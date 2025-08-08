@@ -72,9 +72,7 @@ test.describe.serial('8. Birth declaration case - 8', () => {
         .locator('#informant____other____relation')
         .fill(declaration.informant.relation)
 
-      // TODO: WHY WE NEED THIS?
-      await continueForm(page)
-      await continueForm(page)
+      await goToSection(page, 'mother')
     })
 
     test("8.1.3 Fill mother's details", async () => {

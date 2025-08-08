@@ -117,7 +117,12 @@ export const Workqueues = defineWorkqueues([
         type: 'DEFAULT',
         conditionals: []
       }
-    ]
+    ],
+    emptyMessage: {
+      id: 'v2.workqueues.recent.emptyMessage',
+      defaultMessage: 'No recent records',
+      description: 'Empty message for recent workqueue'
+    }
   },
   {
     slug: 'requires-completion',
@@ -141,7 +146,12 @@ export const Workqueues = defineWorkqueues([
         type: 'DEFAULT',
         conditionals: []
       }
-    ]
+    ],
+    emptyMessage: {
+      id: 'v2.workqueues.notifications.emptyMessage',
+      defaultMessage: 'No notifications',
+      description: 'Empty message for notifications workqueue'
+    }
   },
   {
     slug: 'sent-for-review',
@@ -398,7 +408,7 @@ export const Workqueues = defineWorkqueues([
     },
     query: {
       flags: {
-        noneOf: [InherentFlags.PRINTED, InherentFlags.CORRECTION_REQUESTED]
+        anyOf: [InherentFlags.PENDING_CERTIFICATION]
       },
       status: { type: 'exact', term: 'REGISTERED' },
       updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }

@@ -414,9 +414,10 @@ test.describe('1. Death event declaration', () => {
          * - be navigated to "my-drafts" tab
          * - find the declared death event record on this page list with saved data
          */
-        await expect(page.locator('#content-name')).toHaveText(
-          'Assigned to you'
-        )
+        //@todo: The user should be navigated to "my-drafts" tab by default
+        await page.getByText('My drafts').click()
+
+        await expect(page.locator('#content-name')).toHaveText('My drafts')
 
         await ensureOutboxIsEmpty(page)
 

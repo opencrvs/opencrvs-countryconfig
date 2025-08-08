@@ -113,7 +113,8 @@ test.describe('10. Correct record', () => {
       await expect(page.locator('#requester____type_error')).not.toBeVisible()
       await expect(page.locator('#reason____option_error')).not.toBeVisible()
       await expect(page.locator('#requester____idType_error')).toBeVisible()
-      await expect(page.locator('#requester____name_error')).toBeVisible()
+      await expect(page.locator('#firstname_error')).toBeVisible()
+      await expect(page.locator('#surname_error')).toBeVisible()
       await expect(
         page.locator('#requester____relationship_error')
       ).toBeVisible()

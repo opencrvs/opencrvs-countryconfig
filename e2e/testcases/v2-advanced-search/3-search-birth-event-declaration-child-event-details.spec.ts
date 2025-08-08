@@ -3,7 +3,6 @@ import { getToken, loginToV2 } from '../../helpers'
 import { createDeclaration } from '../v2-test-data/birth-declaration-with-father-brother'
 import { CREDENTIALS } from '../../constants'
 import { faker } from '@faker-js/faker'
-import { formatDateToLongString } from './utils'
 import { getAllLocations, getLocationIdByName } from '../birth/helpers'
 import { type } from '../../v2-utils'
 
@@ -92,19 +91,17 @@ test.describe
     test('3.1.2 - Validate search and show results', async () => {
       await page.click('#search')
       await expect(page).toHaveURL(/.*\/search-result/)
-      await expect(page.url()).toContain(`child.dob=${yyyy}-${mm}-${dd}`)
-      await expect(page.url()).toContain(`child.gender=female`)
-      await expect(page.url()).toContain(`child.birthLocation=${facilityId}`)
+      expect(page.url()).toContain(`child.dob=${yyyy}-${mm}-${dd}`)
+      expect(page.url()).toContain(`child.gender=female`)
+      expect(page.url()).toContain(`child.birthLocation=${facilityId}`)
       await expect(page.getByText('Search results')).toBeVisible()
 
       const searchResult = await page.locator('#content-name').textContent()
       const searchResultCountNumberInBracketsRegex = /\((\d+)\)$/
-      await expect(searchResult).toMatch(searchResultCountNumberInBracketsRegex)
+      expect(searchResult).toMatch(searchResultCountNumberInBracketsRegex)
       await expect(page.getByText('Event: V2 birth')).toBeVisible()
       await expect(
-        page.getByText(
-          `Child's Date of birth: ${formatDateToLongString(record.declaration['child.dob'])}`
-        )
+        page.getByText(`Child's Date of birth: ${yyyy}-${mm}-${dd}`)
       ).toBeVisible()
       await expect(page.getByText("Child's Sex: Female")).toBeVisible()
       await expect(
@@ -119,10 +116,10 @@ test.describe
     test('3.1.3 - Validate clicking on the search edit button', async () => {
       await page.getByRole('button', { name: 'Edit' }).click()
       await expect(page).toHaveURL(/.*\/advanced-search/)
-      await expect(page.url()).toContain(`child.birthLocation=${facilityId}`)
-      await expect(page.url()).toContain(`child.dob=${yyyy}-${mm}-${dd}`)
-      await expect(page.url()).toContain(`child.gender=female`)
-      await expect(page.url()).toContain(`eventType=v2.birth`)
+      expect(page.url()).toContain(`child.birthLocation=${facilityId}`)
+      expect(page.url()).toContain(`child.dob=${yyyy}-${mm}-${dd}`)
+      expect(page.url()).toContain(`child.gender=female`)
+      expect(page.url()).toContain(`eventType=v2.birth`)
       await expect(page.locator('#tab_v2\\.birth')).toHaveText('Birth')
 
       await expect(page.getByTestId('child____dob-dd')).toHaveValue(dd)
@@ -213,9 +210,9 @@ test.describe
       ).toBeVisible()
       await page.getByText('Residential address', { exact: true }).click()
 
-      await page.locator('#country').getByText('Farajaland')
-      await page.locator('#province').getByText('Central')
-      await page.locator('#district').getByText('Ibombo')
+      page.locator('#country').getByText('Farajaland')
+      page.locator('#province').getByText('Central')
+      page.locator('#district').getByText('Ibombo')
 
       await page.locator('#town').fill('Dhaka')
       await page.locator('#town').blur()
@@ -228,7 +225,7 @@ test.describe
       const searchParams = new URLSearchParams(page.url())
       const address = searchParams.get('child.address.privateHome')
       if (address !== null) {
-        await expect(JSON.parse(address)).toBe({
+        expect(JSON.parse(address)).toBe({
           country: 'FAR',
           province: '579fa8c2-7bc9-4ca3-8163-9a66a0936a8d',
           district: 'e37806ef-ccf6-4ec0-ad9a-afd3d80d4655',
@@ -242,7 +239,7 @@ test.describe
 
       const searchResult = await page.locator('#content-name').textContent()
       const searchResultCountNumberInBracketsRegex = /\((\d+)\)$/
-      await expect(searchResult).toMatch(searchResultCountNumberInBracketsRegex)
+      expect(searchResult).toMatch(searchResultCountNumberInBracketsRegex)
       await expect(page.getByText('Event: V2 birth')).toBeVisible()
       await expect(
         page.getByText(`Location of birth: Farajaland, Central, Ibombo, Dhaka`)
@@ -260,7 +257,7 @@ test.describe
       const searchParams = new URLSearchParams(page.url())
       const address = searchParams.get('child.address.privateHome')
       if (address !== null) {
-        await expect(JSON.parse(address)).toBe({
+        expect(JSON.parse(address)).toBe({
           country: 'FAR',
           province: '579fa8c2-7bc9-4ca3-8163-9a66a0936a8d',
           district: 'e37806ef-ccf6-4ec0-ad9a-afd3d80d4655',
@@ -269,8 +266,8 @@ test.describe
           addressType: 'DOMESTIC'
         })
       }
-      await expect(page.url()).toContain(`child.placeOfBirth=PRIVATE_HOME`)
-      await expect(page.url()).toContain(`eventType=v2.birth`)
+      expect(page.url()).toContain(`child.placeOfBirth=PRIVATE_HOME`)
+      expect(page.url()).toContain(`eventType=v2.birth`)
 
       await expect(page.locator('#country')).toHaveText('Farajaland')
       await expect(page.locator('#province')).toHaveText('Central')

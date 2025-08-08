@@ -2,7 +2,6 @@ import { expect, test, type Page } from '@playwright/test'
 import { getToken, loginToV2 } from '../../helpers'
 import { createDeclaration } from '../v2-test-data/birth-declaration-with-father-brother'
 import { CREDENTIALS } from '../../constants'
-import { formatDateToLongString } from './utils'
 import { getMonthFormatted } from './helper'
 import { type } from '../../v2-utils'
 
@@ -55,8 +54,8 @@ test.describe
     test('2.5.2 - Validate search and show results', async () => {
       await page.click('#search')
       await expect(page).toHaveURL(/.*\/search-result/)
-      await expect(page.url()).toContain(`mother.dob=${yyyy}-${mm}-${dd}`)
-      await expect(page.url()).toContain(
+      expect(page.url()).toContain(`mother.dob=${yyyy}-${mm}-${dd}`)
+      expect(page.url()).toContain(
         `mother.name=${encodeURIComponent(
           JSON.stringify({
             firstname: record.declaration['mother.name'].firstname,
@@ -69,12 +68,10 @@ test.describe
 
       const searchResult = await page.locator('#content-name').textContent()
       const searchResultCountNumberInBracketsRegex = /\((\d+)\)$/
-      await expect(searchResult).toMatch(searchResultCountNumberInBracketsRegex)
+      expect(searchResult).toMatch(searchResultCountNumberInBracketsRegex)
       await expect(page.getByText('Event: V2 birth')).toBeVisible()
       await expect(
-        page.getByText(
-          `Mother's Date of birth: ${formatDateToLongString(record.declaration['mother.dob'])}`
-        )
+        page.getByText(`Mother's Date of birth: ${yyyy}-${mm}-${dd}`)
       ).toBeVisible()
       await expect(
         page.getByText(
@@ -88,8 +85,8 @@ test.describe
     test('2.5.3 - Validate clicking on the search edit button', async () => {
       await page.getByRole('button', { name: 'Edit' }).click()
       await expect(page).toHaveURL(/.*\/advanced-search/)
-      await expect(page.url()).toContain(`mother.dob=${yyyy}-${mm}-${dd}`)
-      await expect(page.url()).toContain(
+      expect(page.url()).toContain(`mother.dob=${yyyy}-${mm}-${dd}`)
+      expect(page.url()).toContain(
         `mother.name=${encodeURIComponent(JSON.stringify({ firstname: record.declaration['mother.name'].firstname, surname: record.declaration['mother.name'].surname, middlename: '' }))}`
       )
       await expect(page.locator('#tab_v2\\.birth')).toHaveText('Birth')
