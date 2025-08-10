@@ -157,7 +157,7 @@ test.describe.serial(' Correct record - 3', () => {
     expect(declaration).toBeDefined()
   })
 
-  test.describe('3.1 Print > Ready to issue', async () => {
+  test.describe('3.1 Print > Event overview', async () => {
     test('3.1.1 Print', async () => {
       await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
 
@@ -192,24 +192,15 @@ test.describe.serial(' Correct record - 3', () => {
       await expectInUrl(page, `/events/overview/${eventId}`)
     })
 
-    test('3.1.2 Ready to issue', async () => {
-      /*
-       * Expected result: should
-       * - be navigated to ready to isssue tab
-       * - include the declaration in this tab
-       */
-      expect(page.url().includes(`events/overview/${eventId}`)).toBeTruthy()
-      ensureAssigned(page)
-    })
-
-    test('3.1.3 Record audit', async () => {
+    test('3.1.2 Record audit', async () => {
+      await ensureAssigned(page)
       await page.getByRole('button', { name: 'Action', exact: true }).click()
 
       /*
        * Expected result: should show correct record button in action menu
        */
       await expect(
-        page.getByText('Correct record', { exact: true })
+        await page.getByText('Correct record', { exact: true })
       ).toBeVisible()
 
       await page.getByText('Correct record', { exact: true }).click()
