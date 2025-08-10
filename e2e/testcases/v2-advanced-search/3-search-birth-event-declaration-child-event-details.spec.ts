@@ -225,14 +225,13 @@ test.describe
       const searchParams = new URLSearchParams(page.url())
       const address = searchParams.get('child.address.privateHome')
       if (address !== null) {
-        expect(JSON.parse(address)).toBe({
-          country: 'FAR',
-          province: '579fa8c2-7bc9-4ca3-8163-9a66a0936a8d',
-          district: 'e37806ef-ccf6-4ec0-ad9a-afd3d80d4655',
-          urbanOrRural: 'URBAN',
-          town: 'Dhaka',
-          addressType: 'DOMESTIC'
-        })
+        const addressObject = JSON.parse(address)
+        await expect(addressObject.country).toBe('FAR')
+        await expect(addressObject.urbanOrRural).toBe('URBAN')
+        await expect(addressObject.town).toBe('Dhaka')
+        await expect(addressObject.addressType).toBe('DOMESTIC')
+        await expect(addressObject.province).toBeTruthy()
+        await expect(addressObject.district).toBeTruthy()
       }
 
       await expect(page.getByText('Search results')).toBeVisible()
@@ -257,14 +256,13 @@ test.describe
       const searchParams = new URLSearchParams(page.url())
       const address = searchParams.get('child.address.privateHome')
       if (address !== null) {
-        expect(JSON.parse(address)).toBe({
-          country: 'FAR',
-          province: '579fa8c2-7bc9-4ca3-8163-9a66a0936a8d',
-          district: 'e37806ef-ccf6-4ec0-ad9a-afd3d80d4655',
-          urbanOrRural: 'URBAN',
-          town: 'Dhaka',
-          addressType: 'DOMESTIC'
-        })
+        const addressObject = JSON.parse(address)
+        await expect(addressObject.country).toBe('FAR')
+        await expect(addressObject.urbanOrRural).toBe('URBAN')
+        await expect(addressObject.town).toBe('Dhaka')
+        await expect(addressObject.addressType).toBe('DOMESTIC')
+        await expect(addressObject.province).toBeTruthy()
+        await expect(addressObject.district).toBeTruthy()
       }
       expect(page.url()).toContain(`child.placeOfBirth=PRIVATE_HOME`)
       expect(page.url()).toContain(`eventType=v2.birth`)

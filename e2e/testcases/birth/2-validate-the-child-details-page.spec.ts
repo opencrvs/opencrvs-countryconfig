@@ -145,7 +145,7 @@ test.describe("2. Validate the child's details page", () => {
        */
       await expect(
         page
-          .locator('[data-test-id="row-value-Sex"]')
+          .locator('[data-testid="row-value-Sex"]')
           .getByText('Required for registration')
       ).toBeVisible()
     })
@@ -281,7 +281,7 @@ test.describe("2. Validate the child's details page", () => {
       await expect(
         page
           .getByRole('row', { name: 'Reason for delayed' })
-          .locator('[data-test-id="row-value-Reason"]')
+          .locator('[data-testid="row-value-Reason"]')
       ).toHaveText('Required for registration')
     })
   })
@@ -294,7 +294,7 @@ test.describe("2. Validate the child's details page", () => {
        * Expected result: should throw error in application review page:
        * - Required for registration
        */
-      await expect(page.locator('[data-test-id="row-value-Place"]')).toHaveText(
+      await expect(page.locator('[data-testid="row-value-Place"]')).toHaveText(
         'Required for registration'
       )
     })

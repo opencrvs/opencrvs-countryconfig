@@ -1382,7 +1382,7 @@ test.describe.serial('8. Validate declaration review page', () => {
 
     test("8.3.2.2 Review child's changed family name", async () => {
       await expect(
-        page.locator('#child-content #Full [data-test-id="row-value-Full"]')
+        page.locator('#child-content #Full [data-testid="row-value-Full"]')
       ).toContainText(
         `${formatName(declaration.child.name)}
             ${declaration.child.name.firstNames} ${newFamilyNameForChild}`,
