@@ -5,6 +5,8 @@
     font-size="8" letter-spacing="0px">
     <tspan x="220.625" y="678.552">&#x2028;</tspan>
     <tspan x="61" y="691.352">{{ $lookup $metadata "modifiedAt"}}</tspan>
+    <tspan x="61" y="701.352">{{$intlWithParams 'certificates.birth.printedCertificateCount'
+      'copiesPrintedForTemplate' ($lookup $metadata "copiesPrintedForTemplate")}}</tspan>
   </text>
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
     font-size="8" font-weight="600" letter-spacing="0px">
@@ -138,7 +140,7 @@
   <g clip-path="url(#clip3_946_2501)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
       font-size="8" letter-spacing="0px">
-      <tspan x="307" y="168.104">{{$intl 'constants' ($lookup $declaration "child.gender")}}</tspan>
+      <tspan x="307" y="168.104">{{$intl 'constants' (lookup $declaration "child.gender")}}</tspan>
     </text>
   </g>
   <line x1="65" y1="174.5" x2="533" y2="174.5" stroke="#ECECEC" />
@@ -374,7 +376,8 @@
   <g clip-path="url(#clip16_946_2501)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
       font-size="8" letter-spacing="0px">
-
+      <!-- NOTE: Since we are using intl-lookup, we need to use informant.relation as actual value
+      rather than as stringified one. Hence we opt for native lookup over $lookup  -->
       {{#ifCond (lookup $declaration 'informant.relation') '===' 'MOTHER' }}
         <tspan x="307" y="518.104">{{$lookup $declaration 'mother.name'}}</tspan>
       {{ else }}
@@ -384,7 +387,7 @@
           <tspan x="307" y="518.104">{{$lookup $declaration 'informant.name'}}</tspan>
         {{/ifCond}}
       {{/ifCond}}
-      <tspan x="307" y="528.104">{{$intl 'v2.constants.informant' ($lookup $declaration 'informant.relation')}}{{#ifCond (lookup $declaration 'informant.relation') '===' 'OTHER'}} ({{$lookup $declaration 'informant.other.relation'}}) {{/ifCond}}</tspan>
+      <tspan x="307" y="528.104">{{$intl 'v2.constants.informant' (lookup $declaration 'informant.relation')}}{{#ifCond (lookup $declaration 'informant.relation') '===' 'OTHER'}} ({{lookup $declaration 'informant.other.relation'}}) {{/ifCond}}</tspan>
     </text>
   </g>
   <line x1="65" y1="536.5" x2="533" y2="536.5" stroke="#ECECEC" />
