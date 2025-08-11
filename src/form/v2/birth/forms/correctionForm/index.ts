@@ -121,7 +121,7 @@ export const CORRECTION_FORM = defineActionForm({
       type: PageTypes.enum.VERIFICATION,
       title: {
         id: 'v2.event.birth.action.correction.form.section.requester.identity.verify.title',
-        defaultMessage: 'Verify their identity',
+        defaultMessage: 'Verify ID',
         description: 'This is the title of the section'
       },
       conditional: and(

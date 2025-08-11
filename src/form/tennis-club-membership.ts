@@ -879,7 +879,7 @@ export const tennisClubMembershipEvent = defineConfig({
             id: 'correction-request.supporting-documents',
             type: PageTypes.enum.FORM,
             title: {
-              id: 'v2.event.tennis-club-membership.action.requestCorrection.form.section.verify',
+              id: 'v2.form.section.documents.title',
               defaultMessage: 'Upload supporting documents',
               description: 'This is the title of the section'
             },
