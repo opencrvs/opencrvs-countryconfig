@@ -13,7 +13,8 @@ import {
   ConditionalType,
   defineDeclarationForm,
   field,
-  FieldType
+  FieldType,
+  never
 } from '@opencrvs/toolkit/events'
 import { not } from '@opencrvs/toolkit/conditionals'
 import { child } from './pages/child'
@@ -78,55 +79,17 @@ export const BIRTH_DECLARATION_REVIEW = {
         id: 'v2.event.birth.action.declare.form.review.reviewHelper_1.label'
       },
       configuration: { styles: { fontVariant: 'h3' as const } }
-      // FIXME: fix conditionals
-      // conditionals: [
-      //   {
-      //     type: ConditionalType.DISPLAY_ON_REVIEW,
-      //     conditional: user.hasScope('SCOPES.RECORD_REGISTER')
-      //   }
-      // ]
     },
-    // {
-    //   id: 'review.reviewDivider_2',
-    //   type: FieldType.DIVIDER,
-    //   label: emptyMessage
-    //   // FIXME: fix conditionals
-    //   // conditionals: [
-    //   //   {
-    //   //     type: ConditionalType.DISPLAY_ON_REVIEW,
-    //   //     conditional: user.hasScope('SCOPES.RECORD_REGISTER')
-    //   //   }
-    //   // ]
-    // },
     {
       id: 'review.noAdvancePrintCertificate',
       type: FieldType.CHECKBOX,
       label: {
         defaultMessage:
-          'I don’t want to print a certificate in advance of registration', // TODO: Eg: Reserved only for offline mode
+          'I don’t want to print a certificate in advance of registration',
         description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.review.noAdvancePrintCertificate.label'
+        id: 'event.birth.action.declare.form.review.field.noAdvancePrintCertificate.label'
       }
-      // FIXME: fix conditionals
-      // conditionals: [
-      //   {
-      //     type: ConditionalType.DISPLAY_ON_REVIEW,
-      //     conditional: user.hasScope('SCOPES.RECORD_REGISTER')
-      //   }
-      // ]
     },
-    // {
-    //   id: 'review.reviewDivider_3',
-    //   type: FieldType.DIVIDER,
-    //   label: emptyMessage
-    //   // FIXME: fix conditionals
-    //   // conditionals: [
-    //   //   {
-    //   //     type: ConditionalType.DISPLAY_ON_REVIEW,
-    //   //     conditional: user.hasScope('SCOPES.RECORD_REGISTER')
-    //   //   }
-    //   // ]
-    // },
     {
       id: 'review.reviewHelper_2',
       type: FieldType.PARAGRAPH,
