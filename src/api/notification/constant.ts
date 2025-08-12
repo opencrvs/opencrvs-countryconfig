@@ -35,3 +35,8 @@ export const LOGIN_URL = process.env.LOGIN_URL as string
 export const SENDER_EMAIL_ADDRESS = process.env.SENDER_EMAIL_ADDRESS
   ? process.env.SENDER_EMAIL_ADDRESS
   : ''
+
+export const USER_NOTIFICATION_DELIVERY_METHOD = process.env
+  .USER_NOTIFICATION_DELIVERY_METHOD
+  ? process.env.USER_NOTIFICATION_DELIVERY_METHOD
+  : 'email'

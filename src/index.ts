@@ -71,6 +71,7 @@ import { ActionType } from '@opencrvs/toolkit/events'
 import { Event } from './form/types/types'
 import { onRegisterHandler } from './api/registration'
 import { workqueueconfigHandler } from './api/workqueue/handler'
+import getUserNotificationRoutes from './config/routes/userNotificationRoutes'
 
 export interface ITokenPayload {
   sub: string
@@ -623,6 +624,8 @@ export async function createServer() {
       description: 'Receives notifications on event actions'
     }
   })
+
+  server.route(getUserNotificationRoutes())
 
   server.ext({
     type: 'onRequest',

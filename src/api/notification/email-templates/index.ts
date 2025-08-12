@@ -9,9 +9,11 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
+import { TriggerEvent } from '@opencrvs/toolkit/notification'
 import * as fs from 'fs'
 import * as Handlebars from 'handlebars'
 import { join } from 'path'
+import { z } from 'zod'
 
 const readBirthTemplate = <T extends Record<string, string>>(
   templateName: string
@@ -34,67 +36,110 @@ const readOtherTemplate = <T extends Record<string, string>>(
     fs.readFileSync(join(__dirname, `./other/${templateName}.html`)).toString()
   )
 
-type OnboardingInviteVariables = {
-  firstNames: string
-  username: string
-  password: string
-  applicationName: string
-  completeSetupUrl: string
-  countryLogo: string
-  loginURL: string
-}
-type TwoFactorAuthenticationVariables = {
-  firstNames: string
-  authCode: string
-  applicationName: string
-  countryLogo: string
-}
-type ChangePhoneNumberVariables = {
-  firstNames: string
-  authCode: string
-  applicationName: string
-  countryLogo: string
-}
-type ChangeEmailAddressVariables = {
-  firstNames: string
-  authCode: string
-  applicationName: string
-  countryLogo: string
-}
-type ResetPasswordBySysAdminVariables = {
-  firstNames: string
-  password: string
-  applicationName: string
-  countryLogo: string
-}
-type ResetPasswordVariables = {
-  firstNames: string
-  authCode: string
-  applicationName: string
-  countryLogo: string
-}
-type UsernameReminderVariables = {
-  firstNames: string
-  username: string
-  applicationName: string
-  countryLogo: string
+const BaseVariables = z.object({
+  applicationName: z.string(),
+  countryLogo: z.string()
+})
+
+export type BaseVariables = z.infer<typeof BaseVariables>
+
+export const TriggerVariable = {
+  [TriggerEvent.USER_CREATED]: z.object({
+    firstNames: z.string(),
+    username: z.string(),
+    password: z.string(),
+    completeSetupUrl: z.string(),
+    loginURL: z.string()
+  }),
+  [TriggerEvent.USER_UPDATED]: z.object({
+    firstNames: z.string(),
+    username: z.string()
+  }),
+  [TriggerEvent.USERNAME_REMINDER]: z.object({
+    firstNames: z.string(),
+    username: z.string()
+  }),
+  [TriggerEvent.RESET_PASSWORD]: z.object({
+    firstNames: z.string(),
+    authCode: z.string()
+  }),
+  [TriggerEvent.RESET_PASSWORD_BY_ADMIN]: z.object({
+    firstNames: z.string(),
+    password: z.string()
+  }),
+  [TriggerEvent.TWO_FA]: z.object({
+    firstNames: z.string(),
+    authCode: z.string()
+  })
+} as const
+
+export type TriggerVariable = {
+  [T in TriggerEvent]: z.infer<(typeof TriggerVariable)[T]>
 }
 
-type UsernameUpdateVariables = {
-  firstNames: string
-  username: string
-  applicationName: string
-  countryLogo: string
-}
+export const OnboardingInviteVariables = BaseVariables.and(
+  TriggerVariable['user-created']
+)
+export type OnboardingInviteVariables = z.infer<
+  typeof OnboardingInviteVariables
+>
 
-type ApproveCorrectionVariables = {
-  firstNames: string
-  lastName: string
-  event: string
-  trackingId: string
-  applicationName: string
-  countryLogo: string
-}
+export const TwoFactorAuthenticationVariables = BaseVariables.and(
+  TriggerVariable['2fa']
+)
+export type TwoFactorAuthenticationVariables = z.infer<
+  typeof TwoFactorAuthenticationVariables
+>
+
+export const ChangePhoneNumberVariables = BaseVariables.extend({
+  firstNames: z.string(),
+  authCode: z.string()
+})
+export type ChangePhoneNumberVariables = z.infer<
+  typeof ChangePhoneNumberVariables
+>
+
+export const ChangeEmailAddressVariables = BaseVariables.extend({
+  firstNames: z.string(),
+  authCode: z.string()
+})
+export type ChangeEmailAddressVariables = z.infer<
+  typeof ChangeEmailAddressVariables
+>
+
+export const ResetPasswordBySysAdminVariables = BaseVariables.and(
+  TriggerVariable['reset-password-by-admin']
+)
+export type ResetPasswordBySysAdminVariables = z.infer<
+  typeof ResetPasswordBySysAdminVariables
+>
+
+export const ResetPasswordVariables = BaseVariables.and(
+  TriggerVariable['reset-password']
+)
+export type ResetPasswordVariables = z.infer<typeof ResetPasswordVariables>
+
+export const UsernameReminderVariables = BaseVariables.and(
+  TriggerVariable['username-reminder']
+)
+export type UsernameReminderVariables = z.infer<
+  typeof UsernameReminderVariables
+>
+
+export const UsernameUpdateVariables = BaseVariables.and(
+  TriggerVariable['user-updated']
+)
+export type UsernameUpdateVariables = z.infer<typeof UsernameUpdateVariables>
+
+export const ApproveCorrectionVariables = BaseVariables.extend({
+  firstNames: z.string(),
+  lastName: z.string(),
+  event: z.string(),
+  trackingId: z.string()
+})
+export type ApproveCorrectionVariables = z.infer<
+  typeof ApproveCorrectionVariables
+>
 
 type RejectCorrectionVariables = ApproveCorrectionVariables & { reason: string }
 
@@ -263,3 +308,7 @@ export type TemplateVariables =
   | RegistrationDeclarationVariables
   | RejectionDeclarationVariables
   | AllUserNotificationVariables
+
+export const TriggerToTemplate = {
+  ['user-created']: 'onboarding-invite'
+} as const
