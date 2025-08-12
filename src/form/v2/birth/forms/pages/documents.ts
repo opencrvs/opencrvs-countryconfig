@@ -55,7 +55,7 @@ const idTypeMessageDescriptors = {
   }
 } satisfies Record<keyof typeof IdType, TranslationConfig>
 
-const DEFAULT_FILE_CONFIGURATION = {
+export const DEFAULT_FILE_CONFIGURATION = {
   maxFileSize: 5 * 1024 * 1024,
   acceptedFileTypes: [
     ImageMimeType.enum['image/jpeg'],
