@@ -191,26 +191,25 @@ export async function emailHandler(
   return h.response().code(200)
 }
 
-export async function userCreatedNotificationHandler(
-  request: Hapi.Request,
-  h: Hapi.ResponseToolkit
-) {
-  const { payload: maybePayload } = request
+export function makeNotificationHandler<T extends TriggerEvent>(event: T) {
+  return async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
+    const { payload: maybePayload } = request
 
-  const payloadValidation =
-    TriggerPayload['user-created'].safeParse(maybePayload)
+    const payloadValidation = TriggerPayload[event].safeParse(maybePayload)
 
-  if (!payloadValidation.success) {
-    return h
-      .response({ error: 'Invalid payload', details: payloadValidation.error })
-      .code(400)
+    if (!payloadValidation.success) {
+      return h
+        .response({
+          error: 'Invalid payload',
+          details: payloadValidation.error
+        })
+        .code(400)
+    }
+
+    await sendNotification(event, payloadValidation.data as TriggerPayload[T])
+
+    return h.response().code(200)
   }
-
-  const payload = payloadValidation.data
-
-  await sendNotification('user-created', payload)
-
-  return h.response().code(200)
 }
 
 function stringifyV1Name(name: FullName) {

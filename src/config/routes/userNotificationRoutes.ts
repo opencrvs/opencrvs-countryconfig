@@ -9,7 +9,7 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { userCreatedNotificationHandler } from '@countryconfig/api/notification/handler'
+import { makeNotificationHandler } from '@countryconfig/api/notification/handler'
 import { ReqRefDefaults, ServerRoute } from '@hapi/hapi'
 
 export default function getUserNotificationRoutes(): ServerRoute<ReqRefDefaults>[] {
@@ -17,15 +17,61 @@ export default function getUserNotificationRoutes(): ServerRoute<ReqRefDefaults>
     {
       method: 'POST',
       path: '/triggers/user/user-created',
-      handler: userCreatedNotificationHandler,
+      handler: makeNotificationHandler('user-created'),
       options: {
-        /*
-         * In deployed environments, the email path needs to be blocked by Traefik.
-         * See `/email`
-         */
         auth: false,
         tags: ['api'],
         description: 'Handles notification for user creation'
+      }
+    },
+    {
+      method: 'POST',
+      path: '/triggers/user/user-updated',
+      handler: makeNotificationHandler('user-updated'),
+      options: {
+        auth: false,
+        tags: ['api'],
+        description: 'Handles notification for user update'
+      }
+    },
+    {
+      method: 'POST',
+      path: '/triggers/user/username-reminder',
+      handler: makeNotificationHandler('username-reminder'),
+      options: {
+        auth: false,
+        tags: ['api'],
+        description: 'Handles notification for username reminder'
+      }
+    },
+    {
+      method: 'POST',
+      path: '/triggers/user/reset-password',
+      handler: makeNotificationHandler('reset-password'),
+      options: {
+        auth: false,
+        tags: ['api'],
+        description: 'Handles notification for password reset'
+      }
+    },
+    {
+      method: 'POST',
+      path: '/triggers/user/reset-password-by-admin',
+      handler: makeNotificationHandler('reset-password-by-admin'),
+      options: {
+        auth: false,
+        tags: ['api'],
+        description: 'Handles notification for admin password reset'
+      }
+    },
+    {
+      method: 'POST',
+      path: '/triggers/user/2fa',
+      handler: makeNotificationHandler('2fa'),
+      options: {
+        auth: false,
+        tags: ['api'],
+        description: 'Handles notification for two-factor authentication code'
       }
     }
   ]
