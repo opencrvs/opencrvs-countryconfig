@@ -266,7 +266,7 @@ export async function sendNotification<T extends TriggerEvent>(
       event,
       reason: "NODE_ENV not being 'production'"
     })
-    // return
+    return
   }
   const applicationConfig = await getApplicationConfig()
   const applicationName = applicationConfig.APPLICATION_NAME
