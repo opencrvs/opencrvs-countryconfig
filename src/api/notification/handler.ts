@@ -12,17 +12,14 @@ import { logger, maskEmail, maskSms } from '@countryconfig/logger'
 import * as Hapi from '@hapi/hapi'
 import * as Joi from 'joi'
 import { IApplicationConfig, getApplicationConfig } from '../../utils'
-import {
-  COUNTRY_LOGO_URL,
-  SENDER_EMAIL_ADDRESS,
-  USER_NOTIFICATION_DELIVERY_METHOD
-} from './constant'
+import { COUNTRY_LOGO_URL, SENDER_EMAIL_ADDRESS } from './constant'
 import { sendEmail } from './email-service'
 import { SMSTemplateType, sendSMS } from './sms-service'
 import {
   AllUserNotificationVariables,
   EmailTemplateType,
   TemplateVariables,
+  TriggerToSMSTemplate,
   TriggerToTemplate,
   TriggerVariable,
   getTemplate,
@@ -44,8 +41,7 @@ function isEmailPayload(
 import {
   TriggerEvent,
   TriggerPayload,
-  FullName,
-  Recipient
+  FullName
 } from '@opencrvs/toolkit/notification'
 import { LOGIN_URL } from '@countryconfig/constants'
 
@@ -270,8 +266,10 @@ export async function sendNotification<T extends TriggerEvent>(
   }
   const applicationConfig = await getApplicationConfig()
   const applicationName = applicationConfig.APPLICATION_NAME
+  const userNotificationDeliveryMethod =
+    applicationConfig.USER_NOTIFICATION_DELIVERY_METHOD
 
-  if (USER_NOTIFICATION_DELIVERY_METHOD === 'email') {
+  if (userNotificationDeliveryMethod === 'email') {
     if (!payload.recipient.email) {
       generateFailureLog({
         contact,
@@ -299,7 +297,7 @@ export async function sendNotification<T extends TriggerEvent>(
       from: SENDER_EMAIL_ADDRESS,
       to: payload.recipient.email
     })
-  } else if (USER_NOTIFICATION_DELIVERY_METHOD === 'sms') {
+  } else if (userNotificationDeliveryMethod === 'sms') {
     if (!contact.mobile) {
       generateFailureLog({
         contact,
@@ -310,12 +308,19 @@ export async function sendNotification<T extends TriggerEvent>(
       })
       return
     }
+
+    await sendSMS(
+      TriggerToSMSTemplate['user-created'],
+      { ...variables, applicationName, countryLogo: COUNTRY_LOGO_URL },
+      contact.mobile,
+      'en'
+    )
   } else {
     generateFailureLog({
       contact,
       name,
       event,
-      reason: `Invalid USER_NOTIFICATION_DELIVERY_METHOD. Options are 'emai' or 'sms'. Found ${USER_NOTIFICATION_DELIVERY_METHOD}`
+      reason: `Invalid USER_NOTIFICATION_DELIVERY_METHOD. Options are 'emai' or 'sms'. Found ${userNotificationDeliveryMethod}`
     })
     return
   }

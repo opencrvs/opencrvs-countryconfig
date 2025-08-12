@@ -312,3 +312,7 @@ export type TemplateVariables =
 export const TriggerToTemplate = {
   ['user-created']: 'onboarding-invite'
 } as const
+
+export const TriggerToSMSTemplate = {
+  ['user-created']: 'userCredentialsNotification'
+} as const

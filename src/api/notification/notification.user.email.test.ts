@@ -1,18 +1,21 @@
 import { vi, describe, it, expect, beforeEach } from 'vitest'
 
 process.env.NODE_ENV = 'production'
-
-vi.mock('../../utils', () => ({
-  getApplicationConfig: vi.fn().mockResolvedValue({
-    APPLICATION_NAME: 'My App',
-    COUNTRY: 'BD',
-    COUNTRY_LOGO: { url: '/logo.png' },
-    SENTRY: 'https://example.com',
-    LOGIN_BACKGROUND: { url: '/bg.png' },
-    USER_NOTIFICATION_DELIVERY_METHOD: 'email',
-    INFORMANT_NOTIFICATION_DELIVERY_METHOD: 'sms'
-  })
-}))
+vi.mock('../../utils', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../utils')>()
+  return {
+    ...actual,
+    getApplicationConfig: vi.fn().mockResolvedValue({
+      APPLICATION_NAME: 'Farajaland CRS',
+      COUNTRY: 'BD',
+      COUNTRY_LOGO: { url: '/logo.png' },
+      SENTRY: 'https://sentry.com',
+      LOGIN_BACKGROUND: { url: '/bg.png' },
+      USER_NOTIFICATION_DELIVERY_METHOD: 'email',
+      INFORMANT_NOTIFICATION_DELIVERY_METHOD: 'sms'
+    })
+  }
+})
 
 vi.mock('nodemailer', () => {
   const sendMailMock = vi.fn().mockResolvedValue({ messageId: 'mocked-id' })
@@ -32,13 +35,12 @@ import { sendNotification } from './handler'
 describe('User notification - Email', () => {
   beforeEach(async () => {
     vi.resetModules()
-
     nodemailer = await import('nodemailer')
   })
   it('user-created', async () => {
     await sendNotification('user-created', {
       recipient: {
-        name: [{ use: 'en', family: 'Cena', given: ['John'] }],
+        name: [{ use: 'en', family: 'Doe', given: ['John'] }],
         email: 'john.doe@gmail.com',
         mobile: '+15551234567'
       },

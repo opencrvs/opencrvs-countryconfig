@@ -1,0 +1,3 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`User notification - sms > calls fetch with correct params 1`] = `"{"messages":[{"destinations":[{"recipient":"+15551234567"}],"from":"mock_sender","text":"Your OpenCRVS account has been created. Please login with your username: j.doe and temporary password: TempPass123!"}]}"`;
