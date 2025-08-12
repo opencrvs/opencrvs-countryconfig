@@ -31,29 +31,25 @@ vi.mock('nodemailer', () => {
 let nodemailer: typeof import('nodemailer')
 
 import { sendNotification } from './handler'
+import { testData } from './testData'
+let sendMailMock: ReturnType<typeof vi.fn>
 
 describe('User notification - Email', () => {
   beforeEach(async () => {
     vi.resetModules()
     nodemailer = await import('nodemailer')
-  })
-  it('user-created', async () => {
-    await sendNotification('user-created', {
-      recipient: {
-        name: [{ use: 'en', family: 'Doe', given: ['John'] }],
-        email: 'john.doe@gmail.com',
-        mobile: '+15551234567'
-      },
-      username: 'j.doe',
-      temporaryPassword: 'TempPass123!'
-    })
-
-    const sendMailMock = (nodemailer as any).__sendMailMock as ReturnType<
+    sendMailMock = (nodemailer as any).__sendMailMock as ReturnType<
       typeof vi.fn
     >
-
-    expect(sendMailMock).toHaveBeenCalledTimes(1)
-
-    expect(sendMailMock.mock.calls[0][0]).toMatchSnapshot()
+    sendMailMock.mockClear()
   })
+
+  testData.forEach(({ event, payload }) =>
+    it(event, async () => {
+      await sendNotification(event, payload)
+
+      expect(sendMailMock).toHaveBeenCalledTimes(1)
+      expect(sendMailMock.mock.calls[0][0]).toMatchSnapshot()
+    })
+  )
 })

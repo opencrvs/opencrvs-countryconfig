@@ -309,10 +309,11 @@ export type TemplateVariables =
   | RejectionDeclarationVariables
   | AllUserNotificationVariables
 
-export const TriggerToTemplate = {
-  ['user-created']: 'onboarding-invite'
-} as const
-
-export const TriggerToSMSTemplate = {
-  ['user-created']: 'userCredentialsNotification'
-} as const
+export const TriggerToEmailTemplate = {
+  ['user-created']: 'onboarding-invite',
+  ['user-updated']: 'username-updated',
+  ['username-reminder']: 'username-reminder',
+  ['reset-password']: 'password-reset',
+  ['reset-password-by-admin']: 'password-reset-by-system-admin',
+  ['2fa']: '2-factor-authentication'
+} satisfies Record<TriggerEvent, EmailTemplateType>

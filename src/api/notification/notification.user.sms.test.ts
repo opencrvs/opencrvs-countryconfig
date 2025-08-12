@@ -39,19 +39,16 @@ vi.mock('node-fetch', () => {
 
 import { sendNotification } from './handler'
 import fetch from 'node-fetch'
+import { testData } from './testData'
 
 describe('User notification - sms', () => {
-  it('calls fetch with correct params', async () => {
-    await sendNotification('user-created', {
-      recipient: {
-        name: [{ use: 'en', family: 'Doe', given: ['John'] }],
-        email: 'john.doe@gmail.com',
-        mobile: '+15551234567'
-      },
-      username: 'j.doe',
-      temporaryPassword: 'TempPass123!'
-    }).catch(() => {})
-
-    expect((fetch as any).mock.calls[0][1].body).toMatchSnapshot()
+  beforeEach(async () => {
+    ;(fetch as any).mockClear()
   })
+  testData.forEach(({ event, payload }) =>
+    it(event, async () => {
+      await sendNotification(event, payload).catch(() => {})
+      expect((fetch as any).mock.calls[0][1].body).toMatchSnapshot()
+    })
+  )
 })

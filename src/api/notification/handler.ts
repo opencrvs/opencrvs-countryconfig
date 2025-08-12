@@ -14,13 +14,12 @@ import * as Joi from 'joi'
 import { IApplicationConfig, getApplicationConfig } from '../../utils'
 import { COUNTRY_LOGO_URL, SENDER_EMAIL_ADDRESS } from './constant'
 import { sendEmail } from './email-service'
-import { SMSTemplateType, sendSMS } from './sms-service'
+import { SMSTemplateType, TriggerToSMSTemplate, sendSMS } from './sms-service'
 import {
   AllUserNotificationVariables,
   EmailTemplateType,
   TemplateVariables,
-  TriggerToSMSTemplate,
-  TriggerToTemplate,
+  TriggerToEmailTemplate,
   TriggerVariable,
   getTemplate,
   renderTemplate
@@ -281,7 +280,7 @@ export async function sendNotification<T extends TriggerEvent>(
       return
     }
 
-    const template = getTemplate(TriggerToTemplate['user-created'])
+    const template = getTemplate(TriggerToEmailTemplate[event])
 
     const emailBody = renderTemplate(template, {
       ...variables,
@@ -310,7 +309,7 @@ export async function sendNotification<T extends TriggerEvent>(
     }
 
     await sendSMS(
-      TriggerToSMSTemplate['user-created'],
+      TriggerToSMSTemplate[event],
       { ...variables, applicationName, countryLogo: COUNTRY_LOGO_URL },
       contact.mobile,
       'en'
@@ -326,7 +325,7 @@ export async function sendNotification<T extends TriggerEvent>(
   }
 }
 
-type TriggerEventPayloadPair<T extends TriggerEvent = TriggerEvent> = {
+export type TriggerEventPayloadPair<T extends TriggerEvent = TriggerEvent> = {
   [K in T]: {
     event: K
     payload: TriggerPayload[K]
@@ -363,7 +362,7 @@ function convertPayloadToVariable({
     case TriggerEvent.RESET_PASSWORD:
       return {
         firstNames,
-        authCode: payload.temporaryPassword
+        authCode: payload.code
       }
 
     case TriggerEvent.RESET_PASSWORD_BY_ADMIN:

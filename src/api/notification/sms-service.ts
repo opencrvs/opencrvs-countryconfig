@@ -18,6 +18,7 @@ import fetch from 'node-fetch'
 import * as Handlebars from 'handlebars'
 import { internal } from '@hapi/boom'
 import { getLanguages } from '../content/service'
+import { TriggerEvent } from '@opencrvs/toolkit/notification'
 
 export const informantTemplates = {
   birthInProgressNotification: 'birthInProgressNotification',
@@ -35,7 +36,8 @@ const otherTemplates = {
   userCredentialsNotification: 'userCredentialsNotification',
   retieveUserNameNotification: 'retieveUserNameNotification',
   updateUserNameNotification: 'updateUserNameNotification',
-  resetUserPasswordNotification: 'resetUserPasswordNotification'
+  resetUserPasswordNotification: 'resetUserPasswordNotification',
+  resetUserPasswordByAdminNotification: 'resetUserPasswordByAdminNotification'
 }
 
 export type SMSTemplateType =
@@ -110,3 +112,12 @@ const compileMessages = async (
   const template = Handlebars.compile(language.messages[templateName])
   return template(variables)
 }
+
+export const TriggerToSMSTemplate = {
+  ['user-created']: 'userCredentialsNotification',
+  ['user-updated']: 'updateUserNameNotification',
+  ['username-reminder']: 'retieveUserNameNotification',
+  ['reset-password']: 'resetUserPasswordNotification',
+  ['reset-password-by-admin']: 'resetUserPasswordByAdminNotification',
+  ['2fa']: 'authenticationCodeNotification'
+} satisfies Record<TriggerEvent, SMSTemplateType>
