@@ -73,7 +73,6 @@ export const advancedSearchBirth = [
     },
     fields: [
       field('child.placeOfBirth', {
-        excludeInSearchQuery: true,
         options: placeOfBirthOptions.slice(0, 2)
       }).exact(),
       field('child.birthLocation', {
