@@ -18,7 +18,7 @@ all:
     # Enable backups
     enable_backups: true
     backup_server_remote_target_directory: /home/backup/v19-alpha-prod
-    single_node: false  # At least 2 nodes are recommended for production environment. Set "single_node: true" at your own discretion.
+    single_node: false # At least 2 nodes are recommended for production environment. Set "single_node: true" at your own discretion.
     users:
       # If you need to remove access from someone, do not remove them from this list, but instead set their state: absent
       - name: riku
@@ -50,6 +50,11 @@ all:
       - name: cihan
         ssh_keys:
           - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEEtz5M5hYKcUehDiCm84BplV+3t1ex8DPjIsMtQEWGv cihan.m.bebek@gmail.com
+        state: present
+        sudoer: true
+      - name: markus
+        ssh_keys:
+          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDGvvjFxXqcdKn9kk8VHzm38R3nLWvvwP8W0e3uXxOgby/7LJZx2bosXCZ28FyPTYwVRezHE9lguKiaCo2kxqzNwwx64MzUFRH60sE5cYeH1IqjCBTY3Ht8hkZlYaVoRmsHiqiqogW+bJPo8PBO+ydCh53KUdJFEOXAYvKZ/RfDsWh7/SjeQrQzpRFNeb9keefX+uNNBbKRm9/AEWIHFCGJpDvpJcz3i8hKbRPtXi5OTcEx1Kr4iOMikGXvGzsC1u84qgiy5moeBzpWeROwyJOHRLqPqQ/IHvUkE4F1BXen02G69nHpFdmjTOcjBbT1RzGTeWZs+ehc/kJaS3dUMHd5rSPsimjiCKZ5+wCAyxc5gJlQof71IpHVN4ZDoetH4Lo2bnLdA1YX6DaVU1Fd/6rPWw02DA1OEIhrjJ3Gak87/HUYGNhpZVyIxyNYGXBMPkmHCHCjzjN7sPdMRvkbl5tahD2PoS4172tsO7YYMfAZ/UYYZw745CDxQYIjjfrFRn8= markuslaurila@MacBook-Pro.local
         state: present
         sudoer: true
 docker-manager-first:
