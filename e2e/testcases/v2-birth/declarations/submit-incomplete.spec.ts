@@ -64,13 +64,13 @@ test.describe.serial('Submit and verify incomplete birth declaration', () => {
         })
         .click()
 
-      await expect(page.getByText('Incomplete', { exact: true })).toBeVisible()
+      await expect(page.getByText('Notified', { exact: true })).toBeVisible()
       await expect(page.locator('#content-name')).toContainText(
         formatName(declaration.child.name)
       )
       await expect(
         page.getByTestId('status-value').locator('span')
-      ).toContainText('Incomplete')
+      ).toContainText('Notified')
       await expect(
         page.getByTestId('event-value').locator('span')
       ).toContainText('Birth')
