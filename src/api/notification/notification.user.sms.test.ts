@@ -1,5 +1,5 @@
 import { vi, describe, it, expect, beforeEach } from 'vitest'
-process.env.NODE_ENV = 'production'
+process.env.USER_NOTIFICATION = 'true'
 
 vi.mock('../../utils', async (importOriginal) => {
   const actual = await importOriginal<typeof import('../../utils')>()
@@ -32,23 +32,34 @@ vi.mock('node-fetch', () => {
     default: vi.fn().mockResolvedValue({
       ok: true,
       status: 200,
-      json: async () => ({})
+      json: async () => ({}),
+      text: async () => 'mock-public-key'
     })
   }
 })
 
-import { sendNotification } from './handler'
 import fetch from 'node-fetch'
 import { testData } from './testData'
+import { createServer } from '../../index'
 
 describe('User notification - sms', () => {
+  let server: any
+
   beforeEach(async () => {
     ;(fetch as any).mockClear()
+    server = await createServer()
   })
+
   testData.forEach(({ event, payload }) =>
     it(event, async () => {
-      await sendNotification(event, payload).catch(() => {})
-      expect((fetch as any).mock.calls[0][1].body).toMatchSnapshot()
+      await server.server
+        .inject({
+          method: 'POST',
+          url: `/triggers/user/${event}`,
+          payload
+        })
+        .catch(() => {})
+      expect((fetch as any).mock.calls[1][1].body).toMatchSnapshot()
     })
   )
 })

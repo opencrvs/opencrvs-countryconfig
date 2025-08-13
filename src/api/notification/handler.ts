@@ -253,12 +253,12 @@ export async function sendNotification<T extends TriggerEvent>(
   const { name: nameV1, ...contact } = payload.recipient
   const name = stringifyV1Name(nameV1[0])
 
-  if (process.env.NODE_ENV !== 'production') {
+  if (process.env.USER_NOTIFICATION !== 'true') {
     generateFailureLog({
       contact,
       name,
       event,
-      reason: "NODE_ENV not being 'production'"
+      reason: "USER_NOTIFICATION not being 'true'"
     })
     return
   }
