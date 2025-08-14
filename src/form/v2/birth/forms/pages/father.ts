@@ -245,7 +245,7 @@ export const father = defineFormPage({
           conditional: requireFatherDetails
         }
       ],
-      defaultValue: 'Madagascar'
+      defaultValue: 'MDG'
     },
     {
       id: 'father.iD',

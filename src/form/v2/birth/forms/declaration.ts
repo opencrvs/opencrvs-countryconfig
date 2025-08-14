@@ -130,12 +130,13 @@ export const BIRTH_DECLARATION_REVIEW = {
     {
       id: 'review.registrationDate',
       type: FieldType.DATE,
-      // required: true,
+      required: true,
       label: {
         defaultMessage: 'Registration Date',
         description: 'This is the label for the field',
         id: 'v2.event.birth.action.declare.form.review.field.registrationDate.label'
       },
+      default: Date.now(),
       conditionals: [
         {
           type: ConditionalType.SHOW,
@@ -185,7 +186,7 @@ export const BIRTH_DECLARATION_REVIEW = {
         id: 'event.birth.action.declare.form.review.field.printButton.label'
       },
       configuration: {
-        template: '',
+        template: 'v2.birth-certificate',
         buttonLabel: {
           id: 'v2.event.birth.action.declare.form.review.printButton.label',
           defaultMessage: 'Print',
@@ -302,7 +303,6 @@ export const BIRTH_DECLARATION_REVIEW = {
         }
       ]
     }
-    // TODO: When uploaded, show the file name and the attach icon and condition the register button
   ]
 }
 

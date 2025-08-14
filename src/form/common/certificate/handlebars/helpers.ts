@@ -264,6 +264,39 @@ export function v2EventStatement(): Handlebars.HelperDelegate {
     motherFokontanyCustomAddress: string,
     motherIsDeceased: boolean
   ) {
+    console.log('v2Event Statement ################>>>>>>>>>>>>>>>>')
+    console.log('childName', childName)
+    console.log('childGender', childGender)
+    console.log('childCountry', childCountry)
+    console.log('placeOfBirthState', placeOfBirthState)
+    console.log('placeOfBirthDistrict', placeOfBirthDistrict)
+    console.log('fatherPrimaryDistrict', fatherPrimaryDistrict)
+    console.log('motherPrimaryDistrict', motherPrimaryDistrict)
+    console.log('dateOfEvent', dateOfEvent)
+    console.log('birthTime', birthTime)
+    console.log('placeOfBirthFacility', placeOfBirthFacility)
+    console.log('fatherName', fatherName)
+    console.log('fatherBirthDate', fatherBirthDate)
+    console.log('fatherBirthPlace', fatherBirthPlace)
+    console.log(
+      'fatherCustomizedExactDateOfBirthUnknown',
+      fatherCustomizedExactDateOfBirthUnknown
+    )
+    console.log('fatherCountry', fatherCountry)
+    console.log('fatherOccupation', fatherOccupation)
+    console.log('fatherFokontanyCustomAddress', fatherFokontanyCustomAddress)
+    console.log('fatherIsDeceased', fatherIsDeceased)
+    console.log('motherName', motherName)
+    console.log('motherBirthDate', motherBirthDate)
+    console.log('motherBirthPlace', motherBirthPlace)
+    console.log(
+      'motherCustomizedExactDateOfBirthUnknown',
+      motherCustomizedExactDateOfBirthUnknown
+    )
+    console.log('motherCountry', motherCountry)
+    console.log('motherOccupation', motherOccupation)
+    console.log('motherFokontanyCustomAddress', motherFokontanyCustomAddress)
+    console.log('motherIsDeceased', motherIsDeceased)
     return joinValuesWith([
       '--Tamin’ny',
       customizeDateInCertificateContent(dateOfEvent) + ',',
@@ -726,7 +759,8 @@ export function v2Logger(): Handlebars.HelperDelegate {
 
 export function v2FatherHasSameAddressAsMother(): Handlebars.HelperDelegate {
   return function (this: any, sameAddress: string) {
-    return sameAddress.toLowerCase() === 'yes' ? true : false
+    console.log('sameAddress :>> ', sameAddress)
+    return sameAddress && sameAddress.toLowerCase() === 'yes' ? true : false
   }
 }
 

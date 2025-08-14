@@ -338,15 +338,7 @@ export const child = defineFormPage({
             field('child.legacyBirthRegistrationNumber').isUndefined()
           )
         }
-      ],
-      configuration: {
-        min: 0,
-        postfix: {
-          defaultMessage: 'Grammes',
-          description: 'This is the postfix for the weight field',
-          id: 'v2.event.birth.action.declare.form.section.child.field.legacyBirthRegistrationNumber.postfix'
-        }
-      }
+      ]
     },
     {
       id: 'child.legacyBirthRegistrationDate',
