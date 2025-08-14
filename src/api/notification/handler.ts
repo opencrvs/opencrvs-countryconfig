@@ -11,31 +11,11 @@
 import { logger, maskEmail, maskSms } from '@countryconfig/logger'
 import * as Hapi from '@hapi/hapi'
 import * as Joi from 'joi'
-import { IApplicationConfig, getApplicationConfig } from '../../utils'
+import { getApplicationConfig } from '../../utils'
 import { COUNTRY_LOGO_URL, SENDER_EMAIL_ADDRESS } from './constant'
 import { sendEmail } from './email-service'
-import { SMSTemplateType, TriggerToSMSTemplate, sendSMS } from './sms-service'
-import {
-  AllUserNotificationVariables,
-  EmailTemplateType,
-  TemplateVariables,
-  TriggerToEmailTemplate,
-  TriggerVariable,
-  getTemplate,
-  renderTemplate
-} from './email-templates'
-
-function isEmailPayload(
-  applicationConfig: IApplicationConfig,
-  notificationPayload: NotificationPayload
-): notificationPayload is EmailNotificationPayload {
-  const recipientType = notificationPayload.type
-  const notificationMethod =
-    recipientType == 'user'
-      ? applicationConfig.USER_NOTIFICATION_DELIVERY_METHOD
-      : applicationConfig.INFORMANT_NOTIFICATION_DELIVERY_METHOD
-  return notificationMethod === 'email'
-}
+import { TriggerToSMSTemplate, sendSMS } from './sms-service'
+import { TriggerVariable, getTemplate, renderTemplate } from './email-templates'
 
 import {
   TriggerEvent,
@@ -43,119 +23,6 @@ import {
   FullName
 } from '@opencrvs/toolkit/notification'
 import { LOGIN_URL } from '@countryconfig/constants'
-
-type EmailNotificationPayload = {
-  templateName: {
-    email: EmailTemplateType
-  }
-  recipient: {
-    email: string
-    bcc?: string[]
-  }
-  type: 'user' | 'informant'
-  locale: string
-  variables: TemplateVariables
-  convertUnicode?: boolean
-}
-
-type SMSNotificationPayload = {
-  templateName: {
-    sms: SMSTemplateType
-  }
-  recipient: {
-    sms: string
-  }
-  type: 'user' | 'informant'
-  locale: string
-  variables: TemplateVariables
-  convertUnicode?: boolean
-}
-
-type NotificationPayload = SMSNotificationPayload | EmailNotificationPayload
-
-export const notificationSchema = Joi.object({
-  templateName: Joi.object({
-    email: Joi.string().required(),
-    sms: Joi.string().required()
-  }),
-  recipient: Joi.object({
-    email: Joi.string().allow(null, '').optional(),
-    sms: Joi.string().allow(null, '').optional(),
-    bcc: Joi.array().items(Joi.string().required()).optional()
-  }),
-  type: Joi.string().valid('user', 'informant').required()
-}).unknown(true)
-
-export async function notificationHandler(
-  request: Hapi.Request,
-  h: Hapi.ResponseToolkit
-) {
-  const payload = request.payload as NotificationPayload
-
-  const applicationConfig = await getApplicationConfig()
-  const applicationName = applicationConfig.APPLICATION_NAME
-
-  if (process.env.NODE_ENV !== 'production') {
-    const { templateName, recipient, convertUnicode, type } = payload
-    if ('sms' in recipient) {
-      recipient.sms = maskSms(recipient.sms)
-    } else {
-      recipient.email = maskEmail(recipient.email)
-      recipient.bcc = Array.isArray(recipient.bcc)
-        ? recipient.bcc.map(maskEmail)
-        : undefined
-    }
-    logger.info(
-      `Ignoring notification due to NODE_ENV not being 'production'. Params: ${JSON.stringify(
-        {
-          templateName,
-          recipient,
-          convertUnicode,
-          type
-        }
-      )}`
-    )
-    return h.response().code(200)
-  }
-
-  if (isEmailPayload(applicationConfig, payload)) {
-    const { templateName, variables, recipient } = payload
-    logger.info(
-      `Notification method is email and recipient ${maskEmail(recipient.email)}`
-    )
-
-    const template = getTemplate(templateName.email)
-    const emailSubject =
-      template.type === 'allUserNotification'
-        ? (variables as AllUserNotificationVariables).subject
-        : template.subject
-
-    const emailBody = renderTemplate(template, {
-      ...variables,
-      applicationName,
-      countryLogo: COUNTRY_LOGO_URL,
-      loginURL: LOGIN_URL
-    })
-
-    await sendEmail({
-      subject: emailSubject,
-      html: emailBody,
-      from: SENDER_EMAIL_ADDRESS,
-      to: recipient.email,
-      bcc: recipient.bcc
-    })
-  } else {
-    const { templateName, variables, recipient, locale } = payload
-    await sendSMS(
-      templateName.sms,
-      { ...variables, applicationName, countryLogo: COUNTRY_LOGO_URL },
-      recipient.sms,
-      locale
-    )
-  }
-
-  return h.response().code(200)
-}
 
 type EmailPayloads = {
   subject: string
@@ -279,15 +146,13 @@ export async function sendNotification<T extends TriggerEvent>(
       return
     }
 
-    const template = getTemplate(TriggerToEmailTemplate[event])
+    const template = getTemplate(event)
 
     const emailBody = renderTemplate(template, {
       ...variables,
       applicationName,
       countryLogo: COUNTRY_LOGO_URL
     })
-
-    console.log(JSON.stringify({ emailBody }))
 
     await sendEmail({
       subject: template.subject,

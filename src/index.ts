@@ -40,12 +40,7 @@ import { eventRegistrationHandler } from '@countryconfig/api/event-registration/
 import decode from 'jwt-decode'
 import { join } from 'path'
 import { logger } from '@countryconfig/logger'
-import {
-  emailHandler,
-  emailSchema,
-  notificationHandler,
-  notificationSchema
-} from './api/notification/handler'
+import { emailHandler, emailSchema } from './api/notification/handler'
 import { ErrorContext } from 'hapi-auth-jwt2'
 import { mapGeojsonHandler } from '@countryconfig/api/dashboards/handler'
 import { formHandler } from '@countryconfig/form'
@@ -448,21 +443,6 @@ export async function createServer() {
     options: {
       tags: ['api'],
       description: 'Serves country wise crude death rate'
-    }
-  })
-
-  server.route({
-    method: 'POST',
-    path: '/notification',
-    handler: notificationHandler,
-    options: {
-      tags: ['api'],
-      auth: false,
-      validate: {
-        payload: notificationSchema
-      },
-      description:
-        'Handles sending either SMS or email using a predefined template file'
     }
   })
 

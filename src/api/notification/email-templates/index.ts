@@ -77,20 +77,6 @@ export type TriggerVariable = {
   [T in TriggerEvent]: z.infer<(typeof TriggerVariable)[T]>
 }
 
-export const OnboardingInviteVariables = BaseVariables.and(
-  TriggerVariable['user-created']
-)
-export type OnboardingInviteVariables = z.infer<
-  typeof OnboardingInviteVariables
->
-
-export const TwoFactorAuthenticationVariables = BaseVariables.and(
-  TriggerVariable['2fa']
-)
-export type TwoFactorAuthenticationVariables = z.infer<
-  typeof TwoFactorAuthenticationVariables
->
-
 export const ChangePhoneNumberVariables = BaseVariables.extend({
   firstNames: z.string(),
   authCode: z.string()
@@ -106,30 +92,6 @@ export const ChangeEmailAddressVariables = BaseVariables.extend({
 export type ChangeEmailAddressVariables = z.infer<
   typeof ChangeEmailAddressVariables
 >
-
-export const ResetPasswordBySysAdminVariables = BaseVariables.and(
-  TriggerVariable['reset-password-by-admin']
-)
-export type ResetPasswordBySysAdminVariables = z.infer<
-  typeof ResetPasswordBySysAdminVariables
->
-
-export const ResetPasswordVariables = BaseVariables.and(
-  TriggerVariable['reset-password']
-)
-export type ResetPasswordVariables = z.infer<typeof ResetPasswordVariables>
-
-export const UsernameReminderVariables = BaseVariables.and(
-  TriggerVariable['username-reminder']
-)
-export type UsernameReminderVariables = z.infer<
-  typeof UsernameReminderVariables
->
-
-export const UsernameUpdateVariables = BaseVariables.and(
-  TriggerVariable['user-updated']
-)
-export type UsernameUpdateVariables = z.infer<typeof UsernameUpdateVariables>
 
 export const ApproveCorrectionVariables = BaseVariables.extend({
   firstNames: z.string(),
@@ -170,15 +132,16 @@ export type AllUserNotificationVariables = {
 }
 
 const templates = {
-  'onboarding-invite': {
+  'user-created': {
     type: 'onboarding-invite',
     subject: 'Welcome to OpenCRVS!',
-    template: readOtherTemplate<OnboardingInviteVariables>('onboarding-invite')
+    template:
+      readOtherTemplate<TriggerVariable['user-created']>('onboarding-invite')
   },
-  '2-factor-authentication': {
+  '2fa': {
     type: '2-factor-authentication',
     subject: 'Two factor authentication',
-    template: readOtherTemplate<TwoFactorAuthenticationVariables>(
+    template: readOtherTemplate<TriggerVariable['2fa']>(
       '2-factor-authentication'
     )
   },
@@ -196,27 +159,32 @@ const templates = {
       'change-email-address'
     )
   },
-  'password-reset-by-system-admin': {
+  'reset-password-by-admin': {
     type: 'password-reset-by-system-admin',
     subject: 'Account password reset invitation',
-    template: readOtherTemplate<ResetPasswordBySysAdminVariables>(
+    template: readOtherTemplate<TriggerVariable['reset-password-by-admin']>(
       'password-reset-by-system-admin'
     )
   },
-  'password-reset': {
+  'reset-password': {
     type: 'password-reset',
     subject: 'Account password reset request',
-    template: readOtherTemplate<ResetPasswordVariables>('password-reset')
+    template:
+      readOtherTemplate<TriggerVariable['reset-password']>('password-reset')
   },
   'username-reminder': {
     type: 'username-reminder',
     subject: 'Account username reminder',
-    template: readOtherTemplate<UsernameReminderVariables>('username-reminder')
+    template:
+      readOtherTemplate<TriggerVariable['username-reminder']>(
+        'username-reminder'
+      )
   },
-  'username-updated': {
+  'user-updated': {
     type: 'username-updated',
     subject: 'Account username updated',
-    template: readOtherTemplate<UsernameUpdateVariables>('username-updated')
+    template:
+      readOtherTemplate<TriggerVariable['user-updated']>('username-updated')
   },
   'correction-approved': {
     type: 'correction-approved',
@@ -294,26 +262,3 @@ export function renderTemplate<T extends (typeof templates)[EmailTemplateType]>(
 ) {
   return template.template(variables as any)
 }
-
-export type TemplateVariables =
-  | OnboardingInviteVariables
-  | TwoFactorAuthenticationVariables
-  | ChangePhoneNumberVariables
-  | ResetPasswordBySysAdminVariables
-  | ResetPasswordVariables
-  | UsernameReminderVariables
-  | UsernameUpdateVariables
-  | InProgressDeclarationVariables
-  | InReviewDeclarationVariables
-  | RegistrationDeclarationVariables
-  | RejectionDeclarationVariables
-  | AllUserNotificationVariables
-
-export const TriggerToEmailTemplate = {
-  ['user-created']: 'onboarding-invite',
-  ['user-updated']: 'username-updated',
-  ['username-reminder']: 'username-reminder',
-  ['reset-password']: 'password-reset',
-  ['reset-password-by-admin']: 'password-reset-by-system-admin',
-  ['2fa']: '2-factor-authentication'
-} satisfies Record<TriggerEvent, EmailTemplateType>
