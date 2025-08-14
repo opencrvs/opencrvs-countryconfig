@@ -10,20 +10,26 @@ jobs:
       - name: Checking out git repo
         uses: actions/checkout@v4
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+          run_install: false
+
       - name: Use Node.js from .nvmrc
         uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
-          cache: 'yarn'
+          cache: 'pnpm'
 
       - name: Runs dependency installation
-        run: yarn
+        run: pnpm install
 
       - name: Compile
-        run: yarn test:compilation
+        run: pnpm test:compilation
 
       - name: Test
-        run: yarn test
+        run: pnpm test
 
       - name: Bash script linting
         uses: ludeeus/action-shellcheck@master

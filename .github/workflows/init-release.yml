@@ -82,7 +82,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          yarn version --new-version ${{ inputs.version }} --no-git-tag-version
+          pnpm version --new-version ${{ inputs.version }} --no-git-tag-version
           git add .
           git commit -m "chore: update version to ${{ inputs.version }}"
 
