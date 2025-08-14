@@ -1,5 +1,4 @@
 id,description,en,fr
-...,This could be shown to the user in a reason for duplicate detected,Standard check,Chèque standard
 action.action,Label for action button,Action,Action
 action.archive,Label for archive record button in dropdown menu,Archive declaration,Déclaration d'archive
 action.assignee,Label for asignee,Assigned to {name } at {officeName},Attribué à {name} chez {officeName}
