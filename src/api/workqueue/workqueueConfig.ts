@@ -408,6 +408,7 @@ export const Workqueues = defineWorkqueues([
     },
     query: {
       flags: {
+        noneOf: [InherentFlags.CORRECTION_REQUESTED],
         anyOf: [InherentFlags.PENDING_CERTIFICATION]
       },
       status: { type: 'exact', term: 'REGISTERED' },

@@ -1,5 +1,4 @@
 id,description,en,fr
-...,This could be shown to the user in a reason for duplicate detected,Standard check,Chèque standard
 action.action,Label for action button,Action,Action
 action.archive,Label for archive record button in dropdown menu,Archive declaration,Déclaration d'archive
 action.assignee,Label for asignee,Assigned to {name } at {officeName},Attribué à {name} chez {officeName}
@@ -2568,6 +2567,7 @@ v2.correction.summary.information.section.title,Correction information section t
 v2.correction.summary.information.section.title,Correction information section title,Correction information,Informations de correction
 v2.correction.summary.section.title,Corrections section title,Request correction(s),Corrections
 v2.correction.summary.section.title,Corrections section title,Request correction(s),Corrections
+v2.correction.summary.title,Title for certificate correction summary,Correction summary,Résumé de la correction
 v2.correction.supportingDocuments.attest.label,Label for attestation of supporting documents,Attest,Attestation
 v2.correction.supportingDocuments.notNeeded.label,Label for indicating supporting documents are not needed,Not Needed,Non nécessaire
 v2.custom.field.form.requiredField,,Required for registration,Requis pour l'enregistrement
@@ -2581,6 +2581,7 @@ v2.error.invalidName,This is the error message for invalid name,"Input contains 
 v2.error.required,Error message when required field is missing,Required,Requis
 v2.error.search,The error message shown when a search query fails,An error occurred while searching,Une erreur s'est produite lors de la recherche
 v2.errors.notAssigned,User not assigned error toast message,You've been unassigned from the event,Vous avez été désassigné de l'événement
+v2.errors.somethingWentWrong,Error toast message for general errors,Something went wrong. Please try again,Une erreur s'est produite. Veuillez réessayer
 v2.event.action.declare.form.section.person.field.address.country.label,This is the label for the field,Country,Pays
 v2.event.action.declare.form.section.person.field.address.number.label,This is the label for the field,Number,Numéro
 v2.event.action.declare.form.section.person.field.address.other.addressLine1.label,This is the label for the field,Address Line 1,Adresse 1
@@ -2594,6 +2595,7 @@ v2.event.action.declare.form.section.person.field.address.residentialArea.label,
 v2.event.action.declare.form.section.person.field.address.street.label,This is the label for the field,Street,Rue / Numéro de parcelle
 v2.event.action.declare.form.section.person.field.address.town.label,This is the label for the field,Town,Ville
 v2.event.action.declare.form.section.person.field.address.zipCode.label,This is the label for the field,Postcode / Zip,Code postal / Zip
+v2.event.action.outbox-retry.label,Label for retry button for outbox,Retry,Réessayer
 v2.event.action.review-correction.label,Label for review correction button in dropdown menu,Review,Revoir
 v2.event.birth.action.certificate.form.section.collectPayment.data.label,Title for the data section,Payment details,Détails du paiement
 v2.event.birth.action.certificate.form.section.collectPayment.fee.label,Title for the data entry,Fee,Frais
