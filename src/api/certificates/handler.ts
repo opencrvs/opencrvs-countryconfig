@@ -99,14 +99,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
           italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
           bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
         }
-      },
-      conditionals: [
-        {
-          type: 'SHOW',
-          // Show only if original certificate was printed
-          conditional: event.hasAction(ActionType.PRINT_CERTIFICATE).minCount(1)
-        }
-      ]
+      }
     },
     {
       id: 'birth-registration-receipt',
@@ -290,17 +283,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
           italics: '/api/countryconfig/fonts/LibreBaskerville-Italic.ttf',
           bolditalics: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf'
         }
-      },
-      conditionals: [
-        {
-          type: 'SHOW',
-          // Show only after the standard birth certificate has been printed at least twice
-          conditional: event
-            .hasAction(ActionType.PRINT_CERTIFICATE)
-            .withTemplate('v2.birth-certificate')
-            .minCount(2)
-        }
-      ]
+      }
     },
     {
       id: 'v2.tennis-club-membership-certificate',
