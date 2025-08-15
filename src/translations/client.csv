@@ -1,5 +1,4 @@
 id,description,en,fr
-...,This could be shown to the user in a reason for duplicate detected,Standard check,Chèque standard
 action.action,Label for action button,Action,Action
 action.archive,Label for archive record button in dropdown menu,Archive declaration,Déclaration d'archive
 action.assignee,Label for asignee,Assigned to {name } at {officeName},Attribué à {name} chez {officeName}
@@ -2334,7 +2333,6 @@ v2.action.view.record,Label for view record,View,Afficher
 v2.action.view.record,Label for view record,View,Afficher
 v2.actionModal.PrimaryAction,The label for primary action button of action modal,"{action, select, declare{Declare} other{{action}}}","{action, select, declare{Declare} other{{action}}}"
 v2.actionModal.cancel,The label for cancel button of action modal,Cancel,Annuler
-v2.actionModal.confirm,The label for confirm button of action modal,Confirm,Confirmer
 v2.actionModal.confirm,The label for confirm button of action modal,Confirm,Confirmer
 v2.actionModal.description,The description for action modal,The informant will be notified of this decision and a record of this decision will be recorded,L'informateur sera informé de cette décision et celle-ci sera consignée dans un dossier.
 v2.actionModal.description.incomplete,Description shown in the action modal when a declaration is incomplete,This incomplete declaration will be submitted for review.,Cette déclaration incomplète sera soumise à l'examen.
