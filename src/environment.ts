@@ -30,6 +30,5 @@ export const env = cleanEnv(process.env, {
   CONFIRM_REGISTRATION_URL: url({
     devDefault: 'http://localhost:5050/confirm/registration'
   }),
-  QA_ENV: bool({ default: false }),
-  USER_NOTIFICATION_DELIVERY_METHOD: str({ devDefault: 'email' })
+  QA_ENV: bool({ default: false })
 })

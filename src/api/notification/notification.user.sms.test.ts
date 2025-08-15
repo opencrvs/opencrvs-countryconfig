@@ -23,8 +23,7 @@ vi.mock(import('./constant'), async (importOriginal) => {
     ...actual,
     INFOBIP_API_KEY: 'mock_api_key',
     INFOBIP_GATEWAY_ENDPOINT: 'https://gateway.infobip.com',
-    INFOBIP_SENDER_ID: 'mock_sender',
-    USER_NOTIFICATION_DELIVERY_METHOD: 'sms'
+    INFOBIP_SENDER_ID: 'mock_sender'
   }
 })
 

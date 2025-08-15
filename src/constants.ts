@@ -31,5 +31,3 @@ export const CHECK_INVALID_TOKEN = env.CHECK_INVALID_TOKEN
 
 export const PRODUCTION = env.isProd
 export const QA_ENV = env.QA_ENV
-export const USER_NOTIFICATION_DELIVERY_METHOD =
-  env.USER_NOTIFICATION_DELIVERY_METHOD
