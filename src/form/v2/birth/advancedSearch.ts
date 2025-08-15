@@ -73,15 +73,13 @@ export const advancedSearchBirth = [
     },
     fields: [
       field('child.placeOfBirth', {
-        excludeInSearchQuery: true,
-        options: placeOfBirthOptions.slice(0, 2)
+        options: placeOfBirthOptions
       }).exact(),
       field('child.birthLocation', {
         searchCriteriaLabelPrefix: childPrefix
       }).exact(),
-      field('child.address.privateHome', {
-        alternateFieldIds: ['child.address.other']
-      }).exact()
+      field('child.address.privateHome').exact(),
+      field('child.address.other').exact()
     ]
   },
   {

@@ -20,7 +20,11 @@ import {
 import { format, subYears } from 'date-fns'
 import { formatV2ChildName } from '../v2-birth/helpers'
 import { IdType } from '@countryconfig/form/v2/person'
-import { ensureAssigned, expectInUrl } from '../../v2-utils'
+import {
+  ensureAssigned,
+  ensureOutboxIsEmpty,
+  expectInUrl
+} from '../../v2-utils'
 
 test.describe.serial(' Correct record - 3', () => {
   let declaration: DeclarationV2
@@ -1069,6 +1073,7 @@ test.describe.serial(' Correct record - 3', () => {
       // await expect(
       //   page.getByText(`${formatV2ChildName(declaration)}`).first()
       // ).toBeVisible()
+      await ensureOutboxIsEmpty(page)
     })
 
     test('3.8.4 Validate history in record audit', async () => {

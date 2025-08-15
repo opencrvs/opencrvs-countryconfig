@@ -6,7 +6,13 @@ import {
   createDeclaration,
   Declaration
 } from '../v2-test-data/birth-declaration-with-mother-father'
-import { ensureAssigned, expectInUrl, selectAction, type } from '../../v2-utils'
+import {
+  ensureAssigned,
+  ensureOutboxIsEmpty,
+  expectInUrl,
+  selectAction,
+  type
+} from '../../v2-utils'
 import {
   formatV2ChildName,
   REQUIRED_VALIDATION_ERROR
@@ -235,6 +241,7 @@ test.describe.serial('Birth correction flow', () => {
 
     await page.getByRole('button', { name: 'Confirm', exact: true }).click()
     await expectInUrl(page, `/events/overview/${eventId}`)
+    await ensureOutboxIsEmpty(page)
   })
 
   test("Event appears in 'Sent for approval' workqueue", async () => {

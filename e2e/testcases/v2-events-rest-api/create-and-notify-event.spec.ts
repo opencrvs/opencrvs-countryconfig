@@ -436,14 +436,14 @@ test.describe('Events REST API', () => {
 
       await ensureAssigned(page)
 
-      await expect(page.locator('#row_0')).toContainText('Notified')
+      await expect(page.locator('#row_0')).toContainText('Sent incomplete')
       await expect(page.locator('#row_0')).toContainText(clientName)
       await expect(page.locator('#row_0')).toContainText('Health integration')
 
-      // Open modal by clicking 'Notified' action row
-      await page.getByText('Notified').click()
+      // Open modal by clicking 'Sent incomplete' action row
+      await page.getByText('Sent incomplete').click()
       const modal = await page.getByTestId('event-history-modal')
-      expect(modal).toContainText('Notified')
+      expect(modal).toContainText('Sent incomplete')
       expect(modal).toContainText(clientName)
     })
 

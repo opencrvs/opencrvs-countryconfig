@@ -15,7 +15,13 @@ import {
   createDeclaration,
   Declaration
 } from '../v2-test-data/birth-declaration-with-mother-father'
-import { ensureAssigned, expectInUrl, selectAction, type } from '../../v2-utils'
+import {
+  ensureAssigned,
+  ensureOutboxIsEmpty,
+  expectInUrl,
+  selectAction,
+  type
+} from '../../v2-utils'
 import { formatV2ChildName } from '../v2-birth/helpers'
 
 test.describe('1. Correct record - 1', () => {
@@ -654,7 +660,7 @@ test.describe('1. Correct record - 1', () => {
          * - include the declaration in this tab
          */
         await page.getByTestId('navigation_workqueue_sent-for-approval').click()
-
+        await ensureOutboxIsEmpty(page)
         await expect(
           page.getByRole('button', { name: formatV2ChildName(declaration) })
         ).toBeVisible()
