@@ -8,6 +8,6 @@ exports[`User notification - sms > reset-password-by-admin 1`] = `"{"messages":[
 
 exports[`User notification - sms > user-created 1`] = `"{"messages":[{"destinations":[{"recipient":"+15551234567"}],"from":"mock_sender","text":"Your OpenCRVS account has been created. Please login with your username: j.doe and temporary password: TempPass123!"}]}"`;
 
-exports[`User notification - sms > user-updated 1`] = `"{"messages":[{"destinations":[{"recipient":"+15551234567"}],"from":"mock_sender","text":"Your OpenCRVS username has been updated to: j.doe. Your password has not changed."}]}"`;
+exports[`User notification - sms > user-updated 1`] = `"{"messages":[{"destinations":[{"recipient":"+15551234567"}],"from":"mock_sender","text":"Your OpenCRVS username has been updated from z.roronoa to: j.doe. Your password has not changed."}]}"`;
 
 exports[`User notification - sms > username-reminder 1`] = `"{"messages":[{"destinations":[{"recipient":"+15551234567"}],"from":"mock_sender","text":"Your username for OpenCRVS is: j.doe"}]}"`;

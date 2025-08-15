@@ -195,70 +195,71 @@ exports[`User notification - Email > reset-password-by-admin 1`] = `
 exports[`User notification - Email > user-created 1`] = `
 {
   "from": "",
-  "html": "<!DOCTYPE html>
+  "html": "<!doctype html>
 <html>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style type="text/css">
+      body {
+        font-family: 'Noto Sans', sans-serif;
+        color: #222;
+        padding: 16px 24px;
+      }
 
-<head>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet" />
-  <style type="text/css">
-        body {
-            font-family: 'Noto Sans', sans-serif;
-            color: #222;
-            padding: 16px 24px;
-        }
+      h1 {
+        font-size: 21px;
+        margin-top: 32px;
+        margin-bottom: 36px;
+        font-weight: 700;
+      }
 
-        h1 {
-            font-size: 21px;
-            margin-top: 32px;
-            margin-bottom: 36px;
-            font-weight: 700;
-        }
+      p {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 1.8;
+        margin-bottom: 24px;
+      }
 
-        p {
-            font-weight: 400;
-            font-size: 16px;
-            line-height: 1.8;
-            margin-bottom: 24px;
-        }
-
-        i {
-            color: #666;
-            font-weight: 400;
-            font-size: 16px;
-        }
-  </style>
+      i {
+        color: #666;
+        font-weight: 400;
+        font-size: 16px;
+      }
+    </style>
   </head>
 
-<body>
-  <img src="http://localhost:3040/content/country-logo" alt="country_logo" style="max-height: 88px;
-  max-width: 100%;">
-  <h1>Welcome to Farajaland CRS</h1>
-  <p>
-    Hello John,
-  </p>
-  <p>
-    An account has been created for you with the following details:
-  </p>
-  <p>
-    Username: <strong>j.doe</strong><br />
-    Password: <strong>TempPass123!</strong>
-  </p>
+  <body>
+    <img
+      src="http://localhost:3040/content/country-logo"
+      alt="country_logo"
+      style="max-height: 88px; max-width: 100%"
+    />
+    <h1>Welcome to Farajaland CRS</h1>
+    <p>Hello John,</p>
+    <p>An account has been created for you with the following details:</p>
+    <p>
+      Username: <strong>j.doe</strong><br />
+      Password: <strong>TempPass123!</strong>
+    </p>
     <p>
       Please click the link below to complete your account setup and start using
       Farajaland CRS.
     </p>
 
-  <div style="margin-top: 32px; margin-bottom: 32px">
-    <a href="http://localhost:3020/">Complete setup</a>
-  </div>
-  <br />
-  <p>
-    Best regards, <br />
-    Farajaland CRS Team
-  </p>
+    <div style="margin-top: 32px; margin-bottom: 32px">
+      <a href="http://localhost:3020/">Complete setup</a>
+    </div>
+    <br />
+    <p>
+      Best regards, <br />
+      Farajaland CRS Team
+    </p>
   </body>
-
-</html>",
+</html>
+",
   "subject": "Welcome to OpenCRVS!",
   "to": "john.doe@gmail.com",
 }
@@ -309,7 +310,7 @@ exports[`User notification - Email > user-updated 1`] = `
         Hello John,
     </p>
     <p>
-        You username has been updated. 
+        You username has been updated from z.roronoa. 
     </p>
     <p>
         Your new username is: <strong>j.doe</strong>
