@@ -586,7 +586,7 @@ export async function createServer() {
 
   server.route({
     method: 'POST',
-    path: '/events/{event}/actions/{action}',
+    path: '/trigger/events/{event}/actions/{action}',
     handler: onAnyActionHandler,
     options: {
       tags: ['api', 'events'],
@@ -596,7 +596,7 @@ export async function createServer() {
 
   server.route({
     method: 'POST',
-    path: `/events/${Event.TENNIS_CLUB_MEMBERSHIP}/actions/${ActionType.REGISTER}`,
+    path: `/trigger/events/${Event.TENNIS_CLUB_MEMBERSHIP}/actions/${ActionType.REGISTER}`,
     handler: onRegisterHandler,
     options: {
       tags: ['api', 'events'],
@@ -606,7 +606,7 @@ export async function createServer() {
 
   server.route({
     method: 'POST',
-    path: `/events/${Event.V2_BIRTH}/actions/${ActionType.REGISTER}`,
+    path: `/trigger/events/${Event.V2_BIRTH}/actions/${ActionType.REGISTER}`,
     handler: onRegisterHandler,
     options: {
       tags: ['api', 'events'],
@@ -616,7 +616,7 @@ export async function createServer() {
 
   server.route({
     method: 'POST',
-    path: `/events/${Event.V2_DEATH}/actions/${ActionType.REGISTER}`,
+    path: `/trigger/events/${Event.V2_DEATH}/actions/${ActionType.REGISTER}`,
     handler: onRegisterHandler,
     options: {
       tags: ['api', 'events'],
