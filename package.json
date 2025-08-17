@@ -44,7 +44,7 @@
     "@graphql-codegen/typescript-operations": "^3.0.4",
     "@inquirer/editor": "^1.2.13",
     "@octokit/core": "4.2.4",
-    "@playwright/test": "^1.48.0",
+    "@playwright/test": "^1.54.2",
     "@types/google-libphonenumber": "^7.4.23",
     "@types/handlebars": "^4.1.0",
     "@types/hapi__h2o2": "8.3.3",

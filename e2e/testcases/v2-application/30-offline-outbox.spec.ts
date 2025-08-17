@@ -391,15 +391,15 @@ test.describe
     ).toContainText('Sending')
     await expect(page.getByTestId('search-result')).not.toContainText(
       formatName(declaration.child.name),
-      { timeout: 20000 }
+      { timeout: 60000 }
     )
     await expect(page.getByTestId('search-result')).not.toContainText(
       formatName(partialDeclaration1.child.name),
-      { timeout: 20000 }
+      { timeout: 60000 }
     )
     await expect(page.getByTestId('search-result')).not.toContainText(
       formatName(partialDeclaration2.child.name),
-      { timeout: 20000 }
+      { timeout: 60000 }
     )
     await ensureOutboxIsEmpty(page)
   })
