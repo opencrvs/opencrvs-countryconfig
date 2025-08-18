@@ -310,7 +310,7 @@ exports[`User notification - Email > user-updated 1`] = `
         Hello John,
     </p>
     <p>
-        You username has been updated from z.roronoa. 
+        You username has been updated. 
     </p>
     <p>
         Your new username is: <strong>j.doe</strong>
