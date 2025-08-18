@@ -190,11 +190,11 @@ function convertPayloadToVariable({
   event,
   payload
 }: TriggerEventPayloadPair): TriggerVariable[typeof event] {
-  const firstName = payload.recipient.name[0].given[0]
+  const firstname = payload.recipient.name[0].given[0]
   switch (event) {
     case TriggerEvent.USER_CREATED:
       return {
-        firstName: payload.recipient.name[0].given[0],
+        firstname: payload.recipient.name[0].given[0],
         username: payload.username,
         password: payload.temporaryPassword,
         completeSetupUrl: LOGIN_URL,
@@ -203,32 +203,32 @@ function convertPayloadToVariable({
 
     case TriggerEvent.USER_UPDATED:
       return {
-        firstName,
+        firstname,
         oldUsername: payload.oldUsername,
         newUsername: payload.newUsername
       }
 
     case TriggerEvent.USERNAME_REMINDER:
       return {
-        firstName,
+        firstname,
         username: payload.username
       }
 
     case TriggerEvent.RESET_PASSWORD:
       return {
-        firstName,
+        firstname,
         authCode: payload.code
       }
 
     case TriggerEvent.RESET_PASSWORD_BY_ADMIN:
       return {
-        firstName,
+        firstname,
         password: payload.temporaryPassword
       }
 
     case TriggerEvent.TWO_FA:
       return {
-        firstName,
+        firstname,
         authCode: payload.code
       }
 

@@ -45,31 +45,31 @@ export type BaseVariables = z.infer<typeof BaseVariables>
 
 export const TriggerVariable = {
   [TriggerEvent.USER_CREATED]: z.object({
-    firstName: z.string(),
+    firstname: z.string(),
     username: z.string(),
     password: z.string(),
     completeSetupUrl: z.string(),
     loginURL: z.string()
   }),
   [TriggerEvent.USER_UPDATED]: z.object({
-    firstName: z.string(),
+    firstname: z.string(),
     oldUsername: z.string(),
     newUsername: z.string()
   }),
   [TriggerEvent.USERNAME_REMINDER]: z.object({
-    firstName: z.string(),
+    firstname: z.string(),
     username: z.string()
   }),
   [TriggerEvent.RESET_PASSWORD]: z.object({
-    firstName: z.string(),
+    firstname: z.string(),
     authCode: z.string()
   }),
   [TriggerEvent.RESET_PASSWORD_BY_ADMIN]: z.object({
-    firstName: z.string(),
+    firstname: z.string(),
     password: z.string()
   }),
   [TriggerEvent.TWO_FA]: z.object({
-    firstName: z.string(),
+    firstname: z.string(),
     authCode: z.string()
   })
 } as const
