@@ -1,21 +1,4 @@
 import { vi, describe, it, expect, beforeEach } from 'vitest'
-process.env.USER_NOTIFICATION = 'true'
-
-vi.mock('../../utils', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('../../utils')>()
-  return {
-    ...actual,
-    getApplicationConfig: vi.fn().mockResolvedValue({
-      APPLICATION_NAME: 'Farajaland CRS',
-      COUNTRY: 'BD',
-      COUNTRY_LOGO: { url: '/logo.png' },
-      SENTRY: 'https://sentry.com',
-      LOGIN_BACKGROUND: { url: '/bg.png' },
-      USER_NOTIFICATION_DELIVERY_METHOD: 'sms',
-      INFORMANT_NOTIFICATION_DELIVERY_METHOD: 'sms'
-    })
-  }
-})
 
 vi.mock(import('./constant'), async (importOriginal) => {
   const actual = await importOriginal()
@@ -24,6 +7,16 @@ vi.mock(import('./constant'), async (importOriginal) => {
     INFOBIP_API_KEY: 'mock_api_key',
     INFOBIP_GATEWAY_ENDPOINT: 'https://gateway.infobip.com',
     INFOBIP_SENDER_ID: 'mock_sender'
+  }
+})
+
+vi.mock(import('../application/application-config'), async (importOriginal) => {
+  const actual = await importOriginal()
+  return {
+    applicationConfig: {
+      ...actual.applicationConfig,
+      USER_NOTIFICATION_DELIVERY_METHOD: 'sms'
+    }
   }
 })
 

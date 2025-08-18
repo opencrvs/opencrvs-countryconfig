@@ -11,7 +11,6 @@
 import { logger, maskEmail, maskSms } from '@countryconfig/logger'
 import * as Hapi from '@hapi/hapi'
 import * as Joi from 'joi'
-import { getApplicationConfig } from '../../utils'
 import { COUNTRY_LOGO_URL, SENDER_EMAIL_ADDRESS } from './constant'
 import { sendEmail } from './email-service'
 import { TriggerToSMSTemplate, sendSMS } from './sms-service'
@@ -23,6 +22,7 @@ import {
   FullName
 } from '@opencrvs/toolkit/notification'
 import { LOGIN_URL } from '@countryconfig/constants'
+import { applicationConfig } from '../application/application-config'
 
 type EmailPayloads = {
   subject: string
@@ -120,16 +120,6 @@ export async function sendNotification<T extends TriggerEvent>(
   const { name: nameV1, ...contact } = payload.recipient
   const name = stringifyV1Name(nameV1[0])
 
-  if (process.env.USER_NOTIFICATION !== 'true') {
-    generateFailureLog({
-      contact,
-      name,
-      event,
-      reason: "USER_NOTIFICATION not being 'true'"
-    })
-    return
-  }
-  const applicationConfig = await getApplicationConfig()
   const applicationName = applicationConfig.APPLICATION_NAME
   const userNotificationDeliveryMethod =
     applicationConfig.USER_NOTIFICATION_DELIVERY_METHOD
