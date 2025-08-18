@@ -84,6 +84,8 @@ export async function ensureAssigned(page: Page) {
 
   if (await assignAction.isVisible()) {
     await assignAction.click()
+    // Wait for the assign modal to appear
+    await page.getByRole('button', { name: 'Assign', exact: true }).click()
   }
 
   await expect(page.getByTestId('assignedTo-value')).not.toHaveText(
