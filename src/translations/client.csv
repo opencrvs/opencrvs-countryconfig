@@ -2557,6 +2557,9 @@ v2.correction.label.verifyIdentity.cancel,Label for cancellation of identity ver
 v2.correction.label.verifyIdentity.confirm,Label for verification of identity in correction request,Yes,Oui
 v2.correction.reason.title,The title for the corrector form,Reason for correction?,Reason for correction?
 v2.correction.requester.relationshop.intro.label,The title for the corrector form,Note: In the case that the child is now of legal age (18) then only they should be able to request a change to their birth record.,"Note : Si l'enfant a atteint l'âge légal (18 ans), il est le seul à pouvoir demander une modification de son acte de naissance."
+v2.correction.requesterOffice,Correction requester office label,Office,Bureau
+v2.correction.submittedBy,Correction subbmitted by label,Submitter,Déposant
+v2.correction.submittedOn,Correction subbmitted on label,Submitted on,Date de soumission
 v2.correction.summary.change,Change link label,Change,Modifier
 v2.correction.summary.information.section.title,Correction information section title,Correction information,Informations de correction
 v2.correction.summary.section.title,Corrections section title,Request correction(s),Corrections
