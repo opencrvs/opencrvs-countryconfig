@@ -2676,174 +2676,174 @@ v2.event.birth.summary.informant.contact.label,This is the label for the informa
 v2.event.birth.summary.informant.contact.value,This is the contact value of the informant,{informant.phoneNo} {informant.email},{informant.phoneNo} {informant.email}
 v2.event.birth.title,This is the title of the summary,{child.name.firstname} {child.name.surname},{child.name.firstname} {child.name.surname}
 v2.event.birth.workqueue.all.name.label,Label for name in all workqueue,{child.name.surname} {child.name.firstname},{child.name.surname} {child.name.firstname}
-v2.event.death.action.Read.label,This is shown as the action name anywhere the user can trigger the action from,Read,Read
-v2.event.death.action.certificate.form.cancel,This is the label for the verification cancellation button,Identity does not match,Identity does not match
-v2.event.death.action.certificate.form.cancel.confirmation.body,This is the body for the verification cancellation modal,"Please be aware that if you proceed, you will be responsible for issuing a certificate without the necessary proof of ID from the collector","Please be aware that if you proceed, you will be responsible for issuing a certificate without the necessary proof of ID from the collector"
-v2.event.death.action.certificate.form.cancel.confirmation.title,This is the title for the verification cancellation modal,Print without proof of ID?,Print without proof of ID?
-v2.event.death.action.certificate.form.label,This is what this form is referred as in the system,Death certificate collector,Death certificate collector
-v2.event.death.action.certificate.form.section.collectPayment.data.label,Title for the data section,Payment details,Payment details
-v2.event.death.action.certificate.form.section.collectPayment.fee.label,Title for the data entry,Fee,Fee
-v2.event.death.action.certificate.form.section.collectPayment.fee.label,Title for the data entry,Fee,Fee
+v2.event.death.action.Read.label,This is shown as the action name anywhere the user can trigger the action from,Read,Lire
+v2.event.death.action.certificate.form.cancel,This is the label for the verification cancellation button,Identity does not match,L'identité ne correspond pas
+v2.event.death.action.certificate.form.cancel.confirmation.body,This is the body for the verification cancellation modal,Please be aware that if you proceed,Veuillez noter que si vous continuez
+v2.event.death.action.certificate.form.cancel.confirmation.title,This is the title for the verification cancellation modal,Print without proof of ID?,Imprimer sans preuve d'identité ?
+v2.event.death.action.certificate.form.label,This is what this form is referred as in the system,Death certificate collector,Collecteur de certificat de décès
+v2.event.death.action.certificate.form.section.collectPayment.data.label,Title for the data section,Payment details,Détails du paiement
+v2.event.death.action.certificate.form.section.collectPayment.fee.label,Title for the data entry,Fee,Frais
+v2.event.death.action.certificate.form.section.collectPayment.fee.label,Title for the data entry,Fee,Frais
 v2.event.death.action.certificate.form.section.collectPayment.service.label,Title for the data entry,Service,Service
 v2.event.death.action.certificate.form.section.collectPayment.service.label,Title for the data entry,Service,Service
-v2.event.death.action.certificate.form.section.collectPayment.service.label.afterRegistrationTarget,Death registration after 45 days of date of death message,Death registration after 45 days of date of death,Death registration after 45 days of date of death
-v2.event.death.action.certificate.form.section.collectPayment.service.label.beforeRegistrationTarget,Death registration before 45 days of date of death message,Death registration before 45 days of date of death,Death registration before 45 days of date of death
-v2.event.death.action.certificate.form.section.requester.label,This is the label for the field,Requester,Requester
-v2.event.death.action.certificate.form.section.requester.other.label,This is the label for the field,Print and issue to someone else,Print and issue to someone else
-v2.event.death.action.certificate.form.section.requester.printInAdvance.label,This is the label for the field,Print in advance,Print in advance
-v2.event.death.action.certificate.form.section.requester.spouse.label,This is the label for the field,Print and issue to Spouse,Print and issue to Spouse
-v2.event.death.action.certificate.form.section.who.title,This is the title of the section,Certify record,Certify record
-v2.event.death.action.certificate.form.verify,This is the label for the verification button,Verified,Verified
-v2.event.death.action.collect-certificate.label,This is shown as the action name anywhere the user can trigger the action from,Print certificate,Print certificate
+v2.event.death.action.certificate.form.section.collectPayment.service.label.afterRegistrationTarget,Death registration after 45 days of date of death message,Death registration after 45 days of date of death,Enregistrement du décès après 45 jours de la date du décès
+v2.event.death.action.certificate.form.section.collectPayment.service.label.beforeRegistrationTarget,Death registration before 45 days of date of death message,Death registration before 45 days of date of death,Enregistrement du décès avant 45 jours de la date du décès
+v2.event.death.action.certificate.form.section.requester.label,This is the label for the field,Requester,Demandeur
+v2.event.death.action.certificate.form.section.requester.other.label,This is the label for the field,Print and issue to someone else,Imprimer et délivrer à quelqu'un d'autre
+v2.event.death.action.certificate.form.section.requester.printInAdvance.label,This is the label for the field,Print in advance,Imprimer à l'avance
+v2.event.death.action.certificate.form.section.requester.spouse.label,This is the label for the field,Print and issue to Spouse,Imprimer et délivrer au conjoint
+v2.event.death.action.certificate.form.section.who.title,This is the title of the section,Certify record,Certifier l'enregistrement
+v2.event.death.action.certificate.form.verify,This is the label for the verification button,Verified,Vérifié
+v2.event.death.action.collect-certificate.label,This is shown as the action name anywhere the user can trigger the action from,Print certificate,Imprimer le certificat
 v2.event.death.action.correction.documents.supportingDocs.affidavit.label,Label for the affidavit option,Affidavit,Affidavit
-v2.event.death.action.correction.documents.supportingDocs.courtDocument.label,Label for the court document option,Court Document,Court Document
-v2.event.death.action.correction.documents.supportingDocs.label,Label for the supporting documents field,Supporting documents,Supporting documents
-v2.event.death.action.correction.documents.supportingDocs.other.label,Label for the other option,Other,Other
-v2.event.death.action.correction.fees.amount.label,Label for the amount field,Fee total,Fee total
-v2.event.death.action.correction.fees.amount.prefix,Prefix for the amount field,$,$
-v2.event.death.action.correction.form.cancel,This is the label for the verification cancellation button,Identity does not match,Identity does not match
-v2.event.death.action.correction.form.cancel.confirmation.body,This is the body for the verification cancellation modal,"Please be aware that if you proceed, you will be responsible for making a change to this record without the necessary proof of identification","Please be aware that if you proceed, you will be responsible for making a change to this record without the necessary proof of identification"
-v2.event.death.action.correction.form.cancel.confirmation.title,This is the title for the verification cancellation modal,Correct without proof of ID?,Correct without proof of ID?
-v2.event.death.action.correction.form.label,This is the label for the death correction form,Correct record,Correct record
-v2.event.death.action.correction.form.requester.type.daughter,This is the label for the correction requester field,Daughter,Daughter
-v2.event.death.action.correction.form.requester.type.daughterInLaw,This is the label for the correction requester field,Daughter-in-law,Daughter-in-law
-v2.event.death.action.correction.form.requester.type.father,This is the label for the correction requester field,Father,Father
-v2.event.death.action.correction.form.requester.type.granddaughter,This is the label for the correction requester field,Granddaughter,Granddaughter
-v2.event.death.action.correction.form.requester.type.grandson,This is the label for the correction requester field,Grandson,Grandson
-v2.event.death.action.correction.form.requester.type.mother,This is the label for the correction requester field,Mother,Mother
-v2.event.death.action.correction.form.requester.type.other,This is the label for the correction requester field,Other,Other
-v2.event.death.action.correction.form.requester.type.son,This is the label for the correction requester field,Son,Son
-v2.event.death.action.correction.form.requester.type.sonInLaw,This is the label for the correction requester field,Son-in-law,Son-in-law
-v2.event.death.action.correction.form.requester.type.spouse,This is the label for the correction requester field,Spouse,Spouse
+v2.event.death.action.correction.documents.supportingDocs.courtDocument.label,Label for the court document option,Court Document,Document judiciaire
+v2.event.death.action.correction.documents.supportingDocs.label,Label for the supporting documents field,Supporting documents,Documents justificatifs
+v2.event.death.action.correction.documents.supportingDocs.other.label,Label for the other option,Other,Autre
+v2.event.death.action.correction.fees.amount.label,Label for the amount field,Fee total,Frais totaux
+v2.event.death.action.correction.fees.amount.prefix,Prefix for the amount field,$,€
+v2.event.death.action.correction.form.cancel,This is the label for the verification cancellation button,Identity does not match,L'identité ne correspond pas
+v2.event.death.action.correction.form.cancel.confirmation.body,This is the body for the verification cancellation modal,Please be aware that if you proceed,Veuillez noter que si vous continuez
+v2.event.death.action.correction.form.cancel.confirmation.title,This is the title for the verification cancellation modal,Correct without proof of ID?,Correction sans preuve d'identité ?
+v2.event.death.action.correction.form.label,This is the label for the death correction form,Correct record,Corriger le dossier
+v2.event.death.action.correction.form.requester.type.daughter,This is the label for the correction requester field,Daughter,Fille
+v2.event.death.action.correction.form.requester.type.daughterInLaw,This is the label for the correction requester field,Daughter-in-law,Belle-fille
+v2.event.death.action.correction.form.requester.type.father,This is the label for the correction requester field,Father,Père
+v2.event.death.action.correction.form.requester.type.granddaughter,This is the label for the correction requester field,Granddaughter,Petite-fille
+v2.event.death.action.correction.form.requester.type.grandson,This is the label for the correction requester field,Grandson,Petit-fils
+v2.event.death.action.correction.form.requester.type.mother,This is the label for the correction requester field,Mother,Mère
+v2.event.death.action.correction.form.requester.type.other,This is the label for the correction requester field,Other,Autre
+v2.event.death.action.correction.form.requester.type.son,This is the label for the correction requester field,Son,Fils
+v2.event.death.action.correction.form.requester.type.sonInLaw,This is the label for the correction requester field,Son-in-law,Gendre
+v2.event.death.action.correction.form.requester.type.spouse,This is the label for the correction requester field,Spouse,Conjoint
 v2.event.death.action.correction.form.section.details.divider.label,This is the title of the section,,
-v2.event.death.action.correction.form.section.details.title,This is the title of the section,Correction details,Correction details
-v2.event.death.action.correction.form.section.fees.title,This is the title of the section,Collect fees,Collect fees
-v2.event.death.action.correction.form.section.reason.title,This is the title of the section,Reason for correction,Reason for correction
-v2.event.death.action.correction.form.section.requester.brn.label,This is the label for the field,ID Number,ID Number
-v2.event.death.action.correction.form.section.requester.father.label,This is the label for the field,Father,Father
-v2.event.death.action.correction.form.section.requester.idType.label,This is the label for the field,Type of ID,Type of ID
-v2.event.death.action.correction.form.section.requester.identity.verify.title,This is the title of the section,Verify ID,Verify ID
-v2.event.death.action.correction.form.section.requester.label,This is the label for the field,Requester,Requester
-v2.event.death.action.correction.form.section.requester.mother.label,This is the label for the field,Mother,Mother
-v2.event.death.action.correction.form.section.requester.name.label,This is the label for the field,Name,Name
-v2.event.death.action.correction.form.section.requester.nid.label,This is the label for the field,ID Number,ID Number
-v2.event.death.action.correction.form.section.requester.passport.label,This is the label for the field,ID Number,ID Number
-v2.event.death.action.correction.form.section.requester.relationship.label,This is the label for the field,Relationship to child,Relationship to child
-v2.event.death.action.correction.form.section.requester.relationship.placeholder,This is the placeholder for the field,eg. Grandmother,eg. Grandmother
-v2.event.death.action.correction.form.section.supporting-documents.title,This is the title of the section,Upload supporting documents,Upload supporting documents
+v2.event.death.action.correction.form.section.details.title,This is the title of the section,Correction details,Détails de la correction
+v2.event.death.action.correction.form.section.fees.title,This is the title of the section,Collect fees,Collecter les frais
+v2.event.death.action.correction.form.section.reason.title,This is the title of the section,Reason for correction,Raison de la correction
+v2.event.death.action.correction.form.section.requester.brn.label,This is the label for the field,ID Number,Numéro d'identité
+v2.event.death.action.correction.form.section.requester.father.label,This is the label for the field,Father,Père
+v2.event.death.action.correction.form.section.requester.idType.label,This is the label for the field,Type of ID,Type d'identité
+v2.event.death.action.correction.form.section.requester.identity.verify.title,This is the title of the section,Verify ID,Vérifier l'identité
+v2.event.death.action.correction.form.section.requester.label,This is the label for the field,Requester,Demandeur
+v2.event.death.action.correction.form.section.requester.mother.label,This is the label for the field,Mother,Mère
+v2.event.death.action.correction.form.section.requester.name.label,This is the label for the field,Name,Nom
+v2.event.death.action.correction.form.section.requester.nid.label,This is the label for the field,ID Number,Numéro d'identité
+v2.event.death.action.correction.form.section.requester.passport.label,This is the label for the field,ID Number,Numéro d'identité
+v2.event.death.action.correction.form.section.requester.relationship.label,This is the label for the field,Relationship to child,Relation avec l'enfant
+v2.event.death.action.correction.form.section.requester.relationship.placeholder,This is the placeholder for the field,eg. Grandmother,ex. Grand-mère
+v2.event.death.action.correction.form.section.supporting-documents.title,This is the title of the section,Upload supporting documents,Télécharger les documents justificatifs
 v2.event.death.action.correction.form.section.verifyIdentity.data.label,Title for the data section,,
-v2.event.death.action.correction.form.verify,This is the label for the verification button,Verified,Verified
-v2.event.death.action.correction.reason.option.clericalError.label,Label for the clerical error option,Myself or an agent made a mistake (Clerical error),Myself or an agent made a mistake (Clerical error)
-v2.event.death.action.correction.reason.option.judicialOrder.label,Label for the judicial order option,Requested to do so by the court (Judicial order),Requested to do so by the court (Judicial order)
-v2.event.death.action.correction.reason.option.materialError.label,Label for the material error option,Informant provided incorrect information (Material error),Informant provided incorrect information (Material error)
-v2.event.death.action.correction.reason.option.materialOmission.label,Label for the material omission option,Informant did not provide this information (Material omission),Informant did not provide this information (Material omission)
-v2.event.death.action.correction.reason.option.other.label,Label for the other option,Other,Other
-v2.event.death.action.correction.reason.other.label,Label for the reason,Specify reason,Specify reason
-v2.event.death.action.declare.form.label,This is what this form is referred as in the system,Death declaration form,Death declaration form
-v2.event.death.action.declare.form.nid.unique,This is the error message for non-unique ID Number,National id must be unique,National id must be unique
-v2.event.death.action.declare.form.nid.unique,This is the error message for non-unique ID Number,National id must be unique,National id must be unique
-v2.event.death.action.declare.form.nid.unique,This is the error message for non-unique ID Number,National id must be unique,National id must be unique
-v2.event.death.action.declare.form.review.comment.label,Label for the comment field in the review section,Comment,Comment
-v2.event.death.action.declare.form.review.signature.label,Label for the signature field in the review section,Signature of informant,Signature of informant
-v2.event.death.action.declare.form.review.title,Title of the form to show in review page,"{deceased.name.firstname, select, __EMPTY__ {Death declaration} other {{deceased.name.surname, select, __EMPTY__ {Death declaration} other {Death declaration for {deceased.name.firstname} {deceased.name.surname}}}}}","{deceased.name.firstname, select, __EMPTY__ {Death declaration} other {{deceased.name.surname, select, __EMPTY__ {Death declaration} other {Death declaration for {deceased.name.firstname} {deceased.name.surname}}}}}"
-v2.event.death.action.declare.form.section.deceased.field.address.label,This is the label for the field,Usual place of residence,Usual place of residence
-v2.event.death.action.declare.form.section.deceased.field.addressHelper.label,This is the label for the field,Usual place of residence,Usual place of residence
-v2.event.death.action.declare.form.section.deceased.field.age.checkbox.label,This is the label for the field,Exact date of birth unknown,Exact date of birth unknown
-v2.event.death.action.declare.form.section.deceased.field.age.label,This is the label for the field,Age of deceased,Age of deceased
-v2.event.death.action.declare.form.section.deceased.field.age.postfix,This is the postfix for age field,years,years
-v2.event.death.action.declare.form.section.deceased.field.deathLocation.label,This is the label for the field,Health Institution,Health Institution
-v2.event.death.action.declare.form.section.deceased.field.deathLocationOther.label,This is the label for the field,Death location address,Death location address
-v2.event.death.action.declare.form.section.deceased.field.dob.error,This is the error message for invalid date,Must be a valid Birthdate,Must be a valid Birthdate
-v2.event.death.action.declare.form.section.deceased.field.dob.label,This is the label for the field,Date of birth,Date of birth
-v2.event.death.action.declare.form.section.deceased.field.gender.label,This is the label for the field,Sex,Sex
-v2.event.death.action.declare.form.section.deceased.field.maritalStatus.label,This is the label for the field,Marital Status,Marital Status
-v2.event.death.action.declare.form.section.deceased.field.name.label,This is the label for the field,Deceased's name,Deceased's name
-v2.event.death.action.declare.form.section.deceased.field.numberOfDependants.label,This is the label for the field,No. of dependants,No. of dependants
-v2.event.death.action.declare.form.section.deceased.field.placeOfDeath.label,This is the label for the field,Place of death,Place of death
-v2.event.death.action.declare.form.section.documents.field.proofOfCauseOfDeath.label,This is the label for the field,Proof of cause of death,Proof of cause of death
-v2.event.death.action.declare.form.section.documents.field.proofOfDeath.label,This is the label for the field,Proof of death of deceased,Proof of death of deceased
-v2.event.death.action.declare.form.section.documents.field.proofOfDeceased.label,This is the label for the field,Proof of deceased's ID,Proof of deceased's ID
-v2.event.death.action.declare.form.section.documents.field.proofOfInformant.label,This is the label for the field,Proof of informant's ID,Proof of informant's ID
-v2.event.death.action.declare.form.section.event.field.addressHelper.label,This is the label for the field,Place of death,Place of death
-v2.event.death.action.declare.form.section.event.field.causeOfDeath.label,This is the label for the field,Cause of death has been established,Cause of death has been established
-v2.event.death.action.declare.form.section.event.field.date.error,This is the error message for invalid date,Must be a valid date,Must be a valid date
-v2.event.death.action.declare.form.section.event.field.date.label,This is the label for the field,Date of death,Date of death
+v2.event.death.action.correction.form.verify,This is the label for the verification button,Verified,Vérifié
+v2.event.death.action.correction.reason.option.clericalError.label,Label for the clerical error option,Myself or an agent made a mistake (Clerical error),Une erreur a été commise par moi-même ou un agent (Erreur administrative)
+v2.event.death.action.correction.reason.option.judicialOrder.label,Label for the judicial order option,Requested to do so by the court (Judicial order),Demandé par le tribunal (Ordonnance judiciaire)
+v2.event.death.action.correction.reason.option.materialError.label,Label for the material error option,Informant provided incorrect information (Material error),L'informateur a fourni des informations incorrectes (Erreur matérielle)
+v2.event.death.action.correction.reason.option.materialOmission.label,Label for the material omission option,Informant did not provide this information (Material omission),L'informateur n'a pas fourni cette information (Omission matérielle)
+v2.event.death.action.correction.reason.option.other.label,Label for the other option,Other,Autre
+v2.event.death.action.correction.reason.other.label,Label for the reason,Specify reason,Préciser la raison
+v2.event.death.action.declare.form.label,This is what this form is referred as in the system,Death declaration form,Formulaire de déclaration de décès
+v2.event.death.action.declare.form.nid.unique,This is the error message for non-unique ID Number,National id must be unique,L'identifiant national doit être unique
+v2.event.death.action.declare.form.nid.unique,This is the error message for non-unique ID Number,National id must be unique,L'identifiant national doit être unique
+v2.event.death.action.declare.form.nid.unique,This is the error message for non-unique ID Number,National id must be unique,L'identifiant national doit être unique
+v2.event.death.action.declare.form.review.comment.label,Label for the comment field in the review section,Comment,Commentaire
+v2.event.death.action.declare.form.review.signature.label,Label for the signature field in the review section,Signature of informant,Signature de l'informateur
+v2.event.death.action.declare.form.review.title,Title of the form to show in review page,{deceased.name.firstname,{deceased.name.firstname
+v2.event.death.action.declare.form.section.deceased.field.address.label,This is the label for the field,Usual place of residence,Lieu de résidence habituel
+v2.event.death.action.declare.form.section.deceased.field.addressHelper.label,This is the label for the field,Usual place of residence,Lieu de résidence habituel
+v2.event.death.action.declare.form.section.deceased.field.age.checkbox.label,This is the label for the field,Exact date of birth unknown,Date exacte de naissance inconnue
+v2.event.death.action.declare.form.section.deceased.field.age.label,This is the label for the field,Age of deceased,Âge du défunt
+v2.event.death.action.declare.form.section.deceased.field.age.postfix,This is the postfix for age field,years,ans
+v2.event.death.action.declare.form.section.deceased.field.deathLocation.label,This is the label for the field,Health Institution,Établissement de santé
+v2.event.death.action.declare.form.section.deceased.field.deathLocationOther.label,This is the label for the field,Death location address,Adresse du lieu de décès
+v2.event.death.action.declare.form.section.deceased.field.dob.error,This is the error message for invalid date,Must be a valid Birthdate,Doit être une date de naissance valide
+v2.event.death.action.declare.form.section.deceased.field.dob.label,This is the label for the field,Date of birth,Date de naissance
+v2.event.death.action.declare.form.section.deceased.field.gender.label,This is the label for the field,Sex,Sexe
+v2.event.death.action.declare.form.section.deceased.field.maritalStatus.label,This is the label for the field,Marital Status,État civil
+v2.event.death.action.declare.form.section.deceased.field.name.label,This is the label for the field,Deceased's name,Nom du défunt
+v2.event.death.action.declare.form.section.deceased.field.numberOfDependants.label,This is the label for the field,No. of dependants,Nombre de personnes à charge
+v2.event.death.action.declare.form.section.deceased.field.placeOfDeath.label,This is the label for the field,Place of death,Lieu du décès
+v2.event.death.action.declare.form.section.documents.field.proofOfCauseOfDeath.label,This is the label for the field,Proof of cause of death,Preuve de la cause du décès
+v2.event.death.action.declare.form.section.documents.field.proofOfDeath.label,This is the label for the field,Proof of death of deceased,Preuve du décès du défunt
+v2.event.death.action.declare.form.section.documents.field.proofOfDeceased.label,This is the label for the field,Proof of deceased's ID,Preuve de l'identité du défunt
+v2.event.death.action.declare.form.section.documents.field.proofOfInformant.label,This is the label for the field,Proof of informant's ID,Preuve de l'identité de l'informateur
+v2.event.death.action.declare.form.section.event.field.addressHelper.label,This is the label for the field,Place of death,Lieu du décès
+v2.event.death.action.declare.form.section.event.field.causeOfDeath.label,This is the label for the field,Cause of death has been established,La cause du décès a été établie
+v2.event.death.action.declare.form.section.event.field.date.error,This is the error message for invalid date,Must be a valid date,Doit être une date valide
+v2.event.death.action.declare.form.section.event.field.date.label,This is the label for the field,Date of death,Date du décès
 v2.event.death.action.declare.form.section.event.field.description.label,Description of cause of death by lay person or verbal autopsy,Description,Description
-v2.event.death.action.declare.form.section.event.field.manner.label,This is the label for the field,Manner of death,Manner of death
-v2.event.death.action.declare.form.section.event.field.reason.label,This is the label for the field,Reason,Reason
-v2.event.death.action.declare.form.section.event.field.sourceCauseDeath.label,This is the label for the field,Source of cause of death,Source of cause of death
-v2.event.death.action.declare.form.section.informant.field.address.addressSameAs.label,This is the label for the field,Same as deceased's usual place of residence?,Same as deceased's usual place of residence?
-v2.event.death.action.declare.form.section.informant.field.address.label,This is the label for the field,Usual place of residence,Usual place of residence
-v2.event.death.action.declare.form.section.informant.field.addressHelper.label,This is the label for the field,Usual place of residence,Usual place of residence
-v2.event.death.action.declare.form.section.informant.field.age.checkbox.label,This is the label for the field,Exact date of birth unknown,Exact date of birth unknown
-v2.event.death.action.declare.form.section.informant.field.age.label,This is the label for the field,Age of informant,Age of informant
-v2.event.death.action.declare.form.section.informant.field.age.postfix,This is the postfix for age field,years,years
-v2.event.death.action.declare.form.section.informant.field.brn.label,This is the label for the field,ID Number,ID Number
-v2.event.death.action.declare.form.section.informant.field.dob.error,This is the error message for invalid date,Must be a valid Birthdate,Must be a valid Birthdate
-v2.event.death.action.declare.form.section.informant.field.dob.label,This is the label for the field,Date of birth,Date of birth
+v2.event.death.action.declare.form.section.event.field.manner.label,This is the label for the field,Manner of death,Mode de décès
+v2.event.death.action.declare.form.section.event.field.reason.label,This is the label for the field,Reason,Raison
+v2.event.death.action.declare.form.section.event.field.sourceCauseDeath.label,This is the label for the field,Source of cause of death,Source de la cause du décès
+v2.event.death.action.declare.form.section.informant.field.address.addressSameAs.label,This is the label for the field,Same as deceased's usual place of residence?,Identique au lieu de résidence habituel du défunt ?
+v2.event.death.action.declare.form.section.informant.field.address.label,This is the label for the field,Usual place of residence,Lieu de résidence habituel
+v2.event.death.action.declare.form.section.informant.field.addressHelper.label,This is the label for the field,Usual place of residence,Lieu de résidence habituel
+v2.event.death.action.declare.form.section.informant.field.age.checkbox.label,This is the label for the field,Exact date of birth unknown,Date exacte de naissance inconnue
+v2.event.death.action.declare.form.section.informant.field.age.label,This is the label for the field,Age of informant,Âge de l'informateur
+v2.event.death.action.declare.form.section.informant.field.age.postfix,This is the postfix for age field,years,ans
+v2.event.death.action.declare.form.section.informant.field.brn.label,This is the label for the field,ID Number,Numéro d'identité
+v2.event.death.action.declare.form.section.informant.field.dob.error,This is the error message for invalid date,Must be a valid Birthdate,Doit être une date de naissance valide
+v2.event.death.action.declare.form.section.informant.field.dob.label,This is the label for the field,Date of birth,Date de naissance
 v2.event.death.action.declare.form.section.informant.field.email.label,This is the label for the field,Email,Email
-v2.event.death.action.declare.form.section.informant.field.idType.label,This is the label for the field,Type of ID,Type of ID
-v2.event.death.action.declare.form.section.informant.field.name.label,This is the label for the field,Informant's name,Informant's name
-v2.event.death.action.declare.form.section.informant.field.nationality.label,This is the label for the field,Nationality,Nationality
-v2.event.death.action.declare.form.section.informant.field.nid.label,This is the label for the field,ID Number,ID Number
-v2.event.death.action.declare.form.section.informant.field.other.relation.label,This is the label for the field,Relationship to deceased,Relationship to deceased
-v2.event.death.action.declare.form.section.informant.field.passport.label,This is the label for the field,ID Number,ID Number
-v2.event.death.action.declare.form.section.informant.field.phoneNo.error,"The error message that appears on phone numbers where the first two characters must be 07 or 09, and length must be 10",Must be a valid 10 digit number that starts with 0(7|9),Must be a valid 10 digit number that starts with 0(7|9)
-v2.event.death.action.declare.form.section.informant.field.phoneNo.label,This is the label for the field,Phone number,Phone number
-v2.event.death.action.declare.form.section.informant.field.relation.label,This is the label for the field,Informant type,Informant type
-v2.event.death.action.declare.form.section.person.field.brn.label,This is the label for the field,ID Number,ID Number
-v2.event.death.action.declare.form.section.person.field.idType.label,This is the label for the field,Type of ID,Type of ID
-v2.event.death.action.declare.form.section.person.field.nationality.label,This is the label for the field,Nationality,Nationality
-v2.event.death.action.declare.form.section.person.field.nid.label,This is the label for the field,ID Number,ID Number
-v2.event.death.action.declare.form.section.person.field.passport.label,This is the label for the field,ID Number,ID Number
-v2.event.death.action.declare.form.section.spouse.field.address.addressSameAs.label,This is the label for the field,Same as deceased's usual place of residence?,Same as deceased's usual place of residence?
-v2.event.death.action.declare.form.section.spouse.field.address.label,This is the label for the field,Usual place of residence,Usual place of residence
-v2.event.death.action.declare.form.section.spouse.field.addressHelper.label,This is the label for the field,Usual place of residence,Usual place of residence
-v2.event.death.action.declare.form.section.spouse.field.age.checkbox.label,This is the label for the field,Exact date of birth unknown,Exact date of birth unknown
-v2.event.death.action.declare.form.section.spouse.field.age.label,This is the label for the field,Age of spouse,Age of spouse
-v2.event.death.action.declare.form.section.spouse.field.age.postfix,This is the postfix for age field,years,years
-v2.event.death.action.declare.form.section.spouse.field.brn.label,This is the label for the field,ID Number,ID Number
-v2.event.death.action.declare.form.section.spouse.field.detailsNotAvailable.label,This is the label for the field,Spouse's details are not available,Spouse's details are not available
-v2.event.death.action.declare.form.section.spouse.field.dob.error,This is the error message for invalid date,Must be a valid Birthdate,Must be a valid Birthdate
-v2.event.death.action.declare.form.section.spouse.field.dob.label,This is the label for the field,Date of birth,Date of birth
-v2.event.death.action.declare.form.section.spouse.field.idType.label,This is the label for the field,Type of ID,Type of ID
-v2.event.death.action.declare.form.section.spouse.field.name.label,This is the label for the field,Spouse's name,Spouse's name
-v2.event.death.action.declare.form.section.spouse.field.nationality.label,This is the label for the field,Nationality,Nationality
-v2.event.death.action.declare.form.section.spouse.field.nid.label,This is the label for the field,ID Number,ID Number
-v2.event.death.action.declare.form.section.spouse.field.passport.label,This is the label for the field,ID Number,ID Number
-v2.event.death.action.declare.form.section.spouse.field.reason.label,This is the label for the field,Reason,Reason
-v2.event.death.action.declare.label,This is shown as the action name anywhere the user can trigger the action from,Declare,Declare
-v2.event.death.action.form.section.alienNumberDetails.label,Field for entering Alien Number details,Alien Number,Alien Number
-v2.event.death.action.form.section.brn.label,Field for entering Birth Registration Number,Birth Registration Number,Birth Registration Number
-v2.event.death.action.form.section.collector.other.field.name.label,This is the label for the name field of OTHER collector,Collector's name,Collector's name
-v2.event.death.action.form.section.drivingLicenseDetails.label,Field for entering Driving License details,Drivers License,Drivers License
-v2.event.death.action.form.section.idNumberOther.label,Field for entering ID Number if Other is selected,ID Number,ID Number
-v2.event.death.action.form.section.idType.alienNumber.label,Option for selecting Alien Number as the ID type,Alien Number,Alien Number
-v2.event.death.action.form.section.idType.brn.label,Option for selecting Birth Registration Number as the ID type,Birth Registration Number,Birth Registration Number
-v2.event.death.action.form.section.idType.drivingLicense.label,Option for selecting Driving License as the ID type,Drivers License,Drivers License
-v2.event.death.action.form.section.idType.label,This is the label for selecting the type of ID,Type of ID,Type of ID
-v2.event.death.action.form.section.idType.nid.label,Option for selecting National ID as the ID type,National ID,National ID
-v2.event.death.action.form.section.idType.noId.label,Option for selecting No ID as the ID type,No ID available,No ID available
-v2.event.death.action.form.section.idType.other.label,Option for selecting Other as the ID type,Other,Other
-v2.event.death.action.form.section.idType.passport.label,Option for selecting Passport as the ID type,Passport,Passport
-v2.event.death.action.form.section.idType.refugeeNumber.label,Option for selecting Refugee Number as the ID type,Refugee Number,Refugee Number
-v2.event.death.action.form.section.idTypeOther.label,Field for entering ID type if Other is selected,Other type of ID,Other type of ID
-v2.event.death.action.form.section.nid.label,Field for entering ID Number,National ID,National ID
-v2.event.death.action.form.section.passportDetails.label,Field for entering Passport details,Passport,Passport
-v2.event.death.action.form.section.refugeeNumberDetails.label,Field for entering Refugee Number details,Refugee Number,Refugee Number
-v2.event.death.action.form.section.relationshipToDeceased.label,This is the label for the relationship to deceased field,Relationship to deceased,Relationship to deceased
-v2.event.death.action.form.section.signedAffidavit.fileName,This is the label for the file name,Signed Affidavit,Signed Affidavit
-v2.event.death.action.form.section.signedAffidavit.label,This is the label for uploading a signed affidavit,Signed Affidavit (Optional),Signed Affidavit (Optional)
-v2.event.death.action.register.label,This is shown as the action name anywhere the user can trigger the action from,Register,Register
-v2.event.death.action.request-correction.label,This is shown as the action name anywhere the user can trigger the action from,Correct record,Correct record
-v2.event.death.action.validate.label,This is shown as the action name anywhere the user can trigger the action from,Validate,Validate
-v2.event.death.label,This is what this event is referred as in the system,Death,Death
-v2.event.death.summary.eventDetails.date.empty,This is shown when there is no date of death information,No date of death,No date of death
-v2.event.death.summary.eventDetails.deathLocation.empty,This is shown when there is no death location information,No place of death,No place of death
-v2.event.death.summary.eventDetails.deathLocation.label,Label for place of death,Place of death,Place of death
-v2.event.death.summary.eventDetails.placeOfDeath.empty,This is shown when there is no place of death information,No place of death,No place of death
-v2.event.death.summary.eventDetails.placeOfDeath.label,Label for place of death,Place of death,Place of death
-v2.event.death.summary.informant.contact.empty,This is shown when there is no informant information,No contact details provided,No contact details provided
+v2.event.death.action.declare.form.section.informant.field.idType.label,This is the label for the field,Type of ID,Type d'identité
+v2.event.death.action.declare.form.section.informant.field.name.label,This is the label for the field,Informant's name,Nom de l'informateur
+v2.event.death.action.declare.form.section.informant.field.nationality.label,This is the label for the field,Nationality,Nationalité
+v2.event.death.action.declare.form.section.informant.field.nid.label,This is the label for the field,ID Number,Numéro d'identité
+v2.event.death.action.declare.form.section.informant.field.other.relation.label,This is the label for the field,Relationship to deceased,Relation avec le défunt
+v2.event.death.action.declare.form.section.informant.field.passport.label,This is the label for the field,ID Number,Numéro d'identité
+v2.event.death.action.declare.form.section.informant.field.phoneNo.error,The error message that appears on phone numbers where the first two characters must be 07 or 09,and length must be 10,and length must be 10
+v2.event.death.action.declare.form.section.informant.field.phoneNo.label,This is the label for the field,Phone number,Numéro de téléphone
+v2.event.death.action.declare.form.section.informant.field.relation.label,This is the label for the field,Informant type,Type d'informateur
+v2.event.death.action.declare.form.section.person.field.brn.label,This is the label for the field,ID Number,Numéro d'identité
+v2.event.death.action.declare.form.section.person.field.idType.label,This is the label for the field,Type of ID,Type d'identité
+v2.event.death.action.declare.form.section.person.field.nationality.label,This is the label for the field,Nationality,Nationalité
+v2.event.death.action.declare.form.section.person.field.nid.label,This is the label for the field,ID Number,Numéro d'identité
+v2.event.death.action.declare.form.section.person.field.passport.label,This is the label for the field,ID Number,Numéro d'identité
+v2.event.death.action.declare.form.section.spouse.field.address.addressSameAs.label,This is the label for the field,Same as deceased's usual place of residence?,Identique au lieu de résidence habituel du défunt ?
+v2.event.death.action.declare.form.section.spouse.field.address.label,This is the label for the field,Usual place of residence,Lieu de résidence habituel
+v2.event.death.action.declare.form.section.spouse.field.addressHelper.label,This is the label for the field,Usual place of residence,Lieu de résidence habituel
+v2.event.death.action.declare.form.section.spouse.field.age.checkbox.label,This is the label for the field,Exact date of birth unknown,Date exacte de naissance inconnue
+v2.event.death.action.declare.form.section.spouse.field.age.label,This is the label for the field,Age of spouse,Âge du conjoint
+v2.event.death.action.declare.form.section.spouse.field.age.postfix,This is the postfix for age field,years,ans
+v2.event.death.action.declare.form.section.spouse.field.brn.label,This is the label for the field,ID Number,Numéro d'identité
+v2.event.death.action.declare.form.section.spouse.field.detailsNotAvailable.label,This is the label for the field,Spouse's details are not available,Les informations du conjoint ne sont pas disponibles
+v2.event.death.action.declare.form.section.spouse.field.dob.error,This is the error message for invalid date,Must be a valid Birthdate,Doit être une date de naissance valide
+v2.event.death.action.declare.form.section.spouse.field.dob.label,This is the label for the field,Date of birth,Date de naissance
+v2.event.death.action.declare.form.section.spouse.field.idType.label,This is the label for the field,Type of ID,Type d'identité
+v2.event.death.action.declare.form.section.spouse.field.name.label,This is the label for the field,Spouse's name,Nom du conjoint
+v2.event.death.action.declare.form.section.spouse.field.nationality.label,This is the label for the field,Nationality,Nationalité
+v2.event.death.action.declare.form.section.spouse.field.nid.label,This is the label for the field,ID Number,Numéro d'identité
+v2.event.death.action.declare.form.section.spouse.field.passport.label,This is the label for the field,ID Number,Numéro d'identité
+v2.event.death.action.declare.form.section.spouse.field.reason.label,This is the label for the field,Reason,Raison
+v2.event.death.action.declare.label,This is shown as the action name anywhere the user can trigger the action from,Declare,Déclarer
+v2.event.death.action.form.section.alienNumberDetails.label,Field for entering Alien Number details,Alien Number,Numéro d'étranger
+v2.event.death.action.form.section.brn.label,Field for entering Birth Registration Number,Birth Registration Number,Numéro d'enregistrement de naissance
+v2.event.death.action.form.section.collector.other.field.name.label,This is the label for the name field of OTHER collector,Collector's name,Nom du collecteur
+v2.event.death.action.form.section.drivingLicenseDetails.label,Field for entering Driving License details,Drivers License,Permis de conduire
+v2.event.death.action.form.section.idNumberOther.label,Field for entering ID Number if Other is selected,ID Number,Numéro d'identité
+v2.event.death.action.form.section.idType.alienNumber.label,Option for selecting Alien Number as the ID type,Alien Number,Numéro d'étranger
+v2.event.death.action.form.section.idType.brn.label,Option for selecting Birth Registration Number as the ID type,Birth Registration Number,Numéro d'enregistrement de naissance
+v2.event.death.action.form.section.idType.drivingLicense.label,Option for selecting Driving License as the ID type,Drivers License,Permis de conduire
+v2.event.death.action.form.section.idType.label,This is the label for selecting the type of ID,Type of ID,Type d'identité
+v2.event.death.action.form.section.idType.nid.label,Option for selecting National ID as the ID type,National ID,Carte nationale d'identité
+v2.event.death.action.form.section.idType.noId.label,Option for selecting No ID as the ID type,No ID available,Aucune identité disponible
+v2.event.death.action.form.section.idType.other.label,Option for selecting Other as the ID type,Other,Autre
+v2.event.death.action.form.section.idType.passport.label,Option for selecting Passport as the ID type,Passport,Passeport
+v2.event.death.action.form.section.idType.refugeeNumber.label,Option for selecting Refugee Number as the ID type,Refugee Number,Numéro de réfugié
+v2.event.death.action.form.section.idTypeOther.label,Field for entering ID type if Other is selected,Other type of ID,Autre type d'identité
+v2.event.death.action.form.section.nid.label,Field for entering ID Number,National ID,Carte nationale d'identité
+v2.event.death.action.form.section.passportDetails.label,Field for entering Passport details,Passport,Passeport
+v2.event.death.action.form.section.refugeeNumberDetails.label,Field for entering Refugee Number details,Refugee Number,Numéro de réfugié
+v2.event.death.action.form.section.relationshipToDeceased.label,This is the label for the relationship to deceased field,Relationship to deceased,Relation avec le défunt
+v2.event.death.action.form.section.signedAffidavit.fileName,This is the label for the file name,Signed Affidavit,Déclaration signée
+v2.event.death.action.form.section.signedAffidavit.label,This is the label for uploading a signed affidavit,Signed Affidavit (Optional),Déclaration signée (Optionnel)
+v2.event.death.action.register.label,This is shown as the action name anywhere the user can trigger the action from,Register,Enregistrer
+v2.event.death.action.request-correction.label,This is shown as the action name anywhere the user can trigger the action from,Correct record,Corriger l'enregistrement
+v2.event.death.action.validate.label,This is shown as the action name anywhere the user can trigger the action from,Validate,Valider
+v2.event.death.label,This is what this event is referred as in the system,Death,Décès
+v2.event.death.summary.eventDetails.date.empty,This is shown when there is no date of death information,No date of death,Aucune date de décès
+v2.event.death.summary.eventDetails.deathLocation.empty,This is shown when there is no death location information,No place of death,Aucun lieu de décès
+v2.event.death.summary.eventDetails.deathLocation.label,Label for place of death,Place of death,Lieu de décès
+v2.event.death.summary.eventDetails.placeOfDeath.empty,This is shown when there is no place of death information,No place of death,Aucun lieu de décès
+v2.event.death.summary.eventDetails.placeOfDeath.label,Label for place of death,Place of death,Lieu de décès
+v2.event.death.summary.informant.contact.empty,This is shown when there is no informant information,No contact details provided,Aucun contact fourni
 v2.event.death.summary.informant.contact.label,This is the label for the informant information,Contact,Contact
 v2.event.death.summary.informant.contact.value,This is the contact value of the informant,{informant.phoneNo} {informant.email},{informant.phoneNo} {informant.email}
 v2.event.death.title,This is the title of the summary,{deceased.name.firstname} {deceased.name.surname},{deceased.name.firstname} {deceased.name.surname}
