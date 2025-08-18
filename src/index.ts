@@ -40,12 +40,7 @@ import { eventRegistrationHandler } from '@countryconfig/api/event-registration/
 import decode from 'jwt-decode'
 import { join } from 'path'
 import { logger } from '@countryconfig/logger'
-import {
-  emailHandler,
-  emailSchema,
-  notificationHandler,
-  notificationSchema
-} from './api/notification/handler'
+import { emailHandler, emailSchema } from './api/notification/handler'
 import { ErrorContext } from 'hapi-auth-jwt2'
 import { mapGeojsonHandler } from '@countryconfig/api/dashboards/handler'
 import { formHandler } from '@countryconfig/form'
@@ -71,6 +66,7 @@ import { ActionType } from '@opencrvs/toolkit/events'
 import { Event } from './form/types/types'
 import { onRegisterHandler } from './api/registration'
 import { workqueueconfigHandler } from './api/workqueue/handler'
+import getUserNotificationRoutes from './config/routes/userNotificationRoutes'
 
 export interface ITokenPayload {
   sub: string
@@ -452,21 +448,6 @@ export async function createServer() {
 
   server.route({
     method: 'POST',
-    path: '/notification',
-    handler: notificationHandler,
-    options: {
-      tags: ['api'],
-      auth: false,
-      validate: {
-        payload: notificationSchema
-      },
-      description:
-        'Handles sending either SMS or email using a predefined template file'
-    }
-  })
-
-  server.route({
-    method: 'POST',
     path: '/email',
     handler: emailHandler,
     options: {
@@ -623,6 +604,8 @@ export async function createServer() {
       description: 'Receives notifications on event actions'
     }
   })
+
+  server.route(getUserNotificationRoutes())
 
   server.ext({
     type: 'onRequest',
