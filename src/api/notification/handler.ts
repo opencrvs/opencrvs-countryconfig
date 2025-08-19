@@ -14,15 +14,12 @@ import * as Joi from 'joi'
 import { COUNTRY_LOGO_URL, SENDER_EMAIL_ADDRESS } from './constant'
 import { sendEmail } from './email-service'
 import { TriggerToSMSTemplate, sendSMS } from './sms-service'
-import { TriggerVariable, getTemplate, renderTemplate } from './email-templates'
+import { getTemplate, renderTemplate } from './email-templates'
 
-import {
-  TriggerEvent,
-  TriggerPayload,
-  FullName
-} from '@opencrvs/toolkit/notification'
+import { TriggerEvent, TriggerPayload } from '@opencrvs/toolkit/notification'
 import { LOGIN_URL } from '@countryconfig/constants'
 import { applicationConfig } from '../application/application-config'
+import { NameFieldValue } from '@opencrvs/toolkit/events'
 
 type EmailPayloads = {
   subject: string
@@ -79,10 +76,6 @@ export function makeNotificationHandler<T extends TriggerEvent>(event: T) {
   }
 }
 
-function stringifyV1Name(name: FullName) {
-  return name.given[0] + ' ' + name.family
-}
-
 function generateFailureLog({
   contact,
   name,
@@ -90,7 +83,7 @@ function generateFailureLog({
   reason
 }: {
   contact: { mobile?: string; email?: string }
-  name: string
+  name: NameFieldValue
   event: TriggerEvent
   reason: string
 }) {
@@ -101,7 +94,7 @@ function generateFailureLog({
       event,
       recipient: {
         ...contact,
-        name
+        name: name.firstname + ' ' + name.surname
       }
     })}`
   )
@@ -112,15 +105,17 @@ export async function sendNotification<T extends TriggerEvent>(
   event: T,
   payload: TriggerPayload[T]
 ) {
-  const variables = convertPayloadToVariable({
-    event,
-    payload
-  } as TriggerEventPayloadPair)
+  const { recipient, ...rest } = payload
+  const { name, ...contact } = recipient
 
-  const { name: nameV1, ...contact } = payload.recipient
-  const name = stringifyV1Name(nameV1[0])
-
-  const applicationName = applicationConfig.APPLICATION_NAME
+  const variables = {
+    ...rest,
+    ...name,
+    applicationName: applicationConfig.APPLICATION_NAME,
+    countryLogo: COUNTRY_LOGO_URL,
+    completeSetupUrl: LOGIN_URL,
+    loginURL: LOGIN_URL
+  }
   const userNotificationDeliveryMethod =
     applicationConfig.USER_NOTIFICATION_DELIVERY_METHOD
 
@@ -138,11 +133,13 @@ export async function sendNotification<T extends TriggerEvent>(
 
     const template = getTemplate(event)
 
-    const emailBody = renderTemplate(template, {
-      ...variables,
-      applicationName,
-      countryLogo: COUNTRY_LOGO_URL
-    })
+    const emailBody = renderTemplate(template, variables)
+
+    if (process.env.NODE_ENV === 'development') {
+      console.log(
+        `Sending email to ${payload.recipient.email} with subject: ${template.subject}, body: ${JSON.stringify(emailBody)}`
+      )
+    }
 
     await sendEmail({
       subject: template.subject,
@@ -162,12 +159,7 @@ export async function sendNotification<T extends TriggerEvent>(
       return
     }
 
-    await sendSMS(
-      TriggerToSMSTemplate[event],
-      { ...variables, applicationName, countryLogo: COUNTRY_LOGO_URL },
-      contact.mobile,
-      'en'
-    )
+    await sendSMS(TriggerToSMSTemplate[event], variables, contact.mobile, 'en')
   } else {
     generateFailureLog({
       contact,
@@ -185,54 +177,3 @@ export type TriggerEventPayloadPair<T extends TriggerEvent = TriggerEvent> = {
     payload: TriggerPayload[K]
   }
 }[T]
-
-function convertPayloadToVariable({
-  event,
-  payload
-}: TriggerEventPayloadPair): TriggerVariable[typeof event] {
-  const firstname = payload.recipient.name[0].given[0]
-  switch (event) {
-    case TriggerEvent.USER_CREATED:
-      return {
-        firstname: payload.recipient.name[0].given[0],
-        username: payload.username,
-        password: payload.temporaryPassword,
-        completeSetupUrl: LOGIN_URL,
-        loginURL: LOGIN_URL
-      }
-
-    case TriggerEvent.USER_UPDATED:
-      return {
-        firstname,
-        oldUsername: payload.oldUsername,
-        newUsername: payload.newUsername
-      }
-
-    case TriggerEvent.USERNAME_REMINDER:
-      return {
-        firstname,
-        username: payload.username
-      }
-
-    case TriggerEvent.RESET_PASSWORD:
-      return {
-        firstname,
-        authCode: payload.code
-      }
-
-    case TriggerEvent.RESET_PASSWORD_BY_ADMIN:
-      return {
-        firstname,
-        password: payload.temporaryPassword
-      }
-
-    case TriggerEvent.TWO_FA:
-      return {
-        firstname,
-        authCode: payload.code
-      }
-
-    default:
-      throw new Error(`Unknown event: ${event}`)
-  }
-}

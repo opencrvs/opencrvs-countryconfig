@@ -2,13 +2,10 @@ import { Recipient } from '@opencrvs/toolkit/notification'
 import { TriggerEventPayloadPair } from './handler'
 
 const recipient: Recipient = {
-  name: [
-    {
-      use: 'en',
-      family: 'Doe',
-      given: ['John']
-    }
-  ],
+  name: {
+    firstname: 'John',
+    surname: 'Doe'
+  },
   email: 'john.doe@gmail.com',
   mobile: '+15551234567'
 }
@@ -57,13 +54,10 @@ export const testData: TriggerEventPayloadPair[] = [
       recipient,
       temporaryPassword: 'tempPass123',
       admin: {
-        name: [
-          {
-            use: 'en',
-            family: 'Campbell',
-            given: ['Kennedy']
-          }
-        ],
+        name: {
+          firstname: 'Kennedy',
+          surname: 'Campbell'
+        },
         id: 'admin',
         role: 'NATIONAL_SYSTEM_ADMIN'
       }

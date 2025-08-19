@@ -47,7 +47,7 @@ export const TriggerVariable = {
   [TriggerEvent.USER_CREATED]: z.object({
     firstname: z.string(),
     username: z.string(),
-    password: z.string(),
+    temporaryPassword: z.string(),
     completeSetupUrl: z.string(),
     loginURL: z.string()
   }),
@@ -62,15 +62,15 @@ export const TriggerVariable = {
   }),
   [TriggerEvent.RESET_PASSWORD]: z.object({
     firstname: z.string(),
-    authCode: z.string()
+    code: z.string()
   }),
   [TriggerEvent.RESET_PASSWORD_BY_ADMIN]: z.object({
     firstname: z.string(),
-    password: z.string()
+    temporaryPassword: z.string()
   }),
   [TriggerEvent.TWO_FA]: z.object({
     firstname: z.string(),
-    authCode: z.string()
+    code: z.string()
   })
 } as const
 

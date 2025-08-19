@@ -51,6 +51,13 @@ export async function sendSMS(
   locale: string
 ) {
   const message = await compileMessages(type, variables, locale)
+
+  if (process.env.NODE_ENV === 'development') {
+    console.log(
+      `Sending SMS to ${recipient} with body: ${JSON.stringify(message)}`
+    )
+  }
+
   const body = JSON.stringify({
     messages: [
       {
