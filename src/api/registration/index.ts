@@ -65,7 +65,7 @@ export async function onRegisterHandler(
   // Return HTTP 200 with a registration number to immediately accept the registration action.
   // This is the default implementation that automatically generates and assigns a registration number.
 
-  await sendInformantNotification(event)
+  await sendInformantNotification({ event, token })
 
   return h
     .response({ registrationNumber: generateRegistrationNumber() })

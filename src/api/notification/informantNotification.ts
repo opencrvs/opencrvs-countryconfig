@@ -10,17 +10,113 @@
  */
 
 import {
+  ActionType,
   aggregateActionDeclarations,
   EventDocument,
+  FieldUpdateValue,
   getAcceptedActions,
   getPendingAction
 } from '@opencrvs/toolkit/events'
+import { applicationConfig } from '../application/application-config'
+import { COUNTRY_LOGO_URL } from './constant'
+import { GATEWAY_URL } from '@countryconfig/constants'
+import { createClient } from '@opencrvs/toolkit/api'
+import { Event } from '@countryconfig/form/types/types'
+import { InformantType as BirthInformantType } from '@countryconfig/form/v2/birth/forms/pages/informant'
+import { InformantTemplateType } from './sms-service'
+import { InformantEventVariablePair, notify } from './handler'
 
-export async function sendInformantNotification(event: EventDocument) {
-  const declaration = aggregateActionDeclarations(getAcceptedActions(event))
+export async function sendInformantNotification({
+  event,
+  token
+}: {
+  event: EventDocument
+  token: string
+}) {
+  const url = new URL('events', GATEWAY_URL).toString()
+  const client = createClient(url, `Bearer ${token}`)
+
+  const locations = await client.locations.get.query()
+
   const pendingAction = getPendingAction(event.actions)
 
-  console.log(JSON.stringify({ declaration, pendingAction }))
+  const declaration = {
+    ...aggregateActionDeclarations(getAcceptedActions(event)),
+    ...pendingAction.declaration
+  }
 
-  return Promise.resolve(true)
+  const applicationName = applicationConfig.APPLICATION_NAME
+
+  const commonVariables = {
+    trackingId: event.trackingId,
+    crvsOffice:
+      (locations ?? []).find(({ id }) => id === pendingAction.createdAtLocation)
+        ?.name || '',
+    registrationLocation:
+      (locations ?? []).find(({ id }) => id === pendingAction.createdAtLocation)
+        ?.name || '',
+    applicationName,
+    countryLogo: COUNTRY_LOGO_URL
+  }
+  const resolveName = (name: FieldUpdateValue) => {
+    const nameObj = {
+      firstname: '',
+      middlename: '',
+      surname: ''
+    }
+    if (name && typeof name === 'object') {
+      if ('firstname' in name && typeof name.firstname === 'string') {
+        nameObj.firstname = name.firstname
+      }
+      if ('middlename' in name && typeof name.middlename === 'string') {
+        nameObj.middlename = name.middlename
+      }
+      if ('lastname' in name && typeof name.lastname === 'string') {
+        nameObj.surname = name.lastname
+      }
+    }
+    return {
+      nameObj,
+      fullName: `${nameObj.firstname} ${nameObj.middlename} ${nameObj.surname}`
+    }
+  }
+
+  if (event.type === Event.V2_BIRTH) {
+    const informantName =
+      declaration['informant.relation'] === BirthInformantType.MOTHER
+        ? declaration['mother.name']
+        : declaration['informant.relation'] === BirthInformantType.FATHER
+          ? declaration['father.name']
+          : declaration['informant.name']
+
+    const { nameObj, fullName } = resolveName(informantName)
+
+    const informantEmail = declaration['informant.email']
+    const informantMobile = declaration['informant.phoneNo']
+
+    const commonBirthVariables = {
+      ...commonVariables,
+      informantName: fullName
+    }
+
+    if (pendingAction.type === ActionType.NOTIFY) {
+      const informantVariablePair: InformantEventVariablePair = {
+        event: InformantTemplateType.birthInProgressNotification,
+        variable: commonBirthVariables
+      }
+
+      await notify({
+        ...informantVariablePair,
+        recipient: {
+          name: nameObj,
+          email:
+            typeof informantEmail === 'string' ? informantEmail : undefined,
+          mobile:
+            typeof informantMobile === 'string' ? informantMobile : undefined
+        }
+      })
+    }
+  }
+
+  return
 }

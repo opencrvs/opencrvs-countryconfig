@@ -30,7 +30,10 @@ export async function onAnyActionHandler(
 ) {
   // This catch-all event route will receive v2 events with `Content-Type: application/json`
 
-  await sendInformantNotification(request.payload.event)
+  const token = request.auth.artifacts.token as string
+
+  const { event } = request.payload
+  await sendInformantNotification({ event, token })
 
   return h.response().code(200)
 }

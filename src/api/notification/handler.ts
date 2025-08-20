@@ -13,10 +13,19 @@ import * as Hapi from '@hapi/hapi'
 import * as Joi from 'joi'
 import { COUNTRY_LOGO_URL, SENDER_EMAIL_ADDRESS } from './constant'
 import { sendEmail } from './email-service'
-import { TriggerToSMSTemplate, sendSMS } from './sms-service'
-import { getTemplate, renderTemplate } from './email-templates'
+import { InformantTemplateType, getSMSTemplate, sendSMS } from './sms-service'
+import {
+  getTemplate,
+  InformantNotificationVariables,
+  renderTemplate,
+  TriggerVariable
+} from './email-templates'
 
-import { TriggerEvent, TriggerPayload } from '@opencrvs/toolkit/notification'
+import {
+  Recipient,
+  TriggerEvent,
+  TriggerPayload
+} from '@opencrvs/toolkit/notification'
 import { LOGIN_URL } from '@countryconfig/constants'
 import { applicationConfig } from '../application/application-config'
 import { NameFieldValue } from '@opencrvs/toolkit/events'
@@ -70,7 +79,10 @@ export function makeNotificationHandler<T extends TriggerEvent>(event: T) {
         .code(400)
     }
 
-    await sendNotification(event, payloadValidation.data as TriggerPayload[T])
+    await sendUserNotification(
+      event,
+      payloadValidation.data as TriggerPayload[T]
+    )
 
     return h.response().code(200)
   }
@@ -84,7 +96,7 @@ function generateFailureLog({
 }: {
   contact: { mobile?: string; email?: string }
   name: NameFieldValue
-  event: TriggerEvent
+  event: string
   reason: string
 }) {
   contact.mobile &&= maskSms(contact.mobile)
@@ -101,28 +113,40 @@ function generateFailureLog({
   return
 }
 
-export async function sendNotification<T extends TriggerEvent>(
+export async function sendUserNotification<T extends TriggerEvent>(
   event: T,
   payload: TriggerPayload[T]
 ) {
-  const { recipient, ...rest } = payload
-  const { name, ...contact } = recipient
-
-  const variables = {
-    ...rest,
-    ...name,
+  const variable = {
+    ...convertPayloadToVariable({ event, payload } as TriggerEventPayloadPair),
     applicationName: applicationConfig.APPLICATION_NAME,
-    countryLogo: COUNTRY_LOGO_URL,
-    completeSetupUrl: LOGIN_URL,
-    loginURL: LOGIN_URL
+    countryLogo: COUNTRY_LOGO_URL
   }
+
+  const userVariablePair = {
+    event,
+    variable
+  } as UserEventVariablePair
+
+  await notify({ ...userVariablePair, recipient: payload.recipient })
+}
+
+export async function notify({
+  event,
+  variable,
+  recipient
+}: (UserEventVariablePair | InformantEventVariablePair) & {
+  recipient: Recipient
+}) {
   const userNotificationDeliveryMethod =
     applicationConfig.USER_NOTIFICATION_DELIVERY_METHOD
 
+  const { email, mobile, name } = recipient
+
   if (userNotificationDeliveryMethod === 'email') {
-    if (!payload.recipient.email) {
+    if (!email) {
       generateFailureLog({
-        contact,
+        contact: { mobile, email },
         name,
         event,
         reason:
@@ -133,11 +157,11 @@ export async function sendNotification<T extends TriggerEvent>(
 
     const template = getTemplate(event)
 
-    const emailBody = renderTemplate(template, variables)
+    const emailBody = renderTemplate(template, variable)
 
     if (process.env.NODE_ENV === 'development') {
       console.log(
-        `Sending email to ${payload.recipient.email} with subject: ${template.subject}, body: ${JSON.stringify(emailBody)}`
+        `Sending email to ${email} with subject: ${template.subject}, body: ${JSON.stringify(emailBody)}`
       )
     }
 
@@ -145,12 +169,12 @@ export async function sendNotification<T extends TriggerEvent>(
       subject: template.subject,
       html: emailBody,
       from: SENDER_EMAIL_ADDRESS,
-      to: payload.recipient.email
+      to: email
     })
   } else if (userNotificationDeliveryMethod === 'sms') {
-    if (!contact.mobile) {
+    if (!mobile) {
       generateFailureLog({
-        contact,
+        contact: { mobile, email },
         name,
         event,
         reason:
@@ -159,17 +183,33 @@ export async function sendNotification<T extends TriggerEvent>(
       return
     }
 
-    await sendSMS(TriggerToSMSTemplate[event], variables, contact.mobile, 'en')
+    await sendSMS(getSMSTemplate(event), variable, mobile, 'en')
   } else {
     generateFailureLog({
-      contact,
+      contact: { mobile, email },
       name,
       event,
-      reason: `Invalid USER_NOTIFICATION_DELIVERY_METHOD. Options are 'emai' or 'sms'. Found ${userNotificationDeliveryMethod}`
+      reason: `Invalid USER_NOTIFICATION_DELIVERY_METHOD. Options are 'email' or 'sms'. Found ${userNotificationDeliveryMethod}`
     })
     return
   }
 }
+
+export type UserEventVariablePair<T extends TriggerEvent = TriggerEvent> = {
+  [K in T]: {
+    event: K
+    variable: TriggerVariable[K]
+  }
+}[T]
+
+export type InformantEventVariablePair<
+  T extends InformantTemplateType = InformantTemplateType
+> = {
+  [K in T]: {
+    event: K
+    variable: InformantNotificationVariables[K]
+  }
+}[T]
 
 export type TriggerEventPayloadPair<T extends TriggerEvent = TriggerEvent> = {
   [K in T]: {
@@ -177,3 +217,54 @@ export type TriggerEventPayloadPair<T extends TriggerEvent = TriggerEvent> = {
     payload: TriggerPayload[K]
   }
 }[T]
+
+function convertPayloadToVariable({
+  event,
+  payload
+}: TriggerEventPayloadPair): TriggerVariable[typeof event] {
+  const firstname = payload.recipient.name.firstname
+  switch (event) {
+    case TriggerEvent.USER_CREATED:
+      return {
+        firstname,
+        username: payload.username,
+        temporaryPassword: payload.temporaryPassword,
+        completeSetupUrl: LOGIN_URL,
+        loginURL: LOGIN_URL
+      }
+
+    case TriggerEvent.USER_UPDATED:
+      return {
+        firstname,
+        oldUsername: payload.oldUsername,
+        newUsername: payload.newUsername
+      }
+
+    case TriggerEvent.USERNAME_REMINDER:
+      return {
+        firstname,
+        username: payload.username
+      }
+
+    case TriggerEvent.RESET_PASSWORD:
+      return {
+        firstname,
+        code: payload.code
+      }
+
+    case TriggerEvent.RESET_PASSWORD_BY_ADMIN:
+      return {
+        firstname,
+        temporaryPassword: payload.temporaryPassword
+      }
+
+    case TriggerEvent.TWO_FA:
+      return {
+        firstname,
+        code: payload.code
+      }
+
+    default:
+      throw new Error(`Unknown event: ${event}`)
+  }
+}
