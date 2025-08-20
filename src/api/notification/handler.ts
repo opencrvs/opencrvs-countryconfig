@@ -128,22 +128,25 @@ export async function sendUserNotification<T extends TriggerEvent>(
     variable
   } as UserEventVariablePair
 
-  await notify({ ...userVariablePair, recipient: payload.recipient })
+  await notify({
+    ...userVariablePair,
+    recipient: payload.recipient,
+    deliveryMethod: applicationConfig.USER_NOTIFICATION_DELIVERY_METHOD
+  })
 }
 
 export async function notify({
   event,
   variable,
-  recipient
+  recipient,
+  deliveryMethod
 }: (UserEventVariablePair | InformantEventVariablePair) & {
   recipient: Recipient
+  deliveryMethod: string
 }) {
-  const userNotificationDeliveryMethod =
-    applicationConfig.USER_NOTIFICATION_DELIVERY_METHOD
-
   const { email, mobile, name } = recipient
 
-  if (userNotificationDeliveryMethod === 'email') {
+  if (deliveryMethod === 'email') {
     if (!email) {
       generateFailureLog({
         contact: { mobile, email },
@@ -171,7 +174,7 @@ export async function notify({
       from: SENDER_EMAIL_ADDRESS,
       to: email
     })
-  } else if (userNotificationDeliveryMethod === 'sms') {
+  } else if (deliveryMethod === 'sms') {
     if (!mobile) {
       generateFailureLog({
         contact: { mobile, email },
@@ -189,7 +192,7 @@ export async function notify({
       contact: { mobile, email },
       name,
       event,
-      reason: `Invalid USER_NOTIFICATION_DELIVERY_METHOD. Options are 'email' or 'sms'. Found ${userNotificationDeliveryMethod}`
+      reason: `Invalid USER_NOTIFICATION_DELIVERY_METHOD. Options are 'email' or 'sms'. Found ${deliveryMethod}`
     })
     return
   }

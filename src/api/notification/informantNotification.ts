@@ -105,6 +105,10 @@ export async function sendInformantNotification({
       email: typeof informantEmail === 'string' ? informantEmail : undefined,
       mobile: typeof informantMobile === 'string' ? informantMobile : undefined
     }
+    const deliveryInfo = {
+      recipient,
+      deliveryMethod: applicationConfig.INFORMANT_NOTIFICATION_DELIVERY_METHOD
+    }
 
     const commonBirthVariables = {
       ...commonVariables,
@@ -120,7 +124,7 @@ export async function sendInformantNotification({
 
       await notify({
         ...informantVariablePair,
-        recipient
+        ...deliveryInfo
       })
     } else if (pendingAction.type === ActionType.DECLARE) {
       const informantVariablePair: InformantEventVariablePair = {
@@ -130,7 +134,7 @@ export async function sendInformantNotification({
 
       await notify({
         ...informantVariablePair,
-        recipient
+        ...deliveryInfo
       })
     } else if (pendingAction.type === ActionType.REGISTER) {
       if (!registrationNumber) {
@@ -154,7 +158,7 @@ export async function sendInformantNotification({
 
         await notify({
           ...informantVariablePair,
-          recipient
+          ...deliveryInfo
         })
       }
     } else if (pendingAction.type === ActionType.REJECT) {
@@ -165,7 +169,7 @@ export async function sendInformantNotification({
 
       await notify({
         ...informantVariablePair,
-        recipient
+        ...deliveryInfo
       })
     }
   } else if (event.type === Event.V2_DEATH) {
@@ -185,6 +189,11 @@ export async function sendInformantNotification({
       mobile: typeof informantMobile === 'string' ? informantMobile : undefined
     }
 
+    const deliveryInfo = {
+      recipient,
+      deliveryMethod: applicationConfig.INFORMANT_NOTIFICATION_DELIVERY_METHOD
+    }
+
     const commonDeathVariables = {
       ...commonVariables,
       informantName: fullName,
@@ -199,7 +208,7 @@ export async function sendInformantNotification({
 
       await notify({
         ...informantVariablePair,
-        recipient
+        ...deliveryInfo
       })
     } else if (pendingAction.type === ActionType.DECLARE) {
       const informantVariablePair: InformantEventVariablePair = {
@@ -209,7 +218,7 @@ export async function sendInformantNotification({
 
       await notify({
         ...informantVariablePair,
-        recipient
+        ...deliveryInfo
       })
     } else if (pendingAction.type === ActionType.REGISTER) {
       if (!registrationNumber) {
@@ -233,7 +242,7 @@ export async function sendInformantNotification({
 
         await notify({
           ...informantVariablePair,
-          recipient
+          ...deliveryInfo
         })
       }
     } else if (pendingAction.type === ActionType.REJECT) {
@@ -244,7 +253,7 @@ export async function sendInformantNotification({
 
       await notify({
         ...informantVariablePair,
-        recipient
+        ...deliveryInfo
       })
     }
   }
