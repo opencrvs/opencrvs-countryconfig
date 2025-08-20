@@ -615,6 +615,18 @@ export async function createServer() {
     }
   })
 
+  server.ext('onPostHandler', (request, h) => {
+    const { method, route } = request
+    if (
+      method === 'post' &&
+      /^\/events\/[^/]+\/actions\/[^/]+$/.test(route.path)
+    ) {
+      // do your hook work here (request.response holds the handler result)
+      console.log(request.path, 'was called with payload:', request.payload)
+    }
+    return h.continue
+  })
+
   async function stop() {
     await server.stop()
     server.log('info', 'server stopped')
