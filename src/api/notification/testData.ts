@@ -101,7 +101,7 @@ const AssignAction = {
   assignedTo: '68a33795caf0b9e13a86d51f'
 } satisfies Action
 
-const RequestNotificationAction = {
+const RequestBirthNotificationAction = {
   id: 'e8ef249e-dc06-4b5e-840a-2ee7edc3f826' as unknown as UUID,
   transactionId: 'c7c194bf-cd8d-48d0-824f-c3969d5aad79',
   createdByUserType: 'user',
@@ -139,7 +139,7 @@ const RequestNotificationAction = {
   type: ActionType.NOTIFY
 } satisfies Action
 
-const RequestDeclarationAction = {
+const RequestBirthDeclarationAction = {
   id: 'e8ef249e-dc06-4b5e-840a-2ee7edc3f826' as unknown as UUID,
   transactionId: 'c7c194bc-cd8d-48d0-824f-c3969d5aad79',
   createdByUserType: 'user',
@@ -177,7 +177,7 @@ const RequestDeclarationAction = {
   type: ActionType.DECLARE
 } satisfies Action
 
-const DeclarationAction = {
+const BirthDeclarationAction = {
   id: 'e8ef249e-dc06-4b5e-840a-2ee7edc3f826' as unknown as UUID,
   transactionId: 'c7c194bc-cd8d-48d0-824f-c3969d5aad79',
   createdByUserType: 'user',
@@ -244,12 +244,168 @@ const RequestRejectionAction = {
   type: ActionType.REJECT
 } satisfies Action
 
+const RequestDeathNotificationAction = {
+  id: '9ff9189c-f736-407e-916f-1342b3d2beac' as unknown as UUID,
+  transactionId: 'cc240165-b431-41ae-8a31-bae46f40b088',
+  createdByUserType: 'user',
+  createdAt: '2025-08-20T09:43:55.734Z',
+  createdBy: '68a33796caf0b9e13a86d52f',
+  createdByRole: 'LOCAL_REGISTRAR',
+  createdAtLocation: '9e069dda-0d83-4f67-a4f2-9adbf5658e2e' as unknown as UUID,
+  declaration: {
+    'spouse.name': {
+      firstname: 'Toki',
+      surname: 'Kozuki',
+      middlename: ''
+    },
+    'deceased.name': {
+      firstname: 'Oden',
+      surname: 'Kozuki',
+      middlename: ''
+    },
+    'deceased.idType': 'NONE',
+    'informant.email': 'toki@kozuki.com',
+    'informant.phoneNo': '0734231245',
+
+    'deceased.address': {
+      country: 'FAR',
+      addressType: 'DOMESTIC',
+      province: '05cbe3a1-9020-47bd-b558-807607c2f119',
+      district: 'afaead2b-7ef5-4adb-b4bf-3d2b8437c284',
+      urbanOrRural: 'URBAN'
+    },
+    'informant.relation': 'SPOUSE'
+  },
+  annotation: {
+    'review.comment': 'Kaido killed him',
+    'review.signature': {
+      path: '/ocrvs/41db20ff-4084-4e09-8343-f8c962261e32/370dff69-5478-4424-bf74-57fff2eaf865.png',
+      originalFilename: 'signature-review____signature-1755683031251.png',
+      type: 'image/png'
+    }
+  },
+  status: ActionStatus.Requested,
+  type: ActionType.NOTIFY
+} satisfies Action
+
+const RequestDeathDeclarationAction = {
+  id: '9ff9189c-f736-407e-916f-1342b3d2beac' as unknown as UUID,
+  transactionId: 'cc240165-b431-41ae-8a31-bae46f40b088',
+  createdByUserType: 'user',
+  createdAt: '2025-08-20T09:43:55.734Z',
+  createdBy: '68a33796caf0b9e13a86d52f',
+  createdByRole: 'LOCAL_REGISTRAR',
+  createdAtLocation: '9e069dda-0d83-4f67-a4f2-9adbf5658e2e' as unknown as UUID,
+  declaration: {
+    'spouse.age': '41',
+    'spouse.name': {
+      firstname: 'Toki',
+      surname: 'Kozuki',
+      middlename: ''
+    },
+    'deceased.age': '31',
+    'deceased.name': {
+      firstname: 'Oden',
+      surname: 'Kozuki',
+      middlename: ''
+    },
+    'spouse.idType': 'NONE',
+    'deceased.gender': 'male',
+    'deceased.idType': 'NONE',
+    'informant.email': 'toki@kozuki.com',
+    'informant.phoneNo': '0734231245',
+
+    'deceased.address': {
+      country: 'FAR',
+      addressType: 'DOMESTIC',
+      province: '05cbe3a1-9020-47bd-b558-807607c2f119',
+      district: 'afaead2b-7ef5-4adb-b4bf-3d2b8437c284',
+      urbanOrRural: 'URBAN'
+    },
+    'eventDetails.date': '2025-08-19',
+    'spouse.dobUnknown': true,
+    'informant.relation': 'SPOUSE',
+    'spouse.nationality': 'FAR',
+    'deceased.dobUnknown': true,
+    'deceased.nationality': 'FAR',
+    'spouse.addressSameAs': 'YES',
+    'eventDetails.placeOfDeath': 'DECEASED_USUAL_RESIDENCE',
+    'eventDetails.causeOfDeathEstablished': false
+  },
+  annotation: {
+    'review.comment': 'Kaido killed him',
+    'review.signature': {
+      path: '/ocrvs/41db20ff-4084-4e09-8343-f8c962261e32/370dff69-5478-4424-bf74-57fff2eaf865.png',
+      originalFilename: 'signature-review____signature-1755683031251.png',
+      type: 'image/png'
+    }
+  },
+  status: ActionStatus.Requested,
+  type: ActionType.DECLARE
+} satisfies Action
+
+const DeathDeclarationAction = {
+  id: '9ff9189c-f736-407e-916f-1342b3d2beac' as unknown as UUID,
+  transactionId: 'cc240165-b431-41ae-8a31-bae46f40b088',
+  createdByUserType: 'user',
+  createdAt: '2025-08-20T09:43:55.734Z',
+  createdBy: '68a33796caf0b9e13a86d52f',
+  createdByRole: 'LOCAL_REGISTRAR',
+  createdAtLocation: '9e069dda-0d83-4f67-a4f2-9adbf5658e2e' as unknown as UUID,
+  declaration: {
+    'spouse.age': '41',
+    'spouse.name': {
+      firstname: 'Toki',
+      surname: 'Kozuki',
+      middlename: ''
+    },
+    'deceased.age': '31',
+    'deceased.name': {
+      firstname: 'Oden',
+      surname: 'Kozuki',
+      middlename: ''
+    },
+    'spouse.idType': 'NONE',
+    'deceased.gender': 'male',
+    'deceased.idType': 'NONE',
+    'informant.email': 'toki@kozuki.com',
+    'informant.phoneNo': '0734231245',
+
+    'deceased.address': {
+      country: 'FAR',
+      addressType: 'DOMESTIC',
+      province: '05cbe3a1-9020-47bd-b558-807607c2f119',
+      district: 'afaead2b-7ef5-4adb-b4bf-3d2b8437c284',
+      urbanOrRural: 'URBAN'
+    },
+    'eventDetails.date': '2025-08-19',
+    'spouse.dobUnknown': true,
+    'informant.relation': 'SPOUSE',
+    'spouse.nationality': 'FAR',
+    'deceased.dobUnknown': true,
+    'deceased.nationality': 'FAR',
+    'spouse.addressSameAs': 'YES',
+    'eventDetails.placeOfDeath': 'DECEASED_USUAL_RESIDENCE',
+    'eventDetails.causeOfDeathEstablished': false
+  },
+  annotation: {
+    'review.comment': 'Kaido killed him',
+    'review.signature': {
+      path: '/ocrvs/41db20ff-4084-4e09-8343-f8c962261e32/370dff69-5478-4424-bf74-57fff2eaf865.png',
+      originalFilename: 'signature-review____signature-1755683031251.png',
+      type: 'image/png'
+    }
+  },
+  status: ActionStatus.Accepted,
+  type: ActionType.DECLARE
+} satisfies Action
+
 const birthNotificationEvent: EventDocument = {
   id: '43b8c015-2caf-469a-8900-a2209128ad44' as unknown as UUID,
   type: 'v2.birth',
   createdAt: '2025-08-20T03:24:04.815Z',
   updatedAt: '2025-08-20T03:24:04.815Z',
-  actions: [CreateAction, AssignAction, RequestNotificationAction],
+  actions: [CreateAction, AssignAction, RequestBirthNotificationAction],
   trackingId: 'PRZIB7'
 }
 
@@ -258,7 +414,7 @@ const birthDeclarationEvent: EventDocument = {
   type: 'v2.birth',
   createdAt: '2025-08-20T03:24:04.815Z',
   updatedAt: '2025-08-20T03:24:04.815Z',
-  actions: [CreateAction, AssignAction, RequestDeclarationAction],
+  actions: [CreateAction, AssignAction, RequestBirthDeclarationAction],
   trackingId: 'PRZIB7'
 }
 
@@ -270,7 +426,7 @@ const birthRegistrationEvent: EventDocument = {
   actions: [
     CreateAction,
     AssignAction,
-    DeclarationAction,
+    BirthDeclarationAction,
     RequestRegistrationAction
   ],
   trackingId: 'PRZIB7'
@@ -284,7 +440,53 @@ const birthRejectionEvent: EventDocument = {
   actions: [
     CreateAction,
     AssignAction,
-    DeclarationAction,
+    BirthDeclarationAction,
+    RequestRejectionAction
+  ],
+  trackingId: 'PRZIB7'
+}
+
+const deathNotificationEvent: EventDocument = {
+  id: '43b8c015-2caf-469a-8900-a2209128ad44' as unknown as UUID,
+  type: Event.V2_DEATH,
+  createdAt: '2025-08-20T03:24:04.815Z',
+  updatedAt: '2025-08-20T03:24:04.815Z',
+  actions: [CreateAction, AssignAction, RequestDeathNotificationAction],
+  trackingId: 'PRZIB7'
+}
+
+const deathDeclarationEvent: EventDocument = {
+  id: '43b8c015-2caf-469a-8900-a2209128ad44' as unknown as UUID,
+  type: Event.V2_DEATH,
+  createdAt: '2025-08-20T03:24:04.815Z',
+  updatedAt: '2025-08-20T03:24:04.815Z',
+  actions: [CreateAction, AssignAction, RequestDeathDeclarationAction],
+  trackingId: 'PRZIB7'
+}
+
+const deathRegistrationEvent: EventDocument = {
+  id: '43b8c015-2caf-469a-8900-a2209128ad44' as unknown as UUID,
+  type: Event.V2_DEATH,
+  createdAt: '2025-08-20T03:24:04.815Z',
+  updatedAt: '2025-08-20T03:24:04.815Z',
+  actions: [
+    CreateAction,
+    AssignAction,
+    DeathDeclarationAction,
+    RequestRegistrationAction
+  ],
+  trackingId: 'PRZIB7'
+}
+
+const deathRejectionEvent: EventDocument = {
+  id: '43b8c015-2caf-469a-8900-a2209128ad44' as unknown as UUID,
+  type: Event.V2_DEATH,
+  createdAt: '2025-08-20T03:24:04.815Z',
+  updatedAt: '2025-08-20T03:24:04.815Z',
+  actions: [
+    CreateAction,
+    AssignAction,
+    DeathDeclarationAction,
     RequestRejectionAction
   ],
   trackingId: 'PRZIB7'
@@ -314,5 +516,25 @@ export const informantNotificationTestData: {
     eventType: Event.V2_BIRTH,
     actionType: ActionType.REJECT,
     eventDocument: birthRejectionEvent
+  },
+  {
+    eventType: Event.V2_DEATH,
+    actionType: ActionType.NOTIFY,
+    eventDocument: deathNotificationEvent
+  },
+  {
+    eventType: Event.V2_DEATH,
+    actionType: ActionType.DECLARE,
+    eventDocument: deathDeclarationEvent
+  },
+  {
+    eventType: Event.V2_DEATH,
+    actionType: ActionType.REGISTER,
+    eventDocument: deathRegistrationEvent
+  },
+  {
+    eventType: Event.V2_DEATH,
+    actionType: ActionType.REJECT,
+    eventDocument: deathRejectionEvent
   }
 ]
