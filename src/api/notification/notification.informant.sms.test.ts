@@ -31,8 +31,31 @@ vi.mock('node-fetch', () => {
   }
 })
 
+vi.mock('@opencrvs/toolkit/api', () => ({
+  createClient: vi.fn(() => ({
+    locations: {
+      get: {
+        query: vi.fn().mockResolvedValue([
+          {
+            id: '9e069dda-0d83-4f67-a4f2-9adbf5658e2e',
+            name: 'Windmill village registrar office'
+          }
+        ])
+      }
+    }
+  }))
+}))
+
+vi.mock('nanoid', () => {
+  return {
+    customAlphabet: vi.fn(() => {
+      return vi.fn(() => 'P4JPMNEW3ZM3')
+    })
+  }
+})
+
 import fetch from 'node-fetch'
-import { userNotificationTestData } from './testData'
+import { informantNotificationTestData } from './testData'
 import { createServer } from '../../index'
 
 describe('User notification - sms', () => {
@@ -43,16 +66,20 @@ describe('User notification - sms', () => {
     server = await createServer()
   })
 
-  userNotificationTestData.forEach(({ event, payload }) =>
-    it(event, async () => {
-      await server.server
-        .inject({
+  informantNotificationTestData.forEach(
+    ({ eventType, actionType, eventDocument }) =>
+      it(`${eventType} - ${actionType}`, async () => {
+        await server.server.inject({
           method: 'POST',
-          url: `/triggers/user/${event}`,
-          payload
+          url: `/trigger/events/${eventType}/actions/${actionType}`,
+          payload: { event: eventDocument },
+          auth: {
+            strategy: 'jwt',
+            credentials: {},
+            artifacts: { token: 'mock-token' }
+          }
         })
-        .catch(() => {})
-      expect((fetch as any).mock.calls[1][1].body).toMatchSnapshot()
-    })
+        expect((fetch as any).mock.calls[1][1].body).toMatchSnapshot()
+      })
   )
 })

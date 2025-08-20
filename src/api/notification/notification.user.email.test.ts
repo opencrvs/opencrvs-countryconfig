@@ -25,7 +25,7 @@ let nodemailer: typeof import('nodemailer')
 
 import { createServer } from '../../index'
 
-import { testData } from './testData'
+import { userNotificationTestData } from './testData'
 let sendMailMock: ReturnType<typeof vi.fn>
 
 describe('User notification - Email', () => {
@@ -41,7 +41,7 @@ describe('User notification - Email', () => {
     server = await createServer()
   })
 
-  testData.forEach(({ event, payload }) =>
+  userNotificationTestData.forEach(({ event, payload }) =>
     it(event, async () => {
       await server.server.inject({
         method: 'POST',

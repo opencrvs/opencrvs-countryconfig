@@ -11,17 +11,18 @@
 import * as Hapi from '@hapi/hapi'
 import { generateRegistrationNumber } from './registrationNumber'
 import { createClient } from '@opencrvs/toolkit/api'
-import { ActionInput } from '@opencrvs/toolkit/events'
+import {
+  ActionInput,
+  EventDocument,
+  getPendingAction
+} from '@opencrvs/toolkit/events'
 import { GATEWAY_URL } from '@countryconfig/constants'
 import { v4 as uuidv4 } from 'uuid'
+import { sendInformantNotification } from '../notification/informantNotification'
 
-interface ActionConfirmationRequest extends Hapi.Request {
+export interface ActionConfirmationRequest extends Hapi.Request {
   payload: {
-    actionId: string
-    event: {
-      id: string
-    }
-    action: ActionInput
+    event: EventDocument
   }
 }
 
@@ -51,22 +52,24 @@ interface ActionConfirmationRequest extends Hapi.Request {
  * @param {Hapi.ResponseToolkit} h - The response toolkit.
  * @returns {Hapi.Response} The response object. Should return HTTP 200, 202 or 400. With HTTP 200, the payload should contain the generated registration number.
  */
-export function onRegisterHandler(
+export async function onRegisterHandler(
   request: ActionConfirmationRequest,
   h: Hapi.ResponseToolkit
 ) {
   const token = request.auth.artifacts.token as string
-  const actionId = request.payload.actionId
-  const eventId = request.payload.event.id
-  const action = request.payload.action
+  const { event } = request.payload
+  const eventId = event.id
+  const action = getPendingAction(event.actions)
 
   // OPTION 1: Immediate acceptance (HTTP 200)
   // Return HTTP 200 with a registration number to immediately accept the registration action.
   // This is the default implementation that automatically generates and assigns a registration number.
 
-  return h
-    .response({ registrationNumber: generateRegistrationNumber() })
-    .code(200)
+  const registrationNumber = generateRegistrationNumber()
+
+  await sendInformantNotification({ event, token, registrationNumber })
+
+  return h.response({ registrationNumber }).code(200)
 
   // OPTION 2: Immediate rejection (HTTP 400)
   // To reject the registration immediately, uncomment the following:

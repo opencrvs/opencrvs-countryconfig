@@ -651,7 +651,7 @@ export async function createServer() {
 
   server.route({
     method: 'POST',
-    path: '/events/{event}/actions/{action}',
+    path: '/trigger/events/{event}/actions/{action}',
     handler: onAnyActionHandler,
     options: {
       tags: ['api', 'events'],
@@ -661,7 +661,7 @@ export async function createServer() {
 
   server.route({
     method: 'POST',
-    path: '/events/{event}/actions/sent-notification',
+    path: '/trigger/events/{event}/actions/sent-notification',
     handler: mosipRegistrationForReviewHandler({
       url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
     }),
@@ -673,7 +673,7 @@ export async function createServer() {
 
   server.route({
     method: 'POST',
-    path: '/events/{event}/actions/sent-notification-for-review',
+    path: '/trigger/events/{event}/actions/sent-notification-for-review',
     handler: mosipRegistrationForReviewHandler({
       url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
     }),
@@ -686,7 +686,7 @@ export async function createServer() {
 
   server.route({
     method: 'POST',
-    path: '/events/{event}/actions/sent-for-approval',
+    path: '/trigger/events/{event}/actions/sent-for-approval',
     handler: mosipRegistrationForApprovalHandler({
       url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
     }),
@@ -698,7 +698,7 @@ export async function createServer() {
 
   server.route({
     method: 'POST',
-    path: `/events/${Event.TENNIS_CLUB_MEMBERSHIP}/actions/${ActionType.REGISTER}`,
+    path: `/trigger/events/${Event.TENNIS_CLUB_MEMBERSHIP}/actions/${ActionType.REGISTER}`,
     handler: onRegisterHandler,
     options: {
       tags: ['api', 'events'],
@@ -708,7 +708,7 @@ export async function createServer() {
 
   server.route({
     method: 'POST',
-    path: `/events/${Event.V2_BIRTH}/actions/${ActionType.REGISTER}`,
+    path: `/trigger/events/${Event.V2_BIRTH}/actions/${ActionType.REGISTER}`,
     handler: onRegisterHandler,
     options: {
       tags: ['api', 'events'],
@@ -718,7 +718,7 @@ export async function createServer() {
 
   server.route({
     method: 'POST',
-    path: `/events/${Event.V2_DEATH}/actions/${ActionType.REGISTER}`,
+    path: `/trigger/events/${Event.V2_DEATH}/actions/${ActionType.REGISTER}`,
     handler: onRegisterHandler,
     options: {
       tags: ['api', 'events'],
