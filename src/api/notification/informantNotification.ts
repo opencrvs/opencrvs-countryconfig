@@ -24,14 +24,20 @@ import { createClient } from '@opencrvs/toolkit/api'
 import { Event } from '@countryconfig/form/types/types'
 import { InformantType as BirthInformantType } from '@countryconfig/form/v2/birth/forms/pages/informant'
 import { InformantTemplateType } from './sms-service'
-import { InformantEventVariablePair, notify } from './handler'
+import {
+  generateFailureLog,
+  InformantEventVariablePair,
+  notify
+} from './handler'
 
 export async function sendInformantNotification({
   event,
-  token
+  token,
+  registrationNumber
 }: {
   event: EventDocument
   token: string
+  registrationNumber?: string
 }) {
   const url = new URL('events', GATEWAY_URL).toString()
   const client = createClient(url, `Bearer ${token}`)
@@ -52,9 +58,7 @@ export async function sendInformantNotification({
     crvsOffice:
       (locations ?? []).find(({ id }) => id === pendingAction.createdAtLocation)
         ?.name || '',
-    registrationLocation:
-      (locations ?? []).find(({ id }) => id === pendingAction.createdAtLocation)
-        ?.name || '',
+    registrationLocation: '',
     applicationName,
     countryLogo: COUNTRY_LOGO_URL
   }
@@ -77,7 +81,8 @@ export async function sendInformantNotification({
     }
     return {
       nameObj,
-      fullName: `${nameObj.firstname} ${nameObj.middlename} ${nameObj.surname}`
+      fullName:
+        `${nameObj.firstname} ${nameObj.middlename} ${nameObj.surname}`.trim()
     }
   }
 
@@ -94,9 +99,16 @@ export async function sendInformantNotification({
     const informantEmail = declaration['informant.email']
     const informantMobile = declaration['informant.phoneNo']
 
+    const recipient = {
+      name: nameObj,
+      email: typeof informantEmail === 'string' ? informantEmail : undefined,
+      mobile: typeof informantMobile === 'string' ? informantMobile : undefined
+    }
+
     const commonBirthVariables = {
       ...commonVariables,
-      informantName: fullName
+      informantName: fullName,
+      name: resolveName(declaration['child.name']).fullName
     }
 
     if (pendingAction.type === ActionType.NOTIFY) {
@@ -107,13 +119,52 @@ export async function sendInformantNotification({
 
       await notify({
         ...informantVariablePair,
-        recipient: {
-          name: nameObj,
-          email:
-            typeof informantEmail === 'string' ? informantEmail : undefined,
-          mobile:
-            typeof informantMobile === 'string' ? informantMobile : undefined
+        recipient
+      })
+    } else if (pendingAction.type === ActionType.DECLARE) {
+      const informantVariablePair: InformantEventVariablePair = {
+        event: InformantTemplateType.birthDeclarationNotification,
+        variable: commonBirthVariables
+      }
+
+      await notify({
+        ...informantVariablePair,
+        recipient
+      })
+    } else if (pendingAction.type === ActionType.REGISTER) {
+      if (!registrationNumber) {
+        generateFailureLog({
+          contact: {
+            mobile: recipient.mobile,
+            email: recipient.email
+          },
+          name: recipient.name,
+          event: InformantTemplateType.birthRegistrationNotification,
+          reason: 'registration number being missing'
+        })
+      } else {
+        const informantVariablePair: InformantEventVariablePair = {
+          event: InformantTemplateType.birthRegistrationNotification,
+          variable: {
+            ...commonBirthVariables,
+            registrationNumber
+          }
         }
+
+        await notify({
+          ...informantVariablePair,
+          recipient
+        })
+      }
+    } else if (pendingAction.type === ActionType.REJECT) {
+      const informantVariablePair: InformantEventVariablePair = {
+        event: InformantTemplateType.birthRejectionNotification,
+        variable: commonBirthVariables
+      }
+
+      await notify({
+        ...informantVariablePair,
+        recipient
       })
     }
   }

@@ -124,7 +124,9 @@ export const InformantNotificationVariables = {
   [InformantTemplateType.birthInProgressNotification]:
     DeclarationCommonVariables,
   [InformantTemplateType.birthDeclarationNotification]:
-    DeclarationCommonVariables,
+    DeclarationCommonVariables.extend({
+      name: z.string()
+    }),
   [InformantTemplateType.birthRegistrationNotification]:
     DeclarationCommonVariables.extend({
       name: z.string(),

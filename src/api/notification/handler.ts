@@ -88,7 +88,7 @@ export function makeNotificationHandler<T extends TriggerEvent>(event: T) {
   }
 }
 
-function generateFailureLog({
+export function generateFailureLog({
   contact,
   name,
   event,

@@ -65,11 +65,11 @@ export async function onRegisterHandler(
   // Return HTTP 200 with a registration number to immediately accept the registration action.
   // This is the default implementation that automatically generates and assigns a registration number.
 
-  await sendInformantNotification({ event, token })
+  const registrationNumber = generateRegistrationNumber()
 
-  return h
-    .response({ registrationNumber: generateRegistrationNumber() })
-    .code(200)
+  await sendInformantNotification({ event, token, registrationNumber })
+
+  return h.response({ registrationNumber }).code(200)
 
   // OPTION 2: Immediate rejection (HTTP 400)
   // To reject the registration immediately, uncomment the following:

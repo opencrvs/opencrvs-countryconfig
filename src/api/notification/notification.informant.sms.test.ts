@@ -1,10 +1,31 @@
 import { vi, describe, it, expect, beforeEach } from 'vitest'
 
+vi.mock(import('./constant'), async (importOriginal) => {
+  const actual = await importOriginal()
+  return {
+    ...actual,
+    INFOBIP_API_KEY: 'mock_api_key',
+    INFOBIP_GATEWAY_ENDPOINT: 'https://gateway.infobip.com',
+    INFOBIP_SENDER_ID: 'mock_sender'
+  }
+})
+
+vi.mock(import('../application/application-config'), async (importOriginal) => {
+  const actual = await importOriginal()
+  return {
+    applicationConfig: {
+      ...actual.applicationConfig,
+      USER_NOTIFICATION_DELIVERY_METHOD: 'sms'
+    }
+  }
+})
+
 vi.mock('node-fetch', () => {
   return {
     default: vi.fn().mockResolvedValue({
       ok: true,
       status: 200,
+      json: async () => ({}),
       text: async () => 'mock-public-key'
     })
   }
@@ -32,34 +53,16 @@ vi.mock('nanoid', () => {
     })
   }
 })
-vi.mock('nodemailer', () => {
-  const sendMailMock = vi.fn().mockResolvedValue({ messageId: 'mocked-id' })
 
-  return {
-    createTransport: vi.fn(() => ({
-      sendMail: sendMailMock
-    })),
-    __sendMailMock: sendMailMock
-  }
-})
-
-let nodemailer: typeof import('nodemailer')
-
+import fetch from 'node-fetch'
+import { informantNotificationTestData } from './testData'
 import { createServer } from '../../index'
 
-import { informantNotificationTestData } from './testData'
-let sendMailMock: ReturnType<typeof vi.fn>
-
-describe('Informant notification - Email', () => {
+describe('User notification - sms', () => {
   let server: any
 
   beforeEach(async () => {
-    vi.resetModules()
-    nodemailer = await import('nodemailer')
-    sendMailMock = (nodemailer as any).__sendMailMock as ReturnType<
-      typeof vi.fn
-    >
-    sendMailMock.mockClear()
+    ;(fetch as any).mockClear()
     server = await createServer()
   })
 
@@ -76,9 +79,7 @@ describe('Informant notification - Email', () => {
             artifacts: { token: 'mock-token' }
           }
         })
-
-        expect(sendMailMock).toHaveBeenCalledTimes(1)
-        expect(sendMailMock.mock.calls[0][0]).toMatchSnapshot()
+        expect((fetch as any).mock.calls[1][1].body).toMatchSnapshot()
       })
   )
 })
