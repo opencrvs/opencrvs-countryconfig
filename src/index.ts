@@ -11,6 +11,7 @@
 require('app-module-path').addPath(require('path').join(__dirname))
 require('dotenv').config()
 
+import split2 from 'split2'
 import fetch from 'node-fetch'
 import path from 'path'
 import Handlebars from 'handlebars'
@@ -552,6 +553,26 @@ export async function createServer() {
     options: {
       tags: ['api'],
       description: 'Checks for enabled notification for record'
+    }
+  })
+
+  server.route({
+    method: 'POST',
+    path: '/reindex',
+    options: {
+      payload: {
+        output: 'stream',
+        parse: false
+      }
+    },
+    handler: async (req, h) => {
+      const stream = req.raw.req.pipe(split2())
+
+      for await (const chunk of stream) {
+        console.log(JSON.parse(chunk.toString()))
+      }
+
+      return h.response().code(200)
     }
   })
 
