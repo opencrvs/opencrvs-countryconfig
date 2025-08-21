@@ -1273,13 +1273,6 @@
   resolved "https://registry.yarnpkg.com/@types/semver/-/semver-7.5.0.tgz#591c1ce3a702c45ee15f47a42ade72c2fd78978a"
   integrity sha512-G8hZ6XJiHnuhQKR7ZmysCeJWE08o8T0AXtk5darsCaTVsYZhhgUrq53jizaR2FvsoeCwJhlmwTjkXBY5Pn/ZHw==
 
-"@types/split2@^4.2.3":
-  version "4.2.3"
-  resolved "https://registry.yarnpkg.com/@types/split2/-/split2-4.2.3.tgz#ddd9b6b8518df6e0a7825851fcd98de12e415f0b"
-  integrity sha512-59OXIlfUsi2k++H6CHgUQKEb2HKRokUA39HY1i1dS8/AIcqVjtAAFdf8u+HxTWK/4FUHMJQlKSZ4I6irCBJ1Zw==
-  dependencies:
-    "@types/node" "*"
-
 "@types/stream-chain@*":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@types/stream-chain/-/stream-chain-2.1.0.tgz#54f1496eb653482c44b5015abe2e6ae0eae594a1"
