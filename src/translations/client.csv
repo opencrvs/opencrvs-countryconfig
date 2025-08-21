@@ -2690,7 +2690,7 @@ v2.event.birth.title,This is the title of the summary,{child.name.firstname} {ch
 v2.event.birth.workqueue.all.name.label,Label for name in all workqueue,{child.name.surname} {child.name.firstname},{child.name.surname} {child.name.firstname}
 v2.event.death.action.Read.label,This is shown as the action name anywhere the user can trigger the action from,Read,Lire
 v2.event.death.action.certificate.form.cancel,This is the label for the verification cancellation button,Identity does not match,L'identité ne correspond pas
-v2.event.death.action.certificate.form.cancel.confirmation.body,This is the body for the verification cancellation modal,Please be aware that if you proceed,Veuillez noter que si vous continuez
+v2.event.death.action.certificate.form.cancel.confirmation.body,This is the body for the verification cancellation modal,"Please be aware that if you proceed, you will be responsible for issuing a certificate without the necessary proof of ID from the collector","Veuillez noter que si vous continuez, vous serez responsable de la délivrance d'un certificat sans la preuve d'identité nécessaire du collecteur."
 v2.event.death.action.certificate.form.cancel.confirmation.title,This is the title for the verification cancellation modal,Print without proof of ID?,Imprimer sans preuve d'identité ?
 v2.event.death.action.certificate.form.label,This is what this form is referred as in the system,Death certificate collector,Collecteur de certificat de décès
 v2.event.death.action.certificate.form.section.collectPayment.data.label,Title for the data section,Payment details,Détails du paiement
@@ -2714,7 +2714,7 @@ v2.event.death.action.correction.documents.supportingDocs.other.label,Label for 
 v2.event.death.action.correction.fees.amount.label,Label for the amount field,Fee total,Frais totaux
 v2.event.death.action.correction.fees.amount.prefix,Prefix for the amount field,$,€
 v2.event.death.action.correction.form.cancel,This is the label for the verification cancellation button,Identity does not match,L'identité ne correspond pas
-v2.event.death.action.correction.form.cancel.confirmation.body,This is the body for the verification cancellation modal,Please be aware that if you proceed,Veuillez noter que si vous continuez
+v2.event.death.action.correction.form.cancel.confirmation.body,This is the body for the verification cancellation modal,"Please be aware that if you proceed, you will be responsible for making a change to this record without the necessary proof of identification","Veuillez noter que si vous continuez, vous serez responsable d'apporter une modification à cet enregistrement sans la preuve d'identification nécessaire."
 v2.event.death.action.correction.form.cancel.confirmation.title,This is the title for the verification cancellation modal,Correct without proof of ID?,Correction sans preuve d'identité ?
 v2.event.death.action.correction.form.label,This is the label for the death correction form,Correct record,Corriger le dossier
 v2.event.death.action.correction.form.requester.type.daughter,This is the label for the correction requester field,Daughter,Fille
