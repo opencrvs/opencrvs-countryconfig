@@ -11,8 +11,7 @@
 require('app-module-path').addPath(require('path').join(__dirname))
 require('dotenv').config()
 
-import split2 from 'split2'
-import fetch from 'node-fetch'
+import StreamArray from 'stream-json/streamers/StreamArray'
 import path from 'path'
 import Handlebars from 'handlebars'
 import * as Hapi from '@hapi/hapi'
@@ -20,6 +19,7 @@ import * as Pino from 'hapi-pino'
 import * as JWT from 'hapi-auth-jwt2'
 import * as inert from '@hapi/inert'
 import * as Sentry from 'hapi-sentry'
+import fetch from 'node-fetch'
 import {
   CLIENT_APP_URL,
   DOMAIN,
@@ -566,10 +566,11 @@ export async function createServer() {
       }
     },
     handler: async (req, h) => {
-      const stream = req.raw.req.pipe(split2())
+      const stream = req.raw.req.pipe(StreamArray.withParser())
 
-      for await (const chunk of stream) {
-        console.log(JSON.parse(chunk.toString()))
+      for await (const { value } of stream) {
+        // eslint-disable-next-line no-console
+        console.log(value)
       }
 
       return h.response().code(200)
