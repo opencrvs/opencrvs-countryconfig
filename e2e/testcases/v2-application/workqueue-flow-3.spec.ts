@@ -8,7 +8,7 @@ import {
   goToSection,
   loginToV2
 } from '../../helpers'
-import { CREDENTIALS, SAFE_INPUT_CHANGE_TIMEOUT_MS } from '../../constants'
+import { CREDENTIALS } from '../../constants'
 import { ensureOutboxIsEmpty, selectAction } from '../../v2-utils'
 import {
   assertRecordInWorkqueue,
@@ -316,12 +316,6 @@ test.describe.serial('3. Workqueue flow - 3', () => {
       await continueForm(page, 'Back to review')
 
       await page.locator('#review____comment').fill(faker.lorem.sentence())
-      await page.getByRole('button', { name: 'Sign' }).click()
-      await drawSignature(page, 'review____signature_canvas_element', false)
-      await page
-        .locator('#review____signature_modal')
-        .getByRole('button', { name: 'Apply' })
-        .click()
 
       await expect(page.getByRole('dialog')).not.toBeVisible()
 
