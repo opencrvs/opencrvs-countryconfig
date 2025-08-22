@@ -315,8 +315,6 @@ test.describe.serial('3. Workqueue flow - 3', () => {
     test('3.3.6 Send for review', async () => {
       await continueForm(page, 'Back to review')
 
-      await page.locator('#review____comment').fill(faker.lorem.sentence())
-
       await expect(page.getByRole('dialog')).not.toBeVisible()
 
       await page.getByRole('button', { name: 'Send for review' }).click()
