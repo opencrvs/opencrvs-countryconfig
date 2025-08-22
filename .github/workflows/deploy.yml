@@ -1,19 +1,48 @@
 name: Deploy (development)
 run-name: "Deploy to ${{ inputs.environment }} with (core: ${{ inputs.core-image-tag }}, country config: ${{ inputs.countryconfig-image-tag }}, reset: ${{ inputs.reset }})"
 on:
+  workflow_call:
+    inputs:
+      environment:
+        type: string
+        description: Environment to deploy to
+        required: true
+      core-image-tag:
+        type: string
+        description: Core DockerHub image tag
+        required: true
+        default: 'v1.4.1'
+      countryconfig-image-tag:
+        type: string
+        description: Your Country Config DockerHub image tag
+        required: true
+      reset:
+        type: string
+        description: Reset the environment
+        default: 'false'
+        required: false
+      debug:
+        type: boolean
+        description: Open SSH session to the runner after deployment
+        default: false
+        required: false
   workflow_dispatch:
     inputs:
       environment:
         type: choice
         description: Environment to deploy to
         required: true
-        default: 'staging'
+        default: 'development'
         options:
-          - staging
-          - qa
           - development
+          - qa
+          - e2e
+          - v17
+          - staging
+          - v19-alpha-staging
+          - v19-alpha-prod
       core-image-tag:
-        description: Core DockerHub image tag
+        description: Core image tag
         required: true
         default: 'v1.8.1'
       countryconfig-image-tag:
@@ -77,23 +106,19 @@ jobs:
           sed -i -e '$a\' ./infrastructure/known-hosts
           cat ./infrastructure/known-hosts >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
-
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.SSH_KEY }}
           known_hosts: ${{ env.KNOWN_HOSTS }}
-
       - name: Unset KNOWN_HOSTS variable
         run: |
           echo "KNOWN_HOSTS=" >> $GITHUB_ENV
-
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
-
       - name: Wait for images to be available
         run: |
           while true; do
@@ -108,7 +133,6 @@ jobs:
             fi
             sleep 10
           done
-
       - name: Export all secrets and environment variables
         working-directory: ${{ github.event.repository.name }}
         run: |
@@ -147,12 +171,10 @@ jobs:
               ) |
               .[]' <<< "$VARS_JSON_WITH_NEWLINES"
           )
-
       - name: Use Node.js from .nvmrc
         uses: actions/setup-node@v4
         with:
           node-version-file: ${{ github.event.repository.name }}/.nvmrc
-
       - name: Deploy to ${{ inputs.environment }}
         id: deploy
         working-directory: ${{ github.event.repository.name }}
@@ -167,7 +189,6 @@ jobs:
           --version=${{ inputs.core-image-tag }} \
           --country_config_version=${{ env.image_tag }} \
           --replicas=${{ vars.REPLICAS }}
-
   reset:
     needs: deploy
     if: ${{ inputs.reset == 'true' && needs.deploy.outputs.outcome == 'success' }}
@@ -175,7 +196,6 @@ jobs:
     with:
       environment: ${{ inputs.environment }}
     secrets: inherit
-
   seed-data:
     needs: reset
     if: ${{ inputs.reset == 'true' && needs.reset.outputs.outcome == 'success' }}
