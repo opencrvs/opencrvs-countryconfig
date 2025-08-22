@@ -12,6 +12,8 @@ import { tennisClubMembershipEvent } from '@countryconfig/form/tennis-club-membe
 import { birthEvent } from '@countryconfig/form/v2/birth'
 import { deathEvent } from '@countryconfig/form/v2/death'
 import * as Hapi from '@hapi/hapi'
+import { sendInformantNotification } from '../notification/informantNotification'
+import { ActionConfirmationRequest } from '../registration'
 
 export function getCustomEventsHandler(
   _: Hapi.Request,
@@ -22,7 +24,16 @@ export function getCustomEventsHandler(
     .code(200)
 }
 
-export function onAnyActionHandler(_: Hapi.Request, h: Hapi.ResponseToolkit) {
-  // This catch-all event route can receive either legacy FHIR events with `Content-Type: application/fhir+json` or new events with `Content-Type: application/json`
+export async function onAnyActionHandler(
+  request: ActionConfirmationRequest,
+  h: Hapi.ResponseToolkit
+) {
+  // This catch-all event route will receive v2 events with `Content-Type: application/json`
+
+  const token = request.auth.artifacts.token as string
+
+  const { event } = request.payload
+  await sendInformantNotification({ event, token })
+
   return h.response().code(200)
 }
