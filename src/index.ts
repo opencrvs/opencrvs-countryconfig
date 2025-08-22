@@ -11,7 +11,7 @@
 require('app-module-path').addPath(require('path').join(__dirname))
 require('dotenv').config()
 
-import fetch from 'node-fetch'
+import StreamArray from 'stream-json/streamers/StreamArray'
 import path from 'path'
 import Handlebars from 'handlebars'
 import * as Hapi from '@hapi/hapi'
@@ -19,6 +19,7 @@ import * as Pino from 'hapi-pino'
 import * as JWT from 'hapi-auth-jwt2'
 import * as inert from '@hapi/inert'
 import * as Sentry from 'hapi-sentry'
+import fetch from 'node-fetch'
 import {
   CLIENT_APP_URL,
   DOMAIN,
@@ -556,6 +557,27 @@ export async function createServer() {
   })
 
   server.route({
+    method: 'POST',
+    path: '/reindex',
+    options: {
+      payload: {
+        output: 'stream',
+        parse: false
+      }
+    },
+    handler: async (req, h) => {
+      const stream = req.raw.req.pipe(StreamArray.withParser())
+
+      for await (const { value } of stream) {
+        // eslint-disable-next-line no-console
+        console.log(value)
+      }
+
+      return h.response().code(200)
+    }
+  })
+
+  server.route({
     method: 'GET',
     path: '/events',
     handler: getCustomEventsHandler,
@@ -613,6 +635,18 @@ export async function createServer() {
       request.sentryScope?.setExtra('payload', request.payload)
       return h.continue
     }
+  })
+
+  server.ext('onPostHandler', (request, h) => {
+    const { method, route } = request
+    if (
+      method === 'post' &&
+      /^\/events\/[^/]+\/actions\/[^/]+$/.test(route.path)
+    ) {
+      // do your hook work here (request.response holds the handler result)
+      console.log(request.path, 'was called with payload:', request.payload)
+    }
+    return h.continue
   })
 
   async function stop() {
