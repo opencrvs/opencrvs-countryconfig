@@ -2362,6 +2362,7 @@ v2.birth.search.criteria.label.prefix.child,Child prefix,Child's,De l'enfant
 v2.birth.search.criteria.label.prefix.father,Father prefix,Father's,Du père
 v2.birth.search.criteria.label.prefix.informant,Informant prefix,Informant's,Du déclarant
 v2.birth.search.criteria.label.prefix.mother,Mother prefix,Mother's,De la mère
+v2.buttons.archive,Archive button text,Archive,Archiver
 v2.buttons.back,Back button text,Back,Retour
 v2.buttons.backToReview,Back to review button text,Back to review,Retour à la revue
 v2.buttons.cancel,Cancel button text in the modal,Cancel,Annuler
@@ -2598,6 +2599,7 @@ v2.event.action.declare.form.section.person.field.address.town.label,This is the
 v2.event.action.declare.form.section.person.field.address.zipCode.label,This is the label for the field,Postcode / Zip,Code postal / Zip
 v2.event.action.outbox-retry.label,Label for retry button for outbox,Retry,Réessayer
 v2.event.action.review-correction.label,Label for review correction button in dropdown menu,Review,Revoir
+v2.event.birth.action.archive.label,Label for archive record button in dropdown menu,Archive,Aarchiver
 v2.event.birth.action.certificate.form.section.collectPayment.data.label,Title for the data section,Payment details,Détails du paiement
 v2.event.birth.action.certificate.form.section.collectPayment.fee.label,Title for the data entry,Fee,Frais
 v2.event.birth.action.certificate.form.section.collectPayment.service.label,Title for the data entry,Service,Service
@@ -3064,6 +3066,8 @@ v2.print.certificate.toast.message,Floating Toast message upon certificate ready
 v2.printAction.description,The description for print action,Please confirm that the informant has reviewed that the information on the certificate is correct and that it is ready to print.,Veuillez confirmer que l'informateur a vérifié que les informations figurant sur le certificat sont correctes et que celui-ci est prêt à être imprimé.
 v2.printAction.title,The title for print action,Print certificate,Imprimer le certificat
 v2.record-corrected.summary.section.title,Corrections section title,Correction(s),Correction(s)
+v2.recordAudit.archive.confirmation.body,Confirmation body for archiving a declaration,This will archive the record and remove it from your workspace,"Cela supprimera la déclaration de la file d'attente et changera son statut en archive. Pour annuler ce changement, vous devrez rechercher la déclaration."
+v2.recordAudit.archive.confirmation.title,Confirmation title for archiving a declaration,Archive declaration?,Archiver la déclaration ?
 v2.regHome.issued,Label for workqueue tooltip,Empty message,Empty message
 v2.register.eventInfo.birth.title,Event information title for the birth,Introduce the birth registration process to the informant,Présenter la procédure d'enregistrement des naissances à l'informateur
 v2.register.form.modal.desc.deleteDeclarationConfirm,Description for delete declaration confirmation modal,Are you sure you want to delete this declaration?,Êtes-vous sûr de vouloir supprimer cette déclaration ?
