@@ -25,6 +25,7 @@ on:
           - v17
           - v19-alpha-staging
           - v19-alpha-prod
+          - pentest
       core-image-tag:
         description: Core DockerHub image tag
         required: true

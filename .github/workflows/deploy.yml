@@ -41,10 +41,11 @@ on:
           - staging
           - v19-alpha-staging
           - v19-alpha-prod
+          - pentest
       core-image-tag:
         description: Core image tag
         required: true
-        default: 'v1.8.0'
+        default: 'v1.8.1'
       countryconfig-image-tag:
         description: Your Country Config DockerHub image tag
         default: 'latest'
@@ -73,16 +74,13 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.ref_name }}
           path: './${{ github.event.repository.name }}'
-
       - name: Checkout country branch ${{ inputs.countryconfig-image-tag }}
         if: ${{ inputs.countryconfig-image-tag != 'latest' && inputs.countryconfig-image-tag != '' }}
         working-directory: ${{ github.event.repository.name }}
         run: git checkout ${{ inputs.countryconfig-image-tag }}
-
       - name: Checkout core branch ${{ inputs.core-image-tag }}
         working-directory: opencrvs-core
         run: git checkout ${{ inputs.core-image-tag }}
-
       - name: Resolve image tags
         working-directory: ${{ github.event.repository.name }}
         run: |
@@ -98,7 +96,6 @@ jobs:
           message="Core image tag: ${{ inputs.core-image-tag }} \n\nCountry config image tag: $image_tag \n\n $message"
           echo -e $message | tee -a $GITHUB_STEP_SUMMARY
           echo "image_tag=$image_tag" >> $GITHUB_ENV
-
       - name: Read known hosts
         working-directory: ${{ github.event.repository.name }}
         run: |

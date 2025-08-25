@@ -133,8 +133,10 @@ test.describe.serial("2. Validate the child's details page", () => {
        * - Required
        */
       await expect(
-        page.locator('[data-test-id="row-value-child.name"]')
-      ).toContainText(NAME_VALIDATION_ERROR)
+        page
+          .locator('[data-testid="row-value-child.name"]')
+          .getByText(NAME_VALIDATION_ERROR)
+      ).toBeVisible()
     })
   })
 
@@ -164,7 +166,7 @@ test.describe.serial("2. Validate the child's details page", () => {
        */
       await expect(
         page
-          .locator('[data-test-id="row-value-child.gender"]')
+          .locator('[data-testid="row-value-child.gender"]')
           .getByText(REQUIRED_VALIDATION_ERROR)
       ).toBeVisible()
     })
@@ -237,7 +239,7 @@ test.describe.serial("2. Validate the child's details page", () => {
        */
       await expect(
         page
-          .locator('[data-test-id="row-value-child.dob"]')
+          .locator('[data-testid="row-value-child.dob"]')
           .getByText(REQUIRED_VALIDATION_ERROR)
       ).toBeVisible()
     })
@@ -313,7 +315,7 @@ test.describe.serial("2. Validate the child's details page", () => {
       await expect(
         page
           .getByRole('row', { name: 'Reason for delayed' })
-          .locator('[data-test-id="row-value-child.reason"]')
+          .locator('[data-testid="row-value-child.reason"]')
       ).toHaveText(REQUIRED_VALIDATION_ERROR)
     })
   })
@@ -395,7 +397,7 @@ test.describe.serial("2. Validate the child's details page", () => {
        * - Required
        */
       await expect(
-        page.locator('[data-test-id="row-value-child.placeOfBirth"]')
+        page.locator('[data-testid="row-value-child.placeOfBirth"]')
       ).toHaveText(REQUIRED_VALIDATION_ERROR)
     })
   })

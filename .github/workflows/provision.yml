@@ -33,6 +33,7 @@ on:
           - v17
           - v19-alpha-staging
           - v19-alpha-prod
+          - pentest
       tag:
         type: choice
         description: Select group tag you want to execute

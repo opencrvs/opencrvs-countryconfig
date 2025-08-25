@@ -434,16 +434,7 @@ test.describe('Events REST API', () => {
 
       await page.getByText(await formatName(childName)).click()
 
-      await page
-        .getByRole('button', { name: 'Assign record', exact: true })
-        .click()
-      await page.getByRole('button', { name: 'Assign', exact: true }).click()
-      await expect(
-        page.getByRole('button', { name: 'Assign record', exact: true })
-      ).not.toBeVisible()
-      await expect(page.locator('#action-loading-undefined')).not.toBeVisible({
-        timeout: 30000
-      })
+      await ensureAssigned(page)
 
       await expect(page.locator('#row_0')).toContainText('Sent incomplete')
       await expect(page.locator('#row_0')).toContainText(clientName)
@@ -556,16 +547,7 @@ test.describe('Events REST API', () => {
       await page.getByRole('button', { name: 'Notifications' }).click()
       await page.getByText(await formatName(childName)).click()
 
-      await page
-        .getByRole('button', { name: 'Assign record', exact: true })
-        .click()
-      await page.getByRole('button', { name: 'Assign', exact: true }).click()
-      await expect(
-        page.getByRole('button', { name: 'Assign record', exact: true })
-      ).not.toBeVisible()
-      await expect(page.locator('#action-loading-undefined')).not.toBeVisible({
-        timeout: 30000
-      })
+      await ensureAssigned(page)
 
       await page.getByRole('button', { name: 'Action' }).click()
       await getAction(page, 'Review').click()

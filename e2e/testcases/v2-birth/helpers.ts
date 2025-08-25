@@ -95,7 +95,9 @@ export const assertRecordInWorkqueue = async ({
       })
       .click()
 
-    await expect(page.getByTestId('search-result')).toContainText(title)
+    await expect(page.getByTestId('search-result')).toContainText(title, {
+      timeout: SAFE_OUTBOX_TIMEOUT_MS
+    })
 
     if (exists) {
       await expect(page.getByRole('button', { name })).toBeVisible()
