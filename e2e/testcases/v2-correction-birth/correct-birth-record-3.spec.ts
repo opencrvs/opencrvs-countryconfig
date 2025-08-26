@@ -829,7 +829,7 @@ test.describe.serial(' Correct record - 3', () => {
     )
 
     await visible(
-      page.locator('#listTable-corrections-table-mother').locator('#row_3'),
+      page.locator('#listTable-corrections-table-mother').locator('#row_2'),
       'Nationality',
       'Farajaland',
       updatedMotherDetails.nationality
@@ -849,7 +849,7 @@ test.describe.serial(' Correct record - 3', () => {
     )
 
     await visible(
-      page.locator('#listTable-corrections-table-mother').locator('#row_6'),
+      page.locator('#listTable-corrections-table-mother').locator('#row_5'),
       'Usual place of residence'
     )
 
@@ -866,7 +866,7 @@ test.describe.serial(' Correct record - 3', () => {
         expect(
           page
             .locator('#listTable-corrections-table-mother')
-            .locator('#row_6')
+            .locator('#row_5')
             .getByText(x)
         ).toBeVisible()
       )
@@ -1004,7 +1004,6 @@ test.describe.serial(' Correct record - 3', () => {
         `${declaration['mother.name'].firstname} ${declaration['mother.name'].surname}`,
         `${updatedMotherDetails.firstNames} ${updatedMotherDetails.familyName}`
       )
-      await visible(motherTable, 'Exact date of birth unknown', '-', 'Yes')
       await visible(
         motherTable,
         'Age of mother',
@@ -1012,7 +1011,7 @@ test.describe.serial(' Correct record - 3', () => {
       )
 
       await visible(
-        motherTable.locator('#row_3'),
+        motherTable.locator('#row_2'),
         'Nationality',
         'Farajaland',
         'Ethiopia'
@@ -1020,7 +1019,7 @@ test.describe.serial(' Correct record - 3', () => {
       await visible(motherTable, 'Type of ID', 'National ID', 'Passport')
       await visible(motherTable, 'ID Number', updatedMotherDetails.passport)
 
-      await visible(motherTable.locator('#row_6'), 'Usual place of residence')
+      await visible(motherTable.locator('#row_5'), 'Usual place of residence')
       const motherAddressLines = [
         updatedMotherDetails.address.province,
         updatedMotherDetails.address.district,
@@ -1032,7 +1031,7 @@ test.describe.serial(' Correct record - 3', () => {
       ]
       for (const line of motherAddressLines) {
         await expect(
-          motherTable.locator('#row_6').getByText(line)
+          motherTable.locator('#row_5').getByText(line)
         ).toBeVisible()
       }
 
