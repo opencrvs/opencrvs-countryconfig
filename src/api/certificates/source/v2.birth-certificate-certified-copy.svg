@@ -433,7 +433,7 @@
   <g clip-path="url(#clip19_946_2501)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
       font-size="8" letter-spacing="0px">
-      <tspan x="307" y="590.104">{{$lookup $metadata 'legalStatuses.REGISTERED.createdBy.name.fullname'}}</tspan>
+      <tspan x="307" y="590.104">{{$lookup $metadata 'legalStatuses.REGISTERED.createdBy.name'}}</tspan>
     </text>
   </g>
   <g xmlns="http://www.w3.org/2000/svg" opacity="0.15" clip-path="url(#background)">

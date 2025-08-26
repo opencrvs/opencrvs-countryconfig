@@ -318,7 +318,7 @@
     <g clip-path="url(#clip12_1157_5003)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre"
         font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
-        <tspan x="289.95" y="562.754">{{$lookup $metadata 'legalStatuses.REGISTERED.createdBy.name.fullname'}}</tspan>
+        <tspan x="289.95" y="562.754">{{$lookup $metadata 'legalStatuses.REGISTERED.createdBy.name'}}</tspan>
       </text>
     </g>
   </g>

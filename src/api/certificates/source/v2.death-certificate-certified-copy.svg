@@ -205,7 +205,7 @@
   </text>
   <g clip-path="url(#clip11_948_2918)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
-      <tspan x="312" y="444.104">{{$lookup $metadata 'legalStatuses.REGISTERED.createdBy.name.fullname'}}</tspan>
+      <tspan x="312" y="444.104">{{$lookup $metadata 'legalStatuses.REGISTERED.createdBy.name'}}</tspan>
     </text>
   </g>
   <g clip-path="url(#clip12_948_2918)">
