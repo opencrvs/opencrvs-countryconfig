@@ -13,6 +13,7 @@ import { createSelectOptions } from '@countryconfig/form/v2/utils'
 import {
   ConditionalType,
   defineFormPage,
+  DocumentMimeType,
   field,
   FieldType,
   ImageMimeType,
@@ -60,8 +61,14 @@ export const DEFAULT_FILE_CONFIGURATION = {
   acceptedFileTypes: [
     ImageMimeType.enum['image/jpeg'],
     ImageMimeType.enum['image/png'],
-    ImageMimeType.enum['image/jpg']
+    ImageMimeType.enum['image/jpg'],
+    DocumentMimeType.enum['application/pdf']
   ]
+}
+
+export const DOCUMENT_FILE_CONFIGURATION = {
+  maxFileSize: 5 * 1024 * 1024,
+  acceptedFileTypes: [DocumentMimeType.enum['application/pdf']]
 }
 
 const idTypeOptions = createSelectOptions(IdType, idTypeMessageDescriptors)

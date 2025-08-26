@@ -14,7 +14,7 @@ import {
   defineDeclarationForm,
   field,
   FieldType,
-  never
+  or
 } from '@opencrvs/toolkit/events'
 import { not } from '@opencrvs/toolkit/conditionals'
 import { child } from './pages/child'
@@ -22,8 +22,13 @@ import { informant } from './pages/informant'
 import { introduction } from './pages/introduction'
 import { mother } from './pages/mother'
 import { father } from './pages/father'
-import { DEFAULT_FILE_CONFIGURATION, documents } from './pages/documents'
+import {
+  DEFAULT_FILE_CONFIGURATION,
+  DOCUMENT_FILE_CONFIGURATION,
+  documents
+} from './pages/documents'
 import { emptyMessage } from '../../utils'
+import { getTodaysDateDefaultValue } from '@countryconfig/utils'
 
 export const BIRTH_DECLARATION_REVIEW = {
   title: {
@@ -62,19 +67,12 @@ export const BIRTH_DECLARATION_REVIEW = {
       id: 'review.reviewDivider_1',
       type: FieldType.DIVIDER,
       label: emptyMessage
-      // FIXME: fix conditionals
-      // conditionals: [
-      //   {
-      //     type: ConditionalType.DISPLAY_ON_REVIEW,
-      //     conditional: user.hasScope('SCOPES.RECORD_REGISTER')
-      //   }
-      // ]
     },
     {
       id: 'review.reviewHelper_1',
       type: FieldType.PARAGRAPH,
       label: {
-        defaultMessage: 'Offline flow',
+        defaultMessage: 'Print offline in advance of registration',
         description: 'This is the label for the field',
         id: 'v2.event.birth.action.declare.form.review.reviewHelper_1.label'
       },
@@ -136,7 +134,8 @@ export const BIRTH_DECLARATION_REVIEW = {
         description: 'This is the label for the field',
         id: 'v2.event.birth.action.declare.form.review.field.registrationDate.label'
       },
-      default: Date.now(),
+      defaultValue: getTodaysDateDefaultValue(),
+      disabled: true,
       conditionals: [
         {
           type: ConditionalType.SHOW,
@@ -145,18 +144,6 @@ export const BIRTH_DECLARATION_REVIEW = {
           )
         }
       ]
-      // FIXME: fix validation
-      // secured: true,
-      // validation: [
-      //   {
-      //     message: {
-      //       defaultMessage: 'Must be a valid date',
-      //       description: 'This is the error message for invalid date',
-      //       id: 'v2.event.birth.action.declare.form.review.field.registrationDate.error'
-      //     },
-      //     validator: field('review.registrationDate').isBefore().now()
-      //   }
-      // ],
     },
     {
       id: 'registrar.name',
@@ -179,7 +166,7 @@ export const BIRTH_DECLARATION_REVIEW = {
     },
     {
       type: FieldType.PRINT_BUTTON,
-      id: 'child.printButton',
+      id: 'printButton',
       label: {
         defaultMessage: 'Print Certificate',
         description: 'This is the label for the field',
@@ -199,6 +186,10 @@ export const BIRTH_DECLARATION_REVIEW = {
           conditional: not(
             field('review.noAdvancePrintCertificate').isEqualTo(true)
           )
+        },
+        {
+          type: ConditionalType.ENABLE,
+          conditional: not(field('registrar.name').isFalsy())
         }
       ]
     },
@@ -210,8 +201,9 @@ export const BIRTH_DECLARATION_REVIEW = {
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: not(
-            field('review.noAdvancePrintCertificate').isEqualTo(true)
+          conditional: or(
+            not(field('review.noAdvancePrintCertificate').isEqualTo(true)),
+            field('printButton').isEqualTo(true)
           )
         }
       ]
@@ -229,8 +221,9 @@ export const BIRTH_DECLARATION_REVIEW = {
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: not(
-            field('review.noAdvancePrintCertificate').isEqualTo(true)
+          conditional: or(
+            not(field('review.noAdvancePrintCertificate').isEqualTo(true)),
+            field('printButton').isEqualTo(true)
           )
         }
       ]
@@ -248,8 +241,9 @@ export const BIRTH_DECLARATION_REVIEW = {
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: not(
-            field('review.noAdvancePrintCertificate').isEqualTo(true)
+          conditional: or(
+            not(field('review.noAdvancePrintCertificate').isEqualTo(true)),
+            field('printButton').isEqualTo(true)
           )
         }
       ]
@@ -267,8 +261,9 @@ export const BIRTH_DECLARATION_REVIEW = {
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: not(
-            field('review.noAdvancePrintCertificate').isEqualTo(true)
+          conditional: or(
+            not(field('review.noAdvancePrintCertificate').isEqualTo(true)),
+            field('printButton').isEqualTo(true)
           )
         }
       ]
@@ -278,7 +273,7 @@ export const BIRTH_DECLARATION_REVIEW = {
       type: FieldType.FILE,
       required: false,
       configuration: {
-        ...DEFAULT_FILE_CONFIGURATION,
+        ...DOCUMENT_FILE_CONFIGURATION,
         style: {
           width: 'auto' as const
         },
@@ -297,9 +292,11 @@ export const BIRTH_DECLARATION_REVIEW = {
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: not(
-            field('review.noAdvancePrintCertificate').isEqualTo(true)
-          )
+          conditional: field('printButton').isEqualTo(true)
+        },
+        {
+          type: ConditionalType.ENABLE,
+          conditional: field('review.signedCertificate').isEqualTo(true)
         }
       ]
     }

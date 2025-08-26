@@ -23,6 +23,7 @@ export const DECEASED_CODE = 'deceased-details'
 export const OPENCRVS_SPECIFICATION_URL = 'http://opencrvs.org/specs/'
 import { join } from 'path'
 import { stringify } from 'csv-stringify/sync'
+import { field } from '@opencrvs/toolkit/events'
 
 export interface ILocation {
   id?: string
@@ -233,9 +234,10 @@ export async function getStatistics(path?: string) {
   if (!path) {
     path = join(__dirname, '../data-seeding/locations/source/statistics.csv')
   }
-  const data = await readCSVToJSON<
-    Array<Record<string, string> & { adminPcode: string }>
-  >(path)
+  const data =
+    await readCSVToJSON<Array<Record<string, string> & { adminPcode: string }>>(
+      path
+    )
 
   return data.map<LocationStatistic>((item) => {
     const { adminPcode, name, ...yearKeys } = item
@@ -282,3 +284,19 @@ export function createCustomFieldHandlebarName(fieldId: string) {
 export function uppercaseFirstLetter(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1)
 }
+
+export function getTodaysDateDefaultValue() {
+  const now = new Date(Date.now())
+
+  const year = now.getFullYear()
+  const month = String(now.getMonth() + 1).padStart(2, '0')
+  const day = String(now.getDate()).padStart(2, '0')
+
+  const formattedDate = `${year}-${month}-${day}`
+  return formattedDate
+}
+
+// export function clicked(fieldId: string) {
+//   console.log('fieldId :>> ', fieldId)
+//   return field(`${fieldId}__clicked`).isEqualTo(true)
+// }

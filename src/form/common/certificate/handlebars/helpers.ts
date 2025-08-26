@@ -297,6 +297,7 @@ export function v2EventStatement(): Handlebars.HelperDelegate {
     console.log('motherOccupation', motherOccupation)
     console.log('motherFokontanyCustomAddress', motherFokontanyCustomAddress)
     console.log('motherIsDeceased', motherIsDeceased)
+
     return joinValuesWith([
       '--Tamin’ny',
       customizeDateInCertificateContent(dateOfEvent) + ',',
@@ -865,7 +866,7 @@ export function v2RegistrationStatement(): Handlebars.HelperDelegate {
       }
     }
 
-    const informantTypeKey = informantType.toLowerCase()
+    const informantTypeKey = informantType && informantType.toLowerCase()
     const informant = informantDataMap[informantTypeKey] || {}
 
     const informantName = informant.name
@@ -1051,7 +1052,11 @@ export function v2SignatureDescription(): Handlebars.HelperDelegate {
           new Date().toISOString().split('T')[0]
         ) + ", ary nomena an'i ",
         joinValuesWith(
-          [informantType.toLowerCase() === 'mother' ? motherName : fatherName],
+          [
+            informantType && informantType.toLowerCase() === 'mother'
+              ? motherName
+              : fatherName
+          ],
           ' '
         ) + '--'
       ],
@@ -1210,7 +1215,8 @@ const convertNumberToLetterForMalagasySpecificLanguage = (num: number) => {
 }
 
 function convertTimeToMdgCustomWords(timeString: string) {
-  const [hour, minute] = timeString.split(':')
+  const [hour, minute] = timeString ? timeString.split(':') : '00:00'.split(':')
+
   let newHour = parseInt(hour)
   const mdgHours = THE_UNITS_MDG_WORDS.concat(
     FROM_10_TO_19_MDG_WORDS.slice(0, 3)
