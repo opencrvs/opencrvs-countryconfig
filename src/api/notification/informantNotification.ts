@@ -14,7 +14,6 @@ import {
   aggregateActionDeclarations,
   EventDocument,
   FieldUpdateValue,
-  getAcceptedActions,
   getPendingAction
 } from '@opencrvs/toolkit/events'
 import { applicationConfig } from '../application/application-config'
@@ -48,7 +47,7 @@ export async function sendInformantNotification({
   const pendingAction = getPendingAction(event.actions)
 
   const declaration = {
-    ...aggregateActionDeclarations(getAcceptedActions(event)),
+    ...aggregateActionDeclarations(event),
     ...pendingAction.declaration
   }
 
