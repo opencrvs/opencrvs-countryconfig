@@ -1,17 +1,16 @@
-admin2Name_en,admin2Name_alias,admin2Pcode,admin1Name_en,admin1Name_alias,admin1Pcode,admin0Name_en,admin0Name_alias,admin0Pcode
-Ibombo,Ibombo,oEBf29y8JP8,Central,Central,AWn3s2RqgAN,Farajaland,Farajaland,FAR
-Ilanga,Ilanga,HPGiE9Jjh2r,Sulaka,Sulaka,KozcEjeTyuD,Farajaland,Farajaland,FAR
-Embe,Embe,BxrIbNW7f3K,Pualula,Pualula,B1u1bVtIA92,Farajaland,Farajaland,FAR
-Ama,Ama,SQT8xjbvWwf,Chuminga,Chuminga,dbTLdTi7s8F,Farajaland,Farajaland,FAR
-Isamba,Isamba,ntoX1PkiWri,Central,Central,AWn3s2RqgAN,Farajaland,Farajaland,FAR
-Irundu,Irundu,SvFNQpplnch,Sulaka,Sulaka,KozcEjeTyuD,Farajaland,Farajaland,FAR
-Ienge,Ienge,NLjvK1QsrN3,Pualula,Pualula,B1u1bVtIA92,Farajaland,Farajaland,FAR
-Nsali,Nsali,hywxVKv48Xp,Chuminga,Chuminga,dbTLdTi7s8F,Farajaland,Farajaland,FAR
-Itambo,Itambo,QTtxiWj8ONP,Central,Central,AWn3s2RqgAN,Farajaland,Farajaland,FAR
-Zobwe,Zobwe,Oapn6R4rt3D,Sulaka,Sulaka,KozcEjeTyuD,Farajaland,Farajaland,FAR
-Funabuli,Funabuli,idR0pJWLqcR,Pualula,Pualula,B1u1bVtIA92,Farajaland,Farajaland,FAR
-Soka,Soka,jCJxK8sFH40,Chuminga,Chuminga,dbTLdTi7s8F,Farajaland,Farajaland,FAR
-Ezhi,Ezhi,ydyJb1RAy4U,Central,Central,AWn3s2RqgAN,Farajaland,Farajaland,FAR
-Afue,Afue,nO68NTtcdw2,Sulaka,Sulaka,KozcEjeTyuD,Farajaland,Farajaland,FAR
-Pili,Pili,FuvOOwvBw0p,Pualula,Pualula,B1u1bVtIA92,Farajaland,Farajaland,FAR
-Chibiya,Chibiya,R22tRIhdm5Y,Chuminga,Chuminga,dbTLdTi7s8F,Farajaland,Farajaland,FAR
+admin0Pcode,admin0Name_en,admin1Pcode,admin1Name_en,admin2Pcode,admin2Name_en
+COK,Cook Islands,COK-001,Rarotonga,COK-001-001,"Village 1"
+COK,Cook Islands,COK-002,Aitutaki,COK-001-002,"Village 2"
+COK,Cook Islands,COK-003,Atiu,COK-001-003,"Village 3"
+COK,Cook Islands,COK-004,Mauke,COK-001-004,"Village 4"
+COK,Cook Islands,COK-005,Mitiaro,COK-001-005,"Village 5"
+COK,Cook Islands,COK-006,Mangaia,COK-001-006,"Village 6"
+COK,Cook Islands,COK-007,Palmerston,COK-001-007,"Village 7"
+COK,Cook Islands,COK-008,Manihiki,COK-001-008,"Village 8"
+COK,Cook Islands,COK-009,Rakahanga,COK-001-009,"Village 9"
+COK,Cook Islands,COK-010,"Penrhyn (Tongareva)",COK-001-010,"Village 10"
+COK,Cook Islands,COK-011,Pukapuka,COK-001-011,"Village 11"
+COK,Cook Islands,COK-012,Nassau,COK-001-012,"Village 12"
+COK,Cook Islands,COK-013,Suwarrow,COK-001-013,"Village 13"
+COK,Cook Islands,COK-014,Takutea,COK-001-014,"Village 14"
+COK,Cook Islands,COK-015,Manuae,COK-001-015,"Village 15"
