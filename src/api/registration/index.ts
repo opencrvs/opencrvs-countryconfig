@@ -11,18 +11,15 @@
 import * as Hapi from '@hapi/hapi'
 import { generateRegistrationNumber } from './registrationNumber'
 import { createClient } from '@opencrvs/toolkit/api'
-import { ActionInput } from '@opencrvs/toolkit/events'
+import {
+  ActionConfirmationPayload,
+  ActionInput
+} from '@opencrvs/toolkit/events'
 import { GATEWAY_URL } from '@countryconfig/constants'
 import { v4 as uuidv4 } from 'uuid'
 
 interface ActionConfirmationRequest extends Hapi.Request {
-  payload: {
-    actionId: string
-    event: {
-      id: string
-    }
-    action: ActionInput
-  }
+  payload: ActionConfirmationPayload
 }
 
 /* eslint-disable no-unused-vars */
