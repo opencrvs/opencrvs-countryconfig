@@ -30,6 +30,8 @@
 
 - Ensure that place of birth/death only shows active facilities/offices on the form [#9311](https://github.com/opencrvs/opencrvs-core/issues/9311)
 
+- Change copy form "Back to review" to "Go to review" to be inline with the new feature of always desplaying the "Go to review" button in all the pages of all the form. [#10132](https://github.com/opencrvs/opencrvs-core/issues/10132)
+
 ## 1.8.0
 
 ### New features
