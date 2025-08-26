@@ -34,7 +34,7 @@
     stroke-dasharray="3.13 1.56" />
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
     font-size="8" letter-spacing="0px">
-    <tspan x="387.936" y="754.656">Certified by: {{ $lookup $metadata "assignedTo.name"}}</tspan>
+    <tspan x="387.936" y="754.656">Certified by: {{ $lookup $metadata "assignedTo.name.fullname"}}</tspan>
   </text>
   <g clip-path="url(#clip0_946_2501)">
     <text fill="#8D8D8D" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
@@ -125,7 +125,7 @@
   <g clip-path="url(#clip2_946_2501)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
       font-size="8" letter-spacing="0px">
-      <tspan x="307" y="148.104">{{$lookup $declaration "child.name"}}</tspan>
+      <tspan x="307" y="148.104">{{$lookup $declaration "child.name.fullname"}}</tspan>
     </text>
   </g>
   <line x1="65" y1="154.5" x2="533" y2="154.5" stroke="#ECECEC" />
@@ -202,7 +202,7 @@
   <g clip-path="url(#clip6_946_2501)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
       font-size="8" letter-spacing="0px">
-      <tspan x="307" y="266.104">{{$lookup $declaration 'mother.name'}}</tspan>
+      <tspan x="307" y="266.104">{{$lookup $declaration 'mother.name.fullname'}}</tspan>
     </text>
   </g>
   <line x1="65" y1="272.5" x2="533" y2="272.5" stroke="#ECECEC" />
@@ -236,7 +236,7 @@
   <g clip-path="url(#clip8_946_2501)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
       font-size="8" letter-spacing="0px">
-      {{#ifCond ($lookup $declaration 'mother.name') '!==' undefined }}
+      {{#ifCond ($lookup $declaration 'mother.name.fullname') '!==' undefined }}
       <tspan x="307" y="306.104">{{ $lookup $declaration 'mother.address.district' }}{{ $lookup $declaration 'mother.address.district2' }}, {{ $lookup $declaration 'mother.address.province' }}{{ $lookup $declaration 'mother.address.state' }}, {{ $lookup $declaration 'mother.address.country' }}</tspan>
       {{/ifCond}}
     </text>
@@ -287,7 +287,7 @@
   <g clip-path="url(#clip11_946_2501)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
       font-size="8" letter-spacing="0px">
-      <tspan x="307" y="392.104">{{$lookup $declaration 'father.name'}}</tspan>
+      <tspan x="307" y="392.104">{{$lookup $declaration 'father.name.fullname'}}</tspan>
     </text>
   </g>
   <line x1="65" y1="398.5" x2="533" y2="398.5" stroke="#ECECEC" />
@@ -321,7 +321,7 @@
   <g clip-path="url(#clip13_946_2501)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
       font-size="8" letter-spacing="0px">
-      {{#ifCond ($lookup $declaration 'father.name') '!==' undefined }}
+      {{#ifCond ($lookup $declaration 'father.name.fullname') '!==' undefined }}
         {{#ifCond (lookup $declaration 'father.addressSameAs') '===' 'YES'}}
           <tspan x="307" y="432.104">{{ $lookup $declaration 'mother.address.district' }}{{ $lookup $declaration 'mother.address.district2' }}, {{ $lookup $declaration 'mother.address.province' }}{{ $lookup $declaration 'mother.address.state' }}, {{ $lookup $declaration 'mother.address.country' }}</tspan>
         {{else}}
@@ -379,12 +379,12 @@
       <!-- NOTE: Since we are using intl-lookup, we need to use informant.relation as actual value
       rather than as stringified one. Hence we opt for native lookup over $lookup  -->
       {{#ifCond (lookup $declaration 'informant.relation') '===' 'MOTHER' }}
-        <tspan x="307" y="518.104">{{$lookup $declaration 'mother.name'}}</tspan>
+        <tspan x="307" y="518.104">{{$lookup $declaration 'mother.name.fullname'}}</tspan>
       {{ else }}
         {{#ifCond (lookup $declaration 'informant.relation') '===' 'FATHER'}}
-          <tspan x="307" y="518.104">{{$lookup $declaration 'father.name'}}</tspan>
+          <tspan x="307" y="518.104">{{$lookup $declaration 'father.name.fullname'}}</tspan>
         {{ else }}
-          <tspan x="307" y="518.104">{{$lookup $declaration 'informant.name'}}</tspan>
+          <tspan x="307" y="518.104">{{$lookup $declaration 'informant.name.fullname'}}</tspan>
         {{/ifCond}}
       {{/ifCond}}
       <tspan x="307" y="528.104">{{$intl 'v2.constants.informant' (lookup $declaration 'informant.relation')}}{{#ifCond (lookup $declaration 'informant.relation') '===' 'OTHER'}} ({{lookup $declaration 'informant.other.relation'}}) {{/ifCond}}</tspan>
@@ -433,7 +433,7 @@
   <g clip-path="url(#clip19_946_2501)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
       font-size="8" letter-spacing="0px">
-      <tspan x="307" y="590.104">{{$lookup $metadata 'legalStatuses.REGISTERED.createdBy.name'}}</tspan>
+      <tspan x="307" y="590.104">{{$lookup $metadata 'legalStatuses.REGISTERED.createdBy.name.fullname'}}</tspan>
     </text>
   </g>
   <g xmlns="http://www.w3.org/2000/svg" opacity="0.15" clip-path="url(#background)">

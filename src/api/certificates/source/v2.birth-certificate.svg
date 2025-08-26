@@ -103,7 +103,7 @@
   </text>
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="7.76" letter-spacing="0px">
-    <tspan x="391.819" y="740.694">{{ $lookup $metadata "updatedBy.name"}}</tspan>
+    <tspan x="391.819" y="740.694">{{ $lookup $metadata "updatedBy.name.fullname"}}</tspan>
   </text>
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" letter-spacing="0px">
@@ -136,7 +136,7 @@
     <g clip-path="url(#clip4_1157_5003)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre"
         font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
-        <tspan x="289.95" y="229.634">{{$lookup $declaration 'child.name'}}</tspan>
+        <tspan x="289.95" y="229.634">{{$lookup $declaration 'child.name.fullname'}}</tspan>
       </text>
     </g>
     <line x1="81.3999" y1="246.205" x2="512.08" y2="246.205" stroke="#ECECEC" stroke-width="0.97" />
@@ -229,7 +229,7 @@
     <g clip-path="url(#clip8_1157_5003)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre"
         font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
-        <tspan x="289.95" y="396.194">{{$lookup $declaration 'mother.name'}}</tspan>
+        <tspan x="289.95" y="396.194">{{$lookup $declaration 'mother.name.fullname'}}</tspan>
       </text>
     </g>
     <line x1="81.3999" y1="412.765" x2="512.08" y2="412.766" stroke="#ECECEC" stroke-width="0.97" />
@@ -250,7 +250,7 @@
     <g clip-path="url(#clip9_1157_5003)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre"
         font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
-        <tspan x="289.95" y="437.834">{{$lookup $declaration 'father.name'}}</tspan>
+        <tspan x="289.95" y="437.834">{{$lookup $declaration 'father.name.fullname'}}</tspan>
       </text>
     </g>
     <line x1="81.3999" y1="454.405" x2="512.08" y2="454.405" stroke="#ECECEC" stroke-width="0.97" />
@@ -318,7 +318,7 @@
     <g clip-path="url(#clip12_1157_5003)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre"
         font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
-        <tspan x="289.95" y="562.754">{{$lookup $metadata 'legalStatuses.REGISTERED.createdBy.name'}}</tspan>
+        <tspan x="289.95" y="562.754">{{$lookup $metadata 'legalStatuses.REGISTERED.createdBy.name.fullname'}}</tspan>
       </text>
     </g>
   </g>

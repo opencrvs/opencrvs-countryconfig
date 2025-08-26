@@ -28,7 +28,7 @@
     <tspan x="357.752" y="687.343">Registrar / L&#39;Officier de l&#39;&#xc9;tat Civil</tspan>
   </text>
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="7.76" letter-spacing="0px">
-    <tspan x="398.064" y="699.954">{{ $lookup $metadata "updatedBy.name"}}</tspan>
+    <tspan x="398.064" y="699.954">{{ $lookup $metadata "updatedBy.name.fullname"}}</tspan>
   </text>
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
     <tspan x="81.3999" y="563.615">I certify that this certificate is a true copy of the civil registry and is issued by the mandated authority in pursuance </tspan>
@@ -45,7 +45,7 @@
     </text>
     <g clip-path="url(#clip3_1157_5058)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="9.7" letter-spacing="0px">
-        <tspan x="289.95" y="229.583">{{$lookup $declaration "deceased.name"}}</tspan>
+        <tspan x="289.95" y="229.583">{{$lookup $declaration "deceased.name.fullname"}}</tspan>
       </text>
     </g>
     <line x1="81.3999" y1="246.155" x2="512.08" y2="246.155" stroke="#ECECEC" stroke-width="0.97" />
@@ -182,7 +182,7 @@
     </text>
     <g clip-path="url(#clip10_1157_5058)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="9.7" letter-spacing="0px">
-        <tspan x="289.95" y="521.063">{{$lookup $metadata 'legalStatuses.REGISTERED.createdBy.name'}}</tspan>
+        <tspan x="289.95" y="521.063">{{$lookup $metadata 'legalStatuses.REGISTERED.createdBy.name.fullname'}}</tspan>
       </text>
     </g>
   </g>
