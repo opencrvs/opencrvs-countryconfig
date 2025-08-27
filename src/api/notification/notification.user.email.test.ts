@@ -10,33 +10,24 @@ vi.mock('node-fetch', () => {
   }
 })
 
+const sendMailMock = vi.fn().mockResolvedValue({ messageId: 'mocked-id' })
 vi.mock('nodemailer', () => {
-  const sendMailMock = vi.fn().mockResolvedValue({ messageId: 'mocked-id' })
-
   return {
     createTransport: vi.fn(() => ({
       sendMail: sendMailMock
-    })),
-    __sendMailMock: sendMailMock
+    }))
   }
 })
-
-let nodemailer: typeof import('nodemailer')
 
 import { createServer } from '../../index'
 
 import { userNotificationTestData } from './testData'
-let sendMailMock: ReturnType<typeof vi.fn>
 
 describe('User notification - Email', () => {
   let server: any
 
   beforeEach(async () => {
     vi.resetModules()
-    nodemailer = await import('nodemailer')
-    sendMailMock = (nodemailer as any).__sendMailMock as ReturnType<
-      typeof vi.fn
-    >
     sendMailMock.mockClear()
     server = await createServer()
   })
