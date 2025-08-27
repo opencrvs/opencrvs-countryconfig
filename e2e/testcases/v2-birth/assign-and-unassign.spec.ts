@@ -44,6 +44,8 @@ test.describe.serial('Assign & Unassign', () => {
 
   test('Click on "Unassign" from action menu', async () => {
     await selectAction(page, 'Unassign')
+    // Wait for the unassign modal to appear
+    await page.getByRole('button', { name: 'Unassign', exact: true }).click()
     await expect(page.getByTestId('assignedTo-value')).toHaveText(
       'Not assigned'
     )

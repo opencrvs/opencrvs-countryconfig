@@ -158,6 +158,7 @@ export const documents = defineFormPage({
     {
       id: 'documents.proofOfDeceased',
       type: FieldType.FILE_WITH_OPTIONS,
+      uncorrectable: true,
       required: false,
       label: {
         defaultMessage: "Proof of deceased's ID",
@@ -171,6 +172,7 @@ export const documents = defineFormPage({
       id: 'documents.proofOfInformant',
       type: FieldType.FILE_WITH_OPTIONS,
       required: false,
+      uncorrectable: true,
       label: {
         defaultMessage: "Proof of informant's ID",
         description: 'This is the label for the field',
@@ -182,6 +184,7 @@ export const documents = defineFormPage({
     {
       id: 'documents.proofOfDeath',
       type: FieldType.FILE_WITH_OPTIONS,
+      uncorrectable: true,
       required: false,
       label: {
         defaultMessage: 'Proof of death of deceased',
@@ -194,6 +197,7 @@ export const documents = defineFormPage({
     {
       id: 'documents.proofOfCauseOfDeath',
       type: FieldType.FILE_WITH_OPTIONS,
+      uncorrectable: true,
       required: false,
       label: {
         defaultMessage: 'Proof of cause of death',
