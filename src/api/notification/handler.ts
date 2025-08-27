@@ -96,7 +96,7 @@ export function generateFailureLog({
 }: {
   contact: { mobile?: string; email?: string }
   name: NameFieldValue
-  event: string
+  event: TriggerEvent | InformantTemplateType
   reason: string
 }) {
   contact.mobile &&= maskSms(contact.mobile)
@@ -123,13 +123,9 @@ export async function sendUserNotification<T extends TriggerEvent>(
     countryLogo: COUNTRY_LOGO_URL
   }
 
-  const userVariablePair = {
-    event,
-    variable
-  } as UserEventVariablePair
-
   await notify({
-    ...userVariablePair,
+    event,
+    variable,
     recipient: payload.recipient,
     deliveryMethod: applicationConfig.USER_NOTIFICATION_DELIVERY_METHOD
   })
@@ -140,7 +136,11 @@ export async function notify({
   variable,
   recipient,
   deliveryMethod
-}: (UserEventVariablePair | InformantEventVariablePair) & {
+}: {
+  event: UserEventVariablePair['event'] | InformantEventVariablePair['event']
+  variable:
+    | UserEventVariablePair['variable']
+    | InformantEventVariablePair['variable']
   recipient: Recipient
   deliveryMethod: string
 }) {
@@ -205,7 +205,7 @@ export type UserEventVariablePair<T extends TriggerEvent = TriggerEvent> = {
   }
 }[T]
 
-export type InformantEventVariablePair<
+type InformantEventVariablePair<
   T extends InformantTemplateType = InformantTemplateType
 > = {
   [K in T]: {
