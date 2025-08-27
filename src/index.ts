@@ -63,11 +63,13 @@ import {
   onAnyActionHandler
 } from '@countryconfig/api/custom-event/handler'
 import { readFileSync } from 'fs'
-import { ActionType } from '@opencrvs/toolkit/events'
+import { ActionConfirmationPayload, ActionType } from '@opencrvs/toolkit/events'
 import { Event } from './form/types/types'
 import { onRegisterHandler } from './api/registration'
 import { workqueueconfigHandler } from './api/workqueue/handler'
 import getUserNotificationRoutes from './config/routes/userNotificationRoutes'
+import { setupAnalyticsUsingAdminRole } from './analytics/setup-database'
+import { importEvent } from './analytics/analytics'
 
 export interface ITokenPayload {
   sub: string
@@ -637,14 +639,19 @@ export async function createServer() {
     }
   })
 
-  server.ext('onPostHandler', (request, h) => {
-    const { method, route } = request
-    if (
-      method === 'post' &&
-      /^\/events\/[^/]+\/actions\/[^/]+$/.test(route.path)
-    ) {
-      // do your hook work here (request.response holds the handler result)
-      console.log(request.path, 'was called with payload:', request.payload)
+  server.ext('onPostHandler', async (request, h) => {
+    const response = request.response as Hapi.ResponseObject
+    const parsedPath = /^\/events\/[^/]+\/actions\/([^/]+)$/.exec(
+      request.route.path
+    )
+    const actionType = parsedPath?.[1] as ActionType | null
+    const wasRequestForActionConfirmation =
+      actionType && request.method === 'post'
+    const wasActionAcceptedImmediately = response.statusCode === 200
+
+    if (wasRequestForActionConfirmation && wasActionAcceptedImmediately) {
+      const payload = request.payload as ActionConfirmationPayload
+      await importEvent(payload.event)
     }
     return h.continue
   })
@@ -656,6 +663,8 @@ export async function createServer() {
 
   async function start() {
     await server.start()
+    await setupAnalyticsUsingAdminRole()
+
     server.log(
       'info',
       `server started on ${COUNTRY_CONFIG_HOST}:${COUNTRY_CONFIG_PORT}`
