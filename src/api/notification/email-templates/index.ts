@@ -95,8 +95,6 @@ export type ChangeEmailAddressVariables = z.infer<
   typeof ChangeEmailAddressVariables
 >
 
-// informant
-
 export const ApproveCorrectionVariables = BaseVariables.extend({
   firstNames: z.string(),
   lastName: z.string(),

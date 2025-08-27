@@ -14,7 +14,6 @@ import {
   aggregateActionDeclarations,
   EventDocument,
   FieldUpdateValue,
-  getAcceptedActions,
   getPendingAction
 } from '@opencrvs/toolkit/events'
 import { applicationConfig } from '../application/application-config'
@@ -24,12 +23,32 @@ import { createClient } from '@opencrvs/toolkit/api'
 import { Event } from '@countryconfig/form/types/types'
 import { InformantType as BirthInformantType } from '@countryconfig/form/v2/birth/forms/pages/informant'
 import { InformantTemplateType } from './sms-service'
-import {
-  generateFailureLog,
-  InformantEventVariablePair,
-  notify
-} from './handler'
+import { generateFailureLog, notify } from './handler'
 import { InformantType as DeathInformantType } from '@countryconfig/form/v2/death/forms/pages/informant'
+
+const resolveName = (name: FieldUpdateValue) => {
+  const nameObj = {
+    firstname: '',
+    middlename: '',
+    surname: ''
+  }
+  if (name && typeof name === 'object') {
+    if ('firstname' in name && typeof name.firstname === 'string') {
+      nameObj.firstname = name.firstname
+    }
+    if ('middlename' in name && typeof name.middlename === 'string') {
+      nameObj.middlename = name.middlename
+    }
+    if ('lastname' in name && typeof name.lastname === 'string') {
+      nameObj.surname = name.lastname
+    }
+  }
+  return {
+    nameObj,
+    fullName:
+      `${nameObj.firstname} ${nameObj.middlename} ${nameObj.surname}`.trim()
+  }
+}
 
 export async function sendInformantNotification({
   event,
@@ -48,7 +67,7 @@ export async function sendInformantNotification({
   const pendingAction = getPendingAction(event.actions)
 
   const declaration = {
-    ...aggregateActionDeclarations(getAcceptedActions(event)),
+    ...aggregateActionDeclarations(event),
     ...pendingAction.declaration
   }
 
@@ -62,29 +81,6 @@ export async function sendInformantNotification({
     registrationLocation: '',
     applicationName,
     countryLogo: COUNTRY_LOGO_URL
-  }
-  const resolveName = (name: FieldUpdateValue) => {
-    const nameObj = {
-      firstname: '',
-      middlename: '',
-      surname: ''
-    }
-    if (name && typeof name === 'object') {
-      if ('firstname' in name && typeof name.firstname === 'string') {
-        nameObj.firstname = name.firstname
-      }
-      if ('middlename' in name && typeof name.middlename === 'string') {
-        nameObj.middlename = name.middlename
-      }
-      if ('lastname' in name && typeof name.lastname === 'string') {
-        nameObj.surname = name.lastname
-      }
-    }
-    return {
-      nameObj,
-      fullName:
-        `${nameObj.firstname} ${nameObj.middlename} ${nameObj.surname}`.trim()
-    }
   }
 
   if (event.type === Event.V2_BIRTH) {
@@ -105,6 +101,10 @@ export async function sendInformantNotification({
       email: typeof informantEmail === 'string' ? informantEmail : undefined,
       mobile: typeof informantMobile === 'string' ? informantMobile : undefined
     }
+    const deliveryInfo = {
+      recipient,
+      deliveryMethod: applicationConfig.INFORMANT_NOTIFICATION_DELIVERY_METHOD
+    }
 
     const commonBirthVariables = {
       ...commonVariables,
@@ -113,24 +113,16 @@ export async function sendInformantNotification({
     }
 
     if (pendingAction.type === ActionType.NOTIFY) {
-      const informantVariablePair: InformantEventVariablePair = {
-        event: InformantTemplateType.birthInProgressNotification,
-        variable: commonBirthVariables
-      }
-
       await notify({
-        ...informantVariablePair,
-        recipient
+        event: InformantTemplateType.birthInProgressNotification,
+        variable: commonBirthVariables,
+        ...deliveryInfo
       })
     } else if (pendingAction.type === ActionType.DECLARE) {
-      const informantVariablePair: InformantEventVariablePair = {
-        event: InformantTemplateType.birthDeclarationNotification,
-        variable: commonBirthVariables
-      }
-
       await notify({
-        ...informantVariablePair,
-        recipient
+        event: InformantTemplateType.birthDeclarationNotification,
+        variable: commonBirthVariables,
+        ...deliveryInfo
       })
     } else if (pendingAction.type === ActionType.REGISTER) {
       if (!registrationNumber) {
@@ -144,28 +136,20 @@ export async function sendInformantNotification({
           reason: 'registration number being missing'
         })
       } else {
-        const informantVariablePair: InformantEventVariablePair = {
+        await notify({
           event: InformantTemplateType.birthRegistrationNotification,
           variable: {
             ...commonBirthVariables,
             registrationNumber
-          }
-        }
-
-        await notify({
-          ...informantVariablePair,
-          recipient
+          },
+          ...deliveryInfo
         })
       }
     } else if (pendingAction.type === ActionType.REJECT) {
-      const informantVariablePair: InformantEventVariablePair = {
-        event: InformantTemplateType.birthRejectionNotification,
-        variable: commonBirthVariables
-      }
-
       await notify({
-        ...informantVariablePair,
-        recipient
+        event: InformantTemplateType.birthRejectionNotification,
+        variable: commonBirthVariables,
+        ...deliveryInfo
       })
     }
   } else if (event.type === Event.V2_DEATH) {
@@ -185,6 +169,11 @@ export async function sendInformantNotification({
       mobile: typeof informantMobile === 'string' ? informantMobile : undefined
     }
 
+    const deliveryInfo = {
+      recipient,
+      deliveryMethod: applicationConfig.INFORMANT_NOTIFICATION_DELIVERY_METHOD
+    }
+
     const commonDeathVariables = {
       ...commonVariables,
       informantName: fullName,
@@ -192,24 +181,16 @@ export async function sendInformantNotification({
     }
 
     if (pendingAction.type === ActionType.NOTIFY) {
-      const informantVariablePair: InformantEventVariablePair = {
-        event: InformantTemplateType.birthInProgressNotification,
-        variable: commonDeathVariables
-      }
-
       await notify({
-        ...informantVariablePair,
-        recipient
+        event: InformantTemplateType.birthInProgressNotification,
+        variable: commonDeathVariables,
+        ...deliveryInfo
       })
     } else if (pendingAction.type === ActionType.DECLARE) {
-      const informantVariablePair: InformantEventVariablePair = {
-        event: InformantTemplateType.birthDeclarationNotification,
-        variable: commonDeathVariables
-      }
-
       await notify({
-        ...informantVariablePair,
-        recipient
+        event: InformantTemplateType.birthDeclarationNotification,
+        variable: commonDeathVariables,
+        ...deliveryInfo
       })
     } else if (pendingAction.type === ActionType.REGISTER) {
       if (!registrationNumber) {
@@ -223,28 +204,20 @@ export async function sendInformantNotification({
           reason: 'registration number being missing'
         })
       } else {
-        const informantVariablePair: InformantEventVariablePair = {
+        await notify({
           event: InformantTemplateType.birthRegistrationNotification,
           variable: {
             ...commonDeathVariables,
             registrationNumber
-          }
-        }
-
-        await notify({
-          ...informantVariablePair,
-          recipient
+          },
+          ...deliveryInfo
         })
       }
     } else if (pendingAction.type === ActionType.REJECT) {
-      const informantVariablePair: InformantEventVariablePair = {
-        event: InformantTemplateType.birthRejectionNotification,
-        variable: commonDeathVariables
-      }
-
       await notify({
-        ...informantVariablePair,
-        recipient
+        event: InformantTemplateType.birthRejectionNotification,
+        variable: commonDeathVariables,
+        ...deliveryInfo
       })
     }
   }

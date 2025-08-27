@@ -15,7 +15,7 @@ vi.mock(import('../application/application-config'), async (importOriginal) => {
   return {
     applicationConfig: {
       ...actual.applicationConfig,
-      USER_NOTIFICATION_DELIVERY_METHOD: 'sms'
+      INFORMANT_NOTIFICATION_DELIVERY_METHOD: 'sms'
     }
   }
 })
