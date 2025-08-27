@@ -1,10 +1,10 @@
 import { countryLogo } from '@countryconfig/api/application/country-logo'
 
 export const applicationConfig = {
-  APPLICATION_NAME: 'Farajaland CRS',
+  APPLICATION_NAME: 'Cook Islands CRVS',
   BIRTH: {
-    REGISTRATION_TARGET: 30,
-    LATE_REGISTRATION_TARGET: 365,
+    REGISTRATION_TARGET: 14,
+    LATE_REGISTRATION_TARGET: 14,
     FEE: {
       ON_TIME: 0,
       LATE: 5.5,
@@ -13,10 +13,10 @@ export const applicationConfig = {
     PRINT_IN_ADVANCE: true
   },
   COUNTRY_LOGO: countryLogo,
-  SYSTEM_IANA_TIMEZONE: 'Asia/Dhaka', // Default timezone for the country. Basis for date and time calculations during searches.
+  SYSTEM_IANA_TIMEZONE: 'Pacific/Rarotonga', // Default timezone for the country. Basis for date and time calculations during searches.
   CURRENCY: {
-    languagesAndCountry: ['en-US'],
-    isoCode: 'USD'
+    languagesAndCountry: ['en-NZ'],
+    isoCode: 'NZD'
   },
   DEATH: {
     REGISTRATION_TARGET: 45,
@@ -45,13 +45,13 @@ export const applicationConfig = {
     DEATH_REGISTRATION: true,
     MARRIAGE_REGISTRATION: false,
     EXTERNAL_VALIDATION_WORKQUEUE: false,
-    PRINT_DECLARATION: false,
+    PRINT_DECLARATION: true,
     DATE_OF_BIRTH_UNKNOWN: true
   },
   USER_NOTIFICATION_DELIVERY_METHOD: 'email', // or 'sms', or '' ... You can use 'sms' for WhatsApp
   INFORMANT_NOTIFICATION_DELIVERY_METHOD: 'email', // or 'sms', or '' ... You can use 'sms' for WhatsApp
   SIGNATURE_REQUIRED_FOR_ROLES: ['LOCAL_REGISTRAR', 'NATIONAL_REGISTRAR'],
-  SEARCH_DEFAULT_CRITERIA: 'TRACKING_ID'
+  SEARCH_DEFAULT_CRITERIA: 'NAME'
   /*
    * SEARCH_DEFAULT_CRITERIA's value can be one of the following
    * | 'TRACKING_ID',

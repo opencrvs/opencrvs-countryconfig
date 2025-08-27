@@ -22,8 +22,8 @@ window.config = {
   MINIO_BUCKET: 'ocrvs',
   COUNTRY_CONFIG_URL: `${scheme}//countryconfig.${hostname}`,
   // Country code in uppercase ALPHA-3 format
-  COUNTRY: 'FAR',
-  LANGUAGES: 'en,fr',
+  COUNTRY: 'COK',
+  LANGUAGES: 'en',
   SENTRY: sentry,
   LEADERBOARDS_DASHBOARD_URL: `${scheme}//metabase.${hostname}/public/dashboard/acae0527-74be-4804-a3ee-f8b3c9c8784c#bordered=false&titled=false&refresh=300`,
   REGISTRATIONS_DASHBOARD_URL: `${scheme}//metabase.${hostname}/public/dashboard/fec78656-e4f9-4b51-b540-0fed81dbd821#bordered=false&titled=false&refresh=300`,

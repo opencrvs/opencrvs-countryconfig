@@ -165,7 +165,7 @@ export const deceased = defineFormPage({
         description: 'This is the label for the field',
         id: `v2.event.death.action.declare.form.section.person.field.nationality.label`
       },
-      defaultValue: 'FAR'
+      defaultValue: 'COK'
     },
     {
       id: `deceased.idType`,
@@ -290,7 +290,7 @@ export const deceased = defineFormPage({
         id: 'v2.event.death.action.declare.form.section.deceased.field.address.label'
       },
       defaultValue: {
-        country: 'FAR',
+        country: 'COK',
         addressType: AddressType.DOMESTIC,
         province: '$user.province',
         district: '$user.district',
