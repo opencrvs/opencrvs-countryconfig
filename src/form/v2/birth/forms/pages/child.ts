@@ -294,7 +294,7 @@ export const child = defineFormPage({
       ]
     },
     {
-      id: 'child.address.privateHome',
+      id: 'child.birthLocation.privateHome',
       type: FieldType.ADDRESS,
       secured: true,
       hideLabel: true,
