@@ -74,29 +74,6 @@ function getInformant(eventType: string, declaration: Record<string, any>) {
   throw new Error('Invalid event type')
 }
 
-function getVariables(
-  declaration: Record<string, any>,
-  informant: FieldUpdateValue
-) {
-  const { nameObj, fullName } = resolveName(informant)
-
-  const informantEmail = declaration['informant.email']
-  const informantMobile = declaration['informant.phoneNo']
-
-  const recipient = {
-    name: nameObj,
-    email: typeof informantEmail === 'string' ? informantEmail : undefined,
-    mobile: typeof informantMobile === 'string' ? informantMobile : undefined
-  }
-
-  return {
-    informantName: fullName,
-    name: resolveName(declaration['child.name']).fullName,
-    recipient,
-    deliveryMethod: applicationConfig.INFORMANT_NOTIFICATION_DELIVERY_METHOD
-  }
-}
-
 async function getNotificationParams(
   event: EventDocument,
   token: string,
@@ -111,10 +88,21 @@ async function getNotificationParams(
   }
 
   const informant = getInformant(event.type, declaration)
-  const variables = getVariables(declaration, informant)
+  const { nameObj, fullName } = resolveName(informant)
 
-  const deliveryInfo = {
-    recipient: variables.recipient,
+  const informantEmail = declaration['informant.email']
+  const informantMobile = declaration['informant.phoneNo']
+
+  const recipient = {
+    name: nameObj,
+    email: typeof informantEmail === 'string' ? informantEmail : undefined,
+    mobile: typeof informantMobile === 'string' ? informantMobile : undefined
+  }
+
+  const variables = {
+    informantName: fullName,
+    name: resolveName(declaration['child.name']).fullName,
+    recipient,
     deliveryMethod: applicationConfig.INFORMANT_NOTIFICATION_DELIVERY_METHOD
   }
 
@@ -130,7 +118,8 @@ async function getNotificationParams(
       countryLogo: COUNTRY_LOGO_URL,
       ...variables
     },
-    ...deliveryInfo
+    recipient: variables.recipient,
+    deliveryMethod: applicationConfig.INFORMANT_NOTIFICATION_DELIVERY_METHOD
   }
 
   if (pendingAction.type === ActionType.NOTIFY) {
