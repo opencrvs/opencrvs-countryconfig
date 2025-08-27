@@ -46,14 +46,14 @@ test.describe('Action menu options', () => {
       await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
       await page.getByRole('button', { name: 'Ready for review' }).click()
       const options = await getActionMenuOptions(page, declaration)
-      expect(options).toStrictEqual(['Assign', 'View', 'Review'])
+      expect(options).toStrictEqual(['Assign', 'View', 'Review', 'Archive'])
     })
 
     test('Local Registrar', async () => {
       await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
       await page.getByRole('button', { name: 'Ready for review' }).click()
       const options = await getActionMenuOptions(page, declaration)
-      expect(options).toStrictEqual(['Assign', 'View', 'Review'])
+      expect(options).toStrictEqual(['Assign', 'View', 'Review', 'Archive'])
     })
   })
 
@@ -73,7 +73,7 @@ test.describe('Action menu options', () => {
       await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
       await page.getByRole('button', { name: 'Ready for review' }).click()
       const options = await getActionMenuOptions(page, declaration)
-      expect(options).toStrictEqual(['Unassign', 'View', 'Review'])
+      expect(options).toStrictEqual(['Unassign', 'View', 'Review', 'Archive'])
     })
   })
 

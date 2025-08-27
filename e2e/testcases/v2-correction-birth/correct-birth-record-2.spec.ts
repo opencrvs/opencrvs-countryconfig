@@ -286,7 +286,7 @@ test.describe.serial('Correct record - 2', () => {
 
       await expect(
         page.getByText('Exact date of birth unknown' + '-' + 'Yes')
-      ).toBeVisible()
+      ).not.toBeVisible()
 
       await expect(
         page.getByText('Age of informant' + updatedInformantDetails.age)
