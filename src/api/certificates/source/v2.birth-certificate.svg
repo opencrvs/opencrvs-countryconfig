@@ -78,7 +78,7 @@
   </text>
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" letter-spacing="0px">
-    <tspan x="80.9999" y="701.112">{{$lookup $metadata 'updatedAtLocation.location'}}</tspan>
+    <tspan x="80.9999" y="701.112">{{$lookup $metadata 'updatedAtLocation.name'}}</tspan>
     <tspan x="80.9999" y="713.912">{{$lookup $metadata 'updatedAtLocation.district'}}, {{$lookup $metadata 'updatedAtLocation.province'}}, {{$lookup $metadata 'createdAtLocation.country'}}</tspan>
   </text>
   <!--<text
@@ -197,7 +197,7 @@
       <text fill="#222222" xml:space="preserve" style="white-space: pre"
         font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
       {{#ifCond ($lookup $declaration "child.birthLocation") '!==' undefined }}
-        <tspan x="289.95" y="347.054">{{$lookup $declaration 'child.birthLocation.location'}}&#10;</tspan>
+        <tspan x="289.95" y="347.054">{{$lookup $declaration 'child.birthLocation.name'}}&#10;</tspan>
         <tspan x="289.95" y="362.054">{{$lookup $declaration 'child.birthLocation.district'}}, {{$lookup $declaration 'child.birthLocation.province'}}, {{$lookup $declaration 'child.birthLocation.country'}}</tspan>
       {{else}}
         {{#ifCond ($lookup $declaration 'child.address.other') '!==' undefined }}
@@ -274,7 +274,7 @@
     <g clip-path="url(#clip10_1157_5003)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre"
         font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
-        <tspan x="289.95" y="471.974">{{$lookup $metadata "createdAtLocation.location"}}&#x2028;</tspan>
+        <tspan x="289.95" y="471.974">{{$lookup $metadata "createdAtLocation.name"}}&#x2028;</tspan>
         <tspan x="289.95" y="486.974">{{$lookup $metadata "createdAtLocation.district"}}, {{$lookup $metadata "createdAtLocation.province"}}, {{$lookup $metadata "createdAtLocation.country"}}</tspan>
       </text>
     </g>
