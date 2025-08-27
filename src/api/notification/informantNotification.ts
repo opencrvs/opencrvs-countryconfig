@@ -12,6 +12,7 @@
 import {
   ActionType,
   aggregateActionDeclarations,
+  deepMerge,
   EventDocument,
   FieldUpdateValue,
   getPendingAction
@@ -82,10 +83,10 @@ async function getNotificationParams(
   const pendingAction = getPendingAction(event.actions)
   const locations = await getLocations(token)
 
-  const declaration = {
-    ...aggregateActionDeclarations(event),
-    ...pendingAction.declaration
-  }
+  const declaration = deepMerge(
+    aggregateActionDeclarations(event),
+    pendingAction.declaration
+  )
 
   const informant = getInformant(event.type, declaration)
   const { nameObj, fullName } = resolveName(informant)
