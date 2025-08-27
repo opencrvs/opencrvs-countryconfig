@@ -56,11 +56,11 @@ export async function emailHandler(
         { ...payload, from: maskEmail(payload.from), to: maskEmail(payload.to) }
       )}`
     )
+
     return h.response().code(200)
   }
 
   await sendEmail(payload)
-
   return h.response().code(200)
 }
 
@@ -131,19 +131,21 @@ export async function sendUserNotification<T extends TriggerEvent>(
   })
 }
 
-export async function notify({
-  event,
-  variable,
-  recipient,
-  deliveryMethod
-}: {
+export interface NotificationParams {
   event: UserEventVariablePair['event'] | InformantEventVariablePair['event']
   variable:
     | UserEventVariablePair['variable']
     | InformantEventVariablePair['variable']
   recipient: Recipient
   deliveryMethod: string
-}) {
+}
+
+export async function notify({
+  event,
+  variable,
+  recipient,
+  deliveryMethod
+}: NotificationParams) {
   const { email, mobile, name } = recipient
 
   if (deliveryMethod === 'email') {
@@ -155,11 +157,11 @@ export async function notify({
         reason:
           "Not having recipient email when USER_NOTIFICATION_DELIVERY_METHOD is 'email'"
       })
+
       return
     }
 
     const template = getTemplate(event)
-
     const emailBody = renderTemplate(template, variable)
 
     if (process.env.NODE_ENV === 'development') {
@@ -174,7 +176,11 @@ export async function notify({
       from: SENDER_EMAIL_ADDRESS,
       to: email
     })
-  } else if (deliveryMethod === 'sms') {
+
+    return
+  }
+
+  if (deliveryMethod === 'sms') {
     if (!mobile) {
       generateFailureLog({
         contact: { mobile, email },
@@ -187,15 +193,17 @@ export async function notify({
     }
 
     await sendSMS(getSMSTemplate(event), variable, mobile, 'en')
-  } else {
-    generateFailureLog({
-      contact: { mobile, email },
-      name,
-      event,
-      reason: `Invalid USER_NOTIFICATION_DELIVERY_METHOD. Options are 'email' or 'sms'. Found ${deliveryMethod}`
-    })
     return
   }
+
+  generateFailureLog({
+    contact: { mobile, email },
+    name,
+    event,
+    reason: `Invalid USER_NOTIFICATION_DELIVERY_METHOD. Options are 'email' or 'sms'. Found ${deliveryMethod}`
+  })
+
+  return
 }
 
 export type UserEventVariablePair<T extends TriggerEvent = TriggerEvent> = {
