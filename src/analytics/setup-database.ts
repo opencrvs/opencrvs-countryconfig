@@ -12,7 +12,6 @@
 import { ADMIN_DATABASE_URL } from '@countryconfig/constants'
 import { Kysely, PostgresDialect, sql } from 'kysely'
 import { Pool } from 'pg'
-import { getClient } from './postgres'
 
 /**
  * Creates a Postgres user ("role") if it does not already exist. The user is only granted an access to the analytics data.
@@ -41,46 +40,12 @@ function createAnalyticsTables(trx: Kysely<any>) {
     SELECT * FROM app.locations;
 
     CREATE TABLE IF NOT EXISTS analytics.events (
-      id uuid DEFAULT gen_random_uuid() NOT NULL,
+      id uuid NOT NULL UNIQUE,
       event_type text NOT NULL,
-      transaction_id text NOT NULL,
-      tracking_id text NOT NULL,
-      created_at timestamp with time zone DEFAULT now() NOT NULL,
-      updated_at timestamp with time zone DEFAULT now() NOT NULL,
-      CONSTRAINT events_pkey PRIMARY KEY (id),
-      CONSTRAINT events_tracking_id_key UNIQUE (tracking_id),
-      CONSTRAINT events_transaction_id_event_type_key UNIQUE (transaction_id, event_type)
-    );
-
-    CREATE TABLE IF NOT EXISTS analytics.event_actions (
-      action_type app.action_type NOT NULL,
-      annotation jsonb,
-      assigned_to text,
-      created_at timestamp with time zone DEFAULT now() NOT NULL,
-      created_at_location uuid,
-      created_by text NOT NULL,
-      created_by_role text NOT NULL,
-      created_by_signature text,
-      created_by_user_type app.user_type NOT NULL,
+      tracking_id text NOT NULL UNIQUE,
       declaration jsonb DEFAULT '{}'::jsonb NOT NULL,
-      event_id uuid NOT NULL,
-      id uuid DEFAULT gen_random_uuid() NOT NULL,
-      original_action_id uuid,
-      reason_is_duplicate boolean,
-      reason_message text,
-      registration_number text,
-      request_id text,
-      status app.action_status NOT NULL,
-      transaction_id text NOT NULL,
-      content jsonb,
-      -- calculated current state at the time of this action
-      current_state jsonb DEFAULT '{}'::jsonb NOT NULL,
-      UNIQUE (transaction_id, action_type),
-      CONSTRAINT event_actions_pkey PRIMARY KEY (id),
-      CONSTRAINT event_actions_event_id_fkey
-        FOREIGN KEY (event_id) REFERENCES analytics.events(id),
-      CONSTRAINT event_actions_created_at_location_fkey
-        FOREIGN KEY (created_at_location) REFERENCES app.locations(id)
+      created_at timestamp with time zone DEFAULT now() NOT NULL,
+      updated_at timestamp with time zone DEFAULT now() NOT NULL
     );
   `.execute(trx)
 }
@@ -97,7 +62,7 @@ async function grantAccessToUser(roleName: string, trx: Kysely<any>) {
     .execute(trx)
 }
 
-export async function provisionAnalyticsWithAdmin() {
+export async function setupAnalyticsUsingAdminRole() {
   const roleName = 'events_analytics'
   const rolePassword = process.env.ANALYTICS_DB_PASSWORD ?? 'analytics_password'
 
@@ -117,12 +82,4 @@ export async function provisionAnalyticsWithAdmin() {
   } finally {
     await admin.destroy()
   }
-}
-
-export async function smokeTestAnalytics() {
-  const client = getClient()
-
-  await sql`SELECT 1 FROM analytics.events LIMIT 1`.execute(client)
-  await sql`SELECT 1 FROM analytics.event_actions LIMIT 1`.execute(client)
-  await sql`SELECT 1 FROM analytics.locations LIMIT 1`.execute(client)
 }

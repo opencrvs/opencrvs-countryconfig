@@ -68,11 +68,8 @@ import { Event } from './form/types/types'
 import { onRegisterHandler } from './api/registration'
 import { workqueueconfigHandler } from './api/workqueue/handler'
 import getUserNotificationRoutes from './config/routes/userNotificationRoutes'
-import {
-  provisionAnalyticsWithAdmin,
-  smokeTestAnalytics
-} from './analytics/database'
-import { importEvent } from './analytics/events'
+import { setupAnalyticsUsingAdminRole } from './analytics/setup-database'
+import { importEvent } from './analytics/analytics'
 
 export interface ITokenPayload {
   sub: string
@@ -644,9 +641,12 @@ export async function createServer() {
 
   server.ext('onPostHandler', async (request, h) => {
     const response = request.response as Hapi.ResponseObject
+    const parsedPath = /^\/events\/[^/]+\/actions\/([^/]+)$/.exec(
+      request.route.path
+    )
+    const actionType = parsedPath?.[1] as ActionType | null
     const wasRequestForActionConfirmation =
-      request.method === 'post' &&
-      /^\/events\/[^/]+\/actions\/[^/]+$/.test(request.route.path)
+      actionType && request.method === 'post'
     const wasActionAcceptedImmediately = response.statusCode === 200
 
     if (wasRequestForActionConfirmation && wasActionAcceptedImmediately) {
@@ -663,8 +663,7 @@ export async function createServer() {
 
   async function start() {
     await server.start()
-    await provisionAnalyticsWithAdmin()
-    await smokeTestAnalytics()
+    await setupAnalyticsUsingAdminRole()
 
     server.log(
       'info',
