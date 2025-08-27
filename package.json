@@ -38,7 +38,6 @@
     "@types/hapi__inert": "5.2.1",
     "@types/inquirer": "^9.0.7",
     "@types/libsodium-wrappers": "^0.7.10",
-    "@types/minimist": "^1.2.5",
     "@types/pg": "^8.15.5",
     "@types/prompts": "^2.4.9",
     "@types/react-intl": "^3.0.0",
@@ -83,7 +82,6 @@
     "@types/stream-json": "^1.7.8",
     "app-module-path": "^2.2.0",
     "chalk": "^2.4.1",
-    "country-data": "^0.0.31",
     "cross-env": "^6.0.3",
     "csv-stringify": "^6.4.6",
     "csv2json": "^2.0.2",
@@ -100,12 +98,10 @@
     "kysely": "^0.28.5",
     "lodash": "^4.17.21",
     "luxon": "^3.7.1",
-    "minimist": "^1.2.8",
     "nanoid": "3",
     "node-fetch": "^2.6.1",
     "nodemailer": "^6.9.8",
     "opener": "^1.5.1",
-    "p-queue": "^6.6.2",
     "pg": "^8.16.3",
     "pino": "^7.0.0",
     "prompts": "^2.4.2",
@@ -129,7 +125,6 @@
     ]
   },
   "resolutions": {
-    "minimist": "^1.2.2",
     "acorn": "^6.4.1"
   }
 }
