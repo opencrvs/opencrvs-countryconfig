@@ -101,7 +101,11 @@ async function getNotificationParams(
 
   const variables = {
     informantName: fullName,
-    name: resolveName(declaration['child.name']).fullName,
+    name: resolveName(
+      event.type === Event.V2_BIRTH
+        ? declaration['child.name']
+        : declaration['deceased.name']
+    ).fullName,
     recipient,
     deliveryMethod: applicationConfig.INFORMANT_NOTIFICATION_DELIVERY_METHOD
   }
@@ -124,14 +128,20 @@ async function getNotificationParams(
 
   if (pendingAction.type === ActionType.NOTIFY) {
     return {
-      event: InformantTemplateType.birthInProgressNotification,
+      event:
+        event.type === Event.V2_BIRTH
+          ? InformantTemplateType.birthInProgressNotification
+          : InformantTemplateType.deathInProgressNotification,
       ...params
     }
   }
 
   if (pendingAction.type === ActionType.DECLARE) {
     return {
-      event: InformantTemplateType.birthDeclarationNotification,
+      event:
+        event.type === Event.V2_BIRTH
+          ? InformantTemplateType.birthDeclarationNotification
+          : InformantTemplateType.deathDeclarationNotification,
       ...params
     }
   }
@@ -142,7 +152,10 @@ async function getNotificationParams(
       generateFailureLog({
         contact: { mobile, email },
         name,
-        event: InformantTemplateType.birthRegistrationNotification,
+        event:
+          event.type === Event.V2_BIRTH
+            ? InformantTemplateType.birthRegistrationNotification
+            : InformantTemplateType.deathRegistrationNotification,
         reason: 'registration number being missing'
       })
 
@@ -150,7 +163,10 @@ async function getNotificationParams(
     }
 
     return {
-      event: InformantTemplateType.birthRegistrationNotification,
+      event:
+        event.type === Event.V2_BIRTH
+          ? InformantTemplateType.birthRegistrationNotification
+          : InformantTemplateType.deathRegistrationNotification,
       ...params,
       variable: { ...params.variable, registrationNumber }
     }
@@ -158,7 +174,10 @@ async function getNotificationParams(
 
   if (pendingAction.type === ActionType.REJECT) {
     return {
-      event: InformantTemplateType.birthRejectionNotification,
+      event:
+        event.type === Event.V2_BIRTH
+          ? InformantTemplateType.birthRejectionNotification
+          : InformantTemplateType.deathRejectionNotification,
       ...params
     }
   }
