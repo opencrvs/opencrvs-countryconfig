@@ -57,6 +57,7 @@ export const testData: TriggerEventPayloadPair[] = [
       recipient,
       temporaryPassword: 'tempPass123',
       admin: {
+        primaryOfficeId: '028d2c85-ca31-426d-b5d1-2cef545a4902',
         name: [
           {
             use: 'en',
