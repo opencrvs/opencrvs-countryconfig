@@ -63,13 +63,18 @@ import {
   onAnyActionHandler
 } from '@countryconfig/api/custom-event/handler'
 import { readFileSync } from 'fs'
-import { ActionConfirmationPayload, ActionType } from '@opencrvs/toolkit/events'
+import {
+  ActionConfirmationPayload,
+  ActionType,
+  EventDocument
+} from '@opencrvs/toolkit/events'
 import { Event } from './form/types/types'
 import { onRegisterHandler } from './api/registration'
 import { workqueueconfigHandler } from './api/workqueue/handler'
 import getUserNotificationRoutes from './config/routes/userNotificationRoutes'
 import { setupAnalyticsUsingAdminRole } from './analytics/setup-database'
-import { importEvent } from './analytics/analytics'
+import { importEvent, importEvents } from './analytics/analytics'
+import { getClient } from './analytics/postgres'
 
 export interface ITokenPayload {
   sub: string
@@ -565,11 +570,23 @@ export async function createServer() {
     },
     handler: async (req, h) => {
       const stream = req.raw.req.pipe(StreamArray.withParser())
+      const BATCH_SIZE = 1000
+      const queue: EventDocument[] = []
+      const client = getClient()
 
-      for await (const { value } of stream) {
-        // eslint-disable-next-line no-console
-        console.log(value)
-      }
+      await client.transaction().execute(async (trx) => {
+        for await (const { value } of stream) {
+          queue.push(value)
+
+          if (queue.length >= BATCH_SIZE) {
+            await importEvents(value, trx)
+          }
+        }
+
+        if (queue.length > 0) {
+          await importEvents(queue, trx)
+        }
+      })
 
       return h.response().code(200)
     }
@@ -647,7 +664,8 @@ export async function createServer() {
 
     if (wasRequestForActionConfirmation && wasActionAcceptedImmediately) {
       const payload = request.payload as ActionConfirmationPayload
-      await importEvent(payload.event)
+      const db = getClient()
+      await importEvent(payload.event, db)
     }
     return h.continue
   })

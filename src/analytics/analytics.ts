@@ -9,36 +9,32 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import {
-  Action,
-  ActionType,
-  EventDocument,
-  getCurrentEventState
-} from '@opencrvs/toolkit/events'
-import { getClient } from './postgres'
+import { EventDocument, getCurrentEventState } from '@opencrvs/toolkit/events'
 import { birthEvent } from '@countryconfig/form/v2/birth'
 import { deathEvent } from '@countryconfig/form/v2/death'
 import { Event } from '@countryconfig/form/types/types'
+import { Kysely, sql } from 'kysely'
+import { compact as removeNulls } from 'lodash'
 
-export const upsertAnalyticsEvent = async (
-  id: string,
-  eventType: string,
-  trackingId: string,
+interface AnalyticsEvent {
+  id: string
+
+  eventType: string
+  trackingId: string
   declaration: Record<string, any>
+}
+
+export const upsertAnalyticsEvents = async (
+  values: Array<AnalyticsEvent>,
+  trx: Kysely<any>
 ) => {
-  const client = getClient()
-  return client
+  return trx
     .insertInto('analytics.events')
-    .values({
-      id,
-      eventType,
-      trackingId,
-      declaration
-    })
+    .values(values)
     .onConflict((oc) =>
       oc.column('id').doUpdateSet({
-        declaration,
-        updatedAt: new Date()
+        declaration: sql`excluded.declaration`,
+        updatedAt: sql`now()`
       })
     )
     .returningAll()
@@ -60,20 +56,38 @@ function getEventConfig(eventType: string) {
   return null
 }
 
-export const importEvent = async (event: EventDocument) => {
+function addCurrentStateToEvent(event: EventDocument) {
   const eventConfig = getEventConfig(event.type)
 
   if (!eventConfig) {
     // Ignoring ${event.type} for analytics
-    return
+    return null
   }
 
   const declaration = getCurrentEventState(event, eventConfig)
 
-  return upsertAnalyticsEvent(
-    event.id,
-    event.type,
-    event.trackingId,
+  return {
+    id: event.id,
+    eventType: event.type,
+    trackingId: event.trackingId,
     declaration
-  )
+  }
+}
+
+export function importEvent(event: EventDocument, trx: Kysely<any>) {
+  const declaration = addCurrentStateToEvent(event)
+
+  if (!declaration)
+    // Ignoring ${event.type} for analytics
+    return
+
+  return upsertAnalyticsEvents([declaration], trx)
+}
+
+export const importEvents = async (
+  events: EventDocument[],
+  trx: Kysely<any>
+) => {
+  const eventsWithCurrentState = events.map(addCurrentStateToEvent)
+  return upsertAnalyticsEvents(removeNulls(eventsWithCurrentState), trx)
 }
