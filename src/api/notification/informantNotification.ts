@@ -23,7 +23,7 @@ import { createClient } from '@opencrvs/toolkit/api'
 import { Event } from '@countryconfig/form/types/types'
 import { InformantType as BirthInformantType } from '@countryconfig/form/v2/birth/forms/pages/informant'
 import { InformantTemplateType } from './sms-service'
-import { generateFailureLog, notify } from './handler'
+import { generateFailureLog, NotificationParams, notify } from './handler'
 import { InformantType as DeathInformantType } from '@countryconfig/form/v2/death/forms/pages/informant'
 
 const resolveName = (name: FieldUpdateValue) => {
@@ -50,6 +50,141 @@ const resolveName = (name: FieldUpdateValue) => {
   }
 }
 
+async function getLocations(token: string) {
+  const url = new URL('events', GATEWAY_URL).toString()
+  const client = createClient(url, `Bearer ${token}`)
+  return client.locations.get.query()
+}
+
+function getInformant(eventType: string, declaration: Record<string, any>) {
+  if (eventType === Event.V2_BIRTH) {
+    return declaration['informant.relation'] === BirthInformantType.MOTHER
+      ? declaration['mother.name']
+      : declaration['informant.relation'] === BirthInformantType.FATHER
+        ? declaration['father.name']
+        : declaration['informant.name']
+  }
+
+  if (eventType === Event.V2_DEATH) {
+    return declaration['informant.relation'] === DeathInformantType.SPOUSE
+      ? declaration['spouse.name']
+      : declaration['informant.name']
+  }
+
+  throw new Error('Invalid event type')
+}
+
+async function getNotificationParams(
+  event: EventDocument,
+  token: string,
+  registrationNumber?: string
+): Promise<NotificationParams> {
+  const pendingAction = getPendingAction(event.actions)
+  const locations = await getLocations(token)
+
+  const declaration = {
+    ...aggregateActionDeclarations(event),
+    ...pendingAction.declaration
+  }
+
+  const informant = getInformant(event.type, declaration)
+  const { nameObj, fullName } = resolveName(informant)
+
+  const informantEmail = declaration['informant.email']
+  const informantMobile = declaration['informant.phoneNo']
+
+  const recipient = {
+    name: nameObj,
+    email: typeof informantEmail === 'string' ? informantEmail : undefined,
+    mobile: typeof informantMobile === 'string' ? informantMobile : undefined
+  }
+
+  const variables = {
+    informantName: fullName,
+    name: resolveName(
+      event.type === Event.V2_BIRTH
+        ? declaration['child.name']
+        : declaration['deceased.name']
+    ).fullName,
+    recipient,
+    deliveryMethod: applicationConfig.INFORMANT_NOTIFICATION_DELIVERY_METHOD
+  }
+
+  const params = {
+    variable: {
+      trackingId: event.trackingId,
+      crvsOffice:
+        (locations ?? []).find(
+          ({ id }) => id === pendingAction.createdAtLocation
+        )?.name || '',
+      registrationLocation: '',
+      applicationName: applicationConfig.APPLICATION_NAME,
+      countryLogo: COUNTRY_LOGO_URL,
+      ...variables
+    },
+    recipient: variables.recipient,
+    deliveryMethod: applicationConfig.INFORMANT_NOTIFICATION_DELIVERY_METHOD
+  }
+
+  if (pendingAction.type === ActionType.NOTIFY) {
+    return {
+      event:
+        event.type === Event.V2_BIRTH
+          ? InformantTemplateType.birthInProgressNotification
+          : InformantTemplateType.deathInProgressNotification,
+      ...params
+    }
+  }
+
+  if (pendingAction.type === ActionType.DECLARE) {
+    return {
+      event:
+        event.type === Event.V2_BIRTH
+          ? InformantTemplateType.birthDeclarationNotification
+          : InformantTemplateType.deathDeclarationNotification,
+      ...params
+    }
+  }
+
+  if (pendingAction.type === ActionType.REGISTER) {
+    if (!registrationNumber) {
+      const { mobile, email, name } = variables.recipient || {}
+      generateFailureLog({
+        contact: { mobile, email },
+        name,
+        event:
+          event.type === Event.V2_BIRTH
+            ? InformantTemplateType.birthRegistrationNotification
+            : InformantTemplateType.deathRegistrationNotification,
+        reason: 'registration number being missing'
+      })
+
+      throw new Error('Registration number is missing')
+    }
+
+    return {
+      event:
+        event.type === Event.V2_BIRTH
+          ? InformantTemplateType.birthRegistrationNotification
+          : InformantTemplateType.deathRegistrationNotification,
+      ...params,
+      variable: { ...params.variable, registrationNumber }
+    }
+  }
+
+  if (pendingAction.type === ActionType.REJECT) {
+    return {
+      event:
+        event.type === Event.V2_BIRTH
+          ? InformantTemplateType.birthRejectionNotification
+          : InformantTemplateType.deathRejectionNotification,
+      ...params
+    }
+  }
+
+  throw new Error('Invalid event type')
+}
+
 export async function sendInformantNotification({
   event,
   token,
@@ -59,168 +194,15 @@ export async function sendInformantNotification({
   token: string
   registrationNumber?: string
 }) {
-  const url = new URL('events', GATEWAY_URL).toString()
-  const client = createClient(url, `Bearer ${token}`)
+  try {
+    const notificationParams = await getNotificationParams(
+      event,
+      token,
+      registrationNumber
+    )
 
-  const locations = await client.locations.get.query()
-
-  const pendingAction = getPendingAction(event.actions)
-
-  const declaration = {
-    ...aggregateActionDeclarations(event),
-    ...pendingAction.declaration
+    await notify(notificationParams)
+  } catch (error) {
+    console.log(error)
   }
-
-  const applicationName = applicationConfig.APPLICATION_NAME
-
-  const commonVariables = {
-    trackingId: event.trackingId,
-    crvsOffice:
-      (locations ?? []).find(({ id }) => id === pendingAction.createdAtLocation)
-        ?.name || '',
-    registrationLocation: '',
-    applicationName,
-    countryLogo: COUNTRY_LOGO_URL
-  }
-
-  if (event.type === Event.V2_BIRTH) {
-    const informantName =
-      declaration['informant.relation'] === BirthInformantType.MOTHER
-        ? declaration['mother.name']
-        : declaration['informant.relation'] === BirthInformantType.FATHER
-          ? declaration['father.name']
-          : declaration['informant.name']
-
-    const { nameObj, fullName } = resolveName(informantName)
-
-    const informantEmail = declaration['informant.email']
-    const informantMobile = declaration['informant.phoneNo']
-
-    const recipient = {
-      name: nameObj,
-      email: typeof informantEmail === 'string' ? informantEmail : undefined,
-      mobile: typeof informantMobile === 'string' ? informantMobile : undefined
-    }
-    const deliveryInfo = {
-      recipient,
-      deliveryMethod: applicationConfig.INFORMANT_NOTIFICATION_DELIVERY_METHOD
-    }
-
-    const commonBirthVariables = {
-      ...commonVariables,
-      informantName: fullName,
-      name: resolveName(declaration['child.name']).fullName
-    }
-
-    if (pendingAction.type === ActionType.NOTIFY) {
-      await notify({
-        event: InformantTemplateType.birthInProgressNotification,
-        variable: commonBirthVariables,
-        ...deliveryInfo
-      })
-    } else if (pendingAction.type === ActionType.DECLARE) {
-      await notify({
-        event: InformantTemplateType.birthDeclarationNotification,
-        variable: commonBirthVariables,
-        ...deliveryInfo
-      })
-    } else if (pendingAction.type === ActionType.REGISTER) {
-      if (!registrationNumber) {
-        generateFailureLog({
-          contact: {
-            mobile: recipient.mobile,
-            email: recipient.email
-          },
-          name: recipient.name,
-          event: InformantTemplateType.birthRegistrationNotification,
-          reason: 'registration number being missing'
-        })
-      } else {
-        await notify({
-          event: InformantTemplateType.birthRegistrationNotification,
-          variable: {
-            ...commonBirthVariables,
-            registrationNumber
-          },
-          ...deliveryInfo
-        })
-      }
-    } else if (pendingAction.type === ActionType.REJECT) {
-      await notify({
-        event: InformantTemplateType.birthRejectionNotification,
-        variable: commonBirthVariables,
-        ...deliveryInfo
-      })
-    }
-  } else if (event.type === Event.V2_DEATH) {
-    const informantName =
-      declaration['informant.relation'] === DeathInformantType.SPOUSE
-        ? declaration['spouse.name']
-        : declaration['informant.name']
-
-    const { nameObj, fullName } = resolveName(informantName)
-
-    const informantEmail = declaration['informant.email']
-    const informantMobile = declaration['informant.phoneNo']
-
-    const recipient = {
-      name: nameObj,
-      email: typeof informantEmail === 'string' ? informantEmail : undefined,
-      mobile: typeof informantMobile === 'string' ? informantMobile : undefined
-    }
-
-    const deliveryInfo = {
-      recipient,
-      deliveryMethod: applicationConfig.INFORMANT_NOTIFICATION_DELIVERY_METHOD
-    }
-
-    const commonDeathVariables = {
-      ...commonVariables,
-      informantName: fullName,
-      name: resolveName(declaration['deceased.name']).fullName
-    }
-
-    if (pendingAction.type === ActionType.NOTIFY) {
-      await notify({
-        event: InformantTemplateType.birthInProgressNotification,
-        variable: commonDeathVariables,
-        ...deliveryInfo
-      })
-    } else if (pendingAction.type === ActionType.DECLARE) {
-      await notify({
-        event: InformantTemplateType.birthDeclarationNotification,
-        variable: commonDeathVariables,
-        ...deliveryInfo
-      })
-    } else if (pendingAction.type === ActionType.REGISTER) {
-      if (!registrationNumber) {
-        generateFailureLog({
-          contact: {
-            mobile: recipient.mobile,
-            email: recipient.email
-          },
-          name: recipient.name,
-          event: InformantTemplateType.birthRegistrationNotification,
-          reason: 'registration number being missing'
-        })
-      } else {
-        await notify({
-          event: InformantTemplateType.birthRegistrationNotification,
-          variable: {
-            ...commonDeathVariables,
-            registrationNumber
-          },
-          ...deliveryInfo
-        })
-      }
-    } else if (pendingAction.type === ActionType.REJECT) {
-      await notify({
-        event: InformantTemplateType.birthRejectionNotification,
-        variable: commonDeathVariables,
-        ...deliveryInfo
-      })
-    }
-  }
-
-  return
 }
