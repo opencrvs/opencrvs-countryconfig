@@ -60,7 +60,7 @@ describe('Informant notification - Email', () => {
         await server.server.inject({
           method: 'POST',
           url: `/trigger/events/${eventType}/actions/${actionType}`,
-          payload: { event: eventDocument },
+          payload: eventDocument,
           auth: {
             strategy: 'jwt',
             credentials: {},
