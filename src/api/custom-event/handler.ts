@@ -32,7 +32,7 @@ export async function onAnyActionHandler(
 
   const token = request.auth.artifacts.token as string
 
-  const { event } = request.payload
+  const event = request.payload
   await sendInformantNotification({ event, token })
 
   return h.response().code(200)

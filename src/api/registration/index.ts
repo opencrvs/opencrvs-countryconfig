@@ -21,9 +21,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { sendInformantNotification } from '../notification/informantNotification'
 
 export interface ActionConfirmationRequest extends Hapi.Request {
-  payload: {
-    event: EventDocument
-  }
+  payload: EventDocument
 }
 
 /* eslint-disable no-unused-vars */
@@ -57,7 +55,7 @@ export async function onRegisterHandler(
   h: Hapi.ResponseToolkit
 ) {
   const token = request.auth.artifacts.token as string
-  const { event } = request.payload
+  const event = request.payload
   const eventId = event.id
   const action = getPendingAction(event.actions)
 
