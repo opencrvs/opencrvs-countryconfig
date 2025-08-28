@@ -11,7 +11,7 @@
 require('app-module-path').addPath(require('path').join(__dirname))
 require('dotenv').config()
 
-import fetch from 'node-fetch'
+import StreamArray from 'stream-json/streamers/StreamArray'
 import path from 'path'
 import Handlebars from 'handlebars'
 import * as Hapi from '@hapi/hapi'
@@ -19,6 +19,7 @@ import * as Pino from 'hapi-pino'
 import * as JWT from 'hapi-auth-jwt2'
 import * as inert from '@hapi/inert'
 import * as Sentry from 'hapi-sentry'
+import fetch from 'node-fetch'
 import {
   CLIENT_APP_URL,
   DOMAIN,
@@ -62,11 +63,18 @@ import {
   onAnyActionHandler
 } from '@countryconfig/api/custom-event/handler'
 import { readFileSync } from 'fs'
-import { ActionType } from '@opencrvs/toolkit/events'
+import {
+  ActionConfirmationPayload,
+  ActionType,
+  EventDocument
+} from '@opencrvs/toolkit/events'
 import { Event } from './form/types/types'
 import { onRegisterHandler } from './api/registration'
 import { workqueueconfigHandler } from './api/workqueue/handler'
 import getUserNotificationRoutes from './config/routes/userNotificationRoutes'
+import { setupAnalyticsUsingAdminRole } from './analytics/setup-database'
+import { importEvent, importEvents } from './analytics/analytics'
+import { getClient } from './analytics/postgres'
 
 export interface ITokenPayload {
   sub: string
@@ -552,6 +560,40 @@ export async function createServer() {
   })
 
   server.route({
+    method: 'POST',
+    path: '/reindex',
+    options: {
+      payload: {
+        output: 'stream',
+        parse: false
+      }
+    },
+    handler: async (req, h) => {
+      const stream = req.raw.req.pipe(StreamArray.withParser())
+      const BATCH_SIZE = 1000
+      const queue: EventDocument[] = []
+      const client = getClient()
+
+      await client.transaction().execute(async (trx) => {
+        for await (const { value } of stream) {
+          queue.push(value)
+
+          if (queue.length >= BATCH_SIZE) {
+            await importEvents(queue, trx)
+            queue.length = 0
+          }
+        }
+
+        if (queue.length > 0) {
+          await importEvents(queue, trx)
+        }
+      })
+
+      return h.response().code(200)
+    }
+  })
+
+  server.route({
     method: 'GET',
     path: '/events',
     handler: getCustomEventsHandler,
@@ -611,6 +653,24 @@ export async function createServer() {
     }
   })
 
+  server.ext('onPostHandler', async (request, h) => {
+    const response = request.response as Hapi.ResponseObject
+    const parsedPath = /^\/events\/[^/]+\/actions\/([^/]+)$/.exec(
+      request.route.path
+    )
+    const actionType = parsedPath?.[1] as ActionType | null
+    const wasRequestForActionConfirmation =
+      actionType && request.method === 'post'
+    const wasActionAcceptedImmediately = response.statusCode === 200
+
+    if (wasRequestForActionConfirmation && wasActionAcceptedImmediately) {
+      const payload = request.payload as ActionConfirmationPayload
+      const db = getClient()
+      await importEvent(payload.event, db)
+    }
+    return h.continue
+  })
+
   async function stop() {
     await server.stop()
     server.log('info', 'server stopped')
@@ -618,6 +678,8 @@ export async function createServer() {
 
   async function start() {
     await server.start()
+    await setupAnalyticsUsingAdminRole()
+
     server.log(
       'info',
       `server started on ${COUNTRY_CONFIG_HOST}:${COUNTRY_CONFIG_PORT}`
