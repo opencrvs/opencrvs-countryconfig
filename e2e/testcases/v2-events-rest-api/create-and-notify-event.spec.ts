@@ -11,7 +11,7 @@ import {
 } from '../../helpers'
 import { addDays, format, subDays } from 'date-fns'
 import { faker } from '@faker-js/faker'
-import { ensureAssigned, selectAction } from '../../v2-utils'
+import { ensureAssigned } from '../../v2-utils'
 import { getAllLocations } from '../birth/helpers'
 
 async function fetchClientAPI(
@@ -443,6 +443,51 @@ test.describe('Events REST API', () => {
             'child.dob': format(subDays(new Date(), 1), 'yyyy-MM-dd')
           },
           annotation: {}
+        }
+      )
+
+      const body = await response.json()
+
+      expect(response.status).toBe(400)
+      expect(body.message).toMatchSnapshot()
+    })
+
+    test('HTTP 400 when trying to notify an event with an invalid createdAtLocation', async () => {
+      const createEventResponse = await fetchClientAPI(
+        '/api/events/events',
+        'POST',
+        clientToken,
+        {
+          type: EVENT_TYPE,
+          transactionId: uuidv4()
+        }
+      )
+
+      const createEventResponseBody = await createEventResponse.json()
+      const eventId = createEventResponseBody.id
+
+      const childName = {
+        firstNames: faker.person.firstName(),
+        familyName: faker.person.lastName()
+      }
+
+      const response = await fetchClientAPI(
+        '/api/events/events/notifications',
+        'POST',
+        clientToken,
+        {
+          eventId,
+          transactionId: uuidv4(),
+          type: 'NOTIFY',
+          declaration: {
+            'child.name': {
+              firstname: childName.firstNames,
+              surname: childName.familyName
+            },
+            'child.dob': format(subDays(new Date(), 1), 'yyyy-MM-dd')
+          },
+          annotation: {},
+          createdAtLocation: 'invalid-location-id'
         }
       )
 
