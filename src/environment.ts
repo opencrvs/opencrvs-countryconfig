@@ -37,5 +37,8 @@ export const env = cleanEnv(process.env, {
   ANALYTICS_DATABASE_URL: url({
     devDefault:
       'postgres://events_analytics:analytics_password@localhost:5432/events'
+  }),
+  ANALYTICS_DATABASE_PASSWORD: url({
+    devDefault: 'analytics_password'
   })
 })

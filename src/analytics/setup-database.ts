@@ -9,7 +9,10 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { ADMIN_DATABASE_URL } from '@countryconfig/constants'
+import {
+  ADMIN_DATABASE_URL,
+  ANALYTICS_DATABASE_PASSWORD
+} from '@countryconfig/constants'
 import { Kysely, PostgresDialect, sql } from 'kysely'
 import { Pool } from 'pg'
 
@@ -64,7 +67,6 @@ async function grantAccessToUser(roleName: string, trx: Kysely<any>) {
 
 export async function setupAnalyticsUsingAdminRole() {
   const roleName = 'events_analytics'
-  const rolePassword = process.env.ANALYTICS_DB_PASSWORD ?? 'analytics_password'
 
   const admin = new Kysely<any>({
     dialect: new PostgresDialect({
@@ -74,7 +76,7 @@ export async function setupAnalyticsUsingAdminRole() {
 
   try {
     await admin.transaction().execute(async (trx) => {
-      await createRole(roleName, rolePassword, trx)
+      await createRole('events_analytics', ANALYTICS_DATABASE_PASSWORD, trx)
       await trx.schema.createSchema('analytics').ifNotExists().execute()
       await createAnalyticsTables(trx)
       await grantAccessToUser(roleName, trx)
