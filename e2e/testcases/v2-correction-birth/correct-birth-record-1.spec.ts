@@ -777,7 +777,7 @@ test.describe('1. Correct record - 1', () => {
               )
           ).toBeVisible()
 
-          await expect(page.getByText('Type of birthTwin')).toBeVisible()
+          await expect(page.getByText('Type of birth-Twin')).toBeVisible()
 
           await page.locator('#close-btn').click()
         })

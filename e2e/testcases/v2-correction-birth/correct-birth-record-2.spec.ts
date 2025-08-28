@@ -367,7 +367,7 @@ test.describe.serial('Correct record - 2', () => {
 
         await expect(
           page.getByText(
-            "Informant's name" + formatName(updatedInformantDetails)
+            "Informant's name" + '-' + formatName(updatedInformantDetails)
           )
         ).toBeVisible()
 
