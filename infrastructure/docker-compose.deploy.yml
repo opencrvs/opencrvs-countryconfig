@@ -735,7 +735,7 @@ services:
       - LOGIN_URL=https://login.{{hostname}}
       - CLIENT_APP_URL=https://register.{{hostname}}
       - DOMAIN={{hostname}}
-      - COUNTRY=${COUNTRY:-FAR}
+      - COUNTRY=${COUNTRY:-COK}
       - REDIS_USERNAME=${GATEWAY_REDIS_USERNAME}
       - REDIS_PASSWORD=${GATEWAY_REDIS_PASSWORD}
     deploy:
@@ -1050,7 +1050,7 @@ services:
       - OPENCRVS_METABASE_DB_AUTH_DB=performance
       - OPENCRVS_METABASE_SITE_NAME=OpenCRVS Dashboards
       - OPENCRVS_METABASE_SITE_URL=http://metabase.{{hostname}}
-      - OPENCRVS_METABASE_MAP_NAME=Farajaland
+      - OPENCRVS_METABASE_MAP_NAME="Cook Islands"
       - OPENCRVS_METABASE_MAP_URL=http://countryconfig:3040/content/map.geojson
       - OPENCRVS_METABASE_MAP_REGION_KEY=State
       - OPENCRVS_METABASE_MAP_REGION_NAME=State

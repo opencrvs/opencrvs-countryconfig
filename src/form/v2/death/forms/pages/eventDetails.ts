@@ -318,7 +318,7 @@ export const eventDetails = defineFormPage({
         }
       ],
       defaultValue: {
-        country: 'FAR',
+        country: 'COK',
         addressType: AddressType.DOMESTIC,
         province: '$user.province',
         district: '$user.district',

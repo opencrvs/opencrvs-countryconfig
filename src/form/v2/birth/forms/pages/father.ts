@@ -215,7 +215,7 @@ export const father = defineFormPage({
           conditional: requireFatherDetails
         }
       ],
-      defaultValue: 'FAR'
+      defaultValue: 'COK'
     },
     {
       id: 'father.idType',
@@ -380,7 +380,7 @@ export const father = defineFormPage({
         }
       ],
       defaultValue: {
-        country: 'FAR',
+        country: 'COK',
         addressType: AddressType.DOMESTIC,
         province: '$user.province',
         district: '$user.district',
