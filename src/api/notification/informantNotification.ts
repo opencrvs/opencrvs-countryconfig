@@ -26,6 +26,8 @@ import { InformantType as BirthInformantType } from '@countryconfig/form/v2/birt
 import { InformantTemplateType } from './sms-service'
 import { generateFailureLog, NotificationParams, notify } from './handler'
 import { InformantType as DeathInformantType } from '@countryconfig/form/v2/death/forms/pages/informant'
+import { birthEvent } from '@countryconfig/form/v2/birth'
+import { deathEvent } from '@countryconfig/form/v2/death'
 
 const resolveName = (name: FieldUpdateValue) => {
   const nameObj = {
@@ -75,6 +77,18 @@ function getInformant(eventType: string, declaration: Record<string, any>) {
   throw new Error('Invalid event type')
 }
 
+function getEventConfig(eventType: string) {
+  if (eventType === Event.V2_BIRTH) {
+    return birthEvent
+  }
+
+  if (eventType === Event.V2_DEATH) {
+    return deathEvent
+  }
+
+  throw new Error('Invalid event type')
+}
+
 async function getNotificationParams(
   event: EventDocument,
   token: string,
@@ -84,7 +98,7 @@ async function getNotificationParams(
   const locations = await getLocations(token)
 
   const declaration = deepMerge(
-    aggregateActionDeclarations(event),
+    aggregateActionDeclarations(event, getEventConfig(event.type)),
     pendingAction.declaration
   )
 
