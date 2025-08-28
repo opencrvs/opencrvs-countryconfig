@@ -575,22 +575,31 @@ export async function createServer() {
       const queue: EventDocument[] = []
       const client = getClient()
 
-      await client.transaction().execute(async (trx) => {
-        for await (const { value } of stream) {
-          queue.push(value)
+      try {
+        await client.transaction().execute(async (trx) => {
+          for await (const { value } of stream) {
+            queue.push(value)
 
-          if (queue.length >= BATCH_SIZE) {
-            const batch = queue.splice(0, queue.length)
-            await importEvents(batch, trx)
+            if (queue.length >= BATCH_SIZE) {
+              const batch = queue.splice(0, queue.length)
+              await importEvents(batch, trx)
+            }
           }
-        }
 
-        if (queue.length > 0) {
-          await importEvents(queue, trx)
-        }
-      })
+          if (queue.length > 0) {
+            await importEvents(queue, trx)
+          }
+        })
 
-      return h.response().code(200)
+        return h.response().code(200)
+      } catch (e) {
+        // stop consuming the stream if something failed on import
+        if (!stream.destroyed) stream.destroy(e)
+
+        logger.error(e)
+
+        return h.response({ error: 'Unexpected error' }).code(500)
+      }
     }
   })
 
