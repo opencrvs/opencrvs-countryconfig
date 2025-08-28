@@ -580,8 +580,8 @@ export async function createServer() {
           queue.push(value)
 
           if (queue.length >= BATCH_SIZE) {
-            await importEvents(queue, trx)
-            queue.length = 0
+            const batch = queue.splice(0, queue.length)
+            await importEvents(batch, trx)
           }
         }
 
