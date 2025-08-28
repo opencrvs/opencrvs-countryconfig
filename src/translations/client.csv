@@ -982,7 +982,7 @@ form.field.label.educationAttainmentNotStated,,Not stated
 form.field.label.email,,Email
 form.field.label.empty,empty string,
 form.field.label.exactDateOfBirthUnknown,,Exact date of birth unknown
-form.field.label.familyName,,Last name
+form.field.label.familyName,,Surname
 form.field.label.father.nationality,,Nationality
 form.field.label.father.nationalityBangladesh,,Bangladesh
 form.field.label.fatherFamilyName,,Last Name(s) in default character set other than English
@@ -1005,7 +1005,7 @@ form.field.label.fetchRegistrationModalInfo,,Birth Registration Number
 form.field.label.fileSizeError,,File size must be less than 2MB
 form.field.label.fileUploadError,,{type} supported image only
 form.field.label.firstName,,First name(s)
-form.field.label.firstNames,,First name(s)
+form.field.label.firstNames,,Given name(s)
 form.field.label.fullHonorificName,,Full Honorific Name
 form.field.label.healthInstitution,,Health Institution
 form.field.label.hospital,,Hospital
@@ -1122,7 +1122,7 @@ form.field.label.parentDetailsType,,Do you have the mother and father's details?
 form.field.label.phoneNumber,,Phone number
 form.field.label.physician,,Physician
 form.field.label.placeOfBirth,,Location
-form.field.label.placeOfBirthPreview,,Place of delivery
+form.field.label.placeOfBirthFormField,,Place of birth
 form.field.label.placeOfDeath,,Place of death
 form.field.label.placeOfDeathOther,,Different Address
 form.field.label.placeOfDeathSameAsCurrent,,Current address of the deceased
@@ -1282,9 +1282,9 @@ form.section.groom.name,,Groom
 form.section.groom.title,,Groom's details
 form.section.informant.name,,Informant
 form.section.informant.title,,Informant's details
-form.section.information.birth.bullet1,,I am going to help you make a declaration of birth.
-form.section.information.birth.bullet2,,As the legal Informant it is important that all the information provided by you is accurate.
-form.section.information.birth.bullet3,,Once the declaration is processed you will receive an email to tell you when to visit the office to collect the certificate - Take your ID with you.
+form.section.information.birth.bullet1,,Thank you for coming to the Ministry of Justice to register this birth
+form.section.information.birth.bullet2,,"As the official informant, you are responsible for providing the details of the birth. It is very important that the information you give is accurate, as it will appear on your child's official record."
+form.section.information.birth.bullet3,,"Birth registration creates your child's legal proof of identity and ensures access to healthcare, government benefits, school enrolment, and other essential services."
 form.section.information.birth.bullet4,,"Make sure you collect the certificate. A birth certificate is critical for this child, especially to make their life easy later on. It will help to access health services, school examinations and government benefits."
 form.section.information.death.bullet1,,I am going to help you make a declaration of death.
 form.section.information.death.bullet2,,As the legal Informant it is important that all the information provided by you is accurate.
@@ -1981,7 +1981,7 @@ register.eventInfo.birth.listItem0,,I am here to start the birth registration pr
 register.eventInfo.birth.listItem1,,You will receive an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.
 register.eventInfo.birth.listItem2,,"Make sure you collect the certificate. A birth certificate is critical for this child, especially to make their life easy later on. It will help to access health services, school examinations and government benefits."
 register.eventInfo.birth.listItem3,,
-register.eventInfo.birth.title,,Introduce the birth registration process to the informant
+register.eventInfo.birth.title,,Introduction: Helping you register your child's birth
 register.eventInfo.death.listItem0,,I am here to start the death registration process for you.
 register.eventInfo.death.listItem1,,You will receive an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.
 register.eventInfo.death.listItem2,,Make sure you collect the certificate. A death certificate is critical to support with inheritance claims and to resolve the affairs of the deceased e.g. closing bank accounts and settling loans.
@@ -2617,7 +2617,7 @@ v2.event.birth.action.declare.form.section.child.field.name.label,This is the la
 v2.event.birth.action.declare.form.section.child.field.placeOfBirth.label,This is the label for the field,Place of delivery
 v2.event.birth.action.declare.form.section.child.field.surname.label,This is the label for the field,Last name
 v2.event.birth.action.declare.form.section.child.field.weightAtBirth.label,This is the label for the field,Weight at birth
-v2.event.birth.action.declare.form.section.child.field.weightAtBirth.postfix,This is the postfix for the weight field,Kilograms (kg)
+v2.event.birth.action.declare.form.section.child.field.weightAtBirth.postfix,This is the postfix for the weight field,kg
 v2.event.birth.action.declare.form.section.documents.field.helper.label,This is the label for the field,The following documents are required
 v2.event.birth.action.declare.form.section.documents.field.proofOfBirth.label,This is the label for the field,Proof of birth
 v2.event.birth.action.declare.form.section.documents.field.proofOfFather.label,This is the label for the field,Proof of father's ID
@@ -3029,7 +3029,7 @@ v2.form.field.label.urban,Label for form field checkbox option Urban,Urban
 v2.form.section.documents.title,Form section title for documents,Upload supporting documents
 v2.form.section.father.title,Form section title for fathers details,Father's details
 v2.form.section.informant.title,Form section title for informants details,Informant's details
-v2.form.section.information.birth.bullet1,Form information for birth,I am going to help you make a declaration of birth.
+v2.form.section.information.birth.bullet1,Form information for birth,Thank you for coming to the Ministry of Justice to register this birth
 v2.form.section.information.birth.bullet2,Form information for birth,As the legal Informant it is important that all the information provided by you is accurate.
 v2.form.section.information.birth.bullet3,Form information for birth,Once the declaration is processed you will receive an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.
 v2.form.section.information.birth.bullet4,Form information for birth,"Make sure you collect the certificate. A birth certificate is critical for this child, especially to make their life easy later on. It will help to access health services, school examinations and government benefits."

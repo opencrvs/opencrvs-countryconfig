@@ -26,7 +26,6 @@ export const roles: Role[] = [
       SCOPES.SEARCH_MARRIAGE,
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=my-jurisdiction]',
-      'search[event=tennis-club-membership,access=all]',
       'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]'
     ]
   },
@@ -47,8 +46,7 @@ export const roles: Role[] = [
       SCOPES.SEARCH_DEATH,
       SCOPES.SEARCH_MARRIAGE,
       'search[event=v2.birth,access=all]',
-      'search[event=v2.death,access=all]',
-      'search[event=tennis-club-membership,access=all]'
+      'search[event=v2.death,access=all]'
     ]
   },
   {
@@ -69,7 +67,6 @@ export const roles: Role[] = [
       SCOPES.SEARCH_MARRIAGE,
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=all]',
-      'search[event=tennis-club-membership,access=all]',
       'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]'
     ]
   },
@@ -90,8 +87,7 @@ export const roles: Role[] = [
       SCOPES.SEARCH_DEATH,
       SCOPES.SEARCH_MARRIAGE,
       'search[event=v2.birth,access=all]',
-      'search[event=v2.death,access=all]',
-      'search[event=tennis-club-membership,access=all]'
+      'search[event=v2.death,access=all]'
     ]
   },
   {
@@ -111,8 +107,7 @@ export const roles: Role[] = [
       SCOPES.SEARCH_DEATH,
       SCOPES.SEARCH_MARRIAGE,
       'search[event=v2.birth,access=all]',
-      'search[event=v2.death,access=all]',
-      'search[event=tennis-club-membership,access=all]'
+      'search[event=v2.death,access=all]'
     ]
   },
   {
@@ -145,7 +140,6 @@ export const roles: Role[] = [
       SCOPES.SEARCH_MARRIAGE,
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=all]',
-      'search[event=tennis-club-membership,access=all]',
       'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates-office|in-review|sent-for-approval|in-external-validation|ready-to-print|ready-to-issue]'
     ]
   },
@@ -184,7 +178,6 @@ export const roles: Role[] = [
       SCOPES.SEARCH_MARRIAGE,
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=all]',
-      'search[event=tennis-club-membership,access=all]',
       'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates-office|in-review-all|in-external-validation|ready-to-print|ready-to-issue]'
     ]
   },
@@ -277,7 +270,6 @@ export const roles: Role[] = [
       SCOPES.SEARCH_MARRIAGE,
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=all]',
-      'search[event=tennis-club-membership,access=all]',
       'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates-office|in-review-all|in-external-validation|ready-to-print|ready-to-issue]'
     ]
   }

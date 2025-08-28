@@ -10,7 +10,7 @@ services:
   gateway:
     environment:
       - NODE_ENV=production
-      - LANGUAGES=en,fr
+      - LANGUAGES=en
       - SENTRY_DSN=${SENTRY_DSN:-}
     deploy:
       replicas: 1
@@ -18,7 +18,7 @@ services:
   workflow:
     environment:
       - NODE_ENV=production
-      - LANGUAGES=en,fr
+      - LANGUAGES=en
       - SENTRY_DSN=${SENTRY_DSN:-}
     deploy:
       replicas: 1
@@ -56,7 +56,7 @@ services:
   notification:
     environment:
       - NODE_ENV=production
-      - LANGUAGES=en,fr
+      - LANGUAGES=en
       - SENTRY_DSN=${SENTRY_DSN:-}
       - MONGO_URL=mongodb://notification:${NOTIFICATION_MONGODB_PASSWORD}@mongo1/notification?replicaSet=rs0
     deploy:
