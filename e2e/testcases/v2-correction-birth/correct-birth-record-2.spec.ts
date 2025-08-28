@@ -277,6 +277,7 @@ test.describe.serial('Correct record - 2', () => {
       await expect(
         page.locator('#listTable-corrections-table-informant').getByText(
           "Informant's name" +
+            '-' +
             formatName({
               firstNames: updatedInformantDetails.firstNames,
               familyName: updatedInformantDetails.familyName
@@ -289,7 +290,9 @@ test.describe.serial('Correct record - 2', () => {
       ).not.toBeVisible()
 
       await expect(
-        page.getByText('Age of informant' + updatedInformantDetails.age)
+        page
+          .locator('#listTable-corrections-table-informant')
+          .getByText('Age of informant' + '-' + updatedInformantDetails.age)
       ).toBeVisible()
 
       await expect(
@@ -297,7 +300,9 @@ test.describe.serial('Correct record - 2', () => {
       ).toBeVisible()
 
       await expect(
-        page.getByText('ID Number' + updatedInformantDetails.brn)
+        page
+          .locator('#listTable-corrections-table-informant')
+          .getByText('ID Number' + '-' + updatedInformantDetails.brn)
       ).toBeVisible()
 
       await expect(
@@ -362,7 +367,7 @@ test.describe.serial('Correct record - 2', () => {
 
         await expect(
           page.getByText(
-            "Informant's name" + formatName(updatedInformantDetails)
+            "Informant's name" + '-' + formatName(updatedInformantDetails)
           )
         ).toBeVisible()
 
