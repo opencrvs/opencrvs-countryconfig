@@ -834,15 +834,16 @@
   dependencies:
     "@octokit/openapi-types" "^18.0.0"
 
-"@opencrvs/toolkit@1.8.0-rc.8eb22ef":
-  version "1.8.0-rc.8eb22ef"
-  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-1.8.0-rc.8eb22ef.tgz#bf7be7f77b94e64ea50167cd5dff7460325f1e5a"
-  integrity sha512-EI6GvUJHi+lJEfbXtOTBUFN9v9/xvAiig7rjMMvtZihVvjASd5dWRVD9yBbz6dk3jTYIbEoGdpg4RTC4cEBX6w==
+"@opencrvs/toolkit@1.8.1-rc.8c49721":
+  version "1.8.1-rc.8c49721"
+  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-1.8.1-rc.8c49721.tgz#5179ea7a673dc43a9345e2733d6a6c3aa4470292"
+  integrity sha512-kgU1K9Re0A6MsUqH2Rtfuzga9RHQacfFQuyzwRewz4AJzAPi+8PT4r7pjidmaItXVCt9zlTN67pcpi/W5HwSeA==
   dependencies:
     "@trpc/client" "11.4.3"
     "@trpc/server" "11.4.3"
     ajv "^8.17.1"
     ajv-formats "^3.0.1"
+    object-hash "^3.0.0"
     superjson "1.9.0-0"
     uuid "^9.0.0"
     zod-openapi "^4.2.4"
@@ -4095,6 +4096,11 @@ object-copy@^0.1.0:
     copy-descriptor "^0.1.0"
     define-property "^0.2.5"
     kind-of "^3.0.3"
+
+object-hash@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/object-hash/-/object-hash-3.0.0.tgz#73f97f753e7baffc0e2cc9d6e079079744ac82e9"
+  integrity sha512-RSn9F68PjH9HqtltsSnqYC1XXoWe9Bju5+213R98cNGttag9q9yAOTzdbsqvIa7aNm5WffBZFpWYr2aWrklWAw==
 
 object-visit@^1.0.0:
   version "1.0.1"

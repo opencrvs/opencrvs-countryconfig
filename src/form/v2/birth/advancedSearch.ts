@@ -40,7 +40,7 @@ export const advancedSearchBirth = [
       id: 'v2.advancedSearch.form.registrationDetails'
     },
     fields: [
-      event('legalStatuses.REGISTERED.createdAtLocation').exact(),
+      event('legalStatuses.REGISTERED.createdAtLocation').within(),
       event('legalStatuses.REGISTERED.acceptedAt').range(),
       event('status').exact(),
       event('updatedAt').range()
@@ -73,15 +73,13 @@ export const advancedSearchBirth = [
     },
     fields: [
       field('child.placeOfBirth', {
-        excludeInSearchQuery: true,
-        options: placeOfBirthOptions.slice(0, 2)
+        options: placeOfBirthOptions
       }).exact(),
       field('child.birthLocation', {
         searchCriteriaLabelPrefix: childPrefix
       }).exact(),
-      field('child.address.privateHome', {
-        alternateFieldIds: ['child.address.other']
-      }).exact()
+      field('child.address.privateHome').exact(),
+      field('child.address.other').exact()
     ]
   },
   {

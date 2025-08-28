@@ -1,4 +1,3 @@
-import { SEVEN_DAYS_IN_MILISECOND } from '@countryconfig/constants'
 import {
   ActionStatus,
   ActionType,
@@ -118,7 +117,12 @@ export const Workqueues = defineWorkqueues([
         type: 'DEFAULT',
         conditionals: []
       }
-    ]
+    ],
+    emptyMessage: {
+      id: 'v2.workqueues.recent.emptyMessage',
+      defaultMessage: 'No recent records',
+      description: 'Empty message for recent workqueue'
+    }
   },
   {
     slug: 'requires-completion',
@@ -129,7 +133,10 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of notifications workqueue'
     },
     query: {
-      flags: { anyOf: [InherentFlags.INCOMPLETE] }
+      flags: {
+        anyOf: [InherentFlags.INCOMPLETE],
+        noneOf: [InherentFlags.REJECTED]
+      }
       // @TODO: add this line back after notifications API has support for locations
       // https://github.com/opencrvs/opencrvs-core/issues/9829
       // updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
@@ -139,7 +146,12 @@ export const Workqueues = defineWorkqueues([
         type: 'DEFAULT',
         conditionals: []
       }
-    ]
+    ],
+    emptyMessage: {
+      id: 'v2.workqueues.notifications.emptyMessage',
+      defaultMessage: 'No notifications',
+      description: 'Empty message for notifications workqueue'
+    }
   },
   {
     slug: 'sent-for-review',
@@ -151,6 +163,9 @@ export const Workqueues = defineWorkqueues([
     },
     query: {
       status: { type: 'anyOf', terms: ['DECLARED', 'NOTIFIED'] },
+      flags: {
+        noneOf: [InherentFlags.REJECTED]
+      },
       createdBy: { type: 'exact', term: user('id') }
     },
     actions: [
@@ -181,6 +196,9 @@ export const Workqueues = defineWorkqueues([
     },
     query: {
       status: { type: 'exact', term: 'DECLARED' },
+      flags: {
+        noneOf: [InherentFlags.REJECTED]
+      },
       updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
     },
     actions: [
@@ -217,6 +235,9 @@ export const Workqueues = defineWorkqueues([
             type: 'anyOf',
             terms: ['DECLARED', 'VALIDATED']
           },
+          flags: {
+            noneOf: [InherentFlags.REJECTED]
+          },
           updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
         },
         {
@@ -246,7 +267,40 @@ export const Workqueues = defineWorkqueues([
     ]
   },
   {
-    slug: 'requires-updates',
+    slug: 'requires-updates-self',
+    icon: 'FileMinus',
+    name: {
+      id: 'workqueues.requiresUpdates.title',
+      defaultMessage: 'Requires updates',
+      description: 'Title of requires updates workqueue'
+    },
+    query: {
+      status: { type: 'anyOf', terms: ['DECLARED', 'NOTIFIED'] },
+      flags: {
+        anyOf: [InherentFlags.REJECTED]
+      },
+      createdBy: { type: 'exact', term: user('id') }
+    },
+    actions: [
+      {
+        type: 'DEFAULT',
+        conditionals: []
+      }
+    ],
+    columns: [
+      DATE_OF_EVENT_COLUMN,
+      {
+        label: {
+          defaultMessage: 'Sent for update',
+          description: 'This is the label for the workqueue column',
+          id: 'workqueue.sent-for-update.column.sent-for-update'
+        },
+        value: event.field('updatedAt')
+      }
+    ]
+  },
+  {
+    slug: 'requires-updates-office',
     icon: 'FileMinus',
     name: {
       id: 'workqueues.requiresUpdates.title',
@@ -256,7 +310,8 @@ export const Workqueues = defineWorkqueues([
     query: {
       flags: {
         anyOf: [InherentFlags.REJECTED]
-      }
+      },
+      updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
     },
     actions: [
       {
@@ -289,7 +344,10 @@ export const Workqueues = defineWorkqueues([
       clauses: [
         {
           updatedBy: { type: 'exact', term: user('id') },
-          status: { type: 'exact', term: 'VALIDATED' }
+          status: { type: 'exact', term: 'VALIDATED' },
+          flags: {
+            noneOf: [InherentFlags.REJECTED]
+          }
         },
         {
           flags: {
@@ -350,7 +408,8 @@ export const Workqueues = defineWorkqueues([
     },
     query: {
       flags: {
-        noneOf: [InherentFlags.PRINTED, InherentFlags.CORRECTION_REQUESTED]
+        noneOf: [InherentFlags.CORRECTION_REQUESTED],
+        anyOf: [InherentFlags.PENDING_CERTIFICATION]
       },
       status: { type: 'exact', term: 'REGISTERED' },
       updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }

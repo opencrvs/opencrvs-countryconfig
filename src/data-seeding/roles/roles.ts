@@ -27,7 +27,7 @@ export const roles: Role[] = [
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=my-jurisdiction]',
       'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|requires-updates|sent-for-review]'
+      'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]'
     ]
   },
   {
@@ -70,7 +70,7 @@ export const roles: Role[] = [
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|requires-updates|sent-for-review]'
+      'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]'
     ]
   },
   {
@@ -139,13 +139,14 @@ export const roles: Role[] = [
       SCOPES.PERFORMANCE_READ,
       SCOPES.PERFORMANCE_READ_DASHBOARDS,
       SCOPES.ORGANISATION_READ_LOCATIONS_MY_OFFICE,
+      SCOPES.USER_READ_ONLY_MY_AUDIT,
       SCOPES.SEARCH_BIRTH,
       SCOPES.SEARCH_DEATH,
       SCOPES.SEARCH_MARRIAGE,
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates|in-review|sent-for-approval|in-external-validation|ready-to-print|ready-to-issue]'
+      'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates-office|in-review|sent-for-approval|in-external-validation|ready-to-print|ready-to-issue]'
     ]
   },
   {
@@ -176,6 +177,7 @@ export const roles: Role[] = [
       SCOPES.PERFORMANCE_READ,
       SCOPES.PERFORMANCE_READ_DASHBOARDS,
       SCOPES.PROFILE_ELECTRONIC_SIGNATURE,
+      SCOPES.USER_READ_ONLY_MY_AUDIT,
       SCOPES.ORGANISATION_READ_LOCATIONS_MY_OFFICE,
       SCOPES.SEARCH_BIRTH,
       SCOPES.SEARCH_DEATH,
@@ -183,7 +185,7 @@ export const roles: Role[] = [
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates|in-review-all|in-external-validation|ready-to-print|ready-to-issue]'
+      'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates-office|in-review-all|in-external-validation|ready-to-print|ready-to-issue]'
     ]
   },
   {
@@ -266,6 +268,7 @@ export const roles: Role[] = [
       SCOPES.PERFORMANCE_READ,
       SCOPES.PERFORMANCE_READ_DASHBOARDS,
       SCOPES.PERFORMANCE_EXPORT_VITAL_STATISTICS,
+      SCOPES.USER_READ_ONLY_MY_AUDIT,
       SCOPES.PROFILE_ELECTRONIC_SIGNATURE,
       SCOPES.ORGANISATION_READ_LOCATIONS_MY_OFFICE,
       SCOPES.USER_READ_MY_OFFICE,
@@ -275,7 +278,7 @@ export const roles: Role[] = [
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates|in-review-all|in-external-validation|ready-to-print|ready-to-issue]'
+      'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates-office|in-review-all|in-external-validation|ready-to-print|ready-to-issue]'
     ]
   }
 ]

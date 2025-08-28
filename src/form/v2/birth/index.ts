@@ -22,6 +22,7 @@ import { advancedSearchBirth } from './advancedSearch'
 import { Event } from '@countryconfig/form/types/types'
 import { BIRTH_CERTIFICATE_COLLECTOR_FORM } from './forms/printForm'
 import { PlaceOfBirth } from './forms/pages/child'
+import { CORRECTION_FORM } from './forms/correctionForm'
 
 export const birthEvent = defineConfig({
   id: Event.V2_BIRTH,
@@ -207,6 +208,16 @@ export const birthEvent = defineConfig({
         id: 'v2.event.birth.action.collect-certificate.label'
       },
       printForm: BIRTH_CERTIFICATE_COLLECTOR_FORM
+    },
+    {
+      type: ActionType.REQUEST_CORRECTION,
+      label: {
+        id: 'v2.event.birth.action.declare.form.review.title',
+        defaultMessage:
+          '{child.name.firstname, select, __EMPTY__ {Birth declaration} other {{child.name.surname, select, __EMPTY__ {Birth declaration for {child.name.firstname}} other {Birth declaration for {child.name.firstname} {child.name.surname}}}}}',
+        description: 'Title of the form to show in review page'
+      },
+      correctionForm: CORRECTION_FORM
     }
   ],
   advancedSearch: advancedSearchBirth
