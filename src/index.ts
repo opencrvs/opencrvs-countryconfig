@@ -560,6 +560,11 @@ export async function createServer() {
     method: 'POST',
     path: '/reindex',
     options: {
+      /*
+       * In deployed environments, the reindex path is blocked by Traefik.
+       * See docker-compose.deploy.yml for more details.
+       */
+      auth: false,
       payload: {
         output: 'stream',
         parse: false
