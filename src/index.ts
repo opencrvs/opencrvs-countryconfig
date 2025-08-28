@@ -63,11 +63,7 @@ import {
   onAnyActionHandler
 } from '@countryconfig/api/custom-event/handler'
 import { readFileSync } from 'fs'
-import {
-  ActionConfirmationPayload,
-  ActionType,
-  EventDocument
-} from '@opencrvs/toolkit/events'
+import { ActionType, EventDocument } from '@opencrvs/toolkit/events'
 import { Event } from './form/types/types'
 import { onRegisterHandler } from './api/registration'
 import { workqueueconfigHandler } from './api/workqueue/handler'
@@ -664,9 +660,9 @@ export async function createServer() {
     const wasActionAcceptedImmediately = response.statusCode === 200
 
     if (wasRequestForActionConfirmation && wasActionAcceptedImmediately) {
-      const payload = request.payload as ActionConfirmationPayload
+      const event = request.payload as EventDocument
       const db = getClient()
-      await importEvent(payload.event, db)
+      await importEvent(event, db)
     }
     return h.continue
   })
