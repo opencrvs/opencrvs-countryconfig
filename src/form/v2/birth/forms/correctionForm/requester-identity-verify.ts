@@ -129,6 +129,7 @@ export const correctionRequesterIdentityVerify: FieldConfig[] = [
         { fieldId: 'informant.brn' },
         { fieldId: 'informant.name' },
         { fieldId: 'informant.dob' },
+        { fieldId: 'informant.other.relation' },
         { fieldId: 'informant.nationality' }
       ]
     }

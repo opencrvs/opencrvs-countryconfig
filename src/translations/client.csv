@@ -2359,6 +2359,7 @@ v2.birth.search.criteria.label.prefix.child,Child prefix,Child's,De l'enfant
 v2.birth.search.criteria.label.prefix.father,Father prefix,Father's,Du père
 v2.birth.search.criteria.label.prefix.informant,Informant prefix,Informant's,Du déclarant
 v2.birth.search.criteria.label.prefix.mother,Mother prefix,Mother's,De la mère
+v2.buttons.archive,Archive button text,Archive,Archiver
 v2.buttons.back,Back button text,Back,Retour
 v2.buttons.backToReview,Back to review button text,Back to review,Retour à la revue
 v2.buttons.cancel,Cancel button text in the modal,Cancel,Annuler
@@ -2592,6 +2593,7 @@ v2.event.action.declare.form.section.person.field.address.town.label,This is the
 v2.event.action.declare.form.section.person.field.address.zipCode.label,This is the label for the field,Postcode / Zip,Code postal / Zip
 v2.event.action.outbox-retry.label,Label for retry button for outbox,Retry,Réessayer
 v2.event.action.review-correction.label,Label for review correction button in dropdown menu,Review,Revoir
+v2.event.birth.action.archive.label,Label for archive record button in dropdown menu,Archive,Aarchiver
 v2.event.birth.action.certificate.form.section.collectPayment.data.label,Title for the data section,Payment details,Détails du paiement
 v2.event.birth.action.certificate.form.section.collectPayment.fee.label,Title for the data entry,Fee,Frais
 v2.event.birth.action.certificate.form.section.collectPayment.service.label,Title for the data entry,Service,Service
@@ -2681,7 +2683,7 @@ v2.event.birth.title,This is the title of the summary,{child.name.firstname} {ch
 v2.event.birth.workqueue.all.name.label,Label for name in all workqueue,{child.name.surname} {child.name.firstname},{child.name.surname} {child.name.firstname}
 v2.event.death.action.Read.label,This is shown as the action name anywhere the user can trigger the action from,Read,Lire
 v2.event.death.action.certificate.form.cancel,This is the label for the verification cancellation button,Identity does not match,L'identité ne correspond pas
-v2.event.death.action.certificate.form.cancel.confirmation.body,This is the body for the verification cancellation modal,Please be aware that if you proceed,Veuillez noter que si vous continuez
+v2.event.death.action.certificate.form.cancel.confirmation.body,This is the body for the verification cancellation modal,"Please be aware that if you proceed, you will be responsible for issuing a certificate without the necessary proof of ID from the collector","Veuillez noter que si vous continuez, vous serez responsable de la délivrance d'un certificat sans la preuve d'identité nécessaire du collecteur."
 v2.event.death.action.certificate.form.cancel.confirmation.title,This is the title for the verification cancellation modal,Print without proof of ID?,Imprimer sans preuve d'identité ?
 v2.event.death.action.certificate.form.label,This is what this form is referred as in the system,Death certificate collector,Collecteur de certificat de décès
 v2.event.death.action.certificate.form.section.collectPayment.data.label,Title for the data section,Payment details,Détails du paiement
@@ -2705,7 +2707,7 @@ v2.event.death.action.correction.documents.supportingDocs.other.label,Label for 
 v2.event.death.action.correction.fees.amount.label,Label for the amount field,Fee total,Frais totaux
 v2.event.death.action.correction.fees.amount.prefix,Prefix for the amount field,$,€
 v2.event.death.action.correction.form.cancel,This is the label for the verification cancellation button,Identity does not match,L'identité ne correspond pas
-v2.event.death.action.correction.form.cancel.confirmation.body,This is the body for the verification cancellation modal,Please be aware that if you proceed,Veuillez noter que si vous continuez
+v2.event.death.action.correction.form.cancel.confirmation.body,This is the body for the verification cancellation modal,"Please be aware that if you proceed, you will be responsible for making a change to this record without the necessary proof of identification","Veuillez noter que si vous continuez, vous serez responsable d'apporter une modification à cet enregistrement sans la preuve d'identification nécessaire."
 v2.event.death.action.correction.form.cancel.confirmation.title,This is the title for the verification cancellation modal,Correct without proof of ID?,Correction sans preuve d'identité ?
 v2.event.death.action.correction.form.label,This is the label for the death correction form,Correct record,Corriger le dossier
 v2.event.death.action.correction.form.requester.type.daughter,This is the label for the correction requester field,Daughter,Fille
@@ -3052,6 +3054,8 @@ v2.print.certificate.toast.message,Floating Toast message upon certificate ready
 v2.printAction.description,The description for print action,Please confirm that the informant has reviewed that the information on the certificate is correct and that it is ready to print.,Veuillez confirmer que l'informateur a vérifié que les informations figurant sur le certificat sont correctes et que celui-ci est prêt à être imprimé.
 v2.printAction.title,The title for print action,Print certificate,Imprimer le certificat
 v2.record-corrected.summary.section.title,Corrections section title,Correction(s),Correction(s)
+v2.recordAudit.archive.confirmation.body,Confirmation body for archiving a declaration,This will archive the record and remove it from your workspace,"Cela supprimera la déclaration de la file d'attente et changera son statut en archive. Pour annuler ce changement, vous devrez rechercher la déclaration."
+v2.recordAudit.archive.confirmation.title,Confirmation title for archiving a declaration,Archive declaration?,Archiver la déclaration ?
 v2.regHome.issued,Label for workqueue tooltip,Empty message,Empty message
 v2.register.eventInfo.birth.title,Event information title for the birth,Introduce the birth registration process to the informant,Présenter la procédure d'enregistrement des naissances à l'informateur
 v2.register.form.modal.desc.deleteDeclarationConfirm,Description for delete declaration confirmation modal,Are you sure you want to delete this declaration?,Êtes-vous sûr de vouloir supprimer cette déclaration ?

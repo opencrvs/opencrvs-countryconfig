@@ -17,7 +17,7 @@
   </text>
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
     <tspan x="240.727" y="647.312">&#x2028;</tspan>
-    <tspan x="81" y="660.112">{{$lookup $metadata 'createdAtLocation.location'}}</tspan>
+    <tspan x="81" y="660.112">{{$lookup $metadata 'createdAtLocation.name'}}</tspan>
     <tspan x="81" y="672.912">{{$lookup $metadata 'createdAtLocation.district'}}, {{$lookup $metadata 'createdAtLocation.province'}}, {{$lookup $metadata 'createdAtLocation.country'}}</tspan>
   </text>
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
@@ -28,7 +28,7 @@
     <tspan x="357.752" y="687.343">Registrar / L&#39;Officier de l&#39;&#xc9;tat Civil</tspan>
   </text>
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="7.76" letter-spacing="0px">
-    <tspan x="398.064" y="699.954">{{ $lookup $metadata "updatedBy.name"}}</tspan>
+    <tspan x="398.064" y="699.954">{{ $lookup $metadata "updatedBy.name.fullname"}}</tspan>
   </text>
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
     <tspan x="81.3999" y="563.615">I certify that this certificate is a true copy of the civil registry and is issued by the mandated authority in pursuance </tspan>
@@ -45,7 +45,7 @@
     </text>
     <g clip-path="url(#clip3_1157_5058)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="9.7" letter-spacing="0px">
-        <tspan x="289.95" y="229.583">{{$lookup $declaration "deceased.name"}}</tspan>
+        <tspan x="289.95" y="229.583">{{$lookup $declaration "deceased.name.fullname"}}</tspan>
       </text>
     </g>
     <line x1="81.3999" y1="246.155" x2="512.08" y2="246.155" stroke="#ECECEC" stroke-width="0.97" />
@@ -61,7 +61,7 @@
     </text>
     <g clip-path="url(#clip4_1157_5058)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="9.7" letter-spacing="0px">
-        <tspan x="289.95" y="271.224">{{$lookup $declaration "deceased.gender"}}</tspan>
+        <tspan x="289.95" y="271.224">{{ $lookup $declaration "deceased.gender" }}</tspan>
       </text>
     </g>
     <line x1="81.3999" y1="287.795" x2="512.08" y2="287.795" stroke="#ECECEC" stroke-width="0.97" />
@@ -114,7 +114,7 @@
     <g clip-path="url(#clip7_1157_5058)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="9.7" letter-spacing="0px">
         {{#ifCond ($lookup $declaration "eventDetails.deathLocation") '!==' undefined }}
-          <tspan x="289.95" y="388.643">{{$lookup $declaration "eventDetails.deathLocation.location"}}&#10;</tspan>
+          <tspan x="289.95" y="388.643">{{$lookup $declaration "eventDetails.deathLocation.name"}}&#10;</tspan>
           <tspan x="289.95" y="403.643">{{$lookup $declaration 'eventDetails.deathLocation.district'}}, {{$lookup $declaration 'eventDetails.deathLocation.province'}}, {{$lookup $declaration 'eventDetails.deathLocation.country'}}</tspan>
         {{else}}
           {{#ifCond ($lookup $declaration 'eventDetails.deathLocationOther') '!==' undefined }}
@@ -147,7 +147,7 @@
     </text>
     <g clip-path="url(#clip8_1157_5058)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="9.7" letter-spacing="0px">
-        <tspan x="289.95" y="430.284">{{$lookup $metadata 'createdAtLocation.location'}}</tspan>
+        <tspan x="289.95" y="430.284">{{$lookup $metadata 'createdAtLocation.name'}}</tspan>
         <tspan x="289.95" y="445.284">{{$lookup $metadata 'createdAtLocation.district'}}, {{$lookup $metadata 'createdAtLocation.province'}}, {{$lookup $metadata 'createdAtLocation.country'}}</tspan>
       </text>
     </g>
