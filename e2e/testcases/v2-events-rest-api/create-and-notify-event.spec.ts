@@ -224,13 +224,13 @@ test.describe('Events REST API', () => {
     let healthFacilityId: string
 
     test.beforeAll(async () => {
-      const healthFacility = await getAllLocations('HEALTH_FACILITY')
+      const healthFacilities = await getAllLocations('HEALTH_FACILITY')
 
-      if (!healthFacility[0].id) {
+      if (!healthFacilities[0].id) {
         throw new Error('No health facility found')
       }
 
-      healthFacilityId = healthFacility[0].id
+      healthFacilityId = healthFacilities[0].id
     })
 
     test('HTTP 401 when invalid token is used', async () => {
@@ -488,6 +488,60 @@ test.describe('Events REST API', () => {
           },
           annotation: {},
           createdAtLocation: 'invalid-location-id'
+        }
+      )
+
+      const body = await response.json()
+
+      expect(response.status).toBe(400)
+      expect(body.message).toMatchSnapshot()
+    })
+
+    test('HTTP 400 when trying to notify an event with a non-office createdAtLocation', async () => {
+      const createEventResponse = await fetchClientAPI(
+        '/api/events/events',
+        'POST',
+        clientToken,
+        {
+          type: EVENT_TYPE,
+          transactionId: uuidv4()
+        }
+      )
+
+      const createEventResponseBody = await createEventResponse.json()
+      const eventId = createEventResponseBody.id
+
+      const childName = {
+        firstNames: faker.person.firstName(),
+        familyName: faker.person.lastName()
+      }
+
+      const locations = await getAllLocations('ADMIN_STRUCTURE')
+      const centralLocation = locations.find(
+        (location) => location.name === 'Central'
+      )
+
+      if (!centralLocation) {
+        throw new Error('No central location found')
+      }
+
+      const response = await fetchClientAPI(
+        '/api/events/events/notifications',
+        'POST',
+        clientToken,
+        {
+          eventId,
+          transactionId: uuidv4(),
+          type: 'NOTIFY',
+          declaration: {
+            'child.name': {
+              firstname: childName.firstNames,
+              surname: childName.familyName
+            },
+            'child.dob': format(subDays(new Date(), 1), 'yyyy-MM-dd')
+          },
+          annotation: {},
+          createdAtLocation: centralLocation.id
         }
       )
 
