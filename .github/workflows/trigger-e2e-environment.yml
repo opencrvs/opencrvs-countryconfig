@@ -78,7 +78,8 @@ jobs:
                 .trim()
                 .replace(/\s+/g, '-')
                 .replace(/-+/g, '-')
-                .substr(0, 30);
+                .substr(0, 30)
+                .replace(/^[^a-z0-9]+|[^a-z0-9]+$/g, '');
             }
             const result = await github.rest.repos.createDispatchEvent({
               owner: 'opencrvs',
@@ -134,7 +135,8 @@ jobs:
                 .trim()
                 .replace(/\s+/g, '-')
                 .replace(/-+/g, '-')
-                .substr(0, 30);
+                .substr(0, 30)
+                .replace(/^[^a-z0-9]+|[^a-z0-9]+$/g, '');
             }
             const branchName = slugify('${{ env.BRANCH_NAME }}');
             const deployMessage = `Your environment is deployed to https://${branchName}.opencrvs.dev.`;
