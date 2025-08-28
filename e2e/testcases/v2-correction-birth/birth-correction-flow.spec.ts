@@ -291,7 +291,7 @@ test.describe.serial('Birth correction flow', () => {
       await expect(page.getByText("Child's details")).toBeVisible()
       await expect(
         page.getByText(
-          `Reason for delayed registration${reasonForDelayedRegistration}`
+          `Reason for delayed registration-${reasonForDelayedRegistration}`
         )
       ).toBeVisible()
 
