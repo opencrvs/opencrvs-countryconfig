@@ -46,7 +46,7 @@ export const InformantType = {
 } as const
 export type InformantTypeKey = keyof typeof InformantType
 
-const PHONE_NUMBER_REGEX = '^(7|9)[0-9]{8}$'
+const PHONE_NUMBER_REGEX = '^\\+[1-9]\\d{0,2}\\|\\d{4,12}$'
 const informantMessageDescriptors = {
   MOTHER: {
     defaultMessage: 'Mother',
@@ -428,10 +428,11 @@ export const informant = defineFormPage({
     },
     {
       id: 'informant.phoneNo',
-      type: FieldType.PHONE,
+      type: FieldType.INTL_PHONE,
       required: false,
       options: intlPhoneOptions,
-      country: getDialingCodeFromAlpha3('ZMB'),
+      country: getDialingCodeFromAlpha3('ZMB'), // default country code
+      // defaultValue: '+44|123', INTL_PHONE uses a pipe to separate country code and number
       secured: true,
       label: {
         defaultMessage: 'Phone number',
@@ -442,10 +443,10 @@ export const informant = defineFormPage({
         {
           message: {
             defaultMessage:
-              'Must be a valid 10 digit number that starts with 0(7|9)',
+              'An international phone number must have a minimum of 4 digits and a maximum of 12 digits after country code',
             description:
-              'The error message that appears on phone numbers where the first two characters must be 07 or 09, and length must be 10',
-            id: 'v2.event.birth.action.declare.form.section.informant.field.phoneNo.error'
+              'The error message that appears on international phone numbers',
+            id: 'validations.intlPhoneNumberFormat'
           },
           validator: or(
             field('informant.phoneNo').matches(PHONE_NUMBER_REGEX),

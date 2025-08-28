@@ -3150,6 +3150,7 @@ validations.englishOnlyNameFormat,"The error message that appears when a non Eng
 validations.facilityMustBeSelected,The error message appears when no valid facility is selected,No facility selected,Aucun établissement sélectionné
 validations.greaterThanZero,The error message appears when input is less than or equal to 0,Must be a greater than zero,Doit être supérieur à zéro
 validations.illegalMarriageAge,The error message appears when the birth date is not old enough to register for marriage,Illegal age of marriage,Age illègale pour mariage
+validations.intlPhoneNumberFormat,The error message that appears on an international phone number field,An international phone number must have a minimum of 4 digits and a maximum of 12 digits after country code,Un numéro de téléphone international doit comporter un minimum de 4 chiffres et un maximum de 12 chiffres après l'indicatif du pays
 validations.invalidDate,The error message that appears when a date field is invalid,Invalid date field,Champ de date invalide
 validations.isAgeInYearsBetween,The error message that appears when age for the given date is outside the legal age range,Age must be between {min} and {max} years,L'âge doit être compris entre {min} et {max} ans.
 validations.isDateNotAfterDeath,The error message appears when the given date of death is not valid,Date of birth must be before date of death,La date doit être antérieure à la date de décès

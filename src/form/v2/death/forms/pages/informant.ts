@@ -464,7 +464,7 @@ export const informant = defineFormPage({
     },
     {
       id: 'informant.phoneNo',
-      type: FieldType.PHONE,
+      type: FieldType.INTL_PHONE,
       required: false,
       options: intlPhoneOptions,
       country: getDialingCodeFromAlpha3('ZMB'),
