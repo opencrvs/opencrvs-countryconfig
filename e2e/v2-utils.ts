@@ -104,18 +104,17 @@ export async function ensureAssigned(page: Page) {
 }
 
 export async function expectInUrl(page: Page, assertionString: string) {
-  await expect(page.url().includes(assertionString)).toBeTruthy()
+  await page.waitForURL((url) => url.pathname.includes(assertionString))
 }
 
 export async function ensureOutboxIsEmpty(page: Page) {
   await page.waitForTimeout(SAFE_INPUT_CHANGE_TIMEOUT_MS)
 
-  await expect(page.locator('#navigation_workqueue_outbox')).toHaveText(
-    'Outbox',
-    {
-      timeout: SAFE_OUTBOX_TIMEOUT_MS
-    }
-  )
+  const outbox = page.locator('#navigation_workqueue_outbox')
+
+  await expect(outbox).toHaveText('Outbox', {
+    timeout: SAFE_OUTBOX_TIMEOUT_MS
+  })
 }
 
 export async function type(page: Page, locator: string, text: string) {

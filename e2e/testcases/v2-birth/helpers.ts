@@ -4,7 +4,10 @@ import { formatName, joinValuesWith } from '../../helpers'
 import { faker } from '@faker-js/faker'
 import { ensureOutboxIsEmpty } from '../../v2-utils'
 import { getRowByTitle } from '../v2-print-certificate/birth/helpers'
-import { SAFE_OUTBOX_TIMEOUT_MS } from '../../constants'
+import {
+  SAFE_OUTBOX_TIMEOUT_MS,
+  SAFE_WORKQUEUE_TIMEOUT_MS
+} from '../../constants'
 
 export const REQUIRED_VALIDATION_ERROR = 'Required'
 export const NAME_VALIDATION_ERROR =
@@ -85,24 +88,32 @@ export const assertRecordInWorkqueue = async ({
   name: string
   workqueues: { title: string; exists: boolean }[]
 }) => {
-  await page.getByRole('button', { name: 'Outbox' }).click()
   await ensureOutboxIsEmpty(page)
 
   for (const { title, exists } of workqueues) {
+    // NOTE: These tests are quite flaky. See if waiting unnecessarily long between page changes
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS)
     await page
       .getByRole('button', {
         name: title
       })
       .click()
 
-    await expect(page.getByTestId('search-result')).toContainText(title, {
+    const workqueue = page.getByTestId('search-result')
+
+    await expect(workqueue).toContainText(title, {
       timeout: SAFE_OUTBOX_TIMEOUT_MS
     })
 
+    const recordButton = workqueue.getByRole('button', { name })
+
     if (exists) {
-      await expect(page.getByRole('button', { name })).toBeVisible()
+      await recordButton.waitFor({ state: 'visible' })
+      await expect(recordButton).toBeVisible()
     } else {
-      await expect(page.getByRole('button', { name })).toBeHidden()
+      await expect(recordButton).toHaveCount(0, {
+        timeout: SAFE_OUTBOX_TIMEOUT_MS
+      })
     }
   }
 }

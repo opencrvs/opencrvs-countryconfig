@@ -15,14 +15,8 @@ import {
   createDeclaration,
   Declaration
 } from '../v2-test-data/birth-declaration-with-mother-father'
-import {
-  ensureAssigned,
-  ensureOutboxIsEmpty,
-  expectInUrl,
-  selectAction,
-  type
-} from '../../v2-utils'
-import { formatV2ChildName } from '../v2-birth/helpers'
+import { ensureAssigned, expectInUrl, selectAction, type } from '../../v2-utils'
+import { assertRecordInWorkqueue, formatV2ChildName } from '../v2-birth/helpers'
 
 test.describe('1. Correct record - 1', () => {
   let declaration: Declaration
@@ -659,11 +653,11 @@ test.describe('1. Correct record - 1', () => {
          * - be navigated to Sent for approval workqueue
          * - include the declaration in this tab
          */
-        await page.getByTestId('navigation_workqueue_sent-for-approval').click()
-        await ensureOutboxIsEmpty(page)
-        await expect(
-          page.getByRole('button', { name: formatV2ChildName(declaration) })
-        ).toBeVisible()
+        await assertRecordInWorkqueue({
+          page,
+          name: formatV2ChildName(declaration),
+          workqueues: [{ title: 'Sent for approval', exists: true }]
+        })
       })
     })
 

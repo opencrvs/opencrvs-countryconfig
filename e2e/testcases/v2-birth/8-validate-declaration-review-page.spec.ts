@@ -10,7 +10,7 @@ import {
 } from '../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../constants'
-import { fillDate } from './helpers'
+import { assertRecordInWorkqueue, fillDate } from './helpers'
 import { ensureOutboxIsEmpty, selectAction } from '../../v2-utils'
 
 test.describe.serial('8. Validate declaration review page', () => {
@@ -1439,14 +1439,11 @@ test.describe.serial('8. Validate declaration review page', () => {
       await ensureOutboxIsEmpty(page)
       await page.getByText('Ready to print').click()
 
-      /*
-       * @TODO: When workflows are implemented on V2, this should navigate to correct workflow first.
-       */
-      await expect(
-        page.getByRole('button', {
-          name: `${declaration.child.name.firstNames} ${newFamilyNameForChild}`
-        })
-      ).toBeVisible()
+      await assertRecordInWorkqueue({
+        page,
+        name: `${declaration.child.name.firstNames} ${newFamilyNameForChild}`,
+        workqueues: [{ title: 'Ready to print', exists: true }]
+      })
     })
   })
 })

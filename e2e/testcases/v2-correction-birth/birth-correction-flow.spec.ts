@@ -14,6 +14,7 @@ import {
   type
 } from '../../v2-utils'
 import {
+  assertRecordInWorkqueue,
   formatV2ChildName,
   REQUIRED_VALIDATION_ERROR
 } from '../v2-birth/helpers'
@@ -245,14 +246,17 @@ test.describe.serial('Birth correction flow', () => {
   })
 
   test("Event appears in 'Sent for approval' workqueue", async () => {
+    await ensureOutboxIsEmpty(page)
     await page.getByTestId('navigation_workqueue_sent-for-approval').click()
 
-    await expect(
-      page.getByRole('button', { name: formatV2ChildName(declaration) })
-    ).toBeVisible()
+    await assertRecordInWorkqueue({
+      page,
+      name: formatV2ChildName(declaration),
+      workqueues: [{ title: 'Sent for approval', exists: true }]
+    })
   })
 
-  test.describe('Approve correction request', () => {
+  test.describe.serial('Approve correction request', () => {
     test('Login as Local Registrar', async () => {
       await logout(page)
       await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
@@ -261,9 +265,11 @@ test.describe.serial('Birth correction flow', () => {
     test("Find the event in the 'Ready for review' workflow", async () => {
       await page.getByRole('button', { name: 'Ready for review' }).click()
 
-      await page
-        .getByRole('button', { name: formatV2ChildName(declaration) })
-        .click()
+      await assertRecordInWorkqueue({
+        page,
+        name: formatV2ChildName(declaration),
+        workqueues: [{ title: 'review', exists: true }]
+      })
     })
 
     test('Correction request action appears in audit history', async () => {

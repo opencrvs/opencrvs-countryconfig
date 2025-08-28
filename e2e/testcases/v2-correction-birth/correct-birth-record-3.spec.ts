@@ -1076,6 +1076,8 @@ test.describe.serial(' Correct record - 3', () => {
     })
 
     test('3.8.4 Validate history in record audit', async () => {
+      await ensureOutboxIsEmpty(page)
+      // @TODO: why the reload
       await page.reload()
       await ensureAssigned(page)
       await page.getByRole('button', { name: 'Next page' }).click()
