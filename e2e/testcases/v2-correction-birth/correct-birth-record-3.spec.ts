@@ -106,7 +106,6 @@ test.describe.serial(' Correct record - 3', () => {
         'child.dob': format(subYears(new Date(), 1), 'yyyy-MM-dd'),
         'child.reason': 'Late',
         'child.placeOfBirth': 'HEALTH_FACILITY',
-        'child.birthLocation': 'e34f79ff-9287-41ff-ab3e-da562a207d69',
         'child.attendantAtBirth': 'PHYSICIAN',
         'child.birthType': 'SINGLE',
         'child.weightAtBirth': 3,
@@ -126,14 +125,6 @@ test.describe.serial(' Correct record - 3', () => {
         'mother.educationalAttainment': 'NO_SCHOOLING',
         'mother.occupation': 'Housewife',
         'mother.previousBirths': 0,
-        'mother.address': {
-          country: 'FAR',
-          addressType: 'DOMESTIC',
-          province: 'Central',
-          district: 'Ibombo',
-          urbanOrRural: 'URBAN'
-        },
-
         'father.name': {
           firstname: faker.person.firstName('male'),
           surname: faker.person.lastName('male')
@@ -794,6 +785,12 @@ test.describe.serial(' Correct record - 3', () => {
       'Other'
     )
 
+    await expect(
+      page
+        .locator('#listTable-corrections-table-child')
+        .getByText('Ibombo Rural Health Centre, Ibombo, Central, Farajaland')
+    ).toBeVisible()
+
     await Promise.all(
       [
         updatedChildDetails.birthLocation.country,
@@ -806,7 +803,10 @@ test.describe.serial(' Correct record - 3', () => {
         updatedChildDetails.birthLocation.zipCode
       ].map((x) =>
         expect(
-          page.locator('#listTable-corrections-table-child').getByText(x)
+          page
+            .locator('#listTable-corrections-table-child div[id^="row_"]')
+            .locator('> span:nth-child(3)')
+            .getByText(x)
         ).toBeVisible()
       )
     )
@@ -853,6 +853,13 @@ test.describe.serial(' Correct record - 3', () => {
       'Usual place of residence'
     )
 
+    await expect(
+      page
+        .locator('#listTable-corrections-table-mother')
+        .locator('#row_5')
+        .getByText('FarajalandCentralIbombo')
+    ).toBeVisible()
+
     await Promise.all(
       [
         updatedMotherDetails.address.province,
@@ -885,20 +892,6 @@ test.describe.serial(' Correct record - 3', () => {
       'No schooling',
       'Primary'
     )
-
-    // await expect(page.getByText(formatV2ChildName(declaration))).toBeVisible()
-
-    // await expect(page.getByText('Verified')).toBeVisible()
-
-    // await expect(
-    //   page.getByText(
-    //     'Informant did not provide this information (Material omission)'
-    //   )
-    // ).toBeVisible()
-
-    // await expect(page.getByText(registrationNumber!)).toBeVisible()
-
-    // await page.getByLabel('No').check()
 
     /*
      * Expected result: should enable the Submit correction request button
@@ -953,6 +946,19 @@ test.describe.serial(' Correct record - 3', () => {
       })
       await page.getByText(formatV2ChildName(declaration)).click()
       await ensureAssigned(page)
+
+      await expect(page.getByText(formatV2ChildName(declaration))).toBeVisible()
+      await expect(
+        page.locator('#summary').getByText(registrationNumber!)
+      ).toBeVisible()
+      await expect(
+        page.locator('#summary').getByText('correction-requested')
+      ).toBeVisible()
+      await expect(
+        page.locator('#summary').getByText('Registered')
+      ).toBeVisible()
+      await expect(page.locator('#summary').getByText(trackingId)).toBeVisible()
+
       await page.getByRole('button', { name: 'Action' }).click()
       await page.locator('#action-dropdownMenu').getByText('Review').click()
       await visible(page, 'Correction request')
@@ -981,6 +987,12 @@ test.describe.serial(' Correct record - 3', () => {
 
       await visible(childTable, 'Location of birth')
 
+      await expect(
+        page
+          .locator('#listTable-corrections-table-child')
+          .getByText('Ibombo Rural Health Centre, Ibombo, Central, Farajaland')
+      ).toBeVisible()
+
       const childAddressLines = [
         updatedChildDetails.birthLocation.country,
         updatedChildDetails.birthLocation.province,
@@ -992,34 +1004,63 @@ test.describe.serial(' Correct record - 3', () => {
         updatedChildDetails.birthLocation.zipCode
       ]
       for (const line of childAddressLines) {
-        await expect(childTable.getByText(line)).toBeVisible()
+        await expect(
+          page
+            .locator('#listTable-corrections-table-child div[id^="row_"]')
+            .locator('> span:nth-child(3)')
+            .getByText(line)
+        ).toBeVisible()
       }
 
       // Mother's section
-      const motherTable = page.locator('#listTable-corrections-table-mother')
-      await visible(motherTable, "Mother's details")
+
       await visible(
-        motherTable,
+        page.locator('#listTable-corrections-table-mother'),
+        "Mother's details"
+      )
+      await visible(
+        page.locator('#listTable-corrections-table-mother'),
         "Mother's name",
         `${declaration['mother.name'].firstname} ${declaration['mother.name'].surname}`,
         `${updatedMotherDetails.firstNames} ${updatedMotherDetails.familyName}`
       )
+
       await visible(
-        motherTable,
+        page.locator('#listTable-corrections-table-mother'),
         'Age of mother',
         updatedMotherDetails.age.toString()
       )
 
       await visible(
-        motherTable.locator('#row_2'),
+        page.locator('#listTable-corrections-table-mother').locator('#row_2'),
         'Nationality',
         'Farajaland',
         'Ethiopia'
       )
-      await visible(motherTable, 'Type of ID', 'National ID', 'Passport')
-      await visible(motherTable, 'ID Number', updatedMotherDetails.passport)
+      await visible(
+        page.locator('#listTable-corrections-table-mother'),
+        'Type of ID',
+        'National ID',
+        'Passport'
+      )
+      await visible(
+        page.locator('#listTable-corrections-table-mother'),
+        'ID Number',
+        updatedMotherDetails.passport
+      )
 
-      await visible(motherTable.locator('#row_5'), 'Usual place of residence')
+      await visible(
+        page.locator('#listTable-corrections-table-mother').locator('#row_5'),
+        'Usual place of residence'
+      )
+
+      await expect(
+        page
+          .locator('#listTable-corrections-table-mother')
+          .locator('#row_5')
+          .getByText('FarajalandCentralIbombo')
+      ).toBeVisible()
+
       const motherAddressLines = [
         updatedMotherDetails.address.province,
         updatedMotherDetails.address.district,
@@ -1031,13 +1072,21 @@ test.describe.serial(' Correct record - 3', () => {
       ]
       for (const line of motherAddressLines) {
         await expect(
-          motherTable.locator('#row_5').getByText(line)
+          page
+            .locator('#listTable-corrections-table-mother')
+            .locator('#row_5')
+            .getByText(line)
         ).toBeVisible()
       }
 
-      await visible(motherTable, 'Marital Status', 'Single', 'Widowed')
       await visible(
-        motherTable,
+        page.locator('#listTable-corrections-table-mother'),
+        'Marital Status',
+        'Single',
+        'Widowed'
+      )
+      await visible(
+        page.locator('#listTable-corrections-table-mother'),
         'Level of education',
         'No schooling',
         'Primary'
