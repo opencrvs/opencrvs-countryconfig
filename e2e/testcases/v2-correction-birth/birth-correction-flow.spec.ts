@@ -309,7 +309,7 @@ test.describe.serial('Birth correction flow', () => {
       ).toBeVisible()
 
       await expect(
-        page.getByRole('cell', { name: "Child's details" })
+        page.getByRole('heading', { name: "Child's details" })
       ).toBeVisible()
     })
 
