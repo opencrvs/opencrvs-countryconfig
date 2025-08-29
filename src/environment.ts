@@ -38,5 +38,18 @@ export const env = cleanEnv(process.env, {
   }),
   MOSIP_API_USERINFO_URL: url({
     devDefault: 'http://localhost:2024/esignet/get-oidp-user-info'
+  }),
+  ADMIN_DATABASE_URL: url({
+    devDefault: 'postgres://postgres:postgres@localhost:5432/events',
+    desc: 'The Postgres superuser for your database. For country-config example, we are using the same database as events. Your country might want to set up a completely separate Postgres instance to have granular data access management'
+  }),
+  ANALYTICS_DATABASE_URL: url({
+    devDefault:
+      'postgres://events_analytics:analytics_password@localhost:5432/events',
+    desc: 'The database URL for reads and writes to `analytics.events`. See `src/analytics/setup-database.ts` for how the example database is set up for your country.'
+  }),
+  ANALYTICS_DATABASE_PASSWORD: url({
+    devDefault: 'analytics_password',
+    desc: "The password for analytics user. This is not relevant if you 1) don't use analytics or 2) you set it up manually or with your infrastructure. In this country config example it is being set up on country-config start up."
   })
 })
