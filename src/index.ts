@@ -84,7 +84,6 @@ import {
 import { getEventType } from './utils/fhir'
 import { workqueueconfigHandler } from './api/workqueue/handler'
 import getUserNotificationRoutes from './config/routes/userNotificationRoutes'
-import { setupAnalyticsUsingAdminRole } from './analytics/setup-database'
 import { importEvent, importEvents } from './analytics/analytics'
 import { getClient } from './analytics/postgres'
 
@@ -810,7 +809,6 @@ export async function createServer() {
 
   async function start() {
     await server.start()
-    await setupAnalyticsUsingAdminRole()
 
     server.log(
       'info',
