@@ -974,7 +974,7 @@ services:
         tag: 'hearth'
 
   postgres:
-    image: postgres:17
+    image: postgres:17.6
     networks:
       - overlay_net
     restart: unless-stopped
@@ -992,7 +992,7 @@ services:
           - node.labels.data1 == true
 
   postgres-on-update:
-    image: postgres:17
+    image: postgres:17.6
     command: bash /on-deploy.sh && bash /setup-analytics.sh
     configs:
       - source: postgres-on-deploy.{{ts}}
