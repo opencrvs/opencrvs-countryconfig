@@ -20,7 +20,7 @@ import { internal } from '@hapi/boom'
 import { getLanguages } from '../content/service'
 import { TriggerEvent } from '@opencrvs/toolkit/notification'
 
-export const informantTemplates = {
+export const InformantTemplateType = {
   birthInProgressNotification: 'birthInProgressNotification',
   birthDeclarationNotification: 'birthDeclarationNotification',
   birthRegistrationNotification: 'birthRegistrationNotification',
@@ -29,7 +29,10 @@ export const informantTemplates = {
   deathDeclarationNotification: 'deathDeclarationNotification',
   deathRegistrationNotification: 'deathRegistrationNotification',
   deathRejectionNotification: 'deathRejectionNotification'
-}
+} as const
+
+export type InformantTemplateType =
+  (typeof InformantTemplateType)[keyof typeof InformantTemplateType]
 
 const otherTemplates = {
   authenticationCodeNotification: 'authenticationCodeNotification',
@@ -42,7 +45,7 @@ const otherTemplates = {
 
 export type SMSTemplateType =
   | keyof typeof otherTemplates
-  | keyof typeof informantTemplates
+  | InformantTemplateType
 
 export async function sendSMS(
   type: SMSTemplateType,
@@ -51,6 +54,13 @@ export async function sendSMS(
   locale: string
 ) {
   const message = await compileMessages(type, variables, locale)
+
+  if (process.env.NODE_ENV === 'development') {
+    console.log(
+      `Sending SMS to ${recipient} with body: ${JSON.stringify(message)}`
+    )
+  }
+
   const body = JSON.stringify({
     messages: [
       {
@@ -121,3 +131,13 @@ export const TriggerToSMSTemplate = {
   ['reset-password-by-admin']: 'resetUserPasswordByAdminNotification',
   ['2fa']: 'authenticationCodeNotification'
 } satisfies Record<TriggerEvent, SMSTemplateType>
+
+function isTriggerEvent(event: any): event is TriggerEvent {
+  return event in TriggerToSMSTemplate
+}
+
+export function getSMSTemplate(
+  event: TriggerEvent | InformantTemplateType
+): SMSTemplateType {
+  return isTriggerEvent(event) ? TriggerToSMSTemplate[event] : event
+}
