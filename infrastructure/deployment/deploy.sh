@@ -356,6 +356,7 @@ export WEBHOOKS_REDIS_PASSWORD=`generate_password`
 
 export EVENTS_APP_POSTGRES_PASSWORD=`generate_password`
 export EVENTS_MIGRATOR_POSTGRES_PASSWORD=`generate_password`
+export EVENTS_ANALYTICS_POSTGRES_PASSWORD=`generate_password`
 
 #
 # Elasticsearch credentials
