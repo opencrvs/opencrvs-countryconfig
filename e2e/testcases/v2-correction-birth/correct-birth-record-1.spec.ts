@@ -465,7 +465,7 @@ test.describe('1. Correct record - 1', () => {
           page
             .getByTestId('row-value-child.attendantAtBirth')
             .getByRole('deletion')
-        ).toHaveText('')
+        ).toHaveText('-')
 
         await expect(
           page
@@ -504,7 +504,7 @@ test.describe('1. Correct record - 1', () => {
 
         await expect(
           page.getByTestId('row-value-child.birthType').getByRole('deletion')
-        ).toHaveText('')
+        ).toHaveText('-')
 
         await expect(
           page
@@ -566,7 +566,7 @@ test.describe('1. Correct record - 1', () => {
 
         await expect(
           page.getByTestId('row-value-child.birthType').getByRole('deletion')
-        ).toHaveText('')
+        ).toHaveText('-')
 
         await expect(
           page
