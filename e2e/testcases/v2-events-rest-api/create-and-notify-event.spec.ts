@@ -153,7 +153,7 @@ test.describe('Events REST API', () => {
 
       expect(response.status).toBe(400)
       const body = await response.json()
-      expect(body.message).toMatchSnapshot()
+      expect(body.message).toBe('Input validation failed')
     })
 
     test('HTTP 400 with invalid payload', async () => {
@@ -168,7 +168,7 @@ test.describe('Events REST API', () => {
 
       expect(response.status).toBe(400)
       const body = await response.json()
-      expect(body.message).toMatchSnapshot()
+      expect(body.message).toBe('Input validation failed')
     })
 
     test('HTTP 200 with valid payload', async () => {
@@ -261,7 +261,7 @@ test.describe('Events REST API', () => {
 
       expect(response.status).toBe(400)
       const body = await response.json()
-      expect(body.message).toMatchSnapshot()
+      expect(body.message).toBe('Input validation failed')
     })
 
     test('HTTP 400 with invalid payload', async () => {
@@ -276,7 +276,7 @@ test.describe('Events REST API', () => {
 
       expect(response.status).toBe(400)
       const body = await response.json()
-      expect(body.message).toMatchSnapshot()
+      expect(body.message).toBe('Input validation failed')
     })
 
     test('HTTP 400 with payload containing declaration with unexpected fields', async () => {
@@ -312,7 +312,9 @@ test.describe('Events REST API', () => {
 
       expect(response.status).toBe(400)
       const body = await response.json()
-      expect(body.message).toMatchSnapshot()
+      expect(body.message).toBe(
+        '[{"message":"Unexpected field","id":"foo.bar","value":"this should cause an error"},{"message":"Invalid input","id":"child.name","value":{}}]'
+      )
     })
 
     test('HTTP 400 with payload containing declaration with invalid values', async () => {
@@ -348,7 +350,9 @@ test.describe('Events REST API', () => {
 
       expect(response.status).toBe(400)
       const body = await response.json()
-      expect(body.message).toMatchSnapshot()
+      expect(body.message).toBe(
+        '[{"message":"Invalid input","id":"child.name","value":{}}]'
+      )
     })
 
     test('HTTP 400 with payload containing declaration with values of wrong type', async () => {
@@ -382,7 +386,9 @@ test.describe('Events REST API', () => {
 
       expect(response.status).toBe(400)
       const body = await response.json()
-      expect(body.message).toMatchSnapshot()
+      expect(body.message).toBe(
+        '[{"message":"Invalid input","id":"child.name","value":{}}]'
+      )
     })
 
     test('HTTP 404 when trying to notify a non-existing event', async () => {
@@ -449,7 +455,9 @@ test.describe('Events REST API', () => {
       const body = await response.json()
 
       expect(response.status).toBe(400)
-      expect(body.message).toMatchSnapshot()
+      expect(body.message).toBe(
+        'createdAtLocation is required and must be a valid office id'
+      )
     })
 
     test('HTTP 400 when trying to notify an event with an invalid createdAtLocation', async () => {
@@ -494,7 +502,7 @@ test.describe('Events REST API', () => {
       const body = await response.json()
 
       expect(response.status).toBe(400)
-      expect(body.message).toMatchSnapshot()
+      expect(body.message).toBe('Input validation failed')
     })
 
     test('HTTP 400 when trying to notify an event with a non-office createdAtLocation', async () => {
@@ -548,7 +556,7 @@ test.describe('Events REST API', () => {
       const body = await response.json()
 
       expect(response.status).toBe(400)
-      expect(body.message).toMatchSnapshot()
+      expect(body.message).toBe('createdAtLocation must be an office location')
     })
 
     test('HTTP 200 with valid payload', async ({ page }) => {

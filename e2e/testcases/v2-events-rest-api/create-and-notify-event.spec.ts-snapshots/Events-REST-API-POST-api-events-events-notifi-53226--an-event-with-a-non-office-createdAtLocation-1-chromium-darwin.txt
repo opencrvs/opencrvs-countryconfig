@@ -1,1 +1,0 @@
-createdAtLocation must be an office location
