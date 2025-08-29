@@ -423,9 +423,12 @@ test.describe('Events REST API', () => {
 
       expect(response.status).toBe(200)
       expect(body.type).toBe(EVENT_TYPE)
-      expect(body.actions.length).toBe(2)
+      expect(body.actions.length).toBe(3)
       expect(body.actions[0].type).toBe('CREATE')
       expect(body.actions[1].type).toBe('NOTIFY')
+      expect(body.actions[1].status).toBe('Requested')
+      expect(body.actions[2].type).toBe('NOTIFY')
+      expect(body.actions[2].status).toBe('Accepted')
 
       // check that event is created in UI
       await loginToV2(page)

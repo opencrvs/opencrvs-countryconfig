@@ -207,7 +207,6 @@ export async function createDeclaration(
     'review.comment': 'My comment',
     'review.signature': filename
   }
-  console.log(declaration)
   const declareRes = await client.event.actions.declare.request.mutate({
     eventId: eventId,
     transactionId: uuidv4(),
@@ -255,7 +254,13 @@ export async function createDeclaration(
   })
 
   const registerAction = registerRes.actions.find(
-    (action: ActionDocument) => action.type === 'REGISTER'
+    (action: ActionDocument) =>
+      action.type === 'REGISTER' && action.status === 'Accepted'
+  )
+
+  const registerRequestAction = registerRes.actions.find(
+    (action: ActionDocument) =>
+      action.type === 'REGISTER' && action.status === 'Requested'
   )
 
   const trackingId = registerRes?.trackingId as string
@@ -263,7 +268,7 @@ export async function createDeclaration(
 
   return {
     eventId,
-    declaration: registerAction?.declaration as Declaration,
+    declaration: registerRequestAction?.declaration as Declaration,
     trackingId,
     registrationNumber
   }
