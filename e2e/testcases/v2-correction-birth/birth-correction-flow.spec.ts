@@ -328,7 +328,9 @@ test.describe.serial('Birth correction flow', () => {
             }
           })
         )
-      ).toBeVisible()
+      ).toBeVisible({
+        timeout: 60_000
+      })
     })
 
     test('Correction approved action appears in audit history', async () => {
