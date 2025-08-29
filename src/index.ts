@@ -640,6 +640,7 @@ export async function createServer() {
     path: '/events',
     handler: getCustomEventsHandler,
     options: {
+      auth: false,
       tags: ['api', 'events'],
       description: 'Serves custom events'
     }
