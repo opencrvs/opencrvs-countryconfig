@@ -588,7 +588,7 @@ services:
       - INFOBIP_API_KEY=${INFOBIP_API_KEY:-}
       - INFOBIP_SENDER_ID=${INFOBIP_SENDER_ID:-}
       - DOMAIN={{hostname}}
-      - ANALYTICS_DATABASE_URL=${ANALYTICS_DATABASE_URL}
+      - ANALYTICS_DATABASE_URL=postgres://events_analytics:${EVENTS_ANALYTICS_POSTGRES_PASSWORD}@postgres/events
     networks:
       - overlay_net
     logging:
