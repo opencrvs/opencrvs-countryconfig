@@ -588,6 +588,9 @@ services:
       - INFOBIP_API_KEY=${INFOBIP_API_KEY:-}
       - INFOBIP_SENDER_ID=${INFOBIP_SENDER_ID:-}
       - DOMAIN={{hostname}}
+      - ADMIN_DATABASE_URL=
+      - ANALYTICS_DATABASE_URL=
+      - ANALYTICS_DATABASE_PASSWORD=
     networks:
       - overlay_net
     logging:
