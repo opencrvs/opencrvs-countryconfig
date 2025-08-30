@@ -32,6 +32,7 @@ import {
   idTypeOptions,
   maritalStatusOptions
 } from '@countryconfig/form/v2/person'
+import { defaultStreetAddressConfiguration } from '@countryconfig/form/street-address-configuration'
 
 const GenderTypes = {
   MALE: 'male',
@@ -289,12 +290,22 @@ export const deceased = defineFormPage({
         description: 'This is the label for the field',
         id: 'v2.event.death.action.declare.form.section.deceased.field.address.label'
       },
+      validation: [
+        {
+          message: {
+            defaultMessage: 'Invalid input',
+            description: 'Error message when generic field is invalid',
+            id: 'v2.error.invalidInput'
+          },
+          validator: field('deceased.address').isValidAdministrativeLeafLevel()
+        }
+      ],
       defaultValue: {
         country: 'FAR',
-        addressType: AddressType.DOMESTIC,
-        province: '$user.province',
-        district: '$user.district',
-        urbanOrRural: 'URBAN'
+        addressType: AddressType.DOMESTIC
+      },
+      configuration: {
+        streetAddressForm: defaultStreetAddressConfiguration
       }
     }
   ]
