@@ -104,6 +104,7 @@ export async function getDeclaration({
       surname: faker.person.lastName()
     },
     'mother.dob': '1995-09-12',
+    'mother.dobUnknown': false,
     'mother.nationality': 'FAR',
     'mother.idType': 'NATIONAL_ID',
     'mother.educationalAttainment': 'NO_SCHOOLING',
