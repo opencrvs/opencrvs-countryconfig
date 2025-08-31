@@ -659,6 +659,11 @@ services:
         - 'traefik.http.middlewares.auth.headers.stsseconds=31536000'
         - 'traefik.http.middlewares.auth.headers.stsincludesubdomains=true'
         - 'traefik.http.middlewares.auth.headers.stspreload=true'
+        # This is an invalid IP range, effectively blocking all IPs from accessing below paths.
+        # It's only meant to be accessed from the internal docker network.
+        - 'traefik.http.middlewares.block-internal-routes.ipwhitelist.sourcerange=255.255.255.255'
+        - 'traefik.http.routers.block-internal.rule=Host(`countryconfig.{{hostname}}`) && PathPrefix(`/internal`)'
+        - 'traefik.http.routers.block-internal.middlewares=block-internal-routes'
       replicas: 1
     networks:
       - overlay_net
