@@ -296,7 +296,7 @@ test.describe.serial('Correct record - 2', () => {
       ).toBeVisible()
 
       await expect(
-        page.getByRole('row', { name: 'Type of ID Birth Registration' })
+        page.getByRole('row', { name: 'Birth Registration Number' })
       ).toBeVisible()
 
       await expect(
