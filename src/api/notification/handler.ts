@@ -95,7 +95,7 @@ export function generateFailureLog({
   reason
 }: {
   contact: { mobile?: string; email?: string }
-  name: NameFieldValue
+  name?: NameFieldValue
   event: TriggerEvent | InformantTemplateType
   reason: string
 }) {
@@ -106,7 +106,7 @@ export function generateFailureLog({
       event,
       recipient: {
         ...contact,
-        name: name.firstname + ' ' + name.surname
+        name: name ? name.firstname + ' ' + name.surname : ''
       }
     })}`
   )
@@ -192,6 +192,17 @@ export async function notify({
       return
     }
 
+    if (event === TriggerEvent.ALL_USER_NOTIFICATION) {
+      generateFailureLog({
+        contact: { mobile, email },
+        name,
+        event,
+        reason:
+          "USER_NOTIFICATION_DELIVERY_METHOD being 'sms' when trying to send all-user-notification"
+      })
+      return
+    }
+
     await sendSMS(getSMSTemplate(event), variable, mobile, 'en')
     return
   }
@@ -233,7 +244,7 @@ function convertPayloadToVariable({
   event,
   payload
 }: TriggerEventPayloadPair): TriggerVariable[typeof event] {
-  const firstname = payload.recipient.name.firstname
+  const firstname = payload.recipient.name?.firstname ?? ''
   switch (event) {
     case TriggerEvent.USER_CREATED:
       return {
@@ -274,7 +285,8 @@ function convertPayloadToVariable({
         firstname,
         code: payload.code
       }
-
+    case TriggerEvent.ALL_USER_NOTIFICATION:
+      return { subject: payload.subject, body: payload.body }
     default:
       throw new Error(`Unknown event: ${event}`)
   }

@@ -72,6 +72,10 @@ export const TriggerVariable = {
   [TriggerEvent.TWO_FA]: z.object({
     firstname: z.string(),
     code: z.string()
+  }),
+  [TriggerEvent.ALL_USER_NOTIFICATION]: z.object({
+    subject: z.string(),
+    body: z.string()
   })
 } as const
 
@@ -153,11 +157,6 @@ export type InformantNotificationVariables = {
   [K in InformantTemplateType]: z.infer<
     (typeof InformantNotificationVariables)[K]
   >
-}
-
-export type AllUserNotificationVariables = {
-  subject: string
-  body: string
 }
 
 const templates = {
@@ -293,10 +292,10 @@ const templates = {
         InformantNotificationVariables['deathRejectionNotification']
       >('rejection')
   },
-  allUserNotification: {
+  'all-user-notification': {
     type: 'allUserNotification',
     subject: '', // Subject defined from National Sys Admin Dashboard
-    template: readOtherTemplate<AllUserNotificationVariables>(
+    template: readOtherTemplate<TriggerVariable['all-user-notification']>(
       'all-user-notification'
     )
   }
@@ -309,7 +308,6 @@ export type EmailTemplateType =
   | 'change-email-address'
   | 'correction-approved'
   | 'correction-rejected'
-  | 'allUserNotification'
 
 export function getTemplate<T extends EmailTemplateType>(type: T) {
   return templates[type]
