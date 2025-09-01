@@ -46,16 +46,13 @@ create_or_update_role "events_analytics" "$EVENTS_ANALYTICS_POSTGRES_PASSWORD" "
 PGPASSWORD="$POSTGRES_PASSWORD" psql -v ON_ERROR_STOP=1 -h "$POSTGRES_HOST" -p "$POSTGRES_PORT" \
   -U "$POSTGRES_USER" -d "$TARGET_DB" <<EOSQL
 
--- Create schema if not exists
 CREATE SCHEMA IF NOT EXISTS analytics;
 
--- Create or replace view
 CREATE OR REPLACE VIEW analytics.locations
 WITH (security_barrier)
 AS
 SELECT * FROM app.locations;
 
--- Create events table if not exists
 CREATE TABLE IF NOT EXISTS analytics.events (
   id uuid NOT NULL UNIQUE,
   event_type text NOT NULL,
@@ -65,11 +62,9 @@ CREATE TABLE IF NOT EXISTS analytics.events (
   updated_at timestamptz DEFAULT now() NOT NULL
 );
 
--- Grant usage on schema
 GRANT USAGE ON SCHEMA analytics TO events_analytics;
 
--- Grant table permissions
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA analytics TO events_analytics;
 EOSQL
 
-echo "✅ Database '$TARGET_DB' and analytics schema initialized"
+echo "✅ Analytics schema initialized for database '$TARGET_DB'"
