@@ -63,14 +63,3 @@ EOF
 
 echo "✅ Database '$TARGET_DB' initialized successfully."
 exit 0
-
-TARGET_DB="events"
-
-echo "Waiting for PostgreSQL to be ready at ${POSTGRES_HOST}:${POSTGRES_PORT}..."
-until PGPASSWORD="$POSTGRES_PASSWORD" psql -h "$POSTGRES_HOST" -p "$POSTGRES_PORT" \
-  -U "$POSTGRES_USER" -d postgres -c '\q' 2>/dev/null; do
-  sleep 2
-done
-
-sleep "$KEEP_ALIVE_SECONDS"
-
