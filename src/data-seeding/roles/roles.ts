@@ -7,6 +7,10 @@ type Role = {
   scopes: Scope[]
 }
 
+// TODO CIHAN: Create and use function for constructing these scopes?
+const RECORD_DECLARE_SCOPE =
+  'record.declare[event=v2.birth|v2.death|tennis-club-membership]'
+
 export const roles: Role[] = [
   {
     id: 'FIELD_AGENT',
@@ -28,7 +32,8 @@ export const roles: Role[] = [
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]'
+      'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]',
+      RECORD_DECLARE_SCOPE
     ]
   },
   {
@@ -50,7 +55,8 @@ export const roles: Role[] = [
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]'
+      'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]',
+      RECORD_DECLARE_SCOPE
     ]
   },
   {
@@ -72,7 +78,8 @@ export const roles: Role[] = [
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]'
+      'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]',
+      RECORD_DECLARE_SCOPE
     ]
   },
   {
@@ -94,7 +101,8 @@ export const roles: Role[] = [
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]'
+      'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]',
+      RECORD_DECLARE_SCOPE
     ]
   },
   {
@@ -116,7 +124,8 @@ export const roles: Role[] = [
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]'
+      'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]',
+      RECORD_DECLARE_SCOPE
     ]
   },
   {
@@ -150,7 +159,8 @@ export const roles: Role[] = [
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates-office|in-review|sent-for-approval|in-external-validation|ready-to-print|ready-to-issue]'
+      'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates-office|in-review|sent-for-approval|in-external-validation|ready-to-print|ready-to-issue]',
+      RECORD_DECLARE_SCOPE
     ]
   },
   {
@@ -191,7 +201,8 @@ export const roles: Role[] = [
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates-office|in-review-all|in-external-validation|ready-to-print|ready-to-issue]'
+      'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates-office|in-review-all|in-external-validation|ready-to-print|ready-to-issue]',
+      RECORD_DECLARE_SCOPE
     ]
   },
   {
@@ -280,7 +291,8 @@ export const roles: Role[] = [
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates-office|in-review-all|in-external-validation|ready-to-print|ready-to-issue]'
+      'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates-office|in-review-all|in-external-validation|ready-to-print|ready-to-issue]',
+      RECORD_DECLARE_SCOPE
     ]
   },
   {
