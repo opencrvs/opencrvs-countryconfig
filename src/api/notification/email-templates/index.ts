@@ -160,13 +160,13 @@ export type InformantNotificationVariables = {
 }
 
 const templates = {
-  'user-created': {
+  [TriggerEvent.USER_CREATED]: {
     type: 'onboarding-invite',
     subject: 'Welcome to OpenCRVS!',
     template:
       readOtherTemplate<TriggerVariable['user-created']>('onboarding-invite')
   },
-  '2fa': {
+  [TriggerEvent.TWO_FA]: {
     type: '2-factor-authentication',
     subject: 'Two factor authentication',
     template: readOtherTemplate<TriggerVariable['2fa']>(
@@ -187,20 +187,20 @@ const templates = {
       'change-email-address'
     )
   },
-  'reset-password-by-admin': {
+  [TriggerEvent.RESET_PASSWORD_BY_ADMIN]: {
     type: 'password-reset-by-system-admin',
     subject: 'Account password reset invitation',
     template: readOtherTemplate<TriggerVariable['reset-password-by-admin']>(
       'password-reset-by-system-admin'
     )
   },
-  'reset-password': {
+  [TriggerEvent.RESET_PASSWORD]: {
     type: 'password-reset',
     subject: 'Account password reset request',
     template:
       readOtherTemplate<TriggerVariable['reset-password']>('password-reset')
   },
-  'username-reminder': {
+  [TriggerEvent.USERNAME_REMINDER]: {
     type: 'username-reminder',
     subject: 'Account username reminder',
     template:
@@ -208,7 +208,7 @@ const templates = {
         'username-reminder'
       )
   },
-  'user-updated': {
+  [TriggerEvent.USER_UPDATED]: {
     type: 'username-updated',
     subject: 'Account username updated',
     template:
