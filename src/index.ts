@@ -786,7 +786,7 @@ export async function createServer() {
 
   server.ext('onPostHandler', async (request, h) => {
     const response = request.response as Hapi.ResponseObject
-    const parsedPath = /^\/events\/[^/]+\/actions\/([^/]+)$/.exec(
+    const parsedPath = /^\/trigger\/events\/[^/]+\/actions\/([^/]+)$/.exec(
       request.route.path
     )
     const actionType = parsedPath?.[1] as ActionType | null
