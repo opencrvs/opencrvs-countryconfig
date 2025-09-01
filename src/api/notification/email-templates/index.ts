@@ -292,7 +292,7 @@ const templates = {
         InformantNotificationVariables['deathRejectionNotification']
       >('rejection')
   },
-  'all-user-notification': {
+  [TriggerEvent.ALL_USER_NOTIFICATION]: {
     type: 'allUserNotification',
     subject: '', // Subject defined from National Sys Admin Dashboard
     template: readOtherTemplate<TriggerVariable['all-user-notification']>(
