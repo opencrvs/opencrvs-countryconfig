@@ -983,7 +983,7 @@ services:
 
   postgres-on-update:
     image: postgres:17.6
-    command: ["bash", "-c", "/on-deploy.sh && /setup-analytics.sh"]
+    command: ["bash", "-c", "bash /on-deploy.sh && bash /setup-analytics.sh"]
     configs:
       - source: postgres-on-deploy.{{ts}}
         target: /on-deploy.sh
