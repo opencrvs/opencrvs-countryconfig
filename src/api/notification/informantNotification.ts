@@ -197,7 +197,7 @@ async function getNotificationParams(
     }
   }
 
-  throw new Error('Invalid event type')
+  throw new Error(`Invalid action type "${pendingAction.type}"`)
 }
 
 export async function sendInformantNotification({
