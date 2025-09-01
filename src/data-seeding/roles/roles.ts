@@ -7,7 +7,6 @@ type Role = {
   scopes: Scope[]
 }
 
-// TODO CIHAN: Create and use function for constructing these scopes?
 const RECORD_DECLARE_SCOPE =
   'record.declare[event=v2.birth|v2.death|tennis-club-membership]'
 
