@@ -9,7 +9,6 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { conditionals } from '@countryconfig/form/common/custom-validation-conditionals/custom-conditionals'
 import {
   and,
   ConditionalType,
@@ -49,6 +48,7 @@ export const deathcorrectionRequesterIdentityVerify: FieldConfig[] = [
         { fieldId: 'spouse.brn' },
         { fieldId: 'spouse.name' },
         { fieldId: 'spouse.dob' },
+        { fieldId: 'spouse.age' },
         { fieldId: 'spouse.nationality' }
       ]
     }
@@ -78,6 +78,7 @@ export const deathcorrectionRequesterIdentityVerify: FieldConfig[] = [
         { fieldId: 'informant.brn' },
         { fieldId: 'informant.name' },
         { fieldId: 'informant.dob' },
+        { fieldId: 'informant.age' },
         { fieldId: 'informant.nationality' }
       ]
     }
