@@ -15,6 +15,7 @@ import { deathEvent } from '@countryconfig/form/v2/death'
 import { Event } from '@countryconfig/form/types/types'
 import { Kysely, sql } from 'kysely'
 import { compact as removeNulls } from 'lodash'
+import { tennisClubMembershipEvent } from '@countryconfig/form/tennis-club-membership'
 
 interface AnalyticsEvent {
   id: string
@@ -47,6 +48,10 @@ export const upsertAnalyticsEvents = async (
 function getEventConfig(eventType: string) {
   if (eventType === Event.V2_BIRTH) {
     return birthEvent
+  }
+
+  if (eventType === Event.TENNIS_CLUB_MEMBERSHIP) {
+    return tennisClubMembershipEvent
   }
 
   if (eventType === Event.V2_DEATH) {
