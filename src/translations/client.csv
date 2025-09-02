@@ -1402,6 +1402,7 @@ integrations.updatePermissionsMsg,Label for update permissions message,Permissio
 integrations.webhook.PII,Label for PII,Include PII data,Inclure les données PII
 integrations.webhookDescription,label for webhook client,"A Webhook client can subscribe to be notified upon a birth or death registration following W3C WebSub standards. For more information, visit:","Un client Webhook peut s'abonner pour être notifié lors de l'enregistrement d'une naissance ou d'un décès selon les normes WebSub du W3C. Pour plus d'informations, consultez le site :"
 integrations.webhookPermissionsDescription,Webhook description above permissions,Select the data you wish to be contained within the webhook payload,Sélectionnez les données que vous souhaitez voir figurer dans les données utiles du webhook.
+loading.records,Loading indicator while fetching records,Loading records...,Chargement des enregistrements...
 misc.confirmPinTitle,The title displayed while creating a PIN,Confirm PIN,Confirmer le  Code PIN
 misc.createDescription,The description displayed while creating a PIN,Choose a PIN that doesn't have 4 repeating digits or sequential numbers,Choisissez un code PIN qui ne comporte pas 4 chiffres répétitifs ou des numéros séquentiels.
 misc.createTitle,The title displayed while creating a PIN,Create a PIN,Créer un code PIN
@@ -3132,6 +3133,9 @@ v2.search.noRecord,The no record text,"No records {slug, select, draft {in my dr
 v2.search.noResult,The no result text,No result,Pas de résultats”
 v2.search.noResultFor,The no result text,No results for “{searchTerm}”,Pas de résultats pour “{searchTerm}”
 v2.search.quickSearch.result.title,Quick search result title,Search result for “{searchTerm}”,résultat de la recherche pour “{searchTerm}”
+v2.serviceWorker.cacheKey.WorkBoxRuntime.error.button,Button label for logging out when WorkBox runtime cache key is missing,Log out,Se déconnecter
+v2.serviceWorker.cacheKey.WorkBoxRuntime.error.content,Content shown when WorkBox runtime cache key is missing,The app cache was not initiated properly. This may cause issues with your session. Please log in again to continue. You will be logged out automatically in {count} second.,Le cache de l'application n'a pas été correctement initialisé. Cela peut provoquer des problèmes avec votre session. Veuillez vous reconnecter pour continuer. Vous serez automatiquement déconnecté dans {count} seconde.
+v2.serviceWorker.cacheKey.WorkBoxRuntime.error.header,Header shown when WorkBox runtime cache key is missing,⚠️ Application Cache Error,⚠️ Erreur du cache de l'application
 v2.signature.upload.modal.title,Title for the signature upload modal,Upload Signature,Télécharger la signature
 v2.validateAction.Declare,The label for declare button of validate action,Send for approval,Envoyer pour approbation
 v2.validateAction.Reject,The label for reject button of validate action,Reject,Rejeter
