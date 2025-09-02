@@ -104,7 +104,7 @@ test.describe
 
     const row = getRowByTitle(page, formatV2ChildName(declaration))
 
-    await row.getByRole('button', { name: 'Declare' }).click()
+    await row.getByRole('button', { name: 'Review' }).click()
 
     await page.getByRole('button', { name: 'Send for review' }).click()
     await expect(page.getByText('Send for review?')).toBeVisible()
