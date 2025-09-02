@@ -590,6 +590,8 @@ export async function createServer() {
           }
         })
 
+        logger.info('Reindexed all events into analytics.')
+
         return h.response().code(200)
       } catch (e) {
         // stop consuming the stream if something failed on import
