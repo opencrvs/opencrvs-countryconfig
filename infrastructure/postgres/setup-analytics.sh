@@ -53,13 +53,15 @@ WITH (security_barrier)
 AS
 SELECT * FROM app.locations;
 
-CREATE TABLE IF NOT EXISTS analytics.events (
-  id uuid NOT NULL UNIQUE,
+CREATE TABLE IF NOT EXISTS analytics.event_actions (
+  action_id uuid NOT NULL,
+  event_id uuid NOT NULL,
   event_type text NOT NULL,
-  tracking_id text NOT NULL UNIQUE,
-  declaration jsonb DEFAULT '{}'::jsonb NOT NULL,
-  created_at timestamptz DEFAULT now() NOT NULL,
-  updated_at timestamptz DEFAULT now() NOT NULL
+  tracking_id text NOT NULL,
+  declaration jsonb  NOT NULL,
+  indexed_at timestamptz DEFAULT now() NOT NULL,
+  created_at timestamptz NOT NULL,
+  UNIQUE (action_id, event_id)
 );
 
 GRANT USAGE ON SCHEMA analytics TO events_analytics;
