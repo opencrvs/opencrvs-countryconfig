@@ -7,9 +7,6 @@ type Role = {
   scopes: Scope[]
 }
 
-const RECORD_DECLARE_SCOPE =
-  'record.declare[event=v2.birth|v2.death|tennis-club-membership]'
-
 export const roles: Role[] = [
   {
     id: 'FIELD_AGENT',
@@ -19,9 +16,6 @@ export const roles: Role[] = [
       id: 'userRole.fieldAgent'
     },
     scopes: [
-      SCOPES.RECORD_DECLARE_BIRTH,
-      SCOPES.RECORD_DECLARE_DEATH,
-      SCOPES.RECORD_DECLARE_MARRIAGE,
       SCOPES.RECORD_SUBMIT_INCOMPLETE,
       SCOPES.RECORD_SUBMIT_FOR_REVIEW,
       SCOPES.SEARCH_BIRTH,
@@ -31,7 +25,7 @@ export const roles: Role[] = [
       'search[event=v2.death,access=my-jurisdiction]',
       'search[event=tennis-club-membership,access=all]',
       'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]',
-      RECORD_DECLARE_SCOPE
+      'record.declare[event=v2.birth|v2.death|tennis-club-membership]'
     ]
   },
   {
@@ -42,9 +36,6 @@ export const roles: Role[] = [
       id: 'userRole.policeOfficer'
     },
     scopes: [
-      SCOPES.RECORD_DECLARE_BIRTH,
-      SCOPES.RECORD_DECLARE_DEATH,
-      SCOPES.RECORD_DECLARE_MARRIAGE,
       SCOPES.RECORD_SUBMIT_INCOMPLETE,
       SCOPES.RECORD_SUBMIT_FOR_REVIEW,
       SCOPES.SEARCH_BIRTH,
@@ -53,7 +44,7 @@ export const roles: Role[] = [
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      RECORD_DECLARE_SCOPE
+      'record.declare[event=v2.birth|v2.death|tennis-club-membership]'
     ]
   },
   {
@@ -64,9 +55,6 @@ export const roles: Role[] = [
       id: 'userRole.socialWorker'
     },
     scopes: [
-      SCOPES.RECORD_DECLARE_BIRTH,
-      SCOPES.RECORD_DECLARE_DEATH,
-      SCOPES.RECORD_DECLARE_MARRIAGE,
       SCOPES.RECORD_SUBMIT_INCOMPLETE,
       SCOPES.RECORD_SUBMIT_FOR_REVIEW,
       SCOPES.SEARCH_BIRTH,
@@ -76,7 +64,7 @@ export const roles: Role[] = [
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
       'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]',
-      RECORD_DECLARE_SCOPE
+      'record.declare[event=v2.birth|v2.death|tennis-club-membership]'
     ]
   },
   {
@@ -87,9 +75,6 @@ export const roles: Role[] = [
       id: 'userRole.healthcareWorker'
     },
     scopes: [
-      SCOPES.RECORD_DECLARE_BIRTH,
-      SCOPES.RECORD_DECLARE_DEATH,
-      SCOPES.RECORD_DECLARE_MARRIAGE,
       SCOPES.RECORD_SUBMIT_INCOMPLETE,
       SCOPES.RECORD_SUBMIT_FOR_REVIEW,
       SCOPES.SEARCH_BIRTH,
@@ -98,7 +83,7 @@ export const roles: Role[] = [
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      RECORD_DECLARE_SCOPE
+      'record.declare[event=v2.birth|v2.death|tennis-club-membership]'
     ]
   },
   {
@@ -109,9 +94,6 @@ export const roles: Role[] = [
       id: 'userRole.localLeader'
     },
     scopes: [
-      SCOPES.RECORD_DECLARE_BIRTH,
-      SCOPES.RECORD_DECLARE_DEATH,
-      SCOPES.RECORD_DECLARE_MARRIAGE,
       SCOPES.RECORD_SUBMIT_INCOMPLETE,
       SCOPES.RECORD_SUBMIT_FOR_REVIEW,
       SCOPES.SEARCH_BIRTH,
@@ -120,7 +102,7 @@ export const roles: Role[] = [
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      RECORD_DECLARE_SCOPE
+      'record.declare[event=v2.birth|v2.death|tennis-club-membership]'
     ]
   },
   {
@@ -132,11 +114,7 @@ export const roles: Role[] = [
     },
     scopes: [
       SCOPES.RECORD_READ,
-      SCOPES.RECORD_DECLARE_BIRTH,
-      SCOPES.RECORD_DECLARE_DEATH,
-      SCOPES.RECORD_DECLARE_MARRIAGE,
       SCOPES.RECORD_DECLARATION_EDIT,
-      SCOPES.RECORD_SUBMIT_FOR_APPROVAL,
       SCOPES.RECORD_SUBMIT_FOR_UPDATES,
       SCOPES.RECORD_DECLARATION_ARCHIVE,
       SCOPES.RECORD_DECLARATION_REINSTATE,
@@ -155,7 +133,8 @@ export const roles: Role[] = [
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
       'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates-office|in-review|sent-for-approval|in-external-validation|ready-to-print|ready-to-issue]',
-      RECORD_DECLARE_SCOPE
+      'record.declare[event=v2.birth|v2.death|tennis-club-membership]',
+      'record.declared.validate[event=v2.birth|v2.death|tennis-club-membership]'
     ]
   },
   {
@@ -167,9 +146,6 @@ export const roles: Role[] = [
     },
     scopes: [
       SCOPES.RECORD_READ,
-      SCOPES.RECORD_DECLARE_BIRTH,
-      SCOPES.RECORD_DECLARE_DEATH,
-      SCOPES.RECORD_DECLARE_MARRIAGE,
       SCOPES.RECORD_DECLARATION_EDIT,
       SCOPES.RECORD_SUBMIT_FOR_UPDATES,
       SCOPES.RECORD_REVIEW_DUPLICATES,
@@ -195,7 +171,7 @@ export const roles: Role[] = [
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
       'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates-office|in-review-all|in-external-validation|ready-to-print|ready-to-issue]',
-      RECORD_DECLARE_SCOPE
+      'record.declare[event=v2.birth|v2.death|tennis-club-membership]'
     ]
   },
   {
@@ -259,9 +235,6 @@ export const roles: Role[] = [
     },
     scopes: [
       SCOPES.RECORD_READ,
-      SCOPES.RECORD_DECLARE_BIRTH,
-      SCOPES.RECORD_DECLARE_DEATH,
-      SCOPES.RECORD_DECLARE_MARRIAGE,
       SCOPES.RECORD_DECLARATION_EDIT,
       SCOPES.RECORD_SUBMIT_FOR_UPDATES,
       SCOPES.RECORD_REVIEW_DUPLICATES,
@@ -289,7 +262,7 @@ export const roles: Role[] = [
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
       'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates-office|in-review-all|in-external-validation|ready-to-print|ready-to-issue]',
-      RECORD_DECLARE_SCOPE
+      'record.declare[event=v2.birth|v2.death|tennis-club-membership]'
     ]
   }
 ]
