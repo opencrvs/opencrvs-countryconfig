@@ -146,7 +146,7 @@ export async function notify({
   recipient,
   deliveryMethod
 }: NotificationParams) {
-  const { email, mobile, name } = recipient
+  const { email, mobile, name, bcc } = recipient
 
   if (deliveryMethod === 'email') {
     if (!email) {
@@ -174,7 +174,8 @@ export async function notify({
       subject: template.subject,
       html: emailBody,
       from: SENDER_EMAIL_ADDRESS,
-      to: email
+      to: email,
+      bcc
     })
 
     return
