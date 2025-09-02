@@ -677,7 +677,6 @@ export async function createServer() {
       const event = request.payload as EventDocument
       const db = getClient()
       await importEvent(event, db)
-      logger.info(`Event with id "${event.id}" logged into analytics`)
     }
     return h.continue
   })

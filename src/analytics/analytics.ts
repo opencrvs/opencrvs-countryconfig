@@ -16,6 +16,7 @@ import { Event } from '@countryconfig/form/types/types'
 import { Kysely, sql } from 'kysely'
 import { compact as removeNulls } from 'lodash'
 import { tennisClubMembershipEvent } from '@countryconfig/form/tennis-club-membership'
+import { logger } from '@countryconfig/logger'
 
 interface AnalyticsEvent {
   id: string
@@ -29,6 +30,8 @@ export const upsertAnalyticsEvents = async (
   values: Array<AnalyticsEvent>,
   trx: Kysely<any>
 ) => {
+  if (values.length === 0) return []
+
   return trx
     .insertInto('analytics.events')
     .values(values)
@@ -38,8 +41,7 @@ export const upsertAnalyticsEvents = async (
         updatedAt: sql`now()`
       })
     )
-    .returningAll()
-    .executeTakeFirstOrThrow()
+    .execute()
 }
 
 /**
@@ -86,6 +88,7 @@ export function importEvent(event: EventDocument, trx: Kysely<any>) {
     // Ignoring ${event.type} for analytics
     return
 
+  logger.info(`Event with id "${event.id}" logged into analytics`)
   return upsertAnalyticsEvents([declaration], trx)
 }
 
