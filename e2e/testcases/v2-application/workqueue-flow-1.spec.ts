@@ -288,7 +288,7 @@ test.describe.serial('1. Workqueue flow - 1', () => {
     })
   })
 
-  test("1.3 FA can't see the record", async () => {
+  test('1.3 FA can see the record', async () => {
     await loginToV2(page, CREDENTIALS.FIELD_AGENT, true)
 
     await assertRecordInWorkqueue({
@@ -297,7 +297,7 @@ test.describe.serial('1. Workqueue flow - 1', () => {
       workqueues: [
         { title: 'Assigned to you', exists: false },
         { title: 'Recent', exists: false },
-        { title: 'Sent for review', exists: false },
+        { title: 'Sent for review', exists: true },
         { title: 'Requires updates', exists: false }
       ]
     })
@@ -411,7 +411,7 @@ test.describe.serial('1. Workqueue flow - 1', () => {
     })
   })
 
-  test("1.6 FA can't see the record", async () => {
+  test('1.6 FA can see the record', async () => {
     await loginToV2(page, CREDENTIALS.FIELD_AGENT, true)
 
     await assertRecordInWorkqueue({
@@ -420,7 +420,7 @@ test.describe.serial('1. Workqueue flow - 1', () => {
       workqueues: [
         { title: 'Assigned to you', exists: false },
         { title: 'Recent', exists: false },
-        { title: 'Sent for review', exists: false },
+        { title: 'Sent for review', exists: true },
         { title: 'Requires updates', exists: false }
       ]
     })

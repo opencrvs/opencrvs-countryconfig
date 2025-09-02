@@ -97,7 +97,7 @@ test.describe.serial('Birth Record correction flow', () => {
   })
 
   test('Review page should be displayed and continue button should be disabled', async () => {
-    await expectInUrl(page, `/events/correction/${eventId}/review`)
+    await expectInUrl(page, `/events/request-correction/${eventId}/review`)
     await expect(page.getByRole('button', { name: 'Continue' })).toBeDisabled()
   })
 
@@ -130,7 +130,7 @@ test.describe.serial('Birth Record correction flow', () => {
   })
 
   test('When back on review page, continue button should still be disabled', async () => {
-    await expectInUrl(page, `/events/correction/${eventId}/review`)
+    await expectInUrl(page, `/events/request-correction/${eventId}/review`)
     await expect(page.getByRole('button', { name: 'Continue' })).toBeDisabled()
   })
 
@@ -181,7 +181,7 @@ test.describe.serial('Birth Record correction flow', () => {
 
   test('Continue to the summary page', async () => {
     await page.getByRole('button', { name: 'Continue' }).click()
-    await expectInUrl(page, `/events/correction/${eventId}/summary`)
+    await expectInUrl(page, `/events/request-correction/${eventId}/summary`)
     await expect(
       page.getByRole('button', { name: 'Back to review' })
     ).toBeEnabled()
