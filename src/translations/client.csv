@@ -2580,7 +2580,7 @@ v2.duplicates.content.notDuplicateConfirmationTitle,Not a duplicate content conf
 v2.duplicates.content.registeredAt,Registered at label for duplicates comparison,Registered at,Enregistré à
 v2.duplicates.content.registeredBy,Registered by label for duplicates comparison,Registered by,Enregistré par
 v2.duplicates.content.subtitle,Duplicates content subtitle message,"This record was flagged as a potential duplicate of: {trackingIds}. Please review these by clicking on each tracking ID in the tab section to view a side-by-side comparison below, and confirm if this record is a duplicate",Cet enregistrement a été signalé comme un doublon potentiel de : {trackingIds}. Veuillez les examiner en cliquant sur chaque identifiant de suivi dans la section des onglets pour afficher une comparaison côte à côte ci-dessous et confirmer si cet enregistrement est un doublon
-v2.duplicates.content.title,Duplicates content title message,Is {name} ({trackingId}) a duplicate?,Est-ce que {nom} ({trackingId}) est un doublon ?
+v2.duplicates.content.title,Duplicates content title message,Is {name} ({trackingId}) a duplicate?,Est-ce que {name} ({trackingId}) est un doublon ?
 v2.duplicates.review.header,Review page header for duplicates declarations,Potential {event} duplicate review,Potentiel {event} examen de doublon
 v2.duplicates.warning,The warning message shown when a declaration has potential duplicates,Potential duplicate of record {trackingId},Duplicata potentiel de l'enregistrement {trackingId}
 v2.error.child.weightAtBirth.invalidNumberRange,This is the error message for invalid number range,Must be within 0 and 6,Doit être compris entre 0 et 6
