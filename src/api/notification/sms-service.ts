@@ -46,6 +46,7 @@ const otherTemplates = {
 export type SMSTemplateType =
   | keyof typeof otherTemplates
   | InformantTemplateType
+  | 'allUserNotification'
 
 export async function sendSMS(
   type: SMSTemplateType,
@@ -129,7 +130,8 @@ export const TriggerToSMSTemplate = {
   ['username-reminder']: 'retieveUserNameNotification',
   ['reset-password']: 'resetUserPasswordNotification',
   ['reset-password-by-admin']: 'resetUserPasswordByAdminNotification',
-  ['2fa']: 'authenticationCodeNotification'
+  ['2fa']: 'authenticationCodeNotification',
+  ['all-user-notification']: 'allUserNotification'
 } satisfies Record<TriggerEvent, SMSTemplateType>
 
 function isTriggerEvent(event: any): event is TriggerEvent {
