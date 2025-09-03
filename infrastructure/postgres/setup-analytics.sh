@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS analytics.event_actions (
   event_id uuid NOT NULL,
   event_type text NOT NULL,
   tracking_id text NOT NULL,
-  declaration jsonb  NOT NULL,
+  action jsonb  NOT NULL,
   indexed_at timestamptz DEFAULT now() NOT NULL,
   created_at timestamptz NOT NULL,
   UNIQUE (action_id, event_id)

@@ -12,6 +12,7 @@
 import {
   EventConfig,
   EventDocument,
+  EventState,
   getCurrentEventState
 } from '@opencrvs/toolkit/events'
 import { birthEvent } from '@countryconfig/form/v2/birth'
@@ -20,6 +21,7 @@ import { Event } from '@countryconfig/form/types/types'
 import { Kysely, sql } from 'kysely'
 import { tennisClubMembershipEvent } from '@countryconfig/form/tennis-club-membership'
 import { logger } from '@countryconfig/logger'
+import { pickBy } from 'lodash'
 
 /**
  * You can control which events you want to track in analytics by adding them here.
@@ -40,6 +42,22 @@ function getEventConfig(eventType: string) {
   return null
 }
 
+/**
+ * Only analytics fields (`analytics: true`) must be included in `declaration`
+ */
+function pickAnalyticsFields(
+  declaration: EventState,
+  eventConfig: EventConfig
+) {
+  const analyticsFields = eventConfig.declaration.pages.flatMap((page) =>
+    page.fields.filter((field) => field.analytics === true)
+  )
+
+  return pickBy(declaration, (_, key) =>
+    analyticsFields.some((field) => field.id === key)
+  )
+}
+
 export async function upsertAnalyticsEventActions(
   event: EventDocument,
   eventConfig: EventConfig,
@@ -49,13 +67,21 @@ export async function upsertAnalyticsEventActions(
     const actionsFromStartToCurrentPoint = event.actions.slice(0, i + 1)
     const action = event.actions[i]
 
-    const declarationAtCurrentPoint = getCurrentEventState(
+    const actionAtCurrentPoint = getCurrentEventState(
       {
         ...event,
         actions: actionsFromStartToCurrentPoint
       },
       eventConfig
     )
+
+    const actionWithFilteredDeclaration = {
+      ...action,
+      declaration: pickAnalyticsFields(
+        actionAtCurrentPoint.declaration,
+        eventConfig
+      )
+    }
 
     await trx
       .insertInto('analytics.event_actions')
@@ -64,13 +90,13 @@ export async function upsertAnalyticsEventActions(
         actionId: action.id,
         eventType: event.type,
         trackingId: event.trackingId,
-        declaration: declarationAtCurrentPoint,
+        action: actionWithFilteredDeclaration,
         createdAt: action.createdAt,
         indexedAt: undefined
       })
       .onConflict((oc) =>
         oc.columns(['eventId', 'actionId']).doUpdateSet({
-          declaration: sql`excluded.declaration`,
+          action: sql`excluded.action`,
           indexedAt: sql`now()`
         })
       )
