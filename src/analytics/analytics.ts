@@ -65,7 +65,7 @@ export async function upsertAnalyticsEventActions(
         trackingId: event.trackingId,
         declaration: declarationAtCurrentPoint,
         createdAt: declarationAtCurrentPoint.createdAt,
-        indexedAt: new Date().toISOString()
+        indexedAt: undefined
       })
       .onConflict((oc) =>
         oc.columns(['eventId', 'actionId']).doUpdateSet({
