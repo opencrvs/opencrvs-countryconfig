@@ -162,16 +162,17 @@ export async function notify({
     }
 
     const template = getTemplate(event)
+    const subject = 'subject' in variable ? variable.subject : template.subject
     const emailBody = renderTemplate(template, variable)
 
     if (process.env.NODE_ENV === 'development') {
       console.log(
-        `Sending email to ${email} with subject: ${template.subject}, body: ${JSON.stringify(emailBody)}`
+        `Sending email to ${email} with subject: ${subject}, body: ${JSON.stringify(emailBody)}`
       )
     }
 
     await sendEmail({
-      subject: template.subject,
+      subject,
       html: emailBody,
       from: SENDER_EMAIL_ADDRESS,
       to: email,
