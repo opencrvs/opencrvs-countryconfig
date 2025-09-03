@@ -67,6 +67,7 @@ export const correctionRequesterIdentityVerify: FieldConfig[] = [
         { fieldId: 'mother.brn' },
         { fieldId: 'mother.name' },
         { fieldId: 'mother.dob' },
+        { fieldId: 'mother.age' },
         { fieldId: 'mother.nationality' }
       ]
     }
@@ -99,6 +100,7 @@ export const correctionRequesterIdentityVerify: FieldConfig[] = [
         { fieldId: 'father.brn' },
         { fieldId: 'father.name' },
         { fieldId: 'father.dob' },
+        { fieldId: 'father.age' },
         { fieldId: 'father.nationality' }
       ]
     }
@@ -129,6 +131,7 @@ export const correctionRequesterIdentityVerify: FieldConfig[] = [
         { fieldId: 'informant.brn' },
         { fieldId: 'informant.name' },
         { fieldId: 'informant.dob' },
+        { fieldId: 'informant.age' },
         { fieldId: 'informant.other.relation' },
         { fieldId: 'informant.nationality' }
       ]
