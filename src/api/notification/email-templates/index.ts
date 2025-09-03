@@ -72,6 +72,10 @@ export const TriggerVariable = {
   [TriggerEvent.TWO_FA]: z.object({
     firstname: z.string(),
     code: z.string()
+  }),
+  [TriggerEvent.ALL_USER_NOTIFICATION]: z.object({
+    subject: z.string(),
+    body: z.string()
   })
 } as const
 
@@ -155,19 +159,14 @@ export type InformantNotificationVariables = {
   >
 }
 
-export type AllUserNotificationVariables = {
-  subject: string
-  body: string
-}
-
 const templates = {
-  'user-created': {
+  [TriggerEvent.USER_CREATED]: {
     type: 'onboarding-invite',
     subject: 'Welcome to OpenCRVS!',
     template:
       readOtherTemplate<TriggerVariable['user-created']>('onboarding-invite')
   },
-  '2fa': {
+  [TriggerEvent.TWO_FA]: {
     type: '2-factor-authentication',
     subject: 'Two factor authentication',
     template: readOtherTemplate<TriggerVariable['2fa']>(
@@ -188,20 +187,20 @@ const templates = {
       'change-email-address'
     )
   },
-  'reset-password-by-admin': {
+  [TriggerEvent.RESET_PASSWORD_BY_ADMIN]: {
     type: 'password-reset-by-system-admin',
     subject: 'Account password reset invitation',
     template: readOtherTemplate<TriggerVariable['reset-password-by-admin']>(
       'password-reset-by-system-admin'
     )
   },
-  'reset-password': {
+  [TriggerEvent.RESET_PASSWORD]: {
     type: 'password-reset',
     subject: 'Account password reset request',
     template:
       readOtherTemplate<TriggerVariable['reset-password']>('password-reset')
   },
-  'username-reminder': {
+  [TriggerEvent.USERNAME_REMINDER]: {
     type: 'username-reminder',
     subject: 'Account username reminder',
     template:
@@ -209,7 +208,7 @@ const templates = {
         'username-reminder'
       )
   },
-  'user-updated': {
+  [TriggerEvent.USER_UPDATED]: {
     type: 'username-updated',
     subject: 'Account username updated',
     template:
@@ -293,10 +292,10 @@ const templates = {
         InformantNotificationVariables['deathRejectionNotification']
       >('rejection')
   },
-  allUserNotification: {
+  [TriggerEvent.ALL_USER_NOTIFICATION]: {
     type: 'allUserNotification',
     subject: '', // Subject defined from National Sys Admin Dashboard
-    template: readOtherTemplate<AllUserNotificationVariables>(
+    template: readOtherTemplate<TriggerVariable['all-user-notification']>(
       'all-user-notification'
     )
   }
@@ -309,7 +308,6 @@ export type EmailTemplateType =
   | 'change-email-address'
   | 'correction-approved'
   | 'correction-rejected'
-  | 'allUserNotification'
 
 export function getTemplate<T extends EmailTemplateType>(type: T) {
   return templates[type]
