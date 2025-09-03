@@ -48,6 +48,7 @@ export async function upsertAnalyticsEventActions(
   for (let i = 0; i < event.actions.length; i++) {
     const actionsFromStartToCurrentPoint = event.actions.slice(0, i + 1)
     const action = event.actions[i]
+
     const declarationAtCurrentPoint = getCurrentEventState(
       {
         ...event,
@@ -64,7 +65,7 @@ export async function upsertAnalyticsEventActions(
         eventType: event.type,
         trackingId: event.trackingId,
         declaration: declarationAtCurrentPoint,
-        createdAt: declarationAtCurrentPoint.createdAt,
+        createdAt: action.createdAt,
         indexedAt: undefined
       })
       .onConflict((oc) =>
