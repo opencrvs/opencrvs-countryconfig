@@ -343,7 +343,7 @@ export const father = defineFormPage({
         id: 'v2.event.birth.action.declare.form.section.father.field.address.addressSameAs.label'
       },
       parent: field('mother.detailsNotAvailable'),
-      defaultValue: YesNoTypes.YES,
+      defaultValue: YesNoTypes.NO,
       conditionals: [
         {
           type: ConditionalType.SHOW,
