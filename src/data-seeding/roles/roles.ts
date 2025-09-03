@@ -29,6 +29,7 @@ export const roles: Role[] = [
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
       'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]',
+      'record.read[event=v2.birth|v2.death|tennis-club-membership]',
       'record.declare[event=v2.birth|v2.death|tennis-club-membership]',
       'record.notify[event=v2.birth|v2.death|tennis-club-membership]'
     ]
@@ -53,6 +54,7 @@ export const roles: Role[] = [
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
       'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]',
+      'record.read[event=v2.birth|v2.death|tennis-club-membership]',
       'record.declare[event=v2.birth|v2.death|tennis-club-membership]',
       'record.notify[event=v2.birth|v2.death|tennis-club-membership]'
     ]
@@ -77,6 +79,7 @@ export const roles: Role[] = [
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
       'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]',
+      'record.read[event=v2.birth|v2.death|tennis-club-membership]',
       'record.declare[event=v2.birth|v2.death|tennis-club-membership]',
       'record.notify[event=v2.birth|v2.death|tennis-club-membership]'
     ]
@@ -101,6 +104,7 @@ export const roles: Role[] = [
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
       'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]',
+      'record.read[event=v2.birth|v2.death|tennis-club-membership]',
       'record.declare[event=v2.birth|v2.death|tennis-club-membership]',
       'record.notify[event=v2.birth|v2.death|tennis-club-membership]'
     ]
@@ -125,6 +129,7 @@ export const roles: Role[] = [
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
       'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]',
+      'record.read[event=v2.birth|v2.death|tennis-club-membership]',
       'record.declare[event=v2.birth|v2.death|tennis-club-membership]',
       'record.notify[event=v2.birth|v2.death|tennis-club-membership]'
     ]
