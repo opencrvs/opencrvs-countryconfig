@@ -707,7 +707,7 @@ services:
       - jwt-public-key.{{ts}}
     environment:
       - NODE_ENV=production
-      - LANGUAGES=en,fr
+      - LANGUAGES=en
       - SENTRY_DSN=${SENTRY_DSN:-}
       - APN_SERVICE_URL=http://apm-server:8200
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
@@ -728,7 +728,7 @@ services:
       - jwt-public-key.{{ts}}
     environment:
       - NODE_ENV=production
-      - LANGUAGES=en,fr
+      - LANGUAGES=en
       - SENTRY_DSN=${SENTRY_DSN:-}
       - APN_SERVICE_URL=http://apm-server:8200
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
@@ -767,7 +767,7 @@ services:
       - jwt-public-key.{{ts}}
     environment:
       - NODE_ENV=production
-      - LANGUAGES=en,fr
+      - LANGUAGES=en
       - SENTRY_DSN=${SENTRY_DSN:-}
       - APN_SERVICE_URL=http://apm-server:8200
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
