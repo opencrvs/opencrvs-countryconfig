@@ -692,7 +692,6 @@ export async function createServer() {
 
   async function start() {
     await server.start()
-
     server.log(
       'info',
       `server started on ${COUNTRY_CONFIG_HOST}:${COUNTRY_CONFIG_PORT}`
