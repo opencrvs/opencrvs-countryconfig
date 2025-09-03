@@ -677,8 +677,10 @@ export async function createServer() {
 
     if (wasRequestForActionConfirmation && wasActionAcceptedImmediately) {
       const event = request.payload as EventDocument
-      const db = getClient()
-      await importEvent(event, db)
+      const client = getClient()
+      await client.transaction().execute(async (trx) => {
+        await importEvent(event, trx)
+      })
     }
     return h.continue
   })
