@@ -112,9 +112,9 @@ test.describe
       const searchResult = await page.locator('#content-name').textContent()
       const searchResultCountNumberInBracketsRegex = /\((\d+)\)$/
       await expect(searchResult).toMatch(searchResultCountNumberInBracketsRegex)
-      await expect(page.getByText('Event: V2 birth')).toBeVisible()
+      await expect(page.getByText('Event: Birth')).toBeVisible()
       // Check for each pill
-      await expect(page.getByText('Event: V2 birth')).toBeVisible()
+      await expect(page.getByText('Event: Birth')).toBeVisible()
       await expect(
         page.getByText(
           `Date of registration: ${thisYear}-${thisMonth}-${todayDate}`
@@ -145,7 +145,7 @@ test.describe
       await expect(page.url()).toContain(`event.status=REGISTERED&`)
       // event.updatedAt=2025-05-12%2C2025-05-19
       await expect(page.url()).toContain(`event.updatedAt=`)
-      await expect(page.locator('#tab_v2\\.birth')).toHaveText('Birth')
+      await expect(page.locator('#tab_birth')).toHaveText('Birth')
 
       await expect(
         page.locator(

@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Informant notification - Email > v2.birth - DECLARE 1`] = `
+exports[`Informant notification - Email > birth - DECLARE 1`] = `
 {
   "from": "",
   "html": "<!DOCTYPE html>
@@ -67,7 +67,7 @@ exports[`Informant notification - Email > v2.birth - DECLARE 1`] = `
 }
 `;
 
-exports[`Informant notification - Email > v2.birth - NOTIFY 1`] = `
+exports[`Informant notification - Email > birth - NOTIFY 1`] = `
 {
   "from": "",
   "html": "<!DOCTYPE html>
@@ -136,7 +136,7 @@ exports[`Informant notification - Email > v2.birth - NOTIFY 1`] = `
 }
 `;
 
-exports[`Informant notification - Email > v2.birth - REGISTER 1`] = `
+exports[`Informant notification - Email > birth - REGISTER 1`] = `
 {
   "from": "",
   "html": "<!DOCTYPE html>
@@ -206,7 +206,7 @@ exports[`Informant notification - Email > v2.birth - REGISTER 1`] = `
 }
 `;
 
-exports[`Informant notification - Email > v2.birth - REJECT 1`] = `
+exports[`Informant notification - Email > birth - REJECT 1`] = `
 {
   "from": "",
   "html": "<!DOCTYPE html>
@@ -273,7 +273,7 @@ exports[`Informant notification - Email > v2.birth - REJECT 1`] = `
 }
 `;
 
-exports[`Informant notification - Email > v2.death - DECLARE 1`] = `
+exports[`Informant notification - Email > death - DECLARE 1`] = `
 {
   "from": "",
   "html": "<!DOCTYPE html>
@@ -340,7 +340,7 @@ exports[`Informant notification - Email > v2.death - DECLARE 1`] = `
 }
 `;
 
-exports[`Informant notification - Email > v2.death - NOTIFY 1`] = `
+exports[`Informant notification - Email > death - NOTIFY 1`] = `
 {
   "from": "",
   "html": "<!DOCTYPE html>
@@ -403,7 +403,7 @@ exports[`Informant notification - Email > v2.death - NOTIFY 1`] = `
 }
 `;
 
-exports[`Informant notification - Email > v2.death - REGISTER 1`] = `
+exports[`Informant notification - Email > death - REGISTER 1`] = `
 {
   "from": "",
   "html": "<!DOCTYPE html>
@@ -473,7 +473,7 @@ exports[`Informant notification - Email > v2.death - REGISTER 1`] = `
 }
 `;
 
-exports[`Informant notification - Email > v2.death - REJECT 1`] = `
+exports[`Informant notification - Email > death - REJECT 1`] = `
 {
   "from": "",
   "html": "<!DOCTYPE html>

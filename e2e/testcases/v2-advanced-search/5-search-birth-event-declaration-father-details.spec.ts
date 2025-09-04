@@ -64,7 +64,7 @@ test.describe
       const searchResult = await page.locator('#content-name').textContent()
       const searchResultCountNumberInBracketsRegex = /\((\d+)\)$/
       expect(searchResult).toMatch(searchResultCountNumberInBracketsRegex)
-      await expect(page.getByText('Event: V2 birth')).toBeVisible()
+      await expect(page.getByText('Event: Birth')).toBeVisible()
       await expect(
         page.getByText(`Father's Date of birth: ${yyyy}-${mm}-${dd}`)
       ).toBeVisible()
@@ -83,7 +83,7 @@ test.describe
       expect(page.url()).toContain(
         `father.name=${encodeURIComponent(JSON.stringify({ firstname: record.declaration['father.name'].firstname ?? faker.person.firstName, surname: record.declaration['father.name'].surname, middlename: '' }))}`
       )
-      await expect(page.locator('#tab_v2\\.birth')).toHaveText('Birth')
+      await expect(page.locator('#tab_birth')).toHaveText('Birth')
       await expect(page.getByTestId('father____dob-dd')).toHaveValue(dd)
       await expect(page.getByTestId('father____dob-mm')).toHaveValue(mm)
       await expect(page.getByTestId('father____dob-yyyy')).toHaveValue(yyyy)
