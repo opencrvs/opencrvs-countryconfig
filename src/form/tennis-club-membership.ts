@@ -233,7 +233,7 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
       ]
     }
   ]
-}) as any
+})
 
 const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
   label: {
