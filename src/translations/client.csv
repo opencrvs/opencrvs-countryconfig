@@ -2425,6 +2425,7 @@ v2.constants.dod,Label for DoD in work queue list item,D.o.D,Date de décès
 v2.constants.downloaded,Label for application download status Downloaded,Downloaded,Téléchargé
 v2.constants.downloading,Label for declaration download status Downloading,Downloading...,Téléchargement en cours...
 v2.constants.duplicateOf,table header for `duplicate of` in record audit,Duplicate of,Duplicata de
+v2.constants.duplicateOf,table header for `duplicate of` in record audit,Duplicate of,Duplicata de
 v2.constants.emailAddress,Email label,Email Address,Adresse e-mail
 v2.constants.emailBody,Label for email body input,Message,Message
 v2.constants.emailSubject,Label for email subject input,Subject,Sujet
