@@ -11,12 +11,12 @@
 
 import { AdvancedSearchConfig, event, field } from '@opencrvs/toolkit/events'
 const deceasedPrefix = {
-  id: 'v2.death.search.criteria.label.prefix.deceased',
+  id: 'death.search.criteria.label.prefix.deceased',
   defaultMessage: "Deceased's",
   description: 'Deceased prefix'
 }
 const informantPrefix = {
-  id: 'v2.death.search.criteria.label.prefix.informant',
+  id: 'death.search.criteria.label.prefix.informant',
   defaultMessage: "Informant's",
   description: 'Informant prefix'
 }
