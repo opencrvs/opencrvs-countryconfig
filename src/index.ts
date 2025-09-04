@@ -301,15 +301,11 @@ export async function createServer() {
           ? '/client-config.prod.js'
           : '/client-config.js'
 
-      if (process.env.NODE_ENV !== 'production') {
-        const template = Handlebars.compile(
-          readFileSync(join(__dirname, file), 'utf8')
-        )
-        const result = template({ V2_EVENTS: process.env.V2_EVENTS || false })
-        return h.response(result).type('application/javascript')
-      }
-
-      return h.file(join(__dirname, file))
+      const template = Handlebars.compile(
+        readFileSync(join(__dirname, file), 'utf8')
+      )
+      const result = template({ V2_EVENTS: process.env.V2_EVENTS || false })
+      return h.response(result).type('application/javascript')
     },
     options: {
       auth: false,
@@ -560,6 +556,7 @@ export async function createServer() {
     path: '/events',
     handler: getCustomEventsHandler,
     options: {
+      auth: false,
       tags: ['api', 'events'],
       description: 'Serves custom events'
     }
@@ -567,7 +564,7 @@ export async function createServer() {
 
   server.route({
     method: 'POST',
-    path: '/events/{event}/actions/{action}',
+    path: '/trigger/events/{event}/actions/{action}',
     handler: onAnyActionHandler,
     options: {
       tags: ['api', 'events'],
@@ -577,7 +574,7 @@ export async function createServer() {
 
   server.route({
     method: 'POST',
-    path: `/events/${Event.TENNIS_CLUB_MEMBERSHIP}/actions/${ActionType.REGISTER}`,
+    path: `/trigger/events/${Event.TENNIS_CLUB_MEMBERSHIP}/actions/${ActionType.REGISTER}`,
     handler: onRegisterHandler,
     options: {
       tags: ['api', 'events'],
@@ -587,7 +584,7 @@ export async function createServer() {
 
   server.route({
     method: 'POST',
-    path: `/events/${Event.V2_BIRTH}/actions/${ActionType.REGISTER}`,
+    path: `/trigger/events/${Event.V2_BIRTH}/actions/${ActionType.REGISTER}`,
     handler: onRegisterHandler,
     options: {
       tags: ['api', 'events'],
@@ -597,7 +594,7 @@ export async function createServer() {
 
   server.route({
     method: 'POST',
-    path: `/events/${Event.V2_DEATH}/actions/${ActionType.REGISTER}`,
+    path: `/trigger/events/${Event.V2_DEATH}/actions/${ActionType.REGISTER}`,
     handler: onRegisterHandler,
     options: {
       tags: ['api', 'events'],

@@ -1122,7 +1122,7 @@ form.field.label.parentDetailsType,,Do you have the mother and father's details?
 form.field.label.phoneNumber,,Phone number
 form.field.label.physician,,Physician
 form.field.label.placeOfBirth,,Location
-form.field.label.placeOfBirthFormField,,Place of birth
+form.field.label.placeOfBirthPreview,,Place of delivery
 form.field.label.placeOfDeath,,Place of death
 form.field.label.placeOfDeathOther,,Different Address
 form.field.label.placeOfDeathSameAsCurrent,,Current address of the deceased
@@ -1993,9 +1993,7 @@ register.eventInfo.marriage.listItem1,,"Once I complete the declaration, it will
 register.eventInfo.marriage.listItem2,,Wait for an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.
 register.eventInfo.marriage.title,,Introduce the marriage registration process to the informant
 register.form.informationMissing,,Information missing
-register.form.missingFieldsDescription,,"The following information will be submitted for validation. Please
-    make sure all required details have been filled in correctly. There
-    are {numberOfErrors} missing mandatory fields in your form:"
+register.form.missingFieldsDescription,,The following information will be submitted for validation. Please make sure all required details have been filled in correctly. There are {numberOfErrors} missing mandatory fields in your form:
 register.form.modal.areYouReadyToSubmit,,Are you ready to submit?
 register.form.modal.desc.deleteDeclarationConfirm,Description for delete declaration confirmation modal,"Are you certain you want to delete this draft declaration form? Please note, this action cant be undone."
 register.form.modal.desc.exitWithoutSavingDeclarationConfirm,Description for exit declaration without saving confirmation modal,You have unsaved changes on your declaration form. Are you sure you want to exit without saving?
@@ -2567,6 +2565,21 @@ v2.correction.summary.title,Title for certificate correction summary,Correction 
 v2.correction.supportingDocuments.attest.label,Label for attestation of supporting documents,Attest
 v2.correction.supportingDocuments.notNeeded.label,Label for indicating supporting documents are not needed,Not Needed
 v2.custom.field.form.requiredField,,Required for registration
+v2.duplicates.button.markAsDuplicate,,Mark as duplicate
+v2.duplicates.button.notDuplicate,,Not a duplicate
+v2.duplicates.compare.supportingDocuments,,Supporting documents
+v2.duplicates.compare.title,,Review {actualTrackingId} against {duplicateTrackingId}
+v2.duplicates.content.duplicateDropdownMessage,,Duplicate of
+v2.duplicates.content.header,,Declaration details
+v2.duplicates.content.markAsDuplicate,,Mark {trackingId} as duplicate?
+v2.duplicates.content.markAsDuplicateReason,,Please describe your reason
+v2.duplicates.content.notDuplicateConfirmationTitle,,Are you sure {name} ({trackingId}) is not duplicate?
+v2.duplicates.content.registeredAt,,Registered at
+v2.duplicates.content.registeredBy,,Registered by
+v2.duplicates.content.subtitle,,"This record was flagged as a potential duplicate of: {trackingIds}. Please review these by clicking on each tracking ID in the tab section to view a side-by-side comparison below, and confirm if this record is a duplicate"
+v2.duplicates.content.title,,Is {name} ({trackingId}) a duplicate?
+v2.duplicates.review.header,,Potential {event} duplicate review
+v2.duplicates.warning,,Potential duplicate of record {trackingId}
 v2.error.child.weightAtBirth.invalidNumberRange,This is the error message for invalid number range,Must be within 0 and 6
 v2.error.hidden,"Error message when field is hidden or disabled, but a value was received",Hidden or disabled field should not receive a value
 v2.error.invalidDate,Error message when date field is invalid,Invalid date field
@@ -2665,6 +2678,7 @@ v2.event.birth.action.declare.form.version.1,This is the first version of the fo
 v2.event.birth.action.declare.label,This is shown as the action name anywhere the user can trigger the action from,Declare
 v2.event.birth.action.delete.label,Label for delete button in dropdown menu,Delete
 v2.event.birth.action.form.section.collector.other.field.name.label,This is the label for the name field of OTHER collector,Collector's name
+v2.event.birth.action.mark-as-duplicate.label,,Review
 v2.event.birth.action.register.label,Label for review record button in dropdown menu,Review
 v2.event.birth.action.request-correction.label,This is shown as the action name anywhere the user can trigger the action from,Correct record
 v2.event.birth.action.validate.label,This is shown as the action name anywhere the user can trigger the action from,Review
@@ -3119,6 +3133,10 @@ v2.search.noRecord,The no record text,"No records {slug, select, draft {in my dr
 v2.search.noResult,The no result text,No result
 v2.search.noResultFor,The no result text,No results for “{searchTerm}”
 v2.search.quickSearch.result.title,Quick search result title,Search result for “{searchTerm}”
+v2.serviceWorker.cacheKey.WorkBoxRuntime.error.button.logout,,Log out
+v2.serviceWorker.cacheKey.WorkBoxRuntime.error.button.reload,,Reload
+v2.serviceWorker.cacheKey.WorkBoxRuntime.error.content,,"Something went wrong with loading the app. Reload this page, or log out and log back in to continue."
+v2.serviceWorker.cacheKey.WorkBoxRuntime.error.header,,⚠️ Application Cache Error
 v2.signature.upload.modal.title,Title for the signature upload modal,Upload Signature
 v2.validateAction.Declare,The label for declare button of validate action,Send for approval
 v2.validateAction.Reject,The label for reject button of validate action,Reject

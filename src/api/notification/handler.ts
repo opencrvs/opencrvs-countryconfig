@@ -13,16 +13,22 @@ import * as Hapi from '@hapi/hapi'
 import * as Joi from 'joi'
 import { COUNTRY_LOGO_URL, SENDER_EMAIL_ADDRESS } from './constant'
 import { sendEmail } from './email-service'
-import { TriggerToSMSTemplate, sendSMS } from './sms-service'
-import { TriggerVariable, getTemplate, renderTemplate } from './email-templates'
+import { InformantTemplateType, getSMSTemplate, sendSMS } from './sms-service'
+import {
+  getTemplate,
+  InformantNotificationVariables,
+  renderTemplate,
+  TriggerVariable
+} from './email-templates'
 
 import {
+  Recipient,
   TriggerEvent,
-  TriggerPayload,
-  FullName
+  TriggerPayload
 } from '@opencrvs/toolkit/notification'
 import { LOGIN_URL } from '@countryconfig/constants'
 import { applicationConfig } from '../application/application-config'
+import { NameFieldValue } from '@opencrvs/toolkit/events'
 
 type EmailPayloads = {
   subject: string
@@ -50,11 +56,11 @@ export async function emailHandler(
         { ...payload, from: maskEmail(payload.from), to: maskEmail(payload.to) }
       )}`
     )
+
     return h.response().code(200)
   }
 
   await sendEmail(payload)
-
   return h.response().code(200)
 }
 
@@ -73,25 +79,24 @@ export function makeNotificationHandler<T extends TriggerEvent>(event: T) {
         .code(400)
     }
 
-    await sendNotification(event, payloadValidation.data as TriggerPayload[T])
+    await sendUserNotification(
+      event,
+      payloadValidation.data as TriggerPayload[T]
+    )
 
     return h.response().code(200)
   }
 }
 
-function stringifyV1Name(name: FullName) {
-  return name.given[0] + ' ' + name.family
-}
-
-function generateFailureLog({
+export function generateFailureLog({
   contact,
   name,
   event,
   reason
 }: {
   contact: { mobile?: string; email?: string }
-  name: string
-  event: TriggerEvent
+  name?: NameFieldValue
+  event: TriggerEvent | InformantTemplateType
   reason: string
 }) {
   contact.mobile &&= maskSms(contact.mobile)
@@ -101,59 +106,86 @@ function generateFailureLog({
       event,
       recipient: {
         ...contact,
-        name
+        name: name ? name.firstname + ' ' + name.surname : ''
       }
     })}`
   )
   return
 }
 
-export async function sendNotification<T extends TriggerEvent>(
+export async function sendUserNotification<T extends TriggerEvent>(
   event: T,
   payload: TriggerPayload[T]
 ) {
-  const variables = convertPayloadToVariable({
+  const variable = {
+    ...convertPayloadToVariable({ event, payload } as TriggerEventPayloadPair),
+    applicationName: applicationConfig.APPLICATION_NAME,
+    countryLogo: COUNTRY_LOGO_URL
+  }
+
+  await notify({
     event,
-    payload
-  } as TriggerEventPayloadPair)
+    variable,
+    recipient: payload.recipient,
+    deliveryMethod: applicationConfig.USER_NOTIFICATION_DELIVERY_METHOD
+  })
+}
 
-  const { name: nameV1, ...contact } = payload.recipient
-  const name = stringifyV1Name(nameV1[0])
+export interface NotificationParams {
+  event: UserEventVariablePair['event'] | InformantEventVariablePair['event']
+  variable:
+    | UserEventVariablePair['variable']
+    | InformantEventVariablePair['variable']
+  recipient: Recipient
+  deliveryMethod: string
+}
 
-  const applicationName = applicationConfig.APPLICATION_NAME
-  const userNotificationDeliveryMethod =
-    applicationConfig.USER_NOTIFICATION_DELIVERY_METHOD
+export async function notify({
+  event,
+  variable,
+  recipient,
+  deliveryMethod
+}: NotificationParams) {
+  const { email, mobile, name, bcc } = recipient
 
-  if (userNotificationDeliveryMethod === 'email') {
-    if (!payload.recipient.email) {
+  if (deliveryMethod === 'email') {
+    if (!email) {
       generateFailureLog({
-        contact,
+        contact: { mobile, email },
         name,
         event,
         reason:
           "Not having recipient email when USER_NOTIFICATION_DELIVERY_METHOD is 'email'"
       })
+
       return
     }
 
     const template = getTemplate(event)
+    const subject = 'subject' in variable ? variable.subject : template.subject
+    const emailBody = renderTemplate(template, variable)
 
-    const emailBody = renderTemplate(template, {
-      ...variables,
-      applicationName,
-      countryLogo: COUNTRY_LOGO_URL
-    })
+    if (process.env.NODE_ENV === 'development') {
+      console.log(
+        `Sending email to ${email} with subject: ${subject}, body: ${JSON.stringify(emailBody)}`
+      )
+    }
 
     await sendEmail({
-      subject: template.subject,
+      subject,
       html: emailBody,
       from: SENDER_EMAIL_ADDRESS,
-      to: payload.recipient.email
+      to: email,
+      bcc
     })
-  } else if (userNotificationDeliveryMethod === 'sms') {
-    if (!contact.mobile) {
+
+    return
+  }
+
+  if (deliveryMethod === 'sms') {
+    if (!mobile) {
       generateFailureLog({
-        contact,
+        contact: { mobile, email },
         name,
         event,
         reason:
@@ -162,22 +194,46 @@ export async function sendNotification<T extends TriggerEvent>(
       return
     }
 
-    await sendSMS(
-      TriggerToSMSTemplate[event],
-      { ...variables, applicationName, countryLogo: COUNTRY_LOGO_URL },
-      contact.mobile,
-      'en'
-    )
-  } else {
-    generateFailureLog({
-      contact,
-      name,
-      event,
-      reason: `Invalid USER_NOTIFICATION_DELIVERY_METHOD. Options are 'emai' or 'sms'. Found ${userNotificationDeliveryMethod}`
-    })
+    if (event === TriggerEvent.ALL_USER_NOTIFICATION) {
+      generateFailureLog({
+        contact: { mobile, email },
+        name,
+        event,
+        reason:
+          "USER_NOTIFICATION_DELIVERY_METHOD being 'sms' when trying to send all-user-notification"
+      })
+      return
+    }
+
+    await sendSMS(getSMSTemplate(event), variable, mobile, 'en')
     return
   }
+
+  generateFailureLog({
+    contact: { mobile, email },
+    name,
+    event,
+    reason: `Invalid USER_NOTIFICATION_DELIVERY_METHOD. Options are 'email' or 'sms'. Found ${deliveryMethod}`
+  })
+
+  return
 }
+
+export type UserEventVariablePair<T extends TriggerEvent = TriggerEvent> = {
+  [K in T]: {
+    event: K
+    variable: TriggerVariable[K]
+  }
+}[T]
+
+type InformantEventVariablePair<
+  T extends InformantTemplateType = InformantTemplateType
+> = {
+  [K in T]: {
+    event: K
+    variable: InformantNotificationVariables[K]
+  }
+}[T]
 
 export type TriggerEventPayloadPair<T extends TriggerEvent = TriggerEvent> = {
   [K in T]: {
@@ -190,13 +246,13 @@ function convertPayloadToVariable({
   event,
   payload
 }: TriggerEventPayloadPair): TriggerVariable[typeof event] {
-  const firstname = payload.recipient.name[0].given[0]
+  const firstname = payload.recipient.name?.firstname ?? ''
   switch (event) {
     case TriggerEvent.USER_CREATED:
       return {
-        firstname: payload.recipient.name[0].given[0],
+        firstname,
         username: payload.username,
-        password: payload.temporaryPassword,
+        temporaryPassword: payload.temporaryPassword,
         completeSetupUrl: LOGIN_URL,
         loginURL: LOGIN_URL
       }
@@ -217,21 +273,22 @@ function convertPayloadToVariable({
     case TriggerEvent.RESET_PASSWORD:
       return {
         firstname,
-        authCode: payload.code
+        code: payload.code
       }
 
     case TriggerEvent.RESET_PASSWORD_BY_ADMIN:
       return {
         firstname,
-        password: payload.temporaryPassword
+        temporaryPassword: payload.temporaryPassword
       }
 
     case TriggerEvent.TWO_FA:
       return {
         firstname,
-        authCode: payload.code
+        code: payload.code
       }
-
+    case TriggerEvent.ALL_USER_NOTIFICATION:
+      return { subject: payload.subject, body: payload.body }
     default:
       throw new Error(`Unknown event: ${event}`)
   }

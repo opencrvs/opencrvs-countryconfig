@@ -1,5 +1,5 @@
 id,description,en
-authenticationCodeNotification,The SMS messsage that is sent continaing a 2-factor authentication code,Your OpenCRVS authentication code is: {{authCode}}
+authenticationCodeNotification,The SMS messsage that is sent continaing a 2-factor authentication code,Your OpenCRVS authentication code is: {{code}}
 birthDeclarationNotification,The SMS message that is sent to the parent for a birth declaration,Birth registration tracking ID for {{name}} is {{trackingId}}. You will get an SMS within 2 days with progress and next steps.
 birthInProgressNotification,The SMS message that is sent to the parent for a birth notification,Birth registration tracking ID is {{trackingId}}. You must visit {{crvsOffice}} to complete the declaration
 birthRegistrationNotification,The SMS message that is sent to the parent for a birth registration,"Congratulations, the birth of {{name}} has been registered. Visit your local registration office in 5 days with your ID to collect the certificate. Your tracking ID is {{trackingId}}."
@@ -8,8 +8,8 @@ deathDeclarationNotification,The SMS message that is sent to the parent for a de
 deathInProgressNotification,The SMS message that is sent to the parent for a death notification,Death registration tracking ID is {{trackingId}}. You must visit {{crvsOffice}} to complete the declaration
 deathRegistrationNotification,The SMS message that is sent to the parent for a death registration,The death of {{name}} has been registered. Visit your local registration office in 5 days with your ID to collect the certificate. Your tracking ID is {{trackingId}}.
 deathRejectionNotification,The SMS message that is sent to the parent for a death declaration rejection,Death registration declaration for {{name}} ( Tracking ID: {{trackingId}} ) has been rejected. Please visit your local registration office for more information.
-resetUserPasswordByAdminNotification,The SMS message that is sent to a user when admin resets their password,Your password has been reset. Please login to {{applicationName}} with the temporary password: {{password}}.
-resetUserPasswordNotification,The SMS message that is sent to a user when they reset password,Use the code {{authCode}} to reset your {{applicationName}} password. This code expires in 10 minutes.
+resetUserPasswordByAdminNotification,The SMS message that is sent to a user when admin resets their password,Your password has been reset. Please login to {{applicationName}} with the temporary password: {{temporaryPassword}}.
+resetUserPasswordNotification,The SMS message that is sent to a user when they reset password,Use the code {{code}} to reset your {{applicationName}} password. This code expires in 10 minutes.
 retieveUserNameNotification,The SMS message that is sent to a user containing a username,Your username for OpenCRVS is: {{username}}
 updateUserNameNotification,The SMS message that is sent to a user to confirm an updated username,Your OpenCRVS username has been updated to: {{newUsername}}. Your password has not changed.
-userCredentialsNotification,The SMS message that is sent to a new user with a username and passowrd,Your OpenCRVS account has been created. Please login with your username: {{username}} and temporary password: {{password}}
+userCredentialsNotification,The SMS message that is sent to a new user with a username and passowrd,Your OpenCRVS account has been created. Please login with your username: {{username}} and temporary password: {{temporaryPassword}}

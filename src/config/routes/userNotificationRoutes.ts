@@ -73,6 +73,16 @@ export default function getUserNotificationRoutes(): ServerRoute<ReqRefDefaults>
         tags: ['api'],
         description: 'Handles notification for two-factor authentication code'
       }
+    },
+    {
+      method: 'POST',
+      path: '/triggers/user/all-user-notification',
+      handler: makeNotificationHandler('all-user-notification'),
+      options: {
+        auth: false,
+        tags: ['api'],
+        description: 'Handles broadcast for all user '
+      }
     }
   ]
 }

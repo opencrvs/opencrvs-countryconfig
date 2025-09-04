@@ -32,7 +32,7 @@ vi.mock('node-fetch', () => {
 })
 
 import fetch from 'node-fetch'
-import { testData } from './testData'
+import { userNotificationTestData } from './testData'
 import { createServer } from '../../index'
 
 describe('User notification - sms', () => {
@@ -43,7 +43,7 @@ describe('User notification - sms', () => {
     server = await createServer()
   })
 
-  testData.forEach(({ event, payload }) =>
+  userNotificationTestData.forEach(({ event, payload }) =>
     it(event, async () => {
       await server.server
         .inject({

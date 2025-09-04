@@ -14,6 +14,7 @@ import * as fs from 'fs'
 import * as Handlebars from 'handlebars'
 import { join } from 'path'
 import { z } from 'zod'
+import { InformantTemplateType } from '../sms-service'
 
 const readBirthTemplate = <T extends Record<string, string>>(
   templateName: string
@@ -47,7 +48,7 @@ export const TriggerVariable = {
   [TriggerEvent.USER_CREATED]: z.object({
     firstname: z.string(),
     username: z.string(),
-    password: z.string(),
+    temporaryPassword: z.string(),
     completeSetupUrl: z.string(),
     loginURL: z.string()
   }),
@@ -62,15 +63,19 @@ export const TriggerVariable = {
   }),
   [TriggerEvent.RESET_PASSWORD]: z.object({
     firstname: z.string(),
-    authCode: z.string()
+    code: z.string()
   }),
   [TriggerEvent.RESET_PASSWORD_BY_ADMIN]: z.object({
     firstname: z.string(),
-    password: z.string()
+    temporaryPassword: z.string()
   }),
   [TriggerEvent.TWO_FA]: z.object({
     firstname: z.string(),
-    authCode: z.string()
+    code: z.string()
+  }),
+  [TriggerEvent.ALL_USER_NOTIFICATION]: z.object({
+    subject: z.string(),
+    body: z.string()
   })
 } as const
 
@@ -104,42 +109,64 @@ export type ApproveCorrectionVariables = z.infer<
   typeof ApproveCorrectionVariables
 >
 
-type RejectCorrectionVariables = ApproveCorrectionVariables & { reason: string }
+const RejectCorrectionVariables = ApproveCorrectionVariables.extend({
+  reason: z.string()
+})
+type RejectCorrectionVariables = z.infer<typeof RejectCorrectionVariables>
 
-type DeclarationCommonVariables = {
-  trackingId: string
-  crvsOffice: string
-  registrationLocation: string
-  applicationName: string
-  informantName: string
-}
+const DeclarationCommonVariables = z.object({
+  trackingId: z.string(),
+  crvsOffice: z.string(),
+  registrationLocation: z.string(),
+  applicationName: z.string(),
+  informantName: z.string()
+})
 
-type InProgressDeclarationVariables = DeclarationCommonVariables
+export const InformantNotificationVariables = {
+  [InformantTemplateType.birthInProgressNotification]:
+    DeclarationCommonVariables,
+  [InformantTemplateType.birthDeclarationNotification]:
+    DeclarationCommonVariables.extend({
+      name: z.string()
+    }),
+  [InformantTemplateType.birthRegistrationNotification]:
+    DeclarationCommonVariables.extend({
+      name: z.string(),
+      registrationNumber: z.string()
+    }),
+  [InformantTemplateType.birthRejectionNotification]:
+    DeclarationCommonVariables.extend({
+      name: z.string()
+    }),
+  [InformantTemplateType.deathInProgressNotification]:
+    DeclarationCommonVariables,
+  [InformantTemplateType.deathDeclarationNotification]:
+    DeclarationCommonVariables,
+  [InformantTemplateType.deathRegistrationNotification]:
+    DeclarationCommonVariables.extend({
+      name: z.string(),
+      registrationNumber: z.string()
+    }),
+  [InformantTemplateType.deathRejectionNotification]:
+    DeclarationCommonVariables.extend({
+      name: z.string()
+    })
+} as const
 
-type InReviewDeclarationVariables = DeclarationCommonVariables
-
-type RegistrationDeclarationVariables = DeclarationCommonVariables & {
-  name: string
-  registrationNumber: string
-}
-
-type RejectionDeclarationVariables = DeclarationCommonVariables & {
-  name: string
-}
-
-export type AllUserNotificationVariables = {
-  subject: string
-  body: string
+export type InformantNotificationVariables = {
+  [K in InformantTemplateType]: z.infer<
+    (typeof InformantNotificationVariables)[K]
+  >
 }
 
 const templates = {
-  'user-created': {
+  [TriggerEvent.USER_CREATED]: {
     type: 'onboarding-invite',
     subject: 'Welcome to OpenCRVS!',
     template:
       readOtherTemplate<TriggerVariable['user-created']>('onboarding-invite')
   },
-  '2fa': {
+  [TriggerEvent.TWO_FA]: {
     type: '2-factor-authentication',
     subject: 'Two factor authentication',
     template: readOtherTemplate<TriggerVariable['2fa']>(
@@ -160,20 +187,20 @@ const templates = {
       'change-email-address'
     )
   },
-  'reset-password-by-admin': {
+  [TriggerEvent.RESET_PASSWORD_BY_ADMIN]: {
     type: 'password-reset-by-system-admin',
     subject: 'Account password reset invitation',
     template: readOtherTemplate<TriggerVariable['reset-password-by-admin']>(
       'password-reset-by-system-admin'
     )
   },
-  'reset-password': {
+  [TriggerEvent.RESET_PASSWORD]: {
     type: 'password-reset',
     subject: 'Account password reset request',
     template:
       readOtherTemplate<TriggerVariable['reset-password']>('password-reset')
   },
-  'username-reminder': {
+  [TriggerEvent.USERNAME_REMINDER]: {
     type: 'username-reminder',
     subject: 'Account username reminder',
     template:
@@ -181,7 +208,7 @@ const templates = {
         'username-reminder'
       )
   },
-  'user-updated': {
+  [TriggerEvent.USER_UPDATED]: {
     type: 'username-updated',
     subject: 'Account username updated',
     template:
@@ -204,55 +231,84 @@ const templates = {
   birthInProgressNotification: {
     type: 'birthInProgressNotification',
     subject: 'Birth declaration in progress',
-    template: readBirthTemplate<InProgressDeclarationVariables>('inProgress')
+    template:
+      readBirthTemplate<
+        InformantNotificationVariables['birthInProgressNotification']
+      >('inProgress')
   },
   birthDeclarationNotification: {
     type: 'birthDeclarationNotification',
     subject: 'Birth declaration in review',
-    template: readBirthTemplate<InReviewDeclarationVariables>('inReview')
+    template:
+      readBirthTemplate<
+        InformantNotificationVariables['birthDeclarationNotification']
+      >('inReview')
   },
   birthRegistrationNotification: {
     type: 'birthRegistrationNotification',
     subject: 'Birth declaration registered',
     template:
-      readBirthTemplate<RegistrationDeclarationVariables>('registration')
+      readBirthTemplate<
+        InformantNotificationVariables['birthRegistrationNotification']
+      >('registration')
   },
   birthRejectionNotification: {
     type: 'birthRejectionNotification',
     subject: 'Birth declaration required update',
-    template: readBirthTemplate<RejectionDeclarationVariables>('rejection')
+    template:
+      readBirthTemplate<
+        InformantNotificationVariables['birthRejectionNotification']
+      >('rejection')
   },
   deathInProgressNotification: {
     type: 'deathInProgressNotification',
     subject: 'Death declaration in progress',
-    template: readDeathTemplate<InProgressDeclarationVariables>('inProgress')
+    template:
+      readDeathTemplate<
+        InformantNotificationVariables['deathInProgressNotification']
+      >('inProgress')
   },
   deathDeclarationNotification: {
     type: 'deathDeclarationNotification',
     subject: 'Death declaration in review',
-    template: readDeathTemplate<InReviewDeclarationVariables>('inReview')
+    template:
+      readDeathTemplate<
+        InformantNotificationVariables['deathDeclarationNotification']
+      >('inReview')
   },
   deathRegistrationNotification: {
     type: 'deathRegistrationNotification',
     subject: 'Death declaration registered',
     template:
-      readDeathTemplate<RegistrationDeclarationVariables>('registration')
+      readDeathTemplate<
+        InformantNotificationVariables['deathRegistrationNotification']
+      >('registration')
   },
   deathRejectionNotification: {
     type: 'deathRejectionNotification',
     subject: 'Death declaration required update',
-    template: readDeathTemplate<RejectionDeclarationVariables>('rejection')
+    template:
+      readDeathTemplate<
+        InformantNotificationVariables['deathRejectionNotification']
+      >('rejection')
   },
-  allUserNotification: {
+  [TriggerEvent.ALL_USER_NOTIFICATION]: {
     type: 'allUserNotification',
     subject: '', // Subject defined from National Sys Admin Dashboard
-    template: readOtherTemplate<AllUserNotificationVariables>(
+    template: readOtherTemplate<TriggerVariable['all-user-notification']>(
       'all-user-notification'
     )
   }
 } as const
 
-export type EmailTemplateType = keyof typeof templates
+export type EmailTemplateType =
+  | TriggerEvent
+  | InformantTemplateType
+  | 'change-phone-number'
+  | 'change-email-address'
+  | 'correction-approved'
+  | 'correction-rejected'
+
 export function getTemplate<T extends EmailTemplateType>(type: T) {
   return templates[type]
 }
