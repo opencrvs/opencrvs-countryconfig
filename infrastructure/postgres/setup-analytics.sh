@@ -54,15 +54,25 @@ AS
 SELECT * FROM app.locations;
 
 CREATE TABLE IF NOT EXISTS analytics.event_actions (
-  action_id uuid NOT NULL,
-  action_type text NOT NULL,
-  event_id uuid NOT NULL,
-  event_type text NOT NULL,
-  tracking_id text NOT NULL,
-  action jsonb  NOT NULL,
-  indexed_at timestamptz DEFAULT now() NOT NULL,
-  created_at timestamptz NOT NULL,
-  UNIQUE (action_id, event_id)
+  action_type app.action_type NOT NULL,
+  annotation jsonb,
+  assigned_to text,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  created_at_location uuid REFERENCES app.locations(id),
+  created_by text NOT NULL,
+  created_by_role text NOT NULL,
+  created_by_signature text,
+  created_by_user_type app.user_type NOT NULL,
+  declaration jsonb NOT NULL DEFAULT '{}'::jsonb,
+  event_id uuid NOT NULL REFERENCES app.events(id),
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  original_action_id uuid REFERENCES app.event_actions(id),
+  registration_number text UNIQUE,
+  request_id text,
+  status app.action_status NOT NULL,
+  transaction_id text NOT NULL,
+  content jsonb,
+  UNIQUE (id, event_id)
 );
 
 GRANT USAGE ON SCHEMA analytics TO events_analytics;

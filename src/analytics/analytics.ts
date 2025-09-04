@@ -64,13 +64,9 @@ export async function upsertAnalyticsEventActions(
   eventConfig: EventConfig,
   trx: Kysely<any>
 ) {
-  const acceptedActions = event.actions.filter(
-    (action) => action.status === ActionStatus.Accepted
-  )
-
-  for (let i = 0; i < acceptedActions.length; i++) {
-    const actionsFromStartToCurrentPoint = acceptedActions.slice(0, i + 1)
-    const action = acceptedActions[i]
+  for (let i = 0; i < event.actions.length; i++) {
+    const actionsFromStartToCurrentPoint = event.actions.slice(0, i + 1)
+    const action = event.actions[i]
 
     const actionAtCurrentPoint = getCurrentEventState(
       {
@@ -80,41 +76,27 @@ export async function upsertAnalyticsEventActions(
       eventConfig
     )
 
-    const {
-      type,
-      createdAt,
-      // eslint-disable-next-line no-unused-vars
-      status,
-      // eslint-disable-next-line no-unused-vars
-      transactionId,
-      ...actionWithoutMetaFields
-    } = action
+    const { type, ...act } = action
 
     const actionWithFilteredDeclaration = {
-      ...actionWithoutMetaFields,
+      ...act,
+      eventId: event.id,
+      actionType: type,
       declaration: pickAnalyticsFields(
         actionAtCurrentPoint.declaration,
         eventConfig
       )
     }
 
+    if (action.status === ActionStatus.Requested) {
+      continue
+    }
+
     await trx
       .insertInto('analytics.event_actions')
-      .values({
-        eventId: event.id,
-        actionType: action.type,
-        actionId: action.id,
-        eventType: type,
-        trackingId: event.trackingId,
-        action: actionWithFilteredDeclaration,
-        createdAt: createdAt,
-        indexedAt: undefined
-      })
+      .values(actionWithFilteredDeclaration)
       .onConflict((oc) =>
-        oc.columns(['eventId', 'actionId']).doUpdateSet({
-          action: sql`excluded.action`,
-          indexedAt: sql`now()`
-        })
+        oc.columns(['id']).doUpdateSet(actionWithFilteredDeclaration)
       )
       .execute()
   }

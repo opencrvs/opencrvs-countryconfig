@@ -21,6 +21,8 @@
 
 echo 'OpenCRVS Metabase development environment'
 
+cd "$(dirname "$0")"
+
 METABASE_VERSION="v0.56.2"
 METABASE_JAR="./$METABASE_VERSION-metabase.jar"
 
