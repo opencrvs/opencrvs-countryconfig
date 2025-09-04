@@ -62,6 +62,10 @@ advancedSearchResult.pill.trackingId,The label for tracking id in active advance
 advancedSearchResult.table.noResult,The label for no result in advancedSearchResult page,No result,Pas de résultat
 advancedSearchResult.table.searchResult,The label for search result header in advancedSearchResult page,Search results,Résultat de la recherche
 applicant.firstname,The first name of the applicant,First name,Prénom
+birth.search.criteria.label.prefix.child,Child prefix,Child's,De l'enfant
+birth.search.criteria.label.prefix.father,Father prefix,Father's,Du père
+birth.search.criteria.label.prefix.informant,Informant prefix,Informant's,Du déclarant
+birth.search.criteria.label.prefix.mother,Mother prefix,Mother's,De la mère
 buttons.add,Add button text on form config,Add,Ajouter
 buttons.apply,Apply button label,Apply,Appliquer
 buttons.approve,Approve button text,Approve,Approuver
@@ -2355,10 +2359,6 @@ v2.advancedSearch.trackingId,Label for tracking ID field,Tracking ID,ID de suivi
 v2.advancedSearch.updatedAt,Label for date of update field,Time period,Période
 v2.advancedSearch.updatedAt.helperText,Helper text for date of update field,Period of time since the record status changed,Période écoulée depuis le changement de statut de l'enregistrement
 v2.advancedSearchResult.table.searchResult,The label for search result header in advancedSearchResult page,Search results,Résultats de recherche
-v2.birth.search.criteria.label.prefix.child,Child prefix,Child's,De l'enfant
-v2.birth.search.criteria.label.prefix.father,Father prefix,Father's,Du père
-v2.birth.search.criteria.label.prefix.informant,Informant prefix,Informant's,Du déclarant
-v2.birth.search.criteria.label.prefix.mother,Mother prefix,Mother's,De la mère
 v2.buttons.archive,Archive button text,Archive,Archiver
 v2.buttons.back,Back button text,Back,Retour
 v2.buttons.backToReview,Back to review button text,Back to review,Retour à la revue

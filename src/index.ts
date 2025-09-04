@@ -584,7 +584,7 @@ export async function createServer() {
 
   server.route({
     method: 'POST',
-    path: `/trigger/events/${Event.V2_BIRTH}/actions/${ActionType.REGISTER}`,
+    path: `/trigger/events/${Event.Birth}/actions/${ActionType.REGISTER}`,
     handler: onRegisterHandler,
     options: {
       tags: ['api', 'events'],
@@ -594,7 +594,7 @@ export async function createServer() {
 
   server.route({
     method: 'POST',
-    path: `/trigger/events/${Event.V2_DEATH}/actions/${ActionType.REGISTER}`,
+    path: `/trigger/events/${Event.Death}/actions/${ActionType.REGISTER}`,
     handler: onRegisterHandler,
     options: {
       tags: ['api', 'events'],

@@ -25,7 +25,7 @@ import { PlaceOfBirth } from './forms/pages/child'
 import { CORRECTION_FORM } from './forms/correctionForm'
 
 export const birthEvent = defineConfig({
-  id: Event.V2_BIRTH,
+  id: Event.Birth,
   declaration: BIRTH_DECLARATION_FORM,
   label: {
     defaultMessage: 'Birth',
