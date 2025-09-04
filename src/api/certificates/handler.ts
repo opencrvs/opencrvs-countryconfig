@@ -231,8 +231,8 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       }
     },
     {
-      id: 'v2.birth-certificate',
-      event: Event.V2_BIRTH,
+      id: 'birth-certificate',
+      event: Event.Birth,
       label: {
         id: 'certificates.birth.certificate',
         defaultMessage: 'Birth Certificate copy',
@@ -244,7 +244,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
         late: 10.6,
         delayed: 18
       },
-      svgUrl: '/api/countryconfig/certificates/v2.birth-certificate.svg',
+      svgUrl: '/api/countryconfig/certificates/birth-certificate.svg',
       fonts: {
         'Libre Baskerville': {
           normal: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf',
@@ -261,8 +261,8 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       ]
     },
     {
-      id: 'v2.birth-certified-certificate',
-      event: Event.V2_BIRTH,
+      id: 'birth-certified-certificate',
+      event: Event.Birth,
       label: {
         id: 'certificates.birth.certificate.copy',
         defaultMessage: 'Birth Certificate certified copy',
@@ -275,7 +275,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
         delayed: 18
       },
       svgUrl:
-        '/api/countryconfig/certificates/v2.birth-certificate-certified-copy.svg',
+        '/api/countryconfig/certificates/birth-certificate-certified-copy.svg',
       fonts: {
         'Libre Baskerville': {
           normal: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf',
@@ -343,8 +343,8 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       }
     },
     {
-      id: 'v2.death-certificate',
-      event: Event.V2_DEATH,
+      id: 'death-certificate',
+      event: Event.Death,
       label: {
         id: 'certificates.death.certificate',
         defaultMessage: 'Death Certificate copy',
@@ -356,7 +356,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
         late: 10.6,
         delayed: 18
       },
-      svgUrl: '/api/countryconfig/certificates/v2.death-certificate.svg',
+      svgUrl: '/api/countryconfig/certificates/death-certificate.svg',
       fonts: {
         'Libre Baskerville': {
           normal: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf',
@@ -367,8 +367,8 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       }
     },
     {
-      id: 'v2.death-certified-certificate',
-      event: Event.V2_DEATH,
+      id: 'death-certified-certificate',
+      event: Event.Death,
       label: {
         id: 'certificates.death.certificate.copy',
         defaultMessage: 'Death Certificate certified copy',
@@ -381,7 +381,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
         delayed: 18
       },
       svgUrl:
-        '/api/countryconfig/certificates/v2.death-certificate-certified-copy.svg',
+        '/api/countryconfig/certificates/death-certificate-certified-copy.svg',
       fonts: {
         'Libre Baskerville': {
           normal: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf',

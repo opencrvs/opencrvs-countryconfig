@@ -25,7 +25,7 @@ import { PlaceOfDeath } from './forms/pages/eventDetails'
 import { DEATH_CORRECTION_FORM } from './forms/correctionForm'
 
 export const deathEvent = defineConfig({
-  id: Event.V2_DEATH,
+  id: Event.Death,
   declaration: DEATH_DECLARATION_FORM,
   label: {
     defaultMessage: 'Death',

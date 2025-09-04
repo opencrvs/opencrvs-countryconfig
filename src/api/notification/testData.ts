@@ -402,7 +402,7 @@ const DeathDeclarationAction = {
 
 const birthNotificationEvent: EventDocument = {
   id: '43b8c015-2caf-469a-8900-a2209128ad44' as unknown as UUID,
-  type: 'v2.birth',
+  type: 'birth',
   createdAt: '2025-08-20T03:24:04.815Z',
   updatedAt: '2025-08-20T03:24:04.815Z',
   actions: [CreateAction, AssignAction, RequestBirthNotificationAction],
@@ -411,7 +411,7 @@ const birthNotificationEvent: EventDocument = {
 
 const birthDeclarationEvent: EventDocument = {
   id: '43b8c015-2caf-469a-8900-a2209128ad44' as unknown as UUID,
-  type: 'v2.birth',
+  type: 'birth',
   createdAt: '2025-08-20T03:24:04.815Z',
   updatedAt: '2025-08-20T03:24:04.815Z',
   actions: [CreateAction, AssignAction, RequestBirthDeclarationAction],
@@ -420,7 +420,7 @@ const birthDeclarationEvent: EventDocument = {
 
 const birthRegistrationEvent: EventDocument = {
   id: '43b8c015-2caf-469a-8900-a2209128ad44' as unknown as UUID,
-  type: 'v2.birth',
+  type: 'birth',
   createdAt: '2025-08-20T03:24:04.815Z',
   updatedAt: '2025-08-20T03:24:04.815Z',
   actions: [
@@ -434,7 +434,7 @@ const birthRegistrationEvent: EventDocument = {
 
 const birthRejectionEvent: EventDocument = {
   id: '43b8c015-2caf-469a-8900-a2209128ad44' as unknown as UUID,
-  type: 'v2.birth',
+  type: 'birth',
   createdAt: '2025-08-20T03:24:04.815Z',
   updatedAt: '2025-08-20T03:24:04.815Z',
   actions: [
@@ -448,7 +448,7 @@ const birthRejectionEvent: EventDocument = {
 
 const deathNotificationEvent: EventDocument = {
   id: '43b8c015-2caf-469a-8900-a2209128ad44' as unknown as UUID,
-  type: Event.V2_DEATH,
+  type: Event.Death,
   createdAt: '2025-08-20T03:24:04.815Z',
   updatedAt: '2025-08-20T03:24:04.815Z',
   actions: [CreateAction, AssignAction, RequestDeathNotificationAction],
@@ -457,7 +457,7 @@ const deathNotificationEvent: EventDocument = {
 
 const deathDeclarationEvent: EventDocument = {
   id: '43b8c015-2caf-469a-8900-a2209128ad44' as unknown as UUID,
-  type: Event.V2_DEATH,
+  type: Event.Death,
   createdAt: '2025-08-20T03:24:04.815Z',
   updatedAt: '2025-08-20T03:24:04.815Z',
   actions: [CreateAction, AssignAction, RequestDeathDeclarationAction],
@@ -466,7 +466,7 @@ const deathDeclarationEvent: EventDocument = {
 
 const deathRegistrationEvent: EventDocument = {
   id: '43b8c015-2caf-469a-8900-a2209128ad44' as unknown as UUID,
-  type: Event.V2_DEATH,
+  type: Event.Death,
   createdAt: '2025-08-20T03:24:04.815Z',
   updatedAt: '2025-08-20T03:24:04.815Z',
   actions: [
@@ -480,7 +480,7 @@ const deathRegistrationEvent: EventDocument = {
 
 const deathRejectionEvent: EventDocument = {
   id: '43b8c015-2caf-469a-8900-a2209128ad44' as unknown as UUID,
-  type: Event.V2_DEATH,
+  type: Event.Death,
   createdAt: '2025-08-20T03:24:04.815Z',
   updatedAt: '2025-08-20T03:24:04.815Z',
   actions: [
@@ -498,42 +498,42 @@ export const informantNotificationTestData: {
   eventDocument: EventDocument
 }[] = [
   {
-    eventType: Event.V2_BIRTH,
+    eventType: Event.Birth,
     actionType: ActionType.NOTIFY,
     eventDocument: birthNotificationEvent
   },
   {
-    eventType: Event.V2_BIRTH,
+    eventType: Event.Birth,
     actionType: ActionType.DECLARE,
     eventDocument: birthDeclarationEvent
   },
   {
-    eventType: Event.V2_BIRTH,
+    eventType: Event.Birth,
     actionType: ActionType.REGISTER,
     eventDocument: birthRegistrationEvent
   },
   {
-    eventType: Event.V2_BIRTH,
+    eventType: Event.Birth,
     actionType: ActionType.REJECT,
     eventDocument: birthRejectionEvent
   },
   {
-    eventType: Event.V2_DEATH,
+    eventType: Event.Death,
     actionType: ActionType.NOTIFY,
     eventDocument: deathNotificationEvent
   },
   {
-    eventType: Event.V2_DEATH,
+    eventType: Event.Death,
     actionType: ActionType.DECLARE,
     eventDocument: deathDeclarationEvent
   },
   {
-    eventType: Event.V2_DEATH,
+    eventType: Event.Death,
     actionType: ActionType.REGISTER,
     eventDocument: deathRegistrationEvent
   },
   {
-    eventType: Event.V2_DEATH,
+    eventType: Event.Death,
     actionType: ActionType.REJECT,
     eventDocument: deathRejectionEvent
   }
