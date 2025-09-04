@@ -87,6 +87,7 @@ export async function upsertAnalyticsEventActions(
       .insertInto('analytics.event_actions')
       .values({
         eventId: event.id,
+        actionType: action.type,
         actionId: action.id,
         eventType: event.type,
         trackingId: event.trackingId,

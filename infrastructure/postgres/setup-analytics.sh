@@ -55,6 +55,7 @@ SELECT * FROM app.locations;
 
 CREATE TABLE IF NOT EXISTS analytics.event_actions (
   action_id uuid NOT NULL,
+  action_type text NOT NULL,
   event_id uuid NOT NULL,
   event_type text NOT NULL,
   tracking_id text NOT NULL,
