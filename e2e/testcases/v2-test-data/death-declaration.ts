@@ -125,7 +125,7 @@ export async function createDeclaration(
   const client = createClient(GATEWAY_HOST + '/events', `Bearer ${token}`)
 
   const createResponse = await client.event.create.mutate({
-    type: 'v2.death',
+    type: 'death',
     transactionId: uuidv4()
   })
 
