@@ -10,11 +10,17 @@
  */
 
 import {
+  ActionConfig,
+  ActionDocument,
   ActionStatus,
+  ActionType,
   EventConfig,
   EventDocument,
   EventState,
-  getCurrentEventState
+  getActionAnnotationFields,
+  getAllUniqueFields,
+  getCurrentEventState,
+  isMetaAction
 } from '@opencrvs/toolkit/events'
 import { birthEvent } from '@countryconfig/form/v2/birth'
 import { deathEvent } from '@countryconfig/form/v2/death'
@@ -46,7 +52,7 @@ function getEventConfig(eventType: string) {
 /**
  * Only analytics fields (`analytics: true`) must be included in `declaration`
  */
-function pickAnalyticsFields(
+function pickDeclarationAnalyticsFields(
   declaration: EventState,
   eventConfig: EventConfig
 ) {
@@ -59,13 +65,47 @@ function pickAnalyticsFields(
   )
 }
 
+function pickAnnotationAnalyticsFields(
+  annotation: Record<string, any>,
+  actionConfig: ActionConfig
+) {
+  const fields = getActionAnnotationFields(actionConfig)
+
+  const analyticsFields = fields.flatMap((field) =>
+    fields.filter((field) => field.analytics === true)
+  )
+
+  return pickBy(annotation, (_, key) =>
+    analyticsFields.some((field) => field.id === key)
+  )
+}
+
+function getAnnotation(
+  action: ActionDocument,
+  actions: EventDocument['actions']
+) {
+  const originalAction = actions.find((a) => a.id === action.originalActionId)
+  const originalAnnotation =
+    originalAction && 'annotation' in originalAction
+      ? originalAction.annotation
+      : {}
+  const actionAnnotation = 'annotation' in action ? action.annotation : {}
+  return {
+    ...originalAnnotation,
+    ...actionAnnotation
+  }
+}
+
 export async function upsertAnalyticsEventActions(
   event: EventDocument,
   eventConfig: EventConfig,
   trx: Kysely<any>
 ) {
   for (let i = 0; i < event.actions.length; i++) {
-    const actionsFromStartToCurrentPoint = event.actions.slice(0, i + 1)
+    const actionsFromStartToCurrentPoint = event.actions
+      .sort((a, b) => a.createdAt.localeCompare(b.createdAt))
+      .slice(0, i + 1)
+
     const action = event.actions[i]
 
     const actionAtCurrentPoint = getCurrentEventState(
@@ -78,18 +118,32 @@ export async function upsertAnalyticsEventActions(
 
     const { type, ...act } = action
 
+    if (
+      action.status === ActionStatus.Requested ||
+      action.status === ActionStatus.Rejected
+    ) {
+      continue
+    }
+
+    const actionConfig = eventConfig.actions.find((a) => a.type === type)
+
+    const annotation = actionConfig
+      ? pickAnnotationAnalyticsFields(
+          getAnnotation(action, event.actions),
+          actionConfig
+        )
+      : {}
+
     const actionWithFilteredDeclaration = {
       ...act,
       eventId: event.id,
       actionType: type,
-      declaration: pickAnalyticsFields(
+      eventType: event.type,
+      annotation,
+      declaration: pickDeclarationAnalyticsFields(
         actionAtCurrentPoint.declaration,
         eventConfig
       )
-    }
-
-    if (action.status === ActionStatus.Requested) {
-      continue
     }
 
     await trx

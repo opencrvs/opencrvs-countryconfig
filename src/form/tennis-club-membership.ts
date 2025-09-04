@@ -168,7 +168,6 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
           id: 'senior-pass.id',
           type: 'TEXT',
           required: true,
-          analytics: true,
           label: {
             defaultMessage: 'Senior pass ID',
             description: 'This is the label for the field',
@@ -234,7 +233,7 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
       ]
     }
   ]
-})
+}) as any
 
 const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
   label: {

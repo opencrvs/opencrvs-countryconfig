@@ -54,6 +54,7 @@ AS
 SELECT * FROM app.locations;
 
 CREATE TABLE IF NOT EXISTS analytics.event_actions (
+  event_type text NOT NULL,
   action_type app.action_type NOT NULL,
   annotation jsonb,
   assigned_to text,
