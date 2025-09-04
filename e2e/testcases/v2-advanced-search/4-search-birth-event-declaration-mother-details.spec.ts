@@ -69,7 +69,7 @@ test.describe
       const searchResult = await page.locator('#content-name').textContent()
       const searchResultCountNumberInBracketsRegex = /\((\d+)\)$/
       expect(searchResult).toMatch(searchResultCountNumberInBracketsRegex)
-      await expect(page.getByText('Event: V2 birth')).toBeVisible()
+      await expect(page.getByText('Event: Birth')).toBeVisible()
       await expect(
         page.getByText(`Mother's Date of birth: ${yyyy}-${mm}-${dd}`)
       ).toBeVisible()
