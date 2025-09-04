@@ -12,8 +12,6 @@ const thisYear = new Date().getFullYear().toString()
 test.describe
   .serial('Advanced Search - Birth Event Declaration - Registration details', () => {
   let page: Page
-  let [yyyy, mm, dd] = ['', '', '']
-  let fullNameOfChild = ''
 
   test.beforeAll(async ({ browser }) => {
     page = await browser.newPage()
@@ -112,9 +110,9 @@ test.describe
       const searchResult = await page.locator('#content-name').textContent()
       const searchResultCountNumberInBracketsRegex = /\((\d+)\)$/
       await expect(searchResult).toMatch(searchResultCountNumberInBracketsRegex)
-      await expect(page.getByText('Event: V2 birth')).toBeVisible()
+      await expect(page.getByText('Event: Birth')).toBeVisible()
       // Check for each pill
-      await expect(page.getByText('Event: V2 birth')).toBeVisible()
+      await expect(page.getByText('Event: Birth')).toBeVisible()
       await expect(
         page.getByText(
           `Date of registration: ${thisYear}-${thisMonth}-${todayDate}`
