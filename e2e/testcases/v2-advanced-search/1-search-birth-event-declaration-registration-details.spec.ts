@@ -12,6 +12,8 @@ const thisYear = new Date().getFullYear().toString()
 test.describe
   .serial('Advanced Search - Birth Event Declaration - Registration details', () => {
   let page: Page
+  let [yyyy, mm, dd] = ['', '', '']
+  let fullNameOfChild = ''
 
   test.beforeAll(async ({ browser }) => {
     page = await browser.newPage()
