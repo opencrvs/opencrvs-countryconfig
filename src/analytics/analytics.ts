@@ -10,6 +10,7 @@
  */
 
 import {
+  ActionStatus,
   EventConfig,
   EventDocument,
   EventState,
@@ -63,9 +64,13 @@ export async function upsertAnalyticsEventActions(
   eventConfig: EventConfig,
   trx: Kysely<any>
 ) {
-  for (let i = 0; i < event.actions.length; i++) {
-    const actionsFromStartToCurrentPoint = event.actions.slice(0, i + 1)
-    const action = event.actions[i]
+  const acceptedActions = event.actions.filter(
+    (action) => action.status === ActionStatus.Accepted
+  )
+
+  for (let i = 0; i < acceptedActions.length; i++) {
+    const actionsFromStartToCurrentPoint = acceptedActions.slice(0, i + 1)
+    const action = acceptedActions[i]
 
     const actionAtCurrentPoint = getCurrentEventState(
       {
@@ -75,8 +80,18 @@ export async function upsertAnalyticsEventActions(
       eventConfig
     )
 
+    const {
+      type,
+      createdAt,
+      // eslint-disable-next-line no-unused-vars
+      status,
+      // eslint-disable-next-line no-unused-vars
+      transactionId,
+      ...actionWithoutMetaFields
+    } = action
+
     const actionWithFilteredDeclaration = {
-      ...action,
+      ...actionWithoutMetaFields,
       declaration: pickAnalyticsFields(
         actionAtCurrentPoint.declaration,
         eventConfig
@@ -89,10 +104,10 @@ export async function upsertAnalyticsEventActions(
         eventId: event.id,
         actionType: action.type,
         actionId: action.id,
-        eventType: event.type,
+        eventType: type,
         trackingId: event.trackingId,
         action: actionWithFilteredDeclaration,
-        createdAt: action.createdAt,
+        createdAt: createdAt,
         indexedAt: undefined
       })
       .onConflict((oc) =>
