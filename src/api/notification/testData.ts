@@ -239,7 +239,7 @@ const RequestRejectionAction = {
   createdAtLocation: '9e069dda-0d83-4f67-a4f2-9adbf5658e2e' as unknown as UUID,
   declaration: {},
   annotation: {},
-  reason: { message: 'False Data', isDuplicate: false },
+  content: { reason: 'False Data' },
   status: ActionStatus.Requested,
   type: ActionType.REJECT
 } satisfies Action

@@ -23,6 +23,7 @@ import { Event } from '@countryconfig/form/types/types'
 import { BIRTH_CERTIFICATE_COLLECTOR_FORM } from './forms/printForm'
 import { PlaceOfBirth } from './forms/pages/child'
 import { CORRECTION_FORM } from './forms/correctionForm'
+import { dedupConfig } from './dedupConfig'
 
 export const birthEvent = defineConfig({
   id: Event.Birth,
@@ -177,7 +178,17 @@ export const birthEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'v2.event.birth.action.declare.label'
       },
-      review: BIRTH_DECLARATION_REVIEW
+      review: BIRTH_DECLARATION_REVIEW,
+      deduplication: {
+        id: 'birth-deduplication',
+        label: {
+          defaultMessage: 'Detect duplicate',
+          description:
+            'This is shown as the action name anywhere the user can trigger the action from',
+          id: 'v2.event.birth.action.detect-duplicate.label'
+        },
+        query: dedupConfig
+      }
     },
     {
       type: ActionType.VALIDATE,
@@ -187,7 +198,17 @@ export const birthEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'v2.event.birth.action.validate.label'
       },
-      review: BIRTH_DECLARATION_REVIEW
+      review: BIRTH_DECLARATION_REVIEW,
+      deduplication: {
+        id: 'birth-deduplication',
+        label: {
+          defaultMessage: 'Detect duplicate',
+          description:
+            'This is shown as the action name anywhere the user can trigger the action from',
+          id: 'v2.event.birth.action.detect-duplicate.label'
+        },
+        query: dedupConfig
+      }
     },
     {
       type: ActionType.REGISTER,
@@ -197,7 +218,17 @@ export const birthEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'v2.event.birth.action.register.label'
       },
-      review: BIRTH_DECLARATION_REVIEW
+      review: BIRTH_DECLARATION_REVIEW,
+      deduplication: {
+        id: 'birth-deduplication',
+        label: {
+          defaultMessage: 'Detect duplicate',
+          description:
+            'This is shown as the action name anywhere the user can trigger the action from',
+          id: 'v2.event.birth.action.detect-duplicate.label'
+        },
+        query: dedupConfig
+      }
     },
     {
       type: ActionType.PRINT_CERTIFICATE,
