@@ -343,6 +343,7 @@ export const father = defineFormPage({
         id: 'v2.event.birth.action.declare.form.section.father.field.address.addressSameAs.label'
       },
       parent: field('mother.detailsNotAvailable'),
+      // Keep default address when mother details is updated
       defaultValue: YesNoTypes.NO,
       conditionals: [
         {
