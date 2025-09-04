@@ -201,6 +201,7 @@ test.describe.serial('8. Validate declaration review page', () => {
           .locator('#father____nid')
           .fill(declaration.father.identifier.id)
 
+        await page.locator('#father____addressSameAs_YES').click()
         await continueForm(page)
       })
     })
