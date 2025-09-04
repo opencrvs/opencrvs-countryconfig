@@ -216,7 +216,7 @@ constants.allStatuses,Label for select option All statuses,All statuses
 constants.apiUser,The description for API_USER role,API User
 constants.application.title,Application title,Application
 constants.applicationArchivedOn,,Application archived on
-constants.applicationName,Declaration name of CRVS,OpenCRVS
+constants.applicationName,Declaration name of CRVS,Cook Islands CRVS
 constants.archived_declaration,Application has been archived,Archived
 constants.assignRecord,A label for the Assign record -button,Assign record
 constants.averageRateOfRegistrations,A label for Average rate of registrations,Avg. {amount}%
@@ -1361,16 +1361,16 @@ integrations.disable,Label for disable option,Disable
 integrations.documentDetails,Label for document details,Document details
 integrations.enable,Label for enable option,Enable
 integrations.error,Label for error option,Something went wrong
-integrations.eventNotificationDescription,Label for  health notification description,"An event notification client (eg. hospital) can send a partial notification or a full declaration of a birth or death in the HL7 FHIR standard to OpenCRVS for processing. For more information, visit:"
+integrations.eventNotificationDescription,Label for  health notification description,"An event notification client (eg. hospital) can send a partial notification or a full declaration of a birth or death in the HL7 FHIR standard to Cook Islands CRVS for processing. For more information, visit:"
 integrations.fatherDetails,Label for fathers details,Father's details
 integrations.fatherDetailsNoPII,Label for fathers details no PII,Fathers Details (No PII)
 integrations.inactive,Label for inactive integration,Inactive
 integrations.informantDetails,Label for informant details,Informant's details
 integrations.informantDetailsNoPII,Label for informant details no PII,Informant Details (No PII)
 integrations.integratingSystemType,Label for integrating system type,System
-integrations.integratingSystemTypeAlertMosip,Label for alert when selecting MOSIP type,"When ""MOSIP"" National ID type is enabled, all forms require MOSIP E-Signet authentication. The MOSIP Token Seeder and OpenCRVS webhook compatible MOSIP Mediator must be installed. For more information, visit:"
+integrations.integratingSystemTypeAlertMosip,Label for alert when selecting MOSIP type,"When ""MOSIP"" National ID type is enabled, all forms require MOSIP E-Signet authentication. The MOSIP Token Seeder and Cook Islands CRVS webhook compatible MOSIP Mediator must be installed. For more information, visit:"
 integrations.integratingSystemTypeAlertOsia,Label for alert when selecting OSIA type,"When ""OSIA"" National ID is enabled, birth use case compatible endpoints will be enabled. For more information, visit:"
-integrations.integratingSystemTypeAlertOther,Label for alert when selecting other type,"When ""Other"" National ID is enabled, the default OpenCRVS National ID webhook mediator must be installed. For more information, visit:"
+integrations.integratingSystemTypeAlertOther,Label for alert when selecting other type,"When ""Other"" National ID is enabled, the default Cook Islands CRVS National ID webhook mediator must be installed. For more information, visit:"
 integrations.integratingSystemTypeMosip,"Integrating system type option ""MOSIP"",""MOSIP",MOSIP
 integrations.integratingSystemTypeOsia,"Integrating system type option ""OSIA"",""OSIA (Coming soon)",OSIA (Prochainement)
 integrations.integratingSystemTypeOther,"Integrating system type option ""Other"",""Other",Autres
@@ -1380,12 +1380,12 @@ integrations.motherDetails,Label for mothers details,Mother's details
 integrations.motherDetailsNoPII,Label for mothers details no PII,Mothers Details (No PII)
 integrations.name,Label for name input,Name
 integrations.nationalIDName,Label for name input for National ID,Name
-integrations.nationalidAlertDescription,,"A National ID client (eg. MOSIP) can react to birth or death webhooks to create or invalidate NID numbers, and respond to OpenCRVS to provide a temporary ID to children, and link vital events to each other. For more information, visit:"
+integrations.nationalidAlertDescription,,"A National ID client (eg. MOSIP) can react to birth or death webhooks to create or invalidate NID numbers, and respond to Cook Islands CRVS to provide a temporary ID to children, and link vital events to each other. For more information, visit:"
 integrations.newIntegrationDescription,Description to help user fill name and type of a new integration client,Add a unique name and select the type of client you would like to create
 integrations.otherAlertDescription,,...Please visit
-integrations.pageIntroduction,Label for the text integration page intorduction,"For each new client that needs to integrate with OpenCRVS you can create unique client IDs. A number of integration use cases are currently supported, based on both API and webhook technologies."
+integrations.pageIntroduction,Label for the text integration page intorduction,"For each new client that needs to integrate with Cook Islands CRVS you can create unique client IDs. A number of integration use cases are currently supported, based on both API and webhook technologies."
 integrations.pageTitle,Title for integrations page,Integrations
-integrations.recordSearchDescription,Label for  record search description,"A Record search client can perform an advanced search on OpenCRVS data. For more information, visit:"
+integrations.recordSearchDescription,Label for  record search description,"A Record search client can perform an advanced search on Cook Islands CRVS data. For more information, visit:"
 integrations.registrationDetailsnNoPII,Label for registration details no PII,Registration Details (No PII)
 integrations.revealKeys,Label for reveal keys option,Reveal Keys
 integrations.shaSecret,Label for SHA secret,SHA secret
@@ -2149,7 +2149,7 @@ settings.changeLanguage,Change language title,Change language
 settings.changeLanguage.success,Change language success,Language updated to English
 settings.changePassword,Password change modal header,Change password
 settings.changePhone,Change phone number title,Change phone number
-settings.message.changeLanguage,Change language message,Your prefered language that you want to use on OpenCRVS
+settings.message.changeLanguage,Change language message,Your prefered language that you want to use on Cook Islands CRVS
 settings.profile.tile,Profile header,Profile
 settings.security.tile,Security header,Security
 settings.system.tile,System header,System
@@ -2383,7 +2383,7 @@ v2.constants.address,Label for address,Address
 v2.constants.allEvents,Label for select option All events,All events
 v2.constants.allStatuses,Label for select option All statuses,All statuses
 v2.constants.application.title,Application title,Application
-v2.constants.applicationName,Declaration name of CRVS,OpenCRVS
+v2.constants.applicationName,Declaration name of CRVS,Cook Islands CRVS
 v2.constants.assignRecord,A label for the Assign record -button,Assign record
 v2.constants.averageRateOfRegistrations,A label for Average rate of registrations,avg. {amount}%
 v2.constants.birth,A label from the birth event,Birth
