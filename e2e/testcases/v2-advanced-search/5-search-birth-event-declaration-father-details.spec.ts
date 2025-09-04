@@ -83,7 +83,7 @@ test.describe
       expect(page.url()).toContain(
         `father.name=${encodeURIComponent(JSON.stringify({ firstname: record.declaration['father.name'].firstname ?? faker.person.firstName, surname: record.declaration['father.name'].surname, middlename: '' }))}`
       )
-      await expect(page.locator('#tab_v2\\.birth')).toHaveText('Birth')
+      await expect(page.locator('#tab_birth')).toHaveText('Birth')
       await expect(page.getByTestId('father____dob-dd')).toHaveValue(dd)
       await expect(page.getByTestId('father____dob-mm')).toHaveValue(mm)
       await expect(page.getByTestId('father____dob-yyyy')).toHaveValue(yyyy)

@@ -145,7 +145,7 @@ test.describe
       await expect(page.url()).toContain(`event.status=REGISTERED&`)
       // event.updatedAt=2025-05-12%2C2025-05-19
       await expect(page.url()).toContain(`event.updatedAt=`)
-      await expect(page.locator('#tab_v2\\.birth')).toHaveText('Birth')
+      await expect(page.locator('#tab_birth')).toHaveText('Birth')
 
       await expect(
         page.locator(

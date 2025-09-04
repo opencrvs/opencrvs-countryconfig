@@ -95,7 +95,7 @@ test.describe
       expect(page.url()).toContain(
         `child.name=${encodeURIComponent(JSON.stringify({ firstname: record.declaration['child.name'].firstname, surname: record.declaration['child.name'].surname, middlename: '' }))}`
       )
-      await expect(page.locator('#tab_v2\\.birth')).toHaveText('Birth')
+      await expect(page.locator('#tab_birth')).toHaveText('Birth')
 
       await expect(page.getByTestId('child____dob-dd')).toHaveValue(dd)
       await expect(page.getByTestId('child____dob-mm')).toHaveValue(mm)
