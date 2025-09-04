@@ -151,6 +151,10 @@ export async function createDeclaration(
       (action: ActionDocument) => action.type === 'DECLARE'
     )
 
+    if (!declareAction || !('declaration' in declareAction)) {
+      throw new Error('Declaration info not found in action')
+    }
+
     return { eventId, declaration: declareAction?.declaration as Declaration }
   }
 
