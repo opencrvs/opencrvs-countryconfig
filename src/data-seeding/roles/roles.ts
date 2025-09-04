@@ -28,7 +28,10 @@ export const roles: Role[] = [
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]'
+      'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]',
+      'record.read[event=v2.birth|v2.death|tennis-club-membership]',
+      'record.declare[event=v2.birth|v2.death|tennis-club-membership]',
+      'record.notify[event=v2.birth|v2.death|tennis-club-membership]'
     ]
   },
   {
@@ -50,7 +53,10 @@ export const roles: Role[] = [
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]'
+      'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]',
+      'record.read[event=v2.birth|v2.death|tennis-club-membership]',
+      'record.declare[event=v2.birth|v2.death|tennis-club-membership]',
+      'record.notify[event=v2.birth|v2.death|tennis-club-membership]'
     ]
   },
   {
@@ -72,7 +78,10 @@ export const roles: Role[] = [
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]'
+      'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]',
+      'record.read[event=v2.birth|v2.death|tennis-club-membership]',
+      'record.declare[event=v2.birth|v2.death|tennis-club-membership]',
+      'record.notify[event=v2.birth|v2.death|tennis-club-membership]'
     ]
   },
   {
@@ -94,7 +103,10 @@ export const roles: Role[] = [
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]'
+      'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]',
+      'record.read[event=v2.birth|v2.death|tennis-club-membership]',
+      'record.declare[event=v2.birth|v2.death|tennis-club-membership]',
+      'record.notify[event=v2.birth|v2.death|tennis-club-membership]'
     ]
   },
   {
@@ -116,7 +128,10 @@ export const roles: Role[] = [
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]'
+      'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]',
+      'record.read[event=v2.birth|v2.death|tennis-club-membership]',
+      'record.declare[event=v2.birth|v2.death|tennis-club-membership]',
+      'record.notify[event=v2.birth|v2.death|tennis-club-membership]'
     ]
   },
   {
@@ -150,7 +165,14 @@ export const roles: Role[] = [
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates-office|in-review|sent-for-approval|in-external-validation|ready-to-print|ready-to-issue]'
+      'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates-office|in-review|sent-for-approval|in-external-validation|ready-to-print|ready-to-issue]',
+      'record.read[event=v2.birth|v2.death|tennis-club-membership]',
+      'record.declare[event=v2.birth|v2.death|tennis-club-membership]',
+      'record.declared.validate[event=v2.birth|v2.death|tennis-club-membership]',
+      'record.declared.reject[event=v2.birth|v2.death|tennis-club-membership]',
+      'record.declared.archive[event=v2.birth|v2.death|tennis-club-membership]',
+      'record.registered.print-certified-copies[event=v2.birth|v2.death|tennis-club-membership]',
+      'record.registered.request-correction[event=v2.birth|v2.death|tennis-club-membership]'
     ]
   },
   {
@@ -191,7 +213,15 @@ export const roles: Role[] = [
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates-office|in-review-all|in-external-validation|ready-to-print|ready-to-issue]'
+      'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates-office|in-review-all|in-external-validation|ready-to-print|ready-to-issue]',
+      'record.read[event=v2.birth|v2.death|tennis-club-membership]',
+      'record.declare[event=v2.birth|v2.death|tennis-club-membership]',
+      'record.declared.reject[event=v2.birth|v2.death|tennis-club-membership]',
+      'record.declared.archive[event=v2.birth|v2.death|tennis-club-membership]',
+      'record.declared.review-duplicates[event=v2.birth|v2.death|tennis-club-membership]',
+      'record.register[event=v2.birth|v2.death|tennis-club-membership]',
+      'record.registered.print-certified-copies[event=v2.birth|v2.death|tennis-club-membership]',
+      'record.registered.correct[event=v2.birth|v2.death|tennis-club-membership]'
     ]
   },
   {
@@ -280,7 +310,15 @@ export const roles: Role[] = [
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates-office|in-review-all|in-external-validation|ready-to-print|ready-to-issue]'
+      'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates-office|in-review-all|in-external-validation|ready-to-print|ready-to-issue]',
+      'record.read[event=v2.birth|v2.death|tennis-club-membership]',
+      'record.declare[event=v2.birth|v2.death|tennis-club-membership]',
+      'record.declared.reject[event=v2.birth|v2.death|tennis-club-membership]',
+      'record.declared.archive[event=v2.birth|v2.death|tennis-club-membership]',
+      'record.declared.review-duplicates[event=v2.birth|v2.death|tennis-club-membership]',
+      'record.register[event=v2.birth|v2.death|tennis-club-membership]',
+      'record.registered.print-certified-copies[event=v2.birth|v2.death|tennis-club-membership]',
+      'record.registered.correct[event=v2.birth|v2.death|tennis-club-membership]'
     ]
   },
   {
