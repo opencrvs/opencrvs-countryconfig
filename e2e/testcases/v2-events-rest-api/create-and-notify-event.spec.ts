@@ -99,7 +99,7 @@ async function deleteSystemUser(token: string, clientId: string) {
   })
 }
 
-const EVENT_TYPE = 'v2.birth'
+const EVENT_TYPE = 'birth'
 
 test.describe('Events REST API', () => {
   let clientToken: string

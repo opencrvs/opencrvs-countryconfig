@@ -336,8 +336,8 @@ export const roles: Role[] = [
       SCOPES.SEARCH_BIRTH,
       SCOPES.SEARCH_DEATH,
       SCOPES.USER_READ_ONLY_MY_AUDIT,
-      'search[event=v2.birth,access=all]',
-      'search[event=v2.death,access=all]',
+      'search[event=birth,access=all]',
+      'search[event=death,access=all]',
       'search[event=tennis-club-membership,access=all]',
       'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]'
     ]
@@ -360,8 +360,8 @@ export const roles: Role[] = [
       SCOPES.SEARCH_DEATH,
       SCOPES.SEARCH_MARRIAGE,
       SCOPES.USER_READ_ONLY_MY_AUDIT,
-      'search[event=v2.birth,access=all]',
-      'search[event=v2.death,access=all]',
+      'search[event=birth,access=all]',
+      'search[event=death,access=all]',
       'search[event=tennis-club-membership,access=all]',
       'workqueue[id=assigned-to-you|recent|sent-for-review|ready-to-print]'
     ]
