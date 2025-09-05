@@ -9,7 +9,7 @@
 
 #!/bin/bash
 
-METABASE_VERSION="v0.56.2"
+METABASE_VERSION="v0.56.4"
 METABASE_JAR="./$METABASE_VERSION-metabase.jar"
 
 MB_DB_FILE=${MB_DB_FILE:-"$(pwd)/data/metabase/metabase.mv.db"}

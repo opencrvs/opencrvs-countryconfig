@@ -1043,7 +1043,7 @@ services:
         tag: 'webhooks'
 
   dashboards:
-    image: metabase/metabase:v0.56.2
+    image: metabase/metabase:v0.56.4
     volumes:
       # Exceed Docker config file 500 kb file limit, thus a volume mount
       - /opt/opencrvs/infrastructure/metabase/metabase.init.db.sql:/metabase.init.db.sql

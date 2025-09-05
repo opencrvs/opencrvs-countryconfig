@@ -9,6 +9,11 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
+import { tennisClubMembershipEvent } from '@countryconfig/form/tennis-club-membership'
+import { Event } from '@countryconfig/form/types/types'
+import { birthEvent } from '@countryconfig/form/v2/birth'
+import { deathEvent } from '@countryconfig/form/v2/death'
+import { logger } from '@countryconfig/logger'
 import {
   ActionConfig,
   ActionDocument,
@@ -18,16 +23,10 @@ import {
   EventDocument,
   EventState,
   getActionAnnotationFields,
-  getAllUniqueFields,
-  getCurrentEventState,
-  isMetaAction
+  getCurrentEventState
 } from '@opencrvs/toolkit/events'
-import { birthEvent } from '@countryconfig/form/v2/birth'
-import { deathEvent } from '@countryconfig/form/v2/death'
-import { Event } from '@countryconfig/form/types/types'
-import { Kysely, sql } from 'kysely'
-import { tennisClubMembershipEvent } from '@countryconfig/form/tennis-club-membership'
-import { logger } from '@countryconfig/logger'
+import { differenceInDays } from 'date-fns'
+import { Kysely } from 'kysely'
 import { pickBy } from 'lodash'
 
 /**
@@ -71,9 +70,7 @@ function pickAnnotationAnalyticsFields(
 ) {
   const fields = getActionAnnotationFields(actionConfig)
 
-  const analyticsFields = fields.flatMap((field) =>
-    fields.filter((field) => field.analytics === true)
-  )
+  const analyticsFields = fields.filter((field) => field.analytics === true)
 
   return pickBy(annotation, (_, key) =>
     analyticsFields.some((field) => field.id === key)
@@ -94,6 +91,45 @@ function getAnnotation(
     ...originalAnnotation,
     ...actionAnnotation
   }
+}
+
+function precalculateAdditionalAnalytics(
+  action: ActionDocument,
+  declaration: ActionDocument['declaration'],
+  eventConfig: EventConfig
+) {
+  /*
+   * Example: precalculate age from action creation date and child's date of birth
+   */
+
+  if (eventConfig.id === Event.V2_BIRTH) {
+    const createdAt = new Date(action.createdAt)
+    const childDoB = declaration['child.dob']
+    if (!childDoB) return action
+
+    return {
+      ...declaration,
+      'child.age.days': differenceInDays(
+        createdAt,
+        new Date(childDoB as string)
+      )
+    }
+  }
+
+  return action
+}
+
+function convertDotKeysToUnderscore(
+  obj: Record<string, any>
+): Record<string, any> {
+  const newObj: Record<string, any> = {}
+  for (const key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+      const newKey = key.replace(/\./g, '_')
+      newObj[newKey] = obj[key]
+    }
+  }
+  return newObj
 }
 
 export async function upsertAnalyticsEventActions(
@@ -139,10 +175,16 @@ export async function upsertAnalyticsEventActions(
       eventId: event.id,
       actionType: type,
       eventType: event.type,
-      annotation,
-      declaration: pickDeclarationAnalyticsFields(
-        actionAtCurrentPoint.declaration,
-        eventConfig
+      annotation: convertDotKeysToUnderscore(annotation),
+      declaration: convertDotKeysToUnderscore(
+        precalculateAdditionalAnalytics(
+          action,
+          pickDeclarationAnalyticsFields(
+            actionAtCurrentPoint.declaration,
+            eventConfig
+          ),
+          eventConfig
+        )
       )
     }
 
