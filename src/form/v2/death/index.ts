@@ -23,6 +23,7 @@ import { DEATH_CERTIFICATE_COLLECTOR_FORM } from '../death/forms/printForm'
 import { advancedSearchDeath } from './advancedSearch'
 import { PlaceOfDeath } from './forms/pages/eventDetails'
 import { DEATH_CORRECTION_FORM } from './forms/correctionForm'
+import { dedupConfig } from './dedupConfig'
 
 export const deathEvent = defineConfig({
   id: Event.Death,
@@ -180,7 +181,17 @@ export const deathEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'v2.event.death.action.declare.label'
       },
-      review: DEATH_DECLARATION_REVIEW
+      review: DEATH_DECLARATION_REVIEW,
+      deduplication: {
+        id: 'death-deduplication',
+        label: {
+          defaultMessage: 'Detect duplicate',
+          description:
+            'This is shown as the action name anywhere the user can trigger the action from',
+          id: 'v2.event.death.action.detect-duplicate.label'
+        },
+        query: dedupConfig
+      }
     },
     {
       type: ActionType.VALIDATE,
@@ -190,7 +201,17 @@ export const deathEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'v2.event.death.action.validate.label'
       },
-      review: DEATH_DECLARATION_REVIEW
+      review: DEATH_DECLARATION_REVIEW,
+      deduplication: {
+        id: 'death-deduplication',
+        label: {
+          defaultMessage: 'Detect duplicate',
+          description:
+            'This is shown as the action name anywhere the user can trigger the action from',
+          id: 'v2.event.death.action.detect-duplicate.label'
+        },
+        query: dedupConfig
+      }
     },
     {
       type: ActionType.REGISTER,
@@ -200,7 +221,17 @@ export const deathEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'v2.event.death.action.register.label'
       },
-      review: DEATH_DECLARATION_REVIEW
+      review: DEATH_DECLARATION_REVIEW,
+      deduplication: {
+        id: 'death-deduplication',
+        label: {
+          defaultMessage: 'Detect duplicate',
+          description:
+            'This is shown as the action name anywhere the user can trigger the action from',
+          id: 'v2.event.death.action.detect-duplicate.label'
+        },
+        query: dedupConfig
+      }
     },
     {
       type: ActionType.PRINT_CERTIFICATE,
