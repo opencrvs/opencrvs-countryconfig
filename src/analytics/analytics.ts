@@ -139,7 +139,15 @@ export async function upsertAnalyticsEventActions(
 ) {
   for (let i = 0; i < event.actions.length; i++) {
     const actionsFromStartToCurrentPoint = event.actions
-      .sort((a, b) => a.createdAt.localeCompare(b.createdAt))
+      .sort((a, b) => {
+        // CREATE type always comes first
+        if (a.type === ActionType.CREATE && b.type !== ActionType.CREATE)
+          return -1
+        if (b.type === ActionType.CREATE && a.type !== ActionType.CREATE)
+          return 1
+        // Otherwise sort by createdAt
+        return a.createdAt.localeCompare(b.createdAt)
+      })
       .slice(0, i + 1)
 
     const action = event.actions[i]

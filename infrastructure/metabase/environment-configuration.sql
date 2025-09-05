@@ -24,7 +24,7 @@ UPDATE
 SET
   DETAILS = '{"ssl": $METABASE_DATABASE_SSL,"password":"$METABASE_DATABASE_PASSWORD","destination-database":false,"port":$METABASE_DATABASE_PORT,"advanced-options":false,"schema-filters-type":"all","dbname":"$METABASE_DATABASE_NAME","host":"$METABASE_DATABASE_HOST","tunnel-enabled": false,"user":"$METABASE_DATABASE_USER"}'
 WHERE
-  NAME = 'Production OpenCRVS database';
+  NAME = 'OpenCRVS Analytics Database';
 
 UPDATE
   PUBLIC.CORE_USER
