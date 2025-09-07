@@ -53,6 +53,7 @@ test.describe('Save and delete drafts', () => {
     })
 
     test('Delete saved draft', async () => {
+      await page.getByRole('button', { name: 'My drafts' }).click()
       await page.getByRole('button', { name: childName, exact: true }).click()
       await page.getByRole('button', { name: 'Action', exact: true }).click()
 
@@ -67,7 +68,6 @@ test.describe('Save and delete drafts', () => {
       await ensureOutboxIsEmpty(page)
       await page.getByText('My drafts').click()
 
-      await page.getByRole('button', { name: 'Assigned to you' }).click()
       await expect(
         page.getByRole('button', { name: childName, exact: true })
       ).not.toBeVisible()
