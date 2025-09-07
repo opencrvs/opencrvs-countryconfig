@@ -117,6 +117,7 @@ test.describe('Form state', () => {
     })
 
     test('Form states and annotations are not persisted', async () => {
+      await page.getByRole('button', { name: 'My drafts' }).click()
       await page
         .getByRole('button', { name: actionableEventChildName, exact: true })
         .click()
