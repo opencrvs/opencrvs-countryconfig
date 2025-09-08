@@ -15,8 +15,9 @@ import {
   ConditionalType,
   defineFormPage,
   FieldType,
+  PageTypes,
   field,
-  PageTypes
+  user
 } from '@opencrvs/toolkit/events'
 import { or, not, never } from '@opencrvs/toolkit/conditionals'
 import { emptyMessage } from '@countryconfig/form/v2/utils'
@@ -359,7 +360,8 @@ export const mother = defineFormPage({
       ],
       defaultValue: {
         country: 'FAR',
-        addressType: AddressType.DOMESTIC
+        addressType: AddressType.DOMESTIC,
+        administrativeArea: user('primaryOfficeId').locationLevel('district')
       },
       configuration: {
         streetAddressForm: defaultStreetAddressConfiguration
