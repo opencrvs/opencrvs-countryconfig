@@ -217,7 +217,8 @@ export const roles: Role[] = [
       'record.declared.review-duplicates[event=birth|death|tennis-club-membership]',
       'record.register[event=birth|death|tennis-club-membership]',
       'record.registered.print-certified-copies[event=birth|death|tennis-club-membership]',
-      'record.registered.correct[event=birth|death|tennis-club-membership]'
+      'record.registered.correct[event=birth|death|tennis-club-membership]',
+      'record.unassign-others[event=birth|death|tennis-club-membership]'
     ]
   },
   {
@@ -317,7 +318,8 @@ export const roles: Role[] = [
       'record.declared.review-duplicates[event=birth|death|tennis-club-membership]',
       'record.register[event=birth|death|tennis-club-membership]',
       'record.registered.print-certified-copies[event=birth|death|tennis-club-membership]',
-      'record.registered.correct[event=birth|death|tennis-club-membership]'
+      'record.registered.correct[event=birth|death|tennis-club-membership]',
+      'record.unassign-others[event=birth|death|tennis-club-membership]'
     ]
   }
 ]
