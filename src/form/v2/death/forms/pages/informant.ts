@@ -18,7 +18,8 @@ import {
   never,
   or,
   TranslationConfig,
-  field
+  field,
+  user
 } from '@opencrvs/toolkit/events'
 import { not } from '@opencrvs/toolkit/conditionals'
 import { createSelectOptions, emptyMessage } from '../../../utils'
@@ -449,7 +450,8 @@ export const informant = defineFormPage({
       ],
       defaultValue: {
         country: 'FAR',
-        addressType: AddressType.DOMESTIC
+        addressType: AddressType.DOMESTIC,
+        administrativeArea: user('primaryOfficeId').locationLevel('district')
       },
       configuration: {
         streetAddressForm: defaultStreetAddressConfiguration

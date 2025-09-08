@@ -66,14 +66,6 @@ test.describe.serial('8. Death declaration case - 8', () => {
     test('8.1.1 Fill deceased details', async () => {
       await page.locator('#firstname').fill(declaration.deceased.name.firstname)
       await page.locator('#surname').fill(declaration.deceased.name.surname)
-      await page.locator('#province').click()
-      await page
-        .getByText(declaration.deceased.address.province, { exact: true })
-        .click()
-      await page.locator('#district').click()
-      await page
-        .getByText(declaration.deceased.address.district, { exact: true })
-        .click()
       await continueForm(page)
     })
 

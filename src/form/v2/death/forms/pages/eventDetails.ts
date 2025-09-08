@@ -18,7 +18,8 @@ import {
   not,
   or,
   PageTypes,
-  TranslationConfig
+  TranslationConfig,
+  user
 } from '@opencrvs/toolkit/events'
 
 import { createSelectOptions, emptyMessage } from '@countryconfig/form/v2/utils'
@@ -332,7 +333,8 @@ export const eventDetails = defineFormPage({
       ],
       defaultValue: {
         country: 'FAR',
-        addressType: AddressType.DOMESTIC
+        addressType: AddressType.DOMESTIC,
+        administrativeArea: user('primaryOfficeId').locationLevel('district')
       },
       configuration: {
         streetAddressForm: defaultStreetAddressConfiguration
