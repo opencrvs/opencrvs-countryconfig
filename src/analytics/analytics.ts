@@ -33,7 +33,7 @@ import { pickBy } from 'lodash'
  * You can control which events you want to track in analytics by adding them here.
  */
 function getEventConfig(eventType: string) {
-  if (eventType === Event.V2_BIRTH) {
+  if (eventType === Event.Birth) {
     return birthEvent
   }
 
@@ -41,7 +41,7 @@ function getEventConfig(eventType: string) {
     return tennisClubMembershipEvent
   }
 
-  if (eventType === Event.V2_DEATH) {
+  if (eventType === Event.Death) {
     return deathEvent
   }
 
@@ -102,7 +102,7 @@ function precalculateAdditionalAnalytics(
    * Example: precalculate age from action creation date and child's date of birth
    */
 
-  if (eventConfig.id === Event.V2_BIRTH) {
+  if (eventConfig.id === Event.Birth) {
     const createdAt = new Date(action.createdAt)
     const childDoB = declaration['child.dob']
     if (!childDoB) return action
@@ -116,7 +116,7 @@ function precalculateAdditionalAnalytics(
     }
   }
 
-  return action
+  return declaration
 }
 
 function convertDotKeysToUnderscore(
@@ -178,11 +178,20 @@ export async function upsertAnalyticsEventActions(
         )
       : {}
 
+    const actions = event.actions
+    /*
+     * Add date of declaration and date of registration to all events for each access
+     */
+    const declareAction = actions.find((a) => a.type === ActionType.DECLARE)
+    const registerAction = actions.find((a) => a.type === ActionType.REGISTER)
+
     const actionWithFilteredDeclaration = {
       ...act,
       eventId: event.id,
       actionType: type,
       eventType: event.type,
+      declaredAt: declareAction ? declareAction.createdAt : null,
+      registeredAt: registerAction ? registerAction.createdAt : null,
       annotation: convertDotKeysToUnderscore(annotation),
       declaration: convertDotKeysToUnderscore(
         precalculateAdditionalAnalytics(

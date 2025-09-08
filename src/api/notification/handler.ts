@@ -169,6 +169,7 @@ export async function notify({
       console.log(
         `Sending email to ${email} with subject: ${subject}, body: ${JSON.stringify(emailBody)}`
       )
+      return
     }
 
     await sendEmail({
