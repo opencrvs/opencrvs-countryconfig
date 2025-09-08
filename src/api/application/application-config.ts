@@ -26,6 +26,24 @@ export const applicationConfig = {
     },
     PRINT_IN_ADVANCE: true
   },
+  ADMIN_STRUCTURE: [
+    {
+      id: 'province',
+      label: {
+        id: 'v2.field.address.province.label',
+        defaultMessage: 'Province',
+        description: 'Label for province in address'
+      }
+    },
+    {
+      id: 'district',
+      label: {
+        id: 'v2.field.address.district.label',
+        defaultMessage: 'District',
+        description: 'Label for district in address'
+      }
+    }
+  ],
   PHONE_NUMBER_PATTERN: '^0(7|9)[0-9]{8}$',
   NID_NUMBER_PATTERN: '^[0-9]{10}$',
   LOGIN_BACKGROUND: {

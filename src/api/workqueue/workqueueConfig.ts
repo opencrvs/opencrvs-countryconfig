@@ -1,6 +1,7 @@
 import {
   ActionStatus,
   ActionType,
+  EventStatus,
   InherentFlags,
   defineWorkqueues,
   event,
@@ -162,7 +163,6 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of sent for review workqueue'
     },
     query: {
-      status: { type: 'anyOf', terms: ['DECLARED', 'NOTIFIED'] },
       flags: {
         noneOf: [InherentFlags.REJECTED]
       },
@@ -195,7 +195,7 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of ready for review workqueue'
     },
     query: {
-      status: { type: 'exact', term: 'DECLARED' },
+      status: { type: 'exact', term: EventStatus.enum.DECLARED },
       flags: {
         noneOf: [InherentFlags.REJECTED]
       },
@@ -357,12 +357,7 @@ export const Workqueues = defineWorkqueues([
         }
       ]
     },
-    actions: [
-      {
-        type: 'DEFAULT',
-        conditionals: []
-      }
-    ],
+    actions: [],
     columns: [
       DATE_OF_EVENT_COLUMN,
       {
@@ -408,6 +403,7 @@ export const Workqueues = defineWorkqueues([
     },
     query: {
       flags: {
+        noneOf: [InherentFlags.CORRECTION_REQUESTED],
         anyOf: [InherentFlags.PENDING_CERTIFICATION]
       },
       status: { type: 'exact', term: 'REGISTERED' },

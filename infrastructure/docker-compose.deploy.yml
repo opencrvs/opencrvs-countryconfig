@@ -254,8 +254,8 @@ services:
   # Configure redis
   redis:
     environment:
-      - VALKEY_PASSWORD=false
-      - VALKEY_ACLFILE=/run/secrets/redis-acl.{{ts}}
+      - REDIS_PASSWORD=false
+      - REDIS_ACLFILE=/run/secrets/redis-acl.{{ts}}
     secrets:
       - redis-acl.{{ts}}
     networks:
@@ -633,7 +633,7 @@ services:
       - CERT_PRIVATE_KEY_PATH=/run/secrets/jwt-private-key.{{ts}}
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
       - LOGIN_URL=https://login.{{hostname}}
-      - COUNTRY_CONFIG_URL=https://countryconfig.{{hostname}}
+      - COUNTRY_CONFIG_URL_EXTERNAL=https://countryconfig.{{hostname}}
       - CLIENT_APP_URL=https://register.{{hostname}}
       - DOMAIN={{hostname}}
       - REDIS_USERNAME=${AUTH_REDIS_USERNAME}
@@ -961,7 +961,7 @@ services:
         tag: 'hearth'
 
   postgres:
-    image: postgres:17
+    image: postgres:17.6
     networks:
       - overlay_net
     restart: unless-stopped
@@ -979,7 +979,7 @@ services:
           - node.labels.data1 == true
 
   postgres-on-update:
-    image: postgres:17
+    image: postgres:17.6
     command: bash /on-deploy.sh
     configs:
       - source: postgres-on-deploy.{{ts}}
