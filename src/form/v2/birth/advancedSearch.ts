@@ -13,22 +13,22 @@ import { AdvancedSearchConfig, event, field } from '@opencrvs/toolkit/events'
 import { placeOfBirthOptions } from './forms/pages/child'
 
 const childPrefix = {
-  id: 'v2.birth.search.criteria.label.prefix.child',
+  id: 'birth.search.criteria.label.prefix.child',
   defaultMessage: "Child's",
   description: 'Child prefix'
 }
 const motherPrefix = {
-  id: 'v2.birth.search.criteria.label.prefix.mother',
+  id: 'birth.search.criteria.label.prefix.mother',
   defaultMessage: "Mother's",
   description: 'Mother prefix'
 }
 const fatherPrefix = {
-  id: 'v2.birth.search.criteria.label.prefix.father',
+  id: 'birth.search.criteria.label.prefix.father',
   defaultMessage: "Father's",
   description: 'Father prefix'
 }
 const informantPrefix = {
-  id: 'v2.birth.search.criteria.label.prefix.informant',
+  id: 'birth.search.criteria.label.prefix.informant',
   defaultMessage: "Informant's",
   description: 'Informant prefix'
 }
@@ -73,15 +73,13 @@ export const advancedSearchBirth = [
     },
     fields: [
       field('child.placeOfBirth', {
-        excludeInSearchQuery: true,
-        options: placeOfBirthOptions.slice(0, 2)
+        options: placeOfBirthOptions
       }).exact(),
       field('child.birthLocation', {
         searchCriteriaLabelPrefix: childPrefix
       }).exact(),
-      field('child.address.privateHome', {
-        alternateFieldIds: ['child.address.other']
-      }).exact()
+      field('child.address.privateHome').exact(),
+      field('child.address.other').exact()
     ]
   },
   {

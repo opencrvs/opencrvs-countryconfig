@@ -169,7 +169,7 @@ const getFieldConfigForInformant = (informantType: InformantTypeKey) => {
 const getInformantOption = (informantType: InformantTypeKey) => {
   const defaultMessage =
     informantType === InformantType.OTHER
-      ? `Informant`
+      ? `Informant ({informant.other.relation})`
       : `Informant (${informantMessageDescriptors[informantType].defaultMessage})`
 
   return {

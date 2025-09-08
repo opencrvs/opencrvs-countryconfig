@@ -18,8 +18,9 @@ import fetch from 'node-fetch'
 import * as Handlebars from 'handlebars'
 import { internal } from '@hapi/boom'
 import { getLanguages } from '../content/service'
+import { TriggerEvent } from '@opencrvs/toolkit/notification'
 
-export const informantTemplates = {
+export const InformantTemplateType = {
   birthInProgressNotification: 'birthInProgressNotification',
   birthDeclarationNotification: 'birthDeclarationNotification',
   birthRegistrationNotification: 'birthRegistrationNotification',
@@ -28,19 +29,24 @@ export const informantTemplates = {
   deathDeclarationNotification: 'deathDeclarationNotification',
   deathRegistrationNotification: 'deathRegistrationNotification',
   deathRejectionNotification: 'deathRejectionNotification'
-}
+} as const
+
+export type InformantTemplateType =
+  (typeof InformantTemplateType)[keyof typeof InformantTemplateType]
 
 const otherTemplates = {
   authenticationCodeNotification: 'authenticationCodeNotification',
   userCredentialsNotification: 'userCredentialsNotification',
   retieveUserNameNotification: 'retieveUserNameNotification',
   updateUserNameNotification: 'updateUserNameNotification',
-  resetUserPasswordNotification: 'resetUserPasswordNotification'
+  resetUserPasswordNotification: 'resetUserPasswordNotification',
+  resetUserPasswordByAdminNotification: 'resetUserPasswordByAdminNotification'
 }
 
 export type SMSTemplateType =
   | keyof typeof otherTemplates
-  | keyof typeof informantTemplates
+  | InformantTemplateType
+  | 'allUserNotification'
 
 export async function sendSMS(
   type: SMSTemplateType,
@@ -49,6 +55,13 @@ export async function sendSMS(
   locale: string
 ) {
   const message = await compileMessages(type, variables, locale)
+
+  if (process.env.NODE_ENV === 'development') {
+    console.log(
+      `Sending SMS to ${recipient} with body: ${JSON.stringify(message)}`
+    )
+  }
+
   const body = JSON.stringify({
     messages: [
       {
@@ -109,4 +122,24 @@ const compileMessages = async (
 
   const template = Handlebars.compile(language.messages[templateName])
   return template(variables)
+}
+
+export const TriggerToSMSTemplate = {
+  ['user-created']: 'userCredentialsNotification',
+  ['user-updated']: 'updateUserNameNotification',
+  ['username-reminder']: 'retieveUserNameNotification',
+  ['reset-password']: 'resetUserPasswordNotification',
+  ['reset-password-by-admin']: 'resetUserPasswordByAdminNotification',
+  ['2fa']: 'authenticationCodeNotification',
+  ['all-user-notification']: 'allUserNotification'
+} satisfies Record<TriggerEvent, SMSTemplateType>
+
+function isTriggerEvent(event: any): event is TriggerEvent {
+  return event in TriggerToSMSTemplate
+}
+
+export function getSMSTemplate(
+  event: TriggerEvent | InformantTemplateType
+): SMSTemplateType {
+  return isTriggerEvent(event) ? TriggerToSMSTemplate[event] : event
 }

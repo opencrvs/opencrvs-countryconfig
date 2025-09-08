@@ -839,15 +839,16 @@
   resolved "https://registry.yarnpkg.com/@opencrvs/mosip/-/mosip-1.8.0.tgz#ed0b20d85d69c4a774a7d8e7011d15f94551aba8"
   integrity sha512-5MWQZEAdL0P6OFCYyzI87H73QS3DJsxJnWgZ3eGEtUVXDLOiTA6KupoRxJwjvRVbWScH39P0QVKo1lC+yZTL0A==
 
-"@opencrvs/toolkit@1.8.1-rc.d31fe05":
-  version "1.8.1-rc.d31fe05"
-  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-1.8.1-rc.d31fe05.tgz#85e328250902abff35f23528a5fcd43adf3021ae"
-  integrity sha512-sO4l5P+5b5T8zSJU3na9JoZlZFhhnP8mVu67NG8tOu1IA8DthyNb5kGw7AuqW6+YkOW/JEvIupzopgJ+3OGWIA==
+"@opencrvs/toolkit@1.8.1-rc.52c05a2":
+  version "1.8.1-rc.52c05a2"
+  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-1.8.1-rc.52c05a2.tgz#e974d8fddfafc50f26d7df4becf68cea6e7acc58"
+  integrity sha512-8h9BtPdNrtWSxW8iRDhHLuusSy3kargGBCSKR0an3/JSYQBAAVpaGRjtciqaAvEsCJdjcn4nnUIhseTKNZvejA==
   dependencies:
     "@trpc/client" "11.4.3"
     "@trpc/server" "11.4.3"
     ajv "^8.17.1"
     ajv-formats "^3.0.1"
+    object-hash "^3.0.0"
     superjson "1.9.0-0"
     uuid "^9.0.0"
     zod-openapi "^4.2.4"
@@ -4100,6 +4101,11 @@ object-copy@^0.1.0:
     copy-descriptor "^0.1.0"
     define-property "^0.2.5"
     kind-of "^3.0.3"
+
+object-hash@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/object-hash/-/object-hash-3.0.0.tgz#73f97f753e7baffc0e2cc9d6e079079744ac82e9"
+  integrity sha512-RSn9F68PjH9HqtltsSnqYC1XXoWe9Bju5+213R98cNGttag9q9yAOTzdbsqvIa7aNm5WffBZFpWYr2aWrklWAw==
 
 object-visit@^1.0.0:
   version "1.0.1"

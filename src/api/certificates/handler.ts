@@ -11,6 +11,7 @@
 
 import { Event } from '@countryconfig/form/types/types'
 import { Request, ResponseToolkit } from '@hapi/hapi'
+import { ActionType, event, field } from '@opencrvs/toolkit/events'
 
 type FontFamilyTypes = {
   normal: string
@@ -18,9 +19,16 @@ type FontFamilyTypes = {
   italics: string
   bolditalics: string
 }
+
+type JSONSchema = Record<string, any>
+
 export interface ICertificateConfigData {
   id: string
   event: Event
+  // This is a temporary field to indicate that the certificate is a v2 template.
+  // As the templates are assigned to event types per id, we would not be able to define separate templates for v1 and v2 'birth' or 'death' events without this.
+  // After v1 is phased out, this field can be removed.
+  isV2Template?: boolean
   label: {
     id: string
     defaultMessage: string
@@ -34,6 +42,12 @@ export interface ICertificateConfigData {
   }
   svgUrl: string
   fonts?: Record<string, FontFamilyTypes>
+  conditionals?:
+    | {
+        type: 'SHOW'
+        conditional: JSONSchema
+      }[]
+    | undefined
 }
 
 export async function certificateHandler(request: Request, h: ResponseToolkit) {
@@ -89,7 +103,14 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
           italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
           bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
         }
-      }
+      },
+      conditionals: [
+        {
+          type: 'SHOW',
+          // Show only if original certificate was printed
+          conditional: event.hasAction(ActionType.PRINT_CERTIFICATE).minCount(1)
+        }
+      ]
     },
     {
       id: 'birth-registration-receipt',
@@ -162,7 +183,14 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
           italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
           bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
         }
-      }
+      },
+      conditionals: [
+        {
+          type: 'SHOW',
+          // Show only if original certificate was printed
+          conditional: event.hasAction(ActionType.PRINT_CERTIFICATE).minCount(1)
+        }
+      ]
     },
     {
       id: 'marriage-certificate',
@@ -215,7 +243,8 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
     },
     {
       id: 'v2.birth-certificate',
-      event: Event.V2_BIRTH,
+      event: Event.Birth,
+      isV2Template: true,
       label: {
         id: 'certificates.birth.certificate',
         defaultMessage: 'Birth Certificate copy',
@@ -235,11 +264,18 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
           italics: '/api/countryconfig/fonts/LibreBaskerville-Italic.ttf',
           bolditalics: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf'
         }
-      }
+      },
+      conditionals: [
+        {
+          type: 'SHOW',
+          conditional: field('child.dob').isAfter().days(365).inPast()
+        }
+      ]
     },
     {
       id: 'v2.birth-certified-certificate',
-      event: Event.V2_BIRTH,
+      event: Event.Birth,
+      isV2Template: true,
       label: {
         id: 'certificates.birth.certificate.copy',
         defaultMessage: 'Birth Certificate certified copy',
@@ -260,11 +296,22 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
           italics: '/api/countryconfig/fonts/LibreBaskerville-Italic.ttf',
           bolditalics: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf'
         }
-      }
+      },
+      conditionals: [
+        {
+          type: 'SHOW',
+          // Show only after the standard birth certificate has been printed at least twice
+          conditional: event
+            .hasAction(ActionType.PRINT_CERTIFICATE)
+            .withTemplate('v2.birth-certificate')
+            .minCount(2)
+        }
+      ]
     },
     {
       id: 'v2.tennis-club-membership-certificate',
       event: Event.TENNIS_CLUB_MEMBERSHIP,
+      isV2Template: true,
       label: {
         id: 'certificates.tennis-club-membership.certificate.copy',
         defaultMessage: 'Tennis Club Membership Certificate copy',
@@ -285,11 +332,19 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
           italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
           bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
         }
-      }
+      },
+      conditionals: [
+        {
+          type: 'SHOW',
+          // Show only for registered events
+          conditional: event.hasAction(ActionType.PRINT_CERTIFICATE).minCount(0)
+        }
+      ]
     },
     {
       id: 'v2.tennis-club-membership-certified-certificate',
       event: Event.TENNIS_CLUB_MEMBERSHIP,
+      isV2Template: true,
       label: {
         id: 'certificates.tennis-club-membership.certificate.certified-copy',
         defaultMessage: 'Tennis Club Membership Certificate certified copy',
@@ -314,7 +369,8 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
     },
     {
       id: 'v2.death-certificate',
-      event: Event.V2_DEATH,
+      event: Event.Death,
+      isV2Template: true,
       label: {
         id: 'certificates.death.certificate',
         defaultMessage: 'Death Certificate copy',
@@ -338,7 +394,8 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
     },
     {
       id: 'v2.death-certified-certificate',
-      event: Event.V2_DEATH,
+      event: Event.Death,
+      isV2Template: true,
       label: {
         id: 'certificates.death.certificate.copy',
         defaultMessage: 'Death Certificate certified copy',

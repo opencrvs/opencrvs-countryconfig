@@ -97,7 +97,15 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
                 id: 'v2.error.invalidName'
               }
             }
-          ]
+          ],
+          configuration: {
+            name: {
+              firstname: { required: true },
+              middlename: { required: false },
+              surname: { required: true }
+            },
+            maxLength: MAX_NAME_LENGTH
+          }
         },
         {
           id: 'applicant.dob',
@@ -123,6 +131,7 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
           id: 'applicant.image',
           type: 'FILE',
           required: false,
+          uncorrectable: true,
           label: {
             defaultMessage: "Applicant's profile picture",
             description: 'This is the label for the field',
@@ -871,7 +880,7 @@ export const tennisClubMembershipEvent = defineConfig({
             id: 'correction-request.supporting-documents',
             type: PageTypes.enum.FORM,
             title: {
-              id: 'v2.event.tennis-club-membership.action.requestCorrection.form.section.verify',
+              id: 'v2.form.section.documents.title',
               defaultMessage: 'Upload supporting documents',
               description: 'This is the title of the section'
             },
