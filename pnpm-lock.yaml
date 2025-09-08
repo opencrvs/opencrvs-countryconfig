@@ -25,8 +25,8 @@ importers:
         specifier: ^6.0.3
         version: 6.0.5
       '@opencrvs/toolkit':
-        specifier: 1.8.1-rc.d3d858d
-        version: 1.8.1-rc.d3d858d(typescript@5.8.3)(zod@3.25.36)
+        specifier: 1.8.1-rc.52c05a2
+        version: 1.8.1-rc.52c05a2(typescript@5.8.3)(zod@3.25.36)
       '@types/chalk':
         specifier: ^2.2.0
         version: 2.2.4
@@ -928,8 +928,8 @@ packages:
   '@octokit/types@9.3.2':
     resolution: {integrity: sha512-D4iHGTdAnEEVsB8fl95m1hiz7D5YiRdQ9b/OEb3BYRVwbLsGHcRVPz+u+BgRLNk0Q0/4iZCBqDN96j2XNxfXrA==}
 
-  '@opencrvs/toolkit@1.8.1-rc.d3d858d':
-    resolution: {integrity: sha512-lfQnFbCmAq8APwDccmEG1H91zWbw/AglTiOYkIy54pRjyJ1nuSTYbg7goSmvkAtN2o8CLphteSvFZG+X/rNSwA==}
+  '@opencrvs/toolkit@1.8.1-rc.52c05a2':
+    resolution: {integrity: sha512-8h9BtPdNrtWSxW8iRDhHLuusSy3kargGBCSKR0an3/JSYQBAAVpaGRjtciqaAvEsCJdjcn4nnUIhseTKNZvejA==}
 
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
@@ -2759,6 +2759,10 @@ packages:
     resolution: {integrity: sha512-79LYn6VAb63zgtmAteVOWo9Vdj71ZVBy3Pbse+VqxDpEP83XuujMrGqHIwAXJ5I/aM0zU7dIyIAhifVTPrNItQ==}
     engines: {node: '>=0.10.0'}
 
+  object-hash@3.0.0:
+    resolution: {integrity: sha512-RSn9F68PjH9HqtltsSnqYC1XXoWe9Bju5+213R98cNGttag9q9yAOTzdbsqvIa7aNm5WffBZFpWYr2aWrklWAw==}
+    engines: {node: '>= 6'}
+
   object-visit@1.0.1:
     resolution: {integrity: sha512-GBaMwwAVK9qbQN3Scdo0OyvgPW7l3lnaVMj84uTOZlswkX0KpF6fyDBJhtTthf7pymztoN36/KEr1DyhF96zEA==}
     engines: {node: '>=0.10.0'}
@@ -4335,12 +4339,13 @@ snapshots:
     dependencies:
       '@octokit/openapi-types': 18.1.1
 
-  '@opencrvs/toolkit@1.8.1-rc.d3d858d(typescript@5.8.3)(zod@3.25.36)':
+  '@opencrvs/toolkit@1.8.1-rc.52c05a2(typescript@5.8.3)(zod@3.25.36)':
     dependencies:
       '@trpc/client': 11.4.3(@trpc/server@11.4.3(typescript@5.8.3))(typescript@5.8.3)
       '@trpc/server': 11.4.3(typescript@5.8.3)
       ajv: 8.17.1
       ajv-formats: 3.0.1(ajv@8.17.1)
+      object-hash: 3.0.0
       superjson: 1.9.0-0
       uuid: 9.0.1
       zod-openapi: 4.2.4(zod@3.25.36)
@@ -6325,6 +6330,8 @@ snapshots:
       copy-descriptor: 0.1.1
       define-property: 0.2.5
       kind-of: 3.2.2
+
+  object-hash@3.0.0: {}
 
   object-visit@1.0.1:
     dependencies:
