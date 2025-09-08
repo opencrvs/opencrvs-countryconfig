@@ -17,7 +17,8 @@ import {
   FieldType,
   never,
   field,
-  or
+  or,
+  user
 } from '@opencrvs/toolkit/events'
 import { not } from '@opencrvs/toolkit/conditionals'
 import { emptyMessage } from '../../../utils'
@@ -33,6 +34,7 @@ import {
   YesNoTypes
 } from '../../../person'
 import { InformantType } from './informant'
+import { defaultStreetAddressConfiguration } from '@countryconfig/form/street-address-configuration'
 
 export const requireSpouseDetails = or(
   field('spouse.detailsNotAvailable').isFalsy(),
@@ -367,12 +369,23 @@ export const spouse = defineFormPage({
           )
         }
       ],
+      validation: [
+        {
+          message: {
+            defaultMessage: 'Invalid input',
+            description: 'Error message when generic field is invalid',
+            id: 'v2.error.invalidInput'
+          },
+          validator: field('spouse.address').isValidAdministrativeLeafLevel()
+        }
+      ],
       defaultValue: {
         country: 'FAR',
         addressType: AddressType.DOMESTIC,
-        province: '$user.province',
-        district: '$user.district',
-        urbanOrRural: 'URBAN'
+        administrativeArea: user('primaryOfficeId').locationLevel('district')
+      },
+      configuration: {
+        streetAddressForm: defaultStreetAddressConfiguration
       }
     },
     {
