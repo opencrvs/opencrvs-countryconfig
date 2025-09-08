@@ -54,7 +54,7 @@ jobs:
           if [[ "${{ matrix.runner }}" == "ubuntu-24.04-arm" ]]; then
             echo "version=${GIT_HASH}-arm64" >> $GITHUB_OUTPUT
           else
-            echo "version=${GIT_HASH}" >> $GITHUB_OUTPUT
+            echo "version=${GIT_HASH}-amd64" >> $GITHUB_OUTPUT
           fi
 
       - name: Build and push
@@ -79,7 +79,7 @@ jobs:
         run: |
             TAG="${{ needs.build.outputs.version_common }}"
             REPO="${{ secrets.DOCKERHUB_ACCOUNT}}/${{ secrets.DOCKERHUB_REPO }}"
-            MANIFEST_LIST="--amend $REPO:$TAG --amend $REPO:$TAG-arm64"
+            MANIFEST_LIST="$REPO:$TAG-amd64 $REPO:$TAG-arm64"
             if [[ "$BRANCH_NAME" == "develop" ]]; then
               echo "[🔁 pushing ] $REPO:$TAG"
               docker manifest create $REPO:develop \
