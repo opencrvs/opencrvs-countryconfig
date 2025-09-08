@@ -210,12 +210,8 @@ test.describe
       await page.getByText('Residential address', { exact: true }).click()
 
       page.locator('#country').getByText('Farajaland')
-
-      await page.locator('#province').click()
-      await page.getByText('Central', { exact: true }).click()
-
-      await page.locator('#district').click()
-      await page.getByText('Ibombo', { exact: true }).click()
+      page.locator('#province').getByText('Central')
+      page.locator('#district').getByText('Ibombo')
 
       await page.locator('#town').fill('Dhaka')
       await page.locator('#town').blur()
