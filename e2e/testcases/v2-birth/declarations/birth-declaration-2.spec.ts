@@ -31,7 +31,6 @@ test.describe.serial('2. Birth declaration case - 2', () => {
       country: 'Farajaland',
       province: 'Pualula',
       district: 'Funabuli',
-      urbanOrRural: 'Urban',
       town: faker.location.city(),
       residentialArea: faker.location.county(),
       street: faker.location.street(),
@@ -55,8 +54,11 @@ test.describe.serial('2. Birth declaration case - 2', () => {
         country: 'Farajaland',
         province: 'Sulaka',
         district: 'Irundu',
-        urbanOrRural: 'Rural',
-        village: faker.location.county()
+        town: faker.location.city(),
+        residentialArea: faker.location.county(),
+        street: faker.location.street(),
+        number: faker.location.buildingNumber(),
+        postcodeOrZip: faker.location.zipCode()
       },
       maritalStatus: 'Married',
       levelOfEducation: 'Primary'
@@ -78,7 +80,6 @@ test.describe.serial('2. Birth declaration case - 2', () => {
         country: 'Farajaland',
         province: 'Sulaka',
         district: 'Zobwe',
-        urbanOrRural: 'Urban',
         town: faker.location.city(),
         residentialArea: faker.location.county(),
         street: faker.location.street(),
@@ -232,8 +233,15 @@ test.describe.serial('2. Birth declaration case - 2', () => {
         .getByText(declaration.mother.address.district, { exact: true })
         .click()
 
-      await page.getByLabel('Rural').check()
-      await page.locator('#village').fill(declaration.mother.address.village)
+      await page.locator('#town').fill(declaration.mother.address.town)
+      await page
+        .locator('#residentialArea')
+        .fill(declaration.mother.address.residentialArea)
+      await page.locator('#street').fill(declaration.mother.address.street)
+      await page.locator('#number').fill(declaration.mother.address.number)
+      await page
+        .locator('#zipCode')
+        .fill(declaration.mother.address.postcodeOrZip)
 
       await page.locator('#mother____maritalStatus').click()
       await page
@@ -285,7 +293,6 @@ test.describe.serial('2. Birth declaration case - 2', () => {
       await page
         .getByText(declaration.father.address.district, { exact: true })
         .click()
-      await page.getByLabel(declaration.father.address.urbanOrRural).check()
       await page.locator('#town').fill(declaration.father.address.town)
       await page
         .locator('#residentialArea')

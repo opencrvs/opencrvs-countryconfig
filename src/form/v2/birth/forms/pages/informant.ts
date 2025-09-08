@@ -28,6 +28,7 @@ import {
   nationalIdValidator
 } from '@countryconfig/form/v2/birth/validators'
 import { IdType, idTypeOptions } from '../../../person'
+import { defaultStreetAddressConfiguration } from '@countryconfig/form/street-address-configuration'
 
 export const InformantType = {
   MOTHER: 'MOTHER',
@@ -400,12 +401,22 @@ export const informant = defineFormPage({
           conditional: informantOtherThanParent
         }
       ],
+      validation: [
+        {
+          message: {
+            defaultMessage: 'Invalid input',
+            description: 'Error message when generic field is invalid',
+            id: 'v2.error.invalidInput'
+          },
+          validator: field('informant.address').isValidAdministrativeLeafLevel()
+        }
+      ],
       defaultValue: {
         country: 'FAR',
-        addressType: AddressType.DOMESTIC,
-        province: '$user.province',
-        district: '$user.district',
-        urbanOrRural: 'URBAN'
+        addressType: AddressType.DOMESTIC
+      },
+      configuration: {
+        streetAddressForm: defaultStreetAddressConfiguration
       },
       parent: field('informant.relation')
     },

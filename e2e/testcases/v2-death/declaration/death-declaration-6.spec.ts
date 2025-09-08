@@ -59,8 +59,11 @@ test.describe.serial('6. Death declaration case - 6', () => {
         country: 'Farajaland',
         province: 'Chuminga',
         district: 'Nsali',
-        urbanOrRural: 'Rural',
-        village: faker.location.county()
+        town: faker.location.city(),
+        residentialArea: faker.location.county(),
+        street: faker.location.street(),
+        number: faker.location.buildingNumber(),
+        postcodeOrZip: faker.location.zipCode()
       }
     },
     informant: {
@@ -186,10 +189,21 @@ test.describe.serial('6. Death declaration case - 6', () => {
           exact: true
         })
         .click()
-      await page.locator('#urbanOrRural_RURAL').click()
       await page
-        .locator('#village')
-        .fill(declaration.eventDetails.deathLocationOther.village)
+        .locator('#town')
+        .fill(declaration.eventDetails.deathLocationOther.town)
+      await page
+        .locator('#residentialArea')
+        .fill(declaration.eventDetails.deathLocationOther.residentialArea)
+      await page
+        .locator('#street')
+        .fill(declaration.eventDetails.deathLocationOther.street)
+      await page
+        .locator('#number')
+        .fill(declaration.eventDetails.deathLocationOther.number)
+      await page
+        .locator('#zipCode')
+        .fill(declaration.eventDetails.deathLocationOther.postcodeOrZip)
 
       await continueForm(page)
     })
@@ -390,7 +404,11 @@ test.describe.serial('6. Death declaration case - 6', () => {
         declaration.eventDetails.deathLocationOther.country +
           declaration.eventDetails.deathLocationOther.province +
           declaration.eventDetails.deathLocationOther.district +
-          declaration.eventDetails.deathLocationOther.village
+          declaration.eventDetails.deathLocationOther.town +
+          declaration.eventDetails.deathLocationOther.residentialArea +
+          declaration.eventDetails.deathLocationOther.street +
+          declaration.eventDetails.deathLocationOther.number +
+          declaration.eventDetails.deathLocationOther.postcodeOrZip
       )
 
       /*
@@ -643,7 +661,11 @@ test.describe.serial('6. Death declaration case - 6', () => {
         declaration.eventDetails.deathLocationOther.country +
           declaration.eventDetails.deathLocationOther.province +
           declaration.eventDetails.deathLocationOther.district +
-          declaration.eventDetails.deathLocationOther.village
+          declaration.eventDetails.deathLocationOther.town +
+          declaration.eventDetails.deathLocationOther.residentialArea +
+          declaration.eventDetails.deathLocationOther.street +
+          declaration.eventDetails.deathLocationOther.number +
+          declaration.eventDetails.deathLocationOther.postcodeOrZip
       )
 
       /*

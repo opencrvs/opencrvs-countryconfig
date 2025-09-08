@@ -173,7 +173,6 @@ test.describe
           country: 'FAR',
           province: province,
           district: district,
-          urbanOrRural: 'URBAN',
           town: 'Dhaka'
         },
         'child.reason': 'Other', // needed for late dob value
@@ -211,8 +210,12 @@ test.describe
       await page.getByText('Residential address', { exact: true }).click()
 
       page.locator('#country').getByText('Farajaland')
-      page.locator('#province').getByText('Central')
-      page.locator('#district').getByText('Ibombo')
+
+      await page.locator('#province').click()
+      await page.getByText('Central', { exact: true }).click()
+
+      await page.locator('#district').click()
+      await page.getByText('Ibombo', { exact: true }).click()
 
       await page.locator('#town').fill('Dhaka')
       await page.locator('#town').blur()
@@ -227,7 +230,6 @@ test.describe
       if (address !== null) {
         const addressObject = JSON.parse(address)
         await expect(addressObject.country).toBe('FAR')
-        await expect(addressObject.urbanOrRural).toBe('URBAN')
         await expect(addressObject.town).toBe('Dhaka')
         await expect(addressObject.addressType).toBe('DOMESTIC')
         await expect(addressObject.province).toBeTruthy()
@@ -258,7 +260,6 @@ test.describe
       if (address !== null) {
         const addressObject = JSON.parse(address)
         await expect(addressObject.country).toBe('FAR')
-        await expect(addressObject.urbanOrRural).toBe('URBAN')
         await expect(addressObject.town).toBe('Dhaka')
         await expect(addressObject.addressType).toBe('DOMESTIC')
         await expect(addressObject.province).toBeTruthy()

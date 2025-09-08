@@ -65,9 +65,17 @@ test.describe
       await expect(page).toHaveURL(/.*\/search-result/)
       expect(page.url()).toContain(`child.dob=${yyyy}-${mm}-${dd}`)
       expect(page.url()).toContain(`child.gender=female`)
-      expect(page.url()).toContain(
-        `child.name=${encodeURIComponent(JSON.stringify({ firstname: record.declaration['child.name'].firstname, middlename: '', surname: record.declaration['child.name'].surname }))}`
-      )
+
+      const param = new URL(page.url()).searchParams.get('child.name')!
+      const decoded = decodeURIComponent(param)
+      const name = JSON.parse(decoded)
+
+      expect(name).toEqual({
+        firstname: record.declaration['child.name'].firstname,
+        surname: record.declaration['child.name'].surname,
+        middlename: ''
+      })
+
       await expect(page.getByText('Search Results')).toBeVisible()
 
       const searchResult = await page.locator('#content-name').textContent()
@@ -92,9 +100,17 @@ test.describe
       await expect(page).toHaveURL(/.*\/advanced-search/)
       expect(page.url()).toContain(`child.dob=${yyyy}-${mm}-${dd}`)
       expect(page.url()).toContain(`child.gender=female`)
-      expect(page.url()).toContain(
-        `child.name=${encodeURIComponent(JSON.stringify({ firstname: record.declaration['child.name'].firstname, surname: record.declaration['child.name'].surname, middlename: '' }))}`
-      )
+
+      const param = new URL(page.url()).searchParams.get('child.name')!
+      const decoded = decodeURIComponent(param)
+      const name = JSON.parse(decoded)
+
+      expect(name).toEqual({
+        firstname: record.declaration['child.name'].firstname,
+        surname: record.declaration['child.name'].surname,
+        middlename: ''
+      })
+
       await expect(page.locator('#tab_birth')).toHaveText('Birth')
 
       await expect(page.getByTestId('child____dob-dd')).toHaveValue(dd)

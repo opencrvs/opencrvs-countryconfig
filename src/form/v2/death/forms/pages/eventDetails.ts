@@ -23,6 +23,7 @@ import {
 
 import { createSelectOptions, emptyMessage } from '@countryconfig/form/v2/utils'
 import { applicationConfig } from '@countryconfig/api/application/application-config'
+import { defaultStreetAddressConfiguration } from '@countryconfig/form/street-address-configuration'
 
 export const MannerDeathType = {
   MANNER_NATURAL: 'MANNER_NATURAL',
@@ -317,12 +318,24 @@ export const eventDetails = defineFormPage({
           )
         }
       ],
+      validation: [
+        {
+          message: {
+            defaultMessage: 'Invalid input',
+            description: 'Error message when generic field is invalid',
+            id: 'v2.error.invalidInput'
+          },
+          validator: field(
+            'eventDetails.deathLocationOther'
+          ).isValidAdministrativeLeafLevel()
+        }
+      ],
       defaultValue: {
         country: 'FAR',
-        addressType: AddressType.DOMESTIC,
-        province: '$user.province',
-        district: '$user.district',
-        urbanOrRural: 'URBAN'
+        addressType: AddressType.DOMESTIC
+      },
+      configuration: {
+        streetAddressForm: defaultStreetAddressConfiguration
       }
     }
   ]

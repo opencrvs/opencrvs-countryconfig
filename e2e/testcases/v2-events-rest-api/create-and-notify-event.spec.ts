@@ -293,6 +293,7 @@ test.describe('Events REST API', () => {
       const createEventResponseBody = await createEventResponse.json()
       const eventId = createEventResponseBody.id
 
+      const fakeSurname = faker.person.lastName()
       const response = await fetchClientAPI(
         '/api/events/events/notifications',
         'POST',
@@ -303,7 +304,7 @@ test.describe('Events REST API', () => {
           type: 'NOTIFY',
           declaration: {
             'foo.bar': 'this should cause an error',
-            'child.name': { surname: faker.person.lastName() },
+            'child.name': { surname: fakeSurname },
             'child.dob': format(subDays(new Date(), 1), 'yyyy-MM-dd')
           },
           annotation: {}
@@ -313,7 +314,7 @@ test.describe('Events REST API', () => {
       expect(response.status).toBe(400)
       const body = await response.json()
       expect(body.message).toBe(
-        '[{"message":"Unexpected field","id":"foo.bar","value":"this should cause an error"},{"message":"Invalid input","id":"child.name","value":{}}]'
+        `[{"message":"Unexpected field","id":"foo.bar","value":"this should cause an error"},{"message":"Invalid input","id":"child.name","value":{"surname":"${fakeSurname}"}}]`
       )
     })
 
@@ -331,6 +332,8 @@ test.describe('Events REST API', () => {
       const createEventResponseBody = await createEventResponse.json()
       const eventId = createEventResponseBody.id
 
+      const fakeSurname = faker.person.lastName()
+
       const response = await fetchClientAPI(
         '/api/events/events/notifications',
         'POST',
@@ -340,7 +343,7 @@ test.describe('Events REST API', () => {
           transactionId: uuidv4(),
           type: 'NOTIFY',
           declaration: {
-            'child.name': { surname: faker.person.lastName() },
+            'child.name': { surname: fakeSurname },
             // this should cause an error because the date is in the future
             'child.dob': format(addDays(new Date(), 10), 'yyyy-MM-dd')
           },
@@ -351,7 +354,7 @@ test.describe('Events REST API', () => {
       expect(response.status).toBe(400)
       const body = await response.json()
       expect(body.message).toBe(
-        '[{"message":"Invalid input","id":"child.name","value":{}}]'
+        `[{"message":"Invalid input","id":"child.name","value":{"surname":"${fakeSurname}"}}]`
       )
     })
 

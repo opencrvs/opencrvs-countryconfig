@@ -70,7 +70,6 @@ test.describe.serial('3. Death declaration case - 3', () => {
         country: 'Farajaland',
         province: 'Chuminga',
         district: 'Nsali',
-        urbanOrRural: 'Urban',
         town: faker.location.city(),
         residentialArea: faker.location.county(),
         street: faker.location.street(),
@@ -92,8 +91,11 @@ test.describe.serial('3. Death declaration case - 3', () => {
         country: 'Farajaland',
         province: 'Chuminga',
         district: 'Nsali',
-        urbanOrRural: 'Rural',
-        village: faker.location.county()
+        town: faker.location.city(),
+        residentialArea: faker.location.county(),
+        street: faker.location.street(),
+        number: faker.location.buildingNumber(),
+        postcodeOrZip: faker.location.zipCode()
       }
     }
   }
@@ -284,8 +286,15 @@ test.describe.serial('3. Death declaration case - 3', () => {
       await page
         .getByText(declaration.spouse.address.district, { exact: true })
         .click()
-      await page.locator('#urbanOrRural_RURAL').click()
-      await page.locator('#village').fill(declaration.spouse.address.village)
+      await page.locator('#town').fill(declaration.spouse.address.town)
+      await page
+        .locator('#residentialArea')
+        .fill(declaration.spouse.address.residentialArea)
+      await page.locator('#street').fill(declaration.spouse.address.street)
+      await page.locator('#number').fill(declaration.spouse.address.number)
+      await page
+        .locator('#zipCode')
+        .fill(declaration.spouse.address.postcodeOrZip)
 
       await continueForm(page)
     })
@@ -579,7 +588,11 @@ test.describe.serial('3. Death declaration case - 3', () => {
         declaration.spouse.address.country +
           declaration.spouse.address.province +
           declaration.spouse.address.district +
-          declaration.spouse.address.village
+          declaration.spouse.address.town +
+          declaration.spouse.address.residentialArea +
+          declaration.spouse.address.street +
+          declaration.spouse.address.number +
+          declaration.spouse.address.postcodeOrZip
       )
     })
 
@@ -923,7 +936,11 @@ test.describe.serial('3. Death declaration case - 3', () => {
         declaration.spouse.address.country +
           declaration.spouse.address.province +
           declaration.spouse.address.district +
-          declaration.spouse.address.village
+          declaration.spouse.address.town +
+          declaration.spouse.address.residentialArea +
+          declaration.spouse.address.street +
+          declaration.spouse.address.number +
+          declaration.spouse.address.postcodeOrZip
       )
     })
   })

@@ -69,8 +69,11 @@ test.describe.serial('4. Death declaration case - 4', () => {
         country: 'Farajaland',
         province: 'Chuminga',
         district: 'Nsali',
-        urbanOrRural: 'Rural',
-        village: faker.location.county()
+        town: faker.location.city(),
+        residentialArea: faker.location.county(),
+        street: faker.location.street(),
+        number: faker.location.buildingNumber(),
+        postcodeOrZip: faker.location.zipCode()
       }
     },
     spouse: {
@@ -236,8 +239,15 @@ test.describe.serial('4. Death declaration case - 4', () => {
       await page
         .getByText(declaration.informant.address.district, { exact: true })
         .click()
-      await page.locator('#urbanOrRural_RURAL').click()
-      await page.locator('#village').fill(declaration.informant.address.village)
+      await page.locator('#town').fill(declaration.informant.address.town)
+      await page
+        .locator('#residentialArea')
+        .fill(declaration.informant.address.residentialArea)
+      await page.locator('#street').fill(declaration.informant.address.street)
+      await page.locator('#number').fill(declaration.informant.address.number)
+      await page
+        .locator('#zipCode')
+        .fill(declaration.informant.address.postcodeOrZip)
 
       await page
         .locator('#informant____email')
@@ -568,7 +578,11 @@ test.describe.serial('4. Death declaration case - 4', () => {
         declaration.informant.address.country +
           declaration.informant.address.province +
           declaration.informant.address.district +
-          declaration.informant.address.village
+          declaration.informant.address.town +
+          declaration.informant.address.residentialArea +
+          declaration.informant.address.street +
+          declaration.informant.address.number +
+          declaration.informant.address.postcodeOrZip
       )
 
       /*
@@ -896,7 +910,11 @@ test.describe.serial('4. Death declaration case - 4', () => {
         declaration.informant.address.country +
           declaration.informant.address.province +
           declaration.informant.address.district +
-          declaration.informant.address.village
+          declaration.informant.address.town +
+          declaration.informant.address.residentialArea +
+          declaration.informant.address.street +
+          declaration.informant.address.number +
+          declaration.informant.address.postcodeOrZip
       )
 
       /*

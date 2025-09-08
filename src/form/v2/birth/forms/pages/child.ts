@@ -29,6 +29,7 @@ import {
   invalidNameValidator,
   MAX_NAME_LENGTH
 } from '@countryconfig/form/v2/birth/validators'
+import { defaultStreetAddressConfiguration } from '@countryconfig/form/street-address-configuration'
 
 const GenderTypes = {
   MALE: 'male',
@@ -311,12 +312,24 @@ export const child = defineFormPage({
           )
         }
       ],
+      validation: [
+        {
+          message: {
+            defaultMessage: 'Invalid input',
+            description: 'Error message when generic field is invalid',
+            id: 'v2.error.invalidInput'
+          },
+          validator: field(
+            'child.address.privateHome'
+          ).isValidAdministrativeLeafLevel()
+        }
+      ],
       defaultValue: {
         country: 'FAR',
-        addressType: AddressType.DOMESTIC,
-        province: '$user.province',
-        district: '$user.district',
-        urbanOrRural: 'URBAN'
+        addressType: AddressType.DOMESTIC
+      },
+      configuration: {
+        streetAddressForm: defaultStreetAddressConfiguration
       }
     },
     {
@@ -335,12 +348,24 @@ export const child = defineFormPage({
           conditional: field('child.placeOfBirth').isEqualTo(PlaceOfBirth.OTHER)
         }
       ],
+      validation: [
+        {
+          message: {
+            defaultMessage: 'Invalid input',
+            description: 'Error message when generic field is invalid',
+            id: 'v2.error.invalidInput'
+          },
+          validator: field(
+            'child.address.other'
+          ).isValidAdministrativeLeafLevel()
+        }
+      ],
       defaultValue: {
         country: 'FAR',
-        addressType: AddressType.DOMESTIC,
-        province: '$user.province',
-        district: '$user.district',
-        urbanOrRural: 'URBAN'
+        addressType: AddressType.DOMESTIC
+      },
+      configuration: {
+        streetAddressForm: defaultStreetAddressConfiguration
       }
     },
     {

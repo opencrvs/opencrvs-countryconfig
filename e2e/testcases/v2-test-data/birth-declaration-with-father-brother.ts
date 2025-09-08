@@ -40,8 +40,7 @@ async function getPlaceOfBirth(type: 'PRIVATE_HOME' | 'HEALTH_FACILITY') {
         country: 'FAR',
         addressType: AddressType.DOMESTIC,
         province,
-        district,
-        urbanOrRural: 'URBAN' as const
+        district
       }
     }
   }
@@ -89,7 +88,6 @@ export async function getDeclaration({
       country: 'FAR',
       province,
       district,
-      urbanOrRural: 'URBAN' as const,
       addressType: AddressType.DOMESTIC
     },
     'father.name': {
@@ -105,7 +103,6 @@ export async function getDeclaration({
       country: 'FAR',
       province,
       district,
-      urbanOrRural: 'URBAN' as const,
       addressType: AddressType.DOMESTIC
     },
     'child.name': {
