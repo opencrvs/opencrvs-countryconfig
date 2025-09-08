@@ -20,7 +20,6 @@ on:
           - staging
           - qa
           - development
-          - v19-alpha-prod
           - pentest
 jobs:
   reset-data:

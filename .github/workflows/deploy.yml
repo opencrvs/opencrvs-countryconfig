@@ -39,7 +39,6 @@ on:
           - e2e
           - v17
           - staging
-          - v19-alpha-prod
           - pentest
       core-image-tag:
         description: Core image tag

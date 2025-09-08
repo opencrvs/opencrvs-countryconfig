@@ -31,7 +31,6 @@ on:
           - jump
           - e2e
           - v17
-          - v19-alpha-prod
           - pentest
       tag:
         type: choice
