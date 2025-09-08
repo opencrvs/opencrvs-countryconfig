@@ -16,7 +16,8 @@ import {
   defineFormPage,
   FieldType,
   never,
-  field
+  field,
+  user
 } from '@opencrvs/toolkit/events'
 import { or, not } from '@opencrvs/toolkit/conditionals'
 import { emptyMessage } from '@countryconfig/form/v2/utils'
@@ -34,6 +35,7 @@ import {
   yesNoRadioOptions,
   YesNoTypes
 } from '../../../person'
+import { defaultStreetAddressConfiguration } from '@countryconfig/form/street-address-configuration'
 
 export const requireFatherDetails = or(
   field('father.detailsNotAvailable').isFalsy(),
@@ -343,7 +345,8 @@ export const father = defineFormPage({
         id: 'v2.event.birth.action.declare.form.section.father.field.address.addressSameAs.label'
       },
       parent: field('mother.detailsNotAvailable'),
-      defaultValue: YesNoTypes.YES,
+      // Keep default address when mother details is updated
+      defaultValue: YesNoTypes.NO,
       conditionals: [
         {
           type: ConditionalType.SHOW,
@@ -380,12 +383,23 @@ export const father = defineFormPage({
           )
         }
       ],
+      validation: [
+        {
+          message: {
+            defaultMessage: 'Invalid input',
+            description: 'Error message when generic field is invalid',
+            id: 'v2.error.invalidInput'
+          },
+          validator: field('father.address').isValidAdministrativeLeafLevel()
+        }
+      ],
       defaultValue: {
         country: 'FAR',
         addressType: AddressType.DOMESTIC,
-        province: '$user.province',
-        district: '$user.district',
-        urbanOrRural: 'URBAN'
+        administrativeArea: user('primaryOfficeId').locationLevel('district')
+      },
+      configuration: {
+        streetAddressForm: defaultStreetAddressConfiguration
       }
     },
     {

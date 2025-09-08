@@ -16,7 +16,8 @@ import {
   defineFormPage,
   FieldType,
   PageTypes,
-  field
+  field,
+  user
 } from '@opencrvs/toolkit/events'
 import { or, not, never } from '@opencrvs/toolkit/conditionals'
 import { emptyMessage } from '@countryconfig/form/v2/utils'
@@ -31,6 +32,7 @@ import {
   educationalAttainmentOptions,
   maritalStatusOptions
 } from '../../../../common/select-options'
+import { defaultStreetAddressConfiguration } from '@countryconfig/form/street-address-configuration'
 
 export const requireMotherDetails = or(
   field('mother.detailsNotAvailable').isFalsy(),
@@ -346,12 +348,23 @@ export const mother = defineFormPage({
           conditional: requireMotherDetails
         }
       ],
+      validation: [
+        {
+          message: {
+            defaultMessage: 'Invalid input',
+            description: 'Error message when generic field is invalid',
+            id: 'v2.error.invalidInput'
+          },
+          validator: field('mother.address').isValidAdministrativeLeafLevel()
+        }
+      ],
       defaultValue: {
         country: 'FAR',
         addressType: AddressType.DOMESTIC,
-        province: '$user.province',
-        district: '$user.district',
-        urbanOrRural: 'URBAN'
+        administrativeArea: user('primaryOfficeId').locationLevel('district')
+      },
+      configuration: {
+        streetAddressForm: defaultStreetAddressConfiguration
       }
     },
     {
