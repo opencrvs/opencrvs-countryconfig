@@ -14,7 +14,6 @@ import {
   INFOBIP_SENDER_ID
 } from './constant'
 import { logger, maskSms } from '@countryconfig/logger'
-import fetch from 'node-fetch'
 import * as Handlebars from 'handlebars'
 import { internal } from '@hapi/boom'
 import { getLanguages } from '../content/service'

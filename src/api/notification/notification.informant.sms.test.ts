@@ -20,15 +20,11 @@ vi.mock(import('../application/application-config'), async (importOriginal) => {
   }
 })
 
-vi.mock('node-fetch', () => {
-  return {
-    default: vi.fn().mockResolvedValue({
-      ok: true,
-      status: 200,
-      json: async () => ({}),
-      text: async () => 'mock-public-key'
-    })
-  }
+global.fetch = vi.fn().mockResolvedValue({
+  ok: true,
+  status: 200,
+  json: async () => ({}),
+  text: async () => 'mock-public-key'
 })
 
 vi.mock('@opencrvs/toolkit/api', () => ({
@@ -54,7 +50,6 @@ vi.mock('nanoid', () => {
   }
 })
 
-import fetch from 'node-fetch'
 import { informantNotificationTestData } from './testData'
 import { createServer } from '../../index'
 

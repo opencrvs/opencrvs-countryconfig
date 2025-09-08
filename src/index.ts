@@ -11,7 +11,6 @@
 require('app-module-path').addPath(require('path').join(__dirname))
 require('dotenv').config()
 
-import fetch from 'node-fetch'
 import path from 'path'
 import Handlebars from 'handlebars'
 import * as Hapi from '@hapi/hapi'
@@ -132,7 +131,7 @@ export const verifyToken = async (token: string, authUrl: string) => {
     }
   })
 
-  const body = await res.json()
+  const body = (await res.json()) as { valid: boolean }
 
   if (body.valid === true) {
     return true

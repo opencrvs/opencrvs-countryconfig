@@ -10,7 +10,6 @@
  */
 import { GATEWAY_URL } from '@countryconfig/constants'
 import { URL } from 'url'
-import fetch from 'node-fetch'
 
 const GRAPHQL_GATEWAY_URL = new URL('graphql', GATEWAY_URL)
 

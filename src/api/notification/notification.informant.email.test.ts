@@ -1,13 +1,9 @@
 import { vi, describe, it, expect, beforeEach } from 'vitest'
 
-vi.mock('node-fetch', () => {
-  return {
-    default: vi.fn().mockResolvedValue({
-      ok: true,
-      status: 200,
-      text: async () => 'mock-public-key'
-    })
-  }
+global.fetch = vi.fn().mockResolvedValue({
+  ok: true,
+  status: 200,
+  text: async () => 'mock-public-key'
 })
 
 vi.mock('@opencrvs/toolkit/api', () => ({

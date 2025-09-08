@@ -20,18 +20,13 @@ vi.mock(import('../application/application-config'), async (importOriginal) => {
   }
 })
 
-vi.mock('node-fetch', () => {
-  return {
-    default: vi.fn().mockResolvedValue({
-      ok: true,
-      status: 200,
-      json: async () => ({}),
-      text: async () => 'mock-public-key'
-    })
-  }
+global.fetch = vi.fn().mockResolvedValue({
+  ok: true,
+  status: 200,
+  json: async () => ({}),
+  text: async () => 'mock-public-key'
 })
 
-import fetch from 'node-fetch'
 import { userNotificationTestData } from './testData'
 import { createServer } from '../../index'
 
