@@ -99,8 +99,7 @@ test.describe.serial(' Correct record - 4', () => {
           country: 'FAR',
           addressType: 'DOMESTIC',
           province: 'Central',
-          district: 'Ibombo',
-          urbanOrRural: 'URBAN'
+          district: 'Ibombo'
         },
         'child.attendantAtBirth': 'PHYSICIAN',
         'child.birthType': 'SINGLE',
@@ -123,8 +122,7 @@ test.describe.serial(' Correct record - 4', () => {
           country: 'FAR',
           addressType: 'DOMESTIC',
           province: 'Central',
-          district: 'Ibombo',
-          urbanOrRural: 'URBAN'
+          district: 'Ibombo'
         },
         'father.name': {
           firstname: faker.person.firstName('male'),

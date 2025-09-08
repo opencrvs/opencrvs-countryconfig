@@ -201,6 +201,24 @@ test.describe.serial('Correct record - 2', () => {
         .getByText('Farajaland', { exact: true })
         .click()
 
+      await page
+        .locator('#child____address____privateHome-form-input #province')
+        .click()
+      await page
+        .getByText('Central', {
+          exact: true
+        })
+        .click()
+
+      await page
+        .locator('#child____address____privateHome-form-input #district')
+        .click()
+      await page
+        .getByText('Ibombo', {
+          exact: true
+        })
+        .click()
+
       await page.getByTestId('text__town').fill(faker.location.city())
       await page.getByTestId('text__street').fill(faker.location.street())
 

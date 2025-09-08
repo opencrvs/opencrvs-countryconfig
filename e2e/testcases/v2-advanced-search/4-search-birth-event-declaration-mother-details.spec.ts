@@ -86,9 +86,16 @@ test.describe
       await page.getByRole('button', { name: 'Edit' }).click()
       await expect(page).toHaveURL(/.*\/advanced-search/)
       expect(page.url()).toContain(`mother.dob=${yyyy}-${mm}-${dd}`)
-      expect(page.url()).toContain(
-        `mother.name=${encodeURIComponent(JSON.stringify({ firstname: record.declaration['mother.name'].firstname, surname: record.declaration['mother.name'].surname, middlename: '' }))}`
-      )
+
+      const param = new URL(page.url()).searchParams.get('mother.name')!
+      const decoded = decodeURIComponent(param)
+      const name = JSON.parse(decoded)
+
+      expect(name).toEqual({
+        firstname: record.declaration['mother.name'].firstname,
+        surname: record.declaration['mother.name'].surname,
+        middlename: ''
+      })
       await expect(page.locator('#tab_birth')).toHaveText('Birth')
       await expect(page.getByTestId('mother____dob-dd')).toHaveValue(dd)
       await expect(page.getByTestId('mother____dob-mm')).toHaveValue(mm)

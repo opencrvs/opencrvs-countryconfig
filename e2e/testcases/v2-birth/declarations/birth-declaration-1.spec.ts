@@ -55,7 +55,6 @@ test.describe.serial('1. Birth declaration case - 1', () => {
         country: 'Farajaland',
         province: 'Sulaka',
         district: 'Irundu',
-        urbanOrRural: 'Urban',
         town: faker.location.city(),
         residentialArea: faker.location.county(),
         street: faker.location.street(),

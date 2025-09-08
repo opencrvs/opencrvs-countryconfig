@@ -31,8 +31,11 @@ test.describe.serial('5. Birth declaration case - 5', () => {
       country: 'Farajaland',
       province: 'Pualula',
       district: 'Funabuli',
-      urbanOrRural: 'Rural',
-      village: faker.location.county()
+      town: faker.location.city(),
+      residentialArea: faker.location.county(),
+      street: faker.location.street(),
+      number: faker.location.buildingNumber(),
+      postcodeOrZip: faker.location.zipCode()
     },
     informantType: 'Brother',
     informantEmail: faker.internet.email(),
@@ -136,9 +139,15 @@ test.describe.serial('5. Birth declaration case - 5', () => {
         })
         .click()
 
-      await page.getByLabel(declaration.birthLocation.urbanOrRural).check()
-
-      await page.locator('#village').fill(declaration.birthLocation.village)
+      await page.locator('#town').fill(declaration.birthLocation.town)
+      await page
+        .locator('#residentialArea')
+        .fill(declaration.birthLocation.residentialArea)
+      await page.locator('#street').fill(declaration.birthLocation.street)
+      await page.locator('#number').fill(declaration.birthLocation.number)
+      await page
+        .locator('#zipCode')
+        .fill(declaration.birthLocation.postcodeOrZip)
 
       await page.locator('#child____attendantAtBirth').click()
       await page

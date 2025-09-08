@@ -32,7 +32,6 @@ test.describe.serial('4. Birth declaration case - 4', () => {
       country: 'Farajaland',
       province: 'Pualula',
       district: 'Funabuli',
-      urbanOrRural: 'Urban',
       town: faker.location.city(),
       residentialArea: faker.location.county(),
       street: faker.location.street(),
@@ -56,8 +55,11 @@ test.describe.serial('4. Birth declaration case - 4', () => {
         country: 'Farajaland',
         province: 'Chuminga',
         district: 'Ama',
-        urbanOrRural: 'Rural',
-        village: faker.location.county()
+        town: faker.location.city(),
+        residentialArea: faker.location.county(),
+        street: faker.location.street(),
+        number: faker.location.buildingNumber(),
+        postcodeOrZip: faker.location.zipCode()
       }
     },
     mother: {
@@ -236,9 +238,17 @@ test.describe.serial('4. Birth declaration case - 4', () => {
       await page
         .getByText(declaration.informant.address.district, { exact: true })
         .click()
-      await page.getByLabel(declaration.informant.address.urbanOrRural).check()
 
-      await page.locator('#village').fill(declaration.informant.address.village)
+      await page.locator('#town').fill(declaration.informant.address.town)
+      await page
+        .locator('#residentialArea')
+        .fill(declaration.informant.address.residentialArea)
+      await page.locator('#street').fill(declaration.informant.address.street)
+      await page.locator('#number').fill(declaration.informant.address.number)
+      await page
+        .locator('#zipCode')
+        .fill(declaration.informant.address.postcodeOrZip)
+
       await continueForm(page)
     })
 

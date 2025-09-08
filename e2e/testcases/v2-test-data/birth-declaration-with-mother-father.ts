@@ -65,8 +65,7 @@ async function getPlaceOfBirth(type: 'PRIVATE_HOME' | 'HEALTH_FACILITY') {
         country: 'FAR',
         addressType: AddressType.DOMESTIC,
         province,
-        district,
-        urbanOrRural: 'URBAN' as const
+        district
       }
     }
   }
@@ -80,7 +79,7 @@ export async function getDeclaration({
   placeOfBirthType = 'PRIVATE_HOME'
 }: {
   informantRelation?: InformantRelation
-  partialDeclaration?: Record<string, any>
+  partialDeclaration?: any
   placeOfBirthType?: 'PRIVATE_HOME' | 'HEALTH_FACILITY'
 }) {
   const locations = await getAllLocations('ADMIN_STRUCTURE')
@@ -113,8 +112,7 @@ export async function getDeclaration({
     'mother.address': {
       country: 'FAR',
       province,
-      district,
-      urbanOrRural: 'URBAN' as const,
+      administrativeArea: district,
       town: null,
       residentialArea: null,
       street: null,

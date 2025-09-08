@@ -12,7 +12,7 @@ import {
   uploadImageToSection
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
-import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../../constants'
+import { CREDENTIALS } from '../../../constants'
 import { fillDate, validateAddress } from '../helpers'
 import { ensureOutboxIsEmpty, selectAction } from '../../../v2-utils'
 
@@ -34,8 +34,11 @@ test.describe.serial('3. Birth declaration case - 3', () => {
       country: 'Farajaland',
       province: 'Pualula',
       district: 'Funabuli',
-      urbanOrRural: 'Rural',
-      village: faker.location.county()
+      town: faker.location.city(),
+      residentialArea: faker.location.county(),
+      street: faker.location.street(),
+      number: faker.location.buildingNumber(),
+      postcodeOrZip: faker.location.zipCode()
     },
     informantType: 'Grandfather',
     informantEmail: faker.internet.email(),
@@ -54,7 +57,6 @@ test.describe.serial('3. Birth declaration case - 3', () => {
         country: 'Farajaland',
         province: 'Chuminga',
         district: 'Ama',
-        urbanOrRural: 'Urban',
         town: faker.location.city(),
         residentialArea: faker.location.county(),
         street: faker.location.street(),
@@ -104,8 +106,11 @@ test.describe.serial('3. Birth declaration case - 3', () => {
         country: 'Farajaland',
         province: 'Chuminga',
         district: 'Nsali',
-        urbanOrRural: 'Rural',
-        village: faker.location.county()
+        town: faker.location.city(),
+        residentialArea: faker.location.county(),
+        street: faker.location.street(),
+        number: faker.location.buildingNumber(),
+        postcodeOrZip: faker.location.zipCode()
       }
     }
   }
@@ -159,8 +164,15 @@ test.describe.serial('3. Birth declaration case - 3', () => {
           exact: true
         })
         .click()
-      await page.getByLabel(declaration.birthLocation.urbanOrRural).check()
-      await page.locator('#village').fill(declaration.birthLocation.village)
+      await page.locator('#town').fill(declaration.birthLocation.town)
+      await page
+        .locator('#residentialArea')
+        .fill(declaration.birthLocation.residentialArea)
+      await page.locator('#street').fill(declaration.birthLocation.street)
+      await page.locator('#number').fill(declaration.birthLocation.number)
+      await page
+        .locator('#zipCode')
+        .fill(declaration.birthLocation.postcodeOrZip)
 
       await page.locator('#child____attendantAtBirth').click()
       await page
@@ -324,8 +336,15 @@ test.describe.serial('3. Birth declaration case - 3', () => {
       await page
         .getByText(declaration.father.address.district, { exact: true })
         .click()
-      await page.getByLabel(declaration.father.address.urbanOrRural).check()
-      await page.locator('#village').fill(declaration.father.address.village)
+      await page.locator('#town').fill(declaration.father.address.town)
+      await page
+        .locator('#residentialArea')
+        .fill(declaration.father.address.residentialArea)
+      await page.locator('#street').fill(declaration.father.address.street)
+      await page.locator('#number').fill(declaration.father.address.number)
+      await page
+        .locator('#zipCode')
+        .fill(declaration.father.address.postcodeOrZip)
 
       await page.locator('#father____maritalStatus').click()
       await page

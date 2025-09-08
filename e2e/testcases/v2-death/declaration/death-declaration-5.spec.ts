@@ -54,7 +54,6 @@ test.describe.serial('5. Death declaration case - 5', () => {
         country: 'Farajaland',
         province: 'Chuminga',
         district: 'Nsali',
-        urbanOrRural: 'Urban',
         town: faker.location.city(),
         residentialArea: faker.location.county(),
         street: faker.location.street(),

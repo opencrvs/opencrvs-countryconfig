@@ -48,8 +48,7 @@ test.describe.serial('4. Workqueue flow - 4', () => {
       address: {
         country: 'Farajaland',
         province: 'Sulaka',
-        district: 'Irundu',
-        urbanOrRural: 'Urban'
+        district: 'Irundu'
       }
     },
     father: {

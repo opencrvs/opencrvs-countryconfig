@@ -31,6 +31,7 @@ import {
   educationalAttainmentOptions,
   maritalStatusOptions
 } from '../../../../common/select-options'
+import { defaultStreetAddressConfiguration } from '@countryconfig/form/street-address-configuration'
 
 export const requireMotherDetails = or(
   field('mother.detailsNotAvailable').isFalsy(),
@@ -346,12 +347,22 @@ export const mother = defineFormPage({
           conditional: requireMotherDetails
         }
       ],
+      validation: [
+        {
+          message: {
+            defaultMessage: 'Invalid input',
+            description: 'Error message when generic field is invalid',
+            id: 'v2.error.invalidInput'
+          },
+          validator: field('mother.address').isValidAdministrativeLeafLevel()
+        }
+      ],
       defaultValue: {
         country: 'FAR',
-        addressType: AddressType.DOMESTIC,
-        province: '$user.province',
-        district: '$user.district',
-        urbanOrRural: 'URBAN'
+        addressType: AddressType.DOMESTIC
+      },
+      configuration: {
+        streetAddressForm: defaultStreetAddressConfiguration
       }
     },
     {

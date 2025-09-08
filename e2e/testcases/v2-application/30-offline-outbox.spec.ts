@@ -53,7 +53,6 @@ test.describe
         country: 'Farajaland',
         province: 'Sulaka',
         district: 'Irundu',
-        urbanOrRural: 'Urban',
         town: faker.location.city(),
         residentialArea: faker.location.county(),
         street: faker.location.street(),

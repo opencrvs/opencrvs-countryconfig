@@ -52,9 +52,15 @@ test.describe
       await page.click('#search')
       await expect(page).toHaveURL(/.*\/search-result/)
       expect(page.url()).toContain(`informant.dob=${yyyy}-${mm}-${dd}`)
-      expect(page.url()).toContain(
-        `informant.name=${encodeURIComponent(JSON.stringify({ firstname: record.declaration['informant.name'].firstname, middlename: '', surname: record.declaration['informant.name'].surname }))}`
-      )
+      const param = new URL(page.url()).searchParams.get('informant.name')!
+      const decoded = decodeURIComponent(param)
+      const name = JSON.parse(decoded)
+
+      expect(name).toEqual({
+        firstname: record.declaration['informant.name'].firstname,
+        surname: record.declaration['informant.name'].surname,
+        middlename: ''
+      })
       await expect(page.getByText('Search results')).toBeVisible()
 
       const searchResult = await page.locator('#content-name').textContent()
@@ -76,9 +82,17 @@ test.describe
       await page.getByRole('button', { name: 'Edit' }).click()
       await expect(page).toHaveURL(/.*\/advanced-search/)
       expect(page.url()).toContain(`informant.dob=${yyyy}-${mm}-${dd}`)
-      expect(page.url()).toContain(
-        `informant.name=${encodeURIComponent(JSON.stringify({ firstname: record.declaration['informant.name'].firstname, surname: record.declaration['informant.name'].surname, middlename: '' }))}`
-      )
+
+      const param = new URL(page.url()).searchParams.get('informant.name')!
+      const decoded = decodeURIComponent(param)
+      const name = JSON.parse(decoded)
+
+      expect(name).toEqual({
+        firstname: record.declaration['informant.name'].firstname,
+        surname: record.declaration['informant.name'].surname,
+        middlename: ''
+      })
+
       await expect(page.locator('#tab_birth')).toHaveText('Birth')
       await expect(page.getByTestId('informant____dob-dd')).toHaveValue(dd)
       await expect(page.getByTestId('informant____dob-mm')).toHaveValue(mm)
