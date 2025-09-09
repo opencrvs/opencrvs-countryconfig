@@ -14,13 +14,10 @@ const similarNamedChild = field('child.name').fuzzyMatches()
 const childDobWithin5Days = field('child.dob').dateRangeMatches({ days: 5 })
 const similarNamedMother = field('mother.name').fuzzyMatches()
 const similarAgedMother = field('mother.dob').dateRangeMatches({ days: 365 })
-const sameMotherNid = field('mother.nid').strictMatches()
-const sameMotherPassport = field('mother.passport').strictMatches()
-const sameMotherBrn = field('mother.brn').strictMatches()
 const sameMotherIdentifier = or(
-  sameMotherNid,
-  sameMotherPassport,
-  sameMotherBrn
+  field('mother.nid').strictMatches(),
+  field('mother.passport').strictMatches(),
+  field('mother.brn').strictMatches()
 )
 const childDobWithin9Months = field('child.dob').dateRangeMatches({
   days: 270
