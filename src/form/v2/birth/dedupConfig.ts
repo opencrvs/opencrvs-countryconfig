@@ -15,6 +15,13 @@ const childDobWithin5Days = field('child.dob').dateRangeMatches({ days: 5 })
 const similarNamedMother = field('mother.name').fuzzyMatches()
 const similarAgedMother = field('mother.dob').dateRangeMatches({ days: 365 })
 const sameMotherNid = field('mother.nid').strictMatches()
+const sameMotherPassport = field('mother.passport').strictMatches()
+const sameMotherBrn = field('mother.brn').strictMatches()
+const sameMotherIdentifier = or(
+  sameMotherNid,
+  sameMotherPassport,
+  sameMotherBrn
+)
 const childDobWithin9Months = field('child.dob').dateRangeMatches({
   days: 270
 })
@@ -29,12 +36,12 @@ export const dedupConfig = or(
     childDobWithin5Days,
     similarNamedMother,
     similarAgedMother,
-    sameMotherNid
+    sameMotherIdentifier
   ),
   and(
     similarNamedMother,
     similarAgedMother,
-    sameMotherNid,
+    sameMotherIdentifier,
     childDobWithin9Months
   ),
   and(
@@ -42,6 +49,6 @@ export const dedupConfig = or(
     childDobWithin3Years,
     similarNamedMother,
     similarAgedMother,
-    sameMotherNid
+    sameMotherIdentifier
   )
 )
