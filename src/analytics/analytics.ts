@@ -9,6 +9,7 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
+import { applicationConfig } from '@countryconfig/api/application/application-config'
 import { tennisClubMembershipEvent } from '@countryconfig/form/tennis-club-membership'
 import { Event } from '@countryconfig/form/types/types'
 import { birthEvent } from '@countryconfig/form/v2/birth'
@@ -26,8 +27,9 @@ import {
   getCurrentEventState
 } from '@opencrvs/toolkit/events'
 import { differenceInDays } from 'date-fns'
-import { Kysely } from 'kysely'
+import { ExpressionBuilder, Kysely, sql } from 'kysely'
 import { pickBy } from 'lodash'
+import { getClient } from './postgres'
 
 /**
  * You can control which events you want to track in analytics by adding them here.
@@ -230,4 +232,31 @@ export async function importEvents(events: EventDocument[], trx: Kysely<any>) {
   for (const event of events) {
     await importEvent(event, trx)
   }
+}
+
+export async function syncLocationLevels() {
+  const adminLevels = applicationConfig.ADMIN_STRUCTURE
+  const client = getClient()
+  await client.transaction().execute(async (trx) => {
+    return trx
+      .insertInto('analytics.location_levels')
+      .values(
+        adminLevels.map((level, index) => ({
+          id: level.id,
+          level: index + 1,
+          name: level.label.defaultMessage
+        }))
+      )
+      .onConflict((oc) =>
+        oc
+          .column('id')
+          .doUpdateSet(
+            (eb: ExpressionBuilder<any, 'analytics.location_levels'>) => ({
+              name: eb.ref('excluded.name'),
+              level: eb.ref('excluded.level')
+            })
+          )
+      )
+      .execute()
+  })
 }

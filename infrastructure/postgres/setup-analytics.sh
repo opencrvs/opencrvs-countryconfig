@@ -78,6 +78,12 @@ CREATE TABLE IF NOT EXISTS analytics.event_actions (
   UNIQUE (id, event_id)
 );
 
+CREATE TABLE IF NOT EXISTS analytics.location_levels (
+  id text PRIMARY KEY,
+  level int NOT NULL,
+  name text NOT NULL
+);
+
 GRANT USAGE ON SCHEMA analytics TO events_analytics;
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA analytics TO events_analytics;
