@@ -2,6 +2,13 @@ import { defineConfig, devices } from '@playwright/test'
 
 const TEST_TIMEOUT = 90000
 
+
+const subdomains = ['register', ]; // TODO: Add more subdomains if needed
+const insecureOrigins = subdomains.map(subdomain => 
+  `--unsafely-treat-insecure-origin-as-secure=https://${subdomain}.${process.env.DOMAIN}`
+);
+
+const ignoreHTTPSErrors = process.env.CI ? true : false
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -37,15 +44,27 @@ export default defineConfig({
     trace: 'on',
     // Ignore HTTPS errors (like untrusted or self-signed certificates) during Playwright tests on CI
     // This is useful for Let's Encrypt staging certificates that aren't publicly trusted.
-    ignoreHTTPSErrors: process.env.CI ? true : false
+    ignoreHTTPSErrors
   },
 
   /* Configure projects for major browsers */
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] }
-    }
+      use: {
+        ...devices['Desktop Chrome'],
+        ignoreHTTPSErrors,
+        launchOptions: {
+          args: process.env.CI ? [
+            '--ignore-certificate-errors',
+            '--ignore-ssl-errors',
+            '--allow-running-insecure-content',
+            '--disable-web-security',
+            ...insecureOrigins,
+          ] : [],
+        },
+      },
+    },
 
     // {
     //   name: 'firefox',
