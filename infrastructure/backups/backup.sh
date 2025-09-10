@@ -202,22 +202,22 @@ done
 
 echo "Backing up PostgreSQL 'events' database"
 docker run --rm \
-  -e PGPASSWORD=$POSTGRES_PASSWORD \
+  -e PGPASSWORD=$ANALYTICS_POSTGRES_PASSWORD \
   -v $ROOT_PATH/backups/postgres:/backups \
   --network=$NETWORK \
   postgres:17 \
-  bash -c "pg_dump -h postgres -U $POSTGRES_USER -d events -F c -f /backups/events-${LABEL:-$BACKUP_DATE}.dump"
+  bash -c "pg_dump -h postgres -U $ANALYTICS_POSTGRES_USER -d events -F c -f /backups/events-${LABEL:-$BACKUP_DATE}.dump"
 
 # Backup PostgreSQL
 # -----------------
 
 echo "Backing up PostgreSQL 'events' database"
 docker run --rm \
-  -e PGPASSWORD=$POSTGRES_PASSWORD \
+  -e PGPASSWORD=$ANALYTICS_POSTGRES_PASSWORD \
   -v $ROOT_PATH/backups/postgres:/backups \
   --network=$NETWORK \
   postgres:17 \
-  bash -c "pg_dump -h postgres -U $POSTGRES_USER -d events -F c -f /backups/events-${LABEL:-$BACKUP_DATE}.dump"
+  bash -c "pg_dump -h postgres -U $ANALYTICS_POSTGRES_USER -d events -F c -f /backups/events-${LABEL:-$BACKUP_DATE}.dump"
 
 #-------------------------------------------------------------------------------------
 
