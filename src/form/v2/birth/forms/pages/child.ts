@@ -383,6 +383,7 @@ export const child = defineFormPage({
     {
       id: 'child.attendantAtBirth',
       type: FieldType.SELECT,
+      analytics: true,
       required: false,
       label: {
         defaultMessage: 'Attendant at birth',
