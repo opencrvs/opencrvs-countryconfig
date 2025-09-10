@@ -8,6 +8,7 @@ set -euo pipefail
 : "${POSTGRES_PASSWORD:?Must set POSTGRES_PASSWORD}"
 : "${EVENTS_MIGRATOR_POSTGRES_PASSWORD:?Must set EVENTS_MIGRATOR_POSTGRES_PASSWORD}"
 : "${EVENTS_APP_POSTGRES_PASSWORD:?Must set EVENTS_APP_POSTGRES_PASSWORD}"
+: "${KEEP_ALIVE_SECONDS:=0}" # Prevent Swarm from marking this task as failed due to early exit
 
 TARGET_DB="events"
 
@@ -17,8 +18,7 @@ until PGPASSWORD="$POSTGRES_PASSWORD" psql -h "$POSTGRES_HOST" -p "$POSTGRES_POR
   sleep 2
 done
 
-# Prevent Swarm from marking this task as failed due to early exit
-sleep 10
+sleep "$KEEP_ALIVE_SECONDS"
 
 echo "Checking if database '$TARGET_DB' exists..."
 DB_EXISTS=$(PGPASSWORD="$POSTGRES_PASSWORD" psql -qtAX -h "$POSTGRES_HOST" -p "$POSTGRES_PORT" \

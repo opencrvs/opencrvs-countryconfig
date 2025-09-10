@@ -538,7 +538,7 @@ services:
     deploy:
       labels:
         - 'traefik.enable=true'
-        - 'traefik.http.routers.countryconfig.rule=(Host(`countryconfig.{{hostname}}`) || Host(`registry.{{hostname}}`)) && !Path(`/email`) && !Path(`/notification`) && !Path(`/dashboards/queries.json`)'
+        - 'traefik.http.routers.countryconfig.rule=(Host(`countryconfig.{{hostname}}`)|| Host(`registry.{{hostname}}`)) && !Path(`/reindex`) && !Path(`/email`) && !Path(`/notification`) && !Path(`/dashboards/queries.json`)'
         - 'traefik.http.services.countryconfig.loadbalancer.server.port=3040'
         - 'traefik.http.routers.countryconfig.tls=true'
         - 'traefik.http.routers.countryconfig.tls.certresolver=certResolver'
@@ -556,6 +556,8 @@ services:
         - 'traefik.http.middlewares.block-internal-routes.ipwhitelist.sourcerange=255.255.255.255'
         - 'traefik.http.routers.block-email.rule=Host(`countryconfig.{{hostname}}`) && Path(`/email`)'
         - 'traefik.http.routers.block-email.middlewares=block-internal-routes'
+        - 'traefik.http.routers.block-reindex.rule=Host(`countryconfig.{{hostname}}`) && Path(`/reindex`)'
+        - 'traefik.http.routers.block-reindex.middlewares=block-internal-routes'
         - 'traefik.http.routers.block-notification.rule=Host(`countryconfig.{{hostname}}`) && Path(`/notification`)'
         - 'traefik.http.routers.block-notification.middlewares=block-internal-routes'
         - 'traefik.http.routers.block-dashboard-queries.rule=Host(`countryconfig.{{hostname}}`) && Path(`/dashboards/queries.json`)'
@@ -592,6 +594,7 @@ services:
       - MOSIP_API_USERINFO_URL=https://mosip-api.{{hostname}}/esignet/get-oidp-user-info
       - OPENID_PROVIDER_CLAIMS=name,family_name,given_name,middle_name,birthdate,address
       - OPENID_PROVIDER_CLIENT_ID=mock-client_id
+      - ANALYTICS_DATABASE_URL=postgres://events_analytics:${EVENTS_ANALYTICS_POSTGRES_PASSWORD}@postgres/events
     networks:
       - overlay_net
     logging:
@@ -995,10 +998,12 @@ services:
 
   postgres-on-update:
     image: postgres:17.6
-    command: bash /on-deploy.sh
+    command: ["bash", "-c", "bash /on-deploy.sh && bash /setup-analytics.sh"]
     configs:
       - source: postgres-on-deploy.{{ts}}
         target: /on-deploy.sh
+      - source: postgres-analytics-on-deploy.{{ts}}
+        target: /setup-analytics.sh
     deploy:
       labels:
         - traefik.enable=false
@@ -1012,6 +1017,8 @@ services:
       - POSTGRES_PORT=5432
       - EVENTS_APP_POSTGRES_PASSWORD=${EVENTS_APP_POSTGRES_PASSWORD}
       - EVENTS_MIGRATOR_POSTGRES_PASSWORD=${EVENTS_MIGRATOR_POSTGRES_PASSWORD}
+      - EVENTS_ANALYTICS_POSTGRES_PASSWORD=${EVENTS_ANALYTICS_POSTGRES_PASSWORD}
+      - KEEP_ALIVE_SECONDS=10
     networks:
       - overlay_net
 
@@ -1051,18 +1058,26 @@ services:
         tag: 'webhooks'
 
   dashboards:
+    image: metabase/metabase:v0.56.4
     volumes:
       # Exceed Docker config file 500 kb file limit, thus a volume mount
       - /opt/opencrvs/infrastructure/metabase/metabase.init.db.sql:/metabase.init.db.sql
+      - /opt/opencrvs/infrastructure/metabase/run.sh:/run.sh
+      - /opt/opencrvs/infrastructure/metabase/initialize-database.sh:/initialize-database.sh
+      - /opt/opencrvs/infrastructure/metabase/update-database.sh:/update-database.sh
+      - /opt/opencrvs/infrastructure/metabase/environment-configuration.sql:/environment-configuration.sql
+    entrypoint: ["/bin/sh", "/run.sh"]
     networks:
       - overlay_net
     environment:
-      # Note that only mongo1 is used here on purpose for all environments
-      # https://discourse.metabase.com/t/solved-add-mongodb-replicaset-database/7404/2
-      - OPENCRVS_METABASE_DB_HOST=mongo1
-      - OPENCRVS_METABASE_DB_USER=performance
-      - OPENCRVS_METABASE_DB_PASS=${PERFORMANCE_MONGODB_PASSWORD}
-      - OPENCRVS_METABASE_DB_AUTH_DB=performance
+      # Database credentials for PostgreSQL connection
+      - METABASE_DATABASE_SSL=${METABASE_DATABASE_SSL:-false}
+      - METABASE_DATABASE_HOST=${METABASE_DATABASE_HOST:-postgres}
+      - METABASE_DATABASE_PORT=${METABASE_DATABASE_PORT:-5432}
+      - METABASE_DATABASE_NAME=${METABASE_DATABASE_NAME:-events}
+      - METABASE_DATABASE_USER=${METABASE_DATABASE_USER:-events_analytics}
+      - METABASE_DATABASE_PASSWORD=${EVENTS_ANALYTICS_POSTGRES_PASSWORD}
+
       - OPENCRVS_METABASE_SITE_NAME=OpenCRVS Dashboards
       - OPENCRVS_METABASE_SITE_URL=http://metabase.{{hostname}}
       - OPENCRVS_METABASE_MAP_NAME=Farajaland
@@ -1071,6 +1086,11 @@ services:
       - OPENCRVS_METABASE_MAP_REGION_NAME=State
       - OPENCRVS_METABASE_ADMIN_EMAIL=${OPENCRVS_METABASE_ADMIN_EMAIL}
       - OPENCRVS_METABASE_ADMIN_PASSWORD=${OPENCRVS_METABASE_ADMIN_PASSWORD}
+      - METABASE_JAR=/app/metabase.jar
+      - MB_DB_INIT_SQL_FILE=/metabase.init.db.sql
+      - MB_DB_FILE=/data/metabase/metabase.mv.db
+      - OPENCRVS_ENVIRONMENT_CONFIGURATION_SQL_FILE=/environment-configuration.sql
+
     deploy:
       labels:
         - 'traefik.enable=true'
@@ -1094,7 +1114,7 @@ services:
   mosip-api:
     volumes:
       - /data/sqlite:/data/sqlite
-      - /certs:/certs:ro 
+      - /certs:/certs:ro
     image: ghcr.io/opencrvs/mosip-api:1.8.0
     environment:
       - NODE_ENV=production
@@ -1186,7 +1206,7 @@ services:
   esignet-mock:
     image: ghcr.io/opencrvs/esignet-mock:1.8.0-beta.18
     volumes:
-      - /certs:/certs:ro 
+      - /certs:/certs:ro
     environment:
       - NODE_ENV=production
       - CLIENT_APP_URL=https://register.{{hostname}}
@@ -1235,6 +1255,8 @@ configs:
     file: /opt/opencrvs/infrastructure/mongodb/on-deploy.sh
   postgres-on-deploy.{{ts}}:
     file: /opt/opencrvs/infrastructure/postgres/on-deploy.sh
+  postgres-analytics-on-deploy.{{ts}}:
+    file: /opt/opencrvs/infrastructure/postgres/setup-analytics.sh
   beat-rollover-policy.{{ts}}:
     file: /opt/opencrvs/infrastructure/monitoring/beats/rollover-policy.json
   kibana.{{ts}}:

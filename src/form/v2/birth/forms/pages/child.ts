@@ -205,6 +205,7 @@ export const child = defineFormPage({
     },
     {
       id: 'child.gender',
+      analytics: true,
       type: FieldType.SELECT,
       required: true,
       label: {
@@ -216,6 +217,7 @@ export const child = defineFormPage({
     },
     {
       id: 'child.dob',
+      analytics: true,
       type: 'DATE',
       required: true,
       secured: true,
@@ -266,6 +268,7 @@ export const child = defineFormPage({
     },
     {
       id: 'child.placeOfBirth',
+      analytics: true,
       type: FieldType.SELECT,
       required: true,
       secured: true,
@@ -278,6 +281,7 @@ export const child = defineFormPage({
     },
     {
       id: 'child.birthLocation',
+      analytics: true,
       type: 'FACILITY',
       required: true,
       secured: true,
@@ -379,6 +383,7 @@ export const child = defineFormPage({
     {
       id: 'child.attendantAtBirth',
       type: FieldType.SELECT,
+      analytics: true,
       required: false,
       label: {
         defaultMessage: 'Attendant at birth',
@@ -389,6 +394,7 @@ export const child = defineFormPage({
     },
     {
       id: 'child.birthType',
+      analytics: true,
       type: FieldType.SELECT,
       required: false,
       label: {
@@ -400,6 +406,7 @@ export const child = defineFormPage({
     },
     {
       id: 'child.weightAtBirth',
+      analytics: true,
       type: FieldType.NUMBER,
       required: false,
       label: {

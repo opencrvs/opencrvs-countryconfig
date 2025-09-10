@@ -113,6 +113,7 @@ export const informant = defineFormPage({
     {
       id: 'informant.relation',
       type: FieldType.SELECT,
+      analytics: true,
       required: true,
       label: {
         defaultMessage: 'Relationship to child',
