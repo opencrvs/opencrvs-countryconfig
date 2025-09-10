@@ -174,8 +174,7 @@ export const CORRECTION_FORM = defineActionForm({
         {
           id: 'documents.supportingDocs',
           type: FieldType.FILE_WITH_OPTIONS,
-          // @TODO: this should be required, but currently the required functionality is not working correctly for these types of fields
-          // required: true,
+          required: true,
           label: {
             defaultMessage: 'Supporting documents',
             description: 'Label for the supporting documents field',
