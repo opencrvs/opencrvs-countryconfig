@@ -24,6 +24,7 @@ on:
           - e2e
           - v17
           - pentest
+          - metab
       core-image-tag:
         description: Core DockerHub image tag
         required: true

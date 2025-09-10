@@ -21,6 +21,7 @@ on:
           - qa
           - development
           - pentest
+          - metab
 jobs:
   reset-data:
     name: 'Reset data'

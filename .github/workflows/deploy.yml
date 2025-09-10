@@ -40,6 +40,7 @@ on:
           - v17
           - staging
           - pentest
+          - metab
       core-image-tag:
         description: Core image tag
         required: true
