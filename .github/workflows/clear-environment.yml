@@ -21,6 +21,7 @@ on:
           - qa
           - development
           - pentest
+          - meta
 jobs:
   reset-data:
     name: 'Reset data'

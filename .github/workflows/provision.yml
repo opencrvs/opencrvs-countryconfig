@@ -32,6 +32,7 @@ on:
           - e2e
           - v17
           - pentest
+          - meta
       tag:
         type: choice
         description: Select group tag you want to execute
