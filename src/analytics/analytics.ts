@@ -27,14 +27,14 @@ import {
   getCurrentEventState
 } from '@opencrvs/toolkit/events'
 import { differenceInDays } from 'date-fns'
-import { ExpressionBuilder, Kysely, sql } from 'kysely'
+import { ExpressionBuilder, Kysely } from 'kysely'
 import { pickBy } from 'lodash'
 import { getClient } from './postgres'
 
 /**
  * You can control which events you want to track in analytics by adding them here.
  */
-function getEventConfig(eventType: string) {
+function findEventConfig(eventType: string) {
   if (eventType === Event.Birth) {
     return birthEvent
   }
@@ -218,11 +218,14 @@ export async function upsertAnalyticsEventActions(
 }
 
 export async function importEvent(event: EventDocument, trx: Kysely<any>) {
-  const eventConfig = getEventConfig(event.type)
+  const eventConfig = findEventConfig(event.type)
 
-  if (!eventConfig)
-    // Ignoring ${event.type} for analytics
+  if (!eventConfig) {
+    logger.warn(
+      `Event with id "${event.id}" has unsupported event type "${event.type}". Record will not be written in the analytics database.`
+    )
     return
+  }
 
   await upsertAnalyticsEventActions(event, eventConfig, trx)
   logger.info(`Event with id "${event.id}" logged into analytics`)
