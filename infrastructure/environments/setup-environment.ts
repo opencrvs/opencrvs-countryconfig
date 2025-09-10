@@ -702,6 +702,20 @@ const derivedVariables = [
     scope: 'ENVIRONMENT'
   },
   {
+    name: 'ANALYTICS_POSTGRES_USER',
+    valueLabel: 'ANALYTICS_POSTGRES_USER',
+    valueType: 'SECRET',
+    type: 'disabled',
+    scope: 'ENVIRONMENT'
+  },
+  {
+    name: 'ANALYTICS_POSTGRES_PASSWORD',
+    valueLabel: 'ANALYTICS_POSTGRES_PASSWORD',
+    valueType: 'SECRET',
+    type: 'disabled',
+    scope: 'ENVIRONMENT'
+  },
+  {
     name: 'SUPER_USER_PASSWORD',
     valueLabel: 'SUPER_USER_PASSWORD',
     valueType: 'SECRET',
@@ -1211,6 +1225,41 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
       ),
       scope: 'ENVIRONMENT' as const
     },
+    {
+      name: 'ANALYTICS_POSTGRES_USER',
+      type: 'SECRET' as const,
+      didExist: findExistingValue(
+        'ANALYTICS_POSTGRES_USER',
+        'SECRET',
+        'ENVIRONMENT',
+        existingValues
+      ),
+      value: findExistingOrDefine(
+        'ANALYTICS_POSTGRES_USER',
+        'SECRET',
+        'ENVIRONMENT',
+        generateLongPassword()
+      ),
+      scope: 'ENVIRONMENT' as const
+    },
+    {
+      name: 'ANALYTICS_POSTGRES_PASSWORD',
+      type: 'SECRET' as const,
+      didExist: findExistingValue(
+        'ANALYTICS_POSTGRES_PASSWORD',
+        'SECRET',
+        'ENVIRONMENT',
+        existingValues
+      ),
+      value: findExistingOrDefine(
+        'ANALYTICS_POSTGRES_PASSWORD',
+        'SECRET',
+        'ENVIRONMENT',
+        generateLongPassword()
+      ),
+      scope: 'ENVIRONMENT' as const
+    },
+
     {
       name: 'SUPER_USER_PASSWORD',
       type: 'SECRET' as const,
