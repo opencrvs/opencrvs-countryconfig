@@ -2382,20 +2382,10 @@ v2.config.application.vsexport,Vital statistics title,Vital statistics,Statistiq
 v2.configuration.dateFormat,Default format for date values,d MMMM y,d MMMM y
 v2.configuration.timeFormat,Default time format for timestamps,"MMMM dd, yyyy · hh.mm a","MMMM dd, yyyy · hh.mm a"
 v2.constants.PIN,PIN label,PIN,Code Pin
-v2.constants.address,Label for address,Address,Adresse
-v2.constants.allEvents,Label for select option All events,All events,Tous les événements
-v2.constants.allStatuses,Label for select option All statuses,All statuses,Tous les statuts
-v2.constants.application.title,Application title,Application,Application
-v2.constants.applicationName,Declaration name of CRVS,OpenCRVS,OpenCRVS
-v2.constants.assignRecord,A label for the Assign record -button,Assign record,Assigner l'enregistrement
-v2.constants.averageRateOfRegistrations,A label for Average rate of registrations,avg. {amount}%,avg. {amount}%
-v2.constants.birth,A label from the birth event,Birth,Naissance
 v2.constants.births,A label from the births event,Births,Naissances
 v2.constants.by,Label for By (the person who performed the action),By,Par
-v2.constants.certificate.title,Certificate title,Certificate,Certificat
 v2.constants.certificationPaymentTitle,Label for certification payment performance reports,"Payment collected for {event, select, birth{birth} death{death} other{birth}} certificates","Paiement perçu pour les certificats {event, select, birth{birth} death{death} other{birth}}."
 v2.constants.certified,A label for certified,certified,certifié
-v2.constants.collected,The status label for collected,collected,collecté
 v2.constants.collectedBy,The collected by sec text,Collected by,Collecté par
 v2.constants.comment,Label for rejection comment,Comment,Commentaire
 v2.constants.countryName,Name of the OpenCRVS implementation country,Farajaland,Farajaland
@@ -2549,7 +2539,6 @@ v2.correction.corrector.anotherAgent,Label for another registration or field age
 v2.correction.corrector.identity.instruction,The title for the corrector form,Please verify the identity of the person making this request,Please verify the identity of the person making this request
 v2.correction.corrector.identity.verified,Label for verified option in corrector identity check page,I have verified their identity,I have verified their identity
 v2.correction.corrector.identity.verified.label,The title for the corrector form,@todo,@todo
-v2.correction.corrector.informant,Label for informant option in certificate correction form,Informant,Informateur
 v2.correction.corrector.me,Label for registrar option in certificate correction form,Me (Registrar),Me (Registrar)
 v2.correction.corrector.others,Label for someone else option in certificate correction form,Someone else,Quelqu'un d'autre
 v2.correction.corrector.paragraph.title,The title for the corrector form,"For all record corrections at a minimum an affidavit must be provided. For material errors and omissions eg. in paternity cases, a court order must also be provided.","Pour toutes les corrections de dossiers, il faut au moins fournir un affidavit. Pour les erreurs matérielles et les omissions, par exemple dans les cas de paternité, une décision de justice doit également être fournie."
@@ -3072,7 +3061,7 @@ v2.printAction.title,The title for print action,Print certificate,Imprimer le ce
 v2.record-corrected.summary.section.title,Corrections section title,Correction(s),Correction(s)
 v2.recordAudit.archive.confirmation.body,Confirmation body for archiving a declaration,This will archive the record and remove it from your workspace,"Cela supprimera la déclaration de la file d'attente et changera son statut en archive. Pour annuler ce changement, vous devrez rechercher la déclaration."
 v2.recordAudit.archive.confirmation.title,Confirmation title for archiving a declaration,Archive declaration?,Archiver la déclaration ?
-v2.regHome.issued,Label for workqueue tooltip,Empty message,Empty message
+v2.regHome.issued,Label for workqueue tooltip,Issued,Émis
 v2.register.eventInfo.birth.title,Event information title for the birth,Introduce the birth registration process to the informant,Présenter la procédure d'enregistrement des naissances à l'informateur
 v2.register.form.modal.desc.deleteDeclarationConfirm,Description for delete declaration confirmation modal,Are you sure you want to delete this declaration?,Êtes-vous sûr de vouloir supprimer cette déclaration ?
 v2.register.form.modal.title.deleteDeclarationConfirm,Title for delete declaration confirmation modal,Delete draft?,Supprimer le brouillon?
