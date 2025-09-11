@@ -2,11 +2,11 @@ import { defineConfig, devices } from '@playwright/test'
 
 const TEST_TIMEOUT = 90000
 
-
-const subdomains = ['register', ]; // TODO: Add more subdomains if needed
-const insecureOrigins = subdomains.map(subdomain => 
-  `--unsafely-treat-insecure-origin-as-secure=https://${subdomain}.${process.env.DOMAIN}`
-);
+const subdomains = ['register'] // TODO: Add more subdomains if needed
+const insecureOrigins = subdomains.map(
+  (subdomain) =>
+    `--unsafely-treat-insecure-origin-as-secure=https://${subdomain}.${process.env.DOMAIN}`
+)
 
 const ignoreHTTPSErrors = process.env.CI ? true : false
 /**
@@ -55,16 +55,18 @@ export default defineConfig({
         ...devices['Desktop Chrome'],
         ignoreHTTPSErrors,
         launchOptions: {
-          args: process.env.CI ? [
-            '--ignore-certificate-errors',
-            '--ignore-ssl-errors',
-            '--allow-running-insecure-content',
-            '--disable-web-security',
-            ...insecureOrigins,
-          ] : [],
-        },
-      },
-    },
+          args: process.env.CI
+            ? [
+                '--ignore-certificate-errors',
+                '--ignore-ssl-errors',
+                '--allow-running-insecure-content',
+                '--disable-web-security',
+                ...insecureOrigins
+              ]
+            : []
+        }
+      }
+    }
 
     // {
     //   name: 'firefox',
