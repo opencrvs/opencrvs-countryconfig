@@ -694,6 +694,8 @@ error.title.unauthorized,Error title unauthorized,Unauthorized!,Non autorisé !
 error.userListError,Error message when user list loads fails,Failed to load users,Impossible de charger les utilisateurs
 error.weAreTryingToFixThisError,Error description,This page could not be found,"Ce n'est pas vous, c'est nous. C'est notre faute."
 fieldAgentHome.queryError,The text when error ocurred loading rejected declarations,An error occurred while loading declarations,Une erreur s'est produite lors du chargement des déclarations
+form.field.SearchField.changeButtonLabel,,"{fieldName, select, registrationOffice {Change assigned office} other {Change health institute}}","{fieldName, select, registrationOffice {Bureau d'enregistrement assigné} autre {Instituts de santé}}"
+form.field.SearchField.modalTitle,,"{fieldName, select, registrationOffice {Assigned registration office} other {Health institutions}}","{fieldName, select, registrationOffice {Bureau d'enregistrement assigné} autre {Instituts de santé}}"
 form.customField.label.numberOfDependants,,No. of dependants,Nombre de personnes à charge
 form.customField.label.reasonForLateRegistrationBirth,,Reason for delayed registration,Raison du retard d'inscription
 form.customField.label.reasonForLateRegistrationDeath,,Reason for late registration,Raison de l'inscription tardive
