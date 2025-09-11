@@ -5,15 +5,17 @@ set -euo pipefail
 : "${POSTGRES_HOST:=localhost}"
 : "${POSTGRES_PORT:=5432}"
 : "${POSTGRES_PASSWORD:?Must set POSTGRES_PASSWORD}"
-: "${ANALYTICS_POSTGRES_USER:?Must set ANALYTICS_POSTGRES_USER}"
+: "${POSTGRES_USER:?Must set POSTGRES_USER}"
 : "${ANALYTICS_POSTGRES_PASSWORD:?Must set ANALYTICS_POSTGRES_PASSWORD}"
+: "${ANALYTICS_POSTGRES_USER:?Must set ANALYTICS_POSTGRES_USER}"
+: "${POSTGRES_PASSWORD:?Must set POSTGRES_PASSWORD}"
 : "${KEEP_ALIVE_SECONDS:=0}" # Prevent Swarm from marking this task as failed due to early exit
 
 TARGET_DB="events"
 
 echo "Waiting for PostgreSQL to be ready at ${POSTGRES_HOST}:${POSTGRES_PORT}..."
-until PGPASSWORD="$ANALYTICS_POSTGRES_PASSWORD" psql -h "$POSTGRES_HOST" -p "$POSTGRES_PORT" \
-  -U "$ANALYTICS_POSTGRES_USER" -d postgres -c '\q' 2>/dev/null; do
+until PGPASSWORD="$POSTGRES_PASSWORD" psql -h "$POSTGRES_HOST" -p "$POSTGRES_PORT" \
+  -U "$POSTGRES_USER" -d postgres -c '\q' 2>/dev/null; do
   sleep 2
 done
 
@@ -24,8 +26,8 @@ create_or_update_role() {
   local password=$2
   local db=$3
 
-  PGPASSWORD="$ANALYTICS_POSTGRES_PASSWORD" psql -v ON_ERROR_STOP=1 -h "$POSTGRES_HOST" -p "$POSTGRES_PORT" \
-    -U "$ANALYTICS_POSTGRES_USER" -d postgres <<EOSQL
+  PGPASSWORD="$POSTGRES_PASSWORD" psql -v ON_ERROR_STOP=1 -h "$POSTGRES_HOST" -p "$POSTGRES_PORT" \
+    -U "$POSTGRES_USER" -d postgres <<EOSQL
 DO \$\$
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = '${role}') THEN
@@ -40,11 +42,11 @@ END
 EOSQL
 }
 
-create_or_update_role "events_analytics" "$ANALYTICS_POSTGRES_PASSWORD" "$TARGET_DB"
+create_or_update_role "$ANALYTICS_POSTGRES_USER" "$ANALYTICS_POSTGRES_PASSWORD" "$TARGET_DB"
 
 # Schema + tables + grants
-PGPASSWORD="$ANALYTICS_POSTGRES_PASSWORD" psql -v ON_ERROR_STOP=1 -h "$POSTGRES_HOST" -p "$POSTGRES_PORT" \
-  -U "$ANALYTICS_POSTGRES_USER" -d "$TARGET_DB" <<EOSQL
+PGPASSWORD="$POSTGRES_PASSWORD" psql -v ON_ERROR_STOP=1 -h "$POSTGRES_HOST" -p "$POSTGRES_PORT" \
+  -U "$POSTGRES_USER" -d "$TARGET_DB" <<EOSQL
 
 CREATE SCHEMA IF NOT EXISTS analytics;
 
@@ -84,9 +86,9 @@ CREATE TABLE IF NOT EXISTS analytics.location_levels (
   name text NOT NULL
 );
 
-GRANT USAGE ON SCHEMA analytics TO events_analytics;
+GRANT USAGE ON SCHEMA analytics TO $ANALYTICS_POSTGRES_USER;
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA analytics TO events_analytics;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA analytics TO $ANALYTICS_POSTGRES_USER;
 EOSQL
 
 echo "✅ Analytics schema initialized for database '$TARGET_DB'"
