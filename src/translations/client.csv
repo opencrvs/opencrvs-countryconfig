@@ -294,7 +294,8 @@ constants.gender,Gender label,Gender,Sexe
 constants.healthDivision,The description for HEALTH_DIVISION type,Health Division,Division de la santé
 constants.healthcareWorker,The description for Healthcare Worker type,Healthcare Worker,Travailleur de la santé
 constants.history,History heading,History,Histoire
-constants.humanName,Formatted full name,{lastName} {middleName} {firstName},{lastName} {middleName} {firstName}
+constants.humanName,Formatted full name,{firstName} {middleName} {lastName},{firstName} {middleName} {lastName}
+constants.humanName,Formatted full name,{firstName} {middleName} {lastName},{firstName} {middleName} {lastName}
 constants.id,ID Label,ID,ID
 constants.idCheckWithoutVerify,Issuance without the confirmation of proof,Continue without proof of ID?,Continuer sans preuve d'identité?
 constants.inReview.status,A label for In Review,In review,En cours de révision
@@ -836,7 +837,7 @@ form.field.SearchField.modalTitle,,"{fieldName, select, registrationOffice {Assi
 form.field.SearchField.officeLocationId,,Id: {locationId},Id : {locationId}
 form.field.SearchField.placeHolderText,,Search,Recherche
 form.field.dateRangepicker.checkbox.dateLabel,,{rangeStart} to {rangeEnd},{rangeStart} à {rangeEnd}
-form.field.helpertext.nid,Helper text for nid input field,The National ID can only be numeric and must be 10 digits long,Le numéro d'identification national doit être uniquement numérique et comporter 10 chiffres
+form.field.helpertext.nid,Helper text for nid input field,The National ID can only be numeric and must be 10 digits long,The National ID can only be numeric and must be 10 digits long
 form.field.hideLabel,Button to hide section,Hide,Cacher
 form.field.label.NID,,NID,NID
 form.field.label.NIDNetErr,,The request to the NID system was unsuccessful. Please try again with a better connection.,La demande au système NID n'a pas abouti. Veuillez réessayer avec une meilleure connexion.
@@ -1196,7 +1197,6 @@ form.field.label.someoneElse,Other Label,Someone else,Quelqu'un d'autre
 form.field.label.someoneElseCollector,,Print and issue to someone else,Imprimer et remettre à quelqu'un d'autre
 form.field.label.spouseDetailsExist,,Spouse's details are not available,Pas d'information sur le conjoint
 form.field.label.state,Label for State,Province,Province
-form.field.label.totalFees,Label for input Reason for Change,,
 form.field.label.typeOfDocument,,Choose type of supporting document,Choisissez le type de document
 form.field.label.typeOfId,,Type of ID,Type d'identification
 form.field.label.typeOfMarriage,,Type of marriage,Type de mariage
@@ -1222,7 +1222,7 @@ form.field.label.whatDocToUpload,,Which document type are you uploading?,Quel ty
 form.field.nidNotVerified,,Authenticate,Authentifier
 form.field.nidNotVerifiedReviewSection,,Unauthenticated,Non authentifié
 form.field.nidOffline,,National ID authentication is currently not available offline.,L'authentification de la carte d'identité nationale n'est actuellement pas disponible hors ligne.
-form.field.nidVerificationOngoing,Label for indicating offline status for the user. NID verification is not currently available offline.,National ID authentication is currently not available offline.,L'authentification de l'identifiant national n'est actuellement pas disponible hors ligne
+form.field.nidVerificationOngoing,Label for indicating offline status for the user. NID verification is not currently available offline.,National ID authentication is currently not available offline.,National ID authentication is currently not available offline.
 form.field.nidVerified,,Authenticated,Authentifié
 form.field.previewGroups.primaryAddress,,Usual place of residence,Adresse résidentielle
 form.field.previewGroups.secondaryAddress,,Secondary address,Adresse secondaire
@@ -1803,7 +1803,7 @@ phone.label.changeEmail,Change email address label,What is your new email?,Quell
 phone.label.changeNumber,Change phone number label,Enter new number,Quel est votre nouveau numéro ?
 phone.label.confirmation,Confirmation phone number message,A verification code has been sent to {num},Un SMS de confirmation a été envoyé à {num}.
 phone.label.verify,Verify phone number label,Enter 6 digit verification code,Entrez le code de vérification à 6 chiffres
-phone.start,Should starts with,0(4|5),0(4|5)
+phone.start,,0(4|5),0(4|5)
 print.cert.coll.id.actions.cancel,The for the dialog when details of the collector not verified,Cancel,Annuler
 print.cert.coll.id.actions.send,The for the dialog when details of the collector not verified,Confirm,Confirmer
 print.cert.coll.id.description,The description for the dialog when details of the collector not verified,"Please be aware that if you proceed, you will be responsible for issuing a certificate without the necessary proof of ID from the collector","Sachez que si vous continuez, vous serez responsable de l'émission d'un certificat sans la preuve d'identité nécessaire du collecteur."
@@ -1902,12 +1902,12 @@ recordAudit.regAction.corrected,,Record corrected,Enregistrement corrigé
 recordAudit.regAction.downloaded,,Retrieved,Récupéré par
 recordAudit.regAction.flaggedAsPotentialDuplicate,,Flagged as potential duplicate,Marqué comme doublon potentiel
 recordAudit.regAction.markedAsDuplicate,,Marked as a duplicate,Marqué comme un doublon
-recordAudit.regAction.markedAsNotDuplicate,Marked not a duplicate status message for record audit,Marked not a duplicate,Marqué comme non dupliqué
+recordAudit.regAction.markedAsNotDuplicate,Marked not a duplicate status message for record audit,Marked not a duplicate,Marked not a duplicate
 recordAudit.regAction.reinstated,,"Reinstated to {regStatus, select, validated{ready for review} in_progress{in progress} declared{ready for review} rejected{requires updates} other{}}","Réintégré à {regStatus, select, validated{prêt pour la révision} in_progress{en cours} declared{prêt pour la révision} rejected{nécessite des mises à jour} other{}}"
 recordAudit.regAction.rejectedCorrection,,Correction rejected,Correction rejetée
 recordAudit.regAction.requestedCorrection,,Correction requested,Correction demandée
 recordAudit.regAction.unassigned,,Unassigned,Non assigné
-recordAudit.regAction.verified,Verified action,Certificate verified,Certificat vérifié
+recordAudit.regAction.verified,Verified action,Certificate verified,Certificate verified
 recordAudit.regAction.viewed,,Viewed,Vu
 recordAudit.regStatus.archived,,Archived,Archivé
 recordAudit.regStatus.certified,,Certified,Certifié
@@ -2296,16 +2296,18 @@ user.profile.roleType,Title for roleType field,Role,Rôle/Type
 user.profile.sectionTitle.audit,Title for audit section,History,Historique
 user.profile.startDate,Title for startDate field,Start date,Date de début
 user.profile.userName,Title for userName field,Username,Nom d'utilisateur
+userRole.administrator,Name for user role Administrator,Administrator,Administrateur
+userRole.communityLeader, Name for user role Community Leader,Community Leader,Leader communautaire
 userRole.fieldAgent,Name for user role Field Agent,Field Agent,Agent de terrain
 userRole.healthcareWorker,Name for user role Healthcare Worker,Healthcare Worker,Personnel de santé
+userRole.hospitalClerk, Name for user role Hospital Clerk, Hospital Clerk,Clerk d'hôpital
 userRole.localLeader,Name for user role Local Leader,Local Leader,Leader local
 userRole.localRegistrar,Name for user role Local Registrar,Local Registrar,Registraire local
-userRole.localSystemAdmin,Name for user role Local System Admin,Local System Admin,Administrateur système local
-userRole.nationalRegistrar,Name for user role National Registrar,National Registrar,Registraire national
-userRole.nationalSystemAdmin,Name for user role National System Admin,National System Admin,Administrateur système national
-userRole.performanceManager,Name for user role Performance Manager,Performance Manager,Gestion des performances
+userRole.nationalAdministrator,Name for user role National Administrator,National Administrator,Administrateur national
+userRole.operationsManager,Name for user role Operations Manager,Operations Manager,Responsable des opérations
 userRole.policeOfficer,Name for user role Police Officer,Police Officer,Officier de police
-userRole.registrationAgent,Name for user role Registration Agent,Registration Agent,Agent d'enregistrement
+userRole.registrarGeneral, Name for user role Registrar General,Registrar General,Registraire général
+userRole.registrationOfficer,Name for user role Registration Officer,Registration Officer,Agent d'enregistrement
 userRole.socialWorker,Name for user role Social Worker,Social Worker,Travailleur social
 userSetup.complete.instruction,Instruction for the setup complete,Login to your account with your username and newly created password,Connectez-vous maintenant à votre compte avec votre nom d'utilisateur et votre mot de passe nouvellement créé.
 userSetup.complete.title,Title for the setup complete page,Account setup complete,Configuration du compte terminée
@@ -2331,6 +2333,7 @@ v2-events.buttons.submitCorrectionRequest,Submit correction request button text,
 v2-events.correction.correctionReject.reason,Correction request rejection reason,Reason for rejection,Motif du rejet
 v2-events.correction.correctionRequest,Correction request text,Correction request,Demande de correction
 v2.action.correct,Label for correct record button in dropdown menu,Correct Record,Corriger l'enregistrement
+v2.action.view.record,Label for view record,View,Afficher
 v2.action.view.record,Label for view record,View,Afficher
 v2.actionModal.PrimaryAction,The label for primary action button of action modal,"{action, select, declare{Declare} other{{action}}}","{action, select, declare{Declare} other{{action}}}"
 v2.actionModal.cancel,The label for cancel button of action modal,Cancel,Annuler
@@ -2382,10 +2385,20 @@ v2.config.application.vsexport,Vital statistics title,Vital statistics,Statistiq
 v2.configuration.dateFormat,Default format for date values,d MMMM y,d MMMM y
 v2.configuration.timeFormat,Default time format for timestamps,"MMMM dd, yyyy · hh.mm a","MMMM dd, yyyy · hh.mm a"
 v2.constants.PIN,PIN label,PIN,Code Pin
+v2.constants.address,Label for address,Address,Adresse
+v2.constants.allEvents,Label for select option All events,All events,Tous les événements
+v2.constants.allStatuses,Label for select option All statuses,All statuses,Tous les statuts
+v2.constants.application.title,Application title,Application,Application
+v2.constants.applicationName,Declaration name of CRVS,OpenCRVS,OpenCRVS
+v2.constants.assignRecord,A label for the Assign record -button,Assign record,Assigner l'enregistrement
+v2.constants.averageRateOfRegistrations,A label for Average rate of registrations,avg. {amount}%,avg. {amount}%
+v2.constants.birth,A label from the birth event,Birth,Naissance
 v2.constants.births,A label from the births event,Births,Naissances
 v2.constants.by,Label for By (the person who performed the action),By,Par
+v2.constants.certificate.title,Certificate title,Certificate,Certificat
 v2.constants.certificationPaymentTitle,Label for certification payment performance reports,"Payment collected for {event, select, birth{birth} death{death} other{birth}} certificates","Paiement perçu pour les certificats {event, select, birth{birth} death{death} other{birth}}."
 v2.constants.certified,A label for certified,certified,certifié
+v2.constants.collected,The status label for collected,collected,collecté
 v2.constants.collectedBy,The collected by sec text,Collected by,Collecté par
 v2.constants.comment,Label for rejection comment,Comment,Commentaire
 v2.constants.countryName,Name of the OpenCRVS implementation country,Farajaland,Farajaland
@@ -2535,10 +2548,12 @@ v2.constants.within1YearTo5Years,Label for registrations within 1 year to 5 year
 v2.constants.withinTargetDays,Label for registrations within {registrationTargetDays} days,Within {registrationTargetDays} days,Dans les {registrationTargetDays} jours
 v2.constants.withinTargetDaysTo1Year,Label for registrations within {registrationTargetDays} days to 1 year,{registrationTargetDays} days - 1 year,{registrationTargetDays} jours - 1 an
 v2.correction.correctionForApprovalDialog.title,The title for the dialog when record correction sent by registration agent for approval,Send record correction for approval?,Envoyer la correction de l'enregistrement pour approbation?
+v2.correction.correctionForApprovalDialog.title,The title for the dialog when record correction sent by registration agent for approval,Send record correction for approval?,Envoyer la correction de l'enregistrement pour approbation?
 v2.correction.corrector.anotherAgent,Label for another registration or field agent option in certificate correction form,Another registration agent or field agent,Un autre agent d'enregistrement ou un agent de terrain
 v2.correction.corrector.identity.instruction,The title for the corrector form,Please verify the identity of the person making this request,Please verify the identity of the person making this request
 v2.correction.corrector.identity.verified,Label for verified option in corrector identity check page,I have verified their identity,I have verified their identity
 v2.correction.corrector.identity.verified.label,The title for the corrector form,@todo,@todo
+v2.correction.corrector.informant,Label for informant option in certificate correction form,Informant,Informateur
 v2.correction.corrector.me,Label for registrar option in certificate correction form,Me (Registrar),Me (Registrar)
 v2.correction.corrector.others,Label for someone else option in certificate correction form,Someone else,Quelqu'un d'autre
 v2.correction.corrector.paragraph.title,The title for the corrector form,"For all record corrections at a minimum an affidavit must be provided. For material errors and omissions eg. in paternity cases, a court order must also be provided.","Pour toutes les corrections de dossiers, il faut au moins fournir un affidavit. Pour les erreurs matérielles et les omissions, par exemple dans les cas de paternité, une décision de justice doit également être fournie."
@@ -2551,6 +2566,7 @@ v2.correction.requesterOffice,Correction requester office label,Office,Bureau
 v2.correction.submittedBy,Correction submitted by label,Submitter,Déposant
 v2.correction.submittedOn,Correction submitted on label,Submitted on,Date de soumission
 v2.correction.summary.change,Change link label,Change,Modifier
+v2.correction.summary.information.section.title,Correction information section title,Correction information,Informations de correction
 v2.correction.summary.information.section.title,Correction information section title,Correction information,Informations de correction
 v2.correction.summary.section.title,Corrections section title,Request correction(s),Corrections
 v2.correction.summary.title,Title for certificate correction summary,Correction summary,Résumé de la correction
@@ -2606,7 +2622,7 @@ v2.event.birth.action.certificate.form.section.collectPayment.service.label.befo
 v2.event.birth.action.certificate.form.section.collectPayment.service.label.inBetweenRegistrationTargets,Birth registration after 30 days but before 365 days of date of birth,Birth registration after 30 days but before 365 days of date of birth,Enregistrement de naissance après 30 jours mais avant 365 jours de la date de naissance
 v2.event.birth.action.collect-certificate.label,This is shown as the action name anywhere the user can trigger the action from,Print,Imprimer
 v2.event.birth.action.correct.label,This is shown as the action name anywhere the user can trigger the action from,Correct record,Enregistrement correct
-v2.event.birth.action.correction.form.section.requester.identity.verify.title,This is the title of the section,Verify ID,Vérifier l'identité
+v2.event.birth.action.correction.form.section.requester.identity.verify.title,This is the title of the section,Verify their identity,Vérifier l'identité
 v2.event.birth.action.declare.form.label,This is what this form is referred as in the system,Birth decalration form,Birth decalration form
 v2.event.birth.action.declare.form.review.comment.label,Label for the comment field in the review section,Comment,Commentaire
 v2.event.birth.action.declare.form.review.signature.label,Label for the signature field in the review section,Signature of informant,Signature de l'informateur
@@ -2673,6 +2689,8 @@ v2.event.birth.action.form.section.collector.other.field.name.label,This is the 
 v2.event.birth.action.mark-as-duplicate.label,Label for review potential duplicate button in dropdown menu,Review,Revoir
 v2.event.birth.action.register.label,Label for review record button in dropdown menu,Review,Revoir
 v2.event.birth.action.request-correction.label,This is shown as the action name anywhere the user can trigger the action from,Correct record,Enregistrement correct
+v2.event.birth.action.request-correction.label,This is shown as the action name anywhere the user can trigger the action from,Correct record,Enregistrement correct
+v2.event.birth.action.validate.label,This is shown as the action name anywhere the user can trigger the action from,Review,Revoir
 v2.event.birth.action.validate.label,This is shown as the action name anywhere the user can trigger the action from,Review,Revoir
 v2.event.birth.label,This is what this event is referred as in the system,Birth,Naissance
 v2.event.birth.summary.child.dob.empty,Label for date of birth not available,No date of birth,Pas de date de naissance
@@ -2860,7 +2878,7 @@ v2.event.death.title,This is the title of the summary,{deceased.name.firstname} 
 v2.event.default.action.certificate.form.section.who.field.surname.label,This is the label for the field,Type,Type
 v2.event.default.action.certificate.template.type.label,Select certificate template,Type,Taper
 v2.event.history.markAsDuplicate,,Marked as a duplicate,Marqué comme doublon
-v2.event.history.role,Label for the role in event history,"{role, select, LOCAL_REGISTRAR {Local Registrar} SOCIAL_WORKER {Field Agent} REGISTRATION_AGENT {Registration Agent} HEALTH {Health integration} IMPORT {Import integration} NATIONAL_ID {National ID integration} RECORD_SEARCH {Record search integration} WEBHOOK {Webhook} other {Unknown}}","{role, select, LOCAL_REGISTRAR {Officier d'état civil local} SOCIAL_WORKER {Agent de terrain} REGISTRATION_AGENT {Agent d'enregistrement} HEALTH {Intégration santé} IMPORT {Intégration d'importation} NATIONAL_ID {Intégration ID nationale} RECORD_SEARCH {Intégration de recherche d'enregistrements} WEBHOOK {Webhook} other {Inconnu}}"
+v2.event.history.role,Label for the role in event history,"{role, select, LOCAL_REGISTRAR {Local Registrar} SOCIAL_WORKER {Social Worker} FIELD_AGENT {Field Agent} POLICE_OFFICER {Police Officer} REGISTRATION_AGENT {Registration Agent} HEALTHCARE_WORKER {Healthcare Worker} LOCAL_LEADER {Local Leader} HOSPITAL_CLERK {Hospital Clerk} LOCAL_SYSTEM_ADMIN {Administrator} NATIONAL_REGISTRAR {Registrar General} PERFORMANCE_MANAGER {Operations Manager} NATIONAL_SYSTEM_ADMIN {National Administrator} COMMUNITY_LEADER {Community Leader} HEALTH {Health integration} IMPORT {Import integration} NATIONAL_ID {National ID integration} RECORD_SEARCH {Record search integration} WEBHOOK {Webhook} other {Unknown}}","{role, select, LOCAL_REGISTRAR {Officier d'état civil local} SOCIAL_WORKER {Travailleur social} POLICE_OFFICER {Agent de police} FIELD_AGENT {Agent de terrain} REGISTRATION_AGENT {Agent d'enregistrement} HEALTHCARE_WORKER {Professionnel de santé} PERFORMANCE_MANAGER {Responsable des opérations} LOCAL_SYSTEM_ADMIN {Administrateur} NATIONAL_SYSTEM_ADMIN {Administrateur national} LOCAL_LEADER {Responsable local} NATIONAL_REGISTRAR {Registraire général} HOSPITAL_CLERK {Employé administratif à l'hôpital} HEALTH {Intégration santé} IMPORT {Intégration d'importation} NATIONAL_ID {Intégration ID nationale} RECORD_SEARCH {Intégration de recherche d'enregistrements} WEBHOOK {Webhook} COMMUNITY_LEADER {Responsable communautaire} other {Inconnu}}"
 v2.event.history.systemDefaultName,Fallback for system integration name in the event history,System integration,Intégration système
 v2.event.summary.assignedTo.empty,Not assigned message,Not assigned,Non assigné
 v2.event.summary.assignedTo.label,Assigned to label,Assigned to,Assigné à
@@ -2872,7 +2890,7 @@ v2.event.summary.flags.placeholder,Message when no flags are present,No flags,Pa
 v2.event.summary.registrationNumber.empty,No registration number message,No registration number,Aucun numéro d'inscription
 v2.event.summary.registrationNumber.label,Label for the registration number field,Registration Number,Numéro d'inscription
 v2.event.summary.registrationNumber.value,Value for the registration number field,{event.registrationNumber},{event.registrationNumber}
-v2.event.summary.review-correction-request.label,This is shown as the action name anywhere the user can trigger the action from,Review,Examen
+v2.event.summary.review-correction-request.label,This is shown as the action name anywhere the user can trigger the action from,Review correction request,Revoir la demande de correction
 v2.event.summary.status.label,Label for the status field,Status,Statut
 v2.event.summary.status.value,Value for the status field,"{event.status, select, CREATED {Draft} NOTIFIED {Notified} VALIDATED {Validated} DRAFT {Draft} DECLARED {Declared} REGISTERED {Registered} CERTIFIED {Certified} REJECTED {Requires update} ARCHIVED {Archived} MARKED_AS_DUPLICATE {Marked as a duplicate} other {Unknown}}","{event.status, select, CREATED {Brouillon} NOTIFIED {Incomplet} VALIDATED {Validé} DRAFT {Brouillon} DECLARED {Déclaré} REGISTERED {Enregistré} CERTIFIED {Certifié} REJECTED {Requiert une mise à jour} ARCHIVED {Archivé} MARKED_AS_DUPLICATE {Marqué comme doublon} other {Inconnu}}"
 v2.event.summary.trackingId.empty,Message when tracking ID is empty,No tracking ID,Aucun ID de suivi
@@ -2921,6 +2939,7 @@ v2.event.tennis-club-membership.action.form.section.idTypeOther.label,Field for 
 v2.event.tennis-club-membership.action.form.section.lastName.label,This is the label for the last name field,Last Name,Last Name
 v2.event.tennis-club-membership.action.form.section.passportDetails.label,Field for entering Passport details,Passport Details,Passport Details
 v2.event.tennis-club-membership.action.form.section.refugeeNumberDetails.label,Field for entering Refugee Number details,Refugee Number Details,Refugee Number Details
+v2.event.tennis-club-membership.action.form.section.relationshipToChild.label,This is the label for the relationship to member field,Relationship to Child,Relationship to Child
 v2.event.tennis-club-membership.action.form.section.relationshipToMember.label,This is the label for the relationship to member field,Relationship to Member,Relationship to Member
 v2.event.tennis-club-membership.action.form.section.signedAffidavit.label,This is the label for uploading a signed affidavit,Signed Affidavit (Optional),Signed Affidavit (Optional)
 v2.event.tennis-club-membership.action.register.label,This is shown as the action name anywhere the user can trigger the action from,Register,Enregistrer
@@ -2957,7 +2976,7 @@ v2.event.tennis-club-membership.workqueue.registered.name.label,Label for 'Regis
 v2.events.history.status,Events status history,"{status, select, CREATE {Declaration started} NOTIFY {Sent incomplete} VALIDATE {Sent for approval} DRAFT {Draft} DECLARE {Sent for review} REGISTER {Registered} PRINT_CERTIFICATE {Certified} REJECT {Rejected} ARCHIVE {Archived} DUPLICATE_DETECTED {Flagged as potential duplicate} MARKED_AS_DUPLICATE {Marked as a duplicate} CORRECTED {Record corrected} REQUEST_CORRECTION {Correction requested} APPROVE_CORRECTION {Correction approved} REJECT_CORRECTION {Correction rejected} READ {Viewed} ASSIGN {Assigned} UNASSIGN {Unassigned} UPDATE {Updated} other {Unknown}}","{status, select, CREATE {Déclaration commencée} NOTIFY {Envoyé incomplet} VALIDATE {Envoyé pour approbation} DRAFT {Brouillon} DECLARE {Envoyé pour révision} REGISTER {Enregistré} PRINT_CERTIFICATE {Certifié} REJECT {Rejeté} ARCHIVE {Archivé} DUPLICATE_DETECTED {Marqué comme doublon} MARKED_AS_DUPLICATE {Marqué comme doublon} CORRECTED {Enregistrement corrigé} REQUEST_CORRECTION {Correction demandée} APPROVE_CORRECTION {Correction approuvée} REJECT_CORRECTION {Correction refusée} READ {Consulté} ASSIGN {Attribué} UNASSIGN {Désattribué} UPDATE {Mis à jour} other {Inconnu}}"
 v2.events.outbox.processingAction,Message in outbox when processing action,"{action, select, DECLARE {Sending} REGISTER {Registering} VALIDATE {Sending for approval} NOTIFY {Sending} REJECT {Sending for updates} ARCHIVE {Archiving} PRINT_CERTIFICATE {Certifying} REQUEST_CORRECTION {Requesting correction} APPROVE_CORRECTION {Approving correction} REJECT_CORRECTION {Rejecting correction} ASSIGN {Assigning} UNASSIGN {Unassigning} other {processing action}}","{action, select, DECLARE {Envoi} REGISTER {Enregistrement} VALIDATE {Envoi pour approbation} NOTIFY {Envoi} REJECT {Envoi pour mise à jour} ARCHIVE {Archivage} PRINT_CERTIFICATE {Certification} REQUEST_CORRECTION {Demande de correction} APPROVE_CORRECTION {Approbation de la correction} REJECT_CORRECTION {Rejet de la correction} ASSIGN {Attribution} UNASSIGN {Désattribution} other {action en cours}}"
 v2.events.outbox.waitingForAction,Message in outbox when waiting for action,"Waiting to {action, select, DECLARE {send} REGISTER {register} VALIDATE {send for approval} NOTIFY {send} REJECT {send for updates} ARCHIVE {archive} PRINT_CERTIFICATE {certify} REQUEST_CORRECTION {request correction} APPROVE_CORRECTION {approve correction} REJECT_CORRECTION {reject correction} ASSIGN {assign} UNASSIGN {unassign} other {action}}","En attente de {action, select, DECLARE {l'envoi} REGISTER {l'enregistrement} VALIDATE {l'envoi pour approbation} NOTIFY {l'envoi} REJECT {l'envoi pour mise à jour} ARCHIVE {l'archivage} PRINT_CERTIFICATE {la certification} REQUEST_CORRECTION {la demande de correction} APPROVE_CORRECTION {l'approbation de la correction} REJECT_CORRECTION {le rejet de la correction} ASSIGN {l'attribution} UNASSIGN {la désattribution} other {l'action}}"
-v2.events.status,Dynamic event status,"{status, select, OUTBOX {Syncing..} CREATED {Draft} VALIDATED {Validated} DRAFT {Draft} DECLARED {Declared} REGISTERED {Registered} CERTIFIED {Certified} REJECTED {Rejected} ARCHIVED {Archived} MARKED_AS_DUPLICATE {Marked as a duplicate} NOTIFIED {In progress} other {Unknown}}","{status, select, OUTBOX {Synchronisation..} CREATED {Brouillon} VALIDATED {Validé} DRAFT {Brouillon} DECLARED {Déclaré} REGISTERED {Enregistré} CERTIFIED {Certifié} REJECTED {Nécessite une mise à jour} ARCHIVED {Archivé} MARKED_AS_DUPLICATE {Marqué comme doublon} NOTIFIED {Notifié} other {Inconnu}}"
+v2.events.status,Dynamic event status,"{status, select, OUTBOX {Syncing..} CREATED {Draft} VALIDATED {Validated} DRAFT {Draft} DECLARED {Declared} REGISTERED {Registered} CERTIFIED {Certified} REJECTED {Rejected} ARCHIVED {Archived} MARKED_AS_DUPLICATE {Marked as a duplicate} CORRECTED {Record corrected} REQUEST_CORRECTION {Correction requested} APPROVE_CORRECTION {Correction approved} REJECT_CORRECTION {Correction rejected} NOTIFIED {In progress} other {Unknown}}","{status, select, OUTBOX {Synchronisation..} CREATED {Brouillon} VALIDATED {Validé} DRAFT {Brouillon} DECLARED {Déclaré} REGISTERED {Enregistré} CERTIFIED {Certifié} REJECTED {Nécessite une mise à jour} ARCHIVED {Archivé} MARKED_AS_DUPLICATE {Marqué comme doublon} NOTIFIED {Notifié} other {Inconnu}}"
 v2.exitModal.cancel, Modal cancel button,Cancel,Annuler
 v2.exitModal.exitWithoutSaving,exitmodal without saving label,Exit without saving changes?,Quitter sans enregistrer les modifications?
 v2.exitModal.exitWithoutSavingDescription, exitmodal without saving  description,You have unsaved changes on your declaration form. Are you sure you want to exit without saving?,Vous avez des modifications non enregistrées sur votre formulaire de déclaration. Voulez-vous vraiment quitter sans enregistrer ?
@@ -3044,6 +3063,8 @@ v2.form.section.mother.title,Form section title for mothers details,Mother's det
 v2.home.header.searchTool.placeholder,Search tool placeholder,"Search for a tracking ID, name, registration number, national ID, phone number or email","Rechercher un identifiant de suivi, un nom, un numéro d'enregistrement, un numéro d'identité nationale, un numéro de téléphone ou une adresse e-mail"
 v2.messages.emptyString,Empty string, ,
 v2.modal.approveCorrection,The title for approve correction modal,Approve correction?,Approuver la correction ?
+v2.modal.approveCorrection,The title for approve correction modal,Approve correction?,Approuver la correction ?
+v2.modal.rejectCorrection,The title for reject correction modal,Reject correction?,Rejeter la correction ?
 v2.modal.rejectCorrection,The title for reject correction modal,Reject correction?,Rejeter la correction ?
 v2.navigation.CREATED,In progress label in navigation,In progress,En cours
 v2.navigation.DECLARED,Ready for review label in navigation,Ready for review,Prêt pour l'examen
@@ -3061,7 +3082,7 @@ v2.printAction.title,The title for print action,Print certificate,Imprimer le ce
 v2.record-corrected.summary.section.title,Corrections section title,Correction(s),Correction(s)
 v2.recordAudit.archive.confirmation.body,Confirmation body for archiving a declaration,This will archive the record and remove it from your workspace,"Cela supprimera la déclaration de la file d'attente et changera son statut en archive. Pour annuler ce changement, vous devrez rechercher la déclaration."
 v2.recordAudit.archive.confirmation.title,Confirmation title for archiving a declaration,Archive declaration?,Archiver la déclaration ?
-v2.regHome.issued,Label for workqueue tooltip,Issued,Émis
+v2.regHome.issued,Label for workqueue tooltip,Empty message,Empty message
 v2.register.eventInfo.birth.title,Event information title for the birth,Introduce the birth registration process to the informant,Présenter la procédure d'enregistrement des naissances à l'informateur
 v2.register.form.modal.desc.deleteDeclarationConfirm,Description for delete declaration confirmation modal,Are you sure you want to delete this declaration?,Êtes-vous sûr de vouloir supprimer cette déclaration ?
 v2.register.form.modal.title.deleteDeclarationConfirm,Title for delete declaration confirmation modal,Delete draft?,Supprimer le brouillon?
@@ -3207,12 +3228,16 @@ verifyCertificate.successTitle,title for success alert,Valid QR code,Code QR val
 verifyCertificate.successUrl,title for success alert for url validation,URL Verification,Vérification des URL
 verifyCertificate.timeOut,message when time out after few minute,You been timed out,Délais expirée
 verifyCertificate.toastMessage,Message for the toast when time spend 1 minute,"After verifying the certificate, please close the browser window","Après avoir vérifié le certificat, veuillez fermer la fenêtre du navigateur."
+views.idReader.label.eSignet,E-signet button label,Authenticate with e-Signet,S'authentifier avec e-Signet
+views.idReader.label.manualInput,Label that shows below the divider on the id reader component,Complete fields below,Complétez les champs ci-dessous
+views.idReader.label.or,Label that shows on the divider,Or,Ou
 views.idVerification.banner.actions.reset,,Reset,Réinitialiser
 views.idVerification.banner.actions.revoke,,Revoke,Révoquer
 views.idVerification.banner.authenticated.description,,"This identity has been successfully authenticated with the Farajaland’s National ID System. To make edits, please remove the authentication first.",Cette identité a été authentifiée avec succès avec le système national d'identité de Farajaland.
 views.idVerification.banner.authenticated.resetConfirmation.description,,"By clicking ‘Continue,’ you’ll remove ID Authenticated status and unlock the fields for editing.","En cliquant sur «Continuer», vous supprimerez l'état authentifié de l'ID et déverrouillez les champs pour l'édition."
 views.idVerification.banner.authenticated.resetConfirmation.title,,Revoke authenticated ID?,Révoquer une pièce d'identité authentifiée?
 views.idVerification.banner.authenticated.title,,ID Authenticated,ID authentifié
+views.idVerification.banner.failed.description,,The identity data does not match an entry in Farajaland's National ID System,Les données d'identité ne correspondent pas à une entrée du système national d'identification du Farajaland.
 views.idVerification.banner.failed.description,,The identity data does not match an entry in Farajaland's National ID System,Les données d'identité ne correspondent pas à une entrée du système national d'identification du Farajaland.
 views.idVerification.banner.failed.resetConfirmation.description,,"By clicking ‘Continue,’ you’ll clear all information to it’s default state.","En cliquant sur «Continuer», vous effacerez toutes les informations de son état par défaut."
 views.idVerification.banner.failed.resetConfirmation.title,,Reset information?,Réinitialiser les informations?
