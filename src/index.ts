@@ -657,6 +657,13 @@ export async function createServer() {
       }
     },
     handler: async (req, h) => {
+      if (!env.ANALYTICS_DATABASE_URL) {
+        logger.warn(
+          'Skipping reindex, no ANALYTICS_DATABASE_URL environment variable set.'
+        )
+        return h.response().code(200)
+      }
+
       const stream = req.raw.req.pipe(StreamArray.withParser())
       const BATCH_SIZE = 1000
       const queue: EventDocument[] = []
@@ -791,6 +798,13 @@ export async function createServer() {
   })
 
   server.ext('onPostHandler', async (request, h) => {
+    if (!env.ANALYTICS_DATABASE_URL) {
+      logger.warn(
+        'Skipping reindex, no ANALYTICS_DATABASE_URL environment variable set.'
+      )
+      return h.continue
+    }
+
     const response = request.response as Hapi.ResponseObject
     const parsedPath = /^\/trigger\/events\/[^/]+\/actions\/([^/]+)$/.exec(
       request.route.path
@@ -817,7 +831,9 @@ export async function createServer() {
 
   async function start() {
     await server.start()
-    await syncLocationLevels()
+    if (env.ANALYTICS_DATABASE_URL) {
+      await syncLocationLevels()
+    }
     server.log(
       'info',
       `server started on ${COUNTRY_CONFIG_HOST}:${COUNTRY_CONFIG_PORT}`

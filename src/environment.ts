@@ -40,6 +40,7 @@ export const env = cleanEnv(process.env, {
     devDefault: 'http://localhost:2024/esignet/get-oidp-user-info'
   }),
   ANALYTICS_DATABASE_URL: url({
+    default: undefined,
     devDefault:
       'postgres://events_analytics:analytics_password@localhost:5432/events',
     desc: 'The database URL for reads and writes to `analytics.events`. See `/infrastructure/postgres/setup-analytics.sh` for how the default database is set up for your country.'
