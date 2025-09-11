@@ -31,22 +31,22 @@ const idTypeMessageDescriptors = {
   NATIONAL_ID: {
     defaultMessage: 'National ID',
     description: 'Option for form field: Type of ID',
-    id: 'v2.form.field.label.iDTypeNationalID'
+    id: 'form.field.label.iDTypeNationalID'
   },
   PASSPORT: {
     defaultMessage: 'Passport',
     description: 'Option for form field: Type of ID',
-    id: 'v2.form.field.label.iDTypePassport'
+    id: 'form.field.label.iDTypePassport'
   },
   BIRTH_CERTIFICATE: {
     defaultMessage: 'Birth Certificate',
     description: 'Option for form field: Type of ID',
-    id: 'v2.form.field.label.iDTypeBirthCertificate'
+    id: 'form.field.label.iDTypeBirthCertificate'
   },
   OTHER: {
     defaultMessage: 'Other',
     description: 'Option for form field: Type of ID',
-    id: 'v2.form.field.label.iDTypeOther'
+    id: 'form.field.label.iDTypeOther'
   }
 } satisfies Record<keyof typeof IdType, TranslationConfig>
 
@@ -63,32 +63,32 @@ const proofOfDeathMessageDescriptors = {
   ATTESTED_LETTER_OF_DEATH: {
     defaultMessage: 'Attested letter of death',
     description: 'Label for select option Attested Letter of Death',
-    id: 'v2.form.field.label.docTypeLetterOfDeath'
+    id: 'form.field.label.docTypeLetterOfDeath'
   },
   POLICE_CERTIFICATE_OF_DEATH: {
     defaultMessage: 'Police certificate of death',
     description: 'Label for select option Police death certificate',
-    id: 'v2.form.field.label.docTypePoliceCertificate'
+    id: 'form.field.label.docTypePoliceCertificate'
   },
   HOSPITAL_CERTIFICATE_OF_DEATH: {
     defaultMessage: 'Hospital certificate of death',
     description: 'Label for select option Hospital certificate of death',
-    id: 'v2.form.field.label.docTypeHospitalDeathCertificate'
+    id: 'form.field.label.docTypeHospitalDeathCertificate'
   },
   CORONERS_REPORT: {
     defaultMessage: "Coroner's report",
     description: "Label for select option Coroner's report",
-    id: 'v2.form.field.label.docTypeCoronersReport'
+    id: 'form.field.label.docTypeCoronersReport'
   },
   BURIAL_RECEIPT: {
     defaultMessage: 'Certified copy of burial receipt',
     description: 'Label for select option Certified Copy of Burial Receipt',
-    id: 'v2.form.field.label.docTypeCopyOfBurialReceipt'
+    id: 'form.field.label.docTypeCopyOfBurialReceipt'
   },
   OTHER: {
     defaultMessage: 'Other',
     description: 'Option for form field: Type of ID',
-    id: 'v2.form.field.label.docTypeOther'
+    id: 'form.field.label.docTypeOther'
   }
 } satisfies Record<keyof typeof ProofOfDeathType, TranslationConfig>
 
@@ -102,17 +102,17 @@ const proofOfCauseOfDeathMessageDescriptors = {
   VERBAL_AUTOPSY: {
     defaultMessage: 'Verbal autopsy report',
     description: 'Option for form field: verbalAutopsy',
-    id: 'v2.form.field.label.verbalAutopsy'
+    id: 'form.field.label.verbalAutopsy'
   },
   MEDICALLY_CERTIFIED: {
     defaultMessage: 'Medically Certified Cause of Death',
     description: 'Option for form field: medicallyCertified',
-    id: 'v2.form.field.label.medicallyCertified'
+    id: 'form.field.label.medicallyCertified'
   },
   OTHER: {
     defaultMessage: 'Other',
     description: 'Option for form field: Other',
-    id: 'v2.form.field.label.docTypeOther'
+    id: 'form.field.label.docTypeOther'
   }
 } satisfies Record<keyof typeof ProofOfCauseOfDeathType, TranslationConfig>
 
@@ -142,7 +142,7 @@ export const documents = defineFormPage({
   title: {
     defaultMessage: 'Upload supporting documents',
     description: 'Form section title for documents',
-    id: 'v2.form.section.documents.title'
+    id: 'form.section.documents.title'
   },
   fields: [
     {
@@ -151,7 +151,7 @@ export const documents = defineFormPage({
       label: {
         defaultMessage: 'The following documents are required',
         description: 'The following documents are required',
-        id: 'v2.form.field.label.proofOfBirth.fileName'
+        id: 'form.field.label.proofOfBirth.fileName'
       },
       configuration: { styles: { fontVariant: 'reg16' } }
     },
@@ -163,7 +163,7 @@ export const documents = defineFormPage({
       label: {
         defaultMessage: "Proof of deceased's ID",
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.documents.field.proofOfDeceased.label'
+        id: 'event.death.action.declare.form.section.documents.field.proofOfDeceased.label'
       },
       configuration: DEFAULT_FILE_CONFIGURATION,
       options: idTypeOptions
@@ -176,7 +176,7 @@ export const documents = defineFormPage({
       label: {
         defaultMessage: "Proof of informant's ID",
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.documents.field.proofOfInformant.label'
+        id: 'event.death.action.declare.form.section.documents.field.proofOfInformant.label'
       },
       configuration: DEFAULT_FILE_CONFIGURATION,
       options: idTypeOptions
@@ -189,7 +189,7 @@ export const documents = defineFormPage({
       label: {
         defaultMessage: 'Proof of death of deceased',
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.documents.field.proofOfDeath.label'
+        id: 'event.death.action.declare.form.section.documents.field.proofOfDeath.label'
       },
       configuration: DEFAULT_FILE_CONFIGURATION,
       options: proofOfDeathTypeOptions
@@ -202,7 +202,7 @@ export const documents = defineFormPage({
       label: {
         defaultMessage: 'Proof of cause of death',
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.documents.field.proofOfCauseOfDeath.label'
+        id: 'event.death.action.declare.form.section.documents.field.proofOfCauseOfDeath.label'
       },
       configuration: DEFAULT_FILE_CONFIGURATION,
       options: proofOfCauseOfDeathTypeOptions,

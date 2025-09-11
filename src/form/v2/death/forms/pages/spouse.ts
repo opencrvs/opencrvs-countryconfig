@@ -46,7 +46,7 @@ export const spouse = defineFormPage({
   title: {
     defaultMessage: 'Spouse details',
     description: 'Form section title for spouse details',
-    id: 'v2.form.section.spouse.title'
+    id: 'form.section.spouse.title'
   },
   fields: [
     {
@@ -55,7 +55,7 @@ export const spouse = defineFormPage({
       label: {
         defaultMessage: "Spouse's details are not available",
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.spouse.field.detailsNotAvailable.label'
+        id: 'event.death.action.declare.form.section.spouse.field.detailsNotAvailable.label'
       },
       conditionals: [
         {
@@ -86,7 +86,7 @@ export const spouse = defineFormPage({
       label: {
         defaultMessage: 'Reason',
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.spouse.field.reason.label'
+        id: 'event.death.action.declare.form.section.spouse.field.reason.label'
       },
       conditionals: [
         {
@@ -107,7 +107,7 @@ export const spouse = defineFormPage({
       label: {
         defaultMessage: "Spouse's name",
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.spouse.field.name.label'
+        id: 'event.death.action.declare.form.section.spouse.field.name.label'
       },
       conditionals: [
         {
@@ -126,7 +126,7 @@ export const spouse = defineFormPage({
           message: {
             defaultMessage: 'Must be a valid Birthdate',
             description: 'This is the error message for invalid date',
-            id: 'v2.event.death.action.declare.form.section.spouse.field.dob.error'
+            id: 'event.death.action.declare.form.section.spouse.field.dob.error'
           },
           validator: field('spouse.dob').isBefore().now()
         }
@@ -134,7 +134,7 @@ export const spouse = defineFormPage({
       label: {
         defaultMessage: 'Date of birth',
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.spouse.field.dob.label'
+        id: 'event.death.action.declare.form.section.spouse.field.dob.label'
       },
       conditionals: [
         {
@@ -152,7 +152,7 @@ export const spouse = defineFormPage({
       label: {
         defaultMessage: 'Exact date of birth unknown',
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.spouse.field.age.checkbox.label'
+        id: 'event.death.action.declare.form.section.spouse.field.age.checkbox.label'
       },
       conditionals: [
         {
@@ -172,13 +172,13 @@ export const spouse = defineFormPage({
       label: {
         defaultMessage: 'Age of spouse',
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.spouse.field.age.label'
+        id: 'event.death.action.declare.form.section.spouse.field.age.label'
       },
       configuration: {
         postfix: {
           defaultMessage: 'years',
           description: 'This is the postfix for age field',
-          id: 'v2.event.death.action.declare.form.section.spouse.field.age.postfix'
+          id: 'event.death.action.declare.form.section.spouse.field.age.postfix'
         }
       },
       conditionals: [
@@ -198,7 +198,7 @@ export const spouse = defineFormPage({
       label: {
         defaultMessage: 'Nationality',
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.spouse.field.nationality.label'
+        id: 'event.death.action.declare.form.section.spouse.field.nationality.label'
       },
       conditionals: [
         {
@@ -215,7 +215,7 @@ export const spouse = defineFormPage({
       label: {
         defaultMessage: 'Type of ID',
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.spouse.field.idType.label'
+        id: 'event.death.action.declare.form.section.spouse.field.idType.label'
       },
       options: idTypeOptions,
       conditionals: [
@@ -232,7 +232,7 @@ export const spouse = defineFormPage({
       label: {
         defaultMessage: 'ID Number',
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.spouse.field.nid.label'
+        id: 'event.death.action.declare.form.section.spouse.field.nid.label'
       },
       conditionals: [
         {
@@ -249,7 +249,7 @@ export const spouse = defineFormPage({
           message: {
             defaultMessage: 'National id must be unique',
             description: 'This is the error message for non-unique ID Number',
-            id: 'v2.event.death.action.declare.form.nid.unique'
+            id: 'event.death.action.declare.form.nid.unique'
           },
           validator: and(
             not(field('spouse.nid').isEqualTo(field('informant.nid'))),
@@ -265,7 +265,7 @@ export const spouse = defineFormPage({
       label: {
         defaultMessage: 'ID Number',
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.spouse.field.passport.label'
+        id: 'event.death.action.declare.form.section.spouse.field.passport.label'
       },
       conditionals: [
         {
@@ -284,7 +284,7 @@ export const spouse = defineFormPage({
       label: {
         defaultMessage: 'ID Number',
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.spouse.field.brn.label'
+        id: 'event.death.action.declare.form.section.spouse.field.brn.label'
       },
       conditionals: [
         {
@@ -316,7 +316,7 @@ export const spouse = defineFormPage({
       label: {
         defaultMessage: 'Usual place of residence',
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.spouse.field.addressHelper.label'
+        id: 'event.death.action.declare.form.section.spouse.field.addressHelper.label'
       },
       configuration: { styles: { fontVariant: 'h3' } },
       conditionals: [
@@ -337,7 +337,7 @@ export const spouse = defineFormPage({
       label: {
         defaultMessage: "Same as deceased's usual place of residence?",
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.spouse.field.address.addressSameAs.label'
+        id: 'event.death.action.declare.form.section.spouse.field.address.addressSameAs.label'
       },
       defaultValue: YesNoTypes.YES,
       conditionals: [
@@ -358,7 +358,7 @@ export const spouse = defineFormPage({
       label: {
         defaultMessage: 'Usual place of residence',
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.spouse.field.address.label'
+        id: 'event.death.action.declare.form.section.spouse.field.address.label'
       },
       conditionals: [
         {
@@ -374,7 +374,7 @@ export const spouse = defineFormPage({
           message: {
             defaultMessage: 'Invalid input',
             description: 'Error message when generic field is invalid',
-            id: 'v2.error.invalidInput'
+            id: 'error.invalidInput'
           },
           validator: field('spouse.address').isValidAdministrativeLeafLevel()
         }

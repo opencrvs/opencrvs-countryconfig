@@ -25,7 +25,7 @@ export const advancedSearchDeath = [
     title: {
       defaultMessage: 'Registration details',
       description: 'The title of Registration details accordion',
-      id: 'v2.advancedSearch.form.registrationDetails'
+      id: 'advancedSearch.form.registrationDetails'
     },
     fields: [
       event('legalStatuses.REGISTERED.createdAtLocation').within(),
@@ -38,7 +38,7 @@ export const advancedSearchDeath = [
     title: {
       defaultMessage: 'Deceased details',
       description: 'The title of Deceased details accordion',
-      id: 'v2.advancedSearch.form.deceasedDetails'
+      id: 'advancedSearch.form.deceasedDetails'
     },
     fields: [
       field('deceased.dob', {
@@ -57,7 +57,7 @@ export const advancedSearchDeath = [
     title: {
       defaultMessage: 'Event details',
       description: 'The title of Event details accordion',
-      id: 'v2.advancedSearch.form.eventDetails'
+      id: 'advancedSearch.form.eventDetails'
     },
     fields: [
       field('eventDetails.deathLocation', {
@@ -70,7 +70,7 @@ export const advancedSearchDeath = [
     title: {
       defaultMessage: 'Informant details',
       description: 'The title of Informant details accordion',
-      id: 'v2.advancedSearch.form.informantDetails'
+      id: 'advancedSearch.form.informantDetails'
     },
     fields: [
       field('informant.dob', {

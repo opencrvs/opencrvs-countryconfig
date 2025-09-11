@@ -12,7 +12,7 @@ import { correctionRequesterIdentityVerify } from './requester-identity-verify'
 
 export const CORRECTION_FORM = defineActionForm({
   label: {
-    id: 'v2.event.birth.action.correction.form.label',
+    id: 'event.birth.action.correction.form.label',
     defaultMessage: 'Correct record',
     description: 'This is the label for the birth correction form'
   },
@@ -21,7 +21,7 @@ export const CORRECTION_FORM = defineActionForm({
       id: 'details',
       type: PageTypes.enum.FORM,
       title: {
-        id: 'v2.event.birth.action.correction.form.section.details.title',
+        id: 'event.birth.action.correction.form.section.details.title',
         defaultMessage: 'Correction details',
         description: 'This is the title of the section'
       },
@@ -31,7 +31,7 @@ export const CORRECTION_FORM = defineActionForm({
           id: 'details.divider',
           type: FieldType.DIVIDER,
           label: {
-            id: 'v2.event.birth.action.correction.form.section.details.divider.label',
+            id: 'event.birth.action.correction.form.section.details.divider.label',
             defaultMessage: '',
             description: 'This is the title of the section'
           },
@@ -47,7 +47,7 @@ export const CORRECTION_FORM = defineActionForm({
           type: FieldType.SELECT,
           required: true,
           label: {
-            id: 'v2.event.birth.action.correction.form.section.reason.title',
+            id: 'event.birth.action.correction.form.section.reason.title',
             defaultMessage: 'Reason for correction',
             description: 'This is the title of the section'
           },
@@ -58,7 +58,7 @@ export const CORRECTION_FORM = defineActionForm({
                 defaultMessage:
                   'Myself or an agent made a mistake (Clerical error)',
                 description: 'Label for the clerical error option',
-                id: 'v2.event.birth.action.correction.reason.option.clericalError.label'
+                id: 'event.birth.action.correction.reason.option.clericalError.label'
               }
             },
             {
@@ -67,7 +67,7 @@ export const CORRECTION_FORM = defineActionForm({
                 defaultMessage:
                   'Informant provided incorrect information (Material error)',
                 description: 'Label for the material error option',
-                id: 'v2.event.birth.action.correction.reason.option.materialError.label'
+                id: 'event.birth.action.correction.reason.option.materialError.label'
               }
             },
             {
@@ -76,7 +76,7 @@ export const CORRECTION_FORM = defineActionForm({
                 defaultMessage:
                   'Informant did not provide this information (Material omission)',
                 description: 'Label for the material omission option',
-                id: 'v2.event.birth.action.correction.reason.option.materialOmission.label'
+                id: 'event.birth.action.correction.reason.option.materialOmission.label'
               }
             },
             {
@@ -85,7 +85,7 @@ export const CORRECTION_FORM = defineActionForm({
                 defaultMessage:
                   'Requested to do so by the court (Judicial order)',
                 description: 'Label for the judicial order option',
-                id: 'v2.event.birth.action.correction.reason.option.judicialOrder.label'
+                id: 'event.birth.action.correction.reason.option.judicialOrder.label'
               }
             },
             {
@@ -93,7 +93,7 @@ export const CORRECTION_FORM = defineActionForm({
               label: {
                 defaultMessage: 'Other',
                 description: 'Label for the other option',
-                id: 'v2.event.birth.action.correction.reason.option.other.label'
+                id: 'event.birth.action.correction.reason.option.other.label'
               }
             }
           ]
@@ -105,7 +105,7 @@ export const CORRECTION_FORM = defineActionForm({
           label: {
             defaultMessage: 'Specify reason',
             description: 'Label for the reason',
-            id: 'v2.event.birth.action.correction.reason.other.label'
+            id: 'event.birth.action.correction.reason.other.label'
           },
           conditionals: [
             {
@@ -120,7 +120,7 @@ export const CORRECTION_FORM = defineActionForm({
       id: 'requester.identity.verify',
       type: PageTypes.enum.VERIFICATION,
       title: {
-        id: 'v2.event.birth.action.correction.form.section.requester.identity.verify.title',
+        id: 'event.birth.action.correction.form.section.requester.identity.verify.title',
         defaultMessage: 'Verify ID',
         description: 'This is the title of the section'
       },
@@ -134,7 +134,7 @@ export const CORRECTION_FORM = defineActionForm({
           label: {
             defaultMessage: 'Verified',
             description: 'This is the label for the verification button',
-            id: 'v2.event.birth.action.correction.form.verify'
+            id: 'event.birth.action.correction.form.verify'
           }
         },
         cancel: {
@@ -142,21 +142,21 @@ export const CORRECTION_FORM = defineActionForm({
             defaultMessage: 'Identity does not match',
             description:
               'This is the label for the verification cancellation button',
-            id: 'v2.event.birth.action.correction.form.cancel'
+            id: 'event.birth.action.correction.form.cancel'
           },
           confirmation: {
             title: {
               defaultMessage: 'Correct without proof of ID?',
               description:
                 'This is the title for the verification cancellation modal',
-              id: 'v2.event.birth.action.correction.form.cancel.confirmation.title'
+              id: 'event.birth.action.correction.form.cancel.confirmation.title'
             },
             body: {
               defaultMessage:
                 'Please be aware that if you proceed, you will be responsible for making a change to this record without the necessary proof of identification',
               description:
                 'This is the body for the verification cancellation modal',
-              id: 'v2.event.birth.action.correction.form.cancel.confirmation.body'
+              id: 'event.birth.action.correction.form.cancel.confirmation.body'
             }
           }
         }
@@ -166,7 +166,7 @@ export const CORRECTION_FORM = defineActionForm({
       id: 'documents',
       type: PageTypes.enum.FORM,
       title: {
-        id: 'v2.event.birth.action.correction.form.section.supporting-documents.title',
+        id: 'event.birth.action.correction.form.section.supporting-documents.title',
         defaultMessage: 'Upload supporting documents',
         description: 'This is the title of the section'
       },
@@ -179,7 +179,7 @@ export const CORRECTION_FORM = defineActionForm({
           label: {
             defaultMessage: 'Supporting documents',
             description: 'Label for the supporting documents field',
-            id: 'v2.event.birth.action.correction.documents.supportingDocs.label'
+            id: 'event.birth.action.correction.documents.supportingDocs.label'
           },
           options: [
             {
@@ -187,7 +187,7 @@ export const CORRECTION_FORM = defineActionForm({
               label: {
                 defaultMessage: 'Affidavit',
                 description: 'Label for the affidavit option',
-                id: 'v2.event.birth.action.correction.documents.supportingDocs.affidavit.label'
+                id: 'event.birth.action.correction.documents.supportingDocs.affidavit.label'
               }
             },
             {
@@ -195,7 +195,7 @@ export const CORRECTION_FORM = defineActionForm({
               label: {
                 defaultMessage: 'Court Document',
                 description: 'Label for the court document option',
-                id: 'v2.event.birth.action.correction.documents.supportingDocs.courtDocument.label'
+                id: 'event.birth.action.correction.documents.supportingDocs.courtDocument.label'
               }
             },
             {
@@ -203,7 +203,7 @@ export const CORRECTION_FORM = defineActionForm({
               label: {
                 defaultMessage: 'Other',
                 description: 'Label for the other option',
-                id: 'v2.event.birth.action.correction.documents.supportingDocs.other.label'
+                id: 'event.birth.action.correction.documents.supportingDocs.other.label'
               }
             }
           ]
@@ -214,7 +214,7 @@ export const CORRECTION_FORM = defineActionForm({
       id: 'fees',
       type: PageTypes.enum.FORM,
       title: {
-        id: 'v2.event.birth.action.correction.form.section.fees.title',
+        id: 'event.birth.action.correction.form.section.fees.title',
         defaultMessage: 'Collect fees',
         description: 'This is the title of the section'
       },
@@ -226,14 +226,14 @@ export const CORRECTION_FORM = defineActionForm({
           label: {
             defaultMessage: 'Fee total',
             description: 'Label for the amount field',
-            id: 'v2.event.birth.action.correction.fees.amount.label'
+            id: 'event.birth.action.correction.fees.amount.label'
           },
           configuration: {
             min: 0,
             prefix: {
               defaultMessage: '$',
               description: 'Prefix for the amount field',
-              id: 'v2.event.birth.action.correction.fees.amount.prefix'
+              id: 'event.birth.action.correction.fees.amount.prefix'
             }
           }
         }

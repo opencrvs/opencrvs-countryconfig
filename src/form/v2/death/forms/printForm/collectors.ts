@@ -83,7 +83,7 @@ const getInformantOption = (informantType: InformantTypeKey) => {
 
 const spouseOption = {
   label: {
-    id: 'v2.event.death.action.certificate.form.section.requester.spouse.label',
+    id: 'event.death.action.certificate.form.section.requester.spouse.label',
     defaultMessage: 'Print and issue to Spouse',
     description: 'This is the label for the field'
   },
@@ -92,7 +92,7 @@ const spouseOption = {
 
 const otherOption = {
   label: {
-    id: 'v2.event.death.action.certificate.form.section.requester.other.label',
+    id: 'event.death.action.certificate.form.section.requester.other.label',
     defaultMessage: 'Print and issue to someone else',
     description: 'This is the label for the field'
   },
@@ -101,7 +101,7 @@ const otherOption = {
 
 const printInAdvanceOption = {
   label: {
-    id: 'v2.event.death.action.certificate.form.section.requester.printInAdvance.label',
+    id: 'event.death.action.certificate.form.section.requester.printInAdvance.label',
     defaultMessage: 'Print in advance',
     description: 'This is the label for the field'
   },
@@ -111,7 +111,7 @@ const printInAdvanceOption = {
 const requesterLabel = {
   defaultMessage: 'Requester',
   description: 'This is the label for the field',
-  id: 'v2.event.death.action.certificate.form.section.requester.label'
+  id: 'event.death.action.certificate.form.section.requester.label'
 }
 
 const commonConfigs = {
