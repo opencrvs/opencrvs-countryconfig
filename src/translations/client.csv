@@ -402,7 +402,7 @@ correction.correctRecordDialog.title,The title for the dialog when record correc
 correction.correctionForApprovalDialog.actions.cancel,The cancel button for the dialog when record correction sent by registration agent for approval,Cancel,Annuler
 correction.correctionForApprovalDialog.actions.send,The send button for the dialog when record correction sent by registration agent for approval,Confirm,Confirmer
 correction.correctionForApprovalDialog.description,The description for the dialog when record correction sent by registration agent for approval,The Registrar will be notified of this correction request and a record of this request will be recorded,Le greffier sera informé de cette demande de correction et un enregistrement de cette demande sera effectué
-correction.correctionForApprovalDialog.title,The title for the dialog when record correction sent by registration agent for approval,Send record correction for approval ?,Envoyer la correction de l'enregistrement pour approbation ?
+correction.correctionForApprovalDialog.title,The title for the dialog when record correction sent by registration agent for approval,Send record correction for approval?,Envoyer la correction de l'enregistrement pour approbation ?
 correction.corrector.anotherAgent,Label for another registration or field agent option in certificate correction form,Another registration agent or field agent,Un autre agent d'enregistrement ou un agent de terrain
 correction.corrector.birth.note,Birth correction note,Note: In the case that the child is now of legal age (18) then only they should be able to request a change to their birth record.,"Note : Si l'enfant a atteint l'âge légal (18 ans), il est le seul à pouvoir demander une modification de son acte de naissance."
 correction.corrector.bride,Label for bride option in certificate correction form,Bride,Mariée
@@ -428,7 +428,7 @@ correction.reason.materialError,Label for material error for correction reason f
 correction.reason.materialOmission,Label for material omission for correction reason form,Informant did not provide this information (Material omission),L'informateur n'a pas fourni cette information (Omission matérielle)
 correction.reason.other,,Other,Autre
 correction.reason.reasonForChange,Label for other reason for correction reason form,Reason for correction,Motif de la correction
-correction.reason.title,The title for the correction reason form,Reason for correction,Quelle était la raison de la correction ?
+correction.reason.title,The title for the correction reason form,Reason for correction?,Quelle était la raison de la correction?
 correction.request,Status for application being requested for correction,Requested correction,Correction demandée
 correction.summary.addComments,Add Comments header for certificate correction summary,Add Comments,Ajouter des commentaires
 correction.summary.comments,Comments header for certificate correction summary,Comments,Commentaires
@@ -1301,8 +1301,8 @@ print.certificate.paymentMethod,The label for payment method select,Payment meth
 print.certificate.printReceipt,The label for print receipt button,Print receipt,Imprimer le reçu
 print.certificate.queryError,The error message shown when a query fails,An error occurred while quering for birth registration data,Une erreur s'est produite lors de la recherche de données d'enregistrement des naissances.
 print.certificate.review.description,Certificate review description,Please confirm that the informant has reviewed that the information on the certificate is correct and that it is ready to print.,Veuillez confirmer que l'informateur a vérifié que les informations figurant sur le certificat sont correctes et que celui-ci est prêt à être imprimé.
-print.certificate.review.modal.body.print,Print certificate modal body text,A PDF of the certificate will open in a new tab for you to print. This record will then be moved to your ready to issue work-queue,Un PDF du certificat s'ouvrira dans un nouvel onglet que vous pourrez imprimer. Cet enregistrement sera ensuite déplacé vers votre file d'attente de travail prêt à émettre
-print.certificate.review.modal.body.printAndIssue,Print certificate modal body text,A PDF of the certificate will open in a new tab for you to print and issue,Un PDF du certificat s'ouvrira dans un nouvel onglet que vous pourrez imprimer et émettre
+print.certificate.review.modal.body.print,Print certificate modal body text,A Pdf of the certificate will open in a new tab for you to print. This record will then be moved to your ready to issue work-queue,Un PDF du certificat s'ouvrira dans un nouvel onglet que vous pourrez imprimer. Cet enregistrement sera ensuite déplacé vers votre file d'attente de travail prêt à émettre
+print.certificate.review.modal.body.printAndIssue,Print certificate modal body text,A Pdf of the certificate will open in a new tab for you to print and issue,Un PDF du certificat s'ouvrira dans un nouvel onglet que vous pourrez imprimer et émettre
 print.certificate.review.printAndIssueModalTitle,Print and issue certificate modal title text,Print and issue certificate?,Imprimer et émettre le certificat ?
 print.certificate.review.printModalTitle,Print certificate modal title text,Print certificate?,Imprimer le certificat ?
 print.certificate.review.title,Certificate review title,Ready to certify?,Prêt à certifier ?
@@ -1710,7 +1710,7 @@ v2-events.buttons.makeCorrection,Rectord correction button text,Correct record,C
 v2-events.buttons.submitCorrectionRequest,Submit correction request button text,Submit correction request,Soumettre une demande de correction
 v2-events.correction.correctionReject.reason,Correction request rejection reason,Reason for rejection,Motif du rejet
 v2-events.correction.correctionRequest,Correction request text,Correction request,Demande de correction
-v2.action.correct,Label for correct record button in dropdown menu,Correct Record,Corriger l'enregistrement
+v2.action.correct,Label for correct record button in dropdown menu,Correct record,Enregistrement correct
 v2.action.view.record,Label for view record,View,Afficher
 v2.actionModal.PrimaryAction,The label for primary action button of action modal,"{action, select, declare{Declare} other{{action}}}","{action, select, declare{Declare} other{{action}}}"
 v2.actionModal.cancel,The label for cancel button of action modal,Cancel,Annuler
@@ -1776,7 +1776,7 @@ v2.correction.corrector.others,Label for someone else option in certificate corr
 v2.correction.corrector.paragraph.title,The title for the corrector form,"For all record corrections at a minimum an affidavit must be provided. For material errors and omissions eg. in paternity cases, a court order must also be provided.","Pour toutes les corrections de dossiers, il faut au moins fournir un affidavit. Pour les erreurs matérielles et les omissions, par exemple dans les cas de paternité, une décision de justice doit également être fournie."
 v2.correction.label.verifyIdentity.cancel,Label for cancellation of identity verificationin correction request,No,Non
 v2.correction.label.verifyIdentity.confirm,Label for verification of identity in correction request,Yes,Oui
-v2.correction.reason.title,The title for the corrector form,Reason for correction?,Reason for correction?
+v2.correction.reason.title,The title for the corrector form,Reason for correction?,Quelle était la raison de la correction?
 v2.correction.requester.relationshop.intro.label,The title for the corrector form,Note: In the case that the child is now of legal age (18) then only they should be able to request a change to their birth record.,"Note : Si l'enfant a atteint l'âge légal (18 ans), il est le seul à pouvoir demander une modification de son acte de naissance."
 v2.correction.requesterOffice,Correction requester office label,Office,Bureau
 v2.correction.submittedBy,Correction submitted by label,Submitter,Déposant
@@ -2206,8 +2206,8 @@ v2.navigation.REGISTERED,Ready to print label in navigation,Ready to print,Prêt
 v2.print.certificate.button.confirmPrint,The text for print button,"Yes, print certificate","Oui, imprimer le certificat"
 v2.print.certificate.button.makeCorrection,The label for correction button of print action,"No, make correction","Non, faites la correction"
 v2.print.certificate.onlineOnly,Print certificate online only message,Print certificate is an online only action. Please go online to print the certificate,L'impression du certificat est une action en ligne uniquement. Veuillez vous connecter pour imprimer le certificat.
-v2.print.certificate.review.modal.body.print,Print certificate modal body text,A Pdf of the certificate will open in a new tab for printing. The record will move to the ready-to-issue queue.,A Pdf of the certificate will open in a new tab for printing. The record will move to the ready-to-issue queue.
-v2.print.certificate.review.modal.body.printAndIssue,Print certificate modal body text,A Pdf of the certificate will open in a new tab for printing and issuing.,A Pdf of the certificate will open in a new tab for printing and issuing.
+v2.print.certificate.review.modal.body.print,Print certificate modal body text,A Pdf of the certificate will open in a new tab for printing. The record will move to the ready-to-issue queue.,Un Pdf du certificat s'ouvrira dans un nouvel onglet que vous pourrez imprimer. Cet enregistrement sera ensuite déplacé vers votre file d'attente de travail prêt à émettre
+v2.print.certificate.review.modal.body.printAndIssue,Print certificate modal body text,A Pdf of the certificate will open in a new tab for printing and issuing.,Un Pdf du certificat s'ouvrira dans un nouvel onglet que vous pourrez imprimer et émettre.
 v2.print.certificate.review.printAndIssueModalTitle,Print and issue certificate modal title text,Print and issue certificate?,Imprimer et émettre le certificat ?
 v2.print.certificate.review.printModalTitle,Print certificate modal title text,Print certificate?,Imprimer le certificat ?
 v2.print.certificate.toast.message,Floating Toast message upon certificate ready to print,Certificate is ready to print,Le certificat est prêt à être imprimé
