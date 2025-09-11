@@ -36,22 +36,22 @@ const idTypeMessageDescriptors = {
   NATIONAL_ID: {
     defaultMessage: 'National ID',
     description: 'Option for form field: Type of ID',
-    id: 'v2.form.field.label.iDTypeNationalID'
+    id: 'form.field.label.iDTypeNationalID'
   },
   PASSPORT: {
     defaultMessage: 'Passport',
     description: 'Option for form field: Type of ID',
-    id: 'v2.form.field.label.iDTypePassport'
+    id: 'form.field.label.iDTypePassport'
   },
   BIRTH_CERTIFICATE: {
     defaultMessage: 'Birth Certificate',
     description: 'Option for form field: Type of ID',
-    id: 'v2.form.field.label.iDTypeBirthCertificate'
+    id: 'form.field.label.iDTypeBirthCertificate'
   },
   OTHER: {
     defaultMessage: 'Other',
     description: 'Option for form field: Type of ID',
-    id: 'v2.form.field.label.iDTypeOther'
+    id: 'form.field.label.iDTypeOther'
   }
 } satisfies Record<keyof typeof IdType, TranslationConfig>
 
@@ -75,12 +75,12 @@ const otherMessageDescriptors = {
   PROOF_OF_LEGAL_GUARDIANSHIP: {
     defaultMessage: 'Proof of legal guardianship',
     description: 'Label for document option Proof of legal guardianship',
-    id: 'v2.form.field.label.legalGuardianProof'
+    id: 'form.field.label.legalGuardianProof'
   },
   PROOF_OF_ASSIGNED_RESPONSIBILITY: {
     defaultMessage: 'Proof of assigned responsibility',
     description: 'Label for docuemnt option Proof of assigned responsibility',
-    id: 'v2.form.field.label.assignedResponsibilityProof'
+    id: 'form.field.label.assignedResponsibilityProof'
   }
 } satisfies Record<keyof typeof Other, TranslationConfig>
 
@@ -92,7 +92,7 @@ export const documents = defineFormPage({
   title: {
     defaultMessage: 'Upload supporting documents',
     description: 'Form section title for documents',
-    id: 'v2.form.section.documents.title'
+    id: 'form.section.documents.title'
   },
   fields: [
     {
@@ -108,13 +108,13 @@ export const documents = defineFormPage({
         fileName: {
           defaultMessage: 'Notification of birth',
           description: 'This is the label for the file name',
-          id: 'v2.form.field.label.proofOfBirth.fileName'
+          id: 'form.field.label.proofOfBirth.fileName'
         }
       },
       label: {
         defaultMessage: 'Proof of birth',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.documents.field.proofOfBirth.label'
+        id: 'event.birth.action.declare.form.section.documents.field.proofOfBirth.label'
       }
     },
     {
@@ -125,7 +125,7 @@ export const documents = defineFormPage({
       label: {
         defaultMessage: "Proof of mother's ID",
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.documents.field.proofOfMother.label'
+        id: 'event.birth.action.declare.form.section.documents.field.proofOfMother.label'
       },
       configuration: DEFAULT_FILE_CONFIGURATION,
       options: idTypeOptions,
@@ -145,7 +145,7 @@ export const documents = defineFormPage({
       label: {
         defaultMessage: "Proof of father's ID",
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.documents.field.proofOfFather.label'
+        id: 'event.birth.action.declare.form.section.documents.field.proofOfFather.label'
       },
       configuration: DEFAULT_FILE_CONFIGURATION,
       options: idTypeOptions,
@@ -164,7 +164,7 @@ export const documents = defineFormPage({
       label: {
         defaultMessage: "Proof of informant's ID",
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.documents.field.proofOfInformant.label'
+        id: 'event.birth.action.declare.form.section.documents.field.proofOfInformant.label'
       },
       configuration: DEFAULT_FILE_CONFIGURATION,
       options: idTypeOptions,
@@ -188,7 +188,7 @@ export const documents = defineFormPage({
       label: {
         defaultMessage: 'Other',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.documents.field.proofOther.label'
+        id: 'event.birth.action.declare.form.section.documents.field.proofOther.label'
       },
       configuration: DEFAULT_FILE_CONFIGURATION,
       options: otherOptions,

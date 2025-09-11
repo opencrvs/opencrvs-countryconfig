@@ -45,17 +45,17 @@ const genderMessageDescriptors = {
   MALE: {
     defaultMessage: 'Male',
     description: 'Label for option male',
-    id: 'v2.form.field.label.sexMale'
+    id: 'form.field.label.sexMale'
   },
   FEMALE: {
     defaultMessage: 'Female',
     description: 'Label for option female',
-    id: 'v2.form.field.label.sexFemale'
+    id: 'form.field.label.sexFemale'
   },
   UNKNOWN: {
     defaultMessage: 'Unknown',
     description: 'Label for option unknown',
-    id: 'v2.form.field.label.sexUnknown'
+    id: 'form.field.label.sexUnknown'
   }
 } satisfies Record<keyof typeof GenderTypes, TranslationConfig>
 
@@ -67,7 +67,7 @@ export const deceased = defineFormPage({
   title: {
     defaultMessage: "Deceased's details",
     description: 'Form section title for Deceased',
-    id: 'v2.form.death.deceased.title'
+    id: 'form.death.deceased.title'
   },
   fields: [
     {
@@ -79,7 +79,7 @@ export const deceased = defineFormPage({
       label: {
         defaultMessage: "Deceased's name",
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.deceased.field.name.label'
+        id: 'event.death.action.declare.form.section.deceased.field.name.label'
       },
       validation: [invalidNameValidator('deceased.name')]
     },
@@ -90,7 +90,7 @@ export const deceased = defineFormPage({
       label: {
         defaultMessage: 'Sex',
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.deceased.field.gender.label'
+        id: 'event.death.action.declare.form.section.deceased.field.gender.label'
       },
       options: genderOptions
     },
@@ -103,7 +103,7 @@ export const deceased = defineFormPage({
           message: {
             defaultMessage: 'Must be a valid Birthdate',
             description: 'This is the error message for invalid date',
-            id: 'v2.event.death.action.declare.form.section.deceased.field.dob.error'
+            id: 'event.death.action.declare.form.section.deceased.field.dob.error'
           },
           validator: field('deceased.dob').isBefore().now()
         }
@@ -111,7 +111,7 @@ export const deceased = defineFormPage({
       label: {
         defaultMessage: 'Date of birth',
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.deceased.field.dob.label'
+        id: 'event.death.action.declare.form.section.deceased.field.dob.label'
       },
       conditionals: [
         {
@@ -142,7 +142,7 @@ export const deceased = defineFormPage({
       label: {
         defaultMessage: `Age of deceased`,
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.deceased.field.age.label'
+        id: 'event.death.action.declare.form.section.deceased.field.age.label'
       },
       configuration: {
         postfix: {
@@ -201,7 +201,7 @@ export const deceased = defineFormPage({
           message: {
             defaultMessage: 'National id must be unique',
             description: 'This is the error message for non-unique ID Number',
-            id: 'v2.event.death.action.declare.form.nid.unique'
+            id: 'event.death.action.declare.form.nid.unique'
           },
           validator: and(
             not(field('deceased.nid').isEqualTo(field('informant.nid')))
@@ -261,7 +261,7 @@ export const deceased = defineFormPage({
       label: {
         defaultMessage: 'No. of dependants',
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.deceased.field.numberOfDependants.label'
+        id: 'event.death.action.declare.form.section.deceased.field.numberOfDependants.label'
       },
       configuration: {
         min: 0
@@ -289,14 +289,14 @@ export const deceased = defineFormPage({
       label: {
         defaultMessage: 'Usual place of residence',
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.deceased.field.address.label'
+        id: 'event.death.action.declare.form.section.deceased.field.address.label'
       },
       validation: [
         {
           message: {
             defaultMessage: 'Invalid input',
             description: 'Error message when generic field is invalid',
-            id: 'v2.error.invalidInput'
+            id: 'error.invalidInput'
           },
           validator: field('deceased.address').isValidAdministrativeLeafLevel()
         }

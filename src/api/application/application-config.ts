@@ -30,7 +30,7 @@ export const applicationConfig = {
     {
       id: 'province',
       label: {
-        id: 'v2.field.address.province.label',
+        id: 'field.address.province.label',
         defaultMessage: 'Province',
         description: 'Label for province in address'
       }
@@ -38,7 +38,7 @@ export const applicationConfig = {
     {
       id: 'district',
       label: {
-        id: 'v2.field.address.district.label',
+        id: 'field.address.district.label',
         defaultMessage: 'District',
         description: 'Label for district in address'
       }

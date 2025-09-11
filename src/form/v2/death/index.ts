@@ -31,16 +31,16 @@ export const deathEvent = defineConfig({
   label: {
     defaultMessage: 'Death',
     description: 'This is what this event is referred as in the system',
-    id: 'v2.event.death.label'
+    id: 'event.death.label'
   },
   dateOfEvent: field('eventDetails.date'),
   title: {
     defaultMessage: '{deceased.name.firstname} {deceased.name.surname}',
     description: 'This is the title of the summary',
-    id: 'v2.event.death.title'
+    id: 'event.death.title'
   },
   fallbackTitle: {
-    id: 'v2.event.tennis-club-membership.fallbackTitle',
+    id: 'event.tennis-club-membership.fallbackTitle',
     defaultMessage: 'No name provided',
     description:
       'This is a fallback title if actual title resolves to empty string'
@@ -53,7 +53,7 @@ export const deathEvent = defineConfig({
           defaultMessage: 'No date of death',
           description:
             'This is shown when there is no date of death information',
-          id: 'v2.event.death.summary.eventDetails.date.empty'
+          id: 'event.death.summary.eventDetails.date.empty'
         }
       },
       {
@@ -62,12 +62,12 @@ export const deathEvent = defineConfig({
           defaultMessage: 'No place of death',
           description:
             'This is shown when there is no place of death information',
-          id: 'v2.event.death.summary.eventDetails.placeOfDeath.empty'
+          id: 'event.death.summary.eventDetails.placeOfDeath.empty'
         },
         label: {
           defaultMessage: 'Place of death',
           description: 'Label for place of death',
-          id: 'v2.event.death.summary.eventDetails.placeOfDeath.label'
+          id: 'event.death.summary.eventDetails.placeOfDeath.label'
         },
         conditionals: [
           {
@@ -82,12 +82,12 @@ export const deathEvent = defineConfig({
           defaultMessage: 'No place of death',
           description:
             'This is shown when there is no death location information',
-          id: 'v2.event.death.summary.eventDetails.deathLocation.empty'
+          id: 'event.death.summary.eventDetails.deathLocation.empty'
         },
         label: {
           defaultMessage: 'Place of death',
           description: 'Label for place of death',
-          id: 'v2.event.death.summary.eventDetails.deathLocation.label'
+          id: 'event.death.summary.eventDetails.deathLocation.label'
         },
         conditionals: [
           {
@@ -104,12 +104,12 @@ export const deathEvent = defineConfig({
           defaultMessage: 'No place of death',
           description:
             'This is shown when there is no death location information',
-          id: 'v2.event.death.summary.eventDetails.placeOfDeath.empty'
+          id: 'event.death.summary.eventDetails.placeOfDeath.empty'
         },
         label: {
           defaultMessage: 'Place of death',
           description: 'Label for place of death',
-          id: 'v2.event.death.summary.eventDetails.placeOfDeath.label'
+          id: 'event.death.summary.eventDetails.placeOfDeath.label'
         },
         conditionals: [
           {
@@ -126,12 +126,12 @@ export const deathEvent = defineConfig({
           defaultMessage: 'No place of death',
           description:
             'This is shown when there is no death location information',
-          id: 'v2.event.death.summary.eventDetails.placeOfDeath.empty'
+          id: 'event.death.summary.eventDetails.placeOfDeath.empty'
         },
         label: {
           defaultMessage: 'Place of death',
           description: 'Label for place of death',
-          id: 'v2.event.death.summary.eventDetails.placeOfDeath.label'
+          id: 'event.death.summary.eventDetails.placeOfDeath.label'
         },
         conditionals: [
           {
@@ -147,17 +147,17 @@ export const deathEvent = defineConfig({
         emptyValueMessage: {
           defaultMessage: 'No contact details provided',
           description: 'This is shown when there is no informant information',
-          id: 'v2.event.death.summary.informant.contact.empty'
+          id: 'event.death.summary.informant.contact.empty'
         },
         label: {
           defaultMessage: 'Contact',
           description: 'This is the label for the informant information',
-          id: 'v2.event.death.summary.informant.contact.label'
+          id: 'event.death.summary.informant.contact.label'
         },
         value: {
           defaultMessage: '{informant.phoneNo} {informant.email}',
           description: 'This is the contact value of the informant',
-          id: 'v2.event.death.summary.informant.contact.value'
+          id: 'event.death.summary.informant.contact.value'
         }
       }
     ]
@@ -169,7 +169,7 @@ export const deathEvent = defineConfig({
         defaultMessage: 'Read',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'v2.event.death.action.Read.label'
+        id: 'event.death.action.Read.label'
       },
       review: DEATH_DECLARATION_REVIEW
     },
@@ -179,7 +179,7 @@ export const deathEvent = defineConfig({
         defaultMessage: 'Declare',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'v2.event.death.action.declare.label'
+        id: 'event.death.action.declare.label'
       },
       review: DEATH_DECLARATION_REVIEW,
       deduplication: {
@@ -188,7 +188,7 @@ export const deathEvent = defineConfig({
           defaultMessage: 'Detect duplicate',
           description:
             'This is shown as the action name anywhere the user can trigger the action from',
-          id: 'v2.event.death.action.detect-duplicate.label'
+          id: 'event.death.action.detect-duplicate.label'
         },
         query: dedupConfig
       }
@@ -199,7 +199,7 @@ export const deathEvent = defineConfig({
         defaultMessage: 'Validate',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'v2.event.death.action.validate.label'
+        id: 'event.death.action.validate.label'
       },
       review: DEATH_DECLARATION_REVIEW,
       deduplication: {
@@ -208,7 +208,7 @@ export const deathEvent = defineConfig({
           defaultMessage: 'Detect duplicate',
           description:
             'This is shown as the action name anywhere the user can trigger the action from',
-          id: 'v2.event.death.action.detect-duplicate.label'
+          id: 'event.death.action.detect-duplicate.label'
         },
         query: dedupConfig
       }
@@ -219,7 +219,7 @@ export const deathEvent = defineConfig({
         defaultMessage: 'Register',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'v2.event.death.action.register.label'
+        id: 'event.death.action.register.label'
       },
       review: DEATH_DECLARATION_REVIEW,
       deduplication: {
@@ -228,7 +228,7 @@ export const deathEvent = defineConfig({
           defaultMessage: 'Detect duplicate',
           description:
             'This is shown as the action name anywhere the user can trigger the action from',
-          id: 'v2.event.death.action.detect-duplicate.label'
+          id: 'event.death.action.detect-duplicate.label'
         },
         query: dedupConfig
       }
@@ -239,7 +239,7 @@ export const deathEvent = defineConfig({
         defaultMessage: 'Print certificate',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'v2.event.death.action.collect-certificate.label'
+        id: 'event.death.action.collect-certificate.label'
       },
       printForm: DEATH_CERTIFICATE_COLLECTOR_FORM
     },
@@ -249,7 +249,7 @@ export const deathEvent = defineConfig({
         defaultMessage: 'Correct record',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'v2.event.death.action.request-correction.label'
+        id: 'event.death.action.request-correction.label'
       },
       correctionForm: DEATH_CORRECTION_FORM
     }
