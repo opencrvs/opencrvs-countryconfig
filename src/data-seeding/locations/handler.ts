@@ -69,8 +69,11 @@ export async function locationsHandler(_: Request, h: ResponseToolkit) {
       readCSVToJSON<HumdataLocation[]>(
         './src/data-seeding/locations/source/locations.csv'
       ),
+      // readCSVToJSON<Facility[]>(
+      //   './src/data-seeding/locations/source/health-facilities.csv'
+      // ),
       readCSVToJSON<Facility[]>(
-        './src/data-seeding/locations/source/health-facilities.csv'
+        './src/data-seeding/locations/source/locations_100k.csv'
       ),
       readCSVToJSON<Facility[]>(
         './src/data-seeding/locations/source/crvs-facilities.csv'
