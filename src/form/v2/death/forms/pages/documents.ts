@@ -102,7 +102,7 @@ const proofOfCauseOfDeathMessageDescriptors = {
   VERBAL_AUTOPSY: {
     defaultMessage: 'Verbal autopsy report',
     description: 'Option for form field: verbalAutopsy',
-    id: 'form.field.label.verbalAutopsy'
+    id: 'form.field.label.verbalAutopsyReport'
   },
   MEDICALLY_CERTIFIED: {
     defaultMessage: 'Medically Certified Cause of Death',
