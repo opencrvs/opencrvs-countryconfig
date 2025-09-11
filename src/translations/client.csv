@@ -1734,7 +1734,6 @@ v2.advancedSearch.status,Label for status field,Status of record,Statut de l'enr
 v2.advancedSearch.trackingId,Label for tracking ID field,Tracking ID,ID de suivi
 v2.advancedSearch.updatedAt,Label for date of update field,Time period,Période
 v2.advancedSearch.updatedAt.helperText,Helper text for date of update field,Period of time since the record status changed,Période écoulée depuis le changement de statut de l'enregistrement
-v2.advancedSearchResult.table.searchResult,The label for search result header in advancedSearchResult page,Search results,Résultats de recherche
 v2.buttons.archive,Archive button text,Archive,Archiver
 v2.buttons.back,Back button text,Back,Retour
 v2.buttons.backToReview,Back to review button text,Back to review,Retour à la revue
@@ -1765,7 +1764,6 @@ v2.constants.label.action,Action Label,Action,Action
 v2.constants.label.date,Date Label,Date,Date
 v2.constants.location,Label for location,Location,Localisation
 v2.constants.noConnection,No Connection hover text,No connection,Pas de connexion
-v2.constants.noResultsOutbox,Text to display if there is no items in outbox,No records require processing,Aucun enregistrement à traiter
 v2.constants.reason,Label for Reason the declaration was rejected,Reason,Raison
 v2.constants.role,Role label,Role,Rôle
 v2.constants.skipToMainContent,Label for a keyboard accessibility link which skips to the main content,Skip to main content,Passer au contenu principal
@@ -1774,10 +1772,8 @@ v2.correction.corrector.anotherAgent,Label for another registration or field age
 v2.correction.corrector.identity.instruction,The title for the corrector form,Please verify the identity of the person making this request,Please verify the identity of the person making this request
 v2.correction.corrector.identity.verified,Label for verified option in corrector identity check page,I have verified their identity,I have verified their identity
 v2.correction.corrector.identity.verified.label,The title for the corrector form,@todo,@todo
-v2.correction.corrector.me,Label for registrar option in certificate correction form,Me (Registrar),Me (Registrar)
 v2.correction.corrector.others,Label for someone else option in certificate correction form,Someone else,Quelqu'un d'autre
 v2.correction.corrector.paragraph.title,The title for the corrector form,"For all record corrections at a minimum an affidavit must be provided. For material errors and omissions eg. in paternity cases, a court order must also be provided.","Pour toutes les corrections de dossiers, il faut au moins fournir un affidavit. Pour les erreurs matérielles et les omissions, par exemple dans les cas de paternité, une décision de justice doit également être fournie."
-v2.correction.corrector.title,The title for the corrector form,Who is requesting a change to this record?,Who is requesting a change to this record?
 v2.correction.label.verifyIdentity.cancel,Label for cancellation of identity verificationin correction request,No,Non
 v2.correction.label.verifyIdentity.confirm,Label for verification of identity in correction request,Yes,Oui
 v2.correction.reason.title,The title for the corrector form,Reason for correction?,Reason for correction?
@@ -2221,10 +2217,10 @@ v2.record-corrected.summary.section.title,Corrections section title,Correction(s
 v2.recordAudit.archive.confirmation.body,Confirmation body for archiving a declaration,This will archive the record and remove it from your workspace,"Cela supprimera la déclaration de la file d'attente et changera son statut en archive. Pour annuler ce changement, vous devrez rechercher la déclaration."
 v2.recordAudit.archive.confirmation.title,Confirmation title for archiving a declaration,Archive declaration?,Archiver la déclaration ?
 v2.register.eventInfo.birth.title,Event information title for the birth,Introduce the birth registration process to the informant,Présenter la procédure d'enregistrement des naissances à l'informateur
-v2.register.form.modal.desc.deleteDeclarationConfirm,Description for delete declaration confirmation modal,Are you sure you want to delete this declaration?,Êtes-vous sûr de vouloir supprimer cette déclaration ?
+v2.register.form.modal.description.deleteDeclarationConfirm,Description for delete declaration confirmation modal,Are you sure you want to delete this declaration?,Êtes-vous sûr de vouloir supprimer cette déclaration ?
 v2.register.form.modal.title.deleteDeclarationConfirm,Title for delete declaration confirmation modal,Delete draft?,Supprimer le brouillon?
 v2.register.selectVitalEvent.errorMessage,Error Message to show when no event is being selected,Please select the type of event,Veuillez sélectionner le type d'événement
-v2.register.selectVitalEvent.registerNewEventHeading,The section heading on the page,What type of event do you want to declare?,What type of event do you want to declare?
+v2.register.selectVitalEvent.registerNewEventHeader,The section heading on the page,What type of event do you want to declare?,What type of event do you want to declare?
 v2.register.selectVitalEvent.registerNewEventTitle,The title that appears on the select vital event page,New declaration,Nouvelle déclaration
 v2.rejectModal.archive,The label for archive button of reject modal,Archive,Archiver
 v2.rejectModal.cancel,The label for cancel button of reject modal,Cancel,Annuler
@@ -2268,7 +2264,7 @@ v2.saveAndExit.title.saveDeclarationConfirm,Title for save declaration confirmat
 v2.search.advancedSearch.result.title,Advanced search result title,Search results ({count}),résultat de la recherche pour ({count})
 v2.search.noRecord,The no record text,"No records {slug, select, draft {in my drafts} outbox {require processing} other {{title}}}","Aucun enregistrement {slug, select, draft {dans mes brouillons} outbox {à traiter} other {{title}}}"
 v2.search.noResult,The no result text,No result,Pas de résultats”
-v2.search.noResultFor,The no result text,No results for “{searchTerm}”,Pas de résultats pour “{searchTerm}”
+v2.search.noResultForSearchTerm,The no result text,No results for “{searchTerm}”,Pas de résultats pour “{searchTerm}”
 v2.search.quickSearch.result.title,Quick search result title,Search result for “{searchTerm}”,résultat de la recherche pour “{searchTerm}”
 v2.signature.upload.modal.title,Title for the signature upload modal,Upload Signature,Télécharger la signature
 v2.verified,This is the label for the verification field,Verified,Vérifié

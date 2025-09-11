@@ -45,7 +45,7 @@ export const introduction = defineFormPage({
           defaultMessage:
             'Once the declaration is processed you will receive an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.',
           description: 'Form information for birth',
-          id: 'v2.form.section.information.birth.bullet3'
+          id: 'v2.form.section.information.birth.bullet3.sms'
         },
         {
           defaultMessage:
