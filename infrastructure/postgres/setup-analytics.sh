@@ -4,8 +4,8 @@ set -euo pipefail
 # Configuration
 : "${POSTGRES_HOST:=localhost}"
 : "${POSTGRES_PORT:=5432}"
+: "${POSTGRES_PASSWORD:?Must set POSTGRES_PASSWORD}"
 : "${ANALYTICS_POSTGRES_USER:?Must set ANALYTICS_POSTGRES_USER}"
-: "${ANALYTICS_POSTGRES_PASSWORD:?Must set ANALYTICS_POSTGRES_PASSWORD}"
 : "${ANALYTICS_POSTGRES_PASSWORD:?Must set ANALYTICS_POSTGRES_PASSWORD}"
 : "${KEEP_ALIVE_SECONDS:=0}" # Prevent Swarm from marking this task as failed due to early exit
 
