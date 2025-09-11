@@ -6,7 +6,7 @@ set -euo pipefail
 : "${POSTGRES_PORT:=5432}"
 : "${ANALYTICS_POSTGRES_USER:?Must set ANALYTICS_POSTGRES_USER}"
 : "${ANALYTICS_POSTGRES_PASSWORD:?Must set ANALYTICS_POSTGRES_PASSWORD}"
-: "${EVENTS_ANALYTICS_POSTGRES_PASSWORD:?Must set EVENTS_ANALYTICS_POSTGRES_PASSWORD}"
+: "${ANALYTICS_POSTGRES_PASSWORD:?Must set ANALYTICS_POSTGRES_PASSWORD}"
 : "${KEEP_ALIVE_SECONDS:=0}" # Prevent Swarm from marking this task as failed due to early exit
 
 TARGET_DB="events"
@@ -40,7 +40,7 @@ END
 EOSQL
 }
 
-create_or_update_role "events_analytics" "$EVENTS_ANALYTICS_POSTGRES_PASSWORD" "$TARGET_DB"
+create_or_update_role "events_analytics" "$ANALYTICS_POSTGRES_PASSWORD" "$TARGET_DB"
 
 # Schema + tables + grants
 PGPASSWORD="$ANALYTICS_POSTGRES_PASSWORD" psql -v ON_ERROR_STOP=1 -h "$POSTGRES_HOST" -p "$POSTGRES_PORT" \
