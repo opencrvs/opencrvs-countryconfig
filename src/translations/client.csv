@@ -1724,9 +1724,9 @@ v2.advancedSearch.form.recordStatusAny,Option for form field: status of record,A
 v2.advancedSearch.form.recordStatusArchived,Option for form field: status of record,Archived,Archivé
 v2.advancedSearch.form.recordStatusDeclared,Option for form field: status of record,Declared,Déclaré
 v2.advancedSearch.form.recordStatusNotified,Option for form field: status of record,Notified,Notifié
-v2.advancedSearch.form.recordStatusRegistered,Option for form field: status of record,Registered,Enregistré
+v2.advancedSearch.form.recordStatusRegistered,Option for form field: status of record,Registered,Inscrit
 v2.advancedSearch.form.recordStatusValidated,Option for form field: status of record,Validated,Validé
-v2.advancedSearch.form.registrationDetails,The title of Registration details accordion,Registration details,Détails d'enregistrement
+v2.advancedSearch.form.registrationDetails,The title of Registration details accordion,Registration details,Détails d'inscription
 v2.advancedSearch.registeredAt,Label for date of registration field,Date of registration,Date d'enregistrement
 v2.advancedSearch.registeredAtLocation,Label for place of registration field,Place of registration,Lieu d'enregistrement
 v2.advancedSearch.registeredAtLocation.helperText,Helper text for place of registration field,"Search for a province, district or registration office","Rechercher une province, un district ou un bureau d'enregistrement"
@@ -1738,11 +1738,11 @@ v2.buttons.archive,Archive button text,Archive,Archiver
 v2.buttons.back,Back button text,Back,Retour
 v2.buttons.backToReview,Back to review button text,Back to review,Retour à la revue
 v2.buttons.cancel,Cancel button text in the modal,Cancel,Annuler
-v2.buttons.change,The label for the change button,Change,Changer
+v2.buttons.change,The label for the change button,Change,Modifier
 v2.buttons.changeAll,The label for the change all button,Change all,Changer tous
 v2.buttons.confirm,Confirm button,Confirm,Confirmer
 v2.buttons.continue,Continue Button Text,Continue,Continuer
-v2.buttons.edit,Edit button text,Edit,Éditer
+v2.buttons.edit,Edit button text,Edit,Modifier
 v2.buttons.exit,Label for Exit button on EventTopBar,Exit,Quitter
 v2.buttons.print,Print button text,Print,Imprimer
 v2.buttons.saveExit,The label for the save and exit button,Save & Exit,Enregistrer et quitter
@@ -1759,14 +1759,14 @@ v2.constants.by,Label for By (the person who performed the action),By,Par
 v2.constants.comment,Label for rejection comment,Comment,Commentaire
 v2.constants.duplicateOf,table header for `duplicate of` in record audit,Duplicate of,Duplicata de
 v2.constants.event,Label for Event of event in work queue list item,Event,Événement
-v2.constants.history,History heading,History,Historique
+v2.constants.history,History heading,History,Histoire
 v2.constants.label.action,Action Label,Action,Action
 v2.constants.label.date,Date Label,Date,Date
-v2.constants.location,Label for location,Location,Localisation
+v2.constants.location,Label for location,Location,Situation géographique
 v2.constants.noConnection,No Connection hover text,No connection,Pas de connexion
 v2.constants.reason,Label for Reason the declaration was rejected,Reason,Raison
 v2.constants.role,Role label,Role,Rôle
-v2.constants.skipToMainContent,Label for a keyboard accessibility link which skips to the main content,Skip to main content,Passer au contenu principal
+v2.constants.skipToMainContent,Label for a keyboard accessibility link which skips to the main content,Skip to main content,Sauter au contenu principal
 v2.correction.correctionForApprovalDialog.title,The title for the dialog when record correction sent by registration agent for approval,Send record correction for approval?,Envoyer la correction de l'enregistrement pour approbation?
 v2.correction.corrector.anotherAgent,Label for another registration or field agent option in certificate correction form,Another registration agent or field agent,Un autre agent d'enregistrement ou un agent de terrain
 v2.correction.corrector.identity.instruction,The title for the corrector form,Please verify the identity of the person making this request,Please verify the identity of the person making this request
@@ -1797,7 +1797,7 @@ v2.duplicates.content.notDuplicateConfirmationTitle,Not a duplicate content conf
 v2.duplicates.content.registeredAt,Registered at label for duplicates comparison,Registered at,Enregistré à
 v2.duplicates.content.registeredBy,Registered by label for duplicates comparison,Registered by,Enregistré par
 v2.duplicates.content.subtitle,Duplicates content subtitle message,"This record was flagged as a potential duplicate of: {trackingIds}. Please review these by clicking on each tracking ID in the tab section to view a side-by-side comparison below, and confirm if this record is a duplicate",Cet enregistrement a été signalé comme un doublon potentiel de : {trackingIds}. Veuillez les examiner en cliquant sur chaque identifiant de suivi dans la section des onglets pour afficher une comparaison côte à côte ci-dessous et confirmer si cet enregistrement est un doublon
-v2.duplicates.content.title,Duplicates content title message,Is {name} ({trackingId}) a duplicate?,Est-ce que {name} ({trackingId}) est un doublon ?
+v2.duplicates.content.title,Duplicates content title message,Is {name} ({trackingId}) a duplicate?,Est-ce que {name} ({trackingId}) est un doublon?
 v2.duplicates.review.header,Review page header for duplicates declarations,Potential {event} duplicate review,Potentiel {event} examen de doublon
 v2.duplicates.warning,The warning message shown when a declaration has potential duplicates,Potential duplicate of record {trackingId},Duplicata potentiel de l'enregistrement {trackingId}
 v2.error.child.weightAtBirth.invalidNumberRange,This is the error message for invalid number range,Must be within 0 and 6,Doit être compris entre 0 et 6
