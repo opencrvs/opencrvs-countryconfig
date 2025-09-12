@@ -30,6 +30,7 @@ import { differenceInDays } from 'date-fns'
 import { ExpressionBuilder, Kysely } from 'kysely'
 import { pickBy } from 'lodash'
 import { getClient } from './postgres'
+import { getStatistics } from '@countryconfig/utils'
 
 /**
  * You can control which events you want to track in analytics by adding them here.
@@ -257,6 +258,43 @@ export async function syncLocationLevels() {
             (eb: ExpressionBuilder<any, 'analytics.location_levels'>) => ({
               name: eb.ref('excluded.name'),
               level: eb.ref('excluded.level')
+            })
+          )
+      )
+      .execute()
+  })
+}
+
+export async function syncLocationStatistics() {
+  const client = getClient()
+  const statistics = await getStatistics()
+
+  await client.transaction().execute(async (trx) => {
+    return trx
+      .insertInto('analytics.location_statistics')
+      .values(
+        statistics.flatMap((stat) =>
+          stat.years.map((year) => ({
+            name: stat.name,
+            reference_id: stat.id,
+            year: year.year,
+            crude_birth_rate: year.crude_birth_rate,
+            male_population: year.male_population,
+            female_population: year.female_population,
+            total_population: year.population
+          }))
+        )
+      )
+      .onConflict((oc) =>
+        oc
+          .columns(['reference_id', 'year'])
+          .doUpdateSet(
+            (eb: ExpressionBuilder<any, 'analytics.location_statistics'>) => ({
+              year: eb.ref('excluded.year'),
+              crude_birth_rate: eb.ref('excluded.crude_birth_rate'),
+              male_population: eb.ref('excluded.male_population'),
+              female_population: eb.ref('excluded.female_population'),
+              total_population: eb.ref('excluded.total_population')
             })
           )
       )

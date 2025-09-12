@@ -71,7 +71,8 @@ import getUserNotificationRoutes from './config/routes/userNotificationRoutes'
 import {
   importEvent,
   importEvents,
-  syncLocationLevels
+  syncLocationLevels,
+  syncLocationStatistics
 } from './analytics/analytics'
 import { getClient } from './analytics/postgres'
 
@@ -697,6 +698,7 @@ export async function createServer() {
   async function start() {
     await server.start()
     await syncLocationLevels()
+    await syncLocationStatistics()
     server.log(
       'info',
       `server started on ${COUNTRY_CONFIG_HOST}:${COUNTRY_CONFIG_PORT}`
