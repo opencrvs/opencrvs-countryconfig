@@ -3,7 +3,8 @@ import {
   formatDateTo_dMMMMyyyy,
   formatName,
   getToken,
-  loginToV2
+  loginToV2,
+  uploadImage
 } from '../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../constants'
@@ -119,6 +120,13 @@ test.describe.serial('Correct record - 2', () => {
     await expect(page.getByRole('button', { name: 'Confirm' })).toBeVisible()
     await expect(page.getByRole('button', { name: 'Cancel' })).toBeVisible()
     await page.getByRole('button', { name: 'Confirm' }).click()
+
+    await page.getByText('Select...').click()
+    await page.getByText('Affidavit', { exact: true }).click()
+    await uploadImage(
+      page,
+      page.locator('button[name="documents____supportingDocs"]')
+    )
 
     await page.getByRole('button', { name: 'Continue' }).click()
     await page.locator('#fees____amount').fill(fee)
