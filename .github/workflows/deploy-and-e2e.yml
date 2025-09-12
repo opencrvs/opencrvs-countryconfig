@@ -166,7 +166,6 @@ jobs:
   notify-slack:
     name: Notify Slack on Failure
     runs-on: ubuntu-latest
-    needs: [deploy, discover-tests, test]
     if: failure()
     steps:
       - name: Send Slack notification

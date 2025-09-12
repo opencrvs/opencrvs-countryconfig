@@ -27,3 +27,5 @@ elasticsearch_host() {
 
 # run migration by restarting migration service
 docker service update --force --update-parallelism 1 --update-delay 30s opencrvs_migration
+
+sleep 120
