@@ -167,7 +167,7 @@ jobs:
     name: Notify Slack on Failure
     runs-on: ubuntu-latest
     needs: [deploy, discover-tests, test]
-    if: always && failure()
+    if: always() && failure()
     steps:
       - name: Send Slack notification
         uses: slackapi/slack-github-action@v1.26.0
