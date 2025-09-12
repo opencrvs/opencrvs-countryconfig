@@ -87,7 +87,8 @@ import getUserNotificationRoutes from './config/routes/userNotificationRoutes'
 import {
   importEvent,
   importEvents,
-  syncLocationLevels
+  syncLocationLevels,
+  syncLocationStatistics
 } from './analytics/analytics'
 import { getClient } from './analytics/postgres'
 
@@ -833,6 +834,7 @@ export async function createServer() {
     await server.start()
     if (env.ANALYTICS_DATABASE_URL) {
       await syncLocationLevels()
+      await syncLocationStatistics()
     }
     server.log(
       'info',

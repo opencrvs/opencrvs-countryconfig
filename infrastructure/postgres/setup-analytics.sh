@@ -86,6 +86,17 @@ CREATE TABLE IF NOT EXISTS analytics.location_levels (
   name text NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS analytics.location_statistics (
+  name text,
+  reference_id text NOT NULL,
+  year int NOT NULL,
+  crude_birth_rate int NOT NULL,
+  male_population int NOT NULL,
+  female_population int NOT NULL,
+  total_population int NOT NULL,
+  UNIQUE (reference_id, year)
+);
+
 GRANT USAGE ON SCHEMA analytics TO "$ANALYTICS_POSTGRES_USER";
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA analytics TO "$ANALYTICS_POSTGRES_USER";
