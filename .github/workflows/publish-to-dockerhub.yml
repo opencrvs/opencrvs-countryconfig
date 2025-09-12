@@ -11,24 +11,33 @@ on:
         description: Branch to build from
         default: develop
         required: true
+      build_arm:
+        description: Build ARM images
+        type: boolean
+        default: false
+        required: false
+
 jobs:
   build:
     strategy:
       fail-fast: false
       matrix:
-        runner: [ubuntu-24.04, ubuntu-24.04-arm]
+        runner: ${{ 
+          ((github.ref_type == 'tag' || inputs.build_arm == true) && fromJSON('["ubuntu-24.04", "ubuntu-24.04-arm"]')) || 
+          fromJSON('["ubuntu-24.04"]') 
+          }}
     outputs:
       version: ${{ steps.country_config.outputs.version }}
       version_common: ${{ steps.country_config.outputs.version_common }}
     runs-on: ${{ matrix.runner }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         if: github.event_name == 'workflow_dispatch'
         with:
           fetch-depth: 2
-          ref: '${{ github.event.inputs.branch_name }}'
+          ref: '${{ inputs.branch_name }}'
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         if: github.event_name == 'push'
 
       - name: Get tags
@@ -39,12 +48,13 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
+
       - name: Country config image tag
         id: country_config
         env:
           DOCKERHUB_ACCOUNT: ${{ secrets.DOCKERHUB_ACCOUNT }}
           DOCKERHUB_REPO: ${{ secrets.DOCKERHUB_REPO }}
-          BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+          BRANCH_NAME: ${{ inputs.branch_name || github.ref_name }}
         run: |
           # Check if the current commit has a tag and use it; otherwise, use the short SHA of the HEAD commit
           GIT_HASH=$(git describe --tags --exact-match 2>/dev/null || git rev-parse --short=7 HEAD)
@@ -74,17 +84,21 @@ jobs:
           password: ${{ secrets.DOCKER_TOKEN }}
 
       - name: Create and push multi-arch manifest
+        env:
+          BRANCH_NAME: ${{ inputs.branch_name || github.ref_name }}
+          BUILD_ARM: ${{ github.ref_type == 'tag' || inputs.build_arm == true }}
         run: |
-            TAG="${{ needs.build.outputs.version_common }}"
-            REPO="${{ secrets.DOCKERHUB_ACCOUNT}}/${{ secrets.DOCKERHUB_REPO }}"
+          TAG="${{ needs.build.outputs.version_common }}"
+          REPO="${{ secrets.DOCKERHUB_ACCOUNT}}/${{ secrets.DOCKERHUB_REPO }}"
+          
+          # Create manifest list based on whether ARM build exists
+          if [[ "$BUILD_ARM" == "true" ]]; then
             MANIFEST_LIST="$REPO:$TAG-amd64 $REPO:$TAG-arm64"
-            if [[ "$BRANCH_NAME" == "develop" ]]; then
-              echo "[🔁 pushing ] $REPO:$TAG"
-              docker manifest create $REPO:develop \
-                $MANIFEST_LIST
-              docker manifest push $REPO:develop
-            fi
-            echo "[🔁 pushing ] $REPO:$TAG"
-            docker manifest create $REPO:$TAG \
-               $MANIFEST_LIST
-            docker manifest push $REPO:$TAG
+          else
+            MANIFEST_LIST="$REPO:$TAG-amd64"
+          fi
+          
+          echo "[🔁 pushing ] $REPO:$TAG"
+          docker manifest create $REPO:$TAG \
+             $MANIFEST_LIST
+          docker manifest push $REPO:$TAG
