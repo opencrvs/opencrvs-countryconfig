@@ -155,7 +155,3 @@ echo "🚀 Reinitializing Postgres with on-deploy.sh..."
 
 docker service update --force opencrvs_postgres-on-update
 
-# Rerun the migrations service
-#-----------------------------
-docker service scale opencrvs_migrations=0
-docker service scale opencrvs_migrations=1
