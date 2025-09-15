@@ -21,6 +21,7 @@ on:
           - qa
           - development
           - pentest
+          - v19-beta-staging
 jobs:
   reset-data:
     name: 'Reset data'
