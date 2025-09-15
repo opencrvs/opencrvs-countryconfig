@@ -25,6 +25,7 @@ on:
           - v17
           - pentest
           - v19-beta-staging
+          - v19-beta-prod
       core-image-tag:
         description: Core DockerHub image tag
         required: true

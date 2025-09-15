@@ -41,6 +41,7 @@ on:
           - staging
           - pentest
           - v19-beta-staging
+          - v19-beta-prod
       core-image-tag:
         description: Core image tag
         required: true
