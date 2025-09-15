@@ -1133,7 +1133,7 @@ form.customField.label.numberOfDependants,,No. of dependants,Nombre de personnes
 form.customField.label.reasonForLateRegistrationBirth,,Reason for delayed registration,Raison du retard d'inscription
 form.customField.label.reasonForLateRegistrationDeath,,Reason for late registration,Raison de l'inscription tardive
 form.field.dateRangepicker.checkbox.dateLabel,,{rangeStart} to {rangeEnd},{rangeStart} à {rangeEnd}
-form.field.helpertext.nid,Helper text for nid input field,The National ID can only be numeric and must be 10 digits long,The National ID can only be numeric and must be 10 digits long
+form.field.helpertext.nid,Helper text for nid input field,The National ID can only be numeric and must be 10 digits long,Le numéro d'identification national doit être uniquement numérique et comporter 10 chiffres
 form.field.hideLabel,Button to hide section,Hide,Cacher
 form.field.label.NID,,NID,NID
 form.field.label.No,Label for form field radio option No,No,Non
@@ -1661,7 +1661,7 @@ phone.label.changeEmail,Change email address label,What is your new email?,Quell
 phone.label.changeNumber,Change phone number label,Enter new number,Quel est votre nouveau numéro ?
 phone.label.confirmation,Confirmation phone number message,A verification code has been sent to {num},Un SMS de confirmation a été envoyé à {num}.
 phone.label.verify,Verify phone number label,Enter 6 digit verification code,Entrez le code de vérification à 6 chiffres
-phone.start,,0(4|5),0(4|5)
+phone.start,Should starts with,0(4|5),0(4|5)
 print.cert.coll.id.actions.cancel,The for the dialog when details of the collector not verified,Cancel,Annuler
 print.cert.coll.id.actions.send,The for the dialog when details of the collector not verified,Confirm,Confirmer
 print.cert.coll.id.description,The description for the dialog when details of the collector not verified,"Please be aware that if you proceed, you will be responsible for issuing a certificate without the necessary proof of ID from the collector","Sachez que si vous continuez, vous serez responsable de l'émission d'un certificat sans la preuve d'identité nécessaire du collecteur."
@@ -1757,12 +1757,12 @@ recordAudit.regAction.corrected,,Record corrected,Enregistrement corrigé
 recordAudit.regAction.downloaded,,Retrieved,Récupéré par
 recordAudit.regAction.flaggedAsPotentialDuplicate,,Flagged as potential duplicate,Marqué comme doublon potentiel
 recordAudit.regAction.markedAsDuplicate,,Marked as a duplicate,Marqué comme un doublon
-recordAudit.regAction.markedAsNotDuplicate,Marked not a duplicate status message for record audit,Marked not a duplicate,Marked not a duplicate
+recordAudit.regAction.markedAsNotDuplicate,Marked not a duplicate status message for record audit,Marked not a duplicate,Marqué comme non dupliqué
 recordAudit.regAction.reinstated,,"Reinstated to {regStatus, select, validated{ready for review} in_progress{in progress} declared{ready for review} rejected{requires updates} other{}}","Réintégré à {regStatus, select, validated{prêt pour la révision} in_progress{en cours} declared{prêt pour la révision} rejected{nécessite des mises à jour} other{}}"
 recordAudit.regAction.rejectedCorrection,,Correction rejected,Correction rejetée
 recordAudit.regAction.requestedCorrection,,Correction requested,Correction demandée
 recordAudit.regAction.unassigned,,Unassigned,Non assigné
-recordAudit.regAction.verified,Verified action,Certificate verified,Certificate verified
+recordAudit.regAction.verified,Verified action,Certificate verified,Certificat vérifié
 recordAudit.regAction.viewed,,Viewed,Vu
 recordAudit.regStatus.archived,,Archived,Archivé
 recordAudit.regStatus.certified,,Certified,Certifié
