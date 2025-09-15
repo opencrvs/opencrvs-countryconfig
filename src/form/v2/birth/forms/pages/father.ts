@@ -47,7 +47,7 @@ export const father = defineFormPage({
   title: {
     defaultMessage: "Father's details",
     description: 'Form section title for fathers details',
-    id: 'v2.form.section.father.title'
+    id: 'form.section.father.title'
   },
   fields: [
     {
@@ -87,7 +87,7 @@ export const father = defineFormPage({
       label: {
         defaultMessage: 'Reason',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.father.field.reason.label'
+        id: 'event.birth.action.declare.form.section.father.field.reason.label'
       },
       conditionals: [
         {
@@ -108,7 +108,7 @@ export const father = defineFormPage({
       label: {
         defaultMessage: "Father's name",
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.father.field.name.label'
+        id: 'event.birth.action.declare.form.section.father.field.name.label'
       },
       conditionals: [
         {
@@ -128,7 +128,7 @@ export const father = defineFormPage({
           message: {
             defaultMessage: 'Must be a valid Birthdate',
             description: 'This is the error message for invalid date',
-            id: 'v2.event.birth.action.declare.form.section.person.field.dob.error'
+            id: 'event.birth.action.declare.form.section.person.field.dob.error'
           },
           validator: field('father.dob').isBefore().now()
         },
@@ -137,7 +137,7 @@ export const father = defineFormPage({
             defaultMessage: "Birth date must be before child's birth date",
             description:
               "This is the error message for a birth date after child's birth date",
-            id: 'v2.event.birth.action.declare.form.section.person.dob.afterChild'
+            id: 'event.birth.action.declare.form.section.person.dob.afterChild'
           },
           validator: field('father.dob').isBefore().date(field('child.dob'))
         }
@@ -145,7 +145,7 @@ export const father = defineFormPage({
       label: {
         defaultMessage: 'Date of birth',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.person.field.dob.label'
+        id: 'event.birth.action.declare.form.section.person.field.dob.label'
       },
       conditionals: [
         {
@@ -163,7 +163,7 @@ export const father = defineFormPage({
       label: {
         defaultMessage: 'Exact date of birth unknown',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.person.field.age.checkbox.label'
+        id: 'event.birth.action.declare.form.section.person.field.age.checkbox.label'
       },
       conditionals: [
         {
@@ -183,13 +183,13 @@ export const father = defineFormPage({
       label: {
         defaultMessage: 'Age of father',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.father.field.age.label'
+        id: 'event.birth.action.declare.form.section.father.field.age.label'
       },
       configuration: {
         postfix: {
           defaultMessage: 'years',
           description: 'This is the postfix for age field',
-          id: 'v2.event.birth.action.declare.form.section.person.field.age.postfix'
+          id: 'event.birth.action.declare.form.section.person.field.age.postfix'
         }
       },
       conditionals: [
@@ -209,7 +209,7 @@ export const father = defineFormPage({
       label: {
         defaultMessage: 'Nationality',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.person.field.nationality.label'
+        id: 'event.birth.action.declare.form.section.person.field.nationality.label'
       },
       conditionals: [
         {
@@ -226,7 +226,7 @@ export const father = defineFormPage({
       label: {
         defaultMessage: 'Type of ID',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.person.field.idType.label'
+        id: 'event.birth.action.declare.form.section.person.field.idType.label'
       },
       options: idTypeOptions,
       conditionals: [
@@ -243,7 +243,7 @@ export const father = defineFormPage({
       label: {
         defaultMessage: 'ID Number',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.person.field.nid.label'
+        id: 'event.birth.action.declare.form.section.person.field.nid.label'
       },
       conditionals: [
         {
@@ -260,7 +260,7 @@ export const father = defineFormPage({
           message: {
             defaultMessage: 'National id must be unique',
             description: 'This is the error message for non-unique ID Number',
-            id: 'v2.event.birth.action.declare.form.nid.unique'
+            id: 'event.birth.action.declare.form.nid.unique'
           },
           validator: and(
             not(field('father.nid').isEqualTo(field('mother.nid'))),
@@ -276,7 +276,7 @@ export const father = defineFormPage({
       label: {
         defaultMessage: 'ID Number',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.person.field.passport.label'
+        id: 'event.birth.action.declare.form.section.person.field.passport.label'
       },
       conditionals: [
         {
@@ -295,7 +295,7 @@ export const father = defineFormPage({
       label: {
         defaultMessage: 'ID Number',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.person.field.brn.label'
+        id: 'event.birth.action.declare.form.section.person.field.brn.label'
       },
       conditionals: [
         {
@@ -324,7 +324,7 @@ export const father = defineFormPage({
       label: {
         defaultMessage: 'Usual place of residence',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.person.field.addressHelper.label'
+        id: 'event.birth.action.declare.form.section.person.field.addressHelper.label'
       },
       configuration: { styles: { fontVariant: 'h3' } },
       conditionals: [
@@ -342,7 +342,7 @@ export const father = defineFormPage({
       label: {
         defaultMessage: "Same as mother's usual place of residence?",
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.father.field.address.addressSameAs.label'
+        id: 'event.birth.action.declare.form.section.father.field.address.addressSameAs.label'
       },
       parent: field('mother.detailsNotAvailable'),
       // Keep default address when mother details is updated
@@ -369,7 +369,7 @@ export const father = defineFormPage({
       label: {
         defaultMessage: 'Usual place of residence',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.person.field.address.label'
+        id: 'event.birth.action.declare.form.section.person.field.address.label'
       },
       conditionals: [
         {
@@ -388,7 +388,7 @@ export const father = defineFormPage({
           message: {
             defaultMessage: 'Invalid input',
             description: 'Error message when generic field is invalid',
-            id: 'v2.error.invalidInput'
+            id: 'error.invalidInput'
           },
           validator: field('father.address').isValidAdministrativeLeafLevel()
         }
@@ -420,7 +420,7 @@ export const father = defineFormPage({
       label: {
         defaultMessage: 'Marital Status',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.person.field.maritalStatus.label'
+        id: 'event.birth.action.declare.form.section.person.field.maritalStatus.label'
       },
       options: maritalStatusOptions,
       conditionals: [
@@ -437,7 +437,7 @@ export const father = defineFormPage({
       label: {
         defaultMessage: 'Level of education',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.person.field.educationalAttainment.label'
+        id: 'event.birth.action.declare.form.section.person.field.educationalAttainment.label'
       },
       options: educationalAttainmentOptions,
       conditionals: [
@@ -454,7 +454,7 @@ export const father = defineFormPage({
       label: {
         defaultMessage: 'Occupation',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.person.field.occupation.label'
+        id: 'event.birth.action.declare.form.section.person.field.occupation.label'
       },
       conditionals: [
         {
