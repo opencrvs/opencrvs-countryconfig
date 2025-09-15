@@ -174,7 +174,6 @@ export const DEATH_CORRECTION_FORM = defineActionForm({
         {
           id: 'documents.supportingDocs',
           type: FieldType.FILE_WITH_OPTIONS,
-          required: true,
           label: {
             defaultMessage: 'Supporting documents',
             description: 'Label for the supporting documents field',
