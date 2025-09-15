@@ -113,41 +113,14 @@ jobs:
       - name: Export all secrets and environment variables
         working-directory: ${{ github.event.repository.name }}
         run: |
-          SECRETS_JSON_WITH_NEWLINES=$(cat<<EOF
-            ${{ toJSON(secrets) }}
-          EOF)
-
-          #
-          # Secrets & variables with newlines are filtered out automatically
-          # This includes SSH_KEY and KNOWN_HOSTS
-          #
-          while IFS= read -r secret; do
-            echo "$secret" >> .env.${{ inputs.environment }}
-          done < <(
-            jq -r '
-              to_entries |
-              map(
-                select(.value | test("\n") | not) |
-                "\(.key)=\"\(.value)\""
-              ) |
-              .[]' <<< "$SECRETS_JSON_WITH_NEWLINES"
-          )
-
-          VARS_JSON_WITH_NEWLINES=$(cat<<EOF
-            ${{ toJSON(vars) }}
-          EOF)
-
-          while IFS= read -r var; do
-            echo "$var" >> .env.${{ inputs.environment }}
-          done < <(
-            jq -r '
-              to_entries |
-              map(
-                select(.value | test("\n") | not) |
-                "\(.key)=\"\(.value)\""
-              ) |
-              .[]' <<< "$VARS_JSON_WITH_NEWLINES"
-          )
+          jq -n -r '
+              [${{ toJSON(secrets) }}, ${{ toJSON(vars) }}] 
+              | add
+              | to_entries
+              | map(select(.value | test("\n") | not))
+              | map("\(.key)=\"\(.value)\"")
+              | .[]
+          ' > .env.${{ inputs.environment }}
 
       - name: Use Node.js from .nvmrc
         uses: actions/setup-node@v4

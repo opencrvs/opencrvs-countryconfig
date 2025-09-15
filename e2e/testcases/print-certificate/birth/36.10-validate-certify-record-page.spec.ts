@@ -55,7 +55,7 @@ test.describe.serial('10.0 Validate "Review" page', () => {
       'Print and issue certificate?'
     )
     await expect(page.locator('#confirm-print-modal')).toContainText(
-      'A PDF of the certificate will open in a new tab for you to print and issue'
+      'A Pdf of the certificate will open in a new tab for printing and issuing'
     )
   })
 
