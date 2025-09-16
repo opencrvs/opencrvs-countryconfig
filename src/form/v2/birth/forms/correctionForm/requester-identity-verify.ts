@@ -33,7 +33,7 @@ export const correctionRequesterIdentityVerify: FieldConfig[] = [
     label: {
       defaultMessage: '',
       description: 'Title for the data section',
-      id: 'v2.event.birth.action.correction.form.section.verifyIdentity.data.label'
+      id: 'event.birth.action.correction.form.section.verifyIdentity.data.label'
     },
     configuration: {
       data: [{ fieldId: 'child.name' }, { fieldId: 'child.dob' }]
@@ -57,7 +57,7 @@ export const correctionRequesterIdentityVerify: FieldConfig[] = [
     label: {
       defaultMessage: '',
       description: 'Title for the data section',
-      id: 'v2.event.birth.action.correction.form.section.verifyIdentity.data.label'
+      id: 'event.birth.action.correction.form.section.verifyIdentity.data.label'
     },
     configuration: {
       data: [
@@ -90,7 +90,7 @@ export const correctionRequesterIdentityVerify: FieldConfig[] = [
     label: {
       defaultMessage: '',
       description: 'Title for the data section',
-      id: 'v2.event.birth.action.correction.form.section.verifyIdentity.data.label'
+      id: 'event.birth.action.correction.form.section.verifyIdentity.data.label'
     },
     configuration: {
       data: [
@@ -121,7 +121,7 @@ export const correctionRequesterIdentityVerify: FieldConfig[] = [
     label: {
       defaultMessage: '',
       description: 'Title for the data section',
-      id: 'v2.event.birth.action.correction.form.section.verifyIdentity.data.label'
+      id: 'event.birth.action.correction.form.section.verifyIdentity.data.label'
     },
     configuration: {
       data: [
