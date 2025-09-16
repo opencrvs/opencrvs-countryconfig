@@ -39,22 +39,22 @@ const idTypeMessageDescriptors = {
   NATIONAL_ID: {
     defaultMessage: 'National ID',
     description: 'Option for form field: Type of ID',
-    id: 'v2.form.field.label.iDTypeNationalID'
+    id: 'form.field.label.iDTypeNationalID'
   },
   PASSPORT: {
     defaultMessage: 'Passport',
     description: 'Option for form field: Type of ID',
-    id: 'v2.form.field.label.iDTypePassport'
+    id: 'form.field.label.iDTypePassport'
   },
   BIRTH_REGISTRATION_NUMBER: {
     defaultMessage: 'Birth Registration Number',
     description: 'Option for form field: Type of ID',
-    id: 'v2.form.field.label.iDTypeBRN'
+    id: 'form.field.label.iDTypeBRN'
   },
   NONE: {
     defaultMessage: 'None',
     description: 'Option for form field: Type of ID',
-    id: 'v2.form.field.label.iDTypeNone'
+    id: 'form.field.label.iDTypeNone'
   }
 } satisfies Record<keyof typeof IdType, TranslationConfig>
 
@@ -62,32 +62,32 @@ const maritalStatusMessageDescriptors = {
   SINGLE: {
     defaultMessage: 'Single',
     description: 'Option for form field: Marital status',
-    id: 'v2.form.field.label.maritalStatusSingle'
+    id: 'form.field.label.maritalStatusSingle'
   },
   MARRIED: {
     defaultMessage: 'Married',
     description: 'Option for form field: Marital status',
-    id: 'v2.form.field.label.maritalStatusMarried'
+    id: 'form.field.label.maritalStatusMarried'
   },
   WIDOWED: {
     defaultMessage: 'Widowed',
     description: 'Option for form field: Marital status',
-    id: 'v2.form.field.label.maritalStatusWidowed'
+    id: 'form.field.label.maritalStatusWidowed'
   },
   DIVORCED: {
     defaultMessage: 'Divorced',
     description: 'Option for form field: Marital status',
-    id: 'v2.form.field.label.maritalStatusDivorced'
+    id: 'form.field.label.maritalStatusDivorced'
   },
   SEPARATED: {
     defaultMessage: 'Separated',
     description: 'Option for form field: Marital status',
-    id: 'v2.form.field.label.maritalStatusSeparated'
+    id: 'form.field.label.maritalStatusSeparated'
   },
   NOT_STATED: {
     defaultMessage: 'Not stated',
     description: 'Option for form field: Marital status',
-    id: 'v2.form.field.label.maritalStatusNotStated'
+    id: 'form.field.label.maritalStatusNotStated'
   }
 } satisfies Record<keyof typeof MaritalStatus, TranslationConfig>
 
@@ -95,22 +95,22 @@ const educationalAttainmentMessageDescriptors = {
   NO_SCHOOLING: {
     defaultMessage: 'No schooling',
     description: 'Option for form field: no education',
-    id: 'v2.form.field.label.educationAttainmentNone'
+    id: 'form.field.label.educationAttainmentNone'
   },
   PRIMARY_ISCED_1: {
     defaultMessage: 'Primary',
     description: 'Option for form field: ISCED1 education',
-    id: 'v2.form.field.label.educationAttainmentISCED1'
+    id: 'form.field.label.educationAttainmentISCED1'
   },
   POST_SECONDARY_ISCED_4: {
     defaultMessage: 'Secondary',
     description: 'Option for form field: ISCED4 education',
-    id: 'v2.form.field.label.educationAttainmentISCED4'
+    id: 'form.field.label.educationAttainmentISCED4'
   },
   FIRST_STAGE_TERTIARY_ISCED_5: {
     defaultMessage: 'Tertiary',
     description: 'Option for form field: ISCED5 education',
-    id: 'v2.form.field.label.educationAttainmentISCED5'
+    id: 'form.field.label.educationAttainmentISCED5'
   }
 } satisfies Record<keyof typeof EducationalAttainment, TranslationConfig>
 
@@ -137,12 +137,12 @@ export const YesNoTypes = {
 const yesNoMessageDescriptors = {
   YES: {
     defaultMessage: 'Yes',
-    id: 'v2.form.field.label.Yes',
+    id: 'form.field.label.Yes',
     description: 'Label for form field radio option Yes'
   },
   NO: {
     defaultMessage: 'No',
-    id: 'v2.form.field.label.No',
+    id: 'form.field.label.No',
     description: 'Label for form field radio option No'
   }
 } satisfies Record<keyof typeof YesNoTypes, TranslationConfig>

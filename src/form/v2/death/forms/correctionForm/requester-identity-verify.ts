@@ -38,7 +38,7 @@ export const deathcorrectionRequesterIdentityVerify: FieldConfig[] = [
     label: {
       defaultMessage: '',
       description: 'Title for the data section',
-      id: 'v2.event.death.action.correction.form.section.verifyIdentity.data.label'
+      id: 'event.death.action.correction.form.section.verifyIdentity.data.label'
     },
     configuration: {
       data: [
@@ -68,7 +68,7 @@ export const deathcorrectionRequesterIdentityVerify: FieldConfig[] = [
     label: {
       defaultMessage: '',
       description: 'Title for the data section',
-      id: 'v2.event.death.action.correction.form.section.verifyIdentity.data.label'
+      id: 'event.death.action.correction.form.section.verifyIdentity.data.label'
     },
     configuration: {
       data: [

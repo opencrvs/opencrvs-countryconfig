@@ -37,7 +37,7 @@ export const advancedSearchBirth = [
     title: {
       defaultMessage: 'Registration details',
       description: 'The title of Registration details accordion',
-      id: 'v2.advancedSearch.form.registrationDetails'
+      id: 'advancedSearch.form.registrationDetails'
     },
     fields: [
       event('legalStatuses.REGISTERED.createdAtLocation').within(),
@@ -50,7 +50,7 @@ export const advancedSearchBirth = [
     title: {
       defaultMessage: 'Child details',
       description: 'The title of Child details accordion',
-      id: 'v2.advancedSearch.form.childDetails'
+      id: 'advancedSearch.form.childDetails'
     },
     fields: [
       field('child.dob', {
@@ -69,7 +69,7 @@ export const advancedSearchBirth = [
     title: {
       defaultMessage: 'Event details',
       description: 'The title of Event details accordion',
-      id: 'v2.advancedSearch.form.eventDetails'
+      id: 'advancedSearch.form.eventDetails'
     },
     fields: [
       field('child.placeOfBirth', {
@@ -86,7 +86,7 @@ export const advancedSearchBirth = [
     title: {
       defaultMessage: 'Mother details',
       description: 'The title of Mother details accordion',
-      id: 'v2.advancedSearch.form.motherDetails'
+      id: 'advancedSearch.form.motherDetails'
     },
     fields: [
       field('mother.dob', {
@@ -102,7 +102,7 @@ export const advancedSearchBirth = [
     title: {
       defaultMessage: 'Father details',
       description: 'The title of Father details accordion',
-      id: 'v2.advancedSearch.form.fatherDetails'
+      id: 'advancedSearch.form.fatherDetails'
     },
     fields: [
       field('father.dob', {
@@ -118,7 +118,7 @@ export const advancedSearchBirth = [
     title: {
       defaultMessage: 'Informant details',
       description: 'The title of Informant details accordion',
-      id: 'v2.advancedSearch.form.informantDetails'
+      id: 'advancedSearch.form.informantDetails'
     },
     fields: [
       field('informant.dob', {
