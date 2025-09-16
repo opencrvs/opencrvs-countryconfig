@@ -1503,7 +1503,8 @@ integrations.revealKeys,Label for reveal keys option,Reveal Keys,Montrer clés d
 integrations.shaSecret,Label for SHA secret,SHA secret,SHA Secret
 integrations.type.eventNotification,Label for event notification,Event notification,Notification d'événement
 integrations.type.healthSystem,Label for health system type,Health integration,Intégration de la santé
-integrations.type.import,Label for import type system,Import,Import
+integrations.type.import,Label for import type system,Import,Importer
+integrations.type.importExport,Label for import export type system,Import/Export,Importer/Exporter
 integrations.type.nationalId,Label for national id,National id,Identité nationale
 integrations.type.recordSearch,Label for record search,Record search,Recherche d'enregistrements
 integrations.type.webhook,Label for web hook,Webhook,Webhook
