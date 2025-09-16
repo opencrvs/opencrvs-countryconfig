@@ -31,16 +31,16 @@ export const birthEvent = defineConfig({
   label: {
     defaultMessage: 'Birth',
     description: 'This is what this event is referred as in the system',
-    id: 'v2.event.birth.label'
+    id: 'event.birth.label'
   },
   dateOfEvent: field('child.dob'),
   title: {
     defaultMessage: '{child.name.firstname} {child.name.surname}',
     description: 'This is the title of the summary',
-    id: 'v2.event.birth.title'
+    id: 'event.birth.title'
   },
   fallbackTitle: {
-    id: 'v2.event.tennis-club-membership.fallbackTitle',
+    id: 'event.tennis-club-membership.fallbackTitle',
     defaultMessage: 'No name provided',
     description:
       'This is a fallback title if actual title resolves to empty string'
@@ -52,7 +52,7 @@ export const birthEvent = defineConfig({
         emptyValueMessage: {
           defaultMessage: 'No date of birth',
           description: 'This is shown when there is no child information',
-          id: 'v2.event.birth.summary.child.dob.empty'
+          id: 'event.birth.summary.child.dob.empty'
         }
       },
       // Render the 'fallback value' when selection has not been made.
@@ -62,12 +62,12 @@ export const birthEvent = defineConfig({
         emptyValueMessage: {
           defaultMessage: 'No place of birth',
           description: 'This is shown when there is no child information',
-          id: 'v2.event.birth.summary.child.placeOfBirth.empty'
+          id: 'event.birth.summary.child.placeOfBirth.empty'
         },
         label: {
           defaultMessage: 'Place of birth',
           description: 'Label for place of birth',
-          id: 'v2.event.birth.summary.child.placeOfBirth.label'
+          id: 'event.birth.summary.child.placeOfBirth.label'
         },
         conditionals: [
           {
@@ -81,12 +81,12 @@ export const birthEvent = defineConfig({
         emptyValueMessage: {
           defaultMessage: 'No place of birth',
           description: 'This is shown when there is no child information',
-          id: 'v2.event.birth.summary.child.placeOfBirth.empty'
+          id: 'event.birth.summary.child.placeOfBirth.empty'
         },
         label: {
           defaultMessage: 'Place of birth',
           description: 'Label for place of birth',
-          id: 'v2.event.birth.summary.child.placeOfBirth.label'
+          id: 'event.birth.summary.child.placeOfBirth.label'
         },
         conditionals: [
           {
@@ -102,12 +102,12 @@ export const birthEvent = defineConfig({
         emptyValueMessage: {
           defaultMessage: 'No place of birth',
           description: 'This is shown when there is no child information',
-          id: 'v2.event.birth.summary.child.placeOfBirth.empty'
+          id: 'event.birth.summary.child.placeOfBirth.empty'
         },
         label: {
           defaultMessage: 'Place of birth',
           description: 'Label for place of birth',
-          id: 'v2.event.birth.summary.child.placeOfBirth.label'
+          id: 'event.birth.summary.child.placeOfBirth.label'
         },
         conditionals: [
           {
@@ -123,12 +123,12 @@ export const birthEvent = defineConfig({
         emptyValueMessage: {
           defaultMessage: 'No place of birth',
           description: 'This is shown when there is no child information',
-          id: 'v2.event.birth.summary.child.placeOfBirth.empty'
+          id: 'event.birth.summary.child.placeOfBirth.empty'
         },
         label: {
           defaultMessage: 'Place of birth',
           description: 'Label for place of birth',
-          id: 'v2.event.birth.summary.child.placeOfBirth.label'
+          id: 'event.birth.summary.child.placeOfBirth.label'
         },
         conditionals: [
           {
@@ -144,17 +144,17 @@ export const birthEvent = defineConfig({
         emptyValueMessage: {
           defaultMessage: 'No contact details provided',
           description: 'This is shown when there is no informant information',
-          id: 'v2.event.birth.summary.informant.contact.empty'
+          id: 'event.birth.summary.informant.contact.empty'
         },
         label: {
           defaultMessage: 'Contact',
           description: 'This is the label for the informant information',
-          id: 'v2.event.birth.summary.informant.contact.label'
+          id: 'event.birth.summary.informant.contact.label'
         },
         value: {
           defaultMessage: '{informant.phoneNo} {informant.email}',
           description: 'This is the contact value of the informant',
-          id: 'v2.event.birth.summary.informant.contact.value'
+          id: 'event.birth.summary.informant.contact.value'
         }
       }
     ]
@@ -166,7 +166,7 @@ export const birthEvent = defineConfig({
         defaultMessage: 'Read',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'v2.event.birth.action.Read.label'
+        id: 'event.birth.action.Read.label'
       },
       review: BIRTH_DECLARATION_REVIEW
     },
@@ -176,7 +176,7 @@ export const birthEvent = defineConfig({
         defaultMessage: 'Declare',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'v2.event.birth.action.declare.label'
+        id: 'event.birth.action.declare.label'
       },
       review: BIRTH_DECLARATION_REVIEW,
       deduplication: {
@@ -185,7 +185,7 @@ export const birthEvent = defineConfig({
           defaultMessage: 'Detect duplicate',
           description:
             'This is shown as the action name anywhere the user can trigger the action from',
-          id: 'v2.event.birth.action.detect-duplicate.label'
+          id: 'event.birth.action.detect-duplicate.label'
         },
         query: dedupConfig
       }
@@ -196,7 +196,7 @@ export const birthEvent = defineConfig({
         defaultMessage: 'Validate',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'v2.event.birth.action.validate.label'
+        id: 'event.birth.action.validate.label'
       },
       review: BIRTH_DECLARATION_REVIEW,
       deduplication: {
@@ -205,7 +205,7 @@ export const birthEvent = defineConfig({
           defaultMessage: 'Detect duplicate',
           description:
             'This is shown as the action name anywhere the user can trigger the action from',
-          id: 'v2.event.birth.action.detect-duplicate.label'
+          id: 'event.birth.action.detect-duplicate.label'
         },
         query: dedupConfig
       }
@@ -216,7 +216,7 @@ export const birthEvent = defineConfig({
         defaultMessage: 'Register',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'v2.event.birth.action.register.label'
+        id: 'event.birth.action.register.label'
       },
       review: BIRTH_DECLARATION_REVIEW,
       deduplication: {
@@ -225,7 +225,7 @@ export const birthEvent = defineConfig({
           defaultMessage: 'Detect duplicate',
           description:
             'This is shown as the action name anywhere the user can trigger the action from',
-          id: 'v2.event.birth.action.detect-duplicate.label'
+          id: 'event.birth.action.detect-duplicate.label'
         },
         query: dedupConfig
       }
@@ -236,14 +236,14 @@ export const birthEvent = defineConfig({
         defaultMessage: 'Print certificate',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'v2.event.birth.action.collect-certificate.label'
+        id: 'event.birth.action.collect-certificate.label'
       },
       printForm: BIRTH_CERTIFICATE_COLLECTOR_FORM
     },
     {
       type: ActionType.REQUEST_CORRECTION,
       label: {
-        id: 'v2.event.birth.action.declare.form.review.title',
+        id: 'event.birth.action.declare.form.review.title',
         defaultMessage:
           '{child.name.firstname, select, __EMPTY__ {Birth declaration} other {{child.name.surname, select, __EMPTY__ {Birth declaration for {child.name.firstname}} other {Birth declaration for {child.name.firstname} {child.name.surname}}}}}',
         description: 'Title of the form to show in review page'

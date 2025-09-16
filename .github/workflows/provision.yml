@@ -33,6 +33,8 @@ on:
           - v17
           - pentest
           - meta
+          - v19-beta-staging
+          - v19-beta-prod
       tag:
         type: choice
         description: Select group tag you want to execute

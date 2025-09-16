@@ -48,42 +48,42 @@ const informantMessageDescriptors = {
   MOTHER: {
     defaultMessage: 'Mother',
     description: 'Label for option mother',
-    id: 'v2.form.field.label.informantRelation.mother'
+    id: 'form.field.label.informantRelation.mother'
   },
   FATHER: {
     defaultMessage: 'Father',
     description: 'Label for option father',
-    id: 'v2.form.field.label.informantRelation.father'
+    id: 'form.field.label.informantRelation.father'
   },
   GRANDFATHER: {
     defaultMessage: 'Grandfather',
     description: 'Label for option Grandfather',
-    id: 'v2.form.field.label.informantRelation.grandfather'
+    id: 'form.field.label.informantRelation.grandfather'
   },
   GRANDMOTHER: {
     defaultMessage: 'Grandmother',
     description: 'Label for option Grandmother',
-    id: 'v2.form.field.label.informantRelation.grandmother'
+    id: 'form.field.label.informantRelation.grandmother'
   },
   BROTHER: {
     defaultMessage: 'Brother',
     description: 'Label for option brother',
-    id: 'v2.form.field.label.informantRelation.brother'
+    id: 'form.field.label.informantRelation.brother'
   },
   SISTER: {
     defaultMessage: 'Sister',
     description: 'Label for option Sister',
-    id: 'v2.form.field.label.informantRelation.sister'
+    id: 'form.field.label.informantRelation.sister'
   },
   LEGAL_GUARDIAN: {
     defaultMessage: 'Legal guardian',
     description: 'Label for option Legal Guardian',
-    id: 'v2.form.field.label.informantRelation.legalGuardian'
+    id: 'form.field.label.informantRelation.legalGuardian'
   },
   OTHER: {
     defaultMessage: 'Someone else',
     description: 'Label for option someone else',
-    id: 'v2.form.field.label.informantRelation.others'
+    id: 'form.field.label.informantRelation.others'
   }
 } satisfies Record<keyof typeof InformantType, TranslationConfig>
 
@@ -107,7 +107,7 @@ export const informant = defineFormPage({
   title: {
     defaultMessage: "Informant's details",
     description: 'Form section title for informants details',
-    id: 'v2.form.section.informant.title'
+    id: 'form.section.informant.title'
   },
   fields: [
     {
@@ -118,7 +118,7 @@ export const informant = defineFormPage({
       label: {
         defaultMessage: 'Relationship to child',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.informant.field.relation.label'
+        id: 'event.birth.action.declare.form.section.informant.field.relation.label'
       },
       options: birthInformantTypeOptions
     },
@@ -129,7 +129,7 @@ export const informant = defineFormPage({
       label: {
         defaultMessage: 'Relationship to child',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.informant.field.other.relation.label'
+        id: 'event.birth.action.declare.form.section.informant.field.other.relation.label'
       },
       conditionals: [
         {
@@ -150,7 +150,7 @@ export const informant = defineFormPage({
       label: {
         defaultMessage: "Informant's name",
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.informant.field.name.label'
+        id: 'event.birth.action.declare.form.section.informant.field.name.label'
       },
       conditionals: [
         {
@@ -170,7 +170,7 @@ export const informant = defineFormPage({
           message: {
             defaultMessage: 'Must be a valid Birthdate',
             description: 'This is the error message for invalid date',
-            id: 'v2.event.birth.action.declare.form.section.person.field.dob.error'
+            id: 'event.birth.action.declare.form.section.person.field.dob.error'
           },
           validator: field('informant.dob').isBefore().now()
         },
@@ -179,7 +179,7 @@ export const informant = defineFormPage({
             defaultMessage: "Birth date must be before child's birth date",
             description:
               "This is the error message for a birth date after child's birth date",
-            id: 'v2.event.birth.action.declare.form.section.person.dob.afterChild'
+            id: 'event.birth.action.declare.form.section.person.dob.afterChild'
           },
           validator: field('informant.dob').isBefore().date(field('child.dob'))
         }
@@ -187,7 +187,7 @@ export const informant = defineFormPage({
       label: {
         defaultMessage: 'Date of birth',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.person.field.dob.label'
+        id: 'event.birth.action.declare.form.section.person.field.dob.label'
       },
       conditionals: [
         {
@@ -206,7 +206,7 @@ export const informant = defineFormPage({
       label: {
         defaultMessage: 'Exact date of birth unknown',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.person.field.age.checkbox.label'
+        id: 'event.birth.action.declare.form.section.person.field.age.checkbox.label'
       },
       conditionals: [
         {
@@ -227,13 +227,13 @@ export const informant = defineFormPage({
       label: {
         defaultMessage: 'Age of informant',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.informant.field.age.label'
+        id: 'event.birth.action.declare.form.section.informant.field.age.label'
       },
       configuration: {
         postfix: {
           defaultMessage: 'years',
           description: 'This is the postfix for age field',
-          id: 'v2.event.birth.action.declare.form.section.person.field.age.postfix'
+          id: 'event.birth.action.declare.form.section.person.field.age.postfix'
         }
       },
       conditionals: [
@@ -254,7 +254,7 @@ export const informant = defineFormPage({
       label: {
         defaultMessage: 'Nationality',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.person.field.nationality.label'
+        id: 'event.birth.action.declare.form.section.person.field.nationality.label'
       },
       conditionals: [
         {
@@ -272,7 +272,7 @@ export const informant = defineFormPage({
       label: {
         defaultMessage: 'Type of ID',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.person.field.idType.label'
+        id: 'event.birth.action.declare.form.section.person.field.idType.label'
       },
       options: idTypeOptions,
       conditionals: [
@@ -290,7 +290,7 @@ export const informant = defineFormPage({
       label: {
         defaultMessage: 'ID Number',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.person.field.nid.label'
+        id: 'event.birth.action.declare.form.section.person.field.nid.label'
       },
       conditionals: [
         {
@@ -307,7 +307,7 @@ export const informant = defineFormPage({
           message: {
             defaultMessage: 'National id must be unique',
             description: 'This is the error message for non-unique ID Number',
-            id: 'v2.event.birth.action.declare.form.nid.unique'
+            id: 'event.birth.action.declare.form.nid.unique'
           },
           validator: and(
             not(field('informant.nid').isEqualTo(field('mother.nid'))),
@@ -324,7 +324,7 @@ export const informant = defineFormPage({
       label: {
         defaultMessage: 'ID Number',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.person.field.passport.label'
+        id: 'event.birth.action.declare.form.section.person.field.passport.label'
       },
       conditionals: [
         {
@@ -344,7 +344,7 @@ export const informant = defineFormPage({
       label: {
         defaultMessage: 'ID Number',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.person.field.brn.label'
+        id: 'event.birth.action.declare.form.section.person.field.brn.label'
       },
       conditionals: [
         {
@@ -377,7 +377,7 @@ export const informant = defineFormPage({
       label: {
         defaultMessage: 'Usual place of residence',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.person.field.addressHelper.label'
+        id: 'event.birth.action.declare.form.section.person.field.addressHelper.label'
       },
       configuration: { styles: { fontVariant: 'h3' } },
       conditionals: [
@@ -395,7 +395,7 @@ export const informant = defineFormPage({
       label: {
         defaultMessage: 'Usual place of residence',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.person.field.address.label'
+        id: 'event.birth.action.declare.form.section.person.field.address.label'
       },
       conditionals: [
         {
@@ -408,7 +408,7 @@ export const informant = defineFormPage({
           message: {
             defaultMessage: 'Invalid input',
             description: 'Error message when generic field is invalid',
-            id: 'v2.error.invalidInput'
+            id: 'error.invalidInput'
           },
           validator: field('informant.address').isValidAdministrativeLeafLevel()
         }
@@ -424,7 +424,7 @@ export const informant = defineFormPage({
       parent: field('informant.relation')
     },
     {
-      id: 'v2.informant.address.divider.end',
+      id: 'informant.address.divider.end',
       type: FieldType.DIVIDER,
       label: emptyMessage,
       conditionals: [
@@ -443,7 +443,7 @@ export const informant = defineFormPage({
       label: {
         defaultMessage: 'Phone number',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.informant.field.phoneNo.label'
+        id: 'event.birth.action.declare.form.section.informant.field.phoneNo.label'
       },
       validation: [
         {
@@ -452,7 +452,7 @@ export const informant = defineFormPage({
               'Must be a valid 10 digit number that starts with 0(7|9)',
             description:
               'The error message that appears on phone numbers where the first two characters must be 07 or 09, and length must be 10',
-            id: 'v2.event.birth.action.declare.form.section.informant.field.phoneNo.error'
+            id: 'event.birth.action.declare.form.section.informant.field.phoneNo.error'
           },
           validator: or(
             field('informant.phoneNo').matches(PHONE_NUMBER_REGEX),
@@ -470,7 +470,7 @@ export const informant = defineFormPage({
       label: {
         defaultMessage: 'Email',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.informant.field.email.label'
+        id: 'event.birth.action.declare.form.section.informant.field.email.label'
       },
       configuration: {
         maxLength: 255

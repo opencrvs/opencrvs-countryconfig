@@ -1259,7 +1259,40 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
       ),
       scope: 'ENVIRONMENT' as const
     },
-
+    {
+      name: 'POSTGRES_USER',
+      type: 'SECRET' as const,
+      didExist: findExistingValue(
+        'POSTGRES_USER',
+        'SECRET',
+        'ENVIRONMENT',
+        existingValues
+      ),
+      value: findExistingOrDefine(
+        'POSTGRES_USER',
+        'SECRET',
+        'ENVIRONMENT',
+        generateLongPassword()
+      ),
+      scope: 'ENVIRONMENT' as const
+    },
+    {
+      name: 'POSTGRES_PASSWORD',
+      type: 'SECRET' as const,
+      didExist: findExistingValue(
+        'POSTGRES_PASSWORD',
+        'SECRET',
+        'ENVIRONMENT',
+        existingValues
+      ),
+      value: findExistingOrDefine(
+        'POSTGRES_PASSWORD',
+        'SECRET',
+        'ENVIRONMENT',
+        generateLongPassword()
+      ),
+      scope: 'ENVIRONMENT' as const
+    },
     {
       name: 'SUPER_USER_PASSWORD',
       type: 'SECRET' as const,

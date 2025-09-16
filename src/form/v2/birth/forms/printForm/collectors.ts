@@ -112,7 +112,7 @@ const getInformantOption = (informantType: InformantTypeKey) => {
 
 const fatherOption = {
   label: {
-    id: 'v2.event.birth.action.certificate.form.section.requester.father.label',
+    id: 'event.birth.action.certificate.form.section.requester.father.label',
     defaultMessage: 'Print and issue to Father',
     description: 'This is the label for the field'
   },
@@ -121,7 +121,7 @@ const fatherOption = {
 
 const motherOption = {
   label: {
-    id: 'v2.event.birth.action.certificate.form.section.requester.mother.label',
+    id: 'event.birth.action.certificate.form.section.requester.mother.label',
     defaultMessage: 'Print and issue to Mother',
     description: 'This is the label for the field'
   },
@@ -130,7 +130,7 @@ const motherOption = {
 
 const otherOption = {
   label: {
-    id: 'v2.event.birth.action.certificate.form.section.requester.other.label',
+    id: 'event.birth.action.certificate.form.section.requester.other.label',
     defaultMessage: 'Print and issue to someone else',
     description: 'This is the label for the field'
   },
@@ -140,7 +140,7 @@ const otherOption = {
 const requesterLabel = {
   defaultMessage: 'Requester',
   description: 'This is the label for the field',
-  id: 'v2.event.birth.action.certificate.form.section.requester.label'
+  id: 'event.birth.action.certificate.form.section.requester.label'
 }
 
 const commonConfigs = {
