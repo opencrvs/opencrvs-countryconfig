@@ -25,7 +25,7 @@ import { printCertificateCollectorIdentityVerify } from './collector-identity-ve
 
 export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
   label: {
-    id: 'v2.event.birth.action.certificate.form.label',
+    id: 'event.birth.action.certificate.form.label',
     defaultMessage: 'Birth certificate collector',
     description: 'This is what this form is referred as in the system'
   },
@@ -34,7 +34,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
       id: 'collector',
       type: PageTypes.enum.FORM,
       title: {
-        id: 'v2.event.birth.action.certificate.form.section.who.title',
+        id: 'event.birth.action.certificate.form.section.who.title',
         defaultMessage: 'Certify record',
         description: 'This is the title of the section'
       },
@@ -57,7 +57,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
           label: {
             defaultMessage: 'Verified',
             description: 'This is the label for the verification button',
-            id: 'v2.event.birth.action.certificate.form.verify'
+            id: 'event.birth.action.certificate.form.verify'
           }
         },
         cancel: {
@@ -65,21 +65,21 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
             defaultMessage: 'Identity does not match',
             description:
               'This is the label for the verification cancellation button',
-            id: 'v2.event.birth.action.certificate.form.cancel'
+            id: 'event.birth.action.certificate.form.cancel'
           },
           confirmation: {
             title: {
               defaultMessage: 'Print without proof of ID?',
               description:
                 'This is the title for the verification cancellation modal',
-              id: 'v2.event.birth.action.certificate.form.cancel.confirmation.title'
+              id: 'event.birth.action.certificate.form.cancel.confirmation.title'
             },
             body: {
               defaultMessage:
                 'Please be aware that if you proceed, you will be responsible for issuing a certificate without the necessary proof of ID from the collector',
               description:
                 'This is the body for the verification cancellation modal',
-              id: 'v2.event.birth.action.certificate.form.cancel.confirmation.body'
+              id: 'event.birth.action.certificate.form.cancel.confirmation.body'
             }
           }
         }
@@ -100,7 +100,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
           label: {
             defaultMessage: 'Payment details',
             description: 'Title for the data section',
-            id: 'v2.event.birth.action.certificate.form.section.collectPayment.data.label'
+            id: 'event.birth.action.certificate.form.section.collectPayment.data.label'
           },
           conditionals: [
             {
@@ -122,21 +122,21 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
                 label: {
                   defaultMessage: 'Service',
                   description: 'Title for the data entry',
-                  id: 'v2.event.birth.action.certificate.form.section.collectPayment.service.label'
+                  id: 'event.birth.action.certificate.form.section.collectPayment.service.label'
                 },
                 value: {
                   defaultMessage:
                     'Birth registration after 365 days of date of birth',
                   description:
                     'Birth registration after 365 days of date of birth message',
-                  id: 'v2.event.birth.action.certificate.form.section.collectPayment.service.label.afterLateRegistrationTarget'
+                  id: 'event.birth.action.certificate.form.section.collectPayment.service.label.afterLateRegistrationTarget'
                 }
               },
               {
                 label: {
                   defaultMessage: 'Fee',
                   description: 'Title for the data entry',
-                  id: 'v2.event.birth.action.certificate.form.section.collectPayment.fee.label'
+                  id: 'event.birth.action.certificate.form.section.collectPayment.fee.label'
                 },
                 value: '$15.00'
               }
@@ -150,7 +150,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
           label: {
             defaultMessage: 'Payment details',
             description: 'Title for the data section',
-            id: 'v2.event.birth.action.certificate.form.section.collectPayment.data.label'
+            id: 'event.birth.action.certificate.form.section.collectPayment.data.label'
           },
           conditionals: [
             {
@@ -177,21 +177,21 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
                 label: {
                   defaultMessage: 'Service',
                   description: 'Title for the data entry',
-                  id: 'v2.event.birth.action.certificate.form.section.collectPayment.service.label'
+                  id: 'event.birth.action.certificate.form.section.collectPayment.service.label'
                 },
                 value: {
                   defaultMessage:
                     'Birth registration after 30 days but before 365 days of date of birth',
                   description:
                     'Birth registration after 30 days but before 365 days of date of birth message',
-                  id: 'v2.event.birth.action.certificate.form.section.collectPayment.service.label.inBetweenRegistrationTargets'
+                  id: 'event.birth.action.certificate.form.section.collectPayment.service.label.inBetweenRegistrationTargets'
                 }
               },
               {
                 label: {
                   defaultMessage: 'Fee',
                   description: 'Title for the data entry',
-                  id: 'v2.event.birth.action.certificate.form.section.collectPayment.fee.label'
+                  id: 'event.birth.action.certificate.form.section.collectPayment.fee.label'
                 },
                 value: '$7.00'
               }
@@ -204,7 +204,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
           label: {
             defaultMessage: 'Payment details',
             description: 'Title for the data section',
-            id: 'v2.event.birth.action.certificate.form.section.collectPayment.data.label'
+            id: 'event.birth.action.certificate.form.section.collectPayment.data.label'
           },
           conditionals: [
             {
@@ -224,21 +224,21 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
                 label: {
                   defaultMessage: 'Service',
                   description: 'Title for the data entry',
-                  id: 'v2.event.birth.action.certificate.form.section.collectPayment.service.label'
+                  id: 'event.birth.action.certificate.form.section.collectPayment.service.label'
                 },
                 value: {
                   defaultMessage:
                     'Birth registration before 30 days of date of birth',
                   description:
                     'Birth registration before 30 days of date of birth message',
-                  id: 'v2.event.birth.action.certificate.form.section.collectPayment.service.label.beforeRegistrationTarget'
+                  id: 'event.birth.action.certificate.form.section.collectPayment.service.label.beforeRegistrationTarget'
                 }
               },
               {
                 label: {
                   defaultMessage: 'Fee',
                   description: 'Title for the data entry',
-                  id: 'v2.event.birth.action.certificate.form.section.collectPayment.fee.label'
+                  id: 'event.birth.action.certificate.form.section.collectPayment.fee.label'
                 },
                 value: '$5.00'
               }
