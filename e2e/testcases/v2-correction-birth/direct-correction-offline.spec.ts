@@ -171,7 +171,7 @@ test.describe.serial('Direct correction offline', () => {
 
     expect(page.url().includes(`events/overview/${eventId}`)).toBeTruthy()
 
-    // We should expect to see the optimistically updated new child name instead of the old one
+    // We expect to see the optimistically updated new child name instead of the old one
     await expect(
       page.locator('#content-name', {
         hasText: formatV2ChildName({ 'child.name': updatedChildDetails })
