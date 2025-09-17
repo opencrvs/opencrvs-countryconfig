@@ -11,7 +11,7 @@
 require('app-module-path').addPath(require('path').join(__dirname))
 require('dotenv').config()
 
-import fetch from 'node-fetch'
+import StreamArray from 'stream-json/streamers/StreamArray'
 import path from 'path'
 import Handlebars from 'handlebars'
 import * as Hapi from '@hapi/hapi'
@@ -20,6 +20,7 @@ import * as JWT from 'hapi-auth-jwt2'
 import * as inert from '@hapi/inert'
 import * as Sentry from 'hapi-sentry'
 import * as H2o2 from '@hapi/h2o2'
+import fetch from 'node-fetch'
 import {
   CLIENT_APP_URL,
   DOMAIN,
@@ -65,7 +66,7 @@ import {
   onAnyActionHandler
 } from '@countryconfig/api/custom-event/handler'
 import { readFileSync } from 'fs'
-import { ActionType } from '@opencrvs/toolkit/events'
+import { ActionType, EventDocument } from '@opencrvs/toolkit/events'
 import { Event } from './form/types/types'
 import { onRegisterHandler } from './api/registration'
 import { env } from './environment'
@@ -83,6 +84,13 @@ import {
 import { getEventType } from './utils/fhir'
 import { workqueueconfigHandler } from './api/workqueue/handler'
 import getUserNotificationRoutes from './config/routes/userNotificationRoutes'
+import {
+  importEvent,
+  importEvents,
+  syncLocationLevels,
+  syncLocationStatistics
+} from './analytics/analytics'
+import { getClient } from './analytics/postgres'
 
 export interface ITokenPayload {
   sub: string
@@ -636,6 +644,63 @@ export async function createServer() {
   })
 
   server.route({
+    method: 'POST',
+    path: '/reindex',
+    options: {
+      /*
+       * In deployed environments, the reindex path is blocked by Traefik.
+       * See docker-compose.deploy.yml for more details.
+       */
+      auth: false,
+      payload: {
+        output: 'stream',
+        parse: false
+      }
+    },
+    handler: async (req, h) => {
+      if (!env.ANALYTICS_DATABASE_URL) {
+        logger.warn(
+          'Skipping reindex, no ANALYTICS_DATABASE_URL environment variable set.'
+        )
+        return h.response().code(200)
+      }
+
+      const stream = req.raw.req.pipe(StreamArray.withParser())
+      const BATCH_SIZE = 1000
+      const queue: EventDocument[] = []
+      const client = getClient()
+
+      try {
+        await client.transaction().execute(async (trx) => {
+          for await (const { value } of stream) {
+            queue.push(value)
+
+            if (queue.length >= BATCH_SIZE) {
+              const batch = queue.splice(0, queue.length)
+              await importEvents(batch, trx)
+            }
+          }
+
+          if (queue.length > 0) {
+            await importEvents(queue, trx)
+          }
+        })
+
+        logger.info('Reindexed all events into analytics.')
+
+        return h.response().code(200)
+      } catch (e) {
+        // stop consuming the stream if something failed on import
+        if (!stream.destroyed) stream.destroy(e)
+
+        logger.error(e)
+
+        return h.response({ error: 'Unexpected error' }).code(500)
+      }
+    }
+  })
+
+  server.route({
     method: 'GET',
     path: '/events',
     handler: getCustomEventsHandler,
@@ -733,6 +798,33 @@ export async function createServer() {
     }
   })
 
+  server.ext('onPostHandler', async (request, h) => {
+    if (!env.ANALYTICS_DATABASE_URL) {
+      logger.warn(
+        'Skipping reindex, no ANALYTICS_DATABASE_URL environment variable set.'
+      )
+      return h.continue
+    }
+
+    const response = request.response as Hapi.ResponseObject
+    const parsedPath = /^\/trigger\/events\/[^/]+\/actions\/([^/]+)$/.exec(
+      request.route.path
+    )
+    const actionType = parsedPath?.[1] as ActionType | null
+    const wasRequestForActionConfirmation =
+      actionType && request.method === 'post'
+    const wasActionAcceptedImmediately = response.statusCode === 200
+
+    if (wasRequestForActionConfirmation && wasActionAcceptedImmediately) {
+      const event = request.payload as EventDocument
+      const client = getClient()
+      await client.transaction().execute(async (trx) => {
+        await importEvent(event, trx)
+      })
+    }
+    return h.continue
+  })
+
   async function stop() {
     await server.stop()
     server.log('info', 'server stopped')
@@ -740,6 +832,10 @@ export async function createServer() {
 
   async function start() {
     await server.start()
+    if (env.ANALYTICS_DATABASE_URL) {
+      await syncLocationLevels()
+      await syncLocationStatistics()
+    }
     server.log(
       'info',
       `server started on ${COUNTRY_CONFIG_HOST}:${COUNTRY_CONFIG_PORT}`

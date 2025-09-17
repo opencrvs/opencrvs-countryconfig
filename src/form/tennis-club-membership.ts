@@ -111,6 +111,7 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
           id: 'applicant.dob',
           type: FieldType.DATE,
           required: true,
+          analytics: true,
           validation: [
             {
               message: {

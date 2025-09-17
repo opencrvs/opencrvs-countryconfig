@@ -94,7 +94,7 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.5.7
-  
+
       - name: Terraform Init
         working-directory: ${{ env.TF_PATH }}
         run: terraform init
@@ -121,7 +121,7 @@ jobs:
             echo "worker_ip=$(terraform output -raw worker_ip)" >> $GITHUB_OUTPUT
             # echo "backup_ip=$(terraform output -raw backup_ip)" >> $GITHUB_OUTPUT
           fi
-  
+
       - name: Update terraform state file in ${{ env.TERRAFORM_REPO }}
         run: |
           cp ${{ env.TF_PATH }}/terraform.tfstate terraform-state/${{ vars.COUNTRY_NAME }}/${{ inputs.environment }}-${{ env.type }}.tfstate
