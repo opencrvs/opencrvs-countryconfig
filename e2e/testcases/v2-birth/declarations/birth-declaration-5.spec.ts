@@ -511,8 +511,7 @@ test.describe.serial('5. Birth declaration case - 5', () => {
       await expect(page.getByRole('dialog')).not.toBeVisible()
     })
 
-    // @TODO: take in to use after workflows are implemented on V2
-    test.skip('5.1.8 Register', async () => {
+    test('5.1.8 Register', async () => {
       await page.getByRole('button', { name: 'Register' }).click()
       await page.locator('#confirm_Declare').click()
 
