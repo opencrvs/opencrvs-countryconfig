@@ -935,7 +935,7 @@ event.death.action.declare.form.nid.unique,This is the error message for non-uni
 event.death.action.declare.form.nid.unique,This is the error message for non-unique ID Number,National id must be unique,L'identifiant national doit être unique
 event.death.action.declare.form.review.comment.label,Label for the comment field in the review section,Comment,Commentaire
 event.death.action.declare.form.review.signature.label,Label for the signature field in the review section,Signature of informant,Signature de l'informateur
-event.death.action.declare.form.review.title,Title of the form to show in review page,"{deceased.name.firstname, select, __EMPTY__ {Death declaration} other {{deceased.name.surname, select, __EMPTY__ {Death declaration} other {Death declaration for {deceased.name.firstname} {deceased.name.surname}}}}}","{deceased.name.firstname, select, __EMPTY__ {Déclaration de décès} other {{deceased.name.surname, select, __EMPTY__ {Déclaration de décès} other {Déclaration de décès de {deceased.name.firstname} {deceased.name.surname}}}}}"
+event.death.action.declare.form.review.title,Title of the form to show in review page,"{deceased.name.firstname, select, __EMPTY__ {Death declaration} other {{deceased.name.surname, select, __EMPTY__ {Death declaration for {deceased.name.firstname}} other {Death declaration for {deceased.name.firstname} {deceased.name.surname}}}}}","{deceased.name.firstname, select, __EMPTY__ {Déclaration de décès} other {{deceased.name.surname, select, __EMPTY__ {Déclaration de décès de {deceased.name.firstname}} other {Déclaration de décès de {deceased.name.firstname} {deceased.name.surname}}}}}"
 event.death.action.declare.form.section.deceased.field.address.label,This is the label for the field,Usual place of residence,Lieu de résidence habituel
 event.death.action.declare.form.section.deceased.field.addressHelper.label,This is the label for the field,Usual place of residence,Lieu de résidence habituel
 event.death.action.declare.form.section.deceased.field.age.checkbox.label,This is the label for the field,Exact date of birth unknown,Date exacte de naissance inconnue
@@ -1039,6 +1039,7 @@ event.death.summary.informant.contact.value,This is the contact value of the inf
 event.death.title,This is the title of the summary,{deceased.name.firstname} {deceased.name.surname},{deceased.name.firstname} {deceased.name.surname}
 event.default.action.certificate.template.type.label,Select certificate template,Type,Taper
 event.history.role,Label for the role in event history,"{role, select, LOCAL_REGISTRAR {Local Registrar} SOCIAL_WORKER {Field Agent} REGISTRATION_AGENT {Registration Agent} HEALTH {Health integration} IMPORT {Import integration} NATIONAL_ID {National ID integration} RECORD_SEARCH {Record search integration} WEBHOOK {Webhook} other {Unknown}}","{role, select, LOCAL_REGISTRAR {Officier d'état civil local} SOCIAL_WORKER {Agent de terrain} REGISTRATION_AGENT {Agent d'enregistrement} HEALTH {Intégration santé} IMPORT {Intégration d'importation} NATIONAL_ID {Intégration ID nationale} RECORD_SEARCH {Intégration de recherche d'enregistrements} WEBHOOK {Webhook} other {Inconnu}}"
+event.history.system,Name for system initiated actions in the event history,System,System
 event.history.systemDefaultName,Fallback for system integration name in the event history,System integration,Intégration système
 event.summary.assignedTo.empty,Not assigned message,Not assigned,Non assigné
 event.summary.assignedTo.label,Assigned to label,Assigned to,Assigné à
@@ -1505,7 +1506,8 @@ integrations.revealKeys,Label for reveal keys option,Reveal Keys,Montrer clés d
 integrations.shaSecret,Label for SHA secret,SHA secret,SHA Secret
 integrations.type.eventNotification,Label for event notification,Event notification,Notification d'événement
 integrations.type.healthSystem,Label for health system type,Health integration,Intégration de la santé
-integrations.type.import,Label for import type system,Import,Import
+integrations.type.import,Label for import type system,Import,Importer
+integrations.type.importExport,Label for import export type system,Import/Export,Importer/Exporter
 integrations.type.nationalId,Label for national id,National id,Identité nationale
 integrations.type.recordSearch,Label for record search,Record search,Recherche d'enregistrements
 integrations.type.webhook,Label for web hook,Webhook,Webhook
@@ -1514,6 +1516,7 @@ integrations.updatePermissionsMsg,Label for update permissions message,Permissio
 integrations.webhook.PII,Label for PII,Include PII data,Inclure les données PII
 integrations.webhookDescription,label for webhook client,"A Webhook client can subscribe to be notified upon a birth or death registration following W3C WebSub standards. For more information, visit:","Un client Webhook peut s'abonner pour être notifié lors de l'enregistrement d'une naissance ou d'un décès selon les normes WebSub du W3C. Pour plus d'informations, consultez le site :"
 integrations.webhookPermissionsDescription,Webhook description above permissions,Select the data you wish to be contained within the webhook payload,Sélectionnez les données que vous souhaitez voir figurer dans les données utiles du webhook.
+loading.records,Loading indicator while fetching records,Loading records...,Chargement des enregistrements...
 messages.emptyString,Empty string, ,
 misc.confirmPinTitle,The title displayed while creating a PIN,Confirm PIN,Confirmer le  Code PIN
 misc.createDescription,The description displayed while creating a PIN,Choose a PIN that doesn't have 4 repeating digits or sequential numbers,Choisissez un code PIN qui ne comporte pas 4 chiffres répétitifs ou des numéros séquentiels.
@@ -1996,6 +1999,10 @@ search.searchResultFor,The search result text,Search result for “{param}”,r�
 search.searchingFor,The searching for text,Searching for “{param}”,Recherche de  “{param}”
 search.totalResultText,The total result text,"{total, plural, =0 {} one {# record found} other {# records found}} ","{total, plural, =0 {} one {# record found} other {# records found}}"
 search.waitingForConnection,The text when there is no connectivity,Reconnect to load declarations,Se reconnecter pour charger les déclarations
+serviceWorker.cacheKey.WorkBoxRuntime.error.button.logout,Button label for logging out when WorkBox runtime cache key is missing,Log out,Se déconnecter
+serviceWorker.cacheKey.WorkBoxRuntime.error.button.reload,Button label for logging out when WorkBox runtime cache key is missing,Reload,Recharger
+serviceWorker.cacheKey.WorkBoxRuntime.error.content,Content shown when WorkBox runtime cache key is missing,"Something went wrong with loading the app. Reload this page, or log out and log back in to continue.",Un problème est survenu lors du chargement de l’application. Rechargez cette page ou déconnectez-vous puis reconnectez-vous pour continuer.
+serviceWorker.cacheKey.WorkBoxRuntime.error.header,Header shown when WorkBox runtime cache key is missing,⚠️ Application Cache Error,⚠️ Erreur du cache de l'application
 settings.account.tile,Account header,Account,Compte
 settings.changeAvatar,Avatar change modal header,Change profile image,Modifier l'image du profil
 settings.changeAvatar.changeImage,Change image label,Change,Modifier l'image
