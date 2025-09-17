@@ -300,7 +300,7 @@ export const child = defineFormPage({
       ]
     },
     {
-      id: 'child.address.privateHome',
+      id: 'child.birthLocation.privateHome',
       type: FieldType.ADDRESS,
       secured: true,
       hideLabel: true,
@@ -325,7 +325,7 @@ export const child = defineFormPage({
             id: 'error.invalidInput'
           },
           validator: field(
-            'child.address.privateHome'
+            'child.birthLocation.privateHome'
           ).isValidAdministrativeLeafLevel()
         }
       ],
@@ -339,7 +339,7 @@ export const child = defineFormPage({
       }
     },
     {
-      id: 'child.address.other',
+      id: 'child.birthLocation.other',
       type: FieldType.ADDRESS,
       secured: true,
       hideLabel: true,
@@ -362,7 +362,7 @@ export const child = defineFormPage({
             id: 'error.invalidInput'
           },
           validator: field(
-            'child.address.other'
+            'child.birthLocation.other'
           ).isValidAdministrativeLeafLevel()
         }
       ],
