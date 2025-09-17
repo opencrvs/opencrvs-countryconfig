@@ -23,7 +23,7 @@ import { random } from 'lodash'
 import { formatV2ChildName } from '../v2-birth/helpers'
 import { ensureAssigned } from '../../v2-utils'
 
-test.describe.serial(' Correct record - 4', () => {
+test.describe.serial('Correct record - 4', () => {
   let declaration: DeclarationV2
   let trackingId = ''
   let eventId: string
@@ -55,7 +55,9 @@ test.describe.serial(' Correct record - 4', () => {
 
   const updatedChildDetails = {
     placeOfBirth: 'Health Institution',
-    birthFacility: 'Mwenekombe Health Post'
+    birthFacility: 'Mwenekombe Health Post',
+    firstNames: faker.person.firstName(),
+    familyName: faker.person.lastName()
   }
 
   const correctionFee = faker.number.int({ min: 1, max: 1000 }).toString()
@@ -194,6 +196,7 @@ test.describe.serial(' Correct record - 4', () => {
 
     await page.getByRole('button', { name: 'Verified' }).click()
   })
+
   test('4.4 Upload supporting documents', async () => {
     /*
      * Expected result: should
@@ -702,6 +705,20 @@ test.describe.serial(' Correct record - 4', () => {
           .getByTestId('row-value-child.birthLocation')
           .getByText(updatedChildDetails.birthFacility)
       ).toBeVisible()
+    })
+
+    test('4.4.3 Change child name', async () => {
+      await page.getByTestId('change-button-child.name').click()
+
+      await page
+        .getByTestId('text__firstname')
+        .fill(updatedChildDetails.firstNames)
+
+      await page
+        .getByTestId('text__surname')
+        .fill(updatedChildDetails.familyName)
+
+      await goBackToReview(page)
       await page.getByRole('button', { name: 'Continue' }).click()
     })
   })
@@ -878,9 +895,15 @@ test.describe.serial(' Correct record - 4', () => {
   test('4.8 Validate history in record audit', async () => {
     await auditRecord({
       page,
-      name: formatV2ChildName(declaration),
+      name: formatV2ChildName({
+        'child.name': {
+          firstname: updatedChildDetails.firstNames,
+          surname: updatedChildDetails.familyName
+        }
+      }),
       trackingId
     })
+
     await ensureAssigned(page)
 
     /*
