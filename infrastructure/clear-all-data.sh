@@ -21,17 +21,17 @@ print_usage_and_exit () {
     echo "ELASTICSEARCH_ADMIN_USER=your_user ELASTICSEARCH_ADMIN_PASSWORD=your_pass"
     echo ""
     echo "Postgres admin user credentials must be given as environment variables:"
-    echo "ANALYTICS_POSTGRES_USER=your_user ANALYTICS_POSTGRES_PASSWORD=your_pass"
+    echo "POSTGRES_USER=your_user POSTGRES_PASSWORD=your_pass"
     exit 1
 }
 
-if [ -z "${ANALYTICS_POSTGRES_USER:-}" ]; then
-    echo 'Error: ANALYTICS_POSTGRES_USER environment variable must be set.'
+if [ -z "${POSTGRES_USER:-}" ]; then
+    echo 'Error: POSTGRES_USER environment variable must be set.'
     print_usage_and_exit
 fi
 
-if [ -z "${ANALYTICS_POSTGRES_PASSWORD:-}" ]; then
-    echo 'Error: ANALYTICS_POSTGRES_PASSWORD environment variable must be set.'
+if [ -z "${POSTGRES_PASSWORD:-}" ]; then
+    echo 'Error: POSTGRES_PASSWORD environment variable must be set.'
     print_usage_and_exit
 fi
 
