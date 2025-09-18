@@ -63,6 +63,10 @@ export const spouse = defineFormPage({
           conditional: not(
             field('informant.relation').isEqualTo(InformantType.SPOUSE)
           )
+        },
+        {
+          type: ConditionalType.DISPLAY_ON_REVIEW,
+          conditional: field('spouse.detailsNotAvailable').isEqualTo(true)
         }
       ]
     },
