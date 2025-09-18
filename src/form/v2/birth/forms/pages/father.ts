@@ -65,6 +65,10 @@ export const father = defineFormPage({
           conditional: not(
             field('informant.relation').isEqualTo(InformantType.FATHER)
           )
+        },
+        {
+          type: ConditionalType.DISPLAY_ON_REVIEW,
+          conditional: field('father.detailsNotAvailable').isEqualTo(true)
         }
       ]
     },
