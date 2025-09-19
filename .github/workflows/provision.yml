@@ -35,6 +35,7 @@ on:
           - meta
           - v19-beta-staging
           - v19-beta-prod
+          - fix-analytics
       tag:
         type: choice
         description: Select group tag you want to execute
@@ -153,8 +154,8 @@ jobs:
           dockerhub_password: ${{ secrets.DOCKER_TOKEN }}
           mongodb_admin_username: ${{ secrets.MONGODB_ADMIN_USER }}
           mongodb_admin_password: ${{ secrets.MONGODB_ADMIN_PASSWORD }}
-          postgres_user: ${{ secrets.ANALYTICS_POSTGRES_USER }}
-          postgres_password: ${{ secrets.ANALYTICS_POSTGRES_PASSWORD }}
+          postgres_user: ${{ secrets.POSTGRES_USER }}
+          postgres_password: ${{ secrets.POSTGRES_PASSWORD }}
           backup_encryption_passphrase: ${{ secrets.BACKUP_ENCRYPTION_PASSPHRASE }}
           elasticsearch_superuser_password: ${{ secrets.ELASTICSEARCH_SUPERUSER_PASSWORD }}
           # SSH_HOST was moved from a secret to a variable in OpenCRVS 1.5.0

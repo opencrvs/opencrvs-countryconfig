@@ -203,22 +203,22 @@ done
 
 echo "Backing up PostgreSQL 'events' database"
 docker run --rm \
-  -e PGPASSWORD=$ANALYTICS_POSTGRES_PASSWORD \
+  -e PGPASSWORD=$POSTGRES_PASSWORD \
   -v $ROOT_PATH/backups/postgres:/backups \
   --network=$NETWORK \
   postgres:17 \
-  bash -c "pg_dump -h postgres -U $ANALYTICS_POSTGRES_USER -d events -F c -f /backups/events-${LABEL:-$BACKUP_DATE}.dump"
+  bash -c "pg_dump -h postgres -U $POSTGRES_USER -d events -F c -f /backups/events-${LABEL:-$BACKUP_DATE}.dump"
 
 # Backup PostgreSQL
 # -----------------
 
 echo "Backing up PostgreSQL 'events' database"
 docker run --rm \
-  -e PGPASSWORD=$ANALYTICS_POSTGRES_PASSWORD \
+  -e PGPASSWORD=$POSTGRES_PASSWORD \
   -v $ROOT_PATH/backups/postgres:/backups \
   --network=$NETWORK \
   postgres:17 \
-  bash -c "pg_dump -h postgres -U $ANALYTICS_POSTGRES_USER -d events -F c -f /backups/events-${LABEL:-$BACKUP_DATE}.dump"
+  bash -c "pg_dump -h postgres -U $POSTGRES_USER -d events -F c -f /backups/events-${LABEL:-$BACKUP_DATE}.dump"
 
 # Backup SQLite
 # ---------------------------------------------------------------------------------------------
@@ -229,6 +229,7 @@ docker run --rm \
   -v $ROOT_PATH/backups/sqlite:/data/backup \
   alpine sh -c "apk add --no-cache sqlite && \
   sqlite3 /data/sqlite/mosip-api.db \".backup '/data/backup/mosip-api-${LABEL:-$BACKUP_DATE}.sqlite'\""
+
 
 #-------------------------------------------------------------------------------------
 
