@@ -253,11 +253,13 @@ services:
         tag: 'mongo-on-update'
   # Configure redis
   redis:
-    environment:
-      - REDIS_PASSWORD=false
-      - REDIS_ACLFILE=/run/secrets/redis-acl.{{ts}}
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
     secrets:
-      - redis-acl.{{ts}}
+      - source: redis-acl.{{ts}}
+        target: /usr/local/etc/redis/users.acl
+    configs:
+      - source: redis-conf.{{ts}}
+        target: /usr/local/etc/redis/redis.conf
     networks:
       - overlay_net
     deploy:
@@ -1274,6 +1276,8 @@ configs:
     file: /opt/opencrvs/infrastructure/elasticsearch/jvm.options
   minio-mc-config.{{ts}}:
     file: /opt/opencrvs/infrastructure/mc-config/config.json
+  redis-conf.{{ts}}:
+    file: /opt/opencrvs/infrastructure/redis/redis.conf
 networks:
   overlay_net:
     driver: overlay
