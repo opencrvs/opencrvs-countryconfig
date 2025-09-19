@@ -215,17 +215,6 @@ docker run --rm \
   postgres:17 \
   bash -c "pg_dump -h postgres -U $POSTGRES_USER -d events -F c -f /backups/events-${LABEL:-$BACKUP_DATE}.dump"
 
-# Backup PostgreSQL
-# -----------------
-
-echo "Backing up PostgreSQL 'events' database"
-docker run --rm \
-  -e PGPASSWORD=$POSTGRES_PASSWORD \
-  -v $ROOT_PATH/backups/postgres:/backups \
-  --network=$NETWORK \
-  postgres:17 \
-  bash -c "pg_dump -h postgres -U $POSTGRES_USER -d events -F c -f /backups/events-${LABEL:-$BACKUP_DATE}.dump"
-
 #-------------------------------------------------------------------------------------
 
 echo ""
@@ -260,6 +249,7 @@ create_elasticsearch_backup() {
   echo "Target indices for backup: $indices"
   OUTPUT=""
   OUTPUT=$(docker run --rm --network=$NETWORK appropriate/curl curl -sS -X PUT -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs/snapshot_${LABEL:-$BACKUP_DATE}?wait_for_completion=true&pretty" -d \"{\"indices\": \"${indices}\"}\" 2>/dev/null)
+  echo "Elasticsearch snapshot response: $OUTPUT"
   if echo $OUTPUT | jq -e '.snapshot.state == "SUCCESS"' > /dev/null; then
     echo "Snapshot state is SUCCESS"
   else
