@@ -35,7 +35,6 @@ on:
           - meta
           - v19-beta-staging
           - v19-beta-prod
-          - aaa
       tag:
         type: choice
         description: Select group tag you want to execute

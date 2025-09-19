@@ -27,7 +27,6 @@ on:
           - meta
           - v19-beta-staging
           - v19-beta-prod
-          - aaa
       core-image-tag:
         description: Core DockerHub image tag
         required: true
