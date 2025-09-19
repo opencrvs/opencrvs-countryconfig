@@ -133,7 +133,6 @@ mkdir -p $ROOT_PATH/backups/influxdb
 mkdir -p $ROOT_PATH/backups/mongo
 mkdir -p $ROOT_PATH/backups/minio
 mkdir -p $ROOT_PATH/backups/vsexport
-mkdir -p $ROOT_PATH/backups/sqlite
 mkdir -p $ROOT_PATH/backups/postgres
 
 # This enables root-created directory to be writable by the docker user
@@ -175,6 +174,13 @@ elasticsearch_host() {
   else
     echo "elasticsearch:9200"
   fi
+}
+
+get_target_indices() {
+  docker run --rm --network=$NETWORK appropriate/curl curl -s "http://$(elasticsearch_host)/_cat/indices?h=index" \
+    | grep -E '^(ocrvs-|events_)' \
+    | paste -sd, - \
+    | sed 's/\,$//'
 }
 
 # Today's date is used for filenames if LABEL is not provided
@@ -220,17 +226,6 @@ docker run --rm \
   postgres:17 \
   bash -c "pg_dump -h postgres -U $POSTGRES_USER -d events -F c -f /backups/events-${LABEL:-$BACKUP_DATE}.dump"
 
-# Backup SQLite
-# ---------------------------------------------------------------------------------------------
-echo "Creating a backup for SQLite"
-
-docker run --rm \
-  -v $ROOT_PATH/sqlite:/data/sqlite \
-  -v $ROOT_PATH/backups/sqlite:/data/backup \
-  alpine sh -c "apk add --no-cache sqlite && \
-  sqlite3 /data/sqlite/mosip-api.db \".backup '/data/backup/mosip-api-${LABEL:-$BACKUP_DATE}.sqlite'\""
-
-
 #-------------------------------------------------------------------------------------
 
 echo ""
@@ -261,8 +256,10 @@ echo "Backup Elasticsearch as a set of snapshot files into an elasticsearch sub 
 echo ""
 
 create_elasticsearch_backup() {
+  indices=$(get_target_indices)
+  echo "Target indices for backup: $indices"
   OUTPUT=""
-  OUTPUT=$(docker run --rm --network=$NETWORK appropriate/curl curl -sS -X PUT -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs/snapshot_${LABEL:-$BACKUP_DATE}?wait_for_completion=true&pretty" -d '{ "indices": "ocrvs" }' 2>/dev/null)
+  OUTPUT=$(docker run --rm --network=$NETWORK appropriate/curl curl -sS -X PUT -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs/snapshot_${LABEL:-$BACKUP_DATE}?wait_for_completion=true&pretty" -d \"{\"indices\": \"${indices}\"}\" 2>/dev/null)
   if echo $OUTPUT | jq -e '.snapshot.state == "SUCCESS"' > /dev/null; then
     echo "Snapshot state is SUCCESS"
   else
@@ -324,7 +321,6 @@ mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/application
 mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/metrics-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
 mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/webhooks-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
 mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/performance-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
-mkdir -p $BACKUP_RAW_FILES_DIR/sqlite/ && cp $ROOT_PATH/backups/sqlite/mosip-api-${LABEL:-$BACKUP_DATE}.sqlite $BACKUP_RAW_FILES_DIR/sqlite/
 mkdir -p $BACKUP_RAW_FILES_DIR/postgres/ && cp $ROOT_PATH/backups/postgres/events-${LABEL:-$BACKUP_DATE}.dump $BACKUP_RAW_FILES_DIR/postgres/
 
 tar -czf /tmp/${LABEL:-$BACKUP_DATE}.tar.gz -C "$BACKUP_RAW_FILES_DIR" .
@@ -343,4 +339,3 @@ fi
 rm /tmp/${LABEL:-$BACKUP_DATE}.tar.gz.enc
 rm /tmp/${LABEL:-$BACKUP_DATE}.tar.gz
 rm -r $BACKUP_RAW_FILES_DIR
-
