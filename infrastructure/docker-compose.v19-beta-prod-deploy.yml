@@ -94,6 +94,7 @@ services:
       - jwt-public-key.{{ts}}
     environment:
       - NODE_ENV=production
+      - V2_EVENTS=true
       - CHECK_INVALID_TOKEN=true
       - SENTRY_DSN=${SENTRY_DSN:-}
       - SENDER_EMAIL_ADDRESS=${SENDER_EMAIL_ADDRESS}
