@@ -357,8 +357,8 @@ export WEBHOOKS_REDIS_PASSWORD=`generate_password`
 export EVENTS_APP_POSTGRES_PASSWORD=`generate_password`
 export EVENTS_MIGRATOR_POSTGRES_PASSWORD=`generate_password`
 export ANALYTICS_POSTGRES_PASSWORD=`generate_password`
+export ANALYTICS_POSTGRES_USER=`generate_password`
 
-#
 # Elasticsearch credentials
 #
 # Notice that all of these passwords change on each deployment.
