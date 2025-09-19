@@ -190,10 +190,10 @@ db.getSiblingDB('webhooks').dropDatabase();"
 ##
 
 docker run --rm \
-  -e PGPASSWORD=$ANALYTICS_POSTGRES_PASSWORD \
+  -e PGPASSWORD=$POSTGRES_PASSWORD \
   --network=$NETWORK \
   postgres:17.6 \
-  bash -c "psql -h postgres -U $ANALYTICS_POSTGRES_USER -c 'DROP DATABASE IF EXISTS events;'"
+  bash -c "psql -h postgres -U $POSTGRES_USER -c 'DROP DATABASE IF EXISTS events;'"
 
 #####
 #
@@ -222,11 +222,11 @@ docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWO
 
 echo "Restoring PostgreSQL 'events' database"
 docker run --rm \
-  -e PGPASSWORD=$ANALYTICS_POSTGRES_PASSWORD \
+  -e PGPASSWORD=$POSTGRES_PASSWORD \
   -v $ROOT_PATH/backups/postgres:/backups \
   --network=$NETWORK \
   postgres:17.6 \
-  bash -c "createdb -h postgres -U $ANALYTICS_POSTGRES_USER events && pg_restore -h postgres -U $ANALYTICS_POSTGRES_USER -d events /backups/events-${LABEL}.dump"
+  bash -c "createdb -h postgres -U $POSTGRES_USER events && pg_restore -h postgres -U $POSTGRES_USER -d events /backups/events-${LABEL}.dump"
 
 ##
 # ------ ELASTICSEARCH -----

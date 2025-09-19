@@ -702,15 +702,15 @@ const derivedVariables = [
     scope: 'ENVIRONMENT'
   },
   {
-    name: 'ANALYTICS_POSTGRES_USER',
-    valueLabel: 'ANALYTICS_POSTGRES_USER',
+    name: 'POSTGRES_USER',
+    valueLabel: 'POSTGRES_USER',
     valueType: 'SECRET',
     type: 'disabled',
     scope: 'ENVIRONMENT'
   },
   {
-    name: 'ANALYTICS_POSTGRES_PASSWORD',
-    valueLabel: 'ANALYTICS_POSTGRES_PASSWORD',
+    name: 'POSTGRES_PASSWORD',
+    valueLabel: 'POSTGRES_PASSWORD',
     valueType: 'SECRET',
     type: 'disabled',
     scope: 'ENVIRONMENT'
@@ -819,7 +819,8 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
             value: 'production'
           },
           { title: 'Jump / Bastion', value: 'jump' },
-          { title: 'Other', value: 'development' }
+          { title: 'Other', value: 'development' },
+          { title: 'E2E', value: 'e2e' }
         ]
       }
     ].map(questionToPrompt)
@@ -913,11 +914,11 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
     existingValues
   )
 
-  const SSH_KEY_EXISTS = existingValues.find(
+  const sshKeyExists = existingValues.find(
     (value) => value.name === 'SSH_KEY' && value.scope === 'ENVIRONMENT'
   )
 
-  if (!SSH_KEY_EXISTS) {
+  if (!sshKeyExists) {
     const sshKey = await editor({
       message: `Paste the SSH private key for ${kleur.cyan(
         'SSH_USER (provision)'
@@ -1218,40 +1219,6 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
       ),
       value: findExistingOrDefine(
         'MONGODB_ADMIN_PASSWORD',
-        'SECRET',
-        'ENVIRONMENT',
-        generateLongPassword()
-      ),
-      scope: 'ENVIRONMENT' as const
-    },
-    {
-      name: 'ANALYTICS_POSTGRES_USER',
-      type: 'SECRET' as const,
-      didExist: findExistingValue(
-        'ANALYTICS_POSTGRES_USER',
-        'SECRET',
-        'ENVIRONMENT',
-        existingValues
-      ),
-      value: findExistingOrDefine(
-        'ANALYTICS_POSTGRES_USER',
-        'SECRET',
-        'ENVIRONMENT',
-        generateLongPassword()
-      ),
-      scope: 'ENVIRONMENT' as const
-    },
-    {
-      name: 'ANALYTICS_POSTGRES_PASSWORD',
-      type: 'SECRET' as const,
-      didExist: findExistingValue(
-        'ANALYTICS_POSTGRES_PASSWORD',
-        'SECRET',
-        'ENVIRONMENT',
-        existingValues
-      ),
-      value: findExistingOrDefine(
-        'ANALYTICS_POSTGRES_PASSWORD',
         'SECRET',
         'ENVIRONMENT',
         generateLongPassword()

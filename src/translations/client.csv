@@ -295,6 +295,7 @@ constants.gender,Gender label,Gender,Sexe
 constants.healthDivision,The description for HEALTH_DIVISION type,Health Division,Division de la santé
 constants.healthcareWorker,The description for Healthcare Worker type,Healthcare Worker,Travailleur de la santé
 constants.history,History heading,History,Histoire
+constants.history,History heading,History,Histoire
 constants.humanName,Formatted full name,{firstName} {middleName} {lastName},{firstName} {middleName} {lastName}
 constants.id,ID Label,ID,ID
 constants.idCheckWithoutVerify,Issuance without the confirmation of proof,Continue without proof of ID?,Continuer sans preuve d'identité?
@@ -1338,6 +1339,7 @@ form.field.label.someoneElse,Other Label,Someone else,Quelqu'un d'autre
 form.field.label.someoneElseCollector,,Print and issue to someone else,Imprimer et remettre à quelqu'un d'autre
 form.field.label.spouseDetailsExist,,Spouse's details are not available,Pas d'information sur le conjoint
 form.field.label.state,Label for State,Province,Province
+form.field.label.typeOfDocument,,Choose type of supporting document,Choisissez le type de document
 form.field.label.typeOfId,,Type of ID,Type d'identification
 form.field.label.typeOfMarriage,,Type of marriage,Type de mariage
 form.field.label.updatingUser,,Updating user,Mise à jour de l'utilisateur
@@ -1356,6 +1358,7 @@ form.field.label.verbalAutopsyReport,,Verbal autopsy report,Rapport d'autopsie v
 form.field.label.weightAtBirth,,Weight at birth,Poids à la naissance
 form.field.nidNotVerified,,Authenticate,Authentifier
 form.field.nidNotVerifiedReviewSection,,Unauthenticated,Non authentifié
+form.field.nidOffline,,National ID authentication is currently not available offline.,L'authentification de la carte d'identité nationale n'est actuellement pas disponible hors ligne.
 form.field.nidVerificationOngoing,Label for indicating offline status for the user. NID verification is not currently available offline.,National ID authentication is currently not available offline.,L'authentification de l'identifiant national n'est actuellement pas disponible hors ligne
 form.field.nidVerified,,Authenticated,Authentifié
 form.field.previewGroups.primaryAddress,,Usual place of residence,Adresse résidentielle
@@ -2138,16 +2141,18 @@ user.profile.roleType,Title for roleType field,Role,Rôle/Type
 user.profile.sectionTitle.audit,Title for audit section,History,Historique
 user.profile.startDate,Title for startDate field,Start date,Date de début
 user.profile.userName,Title for userName field,Username,Nom d'utilisateur
+userRole.administrator,Name for user role Administrator,Administrator,Administrateur
+userRole.communityLeader, Name for user role Community Leader,Community Leader,Leader communautaire
 userRole.fieldAgent,Name for user role Field Agent,Field Agent,Agent de terrain
 userRole.healthcareWorker,Name for user role Healthcare Worker,Healthcare Worker,Personnel de santé
+userRole.hospitalClerk, Name for user role Hospital Clerk, Hospital Clerk,Clerk d'hôpital
 userRole.localLeader,Name for user role Local Leader,Local Leader,Leader local
 userRole.localRegistrar,Name for user role Local Registrar,Local Registrar,Registraire local
-userRole.localSystemAdmin,Name for user role Local System Admin,Local System Admin,Administrateur système local
-userRole.nationalRegistrar,Name for user role National Registrar,National Registrar,Registraire national
-userRole.nationalSystemAdmin,Name for user role National System Admin,National System Admin,Administrateur système national
-userRole.performanceManager,Name for user role Performance Manager,Performance Manager,Gestion des performances
+userRole.nationalAdministrator,Name for user role National Administrator,National Administrator,Administrateur national
+userRole.operationsManager,Name for user role Operations Manager,Operations Manager,Responsable des opérations
 userRole.policeOfficer,Name for user role Police Officer,Police Officer,Officier de police
-userRole.registrationAgent,Name for user role Registration Agent,Registration Agent,Agent d'enregistrement
+userRole.registrarGeneral, Name for user role Registrar General,Registrar General,Registraire général
+userRole.registrationOfficer,Name for user role Registration Officer,Registration Officer,Agent d'enregistrement
 userRole.socialWorker,Name for user role Social Worker,Social Worker,Travailleur social
 userSetup.complete.instruction,Instruction for the setup complete,Login to your account with your username and newly created password,Connectez-vous maintenant à votre compte avec votre nom d'utilisateur et votre mot de passe nouvellement créé.
 userSetup.complete.title,Title for the setup complete page,Account setup complete,Configuration du compte terminée
@@ -2233,12 +2238,16 @@ verifyCertificate.successTitle,title for success alert,Valid QR code,Code QR val
 verifyCertificate.successUrl,title for success alert for url validation,URL Verification,Vérification des URL
 verifyCertificate.timeOut,message when time out after few minute,You been timed out,Délais expirée
 verifyCertificate.toastMessage,Message for the toast when time spend 1 minute,"After verifying the certificate, please close the browser window","Après avoir vérifié le certificat, veuillez fermer la fenêtre du navigateur."
+views.idReader.label.eSignet,E-signet button label,Authenticate with e-Signet,S'authentifier avec e-Signet
+views.idReader.label.manualInput,Label that shows below the divider on the id reader component,Complete fields below,Complétez les champs ci-dessous
+views.idReader.label.or,Label that shows on the divider,Or,Ou
 views.idVerification.banner.actions.reset,,Reset,Réinitialiser
 views.idVerification.banner.actions.revoke,,Revoke,Révoquer
 views.idVerification.banner.authenticated.description,,"This identity has been successfully authenticated with the Farajaland’s National ID System. To make edits, please remove the authentication first.",Cette identité a été authentifiée avec succès avec le système national d'identité de Farajaland.
 views.idVerification.banner.authenticated.resetConfirmation.description,,"By clicking ‘Continue,’ you’ll remove ID Authenticated status and unlock the fields for editing.","En cliquant sur «Continuer», vous supprimerez l'état authentifié de l'ID et déverrouillez les champs pour l'édition."
 views.idVerification.banner.authenticated.resetConfirmation.title,,Revoke authenticated ID?,Révoquer une pièce d'identité authentifiée?
 views.idVerification.banner.authenticated.title,,ID Authenticated,ID authentifié
+views.idVerification.banner.failed.description,,The identity data does not match an entry in Farajaland's National ID System,Les données d'identité ne correspondent pas à une entrée du système national d'identification du Farajaland.
 views.idVerification.banner.failed.description,,The identity data does not match an entry in Farajaland's National ID System,Les données d'identité ne correspondent pas à une entrée du système national d'identification du Farajaland.
 views.idVerification.banner.failed.resetConfirmation.description,,"By clicking ‘Continue,’ you’ll clear all information to it’s default state.","En cliquant sur «Continuer», vous effacerez toutes les informations de son état par défaut."
 views.idVerification.banner.failed.resetConfirmation.title,,Reset information?,Réinitialiser les informations?
