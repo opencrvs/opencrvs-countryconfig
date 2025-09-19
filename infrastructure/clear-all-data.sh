@@ -21,17 +21,17 @@ print_usage_and_exit () {
     echo "ELASTICSEARCH_ADMIN_USER=your_user ELASTICSEARCH_ADMIN_PASSWORD=your_pass"
     echo ""
     echo "Postgres admin user credentials must be given as environment variables:"
-    echo "ANALYTICS_POSTGRES_USER=your_user ANALYTICS_POSTGRES_PASSWORD=your_pass"
+    echo "POSTGRES_USER=your_user POSTGRES_PASSWORD=your_pass"
     exit 1
 }
 
-if [ -z "${ANALYTICS_POSTGRES_USER:-}" ]; then
-    echo 'Error: ANALYTICS_POSTGRES_USER environment variable must be set.'
+if [ -z "${POSTGRES_USER:-}" ]; then
+    echo 'Error: POSTGRES_USER environment variable must be set.'
     print_usage_and_exit
 fi
 
-if [ -z "${ANALYTICS_POSTGRES_PASSWORD:-}" ]; then
-    echo 'Error: ANALYTICS_POSTGRES_PASSWORD environment variable must be set.'
+if [ -z "${POSTGRES_PASSWORD:-}" ]; then
+    echo 'Error: POSTGRES_PASSWORD environment variable must be set.'
     print_usage_and_exit
 fi
 
@@ -133,13 +133,13 @@ EVENTS_APP_ROLE="events_app"
 echo "🔁 Dropping database '${POSTGRES_DB}' and roles..."
 
 docker run --rm --network=$NETWORK  \
-  -e PGPASSWORD="${ANALYTICS_POSTGRES_PASSWORD}" \
-  -e ANALYTICS_POSTGRES_USER="${ANALYTICS_POSTGRES_USER}" \
+  -e PGPASSWORD="${POSTGRES_PASSWORD}" \
+  -e POSTGRES_USER="${POSTGRES_USER}" \
   -e POSTGRES_DB="${POSTGRES_DB}" \
   -e EVENTS_MIGRATOR_ROLE="${EVENTS_MIGRATOR_ROLE}" \
   -e EVENTS_APP_ROLE="${EVENTS_APP_ROLE}" \
   postgres:17.6 bash -c '
-psql -h postgres -U "$ANALYTICS_POSTGRES_USER" -d postgres -v ON_ERROR_STOP=1 <<EOF
+psql -h postgres -U "$POSTGRES_USER" -d postgres -v ON_ERROR_STOP=1 <<EOF
 SELECT pg_terminate_backend(pid)
 FROM pg_stat_activity
 WHERE datname = '\''"$POSTGRES_DB"'\'' AND pid <> pg_backend_pid();
