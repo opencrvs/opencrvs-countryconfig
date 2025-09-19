@@ -819,8 +819,7 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
             value: 'production'
           },
           { title: 'Jump / Bastion', value: 'jump' },
-          { title: 'Other', value: 'development' },
-          { title: 'E2E', value: 'e2e' }
+          { title: 'Other', value: 'development' }
         ]
       }
     ].map(questionToPrompt)
@@ -914,11 +913,11 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
     existingValues
   )
 
-  const sshKeyExists = existingValues.find(
+  const SSH_KEY_EXISTS = existingValues.find(
     (value) => value.name === 'SSH_KEY' && value.scope === 'ENVIRONMENT'
   )
 
-  if (!sshKeyExists) {
+  if (!SSH_KEY_EXISTS) {
     const sshKey = await editor({
       message: `Paste the SSH private key for ${kleur.cyan(
         'SSH_USER (provision)'

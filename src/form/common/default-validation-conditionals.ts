@@ -66,8 +66,7 @@ export const mothersBirthDateConditionals = [
   },
   {
     action: 'hide',
-    expression:
-      'values.exactDateOfBirthUnknown && !$form?.idReader?.birthDate && $form?.verified !== "verified" && $form?.verified !== "authenticated"'
+    expression: 'values.exactDateOfBirthUnknown'
   },
   {
     action: 'disable',
@@ -110,20 +109,6 @@ export const hideIfInformantMotherOrFather = [
 
 export const isInformantSpouse =
   '!values.informantType || values.informantType==="SPOUSE"'
-
-export const hideIfDeceasedAddressNotAvailable = [
-  {
-    action: 'hide',
-    expression: '!(draftData && draftData.deceased?.countryPrimaryDeceased)'
-  }
-]
-
-export const hideIfMotherAddressNotAvailable = [
-  {
-    action: 'hide',
-    expression: '!(draftData && draftData.mother?.countryPrimaryMother)'
-  }
-]
 
 export const hideIfInformantSpouse = [
   {
@@ -172,8 +157,7 @@ export const fathersBirthDateConditionals = [
   },
   {
     action: 'hide',
-    expression:
-      'values.exactDateOfBirthUnknown && !$form?.idReader?.birthDate && $form?.verified !== "verified" && $form?.verified !== "authenticated"'
+    expression: 'values.exactDateOfBirthUnknown'
   },
   {
     action: 'disable',
@@ -317,7 +301,7 @@ export function getNationalIDValidators(configCase: string): Validator[] {
       },
       {
         operation: 'duplicateIDNumber',
-        parameters: ['mother.motherNationalId']
+        parameters: ['mother.iD']
       }
     ]
   } else if (configCase === 'mother') {
@@ -328,7 +312,7 @@ export function getNationalIDValidators(configCase: string): Validator[] {
       },
       {
         operation: 'duplicateIDNumber',
-        parameters: ['father.fatherNationalId']
+        parameters: ['father.iD']
       }
     ]
   } else if (configCase === 'deceased') {
@@ -339,7 +323,7 @@ export function getNationalIDValidators(configCase: string): Validator[] {
       },
       {
         operation: 'duplicateIDNumber',
-        parameters: ['informant.informantNationalId']
+        parameters: ['informant.informantID']
       }
     ]
   } else if (configCase === 'groom') {
@@ -350,7 +334,7 @@ export function getNationalIDValidators(configCase: string): Validator[] {
       },
       {
         operation: 'duplicateIDNumber',
-        parameters: ['bride.brideNationalId']
+        parameters: ['bride.iD']
       }
     ]
   } else if (configCase === 'bride') {
@@ -361,7 +345,7 @@ export function getNationalIDValidators(configCase: string): Validator[] {
       },
       {
         operation: 'duplicateIDNumber',
-        parameters: ['groom.groomNationalId']
+        parameters: ['groom.iD']
       }
     ]
   } else {
@@ -373,23 +357,23 @@ export function getNationalIDValidators(configCase: string): Validator[] {
       },
       {
         operation: 'duplicateIDNumber',
-        parameters: ['deceased.deceasedNationalId']
+        parameters: ['deceased.deceasedID']
       },
       {
         operation: 'duplicateIDNumber',
-        parameters: ['mother.motherNationalId']
+        parameters: ['mother.iD']
       },
       {
         operation: 'duplicateIDNumber',
-        parameters: ['father.fatherNationalId']
+        parameters: ['father.iD']
       },
       {
         operation: 'duplicateIDNumber',
-        parameters: ['groom.groomNationalId']
+        parameters: ['groom.iD']
       },
       {
         operation: 'duplicateIDNumber',
-        parameters: ['bride.brideNationalId']
+        parameters: ['bride.iD']
       }
     ]
   }
@@ -398,8 +382,7 @@ export function getNationalIDValidators(configCase: string): Validator[] {
 export const informantBirthDateConditionals = [
   {
     action: 'hide',
-    expression:
-      'values.exactDateOfBirthUnknown && !$form?.idReader?.birthDate && $form?.verified !== "verified" && $form?.verified !== "authenticated"'
+    expression: 'values.exactDateOfBirthUnknown'
   },
   {
     action: 'disable',
@@ -414,8 +397,7 @@ export const spouseBirthDateConditionals = [
   },
   {
     action: 'hide',
-    expression:
-      'values.exactDateOfBirthUnknown && !$form?.idReader?.birthDate && $form?.verified !== "verified" && $form?.verified !== "authenticated"'
+    expression: 'values.exactDateOfBirthUnknown'
   },
   {
     action: 'disable',
@@ -469,43 +451,3 @@ export const detailsDontExist = '!values.detailsExist'
 // primary address same as other primary
 export const primaryAddressSameAsOtherPrimaryAddress =
   'values.primaryAddressSameAsOtherPrimary'
-export const disableIfVerifiedOrAuthenticated = [
-  {
-    action: 'disable',
-    expression:
-      '$form?.verified === "verified" || $form?.verified === "authenticated"'
-  }
-]
-
-export const hideIfQRReaderFilledBirthDate = [
-  {
-    action: 'hide',
-    expression: '$form?.idReader?.birthDate'
-  }
-]
-
-const disableIfVerified = [
-  {
-    action: 'disable',
-    expression: '$form?.verified === "verified"'
-  }
-]
-
-export const hideIfVerified = [
-  { action: 'hide', expression: '$form?.verified === "verified"' }
-]
-
-const hideIfAuthenticated = [
-  { action: 'hide', expression: '$form?.verified === "authenticated"' }
-]
-
-export const typeOfIDVerificationConditionals = [
-  ...disableIfVerified,
-  ...hideIfAuthenticated
-]
-
-export const exactDateOfBirthUnknownConditionals = [
-  ...hideIfQRReaderFilledBirthDate,
-  ...hideIfAuthenticated,
-  ...hideIfVerified
-]

@@ -61,11 +61,7 @@ import {
   spouseBirthDateConditionals,
   spouseFamilyNameConditionals,
   spouseFirstNameConditionals,
-  hideIfInformantSpouse,
-  hideIfDeceasedAddressNotAvailable,
-  disableIfVerifiedOrAuthenticated,
-  exactDateOfBirthUnknownConditionals,
-  typeOfIDVerificationConditionals
+  hideIfInformantSpouse
 } from '../common/default-validation-conditionals'
 import {
   documentsSection,
@@ -81,17 +77,12 @@ import {
   spouseNameInEnglish
 } from '../common/preview-groups'
 import { certificateHandlebars } from './certficate-handlebars'
-import {
-  getCommonSectionMapping,
-  getCustomFieldMapping
-} from '@countryconfig/utils/mapping/field-mapping-utils'
+import { getCommonSectionMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
 import { getNumberOfDependants } from '@countryconfig/form/death/custom-fields'
 import { getIDNumberFields, getIDType } from '@countryconfig/form/custom-fields'
 import { getSectionMapping } from '@countryconfig/utils/mapping/section/death/mapping-utils'
 //import { getSectionMapping } from '@countryconfig/utils/mapping/section/death/mapping-utils'
 import { getReasonForLateRegistration } from '../custom-fields'
-import { idReaderFields, getInitialValueFromIDReader } from '@opencrvs/mosip'
-import { qrCodeConfig, esignetConfig } from '../common/id-reader-configurations'
 
 // import { createCustomFieldExample } from '../custom-fields'
 
@@ -186,69 +177,38 @@ export const deathForm = {
         {
           id: 'deceased-view-group',
           fields: [
-            ...idReaderFields(
-              'death',
-              'deceased',
-              qrCodeConfig,
-              esignetConfig,
-              getCustomFieldMapping(
-                `death.deceased.deceased-view-group.verified`
-              )
-            ),
             getFirstNameField(
               'deceasedNameInEnglish',
-              disableIfVerifiedOrAuthenticated,
-              certificateHandlebars.deceasedFirstName,
-              getInitialValueFromIDReader('firstName')
+              [],
+              certificateHandlebars.deceasedFirstName
             ), // Required field.  Names in Latin characters must be provided for international passport
             getFamilyNameField(
               'deceasedNameInEnglish',
-              disableIfVerifiedOrAuthenticated,
-              certificateHandlebars.deceasedFamilyName,
-              getInitialValueFromIDReader('familyName')
+              [],
+              certificateHandlebars.deceasedFamilyName
             ), // Required field.  Names in Latin characters must be provided for international passport
-            getGender(
-              certificateHandlebars.deceasedGender,
-              getInitialValueFromIDReader('gender'),
-              disableIfVerifiedOrAuthenticated
-            ), // Required field.
+            getGender(certificateHandlebars.deceasedGender), // Required field.
             getBirthDate(
               'deceasedBirthDate',
               [
                 {
                   action: 'hide',
-                  expression:
-                    'values.exactDateOfBirthUnknown && !$form?.idReader?.birthDate && $form?.verified !== "verified" && $form?.verified !== "authenticated"'
+                  expression: 'values.exactDateOfBirthUnknown'
                 }
-              ].concat(disableIfVerifiedOrAuthenticated),
+              ],
               isValidBirthDate,
-              certificateHandlebars.deceasedBirthDate,
-              getInitialValueFromIDReader('birthDate')
+              certificateHandlebars.deceasedBirthDate
             ), // Required field.,
-            exactDateOfBirthUnknown(exactDateOfBirthUnknownConditionals),
+            exactDateOfBirthUnknown([]),
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfDeceased,
-              exactDateOfBirthUnknownConditional.concat(
-                exactDateOfBirthUnknownConditionals
-              ),
+              exactDateOfBirthUnknownConditional,
               ageOfDeceasedConditionals,
               certificateHandlebars.ageOfDeceasedInYears
             ),
-            getNationality(
-              certificateHandlebars.deceasedNationality,
-              disableIfVerifiedOrAuthenticated
-            ),
-            getIDType(
-              'death',
-              'deceased',
-              typeOfIDVerificationConditionals,
-              true
-            ),
-            ...getIDNumberFields(
-              'deceased',
-              typeOfIDVerificationConditionals,
-              true
-            ),
+            getNationality(certificateHandlebars.deceasedNationality, []),
+            getIDType('death', 'deceased', [], true),
+            ...getIDNumberFields('deceased', [], true),
             getMaritalStatus(certificateHandlebars.deceasedMaritalStatus, []),
             getNumberOfDependants()
           ],
@@ -295,40 +255,19 @@ export const deathForm = {
           fields: [
             deathInformantType,
             otherInformantType(Event.Death),
-            ...idReaderFields(
-              'death',
-              'informant',
-              qrCodeConfig,
-              esignetConfig,
-              getCustomFieldMapping(
-                `death.informant.informant-view-group.verified`
-              ),
-              informantFirstNameConditionals.concat(hideIfInformantSpouse)
-            ),
             getFirstNameField(
               'informantNameInEnglish',
-              informantFirstNameConditionals.concat(
-                hideIfInformantSpouse,
-                disableIfVerifiedOrAuthenticated
-              ),
-              certificateHandlebars.informantFirstName,
-              getInitialValueFromIDReader('firstName')
-            ), // Required field. In Farajaland, we have built the option to integrate with MOSIP. So we have different conditionals for each name to check MOSIP responses.  You could always refactor firstNamesEng for a basic setup
+              informantFirstNameConditionals.concat(hideIfInformantSpouse),
+              certificateHandlebars.informantFirstName
+            ), // Required field.
             getFamilyNameField(
               'informantNameInEnglish',
-              informantFamilyNameConditionals.concat(
-                hideIfInformantSpouse,
-                disableIfVerifiedOrAuthenticated
-              ),
-              certificateHandlebars.informantFamilyName,
-              getInitialValueFromIDReader('familyName')
+              informantFamilyNameConditionals.concat(hideIfInformantSpouse),
+              certificateHandlebars.informantFamilyName
             ), // Required field.
             getBirthDate(
               'informantBirthDate',
-              informantBirthDateConditionals.concat(
-                hideIfInformantSpouse,
-                disableIfVerifiedOrAuthenticated
-              ),
+              informantBirthDateConditionals.concat(hideIfInformantSpouse),
               [
                 {
                   operation: 'dateFormatIsCorrect',
@@ -343,36 +282,21 @@ export const deathForm = {
                   parameters: [16, 100]
                 }
               ],
-              certificateHandlebars.informantBirthDate,
-              getInitialValueFromIDReader('birthDate')
+              certificateHandlebars.informantBirthDate
             ), // Required field.
-            exactDateOfBirthUnknown(
-              hideIfInformantSpouse.concat(exactDateOfBirthUnknownConditionals)
-            ),
+            exactDateOfBirthUnknown(hideIfInformantSpouse),
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfInformant,
-              exactDateOfBirthUnknownConditional.concat(
-                hideIfInformantSpouse,
-                exactDateOfBirthUnknownConditionals
-              ),
+              exactDateOfBirthUnknownConditional.concat(hideIfInformantSpouse),
               ageOfIndividualValidators,
               certificateHandlebars.ageOfInformantInYears
             ),
             getNationality(
               certificateHandlebars.informantNationality,
-              hideIfInformantSpouse.concat(disableIfVerifiedOrAuthenticated)
+              hideIfInformantSpouse
             ),
-            getIDType(
-              'death',
-              'informant',
-              hideIfInformantSpouse.concat(typeOfIDVerificationConditionals),
-              true
-            ),
-            ...getIDNumberFields(
-              'informant',
-              hideIfInformantSpouse.concat(typeOfIDVerificationConditionals),
-              true
-            ),
+            getIDType('death', 'informant', hideIfInformantSpouse, true),
+            ...getIDNumberFields('informant', hideIfInformantSpouse, true),
             // ADDRESS FIELDS WILL RENDER HERE
             divider('informant-address-separator', hideIfInformantSpouse),
             registrationPhone,
@@ -398,35 +322,19 @@ export const deathForm = {
             ),
             divider('spouse-details-seperator', spouseDetailsExistConditionals),
             getReasonNotExisting(certificateHandlebars.spouseReasonNotApplying),
-            ...idReaderFields(
-              'death',
-              'spouse',
-              qrCodeConfig,
-              esignetConfig,
-              getCustomFieldMapping(`death.spouse.spouse-view-group.verified`),
-              detailsExist
-            ),
             getFirstNameField(
               'spouseNameInEnglish',
-              spouseFirstNameConditionals.concat(
-                disableIfVerifiedOrAuthenticated
-              ),
-              certificateHandlebars.spouseFirstName,
-              getInitialValueFromIDReader('firstName')
+              spouseFirstNameConditionals,
+              certificateHandlebars.spouseFirstName
             ), // Required field. In Farajaland, we have built the option to integrate with MOSIP. So we have different conditionals for each name to check MOSIP responses.  You could always refactor firstNamesEng for a basic setup
             getFamilyNameField(
               'spouseNameInEnglish',
-              spouseFamilyNameConditionals.concat(
-                disableIfVerifiedOrAuthenticated
-              ),
-              certificateHandlebars.spouseFamilyName,
-              getInitialValueFromIDReader('familyName')
+              spouseFamilyNameConditionals,
+              certificateHandlebars.spouseFamilyName
             ), // Required field.
             getBirthDate(
               'spouseBirthDate',
-              spouseBirthDateConditionals.concat(
-                disableIfVerifiedOrAuthenticated
-              ),
+              spouseBirthDateConditionals,
               [
                 {
                   operation: 'dateFormatIsCorrect',
@@ -437,41 +345,23 @@ export const deathForm = {
                   parameters: []
                 }
               ],
-              certificateHandlebars.spouseBirthDate,
-              getInitialValueFromIDReader('birthDate')
+              certificateHandlebars.spouseBirthDate
             ), // Required field.
-            exactDateOfBirthUnknown(
-              detailsExist.concat(exactDateOfBirthUnknownConditionals)
-            ),
+            exactDateOfBirthUnknown(detailsExist),
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfSpouse,
-              exactDateOfBirthUnknownConditional.concat(
-                detailsExist,
-                exactDateOfBirthUnknownConditionals
-              ),
+              exactDateOfBirthUnknownConditional.concat(detailsExist),
               ageOfIndividualValidators,
               certificateHandlebars.ageOfSpouseInYears
             ),
             getNationality(
               certificateHandlebars.spouseNationality,
-              detailsExist.concat(disableIfVerifiedOrAuthenticated)
+              detailsExist
             ),
-            getIDType(
-              'death',
-              'spouse',
-              detailsExist.concat(typeOfIDVerificationConditionals),
-              true
-            ),
-            ...getIDNumberFields(
-              'spouse',
-              detailsExist.concat(typeOfIDVerificationConditionals),
-              true
-            ),
+            getIDType('death', 'spouse', detailsExist, true),
+            ...getIDNumberFields('spouse', detailsExist, true),
             // ADDRESS FIELDS WILL RENDER HERE
-            divider(
-              'spouse-address-separator',
-              hideIfDeceasedAddressNotAvailable
-            )
+            divider('spouse-address-separator')
           ],
           previewGroups: [spouseNameInEnglish]
         }

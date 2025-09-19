@@ -20,42 +20,35 @@ export const getBirthDate = (
   fieldName: string,
   conditionals: Conditional[],
   validator: any[],
-  certificateHandlebar: string,
-  initialValue: string | { dependsOn: string[]; expression: string } = ''
+  certificateHandlebar: string
 ): SerializedFormField => ({
   name: fieldName, // A field with this name MUST exist
   type: 'DATE',
   label: formMessageDescriptors.dateOfBirth,
   required: true,
   conditionals,
-  initialValue,
+  initialValue: '',
   validator,
   mapping: getFieldMapping('birthDate', certificateHandlebar)
 })
 
-export const getGender = (
-  certificateHandlebar: string,
-  initialValue: string | { dependsOn: string[]; expression: string } = '',
-  conditionals: Conditional[] = []
-) =>
+export const getGender = (certificateHandlebar: string) =>
   ({
     name: 'gender', // A field with this name MUST exist
     type: 'SELECT_WITH_OPTIONS',
     label: formMessageDescriptors.sex,
     required: true,
-    initialValue,
+    initialValue: '',
     validator: [],
     placeholder: formMessageDescriptors.formSelectPlaceholder,
     mapping: getFieldMapping('gender', certificateHandlebar),
-    options: genderOptions,
-    conditionals
+    options: genderOptions
   }) satisfies SerializedFormField
 
 export const getFamilyNameField = (
   previewGroup: string,
   conditionals: Conditional[],
-  certificateHandlebar: string,
-  initialValue: string | { dependsOn: string[]; expression: string } = ''
+  certificateHandlebar: string
 ) =>
   ({
     name: 'familyNameEng', // A field with this name MUST exist
@@ -65,7 +58,7 @@ export const getFamilyNameField = (
     label: formMessageDescriptors.familyName,
     maxLength: 32,
     required: true,
-    initialValue,
+    initialValue: '',
     validator: [
       {
         operation: 'englishOnlyNameFormat'
@@ -99,8 +92,7 @@ export const getMiddleNameField = (
 export const getFirstNameField = (
   previewGroup: string,
   conditionals: Conditional[],
-  certificateHandlebar: string,
-  initialValue: string | { dependsOn: string[]; expression: string } = ''
+  certificateHandlebar: string
 ) =>
   ({
     name: 'firstNamesEng', // A field with this name MUST exist
@@ -114,7 +106,7 @@ export const getFirstNameField = (
     conditionals,
     maxLength: 32,
     required: true,
-    initialValue,
+    initialValue: '',
     validator: [
       {
         operation: 'englishOnlyNameFormat'

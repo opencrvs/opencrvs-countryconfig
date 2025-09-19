@@ -61,11 +61,7 @@ import {
   informantNotMotherOrFather,
   detailsExistConditional,
   ageOfIndividualValidators,
-  ageOfParentsConditionals,
-  hideIfMotherAddressNotAvailable,
-  exactDateOfBirthUnknownConditionals,
-  disableIfVerifiedOrAuthenticated,
-  typeOfIDVerificationConditionals
+  ageOfParentsConditionals
 } from '../common/default-validation-conditionals'
 import {
   informantFirstNameConditionals,
@@ -81,14 +77,9 @@ import {
 } from './required-sections'
 import { certificateHandlebars } from './certificate-handlebars'
 import { getSectionMapping } from '@countryconfig/utils/mapping/section/birth/mapping-utils'
-import {
-  getCommonSectionMapping,
-  getCustomFieldMapping
-} from '@countryconfig/utils/mapping/field-mapping-utils'
+import { getCommonSectionMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
 import { getReasonForLateRegistration } from '../custom-fields'
 import { getIDNumberFields, getIDType } from '../custom-fields'
-import { getInitialValueFromIDReader, idReaderFields } from '@opencrvs/mosip'
-import { esignetConfig, qrCodeConfig } from '../common/id-reader-configurations'
 // import { createCustomFieldExample } from '../custom-fields'
 
 // ======================= FORM CONFIGURATION =======================
@@ -234,39 +225,25 @@ export const birthForm: ISerializedForm = {
           fields: [
             informantType, // Required field.
             otherInformantType(Event.Birth), // Required field.
-            ...idReaderFields(
-              'birth',
-              'informant',
-              qrCodeConfig,
-              esignetConfig,
-              getCustomFieldMapping(
-                `birth.informant.informant-view-group.verified`
-              ),
-              informantFirstNameConditionals.concat(
-                hideIfInformantMotherOrFather
-              )
-            ),
             getFirstNameField(
               'informantNameInEnglish',
-              informantFirstNameConditionals
-                .concat(hideIfInformantMotherOrFather)
-                .concat(disableIfVerifiedOrAuthenticated),
-              certificateHandlebars.informantFirstName,
-              getInitialValueFromIDReader('firstName')
-            ), // Required field. In Farajaland, we have built the option to integrate with MOSIP. So we have different conditionals for each name to check MOSIP responses.  You could always refactor firstNamesEng for a basic setup
+              informantFirstNameConditionals.concat(
+                hideIfInformantMotherOrFather
+              ),
+              certificateHandlebars.informantFirstName
+            ), // Required field.
             getFamilyNameField(
               'informantNameInEnglish',
-              informantFamilyNameConditionals
-                .concat(hideIfInformantMotherOrFather)
-                .concat(disableIfVerifiedOrAuthenticated),
-              certificateHandlebars.informantFamilyName,
-              getInitialValueFromIDReader('familyName')
+              informantFamilyNameConditionals.concat(
+                hideIfInformantMotherOrFather
+              ),
+              certificateHandlebars.informantFamilyName
             ), // Required field.
             getBirthDate(
               'informantBirthDate',
-              informantBirthDateConditionals
-                .concat(hideIfInformantMotherOrFather)
-                .concat(disableIfVerifiedOrAuthenticated),
+              informantBirthDateConditionals.concat(
+                hideIfInformantMotherOrFather
+              ),
               [
                 {
                   operation: 'dateFormatIsCorrect',
@@ -281,42 +258,30 @@ export const birthForm: ISerializedForm = {
                   parameters: [16, 100]
                 }
               ],
-              certificateHandlebars.informantBirthDate,
-              getInitialValueFromIDReader('birthDate')
+              certificateHandlebars.informantBirthDate
             ), // Required field.
-            exactDateOfBirthUnknown(
-              hideIfInformantMotherOrFather.concat(
-                exactDateOfBirthUnknownConditionals
-              )
-            ),
+            exactDateOfBirthUnknown(hideIfInformantMotherOrFather),
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfInformant,
               exactDateOfBirthUnknownConditional.concat(
-                hideIfInformantMotherOrFather,
-                exactDateOfBirthUnknownConditionals
+                hideIfInformantMotherOrFather
               ),
               ageOfIndividualValidators,
               certificateHandlebars.ageOfInformantInYears
             ),
             getNationality(
               certificateHandlebars.informantNationality,
-              hideIfInformantMotherOrFather.concat(
-                disableIfVerifiedOrAuthenticated
-              )
+              hideIfInformantMotherOrFather
             ), // Required field.
             getIDType(
               'birth',
               'informant',
-              hideIfInformantMotherOrFather.concat(
-                typeOfIDVerificationConditionals
-              ),
+              hideIfInformantMotherOrFather,
               true
             ),
             ...getIDNumberFields(
               'informant',
-              hideIfInformantMotherOrFather.concat(
-                typeOfIDVerificationConditionals
-              ),
+              hideIfInformantMotherOrFather,
               true
             ),
             // ADDRESS FIELDS WILL RENDER HERE
@@ -352,68 +317,37 @@ export const birthForm: ISerializedForm = {
               mothersDetailsExistConditionals
             ),
             getReasonNotExisting(certificateHandlebars.motherReasonNotApplying), // Strongly recommend is required if you want to register abandoned / orphaned children!
-            ...idReaderFields(
-              'birth',
-              'mother',
-              qrCodeConfig,
-              esignetConfig,
-              getCustomFieldMapping(`birth.mother.mother-view-group.verified`),
-              detailsExist
-            ),
             getFirstNameField(
               'motherNameInEnglish',
-              motherFirstNameConditionals.concat(
-                disableIfVerifiedOrAuthenticated
-              ),
-              certificateHandlebars.motherFirstName,
-              getInitialValueFromIDReader('firstName')
+              motherFirstNameConditionals,
+              certificateHandlebars.motherFirstName
             ), // Required field.
             getFamilyNameField(
               'motherNameInEnglish',
-              motherFamilyNameConditionals.concat(
-                disableIfVerifiedOrAuthenticated
-              ),
-              certificateHandlebars.motherFamilyName,
-              getInitialValueFromIDReader('familyName')
+              motherFamilyNameConditionals,
+              certificateHandlebars.motherFamilyName
             ), // Required field.
             getBirthDate(
               'motherBirthDate',
-              mothersBirthDateConditionals.concat(
-                disableIfVerifiedOrAuthenticated
-              ),
+              mothersBirthDateConditionals,
               parentsBirthDateValidators,
-              certificateHandlebars.motherBirthDate,
-              getInitialValueFromIDReader('birthDate')
+              certificateHandlebars.motherBirthDate
             ), // Required field.
-            exactDateOfBirthUnknown(
-              detailsExistConditional.concat(
-                exactDateOfBirthUnknownConditionals
-              )
-            ),
+            exactDateOfBirthUnknown(detailsExistConditional),
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfMother,
               exactDateOfBirthUnknownConditional.concat(
-                detailsExistConditional,
-                exactDateOfBirthUnknownConditionals
+                detailsExistConditional
               ),
               ageOfParentsConditionals,
               certificateHandlebars.ageOfMotherInYears
             ),
             getNationality(
               certificateHandlebars.motherNationality,
-              detailsExist.concat(disableIfVerifiedOrAuthenticated)
+              detailsExist
             ), // Required field.
-            getIDType(
-              'birth',
-              'mother',
-              detailsExist.concat(typeOfIDVerificationConditionals),
-              true
-            ),
-            ...getIDNumberFields(
-              'mother',
-              detailsExist.concat(typeOfIDVerificationConditionals),
-              true
-            ),
+            getIDType('birth', 'mother', detailsExist, true),
+            ...getIDNumberFields('mother', detailsExist, true),
             // ADDRESS FIELDS WILL RENDER HERE
             divider('mother-address-seperator', detailsExist),
             getMaritalStatus(certificateHandlebars.motherMaritalStatus, [
@@ -462,73 +396,39 @@ export const birthForm: ISerializedForm = {
               fathersDetailsExistConditionals
             ),
             getReasonNotExisting('fatherReasonNotApplying'), // Strongly recommend is required if you want to register abandoned / orphaned children!
-            ...idReaderFields(
-              'birth',
-              'father',
-              qrCodeConfig,
-              esignetConfig,
-              getCustomFieldMapping(`birth.father.father-view-group.verified`),
-              detailsExist
-            ),
             getFirstNameField(
               'fatherNameInEnglish',
-              fatherFirstNameConditionals.concat(
-                disableIfVerifiedOrAuthenticated
-              ),
-              certificateHandlebars.fatherFirstName,
-              getInitialValueFromIDReader('firstName')
+              fatherFirstNameConditionals,
+              certificateHandlebars.fatherFirstName
             ), // Required field.
             getFamilyNameField(
               'fatherNameInEnglish',
-              fatherFamilyNameConditionals.concat(
-                disableIfVerifiedOrAuthenticated
-              ),
-              certificateHandlebars.fatherFamilyName,
-              getInitialValueFromIDReader('familyName')
+              fatherFamilyNameConditionals,
+              certificateHandlebars.fatherFamilyName
             ), // Required field.
             getBirthDate(
               'fatherBirthDate',
-              fathersBirthDateConditionals.concat(
-                disableIfVerifiedOrAuthenticated
-              ),
+              fathersBirthDateConditionals,
               parentsBirthDateValidators,
-              certificateHandlebars.fatherBirthDate,
-              getInitialValueFromIDReader('birthDate')
+              certificateHandlebars.fatherBirthDate
             ), // Required field.
-            exactDateOfBirthUnknown(
-              detailsExistConditional.concat(
-                exactDateOfBirthUnknownConditionals
-              )
-            ),
+            exactDateOfBirthUnknown(detailsExistConditional),
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfFather,
               exactDateOfBirthUnknownConditional.concat(
-                detailsExistConditional,
-                exactDateOfBirthUnknownConditionals
+                detailsExistConditional
               ),
               ageOfParentsConditionals,
               certificateHandlebars.ageOfFatherInYears
             ),
             getNationality(
               certificateHandlebars.fatherNationality,
-              detailsExist.concat(disableIfVerifiedOrAuthenticated)
+              detailsExist
             ), // Required field.
-            getIDType(
-              'birth',
-              'father',
-              detailsExist.concat(typeOfIDVerificationConditionals),
-              true
-            ),
-            ...getIDNumberFields(
-              'father',
-              detailsExist.concat(typeOfIDVerificationConditionals),
-              true
-            ),
+            getIDType('birth', 'father', detailsExist, true),
+            ...getIDNumberFields('father', detailsExist, true),
             // ADDRESS FIELDS WILL RENDER HERE
-            divider('father-address-seperator', [
-              ...detailsExist,
-              ...hideIfMotherAddressNotAvailable
-            ]),
+            divider('father-address-seperator', detailsExist),
             getMaritalStatus(certificateHandlebars.fatherMaritalStatus, [
               {
                 action: 'hide',

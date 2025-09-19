@@ -155,3 +155,12 @@ echo "🚀 Reinitializing Postgres with on-deploy.sh..."
 
 docker service update --force opencrvs_postgres-on-update
 
+# Restart the metabase service
+#-----------------------------
+docker service scale opencrvs_dashboards=0
+docker service scale opencrvs_dashboards=1
+
+# Restart events service
+#-----------------------------
+docker service scale opencrvs_events=0
+docker service scale opencrvs_events=1

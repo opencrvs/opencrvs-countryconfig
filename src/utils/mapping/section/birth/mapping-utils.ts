@@ -81,11 +81,6 @@ export function getSectionMapping(mappingId: string): ISectionMapping {
       return {
         template: [
           {
-            fieldName: 'childIdentifier',
-            operation: 'childIdentityToFieldTransformer',
-            parameters: [['NATIONAL_ID']]
-          },
-          {
             fieldName: 'birthConfigurableIdentifier1',
             operation: 'childIdentityToFieldTransformer',
             parameters: [['BIRTH_CONFIGURABLE_IDENTIFIER_1']]
