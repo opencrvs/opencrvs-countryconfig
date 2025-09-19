@@ -24,7 +24,6 @@ on:
           - meta
           - v19-beta-staging
           - v19-beta-prod
-          - fix-analytics
 jobs:
   reset-data:
     name: 'Reset data'

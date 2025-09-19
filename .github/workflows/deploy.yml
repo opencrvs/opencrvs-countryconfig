@@ -43,7 +43,6 @@ on:
           - meta
           - v19-beta-staging
           - v19-beta-prod
-          - fix-analytics
       core-image-tag:
         description: Core image tag
         required: true
@@ -143,6 +142,7 @@ jobs:
               | map("\(.key)=\"\(.value)\"")
               | .[]
           ' > .env.${{ inputs.environment }}
+
       - name: Use Node.js from .nvmrc
         uses: actions/setup-node@v4
         with:
