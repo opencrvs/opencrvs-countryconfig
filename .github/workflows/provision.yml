@@ -35,6 +35,7 @@ on:
           - meta
           - v19-beta-staging
           - v19-beta-prod
+          - fix-analytics
       tag:
         type: choice
         description: Select group tag you want to execute
