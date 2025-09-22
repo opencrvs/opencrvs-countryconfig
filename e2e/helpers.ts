@@ -14,11 +14,16 @@ import fetch from 'node-fetch'
 
 export async function login(page: Page, username: string, password: string) {
   const token = await getToken(username, password)
-  await page.goto(`${CLIENT_URL}?token=${token}`)
+  await page.goto(`${CLIENT_URL}?token=${token}&V2_EVENTS=false`)
 
   await expect(
     page.locator('#appSpinner').or(page.locator('#pin-input'))
   ).toBeVisible()
+
+  await createPIN(page)
+
+  // Navigate to v1 frontpage
+  await page.goto(`${CLIENT_URL}/registration-home`)
   return token
 }
 
