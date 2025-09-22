@@ -4,7 +4,6 @@ import { createPIN, goToSection, login } from '../../helpers'
 test.describe("5. Validate the bride's details page", () => {
   test.beforeEach(async ({ page }) => {
     await login(page, 'k.mweene', 'test')
-    await createPIN(page)
 
     await page.click('#header_new_event')
 

@@ -27,7 +27,6 @@ test.describe.serial('Record Search System Client Tests', () => {
       CREDENTIALS.NATIONAL_SYSTEM_ADMIN.USERNAME,
       CREDENTIALS.NATIONAL_SYSTEM_ADMIN.PASSWORD
     )
-    await createPIN(page)
   })
 
   test.afterAll(async () => {
@@ -141,7 +140,6 @@ test.describe.serial('Event Notification System Client Tests', () => {
       CREDENTIALS.NATIONAL_SYSTEM_ADMIN.USERNAME,
       CREDENTIALS.NATIONAL_SYSTEM_ADMIN.PASSWORD
     )
-    await createPIN(page)
   })
 
   test.afterAll(async () => {

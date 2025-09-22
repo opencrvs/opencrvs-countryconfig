@@ -10,7 +10,6 @@ test.describe('1. Marriage event validation', () => {
       CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
       CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
     )
-    await createPIN(page)
   })
 
   test('1.1. Navigate to the event declaration page', async ({ page }) => {

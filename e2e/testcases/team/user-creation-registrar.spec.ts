@@ -38,7 +38,6 @@ test.describe.serial('1. Create user -1', () => {
         CREDENTIALS.NATIONAL_SYSTEM_ADMIN.USERNAME,
         CREDENTIALS.NATIONAL_SYSTEM_ADMIN.PASSWORD
       )
-      await createPIN(page)
       await page.getByRole('button', { name: 'Team' }).click()
       await expect(page.getByText('HQ Office')).toBeVisible()
       await page.click('#add-user')

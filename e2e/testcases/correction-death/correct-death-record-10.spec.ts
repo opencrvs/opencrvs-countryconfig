@@ -74,7 +74,6 @@ test.describe('10. Correct record - 10', () => {
         CREDENTIALS.REGISTRATION_AGENT.USERNAME,
         CREDENTIALS.REGISTRATION_AGENT.PASSWORD
       )
-      await createPIN(page)
 
       await auditRecord({
         page,
@@ -208,7 +207,6 @@ test.describe('10. Correct record - 10', () => {
         CREDENTIALS.REGISTRATION_AGENT.USERNAME,
         CREDENTIALS.REGISTRATION_AGENT.PASSWORD
       )
-      await createPIN(page)
 
       await auditRecord({
         page,
@@ -928,7 +926,6 @@ test.describe('10. Correct record - 10', () => {
           CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
           CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
         )
-        await createPIN(page)
       })
 
       test('10.2.6.1 Record audit by local registrar', async () => {

@@ -99,7 +99,6 @@ test.describe.serial(' Correct record - 13', () => {
       CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
       CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
     )
-    await createPIN(page)
 
     await auditRecord({
       page,

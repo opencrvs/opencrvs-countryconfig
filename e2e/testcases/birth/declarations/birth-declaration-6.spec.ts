@@ -105,7 +105,6 @@ test.describe.serial('6. Birth declaration case - 6', () => {
         CREDENTIALS.NATIONAL_REGISTRAR.USERNAME,
         CREDENTIALS.NATIONAL_REGISTRAR.PASSWORD
       )
-      await createPIN(page)
       await page.click('#header_new_event')
       await page.getByLabel('Birth').click()
       await page.getByRole('button', { name: 'Continue' }).click()
