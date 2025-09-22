@@ -14,7 +14,7 @@ import fetch from 'node-fetch'
 
 export async function login(page: Page, username: string, password: string) {
   const token = await getToken(username, password)
-  await page.goto(`${CLIENT_URL}?token=${token}&V2_EVENTS=false`)
+  await page.goto(`${CLIENT_URL}?token=${token}`)
 
   await expect(
     page.locator('#appSpinner').or(page.locator('#pin-input'))
@@ -23,7 +23,7 @@ export async function login(page: Page, username: string, password: string) {
   await createPIN(page)
 
   // Navigate to v1 frontpage
-  await page.goto(`${CLIENT_URL}/registration-home`)
+  await page.goto(`${CLIENT_URL}/registration-home&V2_EVENTS=false`)
   return token
 }
 
