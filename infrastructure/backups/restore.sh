@@ -139,7 +139,25 @@ elasticsearch_host() {
 
 echo "delete any previously created snapshot if any.  This may error on a fresh install with a repository_missing_exception error.  Just ignore it."
 docker run --rm --network=$NETWORK appropriate/curl curl -X DELETE "http://$(elasticsearch_host)/_snapshot/ocrvs"
-docker run --rm --network=$NETWORK appropriate/curl curl -X DELETE "http://$(elasticsearch_host)/*" -v
+
+# Delete all data from elasticsearch
+#-----------------------------------
+approved_words=${ES_INDEX_PREFIXES:-"events_ ocrvs-"}
+indices=$(docker run --rm --network=$NETWORK appropriate/curl curl -sS -XGET "http://$(elasticsearch_host)/_cat/indices?h=index")
+echo "--------------------------"
+echo "🧹 cleanup for indices: $approved_words from $indices"
+echo "--------------------------"
+for index in ${indices[@]}; do
+  for approved in $approved_words; do
+    case "$index" in
+    "$approved_words"*) 
+        echo "Delete index $index..."
+        docker run --rm --network=$NETWORK appropriate/curl curl -sS -XDELETE "http://$(elasticsearch_host)/$index"
+        break
+        ;;
+    esac
+  done
+done
 
 echo "Waiting for elasticsearch to restart so that the restore script can find the updated volume."
 docker service update --force --update-parallelism 1 --update-delay 30s opencrvs_elasticsearch
@@ -239,7 +257,8 @@ sleep 10
 
 # Restore all data from a backup into search
 #-------------------------------------------
-docker run --rm --network=$NETWORK appropriate/curl curl -X POST -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs/snapshot_$LABEL/_restore?pretty" -d '{ "indices": "ocrvs" }'
+json_payload="{\"indices\": \"ocrvs-*,events_*\", \"include_global_state\": false}"
+docker run --rm --network=$NETWORK appropriate/curl curl -X POST -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs/snapshot_$LABEL/_restore?pretty" -d "$json_payload"
 sleep 10
 echo "Waiting 1 minute to rotate elasticsearch passwords"
 echo
