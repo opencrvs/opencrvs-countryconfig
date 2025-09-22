@@ -75,12 +75,12 @@ describe('Roles config', () => {
       'FIELD_AGENT',
       'HEALTHCARE_WORKER',
       'HOSPITAL_CLERK',
-      'LOCAL_LEADER',
+      'COMMUNITY_LEADER',
       'LOCAL_REGISTRAR',
       'NATIONAL_REGISTRAR',
       'POLICE_OFFICER',
       'REGISTRATION_AGENT',
-      'SOCIAL_WORKER'
+      'HOSPITAL_CLERK'
     ])
 
     const fullWorkqueueScope =
