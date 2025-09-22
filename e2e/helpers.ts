@@ -23,7 +23,7 @@ export async function login(page: Page, username: string, password: string) {
   await createPIN(page)
 
   // Navigate to v1 frontpage
-  await page.goto(`${CLIENT_URL}/registration-home&V2_EVENTS=false`)
+  await page.goto(`${CLIENT_URL}/registration-home?V2_EVENTS=false`)
   return token
 }
 
