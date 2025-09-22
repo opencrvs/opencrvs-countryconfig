@@ -702,6 +702,20 @@ const derivedVariables = [
     scope: 'ENVIRONMENT'
   },
   {
+    name: 'POSTGRES_USER',
+    valueLabel: 'POSTGRES_USER',
+    valueType: 'SECRET',
+    type: 'disabled',
+    scope: 'ENVIRONMENT'
+  },
+  {
+    name: 'POSTGRES_PASSWORD',
+    valueLabel: 'POSTGRES_PASSWORD',
+    valueType: 'SECRET',
+    type: 'disabled',
+    scope: 'ENVIRONMENT'
+  },
+  {
     name: 'SUPER_USER_PASSWORD',
     valueLabel: 'SUPER_USER_PASSWORD',
     valueType: 'SECRET',

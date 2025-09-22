@@ -146,6 +146,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
         {
           id: 'collector.collect.payment.data.inBetweenRegistrationTargets',
           type: FieldType.DATA,
+          analytics: true,
           label: {
             defaultMessage: 'Payment details',
             description: 'Title for the data section',

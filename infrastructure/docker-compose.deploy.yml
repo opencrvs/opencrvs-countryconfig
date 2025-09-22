@@ -253,11 +253,13 @@ services:
         tag: 'mongo-on-update'
   # Configure redis
   redis:
-    environment:
-      - REDIS_PASSWORD=false
-      - REDIS_ACLFILE=/run/secrets/redis-acl.{{ts}}
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
     secrets:
-      - redis-acl.{{ts}}
+      - source: redis-acl.{{ts}}
+        target: /usr/local/etc/redis/users.acl
+    configs:
+      - source: redis-conf.{{ts}}
+        target: /usr/local/etc/redis/redis.conf
     networks:
       - overlay_net
     deploy:
@@ -537,7 +539,7 @@ services:
     deploy:
       labels:
         - 'traefik.enable=true'
-        - 'traefik.http.routers.countryconfig.rule=Host(`countryconfig.{{hostname}}`) && !Path(`/email`) && !Path(`/notification`) && !Path(`/dashboards/queries.json`)'
+        - 'traefik.http.routers.countryconfig.rule=Host(`countryconfig.{{hostname}}`) && !Path(`/reindex`) && !Path(`/email`) && !Path(`/notification`) && !Path(`/dashboards/queries.json`)'
         - 'traefik.http.services.countryconfig.loadbalancer.server.port=3040'
         - 'traefik.http.routers.countryconfig.tls=true'
         - 'traefik.http.routers.countryconfig.tls.certresolver=certResolver'
@@ -555,6 +557,8 @@ services:
         - 'traefik.http.middlewares.block-internal-routes.ipwhitelist.sourcerange=255.255.255.255'
         - 'traefik.http.routers.block-email.rule=Host(`countryconfig.{{hostname}}`) && Path(`/email`)'
         - 'traefik.http.routers.block-email.middlewares=block-internal-routes'
+        - 'traefik.http.routers.block-reindex.rule=Host(`countryconfig.{{hostname}}`) && Path(`/reindex`)'
+        - 'traefik.http.routers.block-reindex.middlewares=block-internal-routes'
         - 'traefik.http.routers.block-notification.rule=Host(`countryconfig.{{hostname}}`) && Path(`/notification`)'
         - 'traefik.http.routers.block-notification.middlewares=block-internal-routes'
         - 'traefik.http.routers.block-dashboard-queries.rule=Host(`countryconfig.{{hostname}}`) && Path(`/dashboards/queries.json`)'
@@ -586,6 +590,7 @@ services:
       - INFOBIP_API_KEY=${INFOBIP_API_KEY:-}
       - INFOBIP_SENDER_ID=${INFOBIP_SENDER_ID:-}
       - DOMAIN={{hostname}}
+      - ANALYTICS_DATABASE_URL=postgres://events_analytics:${ANALYTICS_POSTGRES_PASSWORD}@postgres/events
       - ESIGNET_REDIRECT_URL=${ESIGNET_REDIRECT_URL}
       - OPENID_PROVIDER_CLIENT_ID=${OPENID_PROVIDER_CLIENT_ID:-}
       - OPENID_PROVIDER_CLAIMS=${OPENID_PROVIDER_CLAIMS:-}
@@ -985,10 +990,12 @@ services:
 
   postgres-on-update:
     image: postgres:17.6
-    command: bash /on-deploy.sh
+    command: ["bash", "-c", "bash /on-deploy.sh && bash /setup-analytics.sh"]
     configs:
       - source: postgres-on-deploy.{{ts}}
         target: /on-deploy.sh
+      - source: postgres-analytics-on-deploy.{{ts}}
+        target: /setup-analytics.sh
     deploy:
       labels:
         - traefik.enable=false
@@ -1000,8 +1007,11 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_HOST=postgres
       - POSTGRES_PORT=5432
+      - ANALYTICS_POSTGRES_USER=events_analytics
+      - ANALYTICS_POSTGRES_PASSWORD=${ANALYTICS_POSTGRES_PASSWORD}
       - EVENTS_APP_POSTGRES_PASSWORD=${EVENTS_APP_POSTGRES_PASSWORD}
       - EVENTS_MIGRATOR_POSTGRES_PASSWORD=${EVENTS_MIGRATOR_POSTGRES_PASSWORD}
+      - KEEP_ALIVE_SECONDS=10
     networks:
       - overlay_net
 
@@ -1041,18 +1051,26 @@ services:
         tag: 'webhooks'
 
   dashboards:
+    image: metabase/metabase:v0.56.4
     volumes:
       # Exceed Docker config file 500 kb file limit, thus a volume mount
       - /opt/opencrvs/infrastructure/metabase/metabase.init.db.sql:/metabase.init.db.sql
+      - /opt/opencrvs/infrastructure/metabase/run.sh:/run.sh
+      - /opt/opencrvs/infrastructure/metabase/initialize-database.sh:/initialize-database.sh
+      - /opt/opencrvs/infrastructure/metabase/update-database.sh:/update-database.sh
+      - /opt/opencrvs/infrastructure/metabase/environment-configuration.sql:/environment-configuration.sql
+    entrypoint: ["/bin/sh", "/run.sh"]
     networks:
       - overlay_net
     environment:
-      # Note that only mongo1 is used here on purpose for all environments
-      # https://discourse.metabase.com/t/solved-add-mongodb-replicaset-database/7404/2
-      - OPENCRVS_METABASE_DB_HOST=mongo1
-      - OPENCRVS_METABASE_DB_USER=performance
-      - OPENCRVS_METABASE_DB_PASS=${PERFORMANCE_MONGODB_PASSWORD}
-      - OPENCRVS_METABASE_DB_AUTH_DB=performance
+      # Database credentials for PostgreSQL connection
+      - METABASE_DATABASE_SSL=${METABASE_DATABASE_SSL:-false}
+      - METABASE_DATABASE_HOST=${METABASE_DATABASE_HOST:-postgres}
+      - METABASE_DATABASE_PORT=${METABASE_DATABASE_PORT:-5432}
+      - METABASE_DATABASE_NAME=${METABASE_DATABASE_NAME:-events}
+      - METABASE_DATABASE_USER=${METABASE_DATABASE_USER:-events_analytics}
+      - METABASE_DATABASE_PASSWORD=${ANALYTICS_POSTGRES_PASSWORD}
+
       - OPENCRVS_METABASE_SITE_NAME=OpenCRVS Dashboards
       - OPENCRVS_METABASE_SITE_URL=http://metabase.{{hostname}}
       - OPENCRVS_METABASE_MAP_NAME=Farajaland
@@ -1061,6 +1079,11 @@ services:
       - OPENCRVS_METABASE_MAP_REGION_NAME=State
       - OPENCRVS_METABASE_ADMIN_EMAIL=${OPENCRVS_METABASE_ADMIN_EMAIL}
       - OPENCRVS_METABASE_ADMIN_PASSWORD=${OPENCRVS_METABASE_ADMIN_PASSWORD}
+      - METABASE_JAR=/app/metabase.jar
+      - MB_DB_INIT_SQL_FILE=/metabase.init.db.sql
+      - MB_DB_FILE=/data/metabase/metabase.mv.db
+      - OPENCRVS_ENVIRONMENT_CONFIGURATION_SQL_FILE=/environment-configuration.sql
+
     deploy:
       labels:
         - 'traefik.enable=true'
@@ -1168,6 +1191,8 @@ configs:
     file: /opt/opencrvs/infrastructure/mongodb/on-deploy.sh
   postgres-on-deploy.{{ts}}:
     file: /opt/opencrvs/infrastructure/postgres/on-deploy.sh
+  postgres-analytics-on-deploy.{{ts}}:
+    file: /opt/opencrvs/infrastructure/postgres/setup-analytics.sh
   beat-rollover-policy.{{ts}}:
     file: /opt/opencrvs/infrastructure/monitoring/beats/rollover-policy.json
   kibana.{{ts}}:
@@ -1184,6 +1209,8 @@ configs:
     file: /opt/opencrvs/infrastructure/elasticsearch/jvm.options
   minio-mc-config.{{ts}}:
     file: /opt/opencrvs/infrastructure/mc-config/config.json
+  redis-conf.{{ts}}:
+    file: /opt/opencrvs/infrastructure/redis/redis.conf
 networks:
   overlay_net:
     driver: overlay

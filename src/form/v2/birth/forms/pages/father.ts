@@ -53,6 +53,7 @@ export const father = defineFormPage({
     {
       id: 'father.detailsNotAvailable',
       type: FieldType.CHECKBOX,
+      analytics: true,
       label: {
         defaultMessage: "Father's details are not available",
         description: 'This is the label for the field',
@@ -64,6 +65,10 @@ export const father = defineFormPage({
           conditional: not(
             field('informant.relation').isEqualTo(InformantType.FATHER)
           )
+        },
+        {
+          type: ConditionalType.DISPLAY_ON_REVIEW,
+          conditional: field('father.detailsNotAvailable').isEqualTo(true)
         }
       ]
     },
@@ -121,6 +126,7 @@ export const father = defineFormPage({
     {
       id: 'father.dob',
       type: 'DATE',
+      analytics: true,
       required: true,
       secured: true,
       validation: [
@@ -416,6 +422,7 @@ export const father = defineFormPage({
     {
       id: 'father.maritalStatus',
       type: FieldType.SELECT,
+      analytics: true,
       required: false,
       label: {
         defaultMessage: 'Marital Status',
@@ -433,6 +440,7 @@ export const father = defineFormPage({
     {
       id: 'father.educationalAttainment',
       type: FieldType.SELECT,
+      analytics: true,
       required: false,
       label: {
         defaultMessage: 'Level of education',
@@ -450,6 +458,7 @@ export const father = defineFormPage({
     {
       id: 'father.occupation',
       type: FieldType.TEXT,
+      analytics: true,
       required: false,
       label: {
         defaultMessage: 'Occupation',

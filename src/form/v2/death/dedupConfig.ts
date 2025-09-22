@@ -8,10 +8,22 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
-import { field, and } from '@opencrvs/toolkit/events/deduplication'
+import { field, and, or, not } from '@opencrvs/toolkit/events/deduplication'
 
 const similarNamedDeceased = field('deceased.name').fuzzyMatches()
-const sameDeceasedNid = field('deceased.nid').strictMatches()
+
+const differentDeceasedIdTypes = not(field('deceased.idType').strictMatches())
+const deceasedIdNotProvided = field('deceased.idType').strictMatches({
+  value: 'NONE'
+})
+const deceasedIdMatchesIfGiven = or(
+  differentDeceasedIdTypes,
+  deceasedIdNotProvided,
+  field('deceased.nid').strictMatches(),
+  field('deceased.passport').strictMatches(),
+  field('deceased.brn').strictMatches()
+)
+
 const deceasedDateOfDeathWithin5Days = field(
   'eventDetails.date'
 ).dateRangeMatches({
@@ -21,7 +33,7 @@ const similarDeceasedDob = field('deceased.dob').dateRangeMatches({ days: 365 })
 
 export const dedupConfig = and(
   similarNamedDeceased,
-  sameDeceasedNid,
+  deceasedIdMatchesIfGiven,
   deceasedDateOfDeathWithin5Days,
   similarDeceasedDob
 )
