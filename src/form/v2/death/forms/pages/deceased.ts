@@ -286,6 +286,7 @@ export const deceased = defineFormPage({
       id: `deceased.address`,
       type: FieldType.ADDRESS,
       hideLabel: true,
+      secured: true,
       label: {
         defaultMessage: 'Usual place of residence',
         description: 'This is the label for the field',
