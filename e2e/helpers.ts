@@ -51,7 +51,12 @@ export async function loginToV2(
   credentials = CREDENTIALS.LOCAL_REGISTRAR,
   skipPin?: boolean
 ) {
-  const token = await login(page, credentials.USERNAME, credentials.PASSWORD)
+  const token = await getToken(credentials.USERNAME, credentials.PASSWORD)
+  await page.goto(`${CLIENT_URL}?token=${token}`)
+
+  await expect(
+    page.locator('#appSpinner').or(page.locator('#pin-input'))
+  ).toBeVisible()
 
   if (!skipPin) {
     await createPIN(page)
