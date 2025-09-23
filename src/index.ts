@@ -26,9 +26,8 @@ import {
   DOMAIN,
   GATEWAY_URL,
   LOGIN_URL,
-  SENTRY_DSN
-} from '@countryconfig/constants'
-import {
+  SENTRY_DSN,
+  V2_EVENTS,
   COUNTRY_CONFIG_HOST,
   COUNTRY_CONFIG_PORT,
   CHECK_INVALID_TOKEN,
@@ -328,7 +327,7 @@ export async function createServer() {
       const template = Handlebars.compile(
         readFileSync(join(__dirname, file), 'utf8')
       )
-      const result = template({ V2_EVENTS: process.env.V2_EVENTS || false })
+      const result = template({ V2_EVENTS })
       return h.response(result).type('application/javascript')
     },
     options: {

@@ -253,11 +253,13 @@ services:
         tag: 'mongo-on-update'
   # Configure redis
   redis:
-    environment:
-      - REDIS_PASSWORD=false
-      - REDIS_ACLFILE=/run/secrets/redis-acl.{{ts}}
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
     secrets:
-      - redis-acl.{{ts}}
+      - source: redis-acl.{{ts}}
+        target: /usr/local/etc/redis/users.acl
+    configs:
+      - source: redis-conf.{{ts}}
+        target: /usr/local/etc/redis/redis.conf
     networks:
       - overlay_net
     deploy:
@@ -594,7 +596,7 @@ services:
       - MOSIP_API_USERINFO_URL=https://mosip-api.{{hostname}}/esignet/get-oidp-user-info
       - OPENID_PROVIDER_CLAIMS=name,family_name,given_name,middle_name,birthdate,address
       - OPENID_PROVIDER_CLIENT_ID=mock-client_id
-      - ANALYTICS_DATABASE_URL=postgres://${ANALYTICS_POSTGRES_USER}:${ANALYTICS_POSTGRES_PASSWORD}@postgres/events
+      - ANALYTICS_DATABASE_URL=postgres://events_analytics:${ANALYTICS_POSTGRES_PASSWORD}@postgres/events
     networks:
       - overlay_net
     logging:
@@ -1015,7 +1017,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_HOST=postgres
       - POSTGRES_PORT=5432
-      - ANALYTICS_POSTGRES_USER=${ANALYTICS_POSTGRES_USER}
+      - ANALYTICS_POSTGRES_USER=events_analytics
       - ANALYTICS_POSTGRES_PASSWORD=${ANALYTICS_POSTGRES_PASSWORD}
       - EVENTS_APP_POSTGRES_PASSWORD=${EVENTS_APP_POSTGRES_PASSWORD}
       - EVENTS_MIGRATOR_POSTGRES_PASSWORD=${EVENTS_MIGRATOR_POSTGRES_PASSWORD}
@@ -1274,6 +1276,8 @@ configs:
     file: /opt/opencrvs/infrastructure/elasticsearch/jvm.options
   minio-mc-config.{{ts}}:
     file: /opt/opencrvs/infrastructure/mc-config/config.json
+  redis-conf.{{ts}}:
+    file: /opt/opencrvs/infrastructure/redis/redis.conf
 networks:
   overlay_net:
     driver: overlay

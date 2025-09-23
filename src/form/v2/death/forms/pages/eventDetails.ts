@@ -147,6 +147,7 @@ export const eventDetails = defineFormPage({
       id: 'eventDetails.date',
       type: FieldType.DATE,
       required: true,
+      secured: true,
       validation: [
         {
           message: {
@@ -277,6 +278,7 @@ export const eventDetails = defineFormPage({
       id: 'eventDetails.placeOfDeath',
       type: FieldType.SELECT,
       required: true,
+      secured: true,
       label: {
         defaultMessage: 'Place of death',
         description: 'This is the label for the field',
@@ -288,6 +290,7 @@ export const eventDetails = defineFormPage({
       id: 'eventDetails.deathLocation',
       type: FieldType.FACILITY,
       required: true,
+      secured: true,
       label: {
         defaultMessage: 'Health Institution',
         description: 'This is the label for the field',
@@ -306,6 +309,7 @@ export const eventDetails = defineFormPage({
       id: 'eventDetails.deathLocationOther',
       type: FieldType.ADDRESS,
       hideLabel: true,
+      secured: true,
       label: {
         defaultMessage: 'Death location address',
         description: 'This is the label for the field',
