@@ -106,7 +106,6 @@ test.describe.serial('7. Death declaration case - 7', () => {
         CREDENTIALS.NATIONAL_REGISTRAR.USERNAME,
         CREDENTIALS.NATIONAL_REGISTRAR.PASSWORD
       )
-      await createPIN(page)
       await page.click('#header_new_event')
       await page.getByLabel('Death').click()
       await page.getByRole('button', { name: 'Continue' }).click()

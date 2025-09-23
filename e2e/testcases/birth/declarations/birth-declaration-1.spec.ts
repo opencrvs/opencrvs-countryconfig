@@ -93,7 +93,7 @@ test.describe.serial('1. Birth declaration case - 1', () => {
         CREDENTIALS.FIELD_AGENT.USERNAME,
         CREDENTIALS.FIELD_AGENT.PASSWORD
       )
-      await createPIN(page)
+
       await page.click('#header_new_event')
       await page.getByLabel('Birth').click()
       await page.getByRole('button', { name: 'Continue' }).click()
@@ -520,7 +520,6 @@ test.describe.serial('1. Birth declaration case - 1', () => {
         CREDENTIALS.REGISTRATION_AGENT.USERNAME,
         CREDENTIALS.REGISTRATION_AGENT.PASSWORD
       )
-      await createPIN(page)
       await page.getByRole('button', { name: 'Ready for review' }).click()
 
       await expect(

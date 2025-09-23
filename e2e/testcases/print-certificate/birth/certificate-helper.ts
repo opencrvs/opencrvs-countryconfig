@@ -61,7 +61,6 @@ export async function getDeclarationForPrintCertificate(
       CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
       CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
     )
-    await createPIN(page)
   }
 
   await page.getByPlaceholder('Search for a tracking ID').fill(trackingId)

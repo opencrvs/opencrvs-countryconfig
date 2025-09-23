@@ -64,7 +64,6 @@ test.describe
       CREDENTIALS.REGISTRATION_AGENT.USERNAME,
       CREDENTIALS.REGISTRATION_AGENT.PASSWORD
     )
-    await createPIN(page)
 
     await page.getByRole('button', { name: 'Ready to print' }).click()
     await page.locator('#name_0').click()
