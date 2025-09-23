@@ -493,3 +493,63 @@ export const auditRecord = async ({
     await page.getByRole('button', { name, exact: true }).click()
   }
 }
+
+const post = async <T = any>({
+  query,
+  variables,
+  headers
+}: {
+  query: string
+  variables: Record<string, any>
+  headers: Record<string, any>
+}) => {
+  const response = await fetch(`${GATEWAY_HOST}/graphql`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      ...headers
+    },
+    body: JSON.stringify({
+      variables,
+      query
+    })
+  })
+
+  if (!response.ok) {
+    throw new Error(`not ok: ${await response.text()}`)
+  }
+
+  return response.json() as Promise<{ data: T }>
+}
+
+type GetUser = {
+  getUser: {
+    primaryOffice: {
+      hierarchy: Array<{
+        id: string
+      }>
+    }
+  }
+}
+
+export const fetchUserLocationHierarchy = async (
+  userId: string,
+  { headers }: { headers: Record<string, any> }
+) => {
+  const res = await post<GetUser>({
+    query: /* GraphQL */ `
+      query fetchUser($userId: String!) {
+        getUser(userId: $userId) {
+          primaryOffice {
+            hierarchy {
+              id
+            }
+          }
+        }
+      }
+    `,
+    variables: { userId },
+    headers
+  })
+  return res.data.getUser.primaryOffice.hierarchy.map(({ id }) => id)
+}

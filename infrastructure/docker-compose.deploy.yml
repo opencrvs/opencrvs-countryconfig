@@ -591,12 +591,12 @@ services:
       - INFOBIP_API_KEY=${INFOBIP_API_KEY:-}
       - INFOBIP_SENDER_ID=${INFOBIP_SENDER_ID:-}
       - DOMAIN={{hostname}}
+      - ANALYTICS_DATABASE_URL=postgres://events_analytics:${ANALYTICS_POSTGRES_PASSWORD}@postgres/events
       # Identity mock
       - ESIGNET_REDIRECT_URL=https://esignet-mock.{{hostname}}/authorize
       - MOSIP_API_USERINFO_URL=https://mosip-api.{{hostname}}/esignet/get-oidp-user-info
       - OPENID_PROVIDER_CLAIMS=name,family_name,given_name,middle_name,birthdate,address
       - OPENID_PROVIDER_CLIENT_ID=mock-client_id
-      - ANALYTICS_DATABASE_URL=postgres://events_analytics:${ANALYTICS_POSTGRES_PASSWORD}@postgres/events
     networks:
       - overlay_net
     logging:

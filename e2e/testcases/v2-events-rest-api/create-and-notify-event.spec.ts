@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { CLIENT_URL, GATEWAY_HOST } from '../../constants'
 import { CREDENTIALS } from '../../constants'
 import {
+  fetchUserLocationHierarchy,
   formatName,
   getAction,
   getClientToken,
@@ -13,6 +14,8 @@ import { addDays, format, subDays } from 'date-fns'
 import { faker } from '@faker-js/faker'
 import { ensureAssigned } from '../../v2-utils'
 import { getAllLocations } from '../birth/helpers'
+
+import decode from 'jwt-decode'
 
 async function fetchClientAPI(
   path: string,
@@ -581,6 +584,15 @@ test.describe('Events REST API', () => {
         familyName: faker.person.lastName()
       }
 
+      const token = await loginToV2(page)
+      const { sub } = decode<{ sub: string }>(token)
+
+      const location = await fetchUserLocationHierarchy(sub, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+
       const response = await fetchClientAPI(
         '/api/events/events/notifications',
         'POST',
@@ -597,7 +609,7 @@ test.describe('Events REST API', () => {
             'child.dob': format(subDays(new Date(), 1), 'yyyy-MM-dd')
           },
           annotation: {},
-          createdAtLocation: healthFacilityId
+          createdAtLocation: location[location.length - 1]
         }
       )
 
@@ -613,7 +625,6 @@ test.describe('Events REST API', () => {
       expect(body.actions[2].status).toBe('Accepted')
 
       // check that event is created in UI
-      await loginToV2(page)
 
       await page.getByRole('button', { name: 'Notifications' }).click()
 
@@ -709,6 +720,15 @@ test.describe('Events REST API', () => {
         familyName: faker.person.lastName()
       }
 
+      const token = await loginToV2(page)
+      const { sub } = decode<{ sub: string }>(token)
+
+      const location = await fetchUserLocationHierarchy(sub, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+
       await fetchClientAPI(
         '/api/events/events/notifications',
         'POST',
@@ -725,11 +745,9 @@ test.describe('Events REST API', () => {
             'child.dob': format(subDays(new Date(), 1), 'yyyy-MM-dd')
           },
           annotation: {},
-          createdAtLocation: healthFacilityId
+          createdAtLocation: location[location.length - 1]
         }
       )
-
-      await loginToV2(page)
 
       await page.getByRole('button', { name: 'Notifications' }).click()
       await page.getByText(await formatName(childName)).click()

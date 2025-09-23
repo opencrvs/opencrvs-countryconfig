@@ -137,8 +137,10 @@ export const Workqueues = defineWorkqueues([
       flags: {
         anyOf: [InherentFlags.INCOMPLETE],
         noneOf: [InherentFlags.REJECTED]
-      },
-      updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+      }
+      // @TODO: add this line back after notifications API has support for locations
+      // https://github.com/opencrvs/opencrvs-core/issues/9829
+      // updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
     },
     actions: [
       {

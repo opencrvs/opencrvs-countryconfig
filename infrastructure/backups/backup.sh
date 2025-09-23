@@ -226,6 +226,7 @@ docker run --rm \
   alpine sh -c "apk add --no-cache sqlite && \
   sqlite3 /data/sqlite/mosip-api.db \".backup '/data/backup/mosip-api-${LABEL:-$BACKUP_DATE}.sqlite'\""
 
+
 #-------------------------------------------------------------------------------------
 
 echo ""

@@ -21,9 +21,9 @@ on:
           - qa
           - development
           - pentest
-          - meta
           - v19-beta-staging
           - v19-beta-prod
+          - fix-analytics
 jobs:
   reset-data:
     name: 'Reset data'
