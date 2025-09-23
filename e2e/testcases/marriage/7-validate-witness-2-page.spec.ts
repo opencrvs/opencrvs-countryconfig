@@ -9,7 +9,6 @@ test.describe('7. Validate Witness 2 details page', () => {
       CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
       CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
     )
-    await createPIN(page)
     await page.click('#header_new_event')
     await page.getByText('Marriage', { exact: true }).click()
     await goToSection(page, 'witnessTwo')

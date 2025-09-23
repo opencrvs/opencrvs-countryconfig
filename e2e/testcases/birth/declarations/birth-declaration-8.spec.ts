@@ -41,7 +41,6 @@ test.describe.serial('8. Birth declaration case - 8', () => {
         CREDENTIALS.FIELD_AGENT.USERNAME,
         CREDENTIALS.FIELD_AGENT.PASSWORD
       )
-      await createPIN(page)
       await page.click('#header_new_event')
       await page.getByLabel('Birth').click()
       await page.getByRole('button', { name: 'Continue' }).click()
@@ -277,7 +276,6 @@ test.describe.serial('8. Birth declaration case - 8', () => {
         CREDENTIALS.REGISTRATION_AGENT.USERNAME,
         CREDENTIALS.REGISTRATION_AGENT.PASSWORD
       )
-      await createPIN(page)
       await page.getByRole('button', { name: 'In Progress' }).click()
       await page.getByRole('button', { name: 'Field Agents' }).click()
 

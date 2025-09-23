@@ -20,7 +20,6 @@ test.describe('1. Death event declaration', () => {
         CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
         CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
       )
-      await createPIN(page)
       await page.click('#header_new_event')
       await expect(page.getByText('New Declaration')).toBeVisible()
       await expect(page.getByText('Event type')).toBeVisible()
@@ -421,7 +420,6 @@ test.describe('1. Death event declaration', () => {
         CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
         CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
       )
-      await createPIN(page)
       await page.click('#header_new_event')
       await page.getByLabel('Death').click()
       await page.getByRole('button', { name: 'Continue' }).click()
@@ -482,7 +480,6 @@ test.describe('1. Death event declaration', () => {
         CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
         CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
       )
-      await createPIN(page)
       await page.click('#header_new_event')
       await page.getByLabel('Death').click()
       await page.getByRole('button', { name: 'Continue' }).click()

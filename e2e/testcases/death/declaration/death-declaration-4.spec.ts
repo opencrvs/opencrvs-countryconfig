@@ -115,7 +115,6 @@ test.describe.serial('4. Death declaration case - 4', () => {
         CREDENTIALS.REGISTRATION_AGENT.USERNAME,
         CREDENTIALS.REGISTRATION_AGENT.PASSWORD
       )
-      await createPIN(page)
       await page.click('#header_new_event')
       await page.getByLabel('Death').click()
       await page.getByRole('button', { name: 'Continue' }).click()
@@ -639,7 +638,6 @@ test.describe.serial('4. Death declaration case - 4', () => {
         CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
         CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
       )
-      await createPIN(page)
       await page.getByRole('button', { name: 'Ready for review' }).click()
 
       await expect(
