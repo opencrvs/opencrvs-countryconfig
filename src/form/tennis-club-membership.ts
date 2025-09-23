@@ -19,8 +19,7 @@ import {
   FieldType,
   PageTypes,
   field,
-  event,
-  user
+  event
 } from '@opencrvs/toolkit/events'
 import { Event } from './types/types'
 import { MAX_NAME_LENGTH } from './v2/birth/validators'
@@ -149,22 +148,6 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
             description: 'This is the label for the field',
             id: 'event.tennis-club-membership.action.declare.form.section.who.field.image.label'
           }
-        },
-        {
-          id: 'cihan.testing',
-          type: 'TEXT',
-          required: false,
-          label: {
-            defaultMessage: 'Cihan test',
-            description: 'This is the label for the field',
-            id: 'event.tennis-club-membership.action.declare.form.section.who.field.cihan.test.label'
-          },
-          conditionals: [
-            {
-              type: ConditionalType.SHOW,
-              conditional: user.hasRole('LOCAL_REGISTRAR')
-            }
-          ]
         }
       ]
     },

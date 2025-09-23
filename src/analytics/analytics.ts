@@ -160,7 +160,8 @@ export async function upsertAnalyticsEventActions(
         ...event,
         actions: actionsFromStartToCurrentPoint
       },
-      eventConfig
+      eventConfig,
+      { user: undefined, leafAdminStructureLocationIds: [] }
     )
 
     const { type, ...act } = action
