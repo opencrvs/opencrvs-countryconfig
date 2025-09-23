@@ -383,6 +383,7 @@ constants.sent_incomplete,Declaration submitted without completing the required 
 constants.showMore,Label for show more link,Show next {pageSize},Afficher la page suivante {pageSize}
 constants.skipToMainContent,Label for a keyboard accessibility link which skips to the main content,Skip to main content,Sauter au contenu principal
 constants.socialWorker,The description for Hospital Clerk type,Hospital Clerk,Commis d'hôpital
+constants.socialWorker,The description for Hospital Clerk type,Hospital Clerk,Commis d'hôpital
 constants.startedAt,Label for Started At in list item,Started,Initié par
 constants.startedBy,Label for Started by in list item,Started by,Initié par
 constants.stateRegistrar,The description for STATE_REGISTRAR role,State Registrar,Administrateur civil
