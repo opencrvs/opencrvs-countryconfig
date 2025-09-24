@@ -140,11 +140,7 @@ docker run --rm --network=$NETWORK  \
   -e EVENTS_APP_ROLE="${EVENTS_APP_ROLE}" \
   postgres:17.6 bash -c '
 psql -h postgres -U "$POSTGRES_USER" -d postgres -v ON_ERROR_STOP=1 <<EOF
-SELECT pg_terminate_backend(pid)
-FROM pg_stat_activity
-WHERE datname = '\''"$POSTGRES_DB"'\'' AND pid <> pg_backend_pid();
-
-DROP DATABASE IF EXISTS "$POSTGRES_DB";
+DROP DATABASE IF EXISTS "$POSTGRES_DB" WITH (FORCE);
 
 DROP ROLE IF EXISTS "$EVENTS_MIGRATOR_ROLE";
 DROP ROLE IF EXISTS "$EVENTS_APP_ROLE";
