@@ -67,8 +67,8 @@ services:
     configs:
       - source: filebeat.{{ts}}
         target: /usr/share/filebeat/filebeat.yml
-      - source: beat-rollover-policy.{{ts}}
-        target: /usr/share/filebeat/rollover-policy.json
+      - source: filebeat-rollover-policy.{{ts}}
+        target: /usr/share/filebeat/filebeat-rollover-policy.json
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /var/lib/docker/containers/:/var/lib/docker/containers/:ro
@@ -115,7 +115,7 @@ services:
     configs:
       - source: metricbeat-conf.{{ts}}
         target: /usr/share/metricbeat/metricbeat.yml
-      - source: beat-rollover-policy.{{ts}}
+      - source: metricbeat-rollover-policy.{{ts}}
         target: /usr/share/metricbeat/rollover-policy.json
     logging:
       driver: gelf
@@ -1111,7 +1111,7 @@ configs:
   hearth-queryparam-extensions-conf.{{ts}}:
     file: /opt/opencrvs/infrastructure/hearth-queryparam-extensions.json
   metricbeat-conf.{{ts}}:
-    file: /opt/opencrvs/infrastructure/monitoring/beats/metricbeat.yml
+    file: /opt/opencrvs/infrastructure/monitoring/metricbeat/metricbeat.yml
   filebeat.{{ts}}:
     file: /opt/opencrvs/infrastructure/monitoring/filebeat/filebeat.yml
   mongo-on-deploy.{{ts}}:
@@ -1120,8 +1120,10 @@ configs:
     file: /opt/opencrvs/infrastructure/postgres/on-deploy.sh
   postgres-analytics-on-deploy.{{ts}}:
     file: /opt/opencrvs/infrastructure/postgres/setup-analytics.sh
-  beat-rollover-policy.{{ts}}:
-    file: /opt/opencrvs/infrastructure/monitoring/beats/rollover-policy.json
+  filebeat-rollover-policy.{{ts}}:
+    file: /opt/opencrvs/infrastructure/monitoring/filebeat/filebeat-rollover-policy.json
+  metricbeat-rollover-policy.{{ts}}:
+    file: /opt/opencrvs/infrastructure/monitoring/metricbeat/metricbeat-rollover-policy.json
   kibana.{{ts}}:
     file: /opt/opencrvs/infrastructure/monitoring/kibana/kibana.yml
   apm.{{ts}}:
