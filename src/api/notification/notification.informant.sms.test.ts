@@ -34,7 +34,7 @@ vi.mock('node-fetch', () => {
 vi.mock('@opencrvs/toolkit/api', () => ({
   createClient: vi.fn(() => ({
     locations: {
-      get: {
+      list: {
         query: vi.fn().mockResolvedValue([
           {
             id: '9e069dda-0d83-4f67-a4f2-9adbf5658e2e',
