@@ -98,10 +98,7 @@ async function getNotificationParams(
   const locations = await getLocations(token)
 
   const declaration = deepMerge(
-    aggregateActionDeclarations(event, getEventConfig(event.type), {
-      user: undefined,
-      leafAdminStructureLocationIds: []
-    }),
+    aggregateActionDeclarations(event, getEventConfig(event.type)),
     pendingAction.declaration
   )
 
