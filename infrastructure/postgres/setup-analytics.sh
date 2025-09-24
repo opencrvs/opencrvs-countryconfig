@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS analytics.location_statistics (
   name text,
   reference_id text NOT NULL,
   year int NOT NULL,
-  crude_birth_rate int NOT NULL,
+  crude_birth_rate NUMERIC(4,1) NOT NULL,
   male_population int NOT NULL,
   female_population int NOT NULL,
   total_population int NOT NULL,
