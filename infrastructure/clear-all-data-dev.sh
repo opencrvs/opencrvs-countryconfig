@@ -38,9 +38,9 @@ print_usage_and_exit() {
 
 # Check if PostgreSQL is accessible
 if ! PGPASSWORD="$POSTGRES_PASSWORD" psql -h "$POSTGRES_HOST" -p "$POSTGRES_PORT" -U "$POSTGRES_USER" -d postgres -c '\q' 2>/dev/null; then
-    echo "❌ Cannot connect to PostgreSQL at ${POSTGRES_HOST}:${POSTGRES_PORT}"
-    echo "   Make sure PostgreSQL is running and credentials are correct."
-    print_usage_and_exit
+  echo "❌ Cannot connect to PostgreSQL at ${POSTGRES_HOST}:${POSTGRES_PORT}"
+  echo "   Make sure PostgreSQL is running and credentials are correct."
+  print_usage_and_exit
 fi
 
 # Clear PostgreSQL analytics schema
