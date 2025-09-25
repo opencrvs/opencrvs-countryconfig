@@ -113,7 +113,7 @@ jobs:
         working-directory: ${{ github.event.repository.name }}
         run: |
           jq -n -r '
-              [${{ toJSON(secrets) }}, ${{ toJSON(vars) }}] 
+              [${{ toJSON(secrets) }}, ${{ toJSON(vars) }}]
               | add
               | to_entries
               | map(select(.value | test("\n") | not))
@@ -153,6 +153,19 @@ jobs:
     needs: reset
     if: ${{ inputs.reset == 'true' && needs.reset.outputs.outcome == 'success' }}
     uses: ./.github/workflows/seed-data.yml
+    with:
+      environment: ${{ inputs.environment }}
+      core-image-tag: ${{ inputs.core-image-tag }}
+    secrets: inherit
+
+  reindex:
+    needs: [deploy, seed-data]
+    if: >
+      ${{
+        (inputs.reset == 'true' && needs.seed-data.result == 'success') ||
+        (inputs.reset != 'true' && needs.deploy.result == 'success')
+      }}
+    uses: ./.github/workflows/reindex.yml
     with:
       environment: ${{ inputs.environment }}
       core-image-tag: ${{ inputs.core-image-tag }}
