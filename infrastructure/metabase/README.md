@@ -16,6 +16,7 @@ By default, Metabase is not started as part of the OpenCRVS stack as running it 
 
 `yarn metabase` – Starts Metabase in port http://localhost:4444
 `yarn db:shell` - In the metabase directory – open a SQL shell for the database Metabase created
+`yarn db:clear:all` - Clears all analytics databases
 
 ### Default credentials
 
