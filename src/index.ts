@@ -90,7 +90,6 @@ import {
   syncLocationStatistics
 } from './analytics/analytics'
 import { getClient } from './analytics/postgres'
-import { env } from './environment'
 
 export interface ITokenPayload {
   sub: string
