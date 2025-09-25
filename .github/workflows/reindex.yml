@@ -31,13 +31,14 @@ jobs:
     timeout-minutes: 60
 
     steps:
-      - name: Pull the seed-data image
-        run: docker pull ghcr.io/opencrvs/ocrvs-data-seeder:${{ inputs.core-image-tag }}
-
-      - name: Run docker container
+      - name: Run reindex script in docker container
         run: |
-            docker run \
-            -e "AUTH_HOST=${{ vars.AUTH_HOST }}" \
-            -e "EVENTS_URL=${{ vars.GATEWAY_HOST }}" \
-            ghcr.io/opencrvs/ocrvs-data-seeder:${{ inputs.core-image-tag }} \
-            yarn reindex-search
+          ssh -p ${{ vars.SSH_PORT }} ${{ vars.SSH_USER }}@${{ vars.SSH_HOST }} ${{ vars.SSH_ARGS }} "
+            docker run --rm \
+              -v ${{ github.workspace }}:/workspace \
+              -w /workspace \
+              -e 'AUTH_HOST=${{ vars.AUTH_HOST }}' \
+              -e 'EVENTS_URL=${{ vars.GATEWAY_HOST }}' \
+              curlimages/curl:latest \
+              sh infrastructure/reindex.sh"
+
