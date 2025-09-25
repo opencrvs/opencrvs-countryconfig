@@ -35,10 +35,10 @@ jobs:
         run: |
           ssh -p ${{ vars.SSH_PORT }} ${{ vars.SSH_USER }}@${{ vars.SSH_HOST }} ${{ vars.SSH_ARGS }} "
             docker run --rm \
-              -v ${{ github.workspace }}:/workspace \
+              -v /opt/opencrvs/infrastructure/deployment:/workspace \
               -w /workspace \
-              -e 'AUTH_HOST=${{ vars.AUTH_HOST }}' \
-              -e 'EVENTS_URL=${{ vars.GATEWAY_HOST }}' \
+              -e 'AUTH_URL=http://auth:4040/' \
+              -e 'EVENTS_URL=http://localhost:5555/' \
               curlimages/curl:latest \
-              sh infrastructure/reindex.sh"
+              sh reindex.sh"
 
