@@ -242,6 +242,7 @@ constants.collected,The status label for collected,Collected,Collecté par
 constants.collectedBy,The collected by sec text,Collected by,Collecté par
 constants.collectorDetails,Label for collector details,Collector Details,Information  du collecteur
 constants.comment,Label for rejection comment,Comment,Commentaire
+constants.communityLeader,The description for Community Leader type,Community Leader,Chef de communauté
 constants.countryName,Name of the OpenCRVS implementation country,Farajaland,Farajaland
 constants.customTimePeriod,Label for Custom time period,Custom time period,Période personnalisée
 constants.dataEntryClerk,The description for DATA_ENTRY_CLERK type,Data entry clerk,Commis à la saisie des données
@@ -874,8 +875,6 @@ event.death.action.certificate.form.cancel.confirmation.title,This is the title 
 event.death.action.certificate.form.label,This is what this form is referred as in the system,Death certificate collector,Collecteur de certificat de décès
 event.death.action.certificate.form.section.collectPayment.data.label,Title for the data section,Payment details,Détails du paiement
 event.death.action.certificate.form.section.collectPayment.fee.label,Title for the data entry,Fee,Frais
-event.death.action.certificate.form.section.collectPayment.fee.label,Title for the data entry,Fee,Frais
-event.death.action.certificate.form.section.collectPayment.service.label,Title for the data entry,Service,Service
 event.death.action.certificate.form.section.collectPayment.service.label,Title for the data entry,Service,Service
 event.death.action.certificate.form.section.collectPayment.service.label.afterRegistrationTarget,Death registration after 45 days of date of death message,Death registration after 45 days of date of death,Enregistrement du décès après 45 jours de la date du décès
 event.death.action.certificate.form.section.collectPayment.service.label.beforeRegistrationTarget,Death registration before 45 days of date of death message,Death registration before 45 days of date of death,Enregistrement du décès avant 45 jours de la date du décès
@@ -931,8 +930,6 @@ event.death.action.correction.reason.option.materialOmission.label,Label for the
 event.death.action.correction.reason.option.other.label,Label for the other option,Other,Autre
 event.death.action.correction.reason.other.label,Label for the reason,Specify reason,Préciser la raison
 event.death.action.declare.form.label,This is what this form is referred as in the system,Death declaration form,Formulaire de déclaration de décès
-event.death.action.declare.form.nid.unique,This is the error message for non-unique ID Number,National id must be unique,L'identifiant national doit être unique
-event.death.action.declare.form.nid.unique,This is the error message for non-unique ID Number,National id must be unique,L'identifiant national doit être unique
 event.death.action.declare.form.nid.unique,This is the error message for non-unique ID Number,National id must be unique,L'identifiant national doit être unique
 event.death.action.declare.form.review.comment.label,Label for the comment field in the review section,Comment,Commentaire
 event.death.action.declare.form.review.signature.label,Label for the signature field in the review section,Signature of informant,Signature de l'informateur
@@ -1066,7 +1063,6 @@ event.tennis-club-membership.action.collect-certificate.label,This is shown as t
 event.tennis-club-membership.action.declare.form.label,This is what this form is referred as in the system,Tennis club membership application,Tennis club membership application
 event.tennis-club-membership.action.declare.form.review.title,Title of the form to show in review page,"{applicant.name.firstname, select, __EMPTY__ {Member declaration} other {{applicant.name.surname, select, __EMPTY__ {Member declaration for {applicant.name.firstname}} other {Member declaration for {applicant.name.firstname} {applicant.name.surname}}}}}","{applicant.name.firstname, select, __EMPTY__ {Déclaration des membres} other {{applicant.name.surname, select, __EMPTY__ {Déclaration des membres pour {applicant.name.firstname}} other {Déclaration des membres pour {applicant.name.firstname} {applicant.name.surname}}}}}"
 event.tennis-club-membership.action.declare.form.section.recommender.field.firstname.label,This is the label for the field,Recommender's first name,Recommender's first name
-event.tennis-club-membership.action.declare.form.section.recommender.field.firstname.label,This is the label for the field,Recommender's name,Nom du recommandataire
 event.tennis-club-membership.action.declare.form.section.recommender.field.id.label,This is the label for the field,Recommender's membership ID,Recommender's membership ID
 event.tennis-club-membership.action.declare.form.section.recommender.field.none.label,This is the label for the field,No recommender,No recommender
 event.tennis-club-membership.action.declare.form.section.recommender.title,This is the title of the section,Who is recommending the applicant?,Who is recommending the applicant?
