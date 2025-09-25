@@ -31,6 +31,27 @@ jobs:
     timeout-minutes: 60
 
     steps:
+      - name: Clone country config resource package
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref_name }}
+          path: './${{ github.event.repository.name }}'
+
+      - name: Read known hosts
+        run: |
+          cd ${{ github.event.repository.name }}
+          echo "KNOWN_HOSTS<<EOF" >> $GITHUB_ENV
+          sed -i -e '$a\' ./infrastructure/known-hosts
+          cat ./infrastructure/known-hosts >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_KEY }}
+          known_hosts: ${{ env.KNOWN_HOSTS }}
+
       - name: Run reindex script in docker container
         run: |
           ssh -p ${{ vars.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ vars.SSH_HOST }} ${{ vars.SSH_ARGS }} "
