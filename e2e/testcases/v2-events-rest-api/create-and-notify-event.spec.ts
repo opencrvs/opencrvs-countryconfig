@@ -12,7 +12,7 @@ import {
 } from '../../helpers'
 import { addDays, format, subDays } from 'date-fns'
 import { faker } from '@faker-js/faker'
-import { ensureAssigned } from '../../v2-utils'
+import { ensureAssigned, selectAction } from '../../v2-utils'
 import { getAllLocations } from '../birth/helpers'
 
 import decode from 'jwt-decode'
@@ -117,6 +117,7 @@ test.describe('Events REST API', () => {
     )
     const { system, clientSecret, name } =
       await createSystemUser(systemAdminToken)
+
     clientName = name
     clientId = system.clientId
     clientToken = await getClientToken(clientId, clientSecret)
@@ -576,6 +577,8 @@ test.describe('Events REST API', () => {
         }
       )
 
+      expect(createEventResponse.status).toBe(200)
+
       const createEventResponseBody = await createEventResponse.json()
       const eventId = createEventResponseBody.id
 
@@ -641,6 +644,15 @@ test.describe('Events REST API', () => {
       const modal = await page.getByTestId('event-history-modal')
       expect(modal).toContainText('Sent incomplete')
       expect(modal).toContainText(clientName)
+
+      // Close the modal
+      await page.locator('#close-btn').click()
+
+      // View the event details
+      await selectAction(page, 'View')
+      await expect(page.getByTestId('row-value-child.name')).toHaveText(
+        formatName(childName)
+      )
     })
 
     test('API is idempotent', async () => {
