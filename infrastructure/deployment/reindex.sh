@@ -13,34 +13,39 @@ set -euo pipefail
 EVENTS_URL="${EVENTS_URL:-http://localhost:5555/}"
 AUTH_URL="${AUTH_URL:-http://localhost:4040/}"
 
+
 get_reindexing_token() {
   curl -s "${AUTH_URL%/}/internal/reindexing-token" | jq -r '.token'
 }
 
 trigger_reindex() {
-  local token
-  token=$(get_reindexing_token)
-  curl -s -f -X POST \
+  token="$(get_reindexing_token)"
+  out="$(curl -s -w '\n%{http_code}' -X POST \
     -H "Authorization: Bearer ${token}" \
     -H "Content-Type: application/json" \
-    "${EVENTS_URL%/}/events/reindex"
+    "${EVENTS_URL%/}/events/reindex")"
+  body="$(printf '%s' "$out" | sed '$d')"
+  code="$(printf '%s' "$out" | tail -n1)"
+  echo "$body"
+  [ "$code" -ge 200 ] && [ "$code" -lt 300 ]
 }
 
 reindexing_attempts=0
 while true; do
-  if [[ $reindexing_attempts -eq 0 ]]; then
+  if [ "$reindexing_attempts" -eq 0 ]; then
     echo "Reindexing search..."
   else
-    echo "Reindexing search... (attempt ${reindexing_attempts})"
+    echo "Reindexing search... (attempt $reindexing_attempts)"
   fi
 
   if trigger_reindex; then
     echo "...done reindexing"
     exit 0
   else
+    echo "Reindex attempt failed"
     reindexing_attempts=$((reindexing_attempts + 1))
-    if (( reindexing_attempts > 30 )); then
-      echo "Failed to reindex search after ${reindexing_attempts} attempts."
+    if [ "$reindexing_attempts" -gt 30 ]; then
+      echo "Failed to reindex search after $reindexing_attempts attempts."
       exit 1
     fi
     sleep 5
