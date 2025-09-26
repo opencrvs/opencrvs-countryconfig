@@ -30,7 +30,10 @@ import {
   invalidNameValidator,
   MAX_NAME_LENGTH
 } from '@countryconfig/form/v2/birth/validators'
-import { defaultStreetAddressConfiguration } from '@countryconfig/form/street-address-configuration'
+import {
+  defaultStreetAddressConfiguration,
+  getNestedFieldValidators
+} from '@countryconfig/form/street-address-configuration'
 
 const GenderTypes = {
   MALE: 'male',
@@ -327,7 +330,11 @@ export const child = defineFormPage({
           validator: field(
             'child.address.privateHome'
           ).isValidAdministrativeLeafLevel()
-        }
+        },
+        ...getNestedFieldValidators(
+          'child.address.privateHome',
+          defaultStreetAddressConfiguration
+        )
       ],
       defaultValue: {
         country: 'FAR',
@@ -364,7 +371,11 @@ export const child = defineFormPage({
           validator: field(
             'child.address.other'
           ).isValidAdministrativeLeafLevel()
-        }
+        },
+        ...getNestedFieldValidators(
+          'child.address.other',
+          defaultStreetAddressConfiguration
+        )
       ],
       defaultValue: {
         country: 'FAR',
