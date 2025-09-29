@@ -198,13 +198,13 @@ test.describe.serial('Correct record - 2', () => {
 
       await page
         .locator(
-          '#child____address____privateHome-form-input #country-form-input input'
+          '#child____birthLocation____privateHome-form-input #country-form-input input'
         )
         .fill('Far')
 
       await page
         .locator(
-          '#child____address____privateHome-form-input #country-form-input'
+          '#child____birthLocation____privateHome-form-input #country-form-input'
         )
         .getByText('Farajaland', { exact: true })
         .click()
