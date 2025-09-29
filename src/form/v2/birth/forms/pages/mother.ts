@@ -32,7 +32,10 @@ import {
   educationalAttainmentOptions,
   maritalStatusOptions
 } from '../../../../common/select-options'
-import { defaultStreetAddressConfiguration } from '@countryconfig/form/street-address-configuration'
+import {
+  defaultStreetAddressConfiguration,
+  getNestedFieldValidators
+} from '@countryconfig/form/street-address-configuration'
 
 export const requireMotherDetails = or(
   field('mother.detailsNotAvailable').isFalsy(),
@@ -361,7 +364,11 @@ export const mother = defineFormPage({
             id: 'error.invalidInput'
           },
           validator: field('mother.address').isValidAdministrativeLeafLevel()
-        }
+        },
+        ...getNestedFieldValidators(
+          'mother.address',
+          defaultStreetAddressConfiguration
+        )
       ],
       defaultValue: {
         country: 'FAR',
