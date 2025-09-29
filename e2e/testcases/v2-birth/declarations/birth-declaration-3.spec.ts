@@ -148,7 +148,7 @@ test.describe.serial('3. Birth declaration case - 3', () => {
         })
         .click()
       await page
-        .locator('#child____address____privateHome-form-input #province')
+        .locator('#child____birthLocation____privateHome-form-input #province')
         .click()
       await page
         .getByText(declaration.birthLocation.province, {
@@ -157,7 +157,7 @@ test.describe.serial('3. Birth declaration case - 3', () => {
         .click()
 
       await page
-        .locator('#child____address____privateHome-form-input #district')
+        .locator('#child____birthLocation____privateHome-form-input #district')
         .click()
       await page
         .getByText(declaration.birthLocation.district, {
@@ -494,7 +494,7 @@ test.describe.serial('3. Birth declaration case - 3', () => {
       await validateAddress(
         page,
         declaration.birthLocation,
-        'row-value-child.address.privateHome'
+        'row-value-child.birthLocation.privateHome'
       )
 
       /*
@@ -781,7 +781,7 @@ test.describe.serial('3. Birth declaration case - 3', () => {
       await validateAddress(
         page,
         declaration.birthLocation,
-        'row-value-child.address.privateHome'
+        'row-value-child.birthLocation.privateHome'
       )
 
       /*
