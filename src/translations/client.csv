@@ -1678,6 +1678,7 @@ print.cert.coll.other.aff.form.title,Form title for other collector affidavit fo
 print.cert.coll.other.aff.label,File label for signed affidavit,Signed affidavit,Affidavit signé
 print.cert.coll.other.aff.paragraph,Form paragraph for other collector affidavit form,This document should clearly prove that the individual has the authority to collect the certificate,Ce document doit prouver clairement que la personne est habilitée à collecter le certificat.
 print.cert.coll.other.aff.title,Modal title for other coller form submission without signed affidavit,Print without signed affidavit?,Continuer sans affidavit signé ?
+print.certificate,label for the print button used in the offline flow,Print,Imprimer
 print.certificate.addAnotherSignature,,Add another,Ajouter un autre
 print.certificate.birthService,Amount due on certificate for birth label,Service: <strong>Birth registration after {service} of D.o.B.</strong><br/>Amount Due:,Service: <strong>Enregistrement de la naissance après  {service} de D.o.B.</strong><br/>Montant dû:
 print.certificate.button.confirmPrint,The text for print button,"Yes, print certificate","Oui, imprimer le certificat"
