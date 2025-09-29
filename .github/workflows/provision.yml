@@ -35,6 +35,7 @@ on:
           - v19-beta-staging
           - v19-beta-prod
           - fix-analytics
+          - mosip
       tag:
         type: choice
         description: Select group tag you want to execute

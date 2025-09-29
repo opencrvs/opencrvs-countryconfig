@@ -2,7 +2,6 @@ import { test, expect, type Page } from '@playwright/test'
 import {
   drawSignature,
   continueForm,
-  createPIN,
   getRandomDate,
   goToSection,
   login,
