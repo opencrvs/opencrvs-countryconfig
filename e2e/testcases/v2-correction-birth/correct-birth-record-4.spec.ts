@@ -20,7 +20,10 @@ import {
 } from '../../constants'
 import { IdType } from '@countryconfig/form/v2/person'
 import { random } from 'lodash'
-import { formatV2ChildName } from '../v2-birth/helpers'
+import {
+  formatV2ChildName,
+  REQUIRED_VALIDATION_ERROR
+} from '../v2-birth/helpers'
 import { ensureAssigned } from '../../v2-utils'
 
 test.describe.serial('Correct record - 4', () => {
@@ -81,6 +84,22 @@ test.describe.serial('Correct record - 4', () => {
     await page.close()
   })
 
+  const father = {
+    'father.name': {
+      firstname: faker.person.firstName('male'),
+      surname: faker.person.lastName('male')
+    },
+    'father.detailsNotAvailable': false,
+    'father.dob': format(subYears(new Date(), 31), 'yyyy-MM-dd'),
+    'father.idType': 'NATIONAL_ID',
+    'father.nid': faker.string.numeric(10),
+    'father.nationality': 'FAR',
+    'father.maritalStatus': 'SINGLE',
+    'father.educationalAttainment': 'NO_SCHOOLING',
+    'father.occupation': 'Unemployed',
+    'father.addressSameAs': 'YES'
+  }
+
   test('4.0 Shortcut declaration', async () => {
     let token = await getToken(
       CREDENTIALS.NATIONAL_REGISTRAR.USERNAME,
@@ -126,19 +145,7 @@ test.describe.serial('Correct record - 4', () => {
           province: 'Central',
           district: 'Ibombo'
         },
-        'father.name': {
-          firstname: faker.person.firstName('male'),
-          surname: faker.person.lastName('male')
-        },
-        'father.detailsNotAvailable': false,
-        'father.dob': format(subYears(new Date(), 31), 'yyyy-MM-dd'),
-        'father.idType': 'NATIONAL_ID',
-        'father.nid': faker.string.numeric(10),
-        'father.nationality': 'FAR',
-        'father.maritalStatus': 'SINGLE',
-        'father.educationalAttainment': 'NO_SCHOOLING',
-        'father.occupation': 'Unemployed',
-        'father.addressSameAs': 'YES'
+        ...father
       },
       'REGISTER',
       'PRIVATE_HOME'
@@ -239,10 +246,30 @@ test.describe.serial('Correct record - 4', () => {
   })
 
   test.describe('4.4 Make correction', async () => {
+    test('Mark father details as not available to ensure data persists', async () => {
+      await page.getByTestId('change-button-father.name').click()
+      await page.getByLabel("Father's details are not available").check()
+      await page.getByRole('button', { name: 'Back to review' }).click()
+      await expect(page.getByTestId('row-value-father.reason')).toHaveText(
+        REQUIRED_VALIDATION_ERROR
+      )
+      await expect(
+        page.getByRole('button', { name: 'Continue' })
+      ).toBeDisabled()
+
+      await page.getByTestId('change-button-father.detailsNotAvailable').click()
+      await page.getByLabel("Father's details are not available").uncheck()
+
+      await expect(page.locator('#firstname')).toHaveValue(
+        father['father.name'].firstname
+      )
+
+      await page.getByRole('button', { name: 'Back to review' }).click()
+    })
+
     test.describe('4.4.1 Make correction on father details page', async () => {
       test('4.4.1.1 Change name', async () => {
         await page.getByTestId('change-button-father.name').click()
-
         /*
          * Expected result: should
          * - redirect to father's details page
