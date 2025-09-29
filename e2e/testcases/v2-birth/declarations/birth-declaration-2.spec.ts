@@ -360,7 +360,7 @@ test.describe.serial('2. Birth declaration case - 2', () => {
       await validateAddress(
         page,
         declaration.birthLocation,
-        'row-value-child.address.privateHome'
+        'row-value-child.birthLocation.privateHome'
       )
 
       /*
@@ -624,7 +624,7 @@ test.describe.serial('2. Birth declaration case - 2', () => {
        */
       await expectRowValueWithChangeButton(
         page,
-        'child.address.privateHome',
+        'child.birthLocation.privateHome',
         Object.values(declaration.birthLocation)
           .filter((t) => t !== 'Urban')
           .join('')

@@ -60,7 +60,7 @@ async function getPlaceOfBirth(type: 'PRIVATE_HOME' | 'HEALTH_FACILITY') {
 
     return {
       'child.placeOfBirth': 'PRIVATE_HOME',
-      'child.address.privateHome': {
+      'child.birthLocation.privateHome': {
         country: 'FAR',
         addressType: AddressType.DOMESTIC,
         administrativeArea: district
