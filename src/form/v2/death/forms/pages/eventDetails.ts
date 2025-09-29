@@ -24,7 +24,10 @@ import {
 
 import { createSelectOptions, emptyMessage } from '@countryconfig/form/v2/utils'
 import { applicationConfig } from '@countryconfig/api/application/application-config'
-import { defaultStreetAddressConfiguration } from '@countryconfig/form/street-address-configuration'
+import {
+  defaultStreetAddressConfiguration,
+  getNestedFieldValidators
+} from '@countryconfig/form/street-address-configuration'
 
 export const MannerDeathType = {
   MANNER_NATURAL: 'MANNER_NATURAL',
@@ -333,7 +336,11 @@ export const eventDetails = defineFormPage({
           validator: field(
             'eventDetails.deathLocationOther'
           ).isValidAdministrativeLeafLevel()
-        }
+        },
+        ...getNestedFieldValidators(
+          'eventDetails.deathLocationOther',
+          defaultStreetAddressConfiguration
+        )
       ],
       defaultValue: {
         country: 'FAR',

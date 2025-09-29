@@ -33,7 +33,10 @@ import {
   idTypeOptions,
   maritalStatusOptions
 } from '@countryconfig/form/v2/person'
-import { defaultStreetAddressConfiguration } from '@countryconfig/form/street-address-configuration'
+import {
+  defaultStreetAddressConfiguration,
+  getNestedFieldValidators
+} from '@countryconfig/form/street-address-configuration'
 
 const GenderTypes = {
   MALE: 'male',
@@ -300,7 +303,11 @@ export const deceased = defineFormPage({
             id: 'error.invalidInput'
           },
           validator: field('deceased.address').isValidAdministrativeLeafLevel()
-        }
+        },
+        ...getNestedFieldValidators(
+          'deceased.address',
+          defaultStreetAddressConfiguration
+        )
       ],
       defaultValue: {
         country: 'FAR',
