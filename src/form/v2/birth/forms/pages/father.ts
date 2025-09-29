@@ -35,7 +35,10 @@ import {
   yesNoRadioOptions,
   YesNoTypes
 } from '../../../person'
-import { defaultStreetAddressConfiguration } from '@countryconfig/form/street-address-configuration'
+import {
+  defaultStreetAddressConfiguration,
+  getNestedFieldValidators
+} from '@countryconfig/form/street-address-configuration'
 
 export const requireFatherDetails = or(
   field('father.detailsNotAvailable').isFalsy(),
@@ -397,7 +400,11 @@ export const father = defineFormPage({
             id: 'error.invalidInput'
           },
           validator: field('father.address').isValidAdministrativeLeafLevel()
-        }
+        },
+        ...getNestedFieldValidators(
+          'father.address',
+          defaultStreetAddressConfiguration
+        )
       ],
       defaultValue: {
         country: 'FAR',
