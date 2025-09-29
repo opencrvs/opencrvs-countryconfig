@@ -124,18 +124,18 @@ test.describe.serial('2. Birth declaration case - 2', () => {
 
       await page
         .locator(
-          '#child____address____privateHome-form-input #country-form-input input'
+          '#child____birthLocation____privateHome-form-input #country-form-input input'
         )
         .fill(declaration.birthLocation.country.slice(0, 3))
       await page
         .locator(
-          '#child____address____privateHome-form-input #country-form-input'
+          '#child____birthLocation____privateHome-form-input #country-form-input'
         )
         .getByText(declaration.birthLocation.country, { exact: true })
         .click()
 
       await page
-        .locator('#child____address____privateHome-form-input #province')
+        .locator('#child____birthLocation____privateHome-form-input #province')
         .click()
       await page
         .getByText(declaration.birthLocation.province, {
@@ -144,7 +144,7 @@ test.describe.serial('2. Birth declaration case - 2', () => {
         .click()
 
       await page
-        .locator('#child____address____privateHome-form-input #district')
+        .locator('#child____birthLocation____privateHome-form-input #district')
         .click()
       await page
         .getByText(declaration.birthLocation.district, {
