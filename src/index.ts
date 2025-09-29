@@ -658,6 +658,11 @@ export async function createServer() {
     },
     handler: async (req, h) => {
       if (!env.ANALYTICS_DATABASE_URL) {
+        // kill client upload immediately
+        if (!req.raw.req.destroyed) {
+          req.raw.req.destroy()
+        }
+
         logger.warn(
           'Skipping reindex, no ANALYTICS_DATABASE_URL environment variable set.'
         )

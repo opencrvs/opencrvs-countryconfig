@@ -34,7 +34,10 @@ import {
   YesNoTypes
 } from '../../../person'
 import { InformantType } from './informant'
-import { defaultStreetAddressConfiguration } from '@countryconfig/form/street-address-configuration'
+import {
+  defaultStreetAddressConfiguration,
+  getNestedFieldValidators
+} from '@countryconfig/form/street-address-configuration'
 
 export const requireSpouseDetails = or(
   field('spouse.detailsNotAvailable').isFalsy(),
@@ -381,7 +384,11 @@ export const spouse = defineFormPage({
             id: 'error.invalidInput'
           },
           validator: field('spouse.address').isValidAdministrativeLeafLevel()
-        }
+        },
+        ...getNestedFieldValidators(
+          'spouse.address',
+          defaultStreetAddressConfiguration
+        )
       ],
       defaultValue: {
         country: 'FAR',
