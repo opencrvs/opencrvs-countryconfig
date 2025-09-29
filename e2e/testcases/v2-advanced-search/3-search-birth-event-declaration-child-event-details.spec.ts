@@ -168,7 +168,7 @@ test.describe
           .toISOString()
           .split('T')[0],
         'child.placeOfBirth': 'PRIVATE_HOME',
-        'child.address.privateHome': {
+        'child.birthLocation.privateHome': {
           addressType: 'DOMESTIC',
           country: 'FAR',
           province: province,
@@ -222,7 +222,7 @@ test.describe
       await expect(page).toHaveURL(/.*\/search-result/)
 
       const searchParams = new URLSearchParams(page.url())
-      const address = searchParams.get('child.address.privateHome')
+      const address = searchParams.get('child.birthLocation.privateHome')
       if (address !== null) {
         const addressObject = JSON.parse(address)
         await expect(addressObject.country).toBe('FAR')
@@ -252,7 +252,7 @@ test.describe
       await page.getByRole('button', { name: 'Edit' }).click()
       await expect(page).toHaveURL(/.*\/advanced-search/)
       const searchParams = new URLSearchParams(page.url())
-      const address = searchParams.get('child.address.privateHome')
+      const address = searchParams.get('child.birthLocation.privateHome')
       if (address !== null) {
         const addressObject = JSON.parse(address)
         await expect(addressObject.country).toBe('FAR')

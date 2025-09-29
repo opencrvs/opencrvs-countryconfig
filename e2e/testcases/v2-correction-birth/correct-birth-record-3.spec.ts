@@ -745,7 +745,9 @@ test.describe.serial(' Correct record - 3', () => {
 
       for (const part of addressParts) {
         await expect(
-          page.getByTestId('row-value-child.address.other').getByText(part)
+          page
+            .getByTestId('row-value-child.birthLocation.other')
+            .getByText(part)
         ).toBeVisible()
       }
 

@@ -97,7 +97,7 @@ test.describe.serial('Correct record - 4', () => {
         'child.dob': format(subYears(new Date(), 1), 'yyyy-MM-dd'),
         'child.reason': 'Late',
         'child.placeOfBirth': 'PRIVATE_HOME',
-        'child.address.privateHome': {
+        'child.birthLocation.privateHome': {
           country: 'FAR',
           addressType: 'DOMESTIC',
           province: 'Central',
