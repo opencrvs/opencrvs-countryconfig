@@ -366,7 +366,7 @@ test.describe.serial("2. Validate the child's details page", () => {
       )
 
       await expect(
-        page.locator('#child____address____privateHome-form-input')
+        page.locator('#child____birthLocation____privateHome-form-input')
       ).toBeVisible()
     })
 
@@ -384,7 +384,7 @@ test.describe.serial("2. Validate the child's details page", () => {
       )
 
       await expect(
-        page.locator('#child____address____other-form-input')
+        page.locator('#child____birthLocation____other-form-input')
       ).toBeVisible()
     })
 

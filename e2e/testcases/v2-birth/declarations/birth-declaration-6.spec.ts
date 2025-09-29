@@ -339,7 +339,7 @@ test.describe.serial('6. Birth declaration case - 6', () => {
       await validateAddress(
         page,
         declaration.birthLocation,
-        'row-value-child.address.other'
+        'row-value-child.birthLocation.other'
       )
 
       /*
