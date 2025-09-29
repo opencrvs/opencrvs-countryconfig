@@ -41,7 +41,7 @@ test.describe.serial('10.0 Validate "Review" page', () => {
   })
 
   test('10.1 Review page validations', async () => {
-    await selectCertificationType(page, 'Birth Certificate Certified Copy')
+    await selectCertificationType(page, 'Birth Certificate')
     await selectRequesterType(page, 'Print and issue to Informant (Mother)')
     await page.getByRole('button', { name: 'Continue' }).click()
     await page.getByRole('button', { name: 'Verified' }).click()

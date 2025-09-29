@@ -52,6 +52,7 @@ export async function loginToV2(
   skipPin?: boolean
 ) {
   const token = await getToken(credentials.USERNAME, credentials.PASSWORD)
+  expect(token).toBeDefined()
   await page.goto(`${CLIENT_URL}?token=${token}`)
 
   await expect(

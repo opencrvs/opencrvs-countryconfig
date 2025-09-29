@@ -43,7 +43,7 @@ test.describe.serial('Navigating in and out of action', () => {
 
   test('Navigate successfully through the print certificate action flow', async () => {
     await navigateToCertificatePrintAction(page, declaration)
-    await selectCertificationType(page, 'Birth Certificate Certified Copy')
+    await selectCertificationType(page, 'Birth Certificate')
     await selectRequesterType(page, 'Print and issue to Informant (Mother)')
     await page.getByRole('button', { name: 'Continue' }).click()
     await page.getByRole('button', { name: 'Verified' }).click()
@@ -51,7 +51,7 @@ test.describe.serial('Navigating in and out of action', () => {
 
     await expectInUrl(
       page,
-      `/events/print-certificate/${eventId}/review?templateId=v2.birth-certified-certificate`
+      `/events/print-certificate/${eventId}/review?templateId=v2.birth-certificate`
     )
   })
 
@@ -68,7 +68,7 @@ test.describe.serial('Navigating in and out of action', () => {
     await page.goForward()
     await expectInUrl(
       page,
-      `/events/print-certificate/${eventId}/review?templateId=v2.birth-certified-certificate`
+      `/events/print-certificate/${eventId}/review?templateId=v2.birth-certificate`
     )
   })
 
