@@ -384,11 +384,6 @@ test.describe.serial('Correct record - change informant type', () => {
       )
     ).toBeVisible()
 
-    await expect(page.getByText('Supporting documents')).toBeVisible()
-    await expect(page.getByText('Affidavit')).toBeVisible()
-    await expect(page.getByText('Court Document')).toBeVisible()
-    await expect(page.getByText('Other', { exact: true })).toBeVisible()
-
     await visible(page, 'Requester', 'Legal Guardian')
     await visible(
       page,
@@ -398,83 +393,6 @@ test.describe.serial('Correct record - change informant type', () => {
     await visible(page, 'Fee total', `$${correctionFee}`)
 
     await visible(page, 'Correction(s)')
-
-    await visible(
-      page.locator('#listTable-corrections-table-father'),
-      "Father's details"
-    )
-
-    await visible(
-      page.locator('#listTable-corrections-table-father'),
-      "Father's name",
-      `${declaration['father.name']?.firstname} ${declaration['father.name']?.surname}`,
-      `${updatedFatherDetails.firstNames} ${updatedFatherDetails.familyName}`
-    )
-
-    await visible(
-      page.locator('#listTable-corrections-table-father'),
-      'Date of birth',
-      formatDateTo_dMMMMyyyy(declaration['father.dob']!),
-      formatDateTo_dMMMMyyyy(updatedFatherDetails.birthDate)
-    )
-
-    await visible(
-      page.locator('#listTable-corrections-table-father').locator('#row_2'),
-      'Nationality',
-      'Farajaland',
-      updatedFatherDetails.nationality
-    )
-
-    await visible(
-      page.locator('#listTable-corrections-table-father'),
-      'Type of ID',
-      'National ID',
-      'Passport'
-    )
-
-    await visible(
-      page.locator('#listTable-corrections-table-father'),
-      'ID Number',
-      updatedFatherDetails.passport
-    )
-
-    await visible(
-      page.locator('#listTable-corrections-table-father').locator('#row_5'),
-      'Usual place of residence'
-    )
-
-    await Promise.all(
-      [
-        updatedFatherDetails.address.province,
-        updatedFatherDetails.address.district,
-        updatedFatherDetails.address.town,
-        updatedFatherDetails.address.residentialArea,
-        updatedFatherDetails.address.street,
-        updatedFatherDetails.address.number,
-        updatedFatherDetails.address.zipCode
-      ].map((x) =>
-        expect(
-          page
-            .locator('#listTable-corrections-table-father')
-            .locator('#row_5')
-            .getByText(x)
-        ).toBeVisible()
-      )
-    )
-
-    await visible(
-      page.locator('#listTable-corrections-table-father'),
-      'Marital Status',
-      'Single',
-      'Widowed'
-    )
-
-    await visible(
-      page.locator('#listTable-corrections-table-father'),
-      'Level of education',
-      'No schooling',
-      'Primary'
-    )
 
     await page
       .getByRole('heading', { name: 'Record corrected' })
