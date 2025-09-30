@@ -385,10 +385,7 @@ export const father = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: and(
             requireFatherDetails,
-            or(
-              field('mother.detailsNotAvailable').isEqualTo(true),
-              field('father.addressSameAs').isEqualTo(YesNoTypes.NO)
-            )
+            not(field('father.addressSameAs').isEqualTo(YesNoTypes.YES))
           )
         }
       ],
