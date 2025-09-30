@@ -1,8 +1,8 @@
 import { test, type Page, expect } from '@playwright/test'
 import { Declaration } from '../../v2-test-data/birth-declaration'
-import { joinValuesWith, loginToV2 } from '../../../helpers'
+import { loginToV2 } from '../../../helpers'
 import { createDeclaration } from '../../v2-test-data/birth-declaration'
-import { CLIENT_V2_URL, CREDENTIALS } from '../../../constants'
+import { CREDENTIALS } from '../../../constants'
 import { getToken } from '../../../helpers'
 import {
   navigateToCertificatePrintAction,
@@ -10,12 +10,12 @@ import {
 } from './helpers'
 import { selectCertificationType } from './helpers'
 import { selectAction } from '../../../v2-utils'
+import { formatV2ChildName } from '../../v2-birth/helpers'
 
 test.describe
   .serial("Validate 'Birth Certificate Certified Copy' PDF details", () => {
   let declaration: Declaration
   let page: Page
-  let eventId: string
 
   test.beforeAll(async ({ browser }) => {
     const token = await getToken(
@@ -32,7 +32,6 @@ test.describe
     )
 
     declaration = res.declaration
-    eventId = res.eventId
     page = await browser.newPage()
   })
 
@@ -57,9 +56,17 @@ test.describe
   })
 
   test('Go to review', async () => {
-    await page.goto(
-      joinValuesWith([CLIENT_V2_URL, 'events', 'overview', eventId], '/')
-    )
+    await page
+      .getByRole('textbox', { name: 'Search for a tracking ID' })
+      .fill(formatV2ChildName(declaration))
+
+    await page.getByRole('button', { name: 'Search' }).click()
+    await page
+      .getByRole('button', {
+        name: formatV2ChildName(declaration),
+        exact: true
+      })
+      .click()
     await selectAction(page, 'Print')
     await selectCertificationType(page, 'Birth Certificate Certified Copy')
     await selectRequesterType(page, 'Print and issue to Informant (Mother)')

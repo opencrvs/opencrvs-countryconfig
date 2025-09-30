@@ -1,19 +1,19 @@
 import { expect, test, type Page } from '@playwright/test'
 
 import { Declaration } from '../../v2-test-data/birth-declaration'
-import { getToken, joinValuesWith } from '../../../helpers'
+import { getToken } from '../../../helpers'
 import { createDeclaration } from '../../v2-test-data/birth-declaration'
-import { CLIENT_V2_URL, CREDENTIALS } from '../../../constants'
+import { CREDENTIALS } from '../../../constants'
 import { loginToV2 } from '../../../helpers'
 import {
   navigateToCertificatePrintAction,
   selectRequesterType
 } from './helpers'
 import { selectAction } from '../../../v2-utils'
+import { formatV2ChildName } from '../../v2-birth/helpers'
 
 test.describe.serial('44.14.0 Validate "Certified copy" option', () => {
   let declaration: Declaration
-  let eventId: string
   let page: Page
 
   test.beforeAll(async ({ browser }) => {
@@ -23,7 +23,6 @@ test.describe.serial('44.14.0 Validate "Certified copy" option', () => {
     )
     const res = await createDeclaration(token)
     declaration = res.declaration
-    eventId = res.eventId
     page = await browser.newPage()
   })
 
@@ -60,9 +59,18 @@ test.describe.serial('44.14.0 Validate "Certified copy" option', () => {
   })
 
   test('44.14.3 "Certified Copy" is now available in certificate types', async () => {
-    await page.goto(
-      joinValuesWith([CLIENT_V2_URL, 'events', 'overview', eventId], '/')
-    )
+    await page
+      .getByRole('textbox', { name: 'Search for a tracking ID' })
+      .fill(formatV2ChildName(declaration))
+
+    await page.getByRole('button', { name: 'Search' }).click()
+    await page
+      .getByRole('button', {
+        name: formatV2ChildName(declaration),
+        exact: true
+      })
+      .click()
+
     await selectAction(page, 'Print')
     await page.locator('#certificateTemplateId svg').click()
     await expect(
