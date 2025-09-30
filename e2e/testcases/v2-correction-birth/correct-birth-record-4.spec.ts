@@ -340,8 +340,6 @@ test.describe.serial('Correct record - 4', () => {
         expect(page.url().includes('correction')).toBeTruthy()
         expect(page.url().includes('review')).toBeTruthy()
 
-        console.log(declaration)
-        console.log(updatedFatherDetails.birthDate)
         await expect(
           await page.getByTestId('row-value-father.dob').getByRole('deletion')
         ).toHaveText(formatDateTo_dMMMMyyyy(declaration['father.dob']!))
