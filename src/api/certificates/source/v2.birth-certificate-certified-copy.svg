@@ -387,7 +387,7 @@
           <tspan x="307" y="518.104">{{$lookup $declaration 'informant.name.fullname'}}</tspan>
         {{/ifCond}}
       {{/ifCond}}
-      <tspan x="307" y="528.104">{{lookup $declaration 'informant.relation'}}{{#ifCond (lookup $declaration 'informant.relation') '===' 'OTHER'}} ({{lookup $declaration 'informant.other.relation'}}) {{/ifCond}}</tspan>
+      <tspan x="307" y="528.104">{{lookup $declaration 'informant.relation'}}{{#ifCond (lookup $declaration 'informant.relation') '===' 'Other'}} ({{lookup $declaration 'informant.other.relation'}}) {{/ifCond}}</tspan>
     </text>
   </g>
   <line x1="65" y1="536.5" x2="533" y2="536.5" stroke="#ECECEC" />
