@@ -41,6 +41,14 @@
         - users
 
     - include_tasks:
+        file: tasks/journald.yml
+        apply:
+          tags:
+            - journald
+      tags:
+        - journald
+
+    - include_tasks:
         file: tasks/security-hardening.yml
         apply:
           tags:
