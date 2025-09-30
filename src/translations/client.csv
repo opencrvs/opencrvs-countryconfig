@@ -1922,6 +1922,7 @@ review.edit.modal.confirmationTitle,Edit modal confirmation title,Edit declarati
 review.error.unauthorized,The error message shown when a query fails,We are unable to display this page to you,Nous ne sommes pas en mesure de vous afficher cette page
 review.form.section.review.name,Form section name for Review,Review,Réviser
 review.form.section.review.title,Form section title for Review,Review,Réviser
+review.form.title,Review form label for update action,Review form,Formulaire de révision
 review.header.subject.subjectWitName,Header subject that shows which declaration type to review with informant name,"{eventType, select, birth {Birth} death {Death} other {Marriage} } declaration for {name}","{eventType, select, birth {Naissance} death {Décès} other {Mariage}} declaration for {name}"
 review.header.subject.subjectWithoutName,Header subject that shows which declaration type to review,"{eventType, select, birth {Birth} death {Death} other {Marriage}} Declaration","{eventType, select, birth {Naissance} death {Décès} other {Marriage}} Déclaration"
 review.header.title.govtName,Header title that shows bgd govt name,Republic of Farajaland,République du Farajaland
