@@ -332,7 +332,7 @@ export const child = defineFormPage({
           ).isValidAdministrativeLeafLevel()
         },
         ...getNestedFieldValidators(
-          'child.address.privateHome',
+          'child.birthLocation.privateHome',
           defaultStreetAddressConfiguration
         )
       ],
@@ -373,7 +373,7 @@ export const child = defineFormPage({
           ).isValidAdministrativeLeafLevel()
         },
         ...getNestedFieldValidators(
-          'child.address.other',
+          'child.birthLocation.other',
           defaultStreetAddressConfiguration
         )
       ],
