@@ -184,6 +184,13 @@ get_target_indices() {
     | sed 's/\,$//'
 }
 
+get_target_indices() {
+  docker run --rm --network=$NETWORK appropriate/curl curl -s "http://$(elasticsearch_host)/_cat/indices?h=index" \
+    | grep -E '^(ocrvs-|events_)' \
+    | paste -sd, - \
+    | sed 's/\,$//'
+}
+
 # Today's date is used for filenames if LABEL is not provided
 #-----------------------------------
 BACKUP_DATE=$(date +%Y-%m-%d)
@@ -259,7 +266,12 @@ echo ""
 create_elasticsearch_backup() {
   indices=$(get_target_indices)
   echo "List indices for backup: $indices"
+  indices=$(get_target_indices)
+  echo "List indices for backup: $indices"
   OUTPUT=""
+  json_payload="{\"indices\": \"${indices}\"}"
+  OUTPUT=$(docker run --rm --network=$NETWORK appropriate/curl curl -sS -X PUT -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs/snapshot_${LABEL:-$BACKUP_DATE}?wait_for_completion=true&pretty" -d "$json_payload" 2>/dev/null) || true
+
   json_payload="{\"indices\": \"${indices}\"}"
   OUTPUT=$(docker run --rm --network=$NETWORK appropriate/curl curl -sS -X PUT -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs/snapshot_${LABEL:-$BACKUP_DATE}?wait_for_completion=true&pretty" -d "$json_payload" 2>/dev/null) || true
 

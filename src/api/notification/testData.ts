@@ -80,7 +80,7 @@ const CreateAction = {
   createdByUserType: 'user',
   createdAt: '2025-08-20T03:24:04.815Z',
   createdBy: '68a33795caf0b9e13a86d51f',
-  createdByRole: 'SOCIAL_WORKER',
+  createdByRole: 'HOSPITAL_CLERK',
   createdAtLocation: '9e069dda-0d83-4f67-a4f2-9adbf5658e2e' as unknown as UUID,
   declaration: {},
   status: ActionStatus.Accepted,
@@ -93,7 +93,7 @@ const AssignAction = {
   createdByUserType: 'user',
   createdAt: '2025-08-20T03:24:04.815Z',
   createdBy: '68a33795caf0b9e13a86d51f',
-  createdByRole: 'SOCIAL_WORKER',
+  createdByRole: 'HOSPITAL_CLERK',
   createdAtLocation: '9e069dda-0d83-4f67-a4f2-9adbf5658e2e' as unknown as UUID,
   declaration: {},
   status: 'Accepted',
@@ -107,7 +107,7 @@ const RequestBirthNotificationAction = {
   createdByUserType: 'user',
   createdAt: '2025-08-20T03:24:49.861Z',
   createdBy: '68a33795caf0b9e13a86d51f',
-  createdByRole: 'SOCIAL_WORKER',
+  createdByRole: 'HOSPITAL_CLERK',
   createdAtLocation: '9e069dda-0d83-4f67-a4f2-9adbf5658e2e' as unknown as UUID,
   declaration: {
     'child.name': {
@@ -145,7 +145,7 @@ const RequestBirthDeclarationAction = {
   createdByUserType: 'user',
   createdAt: '2025-08-20T03:24:49.861Z',
   createdBy: '68a33795caf0b9e13a86d51f',
-  createdByRole: 'SOCIAL_WORKER',
+  createdByRole: 'HOSPITAL_CLERK',
   createdAtLocation: '9e069dda-0d83-4f67-a4f2-9adbf5658e2e' as unknown as UUID,
   declaration: {
     'child.name': {
@@ -183,7 +183,7 @@ const BirthDeclarationAction = {
   createdByUserType: 'user',
   createdAt: '2025-08-20T03:24:49.861Z',
   createdBy: '68a33795caf0b9e13a86d51f',
-  createdByRole: 'SOCIAL_WORKER',
+  createdByRole: 'HOSPITAL_CLERK',
   createdAtLocation: '9e069dda-0d83-4f67-a4f2-9adbf5658e2e' as unknown as UUID,
   declaration: {
     'child.name': {
@@ -221,7 +221,7 @@ const RequestRegistrationAction = {
   createdByUserType: 'user',
   createdAt: '2025-08-20T03:24:49.861Z',
   createdBy: '68a33795caf0b9e13a86d51f',
-  createdByRole: 'SOCIAL_WORKER',
+  createdByRole: 'HOSPITAL_CLERK',
   createdAtLocation: '9e069dda-0d83-4f67-a4f2-9adbf5658e2e' as unknown as UUID,
   declaration: {},
   annotation: {},
@@ -235,7 +235,7 @@ const RequestRejectionAction = {
   createdByUserType: 'user',
   createdAt: '2025-08-20T03:24:49.861Z',
   createdBy: '68a33795caf0b9e13a86d51f',
-  createdByRole: 'SOCIAL_WORKER',
+  createdByRole: 'HOSPITAL_CLERK',
   createdAtLocation: '9e069dda-0d83-4f67-a4f2-9adbf5658e2e' as unknown as UUID,
   declaration: {},
   annotation: {},

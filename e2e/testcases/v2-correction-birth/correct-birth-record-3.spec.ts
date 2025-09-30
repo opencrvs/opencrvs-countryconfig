@@ -948,13 +948,11 @@ test.describe.serial(' Correct record - 3', () => {
     })
 
     test('3.8.1 Record audit by local registrar', async () => {
-      // await type(page, '#searchText', trackingId?.toString())
-      auditRecord({
+      await auditRecord({
         page,
         name: `${formatV2ChildName(declaration)}`,
         trackingId
       })
-      await page.getByText(formatV2ChildName(declaration)).click()
       await ensureAssigned(page)
 
       await expect(page.getByText(formatV2ChildName(declaration))).toBeVisible()
