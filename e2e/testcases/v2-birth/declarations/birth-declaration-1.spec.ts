@@ -315,7 +315,7 @@ test.describe.serial('1. Birth declaration case - 1', () => {
        */
       await expect(
         page.getByTestId('row-value-child.weightAtBirth')
-      ).toHaveText(declaration.weightAtBirth.toString() + 'Kilograms (kg)')
+      ).toHaveText(declaration.weightAtBirth + 'Kilograms (kg)')
 
       /*
        * Expected result: should include
