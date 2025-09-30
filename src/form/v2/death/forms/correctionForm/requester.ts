@@ -14,8 +14,7 @@ import {
   ConditionalType,
   field,
   FieldConfig,
-  FieldType,
-  not
+  FieldType
 } from '@opencrvs/toolkit/events'
 import { InformantType, InformantTypeKey } from '../pages/informant'
 import { informantMessageDescriptors } from '@countryconfig/form/common/messages'
@@ -35,128 +34,43 @@ const commonConfigs = {
 
 const commonOptions = [
   {
-    value: 'SPOUSE',
+    value: 'ANOTHER_AGENT',
     label: {
-      id: 'event.death.action.correction.form.requester.type.spouse',
-      defaultMessage: 'Spouse',
+      id: 'event.birth.action.correction.form.requester.type.anotherAgent',
+      defaultMessage: 'Another registration agent or field agent',
       description: 'This is the label for the correction requester field'
     }
   },
   {
-    value: 'SON',
+    value: 'ME',
     label: {
-      id: 'event.death.action.correction.form.requester.type.son',
-      defaultMessage: 'Son',
+      id: 'event.birth.action.correction.form.requester.type.me',
+      defaultMessage: 'Me',
       description: 'This is the label for the correction requester field'
     }
   },
   {
-    value: 'DAUGHTER',
+    value: 'COURT',
     label: {
-      id: 'event.death.action.correction.form.requester.type.daughter',
-      defaultMessage: 'Daughter',
+      id: 'event.birth.action.correction.form.requester.type.court',
+      defaultMessage: 'Court',
       description: 'This is the label for the correction requester field'
     }
   },
   {
-    value: 'SON_IN_LAW',
+    value: 'SOMEONE_ELSE',
     label: {
-      id: 'event.death.action.correction.form.requester.type.sonInLaw',
-      defaultMessage: 'Son-in-law',
-      description: 'This is the label for the correction requester field'
-    }
-  },
-  {
-    value: 'DAUGHTER_IN_LAW',
-    label: {
-      id: 'event.death.action.correction.form.requester.type.daughterInLaw',
-      defaultMessage: 'Daughter-in-law',
-      description: 'This is the label for the correction requester field'
-    }
-  },
-  {
-    value: 'MOTHER',
-    label: {
-      id: 'event.death.action.correction.form.requester.type.mother',
-      defaultMessage: 'Mother',
-      description: 'This is the label for the correction requester field'
-    }
-  },
-  {
-    value: 'FATHER',
-    label: {
-      id: 'event.death.action.correction.form.requester.type.father',
-      defaultMessage: 'Father',
-      description: 'This is the label for the correction requester field'
-    }
-  },
-  {
-    value: 'GRANDSON',
-    label: {
-      id: 'event.death.action.correction.form.requester.type.grandson',
-      defaultMessage: 'Grandson',
-      description: 'This is the label for the correction requester field'
-    }
-  },
-  {
-    value: 'GRANDDAUGHTER',
-    label: {
-      id: 'event.death.action.correction.form.requester.type.granddaughter',
-      defaultMessage: 'Granddaughter',
-      description: 'This is the label for the correction requester field'
-    }
-  },
-  {
-    value: 'OTHER',
-    label: {
-      id: 'event.death.action.correction.form.requester.type.other',
-      defaultMessage: 'Other',
+      id: 'event.birth.action.correction.form.requester.type.someoneElse',
+      defaultMessage: 'Someone else',
       description: 'This is the label for the correction requester field'
     }
   }
 ]
 
-const onlyMotherExist = (informantType: InformantTypeKey) => {
+const getInformantConditional = (informantType: InformantTypeKey) => {
   return {
     type: ConditionalType.SHOW,
-    conditional: and(
-      field('informant.relation').isEqualTo(informantType),
-      not(field('mother.name').isFalsy()),
-      field('father.name').isFalsy()
-    )
-  }
-}
-
-const onlyFatherExist = (informantType: InformantTypeKey) => {
-  return {
-    type: ConditionalType.SHOW,
-    conditional: and(
-      field('informant.relation').isEqualTo(informantType),
-      not(field('father.name').isFalsy()),
-      field('mother.name').isFalsy()
-    )
-  }
-}
-
-const fatherMotherBothExist = (informantType: InformantTypeKey) => {
-  return {
-    type: ConditionalType.SHOW,
-    conditional: and(
-      field('informant.relation').isEqualTo(informantType),
-      not(field('father.name').isFalsy()),
-      not(field('mother.name').isFalsy())
-    )
-  }
-}
-
-const fatherMotherBothDoesNotExist = (informantType: InformantTypeKey) => {
-  return {
-    type: ConditionalType.SHOW,
-    conditional: and(
-      field('informant.relation').isEqualTo(informantType),
-      field('father.name').isFalsy(),
-      field('mother.name').isFalsy()
-    )
+    conditional: field('informant.relation').isEqualTo(informantType)
   }
 }
 
@@ -164,35 +78,7 @@ const getFieldConfigForInformant = (informantType: InformantTypeKey) => {
   return [
     {
       ...commonConfigs,
-      conditionals: [onlyMotherExist(informantType)],
-      options: [
-        getInformantOption(informantType),
-        motherOption,
-        ...commonOptions
-      ]
-    },
-    {
-      ...commonConfigs,
-      conditionals: [onlyFatherExist(informantType)],
-      options: [
-        getInformantOption(informantType),
-        fatherOption,
-        ...commonOptions
-      ]
-    },
-    {
-      ...commonConfigs,
-      conditionals: [fatherMotherBothExist(informantType)],
-      options: [
-        getInformantOption(informantType),
-        fatherOption,
-        motherOption,
-        ...commonOptions
-      ]
-    },
-    {
-      ...commonConfigs,
-      conditionals: [fatherMotherBothDoesNotExist(informantType)],
+      conditionals: [getInformantConditional(informantType)],
       options: [getInformantOption(informantType), ...commonOptions]
     }
   ]
@@ -214,55 +100,9 @@ const getInformantOption = (informantType: InformantTypeKey) => {
   }
 }
 
-const fatherOption = {
-  label: {
-    id: 'event.death.action.correction.form.section.requester.father.label',
-    defaultMessage: 'Father',
-    description: 'This is the label for the field'
-  },
-  value: InformantType.FATHER
-}
-
-const motherOption = {
-  label: {
-    id: 'event.death.action.correction.form.section.requester.mother.label',
-    defaultMessage: 'Mother',
-    description: 'This is the label for the field'
-  },
-  value: InformantType.MOTHER
-}
-
 export const correctionFormRequesters: FieldConfig[] = [
-  {
-    ...commonConfigs,
-    conditionals: [onlyMotherExist(InformantType.MOTHER)],
-    options: [getInformantOption(InformantType.MOTHER), ...commonOptions]
-  },
-  {
-    ...commonConfigs,
-    conditionals: [fatherMotherBothExist(InformantType.MOTHER)],
-    options: [
-      getInformantOption(InformantType.MOTHER),
-      fatherOption,
-      ...commonOptions
-    ]
-  },
-  {
-    ...commonConfigs,
-    conditionals: [onlyFatherExist(InformantType.FATHER)],
-    options: [getInformantOption(InformantType.FATHER), ...commonOptions]
-  },
-  {
-    ...commonConfigs,
-    conditionals: [fatherMotherBothExist(InformantType.FATHER)],
-    options: [
-      getInformantOption(InformantType.FATHER),
-      motherOption,
-      ...commonOptions
-    ]
-  },
-  ...getFieldConfigForInformant(InformantType.OTHER),
   ...getFieldConfigForInformant(InformantType.SPOUSE),
+  ...getFieldConfigForInformant(InformantType.OTHER),
   ...getFieldConfigForInformant(InformantType.SON),
   ...getFieldConfigForInformant(InformantType.DAUGHTER),
   ...getFieldConfigForInformant(InformantType.SON_IN_LAW),
