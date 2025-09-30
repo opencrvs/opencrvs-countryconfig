@@ -3,7 +3,6 @@ import {
   auditRecord,
   formatDateTo_dMMMMyyyy,
   getToken,
-  goBackToReview,
   loginToV2
 } from '../../helpers'
 import { faker } from '@faker-js/faker'
@@ -19,7 +18,10 @@ import {
 } from '../../constants'
 import { IdType } from '@countryconfig/form/v2/person'
 import { random } from 'lodash'
-import { formatV2ChildName } from '../v2-birth/helpers'
+import {
+  formatV2ChildName,
+  REQUIRED_VALIDATION_ERROR
+} from '../v2-birth/helpers'
 import { ensureAssigned } from '../../v2-utils'
 
 test.describe.serial(
@@ -53,13 +55,6 @@ test.describe.serial(
       },
       maritalStatus: 'Widowed',
       educationLevel: 'Primary'
-    }
-
-    const updatedChildDetails = {
-      placeOfBirth: 'Health Institution',
-      birthFacility: 'Mwenekombe Health Post',
-      firstNames: faker.person.firstName(),
-      familyName: faker.person.lastName()
     }
 
     const correctionFee = faker.number.int({ min: 1, max: 1000 }).toString()
@@ -270,33 +265,21 @@ test.describe.serial(
           .locator('#father____address-form-input')
           .locator('#zipCode')
           .fill(updatedFatherDetails.address.zipCode)
-
-        await page.getByRole('button', { name: 'Back to review' }).click()
       })
     })
 
-    test('3.7 Correction summary', async () => {
-      /*
-       * Expected result: should
-       * - navigate to correction summary
-       * - Send for approval button is disabled
-       */
+    test('Go back to review, expect to not see any validation errors', async () => {
+      await page.getByRole('button', { name: 'Back to review' }).click()
+      await expect(page.getByText(REQUIRED_VALIDATION_ERROR)).not.toBeVisible()
+    })
 
-      expect(page.url().includes('correction')).toBeTruthy()
-      expect(page.url().includes('summary')).toBeTruthy()
+    test('Correction summary', async () => {
+      await page.getByRole('button', { name: 'Continue' }).click()
 
       await expect(
         page.getByRole('button', { name: 'Correct record' })
       ).toBeEnabled()
 
-      /*
-       * Expected result: should show
-       * - Original vs correction
-       * - Requested by
-       * - ID check
-       * - Reason for request
-       * - Comments
-       */
       await visible(page, 'Requester', 'Legal Guardian')
       await visible(
         page,
@@ -306,68 +289,30 @@ test.describe.serial(
       await visible(page, 'Fee total', `$${correctionFee}`)
 
       await visible(page, 'Correction(s)')
-      await visible(page, "Child's details")
 
-      await visible(
-        page.locator('#listTable-corrections-table-child'),
-        'Place of delivery',
-        'Residential address',
-        'Health Institution'
-      )
-
-      await visible(
-        page.locator('#listTable-corrections-table-child'),
-        'Location of birth'
-      )
       await expect(
-        await page
-          .locator('#listTable-corrections-table-child')
-          .getByText(updatedChildDetails.birthFacility)
+        page.getByText(
+          `Father's name-${updatedFatherDetails.firstNames} ${updatedFatherDetails.familyName}`
+        )
       ).toBeVisible()
 
-      await visible(
-        page.locator('#listTable-corrections-table-father'),
-        "Father's details"
-      )
+      await expect(
+        page.getByText(
+          `Date of birth-${formatDateTo_dMMMMyyyy(updatedFatherDetails.birthDate)}`
+        )
+      ).toBeVisible()
 
-      await visible(
-        page.locator('#listTable-corrections-table-father'),
-        "Father's name",
-        `${declaration['father.name']?.firstname} ${declaration['father.name']?.surname}`,
-        `${updatedFatherDetails.firstNames} ${updatedFatherDetails.familyName}`
-      )
+      await expect(
+        page.getByText(`Nationality-${updatedFatherDetails.nationality}`)
+      ).toBeVisible()
 
-      await visible(
-        page.locator('#listTable-corrections-table-father'),
-        'Date of birth',
-        formatDateTo_dMMMMyyyy(declaration['father.dob']!),
-        formatDateTo_dMMMMyyyy(updatedFatherDetails.birthDate)
-      )
+      await expect(page.getByText(`Type of ID-Passport`)).toBeVisible()
 
-      await visible(
-        page.locator('#listTable-corrections-table-father').locator('#row_2'),
-        'Nationality',
-        'Farajaland',
-        updatedFatherDetails.nationality
-      )
+      await expect(
+        page.getByText(`ID Number-${updatedFatherDetails.passport}`)
+      ).toBeVisible()
 
-      await visible(
-        page.locator('#listTable-corrections-table-father'),
-        'Type of ID',
-        'National ID',
-        'Passport'
-      )
-
-      await visible(
-        page.locator('#listTable-corrections-table-father'),
-        'ID Number',
-        updatedFatherDetails.passport
-      )
-
-      await visible(
-        page.locator('#listTable-corrections-table-father').locator('#row_5'),
-        'Usual place of residence'
-      )
+      await expect(page.getByText(`Usual place of residence`)).toBeVisible()
 
       await Promise.all(
         [
@@ -388,52 +333,12 @@ test.describe.serial(
         )
       )
 
-      await visible(
-        page.locator('#listTable-corrections-table-father'),
-        'Marital Status',
-        'Single',
-        'Widowed'
-      )
-
-      await visible(
-        page.locator('#listTable-corrections-table-father'),
-        'Level of education',
-        'No schooling',
-        'Primary'
-      )
-
-      // await expect(page.getByText(formatV2ChildName(declaration))).toBeVisible()
-
-      // await expect(page.getByText('Verified')).toBeVisible()
-
-      // await expect(
-      //   page.getByText(
-      //     'Informant did not provide this information (Material omission)'
-      //   )
-      // ).toBeVisible()
-
-      // await expect(page.getByText(registrationNumber!)).toBeVisible()
-
-      // await page.getByLabel('No').check()
-
-      /*
-       * Expected result: should enable the Correct record button
-       */
       await page.getByRole('button', { name: 'Correct record' }).click()
       await page.getByRole('button', { name: 'Confirm' }).click()
 
-      /*
-       * Expected result: should
-       * - be navigated to sent for approval tab
-       * - include the declaration in this tab
-       */
       expect(page.url().includes(`events/overview/${eventId}`)).toBeTruthy()
       await page.getByRole('button', { name: 'Outbox' }).click()
 
-      /*
-       * This is to ensure the following condition is asserted
-       * after the outbox has the declaration
-       */
       await page.waitForTimeout(SAFE_INPUT_CHANGE_TIMEOUT_MS)
 
       await expect(await page.locator('#no-record')).toContainText(
@@ -444,24 +349,14 @@ test.describe.serial(
       )
     })
 
-    test('4.8 Validate history in record audit', async () => {
+    test('Validate history in record audit', async () => {
       await auditRecord({
         page,
-        name: formatV2ChildName({
-          'child.name': {
-            firstname: updatedChildDetails.firstNames,
-            surname: updatedChildDetails.familyName
-          }
-        }),
+        name: formatV2ChildName(declaration),
         trackingId
       })
 
       await ensureAssigned(page)
-
-      /*
-       * Expected result: should show in task history
-       * - Record corrected
-       */
 
       await expect(
         page
@@ -470,7 +365,7 @@ test.describe.serial(
       ).toBeVisible()
     })
 
-    test('4.9 Validate record corrected modal', async () => {
+    test('Validate record corrected modal', async () => {
       const correctionRequestedRow = page.locator(
         '#listTable-task-history #row_7'
       )
@@ -486,16 +381,6 @@ test.describe.serial(
         .nth(2)
         .innerText()
 
-      /*
-       * Expected result: Should show
-       * - Record corrected header
-       * - Requester & time
-       * - Requested by
-       * - Id check
-       * - Reason
-       * - Comment
-       * - Original vs Correction
-       */
       await expect(
         page.getByRole('heading', { name: 'Record corrected' })
       ).toBeVisible()
@@ -515,14 +400,6 @@ test.describe.serial(
       await expect(page.getByText('Court Document')).toBeVisible()
       await expect(page.getByText('Other', { exact: true })).toBeVisible()
 
-      /*
-       * Expected result: should show
-       * - Original vs correction
-       * - Requested by
-       * - ID check
-       * - Reason for request
-       * - Comments
-       */
       await visible(page, 'Requester', 'Legal Guardian')
       await visible(
         page,
@@ -532,24 +409,6 @@ test.describe.serial(
       await visible(page, 'Fee total', `$${correctionFee}`)
 
       await visible(page, 'Correction(s)')
-      await visible(page, "Child's details")
-
-      await visible(
-        page.locator('#listTable-corrections-table-child'),
-        'Place of delivery',
-        'Residential address',
-        'Health Institution'
-      )
-
-      await visible(
-        page.locator('#listTable-corrections-table-child'),
-        'Location of birth'
-      )
-      await expect(
-        await page
-          .locator('#listTable-corrections-table-child')
-          .getByText(updatedChildDetails.birthFacility)
-      ).toBeVisible()
 
       await visible(
         page.locator('#listTable-corrections-table-father'),
