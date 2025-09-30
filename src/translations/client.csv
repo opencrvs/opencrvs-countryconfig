@@ -959,7 +959,7 @@ event.death.action.declare.form.section.event.field.date.error,This is the error
 event.death.action.declare.form.section.event.field.date.label,This is the label for the field,Date of death,Date du décès
 event.death.action.declare.form.section.event.field.description.label,Description of cause of death by lay person or verbal autopsy,Description,Description
 event.death.action.declare.form.section.event.field.manner.label,This is the label for the field,Manner of death,Mode de décès
-event.death.action.declare.form.section.event.field.reason.label,This is the label for the field,Reason,Raison
+event.death.action.declare.form.section.event.field.reason.label,This is the label for the field,Reason for late registration,Raison de l'inscription tardive
 event.death.action.declare.form.section.event.field.sourceCauseDeath.label,This is the label for the field,Source of cause of death,Source de la cause du décès
 event.death.action.declare.form.section.informant.field.address.addressSameAs.label,This is the label for the field,Same as deceased's usual place of residence?,Identique au lieu de résidence habituel du défunt ?
 event.death.action.declare.form.section.informant.field.address.label,This is the label for the field,Usual place of residence,Lieu de résidence habituel
