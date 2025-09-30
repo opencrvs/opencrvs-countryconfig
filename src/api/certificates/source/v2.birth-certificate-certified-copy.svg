@@ -237,7 +237,7 @@
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
       font-size="8" letter-spacing="0px">
       {{#ifCond ($lookup $declaration 'mother.name.fullname') '!==' undefined }}
-      <tspan x="307" y="306.104">{{ $lookup $declaration 'mother.address.district' }}{{ $lookup $declaration 'mother.address.district2' }}, {{ $lookup $declaration 'mother.address.province' }}{{ $lookup $declaration 'mother.address.state' }}, {{ $lookup $declaration 'mother.address.country' }}</tspan>
+      <tspan x="307" y="306.104">{{ $lookup $declaration 'mother.address.district' }}{{ $lookup $declaration 'mother.address.streetLevelDetails.district2' }}, {{ $lookup $declaration 'mother.address.province' }}{{ $lookup $declaration 'mother.address.streetLevelDetails.state' }}, {{ $lookup $declaration 'mother.address.country' }}</tspan>
       {{/ifCond}}
     </text>
   </g>
@@ -323,9 +323,9 @@
       font-size="8" letter-spacing="0px">
       {{#ifCond ($lookup $declaration 'father.name.fullname') '!==' undefined }}
         {{#ifCond (lookup $declaration 'father.addressSameAs') '===' 'YES'}}
-          <tspan x="307" y="432.104">{{ $lookup $declaration 'mother.address.district' }}{{ $lookup $declaration 'mother.address.district2' }}, {{ $lookup $declaration 'mother.address.province' }}{{ $lookup $declaration 'mother.address.state' }}, {{ $lookup $declaration 'mother.address.country' }}</tspan>
+          <tspan x="307" y="432.104">{{ $lookup $declaration 'mother.address.district' }}{{ $lookup $declaration 'mother.address.streetLevelDetails.district2' }}, {{ $lookup $declaration 'mother.address.province' }}{{ $lookup $declaration 'mother.address.streetLevelDetails.state' }}, {{ $lookup $declaration 'mother.address.country' }}</tspan>
         {{else}}
-          <tspan x="307" y="432.104">{{ $lookup $declaration 'father.address.district' }}{{ $lookup $declaration 'father.address.district2' }}, {{ $lookup $declaration 'father.address.province' }}{{ $lookup $declaration 'father.address.state' }}, {{ $lookup $declaration 'father.address.country' }}</tspan>
+          <tspan x="307" y="432.104">{{ $lookup $declaration 'father.address.district' }}{{ $lookup $declaration 'father.address.streetLevelDetails.district2' }}, {{ $lookup $declaration 'father.address.province' }}{{ $lookup $declaration 'father.address.streetLevelDetails.state' }}, {{ $lookup $declaration 'father.address.country' }}</tspan>
         {{/ifCond}}
       {{/ifCond}}
     </text>
@@ -378,10 +378,10 @@
       font-size="8" letter-spacing="0px">
       <!-- NOTE: Since we are using intl-lookup, we need to use informant.relation as actual value
       rather than as stringified one. Hence we opt for native lookup over $lookup  -->
-      {{#ifCond (lookup $declaration 'informant.relation') '===' 'MOTHER' }}
+      {{#ifCond (lookup $declaration 'informant.relation') '===' 'Mother' }}
         <tspan x="307" y="518.104">{{$lookup $declaration 'mother.name.fullname'}}</tspan>
       {{ else }}
-        {{#ifCond (lookup $declaration 'informant.relation') '===' 'FATHER'}}
+        {{#ifCond (lookup $declaration 'informant.relation') '===' 'Father'}}
           <tspan x="307" y="518.104">{{$lookup $declaration 'father.name.fullname'}}</tspan>
         {{ else }}
           <tspan x="307" y="518.104">{{$lookup $declaration 'informant.name.fullname'}}</tspan>
