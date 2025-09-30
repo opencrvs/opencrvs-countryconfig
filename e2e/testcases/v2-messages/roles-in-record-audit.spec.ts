@@ -4,6 +4,7 @@ import { getToken, joinValuesWith, loginToV2 } from '../../helpers'
 import { createDeclaration } from '../v2-test-data/birth-declaration'
 import { ActionType } from '@opencrvs/toolkit/events'
 import { ensureAssigned } from '../../v2-utils'
+import { formatV2ChildName } from '../v2-birth/helpers'
 
 test.describe('Roles in Record Audit', () => {
   test('Hospital Clerk (Field Agent)', async ({ page }) => {
@@ -15,8 +16,17 @@ test.describe('Roles in Record Audit', () => {
     const eventId = res.eventId
 
     await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
+    await expect(page.locator('#content-name')).toHaveText('Assigned to you', {
+      timeout: 90000
+    })
     await page.goto(
       joinValuesWith([CLIENT_V2_URL, 'events', 'overview', eventId], '/')
+    )
+    await expect(page.locator('#content-name')).toHaveText(
+      formatV2ChildName(res.declaration),
+      {
+        timeout: 90000
+      }
     )
 
     await ensureAssigned(page)
@@ -32,8 +42,17 @@ test.describe('Roles in Record Audit', () => {
     const eventId = res.eventId
 
     await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
+    await expect(page.locator('#content-name')).toHaveText('Assigned to you', {
+      timeout: 90000
+    })
     await page.goto(
       joinValuesWith([CLIENT_V2_URL, 'events', 'overview', eventId], '/')
+    )
+    await expect(page.locator('#content-name')).toHaveText(
+      formatV2ChildName(res.declaration),
+      {
+        timeout: 90000
+      }
     )
 
     await ensureAssigned(page)
@@ -49,8 +68,17 @@ test.describe('Roles in Record Audit', () => {
     const eventId = res.eventId
 
     await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
+    await expect(page.locator('#content-name')).toHaveText('Assigned to you', {
+      timeout: 90000
+    })
     await page.goto(
       joinValuesWith([CLIENT_V2_URL, 'events', 'overview', eventId], '/')
+    )
+    await expect(page.locator('#content-name')).toHaveText(
+      formatV2ChildName(res.declaration),
+      {
+        timeout: 90000
+      }
     )
 
     await ensureAssigned(page)
@@ -66,8 +94,17 @@ test.describe('Roles in Record Audit', () => {
     const eventId = res.eventId
 
     await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
+    await expect(page.locator('#content-name')).toHaveText('Assigned to you', {
+      timeout: 90000
+    })
     await page.goto(
       joinValuesWith([CLIENT_V2_URL, 'events', 'overview', eventId], '/')
+    )
+    await expect(page.locator('#content-name')).toHaveText(
+      formatV2ChildName(res.declaration),
+      {
+        timeout: 90000
+      }
     )
 
     await ensureAssigned(page)
