@@ -1122,18 +1122,10 @@ test.describe.serial(' Correct record - 3', () => {
        * - include the updated declaration in this tab
        */
       expect(page.url().includes(`events/overview/${eventId}`)).toBeTruthy()
-      // await page.getByRole('button', { name: 'Outbox' }).click()
-      // await expectOutboxToBeEmpty(page)
-      // await page.getByRole('button', { name: 'Ready to print' }).click()
-
-      // await expect(
-      //   page.getByText(`${formatV2ChildName(declaration)}`).first()
-      // ).toBeVisible()
       await ensureOutboxIsEmpty(page)
     })
 
     test('3.8.4 Validate history in record audit', async () => {
-      await page.reload()
       await ensureAssigned(page)
       await page.getByRole('button', { name: 'Next page' }).click()
 
