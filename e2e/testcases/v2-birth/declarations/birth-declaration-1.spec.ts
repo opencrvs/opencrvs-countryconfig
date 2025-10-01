@@ -582,7 +582,7 @@ test.describe.serial('1. Birth declaration case - 1', () => {
       await expectRowValueWithChangeButton(
         page,
         'child.weightAtBirth',
-        declaration.weightAtBirth.toString()
+        declaration.weightAtBirth.toString() + 'Kilograms (kg)'
       )
 
       /*

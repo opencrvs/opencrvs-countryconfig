@@ -9,6 +9,8 @@ import {
   selectRequesterType
 } from './helpers'
 import { selectCertificationType } from './helpers'
+import { selectAction } from '../../../v2-utils'
+import { formatV2ChildName } from '../../v2-birth/helpers'
 
 test.describe
   .serial("Validate 'Birth Certificate Certified Copy' PDF details", () => {
@@ -41,9 +43,31 @@ test.describe
     await loginToV2(page)
   })
 
-  test('Go to review', async () => {
+  test('Print birth certificate once', async () => {
     await page.getByRole('button', { name: 'Ready to print' }).click()
     await navigateToCertificatePrintAction(page, declaration)
+    await selectCertificationType(page, 'Birth Certificate')
+    await selectRequesterType(page, 'Print and issue to Informant (Mother)')
+    await page.getByRole('button', { name: 'Continue' }).click()
+    await page.getByRole('button', { name: 'Verified' }).click()
+    await page.getByRole('button', { name: 'Continue' }).click()
+    await page.getByRole('button', { name: 'Yes, print certificate' }).click()
+    await page.getByRole('button', { name: 'Print', exact: true }).click()
+  })
+
+  test('Go to review', async () => {
+    await page
+      .getByRole('textbox', { name: 'Search for a tracking ID' })
+      .fill(formatV2ChildName(declaration))
+
+    await page.getByRole('button', { name: 'Search' }).click()
+    await page
+      .getByRole('button', {
+        name: formatV2ChildName(declaration),
+        exact: true
+      })
+      .click()
+    await selectAction(page, 'Print')
     await selectCertificationType(page, 'Birth Certificate Certified Copy')
     await selectRequesterType(page, 'Print and issue to Informant (Mother)')
     await page.getByRole('button', { name: 'Continue' }).click()

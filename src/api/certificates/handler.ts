@@ -289,7 +289,17 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
           italics: '/api/countryconfig/fonts/LibreBaskerville-Italic.ttf',
           bolditalics: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf'
         }
-      }
+      },
+      conditionals: [
+        {
+          type: 'SHOW',
+          // Show only after the standard birth certificate has been printed at least once
+          conditional: event
+            .hasAction(ActionType.PRINT_CERTIFICATE)
+            .withTemplate('v2.birth-certificate')
+            .minCount(1)
+        }
+      ]
     },
     {
       id: 'v2.tennis-club-membership-certificate',
