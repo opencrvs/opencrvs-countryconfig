@@ -20,8 +20,8 @@ import {
   PageTypes,
   field,
   event,
-  or,
-  user
+  user,
+  or
 } from '@opencrvs/toolkit/events'
 import { Event } from './types/types'
 import { MAX_NAME_LENGTH } from './v2/birth/validators'
@@ -167,7 +167,8 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
               type: ConditionalType.SHOW,
               conditional: or(
                 user.hasRole('SOCIAL_WORKER'),
-                user.hasRole('FIELD_AGENT')
+                user.hasRole('FIELD_AGENT'),
+                user.hasRole('HOSPITAL_CLERK')
               )
             }
           ]
