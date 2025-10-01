@@ -70,7 +70,7 @@ monitoring:
 
 #============================== Index lifecycle management ===============================
 setup.ilm.enabled: true
-setup.ilm.policy_name: 'beat-opencrvs-rollover-policy'
+setup.ilm.policy_name: 'filebeat-opencrvs-rollover-policy'
 setup.ilm.policy_file: /usr/share/filebeat/rollover-policy.json
 setup.ilm.check_exists: true
 setup.ilm.overwrite: true
