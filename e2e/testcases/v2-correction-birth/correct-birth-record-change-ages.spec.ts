@@ -129,9 +129,6 @@ test.describe.serial('Correct record - Change ages', () => {
 
     await page.getByRole('button', { name: 'Action', exact: true }).click()
 
-    /*
-     * Expected result: should show correct record button in action menu
-     */
     await expect(
       page.getByText('Correct record', { exact: true })
     ).toBeVisible()
@@ -152,20 +149,10 @@ test.describe.serial('Correct record - Change ages', () => {
   })
 
   test('Verify identity', async () => {
-    /*
-     * Expected result: should Confirm
-     * nothing
-     */
-
     await page.getByRole('button', { name: 'Verified' }).click()
   })
 
   test('Upload supporting documents', async () => {
-    /*
-     * Expected result: should
-     * - navigate to supporting document
-     * - continue button is disabled
-     */
     expect(page.url().includes('correction')).toBeTruthy()
 
     expect(page.url().includes('onboarding/documents')).toBeTruthy()
@@ -183,10 +170,6 @@ test.describe.serial('Correct record - Change ages', () => {
       })
     }
 
-    /*
-     * Expected result: should enable the continue button
-     */
-
     await page.getByRole('button', { name: 'Continue' }).click()
   })
 
@@ -196,9 +179,7 @@ test.describe.serial('Correct record - Change ages', () => {
       .fill(faker.number.int({ min: 1, max: 1000 }).toString())
 
     await page.getByRole('button', { name: 'Continue' }).click()
-    /*
-     * Expected result: should navigate to review page
-     */
+
     expect(page.url().includes('correction')).toBeTruthy()
     expect(page.url().includes('review')).toBeTruthy()
   })
