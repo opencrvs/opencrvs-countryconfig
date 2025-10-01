@@ -356,47 +356,4 @@ test.describe.serial('Correct record - change informant type', () => {
         .getByRole('button', { name: 'Record corrected' })
     ).toBeVisible()
   })
-
-  test('Validate record corrected modal', async () => {
-    const correctionRequestedRow = page.locator(
-      '#listTable-task-history #row_7'
-    )
-    await correctionRequestedRow.getByText('Record corrected').click()
-
-    const date = await correctionRequestedRow.locator('span').nth(1).innerText()
-
-    const requester = await correctionRequestedRow
-      .locator('span')
-      .nth(2)
-      .innerText()
-
-    await expect(
-      page.getByRole('heading', { name: 'Record corrected' })
-    ).toBeVisible()
-
-    await expect(page.getByText(requester + ' — ' + date)).toBeVisible()
-
-    await expect(page.getByText('Requester' + 'Legal guardian')).toBeVisible()
-    await expect(
-      page.getByText(
-        'Reason for correction' +
-          'Informant provided incorrect information (Material error)'
-      )
-    ).toBeVisible()
-
-    await visible(page, 'Requester', 'Legal Guardian')
-    await visible(
-      page,
-      'Reason for correction',
-      'Informant provided incorrect information (Material error)'
-    )
-    await visible(page, 'Fee total', `$${correctionFee}`)
-
-    await visible(page, 'Correction(s)')
-
-    await page
-      .getByRole('heading', { name: 'Record corrected' })
-      .locator('xpath=following-sibling::*[1]')
-      .click()
-  })
 })

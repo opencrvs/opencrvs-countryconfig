@@ -105,9 +105,7 @@ test.describe.serial('Change informant on review', () => {
 
     test('Fill child details', async () => {
       await page.locator('#firstname').fill(declaration.child.name.firstNames)
-      await page.locator('#firstname').blur()
       await page.locator('#surname').fill(declaration.child.name.familyName)
-      await page.locator('#surname').blur()
       await page.locator('#child____gender').click()
       await page.getByText(declaration.child.gender, { exact: true }).click()
 
@@ -172,9 +170,7 @@ test.describe.serial('Change informant on review', () => {
 
     test("Fill mother's details", async () => {
       await page.locator('#firstname').fill(declaration.mother.name.firstNames)
-      await page.locator('#firstname').blur()
       await page.locator('#surname').fill(declaration.mother.name.familyName)
-      await page.locator('#surname').blur()
 
       await page.getByLabel('Exact date of birth unknown').check()
 
@@ -310,9 +306,7 @@ test.describe.serial('Change informant on review', () => {
       await page.getByRole('button', { name: 'Continue' }).click()
 
       await page.locator('#firstname').fill(declaration.father.name.firstNames)
-      await page.locator('#firstname').blur()
       await page.locator('#surname').fill(declaration.father.name.familyName)
-      await page.locator('#surname').blur()
 
       await page.getByPlaceholder('dd').fill(declaration.father.birthDate.dd)
       await page.getByPlaceholder('mm').fill(declaration.father.birthDate.mm)
