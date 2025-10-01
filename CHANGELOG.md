@@ -18,7 +18,7 @@
 
 - **Upgraded MinIO** to RELEASE.2025-06-13T11-33-47Z and MinIO Client (mc) to RELEASE.2025-05-21T01-59-54Z and ensured compatibility across both amd64 and arm64 architectures.
 
-- Remove the remnants of OpenHIM from the backup & restore scripts. [#9732](https://github.com/opencrvs/opencrvs-core/issues/9732) 
+- Remove the remnants of OpenHIM from the backup & restore scripts. [#9732](https://github.com/opencrvs/opencrvs-core/issues/9732)
 
 - Restricted filesystem usage for journal service and file rotation strategy [#10518](https://github.com/opencrvs/opencrvs-core/issues/10518))
 
@@ -27,7 +27,6 @@
 ### Bug fixes
 
 - Ensure that place of birth/death only shows active facilities/offices on the form [#9311](https://github.com/opencrvs/opencrvs-core/issues/9311)
-
 
 ## 1.8.0
 
@@ -233,7 +232,7 @@ reviewAction.reject,The label for reject button of review action,Reject
 reviewAction.title,The title for review action,Register member
 userRole.fieldAgent,Name for user role Field Agent,Field Agent
 userRole.healthcareWorker,Name for user role Healthcare Worker,Healthcare Worker
-userRole.localLeader,Name for user role Local Leader,Local Leader
+userRole.communityLeader,Name for user role Community Leader,Community Leader
 userRole.localRegistrar,Name for user role Local Registrar,Local Registrar
 userRole.localSystemAdmin,Name for user role Local System Admin,Local System Admin
 userRole.nationalRegistrar,Name for user role National Registrar,National Registrar
@@ -241,7 +240,7 @@ userRole.nationalSystemAdmin,Name for user role National System Admin,National S
 userRole.performanceManager,Name for user role Performance Manager,Performance Manager
 userRole.policeOfficer,Name for user role Police Officer,Police Officer
 userRole.registrationAgent,Name for user role Registration Agent,Registration Agent
-userRole.socialWorker,Name for user role Social Worker,Social Worker
+userRole.hospitalClerk,Name for user role Hospital Clerk,Hospital Clerk
 validations.isAgeInYearsBetween,The error message that appears when age for the given date is outside the legal age range,Age must be between {min} and {max} years.
 wq.noRecords.draft,No records messages for empty draft tab,No records in my drafts
 ```
@@ -261,9 +260,11 @@ wq.noRecords.draft,No records messages for empty draft tab,No records in my draf
 ## 1.6.2
 
 ### New features
+
 - Added a local virtual machine setup for testing Ansible playbooks locally (on MacOS and Ubuntu ). Check [provision.ipynb](infrastructure/local-development/provision.ipynb) for more details.
 
 ### Bug Fixes
+
 - Fixed `trigger-e2e-environment` workflow failing to run due to a missing env variable & accessing a deprecated property
 
 ## 1.6.1
@@ -576,6 +577,7 @@ In the next OpenCRVS release v1.5.0, there will be two significant changes:
 ### New features
 
 - #### Greater customizability of location data in certificates
+
   The various admin level handlebars e.g. **statePlaceofbirth**,
   **districtPrimaryMother** only contained the name of that location which was
   not able to take advantage of all the information OpenCRVS had available

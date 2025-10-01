@@ -314,11 +314,11 @@ export const roles: Role[] = [
     ]
   },
   {
-    id: 'SOCIAL_WORKER',
+    id: 'HOSPITAL_CLERK',
     label: {
-      defaultMessage: 'Social Worker',
-      description: 'Name for user role Social Worker',
-      id: 'userRole.socialWorker'
+      defaultMessage: 'Hospital Clerk',
+      description: 'Name for user role Hospital Clerk',
+      id: 'userRole.hospitalClerk'
     },
     scopes: [
       SCOPES.RECORD_DECLARE_BIRTH,
@@ -364,11 +364,11 @@ export const roles: Role[] = [
     ]
   },
   {
-    id: 'LOCAL_LEADER',
+    id: 'COMMUNITY_LEADER',
     label: {
-      defaultMessage: 'Local Leader',
-      description: 'Name for user role Local Leader',
-      id: 'userRole.localLeader'
+      defaultMessage: 'Community Leader',
+      description: 'Name for user role Community Leader',
+      id: 'userRole.communityLeader'
     },
     scopes: [
       SCOPES.RECORD_DECLARE_BIRTH,
