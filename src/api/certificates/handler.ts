@@ -300,11 +300,11 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       conditionals: [
         {
           type: 'SHOW',
-          // Show only after the standard birth certificate has been printed at least twice
+          // Show only after the standard birth certificate has been printed at least once
           conditional: event
             .hasAction(ActionType.PRINT_CERTIFICATE)
             .withTemplate('v2.birth-certificate')
-            .minCount(2)
+            .minCount(1)
         }
       ]
     },
