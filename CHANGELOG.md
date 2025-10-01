@@ -20,6 +20,8 @@
 
 - Remove the remnants of OpenHIM from the backup & restore scripts. [#9732](https://github.com/opencrvs/opencrvs-core/issues/9732)
 
+- Store system monitoring data for 1 month [#10515](https://github.com/opencrvs/opencrvs-core/issues/10515)
+
 - Restricted filesystem usage for journal service and file rotation strategy [#10518](https://github.com/opencrvs/opencrvs-core/issues/10518))
 
 ## 1.8.1
