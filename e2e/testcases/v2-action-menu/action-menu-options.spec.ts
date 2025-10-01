@@ -38,7 +38,7 @@ test.describe('Action menu options', () => {
         CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
         CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
       )
-      const res = await createDeclaration(token, {}, ActionType.DECLARE)
+      const res = await createDeclaration(token, undefined, ActionType.DECLARE)
       declaration = res.declaration
     })
 
@@ -65,7 +65,7 @@ test.describe('Action menu options', () => {
         CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
         CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
       )
-      const res = await createDeclaration(token, {}, ActionType.VALIDATE)
+      const res = await createDeclaration(token, undefined, ActionType.VALIDATE)
       declaration = res.declaration
     })
 
@@ -85,7 +85,7 @@ test.describe('Action menu options', () => {
         CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
         CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
       )
-      const res = await createDeclaration(token, {})
+      const res = await createDeclaration(token, undefined)
       declaration = res.declaration
     })
 
