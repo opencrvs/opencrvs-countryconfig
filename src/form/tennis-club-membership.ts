@@ -167,7 +167,8 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
               type: ConditionalType.SHOW,
               conditional: or(
                 user.hasRole('SOCIAL_WORKER'),
-                user.hasRole('FIELD_AGENT')
+                user.hasRole('FIELD_AGENT'),
+                user.hasRole('HOSPITAL_CLERK')
               )
             }
           ]
