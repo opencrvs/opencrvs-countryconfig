@@ -140,6 +140,8 @@ test.describe.serial('1. User conditional form flow', () => {
           'Field shown when field agent is submitting application.'
         )
       ).not.toBeVisible()
+
+      await page.getByTestId('exit-button').click()
     })
 
     test('1.2.2 Navigate to the declaration "Review" page', async () => {
