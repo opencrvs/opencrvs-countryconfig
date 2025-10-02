@@ -28,7 +28,7 @@
     <tspan x="357.752" y="687.343">Registrar / L&#39;Officier de l&#39;&#xc9;tat Civil</tspan>
   </text>
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="7.76" letter-spacing="0px">
-    <tspan x="398.064" y="699.954">{{ $lookup $metadata "updatedBy.name.fullname"}}</tspan>
+    <tspan x="398.064" y="699.954">{{ $lookup $metadata "updatedBy.name"}}</tspan>
   </text>
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
     <tspan x="81.3999" y="563.615">I certify that this certificate is a true copy of the civil registry and is issued by the mandated authority in pursuance </tspan>
@@ -284,8 +284,6 @@
       <rect width="469.48" height="62.08" fill="white" transform="translate(62.97 45.7305)" />
     </clipPath>
   </defs>
-    <image width="36" height="36" xlink:href="{{qrCode}}" x="500" y="770"></image>
-  {{#ifCond printInAdvance '!==' true}}
-    <image width="140" height="70" xlink:href="{{$lookup $metadata 'legalStatuses.REGISTERED.createdBy.signature'}}" x="347" y="605"></image>
-  {{/ifCond}}
+  <image width="36" height="36" xlink:href="{{qrCode}}" x="500" y="770"></image>
+  <image width="140" height="70" xlink:href="{{$lookup $metadata 'legalStatuses.REGISTERED.createdBySignature'}}" x="347" y="605"></image>
 </svg>
