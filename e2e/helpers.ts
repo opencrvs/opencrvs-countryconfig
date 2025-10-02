@@ -49,11 +49,15 @@ export async function logout(page: Page) {
 export async function loginToV2(
   page: Page,
   credentials = CREDENTIALS.LOCAL_REGISTRAR,
-  skipPin?: boolean
+  skipPin?: boolean,
+  /** whether to render v2 as first class citizen, sets V2 as the default view. */
+  defaultToV2?: boolean
 ) {
   const token = await getToken(credentials.USERNAME, credentials.PASSWORD)
   expect(token).toBeDefined()
-  await page.goto(`${CLIENT_URL}?token=${token}`)
+  await page.goto(
+    `${CLIENT_URL}?token=${token}${defaultToV2 ? '&V2_EVENTS=true' : ''}`
+  )
 
   await expect(
     page.locator('#appSpinner').or(page.locator('#pin-input'))
@@ -63,8 +67,7 @@ export async function loginToV2(
     await createPIN(page)
   }
 
-  // Navigate to the v2 client
-  await page.goto(CLIENT_V2_URL)
+  await page.goto(defaultToV2 ? CLIENT_URL : CLIENT_V2_URL)
 
   return token
 }
