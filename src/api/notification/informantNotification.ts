@@ -98,7 +98,7 @@ async function getNotificationParams(
   const locations = await getLocations(token)
 
   const declaration = deepMerge(
-    aggregateActionDeclarations(event, getEventConfig(event.type)),
+    aggregateActionDeclarations(event),
     pendingAction.declaration
   )
 
