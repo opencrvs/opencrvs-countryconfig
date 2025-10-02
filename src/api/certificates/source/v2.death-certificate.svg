@@ -68,18 +68,23 @@
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="9.7" font-weight="bold" letter-spacing="0px">
       <tspan x="88.6029" y="305.363">3.</tspan>
     </text>
+    {{#ifCond ($lookup $declaration "deceased.dobUnknown") '!==' "true" }}
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="9.7" font-weight="bold" letter-spacing="0px">
       <tspan x="166.527" y="305.363"> /&#x2028;</tspan>
     </text>
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      {{#ifCond ($lookup $declaration "deceased.dobUnknown") '!==' "true" }}
       <tspan x="104.68" y="305.363">Date of birth</tspan>
       <tspan x="104.68" y="320.363">Date de naissance</tspan>
-      {{else}}
+    </text>
+    {{else}}
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="9.7" font-weight="bold" letter-spacing="0px">
+      <tspan x="123.172" y="305.363"> /&#x2028;</tspan>
+    </text>
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="9.7" font-weight="bold" letter-spacing="0px">
       <tspan x="104.68" y="305.363">Age</tspan>
       <tspan x="104.68" y="320.363">L'âge</tspan>
-      {{/ifCond}}
     </text>
+    {{/ifCond}}
     <g clip-path="url(#clip5_1157_5058)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="9.7" letter-spacing="0px">
         <tspan x="289.95" y="312.863">{{#ifCond ($lookup $declaration "deceased.dobUnknown") '!==' "true" }}{{$lookup $declaration "deceased.dob"}}{{else}}{{$lookup $declaration "deceased.age"}}{{/ifCond}}</tspan>
