@@ -711,10 +711,10 @@ export async function createServer() {
     await server.start()
     await syncLocationLevels()
     await syncLocationStatistics()
-    server.log(
-      'info',
-      `server started on ${COUNTRY_CONFIG_HOST}:${COUNTRY_CONFIG_PORT}`
-    )
+
+    const logMsg = `Server successfully started on ${COUNTRY_CONFIG_HOST}:${COUNTRY_CONFIG_PORT}`
+    logger.info(logMsg)
+    server.log('info', logMsg)
   }
 
   return { server, start, stop }
