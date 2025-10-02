@@ -987,5 +987,22 @@ test.describe.serial('4. Death declaration case - 4', () => {
           declaration.spouse.address.postcodeOrZip
       )
     })
+
+    test('4.2.3 Register', async () => {
+      await page.getByRole('button', { name: 'Register', exact: true }).click()
+      await page.locator('#confirm_Register').click()
+
+      await ensureOutboxIsEmpty(page)
+
+      await page.getByText('Ready to print').click()
+      await expect(
+        page.getByRole('button', {
+          name:
+            declaration.deceased.name.firstname +
+            ' ' +
+            declaration.deceased.name.surname
+        })
+      ).toBeVisible()
+    })
   })
 })
