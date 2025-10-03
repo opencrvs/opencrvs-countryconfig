@@ -949,6 +949,7 @@ event.death.action.declare.form.section.deceased.field.maritalStatus.label,This 
 event.death.action.declare.form.section.deceased.field.name.label,This is the label for the field,Deceased's name,Nom du défunt
 event.death.action.declare.form.section.deceased.field.numberOfDependants.label,This is the label for the field,No. of dependants,Nombre de personnes à charge
 event.death.action.declare.form.section.deceased.field.placeOfDeath.label,This is the label for the field,Place of death,Lieu du décès
+event.death.action.declare.form.section.deceased.field.dob.error.laterThanDeath,This is the error message for date of birth later than date of death,Date of birth must be before the date of death,La date de naissance doit être antérieure à la date de décès
 event.death.action.declare.form.section.documents.field.proofOfCauseOfDeath.label,This is the label for the field,Proof of cause of death,Preuve de la cause du décès
 event.death.action.declare.form.section.documents.field.proofOfDeath.label,This is the label for the field,Proof of death of deceased,Preuve du décès du défunt
 event.death.action.declare.form.section.documents.field.proofOfDeceased.label,This is the label for the field,Proof of deceased's ID,Preuve de l'identité du défunt
@@ -961,6 +962,7 @@ event.death.action.declare.form.section.event.field.description.label,Descriptio
 event.death.action.declare.form.section.event.field.manner.label,This is the label for the field,Manner of death,Mode de décès
 event.death.action.declare.form.section.event.field.reason.label,This is the label for the field,Reason,Raison
 event.death.action.declare.form.section.event.field.sourceCauseDeath.label,This is the label for the field,Source of cause of death,Source de la cause du décès
+event.death.action.declare.form.section.event.field.date.error.beforeBirth,This is the error message for date of death before date of birth,Date of death must be after the deceased's birth date,La date du décès doit être postérieure à la date de naissance du défunt
 event.death.action.declare.form.section.informant.field.address.addressSameAs.label,This is the label for the field,Same as deceased's usual place of residence?,Identique au lieu de résidence habituel du défunt ?
 event.death.action.declare.form.section.informant.field.address.label,This is the label for the field,Usual place of residence,Lieu de résidence habituel
 event.death.action.declare.form.section.informant.field.addressHelper.label,This is the label for the field,Usual place of residence,Lieu de résidence habituel
