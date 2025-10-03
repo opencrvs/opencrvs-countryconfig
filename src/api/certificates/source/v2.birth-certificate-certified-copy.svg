@@ -15,7 +15,7 @@
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
     font-size="8" letter-spacing="0px">
     <tspan x="220.727" y="712.552">&#x2028;</tspan>
-    <tspan x="61" y="725.352">{{$lookup $metadata 'updatedAtLocation.name'}}, {{$lookup $metadata 'updatedAtLocation.district'}}, {{$lookup $metadata 'updatedAtLocation.province'}}, {{$lookup $metadata 'createdAtLocation.country'}}</tspan>
+    <tspan x="61" y="725.352">{{$lookup $metadata 'updatedAtLocation.name'}}, {{$lookup $metadata 'updatedAtLocation.district'}}, {{$lookup $metadata 'updatedAtLocation.province'}}, {{$lookup $metadata 'updatedAtLocation.country'}}</tspan>
   </text>
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
     font-size="8" font-weight="600" letter-spacing="0px">
@@ -402,7 +402,7 @@
   <g clip-path="url(#clip17_946_2501)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
       font-size="8" letter-spacing="0px">
-      <tspan x="307" y="550.104">{{$lookup $metadata "createdAtLocation.district"}}, {{$lookup $metadata "createdAtLocation.province"}}, {{$lookup $metadata "createdAtLocation.country"}}</tspan>
+      <tspan x="307" y="550.104">{{$lookup $metadata "legalStatuses.REGISTERED.createdAtLocation.district"}}, {{$lookup $metadata "legalStatuses.REGISTERED.createdAtLocation.province"}}, {{$lookup $metadata "legalStatuses.REGISTERED.createdAtLocation.country"}}</tspan>
     </text>
   </g>
   <line x1="65" y1="556.5" x2="533" y2="556.5" stroke="#ECECEC" />
