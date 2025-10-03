@@ -1,21 +1,27 @@
-import { expect, test } from '@playwright/test'
+import { expect, Page, test } from '@playwright/test'
 import { v4 as uuidv4 } from 'uuid'
 import { CLIENT_URL, GATEWAY_HOST } from '../../constants'
 import { CREDENTIALS } from '../../constants'
 import {
+  drawSignature,
   fetchUserLocationHierarchy,
   formatName,
-  getAction,
   getClientToken,
   getToken,
   loginToV2
 } from '../../helpers'
 import { addDays, format, subDays } from 'date-fns'
 import { faker } from '@faker-js/faker'
-import { ensureAssigned, selectAction } from '../../v2-utils'
+import { ensureAssigned, expectInUrl, selectAction } from '../../v2-utils'
 import { getAllLocations } from '../birth/helpers'
 
 import decode from 'jwt-decode'
+import {
+  formatV2ChildName,
+  REQUIRED_VALIDATION_ERROR
+} from '../v2-birth/helpers'
+import { getDeclaration } from '../v2-test-data/birth-declaration'
+import { selectRequesterType } from '../v2-print-certificate/birth/helpers'
 
 async function fetchClientAPI(
   path: string,
@@ -710,10 +716,32 @@ test.describe('Events REST API', () => {
       expect(response2.status).toBe(200)
       expect(body1).toEqual(body2)
     })
+  })
 
-    test('user can register event notified by integration', async ({
-      page
-    }) => {
+  test.describe
+    .serial('Local Registrar can register and print an event notified via integration', async () => {
+    const childName = {
+      firstname: faker.person.firstName(),
+      surname: faker.person.lastName()
+    }
+
+    let token: string
+    let page: Page
+    let eventId: string
+
+    test.beforeAll(async ({ browser }) => {
+      page = await browser.newPage()
+    })
+
+    test.afterAll(async () => {
+      await page.close()
+    })
+
+    test('Login', async () => {
+      token = await loginToV2(page)
+    })
+
+    test('Notify event an event via integration', async () => {
       const createEventResponse = await fetchClientAPI(
         '/api/events/events',
         'POST',
@@ -725,14 +753,7 @@ test.describe('Events REST API', () => {
       )
 
       const createEventResponseBody = await createEventResponse.json()
-      const eventId = createEventResponseBody.id
-
-      const childName = {
-        firstNames: faker.person.firstName(),
-        familyName: faker.person.lastName()
-      }
-
-      const token = await loginToV2(page)
+      eventId = createEventResponseBody.id
       const { sub } = decode<{ sub: string }>(token)
 
       const location = await fetchUserLocationHierarchy(sub, {
@@ -740,6 +761,12 @@ test.describe('Events REST API', () => {
           Authorization: `Bearer ${token}`
         }
       })
+
+      const declaration = {
+        ...(await getDeclaration({})),
+        'child.name': childName,
+        'child.dob': undefined
+      }
 
       await fetchClientAPI(
         '/api/events/events/notifications',
@@ -749,35 +776,117 @@ test.describe('Events REST API', () => {
           eventId,
           transactionId: uuidv4(),
           type: 'NOTIFY',
-          declaration: {
-            'child.name': {
-              firstname: childName.firstNames,
-              surname: childName.familyName
-            },
-            'child.dob': format(subDays(new Date(), 1), 'yyyy-MM-dd')
-          },
+          declaration,
           annotation: {},
           createdAtLocation: location[location.length - 1]
         }
       )
+    })
 
+    test("Navigate to event via 'Notifications' -workqueue", async () => {
       await page.getByRole('button', { name: 'Notifications' }).click()
-      await page.getByText(await formatName(childName)).click()
-
-      await ensureAssigned(page)
-
-      await page.getByRole('button', { name: 'Action' }).click()
-      await getAction(page, 'Review').click()
-
       await page
-        .locator('#Accordion_child-accordion-header')
-        .getByRole('button', { name: 'Change all', exact: true })
+        .getByText(await formatV2ChildName({ 'child.name': childName }))
         .click()
+    })
 
-      await page.getByRole('button', { name: 'Continue', exact: true }).click()
+    test('Review event', async () => {
+      await selectAction(page, 'Review')
 
-      await expect(page.locator('#firstname')).toHaveValue(childName.firstNames)
-      await expect(page.locator('#surname')).toHaveValue(childName.familyName)
+      await expect(page.getByTestId('row-value-child.name')).toHaveText(
+        formatV2ChildName({ 'child.name': childName })
+      )
+
+      await expect(page.getByTestId('row-value-child.dob')).toHaveText(
+        REQUIRED_VALIDATION_ERROR
+      )
+
+      await expect(
+        page.getByRole('button', { name: 'Register' })
+      ).toBeDisabled()
+    })
+
+    test('Fill missing child dob field', async () => {
+      await page.getByTestId('change-button-child.dob').click()
+      await page.getByRole('button', { name: 'Continue' }).click()
+
+      const yesterday = new Date()
+      yesterday.setDate(new Date().getDate() - 1)
+      const [yyyy, mm, dd] = yesterday.toISOString().split('T')[0].split('-')
+
+      await page.getByPlaceholder('dd').fill(dd)
+      await page.getByPlaceholder('mm').fill(mm)
+      await page.getByPlaceholder('yyyy').fill(yyyy)
+    })
+
+    const newChildName = {
+      firstname: childName.firstname,
+      surname: `Laurila-${childName.surname}`
+    }
+
+    test('Change child surname', async () => {
+      await page.getByTestId('text__surname').fill(newChildName.surname)
+      await page.getByRole('button', { name: 'Back to review' }).click()
+
+      await expect(page.getByTestId('row-value-child.dob')).not.toHaveText(
+        REQUIRED_VALIDATION_ERROR
+      )
+    })
+
+    test('Fill comment & signature', async () => {
+      await page.locator('#review____comment').fill(faker.lorem.sentence())
+      await page.getByRole('button', { name: 'Sign', exact: true }).click()
+      await drawSignature(page, 'review____signature_canvas_element', false)
+      await page
+        .locator('#review____signature_modal')
+        .getByRole('button', { name: 'Apply' })
+        .click()
+    })
+
+    test('Register event', async () => {
+      await page.getByRole('button', { name: 'Register', exact: true }).click()
+      await page.locator('#confirm_Declare').click()
+    })
+
+    test("Navigate to event via 'Ready to print' -workqueue", async () => {
+      await page.getByRole('button', { name: 'Ready to print' }).click()
+      await page
+        .getByText(await formatV2ChildName({ 'child.name': newChildName }))
+        .click()
+    })
+
+    test('Print certificate', async () => {
+      await selectAction(page, 'Print')
+      await selectRequesterType(page, 'Print and issue to Informant (Mother)')
+      await page.getByRole('button', { name: 'Continue' }).click()
+      await page.getByRole('button', { name: 'Verified' }).click()
+      await page.getByRole('button', { name: 'Continue' }).click()
+
+      await expect(page.locator('#print')).toContainText(
+        formatV2ChildName({ 'child.name': newChildName })
+      )
+
+      await expect(page.locator('#print')).toContainText(
+        'Ibombo District Office'
+      )
+
+      await expect(page.locator('#print')).toContainText(
+        'Ibombo, Central, Farajaland'
+      )
+
+      await page.getByRole('button', { name: 'Yes, print certificate' }).click()
+
+      const popupPromise = page.waitForEvent('popup')
+      await page.getByRole('button', { name: 'Print', exact: true }).click()
+      const popup = await popupPromise
+      const downloadPromise = popup.waitForEvent('download')
+      const download = await downloadPromise
+
+      // Check that the popup URL contains PDF content
+      await expect(popup.url()).toBe('about:blank')
+      await expect(download.suggestedFilename()).toMatch(/^.*\.pdf$/)
+
+      await expectInUrl(page, `/events/overview/${eventId}`)
     })
   })
 })
