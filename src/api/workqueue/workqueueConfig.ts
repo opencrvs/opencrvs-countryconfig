@@ -161,6 +161,10 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of sent for review workqueue'
     },
     query: {
+      status: {
+        type: 'anyOf',
+        terms: ['DECLARED', 'NOTIFIED']
+      },
       flags: {
         noneOf: [InherentFlags.REJECTED]
       },
