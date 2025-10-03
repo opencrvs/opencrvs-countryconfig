@@ -141,7 +141,7 @@ test.describe.serial('Side navigation', () => {
 
     const nationalSystemAdminNestedNavItemsWithFrame = [
       ['Communications', 'Email all users'],
-      ['Configurations', 'Integrations']
+      ['Configuration', 'Integrations']
     ]
 
     for (const item of nationalSystemAdminNavItemsWithFrame) {
