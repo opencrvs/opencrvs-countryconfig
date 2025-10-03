@@ -165,7 +165,8 @@ test.describe.serial('Side navigation', () => {
       await expect(page.locator(items[1])).toBeHidden()
 
       await page.getByRole('button', { name: items[0] }).click()
-      await expect(page.locator(items[1])).toBeVisible()
+
+      await page.getByRole('button', { name: items[1] }).click()
     }
 
     for (const item of nationalSystemAdminNavItemsWithoutFrame) {
