@@ -109,6 +109,17 @@ export const deceased = defineFormPage({
             id: 'event.death.action.declare.form.section.deceased.field.dob.error'
           },
           validator: field('deceased.dob').isBefore().now()
+        },
+        {
+          message: {
+            defaultMessage: 'Date of birth must be before the date of death',
+            description:
+              'This is the error message for date of birth later than date of death',
+            id: 'event.death.action.declare.form.section.deceased.field.dob.error.laterThanDeath'
+          },
+          validator: field('deceased.dob')
+            .isBefore()
+            .date(field('eventDetails.date'))
         }
       ],
       label: {
