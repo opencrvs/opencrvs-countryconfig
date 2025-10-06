@@ -378,10 +378,10 @@
       font-size="8" letter-spacing="0px">
       <!-- NOTE: Since we are using intl-lookup, we need to use informant.relation as actual value
       rather than as stringified one. Hence we opt for native lookup over $lookup  -->
-      {{#ifCond (lookup $declaration 'informant.relation') '===' 'Mother' }}
+      {{#ifCond (lookup $declaration 'informant.relation') '===' 'MOTHER' }}
         <tspan x="307" y="518.104">{{$lookup $declaration 'mother.name.fullname'}}</tspan>
       {{ else }}
-        {{#ifCond (lookup $declaration 'informant.relation') '===' 'Father'}}
+        {{#ifCond (lookup $declaration 'informant.relation') '===' 'FATHER'}}
           <tspan x="307" y="518.104">{{$lookup $declaration 'father.name.fullname'}}</tspan>
         {{ else }}
           <tspan x="307" y="518.104">{{$lookup $declaration 'informant.name.fullname'}}</tspan>
