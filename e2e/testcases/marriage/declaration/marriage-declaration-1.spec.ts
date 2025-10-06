@@ -2,7 +2,6 @@ import { test, expect, type Page } from '@playwright/test'
 import {
   assignRecord,
   continueForm,
-  createPIN,
   drawSignature,
   expectOutboxToBeEmpty,
   expectTextWithChangeLink,
@@ -34,8 +33,8 @@ test.describe.serial('1. Marriage declaration case - 1', () => {
       lastNameAtBirth: faker.person.lastName('male'),
       address: {
         country: 'Farajaland',
-        province: 'Sulaka',
-        district: 'Irundu',
+        province: 'Pualula',
+        district: 'Embe',
         urbanOrRural: 'Urban',
         town: faker.location.city(),
         residentialArea: faker.location.county(),
@@ -114,8 +113,8 @@ test.describe.serial('1. Marriage declaration case - 1', () => {
     test.beforeAll(async () => {
       await login(
         page,
-        CREDENTIALS.FIELD_AGENT.USERNAME,
-        CREDENTIALS.FIELD_AGENT.PASSWORD
+        CREDENTIALS.ANOTHER_FIELD_AGENT.USERNAME,
+        CREDENTIALS.ANOTHER_FIELD_AGENT.PASSWORD
       )
       await page.click('#header_new_event')
       await page.getByLabel('Marriage').click()
