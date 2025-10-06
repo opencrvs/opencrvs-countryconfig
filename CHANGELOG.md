@@ -15,6 +15,7 @@
 
   - Use nvm to upgrade your local development environment to use node version `22.x.x.`
   - Add conditions for the certified copy certificate to ensure it's only available to children who are 1 year or older. [#9684](https://github.com/opencrvs/opencrvs-core/issues/9684)
+  - Available disk space in root file system alert adjusted to fire when 20GB are remaining, rather than when diskspace usage is at 70%.
 
 - **Upgraded MinIO** to RELEASE.2025-06-13T11-33-47Z and MinIO Client (mc) to RELEASE.2025-05-21T01-59-54Z and ensured compatibility across both amd64 and arm64 architectures.
 
