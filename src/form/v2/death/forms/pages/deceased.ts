@@ -74,6 +74,30 @@ export const deceased = defineFormPage({
   },
   fields: [
     {
+      id: 'deceased.verified',
+      type: FieldType.VERIFICATION_STATUS,
+      label: {
+        id: 'deceased.verified.status',
+        defaultMessage: 'Verification status',
+        description: 'The title for the status field label'
+      },
+      configuration: {
+        status: {
+          id: 'deceased.verified.status.text',
+          defaultMessage:
+            '{value, select, authenticated {ID Authenticated} verified {ID Verified} failed {Unverified ID} pending {Pending verification} other {Invalid value}}',
+          description:
+            'Status text shown on the pill on both form declaration and review page'
+        },
+        description: {
+          id: 'deceased.verified.status.description',
+          defaultMessage:
+            '{value, select, authenticated {Identity authenticated with National ID system} verified {Identity verified with National ID system} pending {Identity pending verification with National ID system} failed {Identity verification with National ID system failed} other {Invalid value}}',
+          description: 'Description text of the status'
+        }
+      }
+    },
+    {
       id: 'deceased.name',
       type: FieldType.NAME,
       configuration: { maxLength: MAX_NAME_LENGTH },

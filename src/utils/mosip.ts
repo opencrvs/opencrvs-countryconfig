@@ -29,12 +29,54 @@ import { fhirBundleToMOSIPPayload } from '@opencrvs/mosip'
 import { createUniqueRegistrationNumberFromBundle } from '../api/event-registration/service'
 import { getTaskResource, getTrackingIdFromTaskResource } from '.'
 import { logger } from '@countryconfig/logger'
+import { MosipInteropPayload, VerificationStatus } from '@opencrvs/mosip/api'
+import { EventDocument } from '@opencrvs/toolkit/events'
+import { Event } from '@countryconfig/form/types/types'
+import { env } from '@countryconfig/environment'
 
-interface VerificationStatus {
-  father: boolean
-  mother: boolean
-  informant: boolean
-  spouse: boolean
+/**
+ * Transforms the incoming `EventDocument` and certificate number into a MOSIP payload.
+ * The payload structure varies based on what is agreed with the MOSIP team.
+ *
+ * Below is a simple example for birth and death events.
+ */
+export function composeMosipPayload(
+  event: EventDocument,
+  certificateNumber: string
+): MosipInteropPayload {
+  if (event.type === Event.Birth) {
+    return {
+      trackingId: event.trackingId,
+      requestFields: {
+        birthCertificateNumber: certificateNumber,
+        fullName: '@TODO',
+        dateOfBirth: '@TODO',
+        gender: '@TODO'
+      },
+      notification: {
+        recipientEmail: '@TODO',
+        recipientFullName: '@TODO',
+        recipientPhone: '@TODO'
+      },
+      metaInfo: {},
+      audit: {}
+    }
+  } else {
+    return {
+      trackingId: event.trackingId,
+      requestFields: {
+        deathCertificateNumber: certificateNumber,
+        nationalIdNumber: '@TODO'
+      },
+      notification: {
+        recipientEmail: '@TODO',
+        recipientFullName: '@TODO',
+        recipientPhone: '@TODO'
+      },
+      metaInfo: {},
+      audit: {}
+    }
+  }
 }
 
 /**

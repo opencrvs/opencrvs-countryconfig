@@ -25,6 +25,13 @@ vi.mock('@opencrvs/toolkit/api', () => ({
   }))
 }))
 
+vi.mock('@opencrvs/mosip/api', () => ({
+  createMosipInteropClient: vi.fn(() => ({
+    register: vi.fn(),
+    verifyNid: vi.fn()
+  }))
+}))
+
 vi.mock('nanoid', () => {
   return {
     customAlphabet: vi.fn(() => {
