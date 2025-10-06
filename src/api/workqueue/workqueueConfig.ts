@@ -161,17 +161,16 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of sent for review workqueue'
     },
     query: {
+      status: {
+        type: 'anyOf',
+        terms: ['DECLARED', 'NOTIFIED']
+      },
       flags: {
         noneOf: [InherentFlags.REJECTED]
       },
       createdBy: { type: 'exact', term: user('id') }
     },
-    actions: [
-      {
-        type: 'DEFAULT',
-        conditionals: []
-      }
-    ],
+    actions: [],
     columns: [
       DATE_OF_EVENT_COLUMN,
       {

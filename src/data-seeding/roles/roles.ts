@@ -119,15 +119,20 @@ export const roles: Role[] = [
       SCOPES.RECORD_DECLARE_MARRIAGE,
       SCOPES.RECORD_SUBMIT_INCOMPLETE,
       SCOPES.RECORD_SUBMIT_FOR_REVIEW,
+      SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES,
       SCOPES.SEARCH_BIRTH,
       SCOPES.SEARCH_DEATH,
       SCOPES.SEARCH_MARRIAGE,
+      SCOPES.USER_READ_ONLY_MY_AUDIT,
       'search[event=birth,access=all]',
       'search[event=death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      `record.create[event=birth|death|tennis-club-membership]`,
+      'workqueue[id=assigned-to-you|recent|sent-for-review|ready-to-print]',
+      'record.create[event=birth|death|tennis-club-membership]',
+      'record.read[event=birth|death|tennis-club-membership]',
       'record.declare[event=birth|death|tennis-club-membership]',
-      'record.notify[event=birth|death|tennis-club-membership]'
+      'record.notify[event=birth|death|tennis-club-membership]',
+      'record.registered.print-certified-copies[event=birth|death|tennis-club-membership]'
     ]
   },
   {
