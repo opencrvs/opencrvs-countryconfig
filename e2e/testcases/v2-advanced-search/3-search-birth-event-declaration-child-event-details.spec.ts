@@ -169,11 +169,10 @@ test.describe
           .split('T')[0],
         'child.placeOfBirth': 'PRIVATE_HOME',
         'child.birthLocation.privateHome': {
-          addressType: 'DOMESTIC',
           country: 'FAR',
-          province: province,
-          district: district,
-          town: 'Dhaka'
+          addressType: 'DOMESTIC',
+          administrativeArea: district,
+          streetLevelDetails: { town: 'Dhaka' }
         },
         'child.reason': 'Other', // needed for late dob value
         'child.gender': 'female'

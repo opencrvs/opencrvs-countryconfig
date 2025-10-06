@@ -48,7 +48,7 @@ test.describe.serial('Navigating in and out of action', () => {
     await page.getByRole('button', { name: 'Continue' }).click()
     await page.getByRole('button', { name: 'Verified' }).click()
     await page.getByRole('button', { name: 'Continue' }).click()
-
+    await page.waitForURL(/\/review/)
     await expectInUrl(
       page,
       `/events/print-certificate/${eventId}/review?templateId=v2.birth-certificate`
@@ -66,6 +66,7 @@ test.describe.serial('Navigating in and out of action', () => {
     )
     await page.goForward()
     await page.goForward()
+    await page.waitForURL(/\/review/)
     await expectInUrl(
       page,
       `/events/print-certificate/${eventId}/review?templateId=v2.birth-certificate`
