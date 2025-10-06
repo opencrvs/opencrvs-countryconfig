@@ -1,6 +1,7 @@
 import { test, expect, type Page } from '@playwright/test'
 import {
   assignRecord,
+  auditRecord,
   continueForm,
   drawSignature,
   expectOutboxToBeEmpty,
@@ -58,8 +59,8 @@ test.describe.serial('1. Marriage declaration case - 1', () => {
 
       address: {
         country: 'Farajaland',
-        province: 'Central',
-        district: 'Ibombo',
+        province: 'Sulaka',
+        district: 'Ilanga',
         urbanOrRural: 'Urban',
         town: faker.location.city(),
         residentialArea: faker.location.county(),
@@ -74,8 +75,8 @@ test.describe.serial('1. Marriage declaration case - 1', () => {
       typeOfMarriage: 'Monogamous',
       address: {
         country: 'Farajaland',
-        province: 'Central',
-        district: 'Ibombo',
+        province: 'Sulaka',
+        district: 'Ilanga',
         urbanOrRural: 'Urban',
         town: faker.location.city(),
         residentialArea: faker.location.county(),
@@ -632,13 +633,14 @@ test.describe.serial('1. Marriage declaration case - 1', () => {
         CREDENTIALS.REGISTRATION_AGENT.USERNAME,
         CREDENTIALS.REGISTRATION_AGENT.PASSWORD
       )
-      await page.getByRole('button', { name: 'Ready for review' }).click()
-      await page
-        .getByRole('button', {
-          name: `${declaration.groom.name.firstNames} ${declaration.groom.name.familyName} & ${declaration.bride.name.firstNames} ${declaration.bride.name.familyName}`
-        })
-        .click()
+
+      await auditRecord({
+        page,
+        name: `${declaration.groom.name.firstNames} ${declaration.groom.name.familyName} & ${declaration.bride.name.firstNames} ${declaration.bride.name.familyName}`
+      })
+
       await assignRecord(page)
+
       await page.getByRole('button', { name: 'Action' }).first().click()
       await getAction(page, 'Review declaration').click()
     })
