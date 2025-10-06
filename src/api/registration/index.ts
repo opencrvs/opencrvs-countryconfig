@@ -13,6 +13,8 @@ import { generateRegistrationNumber } from './registrationNumber'
 import { createClient } from '@opencrvs/toolkit/api'
 import {
   ActionInput,
+  deepMerge,
+  aggregateActionDeclarations,
   EventDocument,
   getPendingAction
 } from '@opencrvs/toolkit/events'
@@ -169,22 +171,26 @@ export async function onMosipBirthRegisterHandler(
       'Passed country specified custom logic check for id creation. Forwarding to MOSIP...'
     )
 
+    const pendingAction = getPendingAction(event.actions)
+    const declaration = deepMerge(
+      aggregateActionDeclarations(event),
+      pendingAction.declaration
+    )
+
     const mosipInteropClient = createMosipInteropClient(
       MOSIP_INTEROP_URL,
       `Bearer ${token}`
     )
-
-    // @TODO: Check whether this might crash country-config if MOSIP doesn't respond
     mosipInteropClient.register({
       trackingId: event.trackingId,
       requestFields: {
         birthCertificateNumber: registrationNumber,
-        fullName: '@TODO',
-        dateOfBirth: '@TODO',
-        gender: '@TODO'
+        fullName: declaration['child.name'],
+        dateOfBirth: declaration['child.dob'],
+        gender: declaration['child.gender']
       },
       notification: {
-        recipientEmail: '@TODO',
+        recipientEmail: declaration['informant.email'] as string,
         recipientFullName: '@TODO',
         recipientPhone: '@TODO'
       },
@@ -194,6 +200,8 @@ export async function onMosipBirthRegisterHandler(
 
     return h.response().code(202)
   } catch (error) {
+    logger.error(error)
+
     return h
       .response({
         reason: 'Unexpected error in OpenCRVS-MOSIP interoperability layer'
@@ -226,22 +234,27 @@ export async function onMosipDeathRegisterHandler(
       'Passed country specified custom logic check for id creation. Forwarding to MOSIP...'
     )
 
+    const pendingAction = getPendingAction(event.actions)
+    const declaration = deepMerge(
+      aggregateActionDeclarations(event),
+      pendingAction.declaration
+    )
+
     const mosipInteropClient = createMosipInteropClient(
       MOSIP_INTEROP_URL,
       `Bearer ${token}`
     )
 
-    // @TODO: Check whether this might crash country-config if MOSIP doesn't respond
     mosipInteropClient.register({
       trackingId: event.trackingId,
       requestFields: {
         deathCertificateNumber: registrationNumber,
-        fullName: '@TODO',
-        dateOfBirth: '@TODO',
-        gender: '@TODO'
+        fullName: declaration['deceased.name'],
+        dateOfBirth: declaration['deceased.dob'],
+        gender: declaration['deceased.gender']
       },
       notification: {
-        recipientEmail: '@TODO',
+        recipientEmail: declaration['informant.email'] as string,
         recipientFullName: '@TODO',
         recipientPhone: '@TODO'
       },
@@ -251,6 +264,8 @@ export async function onMosipDeathRegisterHandler(
 
     return h.response().code(202)
   } catch (error) {
+    logger.error(error)
+
     return h
       .response({
         reason: 'Unexpected error in OpenCRVS-MOSIP interoperability layer'
