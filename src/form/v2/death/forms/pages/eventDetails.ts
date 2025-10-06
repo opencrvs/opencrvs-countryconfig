@@ -132,7 +132,7 @@ const placeOfDeathMessageDescriptors = {
   }
 } satisfies Record<keyof typeof PlaceOfDeath, TranslationConfig>
 
-const placeOfDeathOptions = createSelectOptions(
+export const placeOfDeathOptions = createSelectOptions(
   PlaceOfDeath,
   placeOfDeathMessageDescriptors
 )
