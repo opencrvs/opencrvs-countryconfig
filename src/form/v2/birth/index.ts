@@ -98,7 +98,7 @@ export const birthEvent = defineConfig({
         ]
       },
       {
-        fieldId: 'child.address.privateHome',
+        fieldId: 'child.birthLocation.privateHome',
         emptyValueMessage: {
           defaultMessage: 'No place of birth',
           description: 'This is shown when there is no child information',
@@ -119,7 +119,7 @@ export const birthEvent = defineConfig({
         ]
       },
       {
-        fieldId: 'child.address.other',
+        fieldId: 'child.birthLocation.other',
         emptyValueMessage: {
           defaultMessage: 'No place of birth',
           description: 'This is shown when there is no child information',

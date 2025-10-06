@@ -137,10 +137,8 @@ export const Workqueues = defineWorkqueues([
       flags: {
         anyOf: [InherentFlags.INCOMPLETE],
         noneOf: [InherentFlags.REJECTED]
-      }
-      // @TODO: add this line back after notifications API has support for locations
-      // https://github.com/opencrvs/opencrvs-core/issues/9829
-      // updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+      },
+      updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
     },
     actions: [
       {
@@ -163,17 +161,16 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of sent for review workqueue'
     },
     query: {
+      status: {
+        type: 'anyOf',
+        terms: ['DECLARED', 'NOTIFIED']
+      },
       flags: {
         noneOf: [InherentFlags.REJECTED]
       },
       createdBy: { type: 'exact', term: user('id') }
     },
-    actions: [
-      {
-        type: 'DEFAULT',
-        conditionals: []
-      }
-    ],
+    actions: [],
     columns: [
       DATE_OF_EVENT_COLUMN,
       {

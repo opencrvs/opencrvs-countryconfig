@@ -35,7 +35,10 @@ import {
   yesNoRadioOptions,
   YesNoTypes
 } from '../../../person'
-import { defaultStreetAddressConfiguration } from '@countryconfig/form/street-address-configuration'
+import {
+  defaultStreetAddressConfiguration,
+  getNestedFieldValidators
+} from '@countryconfig/form/street-address-configuration'
 
 export const requireFatherDetails = or(
   field('father.detailsNotAvailable').isFalsy(),
@@ -357,7 +360,7 @@ export const father = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            not(field('mother.detailsNotAvailable').isEqualTo(true)),
+            field('mother.detailsNotAvailable').isFalsy(),
             field('father.detailsNotAvailable').isFalsy()
           )
         },
@@ -382,10 +385,7 @@ export const father = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: and(
             requireFatherDetails,
-            or(
-              field('mother.detailsNotAvailable').isEqualTo(true),
-              field('father.addressSameAs').isEqualTo(YesNoTypes.NO)
-            )
+            not(field('father.addressSameAs').isEqualTo(YesNoTypes.YES))
           )
         }
       ],
@@ -397,7 +397,11 @@ export const father = defineFormPage({
             id: 'error.invalidInput'
           },
           validator: field('father.address').isValidAdministrativeLeafLevel()
-        }
+        },
+        ...getNestedFieldValidators(
+          'father.address',
+          defaultStreetAddressConfiguration
+        )
       ],
       defaultValue: {
         country: 'FAR',

@@ -56,7 +56,7 @@ const resolveName = (name: FieldUpdateValue) => {
 async function getLocations(token: string) {
   const url = new URL('events', GATEWAY_URL).toString()
   const client = createClient(url, `Bearer ${token}`)
-  return client.locations.get.query()
+  return client.locations.list.query()
 }
 
 function getInformant(eventType: string, declaration: Record<string, any>) {
@@ -98,7 +98,7 @@ async function getNotificationParams(
   const locations = await getLocations(token)
 
   const declaration = deepMerge(
-    aggregateActionDeclarations(event, getEventConfig(event.type)),
+    aggregateActionDeclarations(event),
     pendingAction.declaration
   )
 
