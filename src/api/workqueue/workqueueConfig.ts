@@ -170,12 +170,7 @@ export const Workqueues = defineWorkqueues([
       },
       createdBy: { type: 'exact', term: user('id') }
     },
-    actions: [
-      {
-        type: 'DEFAULT',
-        conditionals: []
-      }
-    ],
+    actions: [],
     columns: [
       DATE_OF_EVENT_COLUMN,
       {
