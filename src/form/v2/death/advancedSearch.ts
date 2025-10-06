@@ -10,6 +10,7 @@
  */
 
 import { AdvancedSearchConfig, event, field } from '@opencrvs/toolkit/events'
+import { placeOfDeathOptions } from './forms/pages/eventDetails'
 const deceasedPrefix = {
   id: 'death.search.criteria.label.prefix.deceased',
   defaultMessage: "Deceased's",
@@ -60,10 +61,13 @@ export const advancedSearchDeath = [
       id: 'advancedSearch.form.eventDetails'
     },
     fields: [
+      field('eventDetails.placeOfDeath', {
+        options: placeOfDeathOptions
+      }).exact(),
       field('eventDetails.deathLocation', {
-        conditionals: [],
         searchCriteriaLabelPrefix: deceasedPrefix
-      }).exact()
+      }).exact(),
+      field('eventDetails.deathLocationOther', {}).exact()
     ]
   },
   {
