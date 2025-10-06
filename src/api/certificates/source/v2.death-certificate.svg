@@ -157,8 +157,8 @@
     </text>
     <g clip-path="url(#clip8_1157_5058)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="9.7" letter-spacing="0px">
-        <tspan x="289.95" y="430.284">{{$lookup $metadata 'createdAtLocation.name'}}</tspan>
-        <tspan x="289.95" y="445.284">{{$lookup $metadata 'createdAtLocation.district'}}, {{$lookup $metadata 'createdAtLocation.province'}}, {{$lookup $metadata 'createdAtLocation.country'}}</tspan>
+        <tspan x="289.95" y="430.284">{{$lookup $metadata 'legalStatuses.REGISTERED.createdAtLocation.name'}}</tspan>
+        <tspan x="289.95" y="445.284">{{$lookup $metadata 'legalStatuses.REGISTERED.createdAtLocation.district'}}, {{$lookup $metadata 'legalStatuses.REGISTERED.createdAtLocation.province'}}, {{$lookup $metadata 'legalStatuses.REGISTERED.createdAtLocation.country'}}</tspan>
       </text>
     </g>
     <line x1="81.3999" y1="454.355" x2="512.08" y2="454.355" stroke="#ECECEC" stroke-width="0.97" />
