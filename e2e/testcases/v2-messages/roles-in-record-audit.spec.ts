@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test'
-import { CLIENT_V2_URL, CREDENTIALS } from '../../constants'
-import { auditRecord, getToken, loginToV2 } from '../../helpers'
+import { CREDENTIALS } from '../../constants'
+import { getToken, loginToV2 } from '../../helpers'
 import { createDeclaration } from '../v2-test-data/birth-declaration'
 import { ActionType } from '@opencrvs/toolkit/events'
 import { ensureAssigned } from '../../v2-utils'

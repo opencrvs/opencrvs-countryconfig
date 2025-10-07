@@ -10,7 +10,7 @@ import {
   selectCertificationType,
   selectRequesterType
 } from './helpers'
-import { expectInUrl } from '../../../v2-utils'
+import { ensureAssigned, expectInUrl } from '../../../v2-utils'
 
 test.describe.serial('3.0 Validate "Certify record" page', () => {
   let eventId: string
@@ -107,9 +107,18 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
     )
   })
 
-  test('3.5 click warning modal confirm button should take to payment page', async () => {
-    await page.getByRole('button', { name: 'Confirm' }).click()
+  test('3.5 click warning modal cancel button should close the modal', async () => {
+    await page.getByRole('button', { name: 'Cancel' }).click()
+    await expect(page.getByRole('dialog')).toBeHidden()
+    await expectInUrl(
+      page,
+      `/print-certificate/${eventId}/pages/collector.identity.verify`
+    )
+  })
 
+  test('3.6 click warning modal confirm button should take to payment page', async () => {
+    await page.getByRole('button', { name: 'Identity does not match' }).click()
+    await page.getByRole('button', { name: 'Confirm' }).click()
     await expect(page.locator('#content-name')).toContainText('Collect Payment')
     await expect(page.getByRole('button', { name: 'Continue' })).toBeVisible()
 
@@ -119,17 +128,28 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
       page,
       `/print-certificate/${eventId}/review?templateId=v2.birth-certificate`
     )
-    await page.goBack()
-    await page.getByRole('button', { name: 'Back' }).click()
   })
 
-  test('3.6 click warning modal cancel button should close the modal', async () => {
-    await page.getByRole('button', { name: 'Identity does not match' }).click()
-    await page.getByRole('button', { name: 'Cancel' }).click()
-    await expect(page.getByRole('dialog')).toBeHidden()
-    await expectInUrl(
-      page,
-      `/print-certificate/${eventId}/pages/collector.identity.verify`
-    )
+  test('3.7 Print', async () => {
+    await page.getByRole('button', { name: 'Yes, print certificate' }).click()
+    await page.getByRole('button', { name: 'Print', exact: true }).click()
+  })
+
+  test('3.8 Validate Certified -modal', async () => {
+    await expectInUrl(page, `/events/overview/${eventId}`)
+    await ensureAssigned(page)
+    await page.getByRole('button', { name: 'Certified', exact: true }).click()
+
+    await expect(page.getByText('Type' + 'Birth Certificate')).toBeVisible()
+    await expect(
+      page.getByText('Requester' + 'Print and issue to Informant (Mother)')
+    ).toBeVisible()
+    await expect(page.getByText('Verified' + 'No')).toBeVisible()
+
+    // Expect 3 rows
+    await expect(page.locator('#event-history-modal #row_0')).toBeVisible()
+    await expect(page.locator('#event-history-modal #row_1')).toBeVisible()
+    await expect(page.locator('#event-history-modal #row_2')).toBeVisible()
+    await expect(page.locator('#event-history-modal #row_3')).not.toBeVisible()
   })
 })

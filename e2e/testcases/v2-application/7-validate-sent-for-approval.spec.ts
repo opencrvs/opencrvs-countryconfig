@@ -7,7 +7,6 @@ import {
   Declaration
 } from '../v2-test-data/birth-declaration'
 import { formatV2ChildName } from '../v2-birth/helpers'
-import { selectAction } from '../../v2-utils'
 import { ActionType } from '@opencrvs/toolkit/events'
 import { getRowByTitle } from '../v2-print-certificate/birth/helpers'
 
