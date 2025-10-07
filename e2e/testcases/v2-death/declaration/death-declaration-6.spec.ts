@@ -2,6 +2,7 @@ import { test, expect, type Page } from '@playwright/test'
 import {
   continueForm,
   drawSignature,
+  expectRowValueWithChangeButton,
   formatDateObjectTo_dMMMMyyyy,
   getRandomDate,
   goToSection,
@@ -18,16 +19,7 @@ test.describe.serial('6. Death declaration case - 6', () => {
       assertionText
     )
   }
-  async function expectRowValueWithChangeButton(
-    fieldName: string,
-    assertionText: string
-  ) {
-    await expect(page.getByTestId(`row-value-${fieldName}`)).toContainText(
-      assertionText
-    )
 
-    await expect(page.getByTestId(`change-button-${fieldName}`)).toBeVisible()
-  }
   const declaration = {
     deceased: {
       name: {
@@ -291,6 +283,7 @@ test.describe.serial('6. Death declaration case - 6', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'deceased.name',
         declaration.deceased.name.firstname +
           ' ' +
@@ -303,6 +296,7 @@ test.describe.serial('6. Death declaration case - 6', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'deceased.gender',
         declaration.deceased.gender
       )
@@ -313,6 +307,7 @@ test.describe.serial('6. Death declaration case - 6', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'deceased.age',
         declaration.deceased.age.toString()
       )
@@ -323,6 +318,7 @@ test.describe.serial('6. Death declaration case - 6', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'deceased.nationality',
         declaration.deceased.nationality
       )
@@ -333,6 +329,7 @@ test.describe.serial('6. Death declaration case - 6', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'deceased.idType',
         declaration.deceased.idType
       )
@@ -343,6 +340,7 @@ test.describe.serial('6. Death declaration case - 6', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'deceased.maritalStatus',
         declaration.deceased.maritalStatus
       )
@@ -353,6 +351,7 @@ test.describe.serial('6. Death declaration case - 6', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'deceased.address',
         declaration.deceased.address.country +
           declaration.deceased.address.state +
@@ -370,6 +369,7 @@ test.describe.serial('6. Death declaration case - 6', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'eventDetails.date',
         formatDateObjectTo_dMMMMyyyy(declaration.eventDetails.date)
       )
@@ -380,6 +380,7 @@ test.describe.serial('6. Death declaration case - 6', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'eventDetails.mannerOfDeath',
         declaration.eventDetails.mannerOfDeath
       )
@@ -390,6 +391,7 @@ test.describe.serial('6. Death declaration case - 6', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'eventDetails.placeOfDeath',
         declaration.eventDetails.placeOfDeath
       )
@@ -400,6 +402,7 @@ test.describe.serial('6. Death declaration case - 6', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'eventDetails.deathLocationOther',
         declaration.eventDetails.deathLocationOther.country +
           declaration.eventDetails.deathLocationOther.province +
@@ -417,6 +420,7 @@ test.describe.serial('6. Death declaration case - 6', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'informant.relation',
         declaration.informant.relation
       )
@@ -428,6 +432,7 @@ test.describe.serial('6. Death declaration case - 6', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'informant.name',
         declaration.informant.name.firstname +
           ' ' +
@@ -440,6 +445,7 @@ test.describe.serial('6. Death declaration case - 6', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'informant.age',
         declaration.informant.age.toString()
       )
@@ -450,6 +456,7 @@ test.describe.serial('6. Death declaration case - 6', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'informant.nationality',
         declaration.informant.nationality
       )
@@ -460,6 +467,7 @@ test.describe.serial('6. Death declaration case - 6', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'informant.idType',
         declaration.informant.idType
       )
@@ -470,6 +478,7 @@ test.describe.serial('6. Death declaration case - 6', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'informant.address',
         declaration.informant.address.country +
           declaration.informant.address.state +
@@ -487,6 +496,7 @@ test.describe.serial('6. Death declaration case - 6', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'informant.email',
         declaration.informant.email
       )
@@ -496,9 +506,14 @@ test.describe.serial('6. Death declaration case - 6', () => {
        * - Reason
        * - Change button
        */
-      await expectRowValueWithChangeButton('spouse.detailsNotAvailable', 'Yes')
+      await expectRowValueWithChangeButton(
+        page,
+        'spouse.detailsNotAvailable',
+        'Yes'
+      )
 
       await expectRowValueWithChangeButton(
+        page,
         'spouse.reason',
         declaration.spouse.reason
       )

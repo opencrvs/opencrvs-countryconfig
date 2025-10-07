@@ -2,6 +2,7 @@ import { test, expect, type Page } from '@playwright/test'
 import {
   continueForm,
   drawSignature,
+  expectRowValueWithChangeButton,
   goToSection,
   loginToV2
 } from '../../../helpers'
@@ -12,16 +13,6 @@ import { REQUIRED_VALIDATION_ERROR } from '../../v2-birth/helpers'
 
 test.describe.serial('8. Death declaration case - 8', () => {
   let page: Page
-  async function expectRowValueWithChangeButton(
-    fieldName: string,
-    assertionText: string
-  ) {
-    await expect(page.getByTestId(`row-value-${fieldName}`)).toContainText(
-      assertionText
-    )
-
-    await expect(page.getByTestId(`change-button-${fieldName}`)).toBeVisible()
-  }
 
   const declaration = {
     deceased: {
@@ -97,6 +88,7 @@ test.describe.serial('8. Death declaration case - 8', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'deceased.name',
         declaration.deceased.name.firstname +
           ' ' +
@@ -109,6 +101,7 @@ test.describe.serial('8. Death declaration case - 8', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'deceased.gender',
         REQUIRED_VALIDATION_ERROR
       )
@@ -119,6 +112,7 @@ test.describe.serial('8. Death declaration case - 8', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'deceased.dob',
         REQUIRED_VALIDATION_ERROR
       )
@@ -128,13 +122,18 @@ test.describe.serial('8. Death declaration case - 8', () => {
        * - Deceased's Nationality
        * - Change button
        */
-      await expectRowValueWithChangeButton('deceased.nationality', 'Farajaland')
+      await expectRowValueWithChangeButton(
+        page,
+        'deceased.nationality',
+        'Farajaland'
+      )
       /*
        * Expected result: should require
        * - Deceased's Type of Id
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'deceased.idType',
         REQUIRED_VALIDATION_ERROR
       )
@@ -145,6 +144,7 @@ test.describe.serial('8. Death declaration case - 8', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'deceased.address',
         declaration.deceased.address.country +
           declaration.deceased.address.province +
@@ -157,6 +157,7 @@ test.describe.serial('8. Death declaration case - 8', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'eventDetails.date',
         REQUIRED_VALIDATION_ERROR
       )
@@ -167,6 +168,7 @@ test.describe.serial('8. Death declaration case - 8', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'eventDetails.placeOfDeath',
         REQUIRED_VALIDATION_ERROR
       )
@@ -177,6 +179,7 @@ test.describe.serial('8. Death declaration case - 8', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'informant.relation',
         declaration.informant.relation
       )
@@ -187,6 +190,7 @@ test.describe.serial('8. Death declaration case - 8', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'informant.email',
         REQUIRED_VALIDATION_ERROR
       )
@@ -199,6 +203,7 @@ test.describe.serial('8. Death declaration case - 8', () => {
        */
 
       await expectRowValueWithChangeButton(
+        page,
         'spouse.name',
         REQUIRED_VALIDATION_ERROR
       )
@@ -209,6 +214,7 @@ test.describe.serial('8. Death declaration case - 8', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'spouse.dob',
         REQUIRED_VALIDATION_ERROR
       )
@@ -218,7 +224,11 @@ test.describe.serial('8. Death declaration case - 8', () => {
        * - Spouse's Nationality
        * - Change button
        */
-      await expectRowValueWithChangeButton('spouse.nationality', 'Farajaland')
+      await expectRowValueWithChangeButton(
+        page,
+        'spouse.nationality',
+        'Farajaland'
+      )
 
       /*
        * Expected result: should require
@@ -226,6 +236,7 @@ test.describe.serial('8. Death declaration case - 8', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'spouse.idType',
         REQUIRED_VALIDATION_ERROR
       )
@@ -235,7 +246,7 @@ test.describe.serial('8. Death declaration case - 8', () => {
        * - Spouse's address
        * - Change button
        */
-      await expectRowValueWithChangeButton('spouse.addressSameAs', 'Yes')
+      await expectRowValueWithChangeButton(page, 'spouse.addressSameAs', 'Yes')
     })
 
     test('8.1.6 Fill up informant signature', async () => {
@@ -302,6 +313,7 @@ test.describe.serial('8. Death declaration case - 8', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'deceased.name',
         declaration.deceased.name.firstname +
           ' ' +
@@ -314,6 +326,7 @@ test.describe.serial('8. Death declaration case - 8', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'deceased.gender',
         REQUIRED_VALIDATION_ERROR
       )
@@ -324,6 +337,7 @@ test.describe.serial('8. Death declaration case - 8', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'deceased.dob',
         REQUIRED_VALIDATION_ERROR
       )
@@ -333,13 +347,18 @@ test.describe.serial('8. Death declaration case - 8', () => {
        * - Deceased's Nationality
        * - Change button
        */
-      await expectRowValueWithChangeButton('deceased.nationality', 'Farajaland')
+      await expectRowValueWithChangeButton(
+        page,
+        'deceased.nationality',
+        'Farajaland'
+      )
       /*
        * Expected result: should require
        * - Deceased's Type of Id
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'deceased.idType',
         REQUIRED_VALIDATION_ERROR
       )
@@ -350,6 +369,7 @@ test.describe.serial('8. Death declaration case - 8', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'deceased.address',
         declaration.deceased.address.country +
           declaration.deceased.address.province +
@@ -362,6 +382,7 @@ test.describe.serial('8. Death declaration case - 8', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'eventDetails.date',
         REQUIRED_VALIDATION_ERROR
       )
@@ -372,6 +393,7 @@ test.describe.serial('8. Death declaration case - 8', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'eventDetails.placeOfDeath',
         REQUIRED_VALIDATION_ERROR
       )
@@ -382,6 +404,7 @@ test.describe.serial('8. Death declaration case - 8', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'informant.relation',
         declaration.informant.relation
       )
@@ -392,6 +415,7 @@ test.describe.serial('8. Death declaration case - 8', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'informant.email',
         REQUIRED_VALIDATION_ERROR
       )
@@ -404,6 +428,7 @@ test.describe.serial('8. Death declaration case - 8', () => {
        */
 
       await expectRowValueWithChangeButton(
+        page,
         'spouse.name',
         REQUIRED_VALIDATION_ERROR
       )
@@ -414,6 +439,7 @@ test.describe.serial('8. Death declaration case - 8', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'spouse.dob',
         REQUIRED_VALIDATION_ERROR
       )
@@ -423,7 +449,11 @@ test.describe.serial('8. Death declaration case - 8', () => {
        * - Spouse's Nationality
        * - Change button
        */
-      await expectRowValueWithChangeButton('spouse.nationality', 'Farajaland')
+      await expectRowValueWithChangeButton(
+        page,
+        'spouse.nationality',
+        'Farajaland'
+      )
 
       /*
        * Expected result: should require
@@ -431,6 +461,7 @@ test.describe.serial('8. Death declaration case - 8', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'spouse.idType',
         REQUIRED_VALIDATION_ERROR
       )
@@ -440,7 +471,7 @@ test.describe.serial('8. Death declaration case - 8', () => {
        * - Spouse's address
        * - Change button
        */
-      await expectRowValueWithChangeButton('spouse.addressSameAs', 'Yes')
+      await expectRowValueWithChangeButton(page, 'spouse.addressSameAs', 'Yes')
     })
   })
 })

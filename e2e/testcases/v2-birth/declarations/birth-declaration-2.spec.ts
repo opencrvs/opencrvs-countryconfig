@@ -6,11 +6,12 @@ import {
   formatName,
   getRandomDate,
   goToSection,
-  loginToV2
+  loginToV2,
+  expectRowValueWithChangeButton
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
-import { expectRowValueWithChangeButton, validateAddress } from '../helpers'
+import { validateAddress } from '../helpers'
 import { ensureOutboxIsEmpty, selectAction } from '../../../v2-utils'
 
 test.describe.serial('2. Birth declaration case - 2', () => {

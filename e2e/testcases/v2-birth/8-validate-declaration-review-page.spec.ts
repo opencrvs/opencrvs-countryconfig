@@ -6,7 +6,8 @@ import {
   goToSection,
   formatName,
   loginToV2,
-  formatDateObjectTo_dMMMMyyyy
+  formatDateObjectTo_dMMMMyyyy,
+  expectRowValueWithChangeButton
 } from '../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../constants'
@@ -15,17 +16,6 @@ import { ensureOutboxIsEmpty, selectAction } from '../../v2-utils'
 
 test.describe.serial('8. Validate declaration review page', () => {
   let page: Page
-
-  async function expectRowValueWithChangeButton(
-    fieldName: string,
-    assertionText: string
-  ) {
-    await expect(page.getByTestId(`row-value-${fieldName}`)).toContainText(
-      assertionText
-    )
-
-    await expect(page.getByTestId(`change-button-${fieldName}`)).toBeVisible()
-  }
 
   const declaration = {
     child: {
@@ -218,6 +208,7 @@ test.describe.serial('8. Validate declaration review page', () => {
          */
 
         await expectRowValueWithChangeButton(
+          page,
           'child.name',
           declaration.child.name.firstNames +
             ' ' +
@@ -230,6 +221,7 @@ test.describe.serial('8. Validate declaration review page', () => {
          * - Change button
          */
         await expectRowValueWithChangeButton(
+          page,
           'child.gender',
           declaration.child.gender
         )
@@ -240,6 +232,7 @@ test.describe.serial('8. Validate declaration review page', () => {
          * - Change button
          */
         await expectRowValueWithChangeButton(
+          page,
           'child.dob',
           formatDateObjectTo_dMMMMyyyy(declaration.child.birthDate)
         )
@@ -251,10 +244,12 @@ test.describe.serial('8. Validate declaration review page', () => {
          * - Change button
          */
         await expectRowValueWithChangeButton(
+          page,
           'child.placeOfBirth',
           declaration.placeOfBirth
         )
         await expectRowValueWithChangeButton(
+          page,
           'child.birthLocation',
           declaration.birthLocation
         )
@@ -265,6 +260,7 @@ test.describe.serial('8. Validate declaration review page', () => {
          * - Change button
          */
         await expectRowValueWithChangeButton(
+          page,
           'child.attendantAtBirth',
           declaration.attendantAtBirth
         )
@@ -275,6 +271,7 @@ test.describe.serial('8. Validate declaration review page', () => {
          * - Change button
          */
         await expectRowValueWithChangeButton(
+          page,
           'child.birthType',
           declaration.birthType
         )
@@ -285,6 +282,7 @@ test.describe.serial('8. Validate declaration review page', () => {
          * - Change button
          */
         await expectRowValueWithChangeButton(
+          page,
           'child.weightAtBirth',
           declaration.weightAtBirth.toString()
         )
@@ -295,6 +293,7 @@ test.describe.serial('8. Validate declaration review page', () => {
          * - Change button
          */
         await expectRowValueWithChangeButton(
+          page,
           'informant.relation',
           declaration.informantType
         )
@@ -304,6 +303,7 @@ test.describe.serial('8. Validate declaration review page', () => {
          * - Change button
          */
         await expectRowValueWithChangeButton(
+          page,
           'informant.email',
           declaration.informantEmail
         )
@@ -315,6 +315,7 @@ test.describe.serial('8. Validate declaration review page', () => {
          * - Change button
          */
         await expectRowValueWithChangeButton(
+          page,
           'mother.name',
           declaration.mother.name.firstNames +
             ' ' +
@@ -327,6 +328,7 @@ test.describe.serial('8. Validate declaration review page', () => {
          * - Change button
          */
         await expectRowValueWithChangeButton(
+          page,
           'mother.dob',
           formatDateObjectTo_dMMMMyyyy(declaration.mother.birthDate)
         )
@@ -337,6 +339,7 @@ test.describe.serial('8. Validate declaration review page', () => {
          * - Change button
          */
         await expectRowValueWithChangeButton(
+          page,
           'mother.nationality',
           declaration.mother.nationality
         )
@@ -347,10 +350,12 @@ test.describe.serial('8. Validate declaration review page', () => {
          * - Change button
          */
         await expectRowValueWithChangeButton(
+          page,
           'mother.idType',
           declaration.mother.identifier.type
         )
         await expectRowValueWithChangeButton(
+          page,
           'mother.nid',
           declaration.mother.identifier.id
         )
@@ -361,14 +366,17 @@ test.describe.serial('8. Validate declaration review page', () => {
          * - Change button
          */
         await expectRowValueWithChangeButton(
+          page,
           'mother.address',
           declaration.mother.address.country
         )
         await expectRowValueWithChangeButton(
+          page,
           'mother.address',
           declaration.mother.address.district
         )
         await expectRowValueWithChangeButton(
+          page,
           'mother.address',
           declaration.mother.address.province
         )
@@ -380,6 +388,7 @@ test.describe.serial('8. Validate declaration review page', () => {
          * - Change button
          */
         await expectRowValueWithChangeButton(
+          page,
           'father.name',
           declaration.father.name.firstNames +
             ' ' +
@@ -392,6 +401,7 @@ test.describe.serial('8. Validate declaration review page', () => {
          * - Change button
          */
         await expectRowValueWithChangeButton(
+          page,
           'father.dob',
           formatDateObjectTo_dMMMMyyyy(declaration.father.birthDate)
         )
@@ -402,6 +412,7 @@ test.describe.serial('8. Validate declaration review page', () => {
          * - Change button
          */
         await expectRowValueWithChangeButton(
+          page,
           'father.nationality',
           declaration.father.nationality
         )
@@ -412,10 +423,12 @@ test.describe.serial('8. Validate declaration review page', () => {
          * - Change button
          */
         await expectRowValueWithChangeButton(
+          page,
           'father.idType',
           declaration.father.identifier.type
         )
         await expectRowValueWithChangeButton(
+          page,
           'father.nid',
           declaration.father.identifier.id
         )
@@ -425,7 +438,11 @@ test.describe.serial('8. Validate declaration review page', () => {
          * - Father's address
          * - Change button
          */
-        await expectRowValueWithChangeButton('father.addressSameAs', 'Yes')
+        await expectRowValueWithChangeButton(
+          page,
+          'father.addressSameAs',
+          'Yes'
+        )
       })
     })
 
@@ -881,6 +898,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'child.name',
         declaration.child.name.firstNames +
           ' ' +
@@ -893,6 +911,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'child.gender',
         declaration.child.gender
       )
@@ -903,6 +922,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'child.dob',
         formatDateObjectTo_dMMMMyyyy(declaration.child.birthDate)
       )
@@ -914,10 +934,12 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'child.placeOfBirth',
         declaration.placeOfBirth
       )
       await expectRowValueWithChangeButton(
+        page,
         'child.birthLocation',
         declaration.birthLocation
       )
@@ -928,6 +950,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'child.attendantAtBirth',
         declaration.attendantAtBirth
       )
@@ -938,6 +961,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'child.birthType',
         declaration.birthType
       )
@@ -948,6 +972,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'child.weightAtBirth',
         declaration.weightAtBirth.toString()
       )
@@ -958,6 +983,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'informant.relation',
         declaration.informantType
       )
@@ -967,6 +993,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'informant.email',
         declaration.informantEmail
       )
@@ -978,6 +1005,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'mother.name',
         declaration.mother.name.firstNames
       )
@@ -988,6 +1016,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'mother.dob',
         formatDateObjectTo_dMMMMyyyy(declaration.mother.birthDate)
       )
@@ -998,6 +1027,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'mother.nationality',
         declaration.mother.nationality
       )
@@ -1009,10 +1039,12 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'mother.idType',
         declaration.mother.identifier.type
       )
       await expectRowValueWithChangeButton(
+        page,
         'mother.passport',
         declaration.mother.identifier.id
       )
@@ -1023,14 +1055,17 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'mother.address',
         declaration.mother.address.country
       )
       await expectRowValueWithChangeButton(
+        page,
         'mother.address',
         declaration.mother.address.district
       )
       await expectRowValueWithChangeButton(
+        page,
         'mother.address',
         declaration.mother.address.province
       )
@@ -1042,6 +1077,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'father.name',
         declaration.father.name.firstNames +
           ' ' +
@@ -1054,6 +1090,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'father.dob',
         formatDateObjectTo_dMMMMyyyy(declaration.father.birthDate)
       )
@@ -1064,6 +1101,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'father.nationality',
         declaration.father.nationality
       )
@@ -1075,10 +1113,12 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'father.idType',
         declaration.father.identifier.type
       )
       await expectRowValueWithChangeButton(
+        page,
         'father.passport',
         declaration.father.identifier.id
       )
@@ -1088,7 +1128,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Father's address
        * - Change button
        */
-      await expectRowValueWithChangeButton('father.addressSameAs', 'Yes')
+      await expectRowValueWithChangeButton(page, 'father.addressSameAs', 'Yes')
     })
 
     test.describe('8.2.2 Click any "Change" link', async () => {
@@ -1170,6 +1210,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'child.name',
         declaration.child.name.firstNames +
           ' ' +
@@ -1182,6 +1223,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'child.gender',
         declaration.child.gender
       )
@@ -1192,6 +1234,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'child.dob',
         formatDateObjectTo_dMMMMyyyy(declaration.child.birthDate)
       )
@@ -1203,10 +1246,12 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'child.placeOfBirth',
         declaration.placeOfBirth
       )
       await expectRowValueWithChangeButton(
+        page,
         'child.birthLocation',
         declaration.birthLocation
       )
@@ -1217,6 +1262,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'child.attendantAtBirth',
         declaration.attendantAtBirth
       )
@@ -1227,6 +1273,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'child.birthType',
         declaration.birthType
       )
@@ -1237,6 +1284,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'child.weightAtBirth',
         declaration.weightAtBirth.toString()
       )
@@ -1247,6 +1295,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'informant.relation',
         declaration.informantType
       )
@@ -1256,6 +1305,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'informant.email',
         declaration.informantEmail
       )
@@ -1267,6 +1317,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'mother.name',
         declaration.mother.name.firstNames
       )
@@ -1277,6 +1328,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'mother.dob',
         formatDateObjectTo_dMMMMyyyy(declaration.mother.birthDate)
       )
@@ -1287,6 +1339,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'mother.nationality',
         declaration.mother.nationality
       )
@@ -1298,10 +1351,12 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'mother.idType',
         declaration.mother.identifier.type
       )
       await expectRowValueWithChangeButton(
+        page,
         'mother.passport',
         declaration.mother.identifier.id
       )
@@ -1312,14 +1367,17 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'mother.address',
         declaration.mother.address.country
       )
       await expectRowValueWithChangeButton(
+        page,
         'mother.address',
         declaration.mother.address.district
       )
       await expectRowValueWithChangeButton(
+        page,
         'mother.address',
         declaration.mother.address.province
       )
@@ -1331,6 +1389,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'father.name',
         declaration.father.name.firstNames +
           ' ' +
@@ -1343,6 +1402,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'father.dob',
         formatDateObjectTo_dMMMMyyyy(declaration.father.birthDate)
       )
@@ -1353,6 +1413,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'father.nationality',
         declaration.father.nationality
       )
@@ -1364,10 +1425,12 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
+        page,
         'father.idType',
         declaration.father.identifier.type
       )
       await expectRowValueWithChangeButton(
+        page,
         'father.passport',
         declaration.father.identifier.id
       )
@@ -1377,7 +1440,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Father's address
        * - Change button
        */
-      await expectRowValueWithChangeButton('father.addressSameAs', 'Yes')
+      await expectRowValueWithChangeButton(page, 'father.addressSameAs', 'Yes')
     })
 
     const newFamilyNameForChild = faker.person.lastName('male')
