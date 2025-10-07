@@ -125,11 +125,7 @@ export const printCertificateCollectors: FieldConfig[] = [
   {
     ...commonConfigs,
     conditionals: [spouseExists(InformantType.SPOUSE)],
-    options: [
-      getInformantOption(InformantType.SPOUSE),
-      otherOption,
-      printInAdvanceOption
-    ]
+    options: [getInformantOption(InformantType.SPOUSE), otherOption]
   },
   ...getFieldConfigForInformant(InformantType.SON),
   ...getFieldConfigForInformant(InformantType.DAUGHTER),
