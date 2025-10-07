@@ -15,7 +15,6 @@ import {
   defineActionForm,
   field,
   FieldType,
-  never,
   not,
   PageTypes
 } from '@opencrvs/toolkit/events'
@@ -96,52 +95,14 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
       },
       fields: [
         {
-          id: 'collector.collect.payment.service.afterLateRegistrationTarget',
-          type: FieldType.PARAGRAPH,
+          id: 'collector.collect.payment.data.afterLateRegistrationTarget',
+          type: FieldType.DATA,
           label: {
-            id: 'event.birth.action.certificate.form.section.collectPayment.service.label.afterLateRegistrationTarget',
-            defaultMessage:
-              'Birth registration after 365 days of date of birth',
-            description: ''
+            defaultMessage: 'Payment details',
+            description: 'Title for the data section',
+            id: 'event.birth.action.certificate.form.section.collectPayment.data.label'
           },
           conditionals: [
-            {
-              type: ConditionalType.SHOW,
-              conditional: and(
-                not(
-                  field('child.dob')
-                    .isAfter()
-                    .days(applicationConfig.BIRTH.REGISTRATION_TARGET)
-                    .inPast()
-                ),
-
-                field('child.dob')
-                  .isAfter()
-                  .days(applicationConfig.BIRTH.LATE_REGISTRATION_TARGET)
-                  .inPast(),
-                field('child.dob').isBefore().now()
-              )
-            }
-          ]
-        },
-        {
-          id: 'collector.collect.payment.fee.afterLateRegistrationTarget',
-          type: FieldType.NUMBER,
-          label: {
-            id: 'event.birth.action.certificate.form.section.collectPayment.fee.label',
-            defaultMessage: 'Service',
-            description: 'Title for the fee'
-          },
-          defaultValue: 15,
-          configuration: {
-            prefix: {
-              defaultMessage: '$',
-              description: 'Prefix for the fee',
-              id: 'event.birth.action.certificate.form.section.collectPayment.fee.prefix'
-            }
-          },
-          conditionals: [
-            { type: ConditionalType.ENABLE, conditional: never() },
             {
               type: ConditionalType.SHOW,
               conditional: and(
@@ -154,17 +115,42 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
                 field('child.dob').isBefore().now()
               )
             }
-          ]
+          ],
+          configuration: {
+            data: [
+              {
+                label: {
+                  defaultMessage: 'Service',
+                  description: 'Title for the data entry',
+                  id: 'event.birth.action.certificate.form.section.collectPayment.service.label'
+                },
+                value: {
+                  defaultMessage:
+                    'Birth registration after 365 days of date of birth',
+                  description:
+                    'Birth registration after 365 days of date of birth message',
+                  id: 'event.birth.action.certificate.form.section.collectPayment.service.label.afterLateRegistrationTarget'
+                }
+              },
+              {
+                label: {
+                  defaultMessage: 'Fee',
+                  description: 'Title for the data entry',
+                  id: 'event.birth.action.certificate.form.section.collectPayment.fee.label'
+                },
+                value: '$15.00'
+              }
+            ]
+          }
         },
-
         {
-          id: 'collector.collect.payment.service.inBetweenRegistrationTargets',
-          type: FieldType.PARAGRAPH,
+          id: 'collector.collect.payment.data.inBetweenRegistrationTargets',
+          type: FieldType.DATA,
+          analytics: true,
           label: {
-            id: 'event.birth.action.certificate.form.section.collectPayment.service.label.inBetweenRegistrationTargets',
-            defaultMessage:
-              'Birth registration after 30 days but before 365 days of date of birth',
-            description: ''
+            defaultMessage: 'Payment details',
+            description: 'Title for the data section',
+            id: 'event.birth.action.certificate.form.section.collectPayment.data.label'
           },
           conditionals: [
             {
@@ -184,54 +170,41 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
                 field('child.dob').isBefore().now()
               )
             }
-          ]
-        },
-        {
-          id: 'collector.collect.payment.fee.inBetweenRegistrationTargets',
-          type: FieldType.NUMBER,
-          label: {
-            id: 'event.birth.action.certificate.form.section.collectPayment.fee.label',
-            defaultMessage: 'Service',
-            description: 'Title for the fee'
-          },
-          defaultValue: 7,
+          ],
           configuration: {
-            prefix: {
-              defaultMessage: '$',
-              description: 'Prefix for the fee',
-              id: 'event.birth.action.certificate.form.section.collectPayment.fee.prefix'
-            }
-          },
-          conditionals: [
-            { type: ConditionalType.ENABLE, conditional: never() },
-            {
-              type: ConditionalType.SHOW,
-              conditional: and(
-                not(
-                  field('child.dob')
-                    .isAfter()
-                    .days(applicationConfig.BIRTH.REGISTRATION_TARGET)
-                    .inPast()
-                ),
-
-                field('child.dob')
-                  .isAfter()
-                  .days(applicationConfig.BIRTH.LATE_REGISTRATION_TARGET)
-                  .inPast(),
-                field('child.dob').isBefore().now()
-              )
-            }
-          ]
+            data: [
+              {
+                label: {
+                  defaultMessage: 'Service',
+                  description: 'Title for the data entry',
+                  id: 'event.birth.action.certificate.form.section.collectPayment.service.label'
+                },
+                value: {
+                  defaultMessage:
+                    'Birth registration after 30 days but before 365 days of date of birth',
+                  description:
+                    'Birth registration after 30 days but before 365 days of date of birth message',
+                  id: 'event.birth.action.certificate.form.section.collectPayment.service.label.inBetweenRegistrationTargets'
+                }
+              },
+              {
+                label: {
+                  defaultMessage: 'Fee',
+                  description: 'Title for the data entry',
+                  id: 'event.birth.action.certificate.form.section.collectPayment.fee.label'
+                },
+                value: '$7.00'
+              }
+            ]
+          }
         },
-
         {
-          id: 'collector.collect.payment.service.beforeRegistrationTarget',
-          type: FieldType.PARAGRAPH,
+          id: 'collector.collect.payment.data.beforeRegistrationTarget',
+          type: FieldType.DATA,
           label: {
-            id: 'event.birth.action.certificate.form.section.collectPayment.service.label.beforeRegistrationTarget',
-            defaultMessage:
-              'Birth registration before 30 days of date of birth',
-            description: ''
+            defaultMessage: 'Payment details',
+            description: 'Title for the data section',
+            id: 'event.birth.action.certificate.form.section.collectPayment.data.label'
           },
           conditionals: [
             {
@@ -244,37 +217,33 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
                 field('child.dob').isBefore().now()
               )
             }
-          ]
-        },
-        {
-          id: 'collector.collect.payment.fee.beforeRegistrationTarget',
-          type: FieldType.NUMBER,
-          label: {
-            id: 'event.birth.action.certificate.form.section.collectPayment.fee.label',
-            defaultMessage: 'Fee',
-            description: 'Title for the fee'
-          },
-          defaultValue: 5,
+          ],
           configuration: {
-            prefix: {
-              defaultMessage: '$',
-              description: 'Prefix for the fee',
-              id: 'event.birth.action.certificate.form.section.collectPayment.fee.prefix'
-            }
-          },
-          conditionals: [
-            { type: ConditionalType.ENABLE, conditional: never() },
-            {
-              type: ConditionalType.SHOW,
-              conditional: and(
-                field('child.dob')
-                  .isAfter()
-                  .days(applicationConfig.BIRTH.REGISTRATION_TARGET)
-                  .inPast(),
-                field('child.dob').isBefore().now()
-              )
-            }
-          ]
+            data: [
+              {
+                label: {
+                  defaultMessage: 'Service',
+                  description: 'Title for the data entry',
+                  id: 'event.birth.action.certificate.form.section.collectPayment.service.label'
+                },
+                value: {
+                  defaultMessage:
+                    'Birth registration before 30 days of date of birth',
+                  description:
+                    'Birth registration before 30 days of date of birth message',
+                  id: 'event.birth.action.certificate.form.section.collectPayment.service.label.beforeRegistrationTarget'
+                }
+              },
+              {
+                label: {
+                  defaultMessage: 'Fee',
+                  description: 'Title for the data entry',
+                  id: 'event.birth.action.certificate.form.section.collectPayment.fee.label'
+                },
+                value: '$5.00'
+              }
+            ]
+          }
         }
       ]
     }
