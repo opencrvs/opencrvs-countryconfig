@@ -1,8 +1,8 @@
 import { test, expect, type Page } from '@playwright/test'
 import {
   assignRecord,
+  auditRecord,
   continueForm,
-  createPIN,
   drawSignature,
   expectOutboxToBeEmpty,
   expectTextWithChangeLink,
@@ -34,8 +34,8 @@ test.describe.serial('1. Marriage declaration case - 1', () => {
       lastNameAtBirth: faker.person.lastName('male'),
       address: {
         country: 'Farajaland',
-        province: 'Sulaka',
-        district: 'Irundu',
+        province: 'Pualula',
+        district: 'Embe',
         urbanOrRural: 'Urban',
         town: faker.location.city(),
         residentialArea: faker.location.county(),
@@ -59,8 +59,8 @@ test.describe.serial('1. Marriage declaration case - 1', () => {
 
       address: {
         country: 'Farajaland',
-        province: 'Central',
-        district: 'Ibombo',
+        province: 'Sulaka',
+        district: 'Ilanga',
         urbanOrRural: 'Urban',
         town: faker.location.city(),
         residentialArea: faker.location.county(),
@@ -75,8 +75,8 @@ test.describe.serial('1. Marriage declaration case - 1', () => {
       typeOfMarriage: 'Monogamous',
       address: {
         country: 'Farajaland',
-        province: 'Central',
-        district: 'Ibombo',
+        province: 'Sulaka',
+        district: 'Ilanga',
         urbanOrRural: 'Urban',
         town: faker.location.city(),
         residentialArea: faker.location.county(),
@@ -114,8 +114,8 @@ test.describe.serial('1. Marriage declaration case - 1', () => {
     test.beforeAll(async () => {
       await login(
         page,
-        CREDENTIALS.FIELD_AGENT.USERNAME,
-        CREDENTIALS.FIELD_AGENT.PASSWORD
+        CREDENTIALS.ANOTHER_FIELD_AGENT.USERNAME,
+        CREDENTIALS.ANOTHER_FIELD_AGENT.PASSWORD
       )
       await page.click('#header_new_event')
       await page.getByLabel('Marriage').click()
@@ -633,13 +633,14 @@ test.describe.serial('1. Marriage declaration case - 1', () => {
         CREDENTIALS.REGISTRATION_AGENT.USERNAME,
         CREDENTIALS.REGISTRATION_AGENT.PASSWORD
       )
-      await page.getByRole('button', { name: 'Ready for review' }).click()
-      await page
-        .getByRole('button', {
-          name: `${declaration.groom.name.firstNames} ${declaration.groom.name.familyName} & ${declaration.bride.name.firstNames} ${declaration.bride.name.familyName}`
-        })
-        .click()
+
+      await auditRecord({
+        page,
+        name: `${declaration.groom.name.firstNames} ${declaration.groom.name.familyName} & ${declaration.bride.name.firstNames} ${declaration.bride.name.familyName}`
+      })
+
       await assignRecord(page)
+
       await page.getByRole('button', { name: 'Action' }).first().click()
       await getAction(page, 'Review declaration').click()
     })
