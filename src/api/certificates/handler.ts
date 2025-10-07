@@ -9,9 +9,11 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
+import { conditionals } from '@countryconfig/form/common/custom-validation-conditionals/custom-conditionals'
 import { Event } from '@countryconfig/form/types/types'
 import { Request, ResponseToolkit } from '@hapi/hapi'
 import { ActionType, event, field } from '@opencrvs/toolkit/events'
+import { x } from 'joi'
 
 type FontFamilyTypes = {
   normal: string
@@ -412,5 +414,5 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       }
     }
   ]
-  return certificateConfigs
+  return certificateConfigs.map((x) => ({ ...x, conditionals: [] }))
 }
