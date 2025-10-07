@@ -18,7 +18,7 @@ import {
   createDeclaration as createDeclarationV2,
   Declaration as DeclarationV2
 } from '../v2-test-data/birth-declaration-with-mother-father'
-import { format, subYears } from 'date-fns'
+import { format, subDays, subYears } from 'date-fns'
 import { formatV2ChildName } from '../v2-birth/helpers'
 import { IdType } from '@countryconfig/form/v2/person'
 import {
@@ -104,8 +104,7 @@ test.describe.serial(' Correct record - 3', () => {
           surname: faker.person.lastName()
         },
         'child.gender': 'male',
-        'child.dob': format(subYears(new Date(), 1), 'yyyy-MM-dd'),
-        'child.reason': 'Late',
+        'child.dob': format(subDays(new Date(), 360), 'yyyy-MM-dd'),
         'child.placeOfBirth': 'HEALTH_FACILITY',
         'child.attendantAtBirth': 'PHYSICIAN',
         'child.birthType': 'SINGLE',
