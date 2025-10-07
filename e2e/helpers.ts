@@ -567,3 +567,15 @@ export const fetchUserLocationHierarchy = async (
   })
   return res.data.getUser.primaryOffice.hierarchy.map(({ id }) => id)
 }
+
+export async function expectRowValueWithChangeButton(
+  page: Page,
+  fieldName: string,
+  assertionText: string
+) {
+  await expect(page.getByTestId(`row-value-${fieldName}`)).toContainText(
+    assertionText
+  )
+
+  await expect(page.getByTestId(`change-button-${fieldName}`)).toBeVisible()
+}
