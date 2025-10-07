@@ -318,4 +318,16 @@ test.describe.serial('Basic Archival flow', () => {
       })
     ).not.toBeVisible()
   })
+
+  test('Archived declaration can be found via search', async () => {
+    await page.locator('#searchText').fill(formatName(declaration.child.name))
+    await page.locator('#searchIconButton').click()
+    await page
+      .getByRole('button', {
+        name: formatName(declaration.child.name)
+      })
+      .click()
+
+    await expect(page.getByTestId('status-value')).toHaveText('Archived')
+  })
 })
