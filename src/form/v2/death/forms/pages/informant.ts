@@ -34,7 +34,10 @@ import {
   yesNoRadioOptions,
   YesNoTypes
 } from '../../../person'
-import { defaultStreetAddressConfiguration } from '@countryconfig/form/street-address-configuration'
+import {
+  defaultStreetAddressConfiguration,
+  getNestedFieldValidators
+} from '@countryconfig/form/street-address-configuration'
 
 export const InformantType = {
   SPOUSE: 'SPOUSE',
@@ -446,7 +449,11 @@ export const informant = defineFormPage({
             id: 'error.invalidInput'
           },
           validator: field('informant.address').isValidAdministrativeLeafLevel()
-        }
+        },
+        ...getNestedFieldValidators(
+          'informant.address',
+          defaultStreetAddressConfiguration
+        )
       ],
       defaultValue: {
         country: 'FAR',

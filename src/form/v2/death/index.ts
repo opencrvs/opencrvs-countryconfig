@@ -121,7 +121,7 @@ export const deathEvent = defineConfig({
         ]
       },
       {
-        fieldId: 'deceased.address',
+        fieldId: 'eventDetails.deathLocationOther',
         emptyValueMessage: {
           defaultMessage: 'No place of death',
           description:
