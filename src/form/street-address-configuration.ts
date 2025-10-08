@@ -9,7 +9,6 @@ import {
   defineFormConditional,
   errorMessages
 } from '@opencrvs/toolkit/events'
-import { type } from 'os'
 
 function isInternationalAddress() {
   return and(
@@ -43,12 +42,20 @@ export function getNestedFieldValidators(
           [fieldId]: {
             type: 'object',
             properties: {
-              [field.id]: {
-                minLength: 1
+              streetLevelDetails: {
+                type: 'object',
+                properties: {
+                  [field.id]: {
+                    minLength: 1
+                  }
+                },
+                required: [field.id]
               }
-            }
+            },
+            required: ['streetLevelDetails']
           }
-        }
+        },
+        required: [fieldId]
       })
     }))
 }
