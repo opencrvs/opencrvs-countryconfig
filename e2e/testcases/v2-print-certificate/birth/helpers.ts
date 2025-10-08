@@ -33,3 +33,15 @@ export function getRowByTitle(page: Page, title: string) {
   )
   return parentRow
 }
+
+export async function expectPrintPopup(page: Page) {
+  const popupPromise = page.waitForEvent('popup')
+  await page.getByRole('button', { name: 'Print', exact: true }).click()
+  const popup = await popupPromise
+  const downloadPromise = popup.waitForEvent('download')
+  const download = await downloadPromise
+
+  // Check that the popup URL contains PDF content
+  await expect(popup.url()).toBe('about:blank')
+  await expect(download.suggestedFilename()).toMatch(/^.*\.pdf$/)
+}

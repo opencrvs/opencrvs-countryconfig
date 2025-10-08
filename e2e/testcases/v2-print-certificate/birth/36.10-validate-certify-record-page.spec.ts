@@ -6,6 +6,7 @@ import { CREDENTIALS } from '../../../constants'
 import { getToken } from '../../../helpers'
 import {
   navigateToCertificatePrintAction,
+  printAndExpectPopup,
   selectRequesterType
 } from './helpers'
 import { selectCertificationType } from './helpers'
@@ -64,16 +65,7 @@ test.describe.serial('10.0 Validate "Review" page', () => {
 
   test('10.3 Click print button, user will navigate to a new tab from where user can download PDF', async () => {
     await page.getByRole('button', { name: 'Yes, print certificate' }).click()
-
-    const popupPromise = page.waitForEvent('popup')
-    await page.getByRole('button', { name: 'Print', exact: true }).click()
-    const popup = await popupPromise
-    const downloadPromise = popup.waitForEvent('download')
-    const download = await downloadPromise
-
-    // Check that the popup URL contains PDF content
-    await expect(popup.url()).toBe('about:blank')
-    await expect(download.suggestedFilename()).toMatch(/^.*\.pdf$/)
+    await printAndExpectPopup(page)
 
     await expectInUrl(page, `/events/overview/${eventId}`)
   })

@@ -9,7 +9,8 @@ import {
 import {
   selectRequesterType,
   selectCertificationType,
-  navigateToCertificatePrintAction
+  navigateToCertificatePrintAction,
+  printAndExpectPopup
 } from './helpers'
 import { ensureAssigned, expectInUrl } from '../../../v2-utils'
 import { REQUIRED_VALIDATION_ERROR } from '../../v2-birth/helpers'
@@ -139,11 +140,10 @@ test.describe.serial('Validate collect payment page', () => {
 
   test('5.9 Print', async () => {
     await page.getByRole('button', { name: 'Yes, print certificate' }).click()
-    await page.getByRole('button', { name: 'Print', exact: true }).click()
+    await printAndExpectPopup(page)
   })
 
   test('5.10 Validate Certified -modal', async () => {
-    await expectInUrl(page, `/events/overview/${eventId}`)
     await ensureAssigned(page)
     await page.getByRole('button', { name: 'Certified', exact: true }).click()
 

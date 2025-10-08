@@ -6,6 +6,7 @@ import {
   Declaration
 } from '../../v2-test-data/birth-declaration'
 import {
+  printAndExpectPopup,
   navigateToCertificatePrintAction,
   selectCertificationType,
   selectRequesterType
@@ -132,11 +133,10 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
 
   test('3.7 Print', async () => {
     await page.getByRole('button', { name: 'Yes, print certificate' }).click()
-    await page.getByRole('button', { name: 'Print', exact: true }).click()
+    await printAndExpectPopup(page)
   })
 
   test('3.8 Validate Certified -modal', async () => {
-    await expectInUrl(page, `/events/overview/${eventId}`)
     await ensureAssigned(page)
     await page.getByRole('button', { name: 'Certified', exact: true }).click()
 

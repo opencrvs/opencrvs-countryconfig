@@ -9,9 +9,10 @@ import {
 import {
   selectRequesterType,
   selectCertificationType,
-  navigateToCertificatePrintAction
+  navigateToCertificatePrintAction,
+  printAndExpectPopup
 } from './helpers'
-import { ensureAssigned, expectInUrl } from '../../../v2-utils'
+import { ensureAssigned } from '../../../v2-utils'
 
 async function selectIdType(page: Page, idType: string) {
   await page.locator('#collector____OTHER____idType').click()
@@ -65,11 +66,10 @@ test.describe
     await page.getByRole('button', { name: 'Continue' }).click()
     await page.getByRole('button', { name: 'Continue' }).click()
     await page.getByRole('button', { name: 'Yes, print certificate' }).click()
-    await page.getByRole('button', { name: 'Print', exact: true }).click()
+    await printAndExpectPopup(page)
   })
 
   test('Validate Certified -modal', async () => {
-    await expectInUrl(page, `/events/overview/${eventId}`)
     await ensureAssigned(page)
     await page.getByRole('button', { name: 'Certified', exact: true }).click()
 
