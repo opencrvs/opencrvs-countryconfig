@@ -21,7 +21,10 @@ import {
   REQUIRED_VALIDATION_ERROR
 } from '../v2-birth/helpers'
 import { getDeclaration } from '../v2-test-data/birth-declaration'
-import { selectRequesterType } from '../v2-print-certificate/birth/helpers'
+import {
+  printAndExpectPopup,
+  selectRequesterType
+} from '../v2-print-certificate/birth/helpers'
 
 async function fetchClientAPI(
   path: string,
@@ -876,15 +879,7 @@ test.describe('Events REST API', () => {
 
       await page.getByRole('button', { name: 'Yes, print certificate' }).click()
 
-      const popupPromise = page.waitForEvent('popup')
-      await page.getByRole('button', { name: 'Print', exact: true }).click()
-      const popup = await popupPromise
-      const downloadPromise = popup.waitForEvent('download')
-      const download = await downloadPromise
-
-      // Check that the popup URL contains PDF content
-      await expect(popup.url()).toBe('about:blank')
-      await expect(download.suggestedFilename()).toMatch(/^.*\.pdf$/)
+      await printAndExpectPopup(page)
 
       await expectInUrl(page, `/events/overview/${eventId}`)
     })
