@@ -414,5 +414,5 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       }
     }
   ]
-  return certificateConfigs.map((x) => ({ ...x, conditionals: [] }))
+  return certificateConfigs
 }
