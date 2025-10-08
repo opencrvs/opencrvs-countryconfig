@@ -70,7 +70,7 @@ test.describe.serial('Validate collect payment page', () => {
     ).toBeVisible()
   })
 
-  test('5.2 should be able to select Alien ID and correspondent id input will be visible with validation rules', async () => {
+  test('5.2 should be able to select National ID and correspondent id input will be visible with validation rules', async () => {
     await selectIdType(page, 'National ID')
     await page.fill('#collector____nid', '1234567')
     await page.getByRole('heading', { name: 'Birth', exact: true }).click()

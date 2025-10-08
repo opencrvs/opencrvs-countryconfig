@@ -53,7 +53,7 @@ test.describe
     await selectRequesterType(page, 'Print and issue to someone else')
 
     await selectIdType(page, 'Alien Number')
-    await page.fill('#collector____ALIENNUMBER____details', '1234567')
+    await page.fill('#collector____ALIEN_NUMBER____details', '1234567')
     await page.getByRole('heading', { name: 'Birth', exact: true }).click()
 
     await page.fill('#firstname', 'Muhammed Tareq')
