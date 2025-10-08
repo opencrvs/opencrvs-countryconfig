@@ -399,7 +399,7 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
           ]
         },
         {
-          id: 'collector.DRIVING_LICENSE.details',
+          id: 'collector.DRIVINGLICENCE.details',
           type: 'TEXT',
           required: true,
           label: {
@@ -418,7 +418,7 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
           ]
         },
         {
-          id: 'collector.REFUGEE_NUMBER.details',
+          id: 'collector.REFUGEENUMBER.details',
           type: 'TEXT',
           required: true,
           label: {
@@ -437,7 +437,7 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
           ]
         },
         {
-          id: 'collector.ALIEN_NUMBER.details',
+          id: 'collector.ALIENNUMBER.details',
           type: 'TEXT',
           required: true,
           label: {

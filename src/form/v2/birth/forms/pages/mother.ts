@@ -314,7 +314,7 @@ export const mother = defineFormPage({
       ]
     },
     {
-      id: 'mother.addressDivider_1',
+      id: 'mother.addressDivider1',
       type: FieldType.DIVIDER,
       label: emptyMessage,
       conditionals: [
@@ -380,7 +380,7 @@ export const mother = defineFormPage({
       }
     },
     {
-      id: 'mother.addressDivider_2',
+      id: 'mother.addressDivider2',
       type: FieldType.DIVIDER,
       label: emptyMessage,
       conditionals: [
