@@ -46,21 +46,12 @@ const getFieldConfigForInformant = (informantType: InformantTypeKey) => {
     {
       ...commonConfigs,
       conditionals: [spouseDoesNotExist(informantType)],
-      options: [
-        getInformantOption(informantType),
-        otherOption,
-        printInAdvanceOption
-      ]
+      options: [getInformantOption(informantType), otherOption]
     },
     {
       ...commonConfigs,
       conditionals: [spouseExists(informantType)],
-      options: [
-        getInformantOption(informantType),
-        spouseOption,
-        otherOption,
-        printInAdvanceOption
-      ]
+      options: [getInformantOption(informantType), spouseOption, otherOption]
     }
   ]
 }
@@ -97,15 +88,6 @@ const otherOption = {
     description: 'This is the label for the field'
   },
   value: CollectorType.SOMEONE_ELSE
-}
-
-const printInAdvanceOption = {
-  label: {
-    id: 'event.death.action.certificate.form.section.requester.printInAdvance.label',
-    defaultMessage: 'Print in advance',
-    description: 'This is the label for the field'
-  },
-  value: 'PRINT_IN_ADVANCE'
 }
 
 const requesterLabel = {
