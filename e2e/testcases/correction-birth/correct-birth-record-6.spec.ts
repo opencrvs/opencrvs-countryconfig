@@ -2,7 +2,6 @@ import { expect, test, type Page } from '@playwright/test'
 import {
   assignRecord,
   auditRecord,
-  createPIN,
   expectAddress,
   expectOutboxToBeEmpty,
   formatDateTo_ddMMMMyyyy,

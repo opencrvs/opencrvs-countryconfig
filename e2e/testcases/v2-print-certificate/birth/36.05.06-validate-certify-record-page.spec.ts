@@ -9,9 +9,10 @@ import {
 import {
   selectRequesterType,
   selectCertificationType,
-  navigateToCertificatePrintAction
+  navigateToCertificatePrintAction,
+  printAndExpectPopup
 } from './helpers'
-import { expectInUrl } from '../../../v2-utils'
+import { ensureAssigned, expectInUrl } from '../../../v2-utils'
 import { REQUIRED_VALIDATION_ERROR } from '../../v2-birth/helpers'
 
 async function selectIdType(page: Page, idType: string) {
@@ -48,7 +49,7 @@ test.describe.serial('Validate collect payment page', () => {
     await navigateToCertificatePrintAction(page, declaration)
   })
 
-  test('5.1 check collect payment page header', async () => {
+  test('5.1 Select certification and requester type', async () => {
     await selectCertificationType(page, 'Birth Certificate')
     await selectRequesterType(page, 'Print and issue to someone else')
   })
@@ -110,23 +111,59 @@ test.describe.serial('Validate collect payment page', () => {
     await page.getByRole('heading', { name: 'Birth', exact: true }).click()
   })
 
-  test.describe('6.0 Validate "Upload signed affidavit":', async () => {
-    test('6.1 Should be able to add file and navigate to the "Ready to certify?" page.', async () => {
-      const path = require('path')
-      const attachmentPath = path.resolve(__dirname, './528KB-random.png')
-      const inputFile = await page.locator(
-        'input[name="collector____OTHER____signedAffidavit"][type="file"]'
-      )
-      await inputFile.setInputFiles(attachmentPath)
-      await expect(
-        page.getByRole('button', { name: 'Signed Affidavit' })
-      ).toBeVisible()
-      await expect(page.locator('#preview_delete')).toBeVisible()
-      await page.getByRole('button', { name: 'Continue' }).click()
-      await expectInUrl(
-        page,
-        `/print-certificate/${eventId}/pages/collector.collect.payment`
-      )
-    })
+  test('5.7 Should be able to add file and navigate to the payment page', async () => {
+    const path = require('path')
+    const attachmentPath = path.resolve(__dirname, './528KB-random.png')
+    const inputFile = await page.locator(
+      'input[name="collector____OTHER____signedAffidavit"][type="file"]'
+    )
+    await inputFile.setInputFiles(attachmentPath)
+    await expect(
+      page.getByRole('button', { name: 'Signed Affidavit' })
+    ).toBeVisible()
+    await expect(page.locator('#preview_delete')).toBeVisible()
+    await page.getByRole('button', { name: 'Continue' }).click()
+    await expectInUrl(
+      page,
+      `/print-certificate/${eventId}/pages/collector.collect.payment`
+    )
+  })
+
+  test('5.8 Validate fee page', async () => {
+    await expect(
+      page.getByText('Birth registration before 30 days of date of birth')
+    ).toBeVisible()
+    await expect(page.getByText('$5.00')).toBeVisible()
+
+    await page.getByRole('button', { name: 'Continue' }).click()
+  })
+
+  test('5.9 Print', async () => {
+    await page.getByRole('button', { name: 'Yes, print certificate' }).click()
+    await printAndExpectPopup(page)
+  })
+
+  test('5.10 Validate Certified -modal', async () => {
+    await ensureAssigned(page)
+    await page.getByRole('button', { name: 'Certified', exact: true }).click()
+
+    await expect(page.getByText('Type' + 'Birth Certificate')).toBeVisible()
+    await expect(
+      page.getByText('Requester' + 'Print and issue to someone else')
+    ).toBeVisible()
+    await expect(page.getByText('Type of ID' + 'National ID')).toBeVisible()
+    await expect(page.getByText('National ID' + '1235678922')).toBeVisible()
+    await expect(
+      page.getByText("Collector's name" + 'Muhammed Tareq Aziz')
+    ).toBeVisible()
+    await expect(
+      page.getByText('Relationship to child' + 'Uncle')
+    ).toBeVisible()
+
+    await expect(page.getByText('Signed Affidavit (Optional)')).toBeVisible()
+    await expect(
+      page.getByRole('button', { name: 'Signed Affidavit' })
+    ).toBeVisible()
+    await expect(page.getByText('Verified' + 'No')).toBeVisible()
   })
 })
