@@ -279,8 +279,11 @@ test.describe.serial('Basic Archival flow', () => {
     ).not.toBeVisible()
   })
 
-  test('Login as RA', async () => {
+  test('Logout', async () => {
     await logout(page)
+  })
+
+  test('Login as RA', async () => {
     await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
   })
 
