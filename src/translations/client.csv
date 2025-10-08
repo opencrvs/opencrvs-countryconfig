@@ -873,8 +873,6 @@ event.death.action.certificate.form.cancel.confirmation.title,This is the title 
 event.death.action.certificate.form.label,This is what this form is referred as in the system,Death certificate collector,Collecteur de certificat de décès
 event.death.action.certificate.form.section.collectPayment.data.label,Title for the data section,Payment details,Détails du paiement
 event.death.action.certificate.form.section.collectPayment.fee.label,Title for the data entry,Fee,Frais
-event.death.action.certificate.form.section.collectPayment.fee.label,Title for the data entry,Fee,Frais
-event.death.action.certificate.form.section.collectPayment.service.label,Title for the data entry,Service,Service
 event.death.action.certificate.form.section.collectPayment.service.label,Title for the data entry,Service,Service
 event.death.action.certificate.form.section.collectPayment.service.label.afterRegistrationTarget,Death registration after 45 days of date of death message,Death registration after 45 days of date of death,Enregistrement du décès après 45 jours de la date du décès
 event.death.action.certificate.form.section.collectPayment.service.label.beforeRegistrationTarget,Death registration before 45 days of date of death message,Death registration before 45 days of date of death,Enregistrement du décès avant 45 jours de la date du décès
@@ -930,8 +928,6 @@ event.death.action.correction.reason.option.materialOmission.label,Label for the
 event.death.action.correction.reason.option.other.label,Label for the other option,Other,Autre
 event.death.action.correction.reason.other.label,Label for the reason,Specify reason,Préciser la raison
 event.death.action.declare.form.label,This is what this form is referred as in the system,Death declaration form,Formulaire de déclaration de décès
-event.death.action.declare.form.nid.unique,This is the error message for non-unique ID Number,National id must be unique,L'identifiant national doit être unique
-event.death.action.declare.form.nid.unique,This is the error message for non-unique ID Number,National id must be unique,L'identifiant national doit être unique
 event.death.action.declare.form.nid.unique,This is the error message for non-unique ID Number,National id must be unique,L'identifiant national doit être unique
 event.death.action.declare.form.review.comment.label,Label for the comment field in the review section,Comment,Commentaire
 event.death.action.declare.form.review.signature.label,Label for the signature field in the review section,Signature of informant,Signature de l'informateur
@@ -1068,7 +1064,6 @@ event.tennis-club-membership.action.collect-certificate.label,This is shown as t
 event.tennis-club-membership.action.declare.form.label,This is what this form is referred as in the system,Tennis club membership application,Tennis club membership application
 event.tennis-club-membership.action.declare.form.review.title,Title of the form to show in review page,"{applicant.name.firstname, select, __EMPTY__ {Member declaration} other {{applicant.name.surname, select, __EMPTY__ {Member declaration for {applicant.name.firstname}} other {Member declaration for {applicant.name.firstname} {applicant.name.surname}}}}}","{applicant.name.firstname, select, __EMPTY__ {Déclaration des membres} other {{applicant.name.surname, select, __EMPTY__ {Déclaration des membres pour {applicant.name.firstname}} other {Déclaration des membres pour {applicant.name.firstname} {applicant.name.surname}}}}}"
 event.tennis-club-membership.action.declare.form.section.recommender.field.firstname.label,This is the label for the field,Recommender's first name,Recommender's first name
-event.tennis-club-membership.action.declare.form.section.recommender.field.firstname.label,This is the label for the field,Recommender's name,Nom du recommandataire
 event.tennis-club-membership.action.declare.form.section.recommender.field.id.label,This is the label for the field,Recommender's membership ID,Recommender's membership ID
 event.tennis-club-membership.action.declare.form.section.recommender.field.none.label,This is the label for the field,No recommender,No recommender
 event.tennis-club-membership.action.declare.form.section.recommender.title,This is the title of the section,Who is recommending the applicant?,Who is recommending the applicant?
@@ -1878,6 +1873,7 @@ register.selectInformant.newMarriageRegistration,The title that appears for new 
 register.selectInformant.parents,The description that appears when selecting the parent as informant,Mother & Father,Mère et père
 register.selectVitalEvent.backToReviewButton,,Back to review,Retour à l'examen
 register.selectVitalEvent.errorMessage,Error Message to show when no event is being selected,Please select the type of event,Veuillez sélectionner le type d'événement
+register.selectVitalEvent.goToReviewButton,,Go to review,Aller à la révision
 register.selectVitalEvent.registerNewEventHeader,The section heading on the page,What type of event do you want to declare?,What type of event do you want to declare?
 register.selectVitalEvent.registerNewEventHeading,The section heading on the page,Event type,Quel type d'événement voulez-vous déclarer ?
 register.selectVitalEvent.registerNewEventTitle,The title that appears on the select vital event page,New declaration,Nouvelle déclaration
