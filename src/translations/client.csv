@@ -111,6 +111,7 @@ buttons.finish,The label for finish printing certificate button,Finish,Terminer
 buttons.forgotPassword,The label for forgot password button,Forgot password,Mot de passe oublié
 buttons.forgottenPIN,The label for forgotten pin button,Forgotten pin,Code d'accès oublié
 buttons.goToHomePage,Label for Go to Homepage button,Back to home,Retour à la page d'accueil
+buttons.goToReview,Go to review button text,Go to review,
 buttons.issue,Button for issuing,Issue,Délivrer
 buttons.login,Login button on session expire modal,Login,Connexion
 buttons.logout,logout title,Logout,Déconnexion
