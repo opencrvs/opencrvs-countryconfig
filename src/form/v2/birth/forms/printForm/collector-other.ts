@@ -156,7 +156,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     validation: [nationalIdValidator('collector.nid')]
   },
   {
-    id: 'collector.DRIVINGLICENCE.details',
+    id: 'collector.DRIVING-LICENCE.details',
     type: FieldType.TEXT,
     required: true,
     label: {
@@ -196,7 +196,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     ]
   },
   {
-    id: 'collector.REFUGEENUMBER.details',
+    id: 'collector.REFUGEE-NUMBER.details',
     type: FieldType.TEXT,
     required: true,
     label: {
@@ -215,7 +215,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     ]
   },
   {
-    id: 'collector.ALIENNUMBER.details',
+    id: 'collector.ALIEN-NUMBER.details',
     type: FieldType.TEXT,
     required: true,
     label: {
