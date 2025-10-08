@@ -1,4 +1,4 @@
-import { Page } from '@playwright/test'
+import { Page, expect } from '@playwright/test'
 import { Declaration } from '../../v2-test-data/birth-declaration'
 import { selectAction } from '../../../v2-utils'
 
