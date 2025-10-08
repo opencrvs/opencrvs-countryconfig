@@ -27,7 +27,7 @@ jobs:
       fail-fast: false
       matrix:
         runner: ${{ 
-          ((github.ref_type == 'tag' || inputs.build_arm == true) && fromJSON('["ubuntu-24.04", "ubuntu-24.04-arm"]')) || 
+          (inputs.build_arm == true && fromJSON('["ubuntu-24.04", "ubuntu-24.04-arm"]')) || 
           fromJSON('["ubuntu-24.04"]') 
           }}
     outputs:
@@ -90,7 +90,7 @@ jobs:
       - name: Create and push multi-arch manifest
         env:
           BRANCH_NAME: ${{ inputs.branch_name || github.ref_name }}
-          BUILD_ARM: ${{ github.ref_type == 'tag' || inputs.build_arm == true }}
+          BUILD_ARM: ${{ inputs.build_arm == true }}
         run: |
           TAG="${{ needs.build.outputs.version_common }}"
           REPO="${{ secrets.DOCKERHUB_ACCOUNT}}/${{ secrets.DOCKERHUB_REPO }}"
