@@ -2,22 +2,16 @@ import { test, expect, type Page } from '@playwright/test'
 import {
   continueForm,
   drawSignature,
-  formatDateObjectTo_dMMMMyyyy,
   formatName,
   getRandomDate,
   goToSection,
   loginToV2,
-  expectRowValueWithChangeButton,
   logout
 } from '../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../constants'
-import { fillDate, validateAddress } from '../v2-birth/helpers'
-import {
-  ensureAssigned,
-  ensureOutboxIsEmpty,
-  selectAction
-} from '../../v2-utils'
+import { fillDate } from '../v2-birth/helpers'
+import { ensureOutboxIsEmpty, selectAction } from '../../v2-utils'
 
 test.describe.serial('Basic Archival flow', () => {
   let page: Page
@@ -292,6 +286,12 @@ test.describe.serial('Basic Archival flow', () => {
 
   test('Navigate to the event overview page', async () => {
     await page.getByText('Ready for review').click()
+
+    // Expect not to see a quick action for Archival
+    await expect(
+      page.getByRole('button', { name: 'Archive', exact: true })
+    ).not.toBeVisible()
+
     await page
       .getByRole('button', {
         name: formatName(declaration.child.name)
