@@ -270,7 +270,7 @@ export const eventDetails = defineFormPage({
       ]
     },
     {
-      id: 'eventDetails.divider_1',
+      id: 'eventDetails.divider1',
       type: FieldType.DIVIDER,
       label: emptyMessage
     },
@@ -285,7 +285,7 @@ export const eventDetails = defineFormPage({
       configuration: { styles: { fontVariant: 'h3' } }
     },
     {
-      id: 'eventDetails.divider_2',
+      id: 'eventDetails.divider2',
       type: FieldType.DIVIDER,
       label: emptyMessage
     },

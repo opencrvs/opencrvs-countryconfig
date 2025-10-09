@@ -393,7 +393,7 @@ export const informant = defineFormPage({
       parent: field('informant.relation')
     },
     {
-      id: 'informant.addressDivider_1',
+      id: 'informant.addressDivider1',
       type: FieldType.DIVIDER,
       label: emptyMessage,
       conditionals: [
