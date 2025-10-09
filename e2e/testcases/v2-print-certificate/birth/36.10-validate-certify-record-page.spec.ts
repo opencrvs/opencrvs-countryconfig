@@ -64,7 +64,6 @@ test.describe.serial('10.0 Validate "Review" page', () => {
   })
 
   test('10.3 Click print button, user will navigate to a new tab from where user can download PDF', async () => {
-    await page.getByRole('button', { name: 'Yes, print certificate' }).click()
     await printAndExpectPopup(page)
 
     await expectInUrl(page, `/events/overview/${eventId}`)

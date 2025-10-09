@@ -877,8 +877,6 @@ test.describe('Events REST API', () => {
         'Ibombo, Central, Farajaland'
       )
 
-      await page.getByRole('button', { name: 'Yes, print certificate' }).click()
-
       await printAndExpectPopup(page)
 
       await expectInUrl(page, `/events/overview/${eventId}`)
