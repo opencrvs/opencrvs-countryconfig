@@ -50,11 +50,5 @@ export async function mockNetworkConditions(
 }
 
 export async function restoreNetworkConditions(page: Page) {
-  const client = await page.context().newCDPSession(page)
-  await client.send('Network.enable')
-
-  await client.send(
-    'Network.emulateNetworkConditions',
-    NETWORK_CONDITIONS.default
-  )
+  await mockNetworkConditions(page, 'default')
 }
