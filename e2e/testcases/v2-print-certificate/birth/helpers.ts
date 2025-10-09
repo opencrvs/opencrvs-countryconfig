@@ -35,6 +35,7 @@ export function getRowByTitle(page: Page, title: string) {
 }
 
 export async function printAndExpectPopup(page: Page) {
+  await page.getByRole('button', { name: 'Yes, print certificate' }).click()
   const popupPromise = page.waitForEvent('popup')
   await page.getByRole('button', { name: 'Print', exact: true }).click()
   const popup = await popupPromise
