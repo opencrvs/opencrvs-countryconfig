@@ -132,7 +132,6 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
   })
 
   test('3.7 Print', async () => {
-    await page.getByRole('button', { name: 'Yes, print certificate' }).click()
     await printAndExpectPopup(page)
   })
 
