@@ -184,7 +184,7 @@ export const mother = defineFormPage({
     },
     {
       id: 'mother.age',
-      type: FieldType.TEXT,
+      type: FieldType.NUMBER,
       required: true,
       label: {
         defaultMessage: 'Age of mother',

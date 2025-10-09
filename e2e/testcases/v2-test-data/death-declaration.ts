@@ -10,6 +10,7 @@ import {
   AddressType
 } from '@opencrvs/toolkit/events'
 import { getSignatureFile, uploadFile } from './utils'
+import { omitBy } from 'lodash'
 
 async function getPlaceOfDeath(
   type: 'DECEASED_USUAL_RESIDENCE' | 'HEALTH_FACILITY'
@@ -47,8 +48,8 @@ async function getPlaceOfDeath(
   throw new Error('Invalid place of birth type')
 }
 
-export async function getDeclaration({
-  partialDeclaration = {},
+export async function getDeclaration<T extends Partial<ActionUpdate>>({
+  partialDeclaration,
   placeOfDeathType: placeOfDeathType = 'DECEASED_USUAL_RESIDENCE'
 }: {
   partialDeclaration?: Record<string, any>
@@ -64,6 +65,7 @@ export async function getDeclaration({
 
   const mockDeclaration = {
     'spouse.dob': '1975-02-18',
+    'spouse.age': undefined,
     'spouse.nid': faker.string.numeric(10),
     'spouse.name': {
       firstname: faker.person.firstName('female'),
@@ -95,11 +97,14 @@ export async function getDeclaration({
     ...(await getPlaceOfDeath(placeOfDeathType))
   }
 
-  // 💡 Merge overriden fields
-  return {
-    ...mockDeclaration,
-    ...partialDeclaration
-  }
+  // 💡 Merge overriden fields, clear payload
+  return omitBy(
+    {
+      ...mockDeclaration,
+      ...(partialDeclaration ?? {})
+    },
+    (d) => d === undefined
+  ) as typeof mockDeclaration & T
 }
 
 export type Declaration = Awaited<ReturnType<typeof getDeclaration>>
@@ -109,7 +114,7 @@ export interface CreateDeclarationResponse {
   declaration: Declaration
 }
 
-export async function createDeclaration(
+export async function createDeclaration<T extends Partial<ActionUpdate>>(
   token: string,
   dec?: Partial<ActionUpdate>,
   action: ActionType = ActionType.REGISTER,
