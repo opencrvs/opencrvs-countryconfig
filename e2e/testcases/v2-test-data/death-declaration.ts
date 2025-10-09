@@ -48,8 +48,8 @@ async function getPlaceOfDeath(
   throw new Error('Invalid place of birth type')
 }
 
-export async function getDeclaration<T extends Partial<ActionUpdate>>({
-  partialDeclaration,
+export async function getDeclaration({
+  partialDeclaration = {},
   placeOfDeathType: placeOfDeathType = 'DECEASED_USUAL_RESIDENCE'
 }: {
   partialDeclaration?: Record<string, any>
@@ -101,10 +101,10 @@ export async function getDeclaration<T extends Partial<ActionUpdate>>({
   return omitBy(
     {
       ...mockDeclaration,
-      ...(partialDeclaration ?? {})
+      ...partialDeclaration
     },
     (d) => d === undefined
-  ) as typeof mockDeclaration & T
+  ) as typeof mockDeclaration
 }
 
 export type Declaration = Awaited<ReturnType<typeof getDeclaration>>
@@ -114,7 +114,7 @@ export interface CreateDeclarationResponse {
   declaration: Declaration
 }
 
-export async function createDeclaration<T extends Partial<ActionUpdate>>(
+export async function createDeclaration(
   token: string,
   dec?: Partial<ActionUpdate>,
   action: ActionType = ActionType.REGISTER,
