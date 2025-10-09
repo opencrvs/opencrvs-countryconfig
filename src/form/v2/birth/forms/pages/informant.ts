@@ -225,7 +225,7 @@ export const informant = defineFormPage({
     },
     {
       id: 'informant.age',
-      type: FieldType.TEXT,
+      type: FieldType.NUMBER,
       required: true,
       label: {
         defaultMessage: 'Age of informant',

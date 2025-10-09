@@ -151,7 +151,7 @@ export const deceased = defineFormPage({
     },
     {
       id: `deceased.age`,
-      type: FieldType.TEXT,
+      type: FieldType.NUMBER,
       required: true,
       label: {
         defaultMessage: `Age of deceased`,
