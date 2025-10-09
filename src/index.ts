@@ -86,10 +86,12 @@ import getUserNotificationRoutes from './config/routes/userNotificationRoutes'
 import {
   importEvent,
   importEvents,
+  importLocations,
   syncLocationLevels,
   syncLocationStatistics
 } from './analytics/analytics'
 import { getClient } from './analytics/postgres'
+import { createClient } from '@opencrvs/toolkit/api'
 
 export interface ITokenPayload {
   sub: string
@@ -688,6 +690,12 @@ export async function createServer() {
           if (queue.length > 0) {
             await importEvents(queue, trx)
           }
+
+          // Import locations
+          const url = new URL('events', GATEWAY_URL).toString()
+          const client = createClient(url, req.headers.authorization)
+          const locations = await client.locations.list.query()
+          await importLocations(locations)
         })
 
         logger.info('Reindexed all events into analytics.')
@@ -814,6 +822,7 @@ export async function createServer() {
     const parsedPath = /^\/trigger\/events\/[^/]+\/actions\/([^/]+)$/.exec(
       request.route.path
     )
+
     const actionType = parsedPath?.[1] as ActionType | null
     const wasRequestForActionConfirmation =
       actionType && request.method === 'post'
@@ -822,9 +831,15 @@ export async function createServer() {
     if (wasRequestForActionConfirmation && wasActionAcceptedImmediately) {
       const event = request.payload as EventDocument
       const client = getClient()
-      await client.transaction().execute(async (trx) => {
-        await importEvent(event, trx)
-      })
+      try {
+        await client.transaction().execute(async (trx) => {
+          await importEvent(event, trx)
+        })
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error)
+        throw error
+      }
     }
     return h.continue
   })
