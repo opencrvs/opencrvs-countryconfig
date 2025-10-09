@@ -356,7 +356,6 @@ test.describe.serial('1. Birth event declaration', () => {
          * - Save & exit button
          * - 3dot menu (delete option)
          */
-
         await expect(
           page.getByText('Upload supporting documents', { exact: true })
         ).toBeVisible()
@@ -389,7 +388,7 @@ test.describe.serial('1. Birth event declaration', () => {
         await page.locator('button[name="documents____proofOfMother"]').click()
 
         await page
-          .getByTestId('documents____proofOfMother')
+          .locator('input[data-testid="documents____proofOfMother"]')
           .setInputFiles(path.join(__dirname, 'test_img.png'))
 
         await expect(
