@@ -44,6 +44,7 @@ on:
           - v19-beta-prod
           - fix-analytics
           - mosip
+          - openfn
       core-image-tag:
         description: Core image tag
         required: true
@@ -176,7 +177,6 @@ jobs:
       environment: ${{ inputs.environment }}
       core-image-tag: ${{ inputs.core-image-tag }}
     secrets: inherit
-
   reindex-after-seed:
     needs: seed-data
     if: ${{ inputs.reset == 'true' && needs.seed-data.result == 'success' }}
@@ -185,7 +185,6 @@ jobs:
       environment: ${{ inputs.environment }}
       core-image-tag: ${{ inputs.core-image-tag }}
     secrets: inherit
-
   reindex-after-deploy:
     needs: deploy
     if: ${{ inputs.reset != 'true' && needs.deploy.result == 'success' }}

@@ -28,6 +28,7 @@ on:
           - v19-beta-prod
           - fix-analytics
           - mosip
+          - openfn
       core-image-tag:
         description: Core DockerHub image tag
         required: true

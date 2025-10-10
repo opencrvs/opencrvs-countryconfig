@@ -21,7 +21,6 @@ async function selectIdType(page: Page, idType: string) {
 
 test.describe
   .serial('Print to someone else using Alien Number as ID type', () => {
-  let eventId: string
   let declaration: Declaration
   let page: Page
 
@@ -31,7 +30,6 @@ test.describe
       CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
     )
     const res = await createDeclaration(token)
-    eventId = res.eventId
     declaration = res.declaration
     page = await browser.newPage()
   })
@@ -60,12 +58,11 @@ test.describe
     await page.fill('#firstname', 'Muhammed Tareq')
     await page.fill('#surname', 'Aziz')
     await page.fill('#collector____OTHER____relationshipToChild', 'Uncle')
+    await page.getByRole('button', { name: 'Continue' }).click()
+    await page.getByRole('button', { name: 'Continue' }).click()
   })
 
   test('Print', async () => {
-    await page.getByRole('button', { name: 'Continue' }).click()
-    await page.getByRole('button', { name: 'Continue' }).click()
-    await page.getByRole('button', { name: 'Yes, print certificate' }).click()
     await printAndExpectPopup(page)
   })
 

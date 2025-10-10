@@ -25,6 +25,7 @@ on:
           - v19-beta-prod
           - fix-analytics
           - mosip
+          - openfn
 jobs:
   reset-data:
     name: 'Reset data'
