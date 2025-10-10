@@ -30,7 +30,10 @@ import {
   invalidNameValidator,
   MAX_NAME_LENGTH
 } from '@countryconfig/form/v2/birth/validators'
-import { defaultStreetAddressConfiguration } from '@countryconfig/form/street-address-configuration'
+import {
+  defaultStreetAddressConfiguration,
+  getNestedFieldValidators
+} from '@countryconfig/form/street-address-configuration'
 
 const GenderTypes = {
   MALE: 'male',
@@ -262,7 +265,7 @@ export const child = defineFormPage({
       ]
     },
     {
-      id: 'child.divider_1',
+      id: 'child.divider1',
       type: FieldType.DIVIDER,
       label: emptyMessage
     },
@@ -300,7 +303,7 @@ export const child = defineFormPage({
       ]
     },
     {
-      id: 'child.address.privateHome',
+      id: 'child.birthLocation.privateHome',
       type: FieldType.ADDRESS,
       secured: true,
       hideLabel: true,
@@ -325,9 +328,13 @@ export const child = defineFormPage({
             id: 'error.invalidInput'
           },
           validator: field(
-            'child.address.privateHome'
+            'child.birthLocation.privateHome'
           ).isValidAdministrativeLeafLevel()
-        }
+        },
+        ...getNestedFieldValidators(
+          'child.birthLocation.privateHome',
+          defaultStreetAddressConfiguration
+        )
       ],
       defaultValue: {
         country: 'FAR',
@@ -339,7 +346,7 @@ export const child = defineFormPage({
       }
     },
     {
-      id: 'child.address.other',
+      id: 'child.birthLocation.other',
       type: FieldType.ADDRESS,
       secured: true,
       hideLabel: true,
@@ -362,9 +369,13 @@ export const child = defineFormPage({
             id: 'error.invalidInput'
           },
           validator: field(
-            'child.address.other'
+            'child.birthLocation.other'
           ).isValidAdministrativeLeafLevel()
-        }
+        },
+        ...getNestedFieldValidators(
+          'child.birthLocation.other',
+          defaultStreetAddressConfiguration
+        )
       ],
       defaultValue: {
         country: 'FAR',
@@ -376,7 +387,7 @@ export const child = defineFormPage({
       }
     },
     {
-      id: 'child.divider_2',
+      id: 'child.divider2',
       type: FieldType.DIVIDER,
       label: emptyMessage
     },

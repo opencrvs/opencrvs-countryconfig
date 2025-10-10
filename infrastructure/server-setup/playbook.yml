@@ -31,6 +31,8 @@
         apply:
           tags:
             - updates
+      tags:
+        - updates
 
     - include_tasks:
         file: tasks/users.yml
@@ -39,6 +41,14 @@
             - users
       tags:
         - users
+
+    - include_tasks:
+        file: tasks/journald.yml
+        apply:
+          tags:
+            - journald
+      tags:
+        - journald
 
     - include_tasks:
         file: tasks/security-hardening.yml

@@ -207,11 +207,17 @@ db.getSiblingDB('webhooks').dropDatabase();"
 # ------ POSTGRESQL -------
 ##
 
-docker run --rm \
-  -e PGPASSWORD=$POSTGRES_PASSWORD \
-  --network=$NETWORK \
-  postgres:17.6 \
-  bash -c "psql -h postgres -U $POSTGRES_USER -c 'DROP DATABASE IF EXISTS events;'"
+# Check if PostgreSQL backup exists before dropping database
+if [ -f "$ROOT_PATH/backups/postgres/events-${LABEL}.dump" ]; then
+  echo "PostgreSQL backup found. Dropping existing events database..."
+  docker run --rm \
+    -e PGPASSWORD=$POSTGRES_PASSWORD \
+    --network=$NETWORK \
+    postgres:17.6 \
+    bash -c "psql -h postgres -U $POSTGRES_USER -c 'DROP DATABASE IF EXISTS events;'"
+else
+  echo "PostgreSQL backup not found for label ${LABEL}. Skipping PostgreSQL database drop..."
+fi
 
 #####
 #
@@ -238,13 +244,18 @@ docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWO
 # ------ POSTGRESQL -------
 ##
 
-echo "Restoring PostgreSQL 'events' database"
-docker run --rm \
-  -e PGPASSWORD=$POSTGRES_PASSWORD \
-  -v $ROOT_PATH/backups/postgres:/backups \
-  --network=$NETWORK \
-  postgres:17.6 \
-  bash -c "createdb -h postgres -U $POSTGRES_USER events && pg_restore -h postgres -U $POSTGRES_USER -d events /backups/events-${LABEL}.dump"
+# Check if PostgreSQL backup exists before restoring
+if [ -f "$ROOT_PATH/backups/postgres/events-${LABEL}.dump" ]; then
+  echo "PostgreSQL backup found. Restoring PostgreSQL 'events' database..."
+  docker run --rm \
+    -e PGPASSWORD=$POSTGRES_PASSWORD \
+    -v $ROOT_PATH/backups/postgres:/backups \
+    --network=$NETWORK \
+    postgres:17.6 \
+    bash -c "createdb -h postgres -U $POSTGRES_USER events && pg_restore -h postgres -U $POSTGRES_USER -d events /backups/events-${LABEL}.dump"
+else
+  echo "PostgreSQL backup not found for label ${LABEL}. Skipping PostgreSQL database restore..."
+fi
 
 ##
 # ------ ELASTICSEARCH -----

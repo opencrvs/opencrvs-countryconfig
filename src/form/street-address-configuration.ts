@@ -4,8 +4,12 @@ import {
   not,
   field,
   AddressType,
-  FieldType
+  FieldType,
+  FieldConfig,
+  defineFormConditional,
+  errorMessages
 } from '@opencrvs/toolkit/events'
+import { type } from 'os'
 
 function isInternationalAddress() {
   return and(
@@ -19,6 +23,34 @@ function isDomesticAddress() {
     not(field('country').isUndefined()),
     field('addressType').isEqualTo(AddressType.DOMESTIC)
   )
+}
+
+export function getNestedFieldValidators(
+  fieldId: string,
+  fields: FieldConfig[]
+) {
+  return fields
+    .filter((x) => x.required)
+    .map((field) => ({
+      message:
+        typeof field.required === 'object'
+          ? field.required.message
+          : errorMessages.requiredField,
+
+      validator: defineFormConditional({
+        type: 'object',
+        properties: {
+          [fieldId]: {
+            type: 'object',
+            properties: {
+              [field.id]: {
+                minLength: 1
+              }
+            }
+          }
+        }
+      })
+    }))
 }
 
 export const defaultStreetAddressConfiguration = [
@@ -131,7 +163,13 @@ export const defaultStreetAddressConfiguration = [
       }
     ],
     parent: field('country'),
-    required: true,
+    required: {
+      message: {
+        id: 'field.address.state.label.required',
+        description: 'State required message',
+        defaultMessage: 'State is required'
+      }
+    },
     label: {
       id: 'field.address.state.label',
       defaultMessage: 'State',
@@ -148,7 +186,13 @@ export const defaultStreetAddressConfiguration = [
         conditional: isInternationalAddress()
       }
     ],
-    required: true,
+    required: {
+      message: {
+        id: 'field.address.district2.label.required',
+        description: 'District2 required message',
+        defaultMessage: 'District is required'
+      }
+    },
     label: {
       id: 'field.address.district2.label',
       defaultMessage: 'District',

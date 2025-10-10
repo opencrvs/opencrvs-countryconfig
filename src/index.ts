@@ -30,7 +30,8 @@ import {
   COUNTRY_CONFIG_PORT,
   CHECK_INVALID_TOKEN,
   AUTH_URL,
-  DEFAULT_TIMEOUT
+  DEFAULT_TIMEOUT,
+  GATEWAY_URL
 } from '@countryconfig/constants'
 import {
   contentHandler,
@@ -70,10 +71,13 @@ import getUserNotificationRoutes from './config/routes/userNotificationRoutes'
 import {
   importEvent,
   importEvents,
+  importLocations,
   syncLocationLevels,
   syncLocationStatistics
 } from './analytics/analytics'
 import { getClient } from './analytics/postgres'
+import { env } from './environment'
+import { createClient } from '@opencrvs/toolkit/api'
 
 export interface ITokenPayload {
   sub: string
@@ -573,6 +577,18 @@ export async function createServer() {
       }
     },
     handler: async (req, h) => {
+      if (!env.ANALYTICS_DATABASE_URL) {
+        // kill client upload immediately
+        if (!req.raw.req.destroyed) {
+          req.raw.req.destroy()
+        }
+
+        logger.warn(
+          'Skipping reindex, no ANALYTICS_DATABASE_URL environment variable set.'
+        )
+        return h.response().code(200)
+      }
+
       const stream = req.raw.req.pipe(StreamArray.withParser())
       const BATCH_SIZE = 1000
       const queue: EventDocument[] = []
@@ -592,6 +608,12 @@ export async function createServer() {
           if (queue.length > 0) {
             await importEvents(queue, trx)
           }
+
+          // Import locations
+          const url = new URL('events', GATEWAY_URL).toString()
+          const client = createClient(url, req.headers.authorization)
+          const locations = await client.locations.list.query()
+          await importLocations(locations)
         })
 
         logger.info('Reindexed all events into analytics.')
@@ -674,6 +696,7 @@ export async function createServer() {
     const parsedPath = /^\/trigger\/events\/[^/]+\/actions\/([^/]+)$/.exec(
       request.route.path
     )
+
     const actionType = parsedPath?.[1] as ActionType | null
     const wasRequestForActionConfirmation =
       actionType && request.method === 'post'
@@ -682,9 +705,15 @@ export async function createServer() {
     if (wasRequestForActionConfirmation && wasActionAcceptedImmediately) {
       const event = request.payload as EventDocument
       const client = getClient()
-      await client.transaction().execute(async (trx) => {
-        await importEvent(event, trx)
-      })
+      try {
+        await client.transaction().execute(async (trx) => {
+          await importEvent(event, trx)
+        })
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error)
+        throw error
+      }
     }
     return h.continue
   })
@@ -698,10 +727,10 @@ export async function createServer() {
     await server.start()
     await syncLocationLevels()
     await syncLocationStatistics()
-    server.log(
-      'info',
-      `server started on ${COUNTRY_CONFIG_HOST}:${COUNTRY_CONFIG_PORT}`
-    )
+
+    const logMsg = `Server successfully started on ${COUNTRY_CONFIG_HOST}:${COUNTRY_CONFIG_PORT}`
+    logger.info(logMsg)
+    server.log('info', logMsg)
   }
 
   return { server, start, stop }

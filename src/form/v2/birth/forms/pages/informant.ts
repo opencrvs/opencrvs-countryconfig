@@ -29,7 +29,10 @@ import {
   nationalIdValidator
 } from '@countryconfig/form/v2/birth/validators'
 import { IdType, idTypeOptions } from '../../../person'
-import { defaultStreetAddressConfiguration } from '@countryconfig/form/street-address-configuration'
+import {
+  defaultStreetAddressConfiguration,
+  getNestedFieldValidators
+} from '@countryconfig/form/street-address-configuration'
 
 export const InformantType = {
   MOTHER: 'MOTHER',
@@ -360,7 +363,7 @@ export const informant = defineFormPage({
       parent: field('informant.relation')
     },
     {
-      id: 'informant.addressDivider_1',
+      id: 'informant.addressDivider1',
       type: FieldType.DIVIDER,
       label: emptyMessage,
       conditionals: [
@@ -411,7 +414,11 @@ export const informant = defineFormPage({
             id: 'error.invalidInput'
           },
           validator: field('informant.address').isValidAdministrativeLeafLevel()
-        }
+        },
+        ...getNestedFieldValidators(
+          'informant.address',
+          defaultStreetAddressConfiguration
+        )
       ],
       defaultValue: {
         country: 'FAR',
