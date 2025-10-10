@@ -17,6 +17,7 @@ export async function selectAction(
     | 'Delete'
     | 'Correct record'
     | 'View'
+    | 'Archive'
 ) {
   if (
     (await page.getByTestId('status-value').innerText()) !== 'Draft' &&

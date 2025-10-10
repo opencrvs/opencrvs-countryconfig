@@ -50,31 +50,35 @@ PGPASSWORD="$POSTGRES_PASSWORD" psql -v ON_ERROR_STOP=1 -h "$POSTGRES_HOST" -p "
 
 CREATE SCHEMA IF NOT EXISTS analytics;
 
-CREATE OR REPLACE VIEW analytics.locations
-WITH (security_barrier)
-AS
-SELECT * FROM app.locations;
+CREATE TABLE IF NOT EXISTS analytics.locations (
+  id uuid PRIMARY KEY,
+  name text NOT NULL,
+  parent_id uuid REFERENCES analytics.locations(id),
+  location_type TEXT NOT NULL
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS analytics_locations_pkey ON analytics.locations(id uuid_ops);
 
 CREATE TABLE IF NOT EXISTS analytics.event_actions (
   event_type text NOT NULL,
-  action_type app.action_type NOT NULL,
+  action_type TEXT NOT NULL,
   annotation jsonb,
   assigned_to text,
   created_at timestamp with time zone NOT NULL DEFAULT now(),
-  created_at_location uuid REFERENCES app.locations(id),
+  created_at_location uuid,
   created_by text NOT NULL,
   created_by_role text NOT NULL,
   created_by_signature text,
-  created_by_user_type app.user_type NOT NULL,
+  created_by_user_type TEXT NOT NULL,
   declared_at timestamp with time zone,
   registered_at timestamp with time zone,
   declaration jsonb NOT NULL DEFAULT '{}'::jsonb,
-  event_id uuid NOT NULL REFERENCES app.events(id),
+  event_id uuid NOT NULL,
   id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
-  original_action_id uuid REFERENCES app.event_actions(id),
+  original_action_id uuid,
   registration_number text UNIQUE,
   request_id text,
-  status app.action_status NOT NULL,
+  status TEXT NOT NULL,
   transaction_id text NOT NULL,
   content jsonb,
   UNIQUE (id, event_id)
