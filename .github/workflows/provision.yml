@@ -36,6 +36,7 @@ on:
           - v19-beta-prod
           - fix-analytics
           - mosip
+          - openfn
       tag:
         type: choice
         description: Select group tag you want to execute
