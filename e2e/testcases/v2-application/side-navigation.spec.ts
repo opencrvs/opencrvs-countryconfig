@@ -37,9 +37,9 @@ test.describe.serial('Side navigation', () => {
     const localRegistrarNavItemsWithFrame = ['Organisation', 'Team']
 
     const localRegistrarNavItemsWithoutFrame = [
-      'Dashboard',
-      'Statistics',
-      'Leaderboards'
+      'Registrations Dashboard',
+      'Completeness Dashboard',
+      'Registry'
     ]
 
     for (const item of localRegistrarNavItemsWithFrame) {
@@ -88,9 +88,9 @@ test.describe.serial('Side navigation', () => {
     const registrationAgentNavItemsWithFrame = ['Organisation', 'Team']
 
     const registrationAgentNavItemsWithoutFrame = [
-      'Dashboard',
-      'Statistics',
-      'Leaderboards'
+      'Registrations Dashboard',
+      'Completeness Dashboard',
+      'Registry'
     ]
 
     for (const item of registrationAgentNavItemsWithFrame) {
@@ -121,9 +121,9 @@ test.describe.serial('Side navigation', () => {
     const nationalSystemAdminNavItemsWithFrame = ['Organisation', 'Team']
 
     const nationalSystemAdminNavItemsWithoutFrame = [
-      'Dashboard',
-      'Statistics',
-      'Leaderboards'
+      'Registrations Dashboard',
+      'Completeness Dashboard',
+      'Registry'
     ]
 
     // Should not have any workqueues, check that none of the workqueues are present

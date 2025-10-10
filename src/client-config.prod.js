@@ -34,9 +34,35 @@ window.config = {
   COUNTRY: 'FAR',
   LANGUAGES: 'en,fr',
   SENTRY: sentry,
-  LEADERBOARDS_DASHBOARD_URL: `${scheme}//metabase.${hostname}/public/dashboard/acae0527-74be-4804-a3ee-f8b3c9c8784c#bordered=false&titled=false&refresh=300`,
-  REGISTRATIONS_DASHBOARD_URL: `${scheme}//metabase.${hostname}/public/dashboard/fec78656-e4f9-4b51-b540-0fed81dbd821#bordered=false&titled=false&refresh=300`,
-  STATISTICS_DASHBOARD_URL: `${scheme}//metabase.${hostname}/public/dashboard/a17e9bc0-15a2-4bd1-92fa-ab0f346227ca#bordered=false&titled=false&refresh=300`,
+  DASHBOARDS: [
+    {
+      id: 'registrations',
+      title: {
+        id: 'dashboard.registrationsTitle',
+        defaultMessage: 'Registrations Dashboard',
+        description: 'Menu item for registrations dashboard'
+      },
+      url: `${scheme}//metabase.${hostname}/public/dashboard/03be04d6-bde0-4fa7-9141-21cea2a7518b#bordered=false&titled=false&refresh=300`, // Filled in below
+    },
+    {
+      id: 'completeness',
+      title: {
+        id: 'dashboard.completenessTitle',
+        defaultMessage: 'Completeness Dashboard',
+        description: 'Menu item for completeness dashboard'
+      },
+      url: `${scheme}//metabase.${hostname}/public/dashboard/41940907-8542-4e18-a05d-2408e7e9838a#bordered=false&titled=false&refresh=300`,
+    },
+    {
+      id: 'registry',
+      title: {
+        id: 'dashboard.registryTitle',
+        defaultMessage: 'Registry',
+        description: 'Menu item for registry dashboard'
+      },
+      url: `${scheme}//metabase.${hostname}/public/dashboard/dc66b77a-79df-4f68-8fc8-5e5d5a2d7a35#bordered=false&titled=false&refresh=300`,
+    }
+  ],
   FEATURES: {
     V2_EVENTS: {{ V2_EVENTS }}
   }
