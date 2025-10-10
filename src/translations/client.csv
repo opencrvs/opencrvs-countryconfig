@@ -796,6 +796,7 @@ errors.somethingWentWrong,Error toast message for general errors,Something went 
 event.action.outbox-retry.label,Label for retry button for outbox,Retry,Réessayer
 event.action.review-correction.label,Label for review correction button in dropdown menu,Review,Revoir
 event.birth.action.archive.label,Label for archive record button in dropdown menu,Archive,Aarchiver
+event.birth.action.certificate.form.section.verifyIdentity.data.label,Label for identity verification data block,"",""
 event.birth.action.certificate.form.section.collectPayment.data.label,Title for the data section,Payment details,Détails du paiement
 event.birth.action.certificate.form.section.collectPayment.fee.label,Title for the data entry,Fee,Frais
 event.birth.action.certificate.form.section.collectPayment.service.label,Title for the data entry,Service,Service
