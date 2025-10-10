@@ -107,7 +107,7 @@ test.describe.serial('Certified copies renders spouse age correctly', () => {
     )
     const res = await createDeclaration(token, {
       'spouse.dobUnknown': true,
-      'spouse.age': 25,
+      'spouse.age': '25',
       'spouse.dob': undefined
     })
     declaration = res.declaration
@@ -181,7 +181,7 @@ test.describe
       surname: faker.person.lastName()
     },
     'informant.dobUnknown': true,
-    'informant.age': faker.number.int({ min: 18, max: 90 }),
+    'informant.age': faker.number.int({ min: 18, max: 90 }).toString(),
     'informant.dob': undefined,
     'informant.nationality': 'FAR',
     'informant.idType': 'NATIONAL_ID',

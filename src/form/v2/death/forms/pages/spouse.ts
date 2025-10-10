@@ -174,7 +174,7 @@ export const spouse = defineFormPage({
     },
     {
       id: 'spouse.age',
-      type: FieldType.NUMBER,
+      type: FieldType.TEXT,
       required: true,
       label: {
         defaultMessage: 'Age of spouse',

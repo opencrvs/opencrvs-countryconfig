@@ -31,10 +31,10 @@ test.describe.serial('Correct record - Change ages', () => {
     await page.close()
   })
 
-  const motherAgeBefore = 28
-  const motherAgeAfter = 29
-  const informantAgeBefore = 16
-  const informantAgeAfter = 22
+  const motherAgeBefore = '28'
+  const motherAgeAfter = '29'
+  const informantAgeBefore = '16'
+  const informantAgeAfter = '22'
 
   test('Shortcut declaration', async () => {
     let token = await getToken(
@@ -187,9 +187,7 @@ test.describe.serial('Correct record - Change ages', () => {
   test('Change informant age', async () => {
     await page.getByTestId('change-button-informant.age').click()
 
-    await page
-      .getByTestId('text__informant____age')
-      .fill(String(informantAgeAfter))
+    await page.getByTestId('text__informant____age').fill(informantAgeAfter)
 
     await page
       .getByRole('button', { name: 'Back to review', exact: true })
@@ -197,19 +195,17 @@ test.describe.serial('Correct record - Change ages', () => {
 
     await expect(
       page.getByTestId('row-value-informant.age').getByRole('deletion')
-    ).toHaveText(String(informantAgeBefore))
+    ).toHaveText(informantAgeBefore)
 
     await expect(
-      page
-        .getByTestId('row-value-informant.age')
-        .getByText(String(informantAgeAfter))
+      page.getByTestId('row-value-informant.age').getByText(informantAgeAfter)
     ).toBeVisible()
   })
 
   test('Change mother age', async () => {
     await page.getByTestId('change-button-mother.age').click()
 
-    await page.getByTestId('text__mother____age').fill(String(motherAgeAfter))
+    await page.getByTestId('text__mother____age').fill(motherAgeAfter)
 
     await page
       .getByRole('button', { name: 'Back to review', exact: true })
@@ -217,10 +213,10 @@ test.describe.serial('Correct record - Change ages', () => {
 
     await expect(
       page.getByTestId('row-value-mother.age').getByRole('deletion')
-    ).toHaveText(String(motherAgeBefore))
+    ).toHaveText(motherAgeBefore)
 
     await expect(
-      page.getByTestId('row-value-mother.age').getByText(String(motherAgeAfter))
+      page.getByTestId('row-value-mother.age').getByText(motherAgeAfter)
     ).toBeVisible()
   })
 
@@ -288,13 +284,11 @@ test.describe.serial('Correct record - Change ages', () => {
     await selectAction(page, 'View')
 
     await expect(
-      page
-        .getByTestId('row-value-informant.age')
-        .getByText(String(informantAgeAfter))
+      page.getByTestId('row-value-informant.age').getByText(informantAgeAfter)
     ).toBeVisible()
 
     await expect(
-      page.getByTestId('row-value-mother.age').getByText(String(motherAgeAfter))
+      page.getByTestId('row-value-mother.age').getByText(motherAgeAfter)
     ).toBeVisible()
   })
 })
