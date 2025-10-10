@@ -202,6 +202,38 @@ test.describe.serial('Correct record - Change ages', () => {
     ).toBeVisible()
   })
 
+  test('Change mother address to international', async () => {
+    await page.getByTestId('change-button-mother.address').click()
+    await page.getByTestId('location__country').click()
+    await page.getByText('Ethiopia').click()
+    await page
+      .getByRole('button', { name: 'Back to review', exact: true })
+      .click()
+    await expect(page.getByTestId('row-value-mother.address')).toHaveText(
+      'State is required'
+    )
+
+    await page.getByTestId('change-button-mother.address').click()
+
+    await page.getByTestId('text__state').fill('Oromia')
+    await page
+      .getByRole('button', { name: 'Back to review', exact: true })
+      .click()
+    await expect(page.getByTestId('row-value-mother.address')).toHaveText(
+      'District is required'
+    )
+
+    await page.getByTestId('change-button-mother.address').click()
+    await page.getByTestId('text__district2').fill('Woreda')
+    await page
+      .getByRole('button', { name: 'Back to review', exact: true })
+      .click()
+
+    await expect(page.getByTestId('row-value-mother.address')).toHaveText(
+      'FarajalandEthiopiaOromiaWoreda'
+    )
+  })
+
   test('Change mother age', async () => {
     await page.getByTestId('change-button-mother.age').click()
 
@@ -232,6 +264,10 @@ test.describe.serial('Correct record - Change ages', () => {
 
     await expect(
       page.getByText('Age of mother' + motherAgeBefore + motherAgeAfter)
+    ).toBeVisible()
+
+    await expect(
+      page.getByText('Usual place of residenceFarajalandEthiopiaOromiaWoreda')
     ).toBeVisible()
 
     await expect(page.getByText("Informant's details")).toBeVisible()
