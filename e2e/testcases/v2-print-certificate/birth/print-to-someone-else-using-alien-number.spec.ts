@@ -82,5 +82,9 @@ test.describe
     await expect(
       page.getByText('Relationship to child' + 'Uncle')
     ).toBeVisible()
+
+    await expect(page.getByText('Payment details')).toBeVisible()
+    await expect(page.getByText('Fee')).toBeVisible()
+    await expect(page.getByText('$5.00')).toBeVisible()
   })
 })

@@ -145,10 +145,19 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
     ).toBeVisible()
     await expect(page.getByText('Verified' + 'No')).toBeVisible()
 
-    // Expect 3 rows
+    await expect(page.getByText('Payment details')).toBeVisible()
+    await expect(page.getByText('Fee')).toBeVisible()
+    await expect(page.getByText('$5.00')).toBeVisible()
+    await expect(page.getByText('Service')).toBeVisible()
+    await expect(
+      page.getByText('Birth registration before 30 days of date of birth')
+    ).toBeVisible()
+
+    // Expect 4 rows
     await expect(page.locator('#event-history-modal #row_0')).toBeVisible()
     await expect(page.locator('#event-history-modal #row_1')).toBeVisible()
     await expect(page.locator('#event-history-modal #row_2')).toBeVisible()
-    await expect(page.locator('#event-history-modal #row_3')).not.toBeVisible()
+    await expect(page.locator('#event-history-modal #row_3')).toBeVisible()
+    await expect(page.locator('#event-history-modal #row_4')).not.toBeVisible()
   })
 })

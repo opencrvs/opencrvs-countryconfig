@@ -164,5 +164,13 @@ test.describe.serial('Validate collect payment page', () => {
       page.getByRole('button', { name: 'Signed Affidavit' })
     ).toBeVisible()
     await expect(page.getByText('Verified' + 'No')).toBeVisible()
+
+    await expect(page.getByText('Payment details')).toBeVisible()
+    await expect(page.getByText('Fee')).toBeVisible()
+    await expect(page.getByText('$5.00')).toBeVisible()
+    await expect(page.getByText('Service')).toBeVisible()
+    await expect(
+      page.getByText('Birth registration before 30 days of date of birth')
+    ).toBeVisible()
   })
 })
