@@ -31,6 +31,8 @@
         apply:
           tags:
             - updates
+      tags:
+        - updates
 
     - include_tasks:
         file: tasks/users.yml

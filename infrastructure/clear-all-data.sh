@@ -151,17 +151,9 @@ echo "🚀 Reinitializing Postgres with on-deploy.sh..."
 
 docker service update --force opencrvs_postgres-on-update
 
-# Restart the metabase service
-#-----------------------------
-docker service scale opencrvs_dashboards=0
-docker service scale opencrvs_dashboards=1
-
-# Restart events service
-#-----------------------------
-docker service scale opencrvs_events=0
-docker service scale opencrvs_events=1
-
 # Delete all data from SQLite
 # ---------------------------
 docker run --rm -v /data/sqlite:/data/sqlite alpine \
   sh -c "apk add --no-cache sqlite && sqlite3 /data/sqlite/mosip-api.db 'DELETE FROM transactions;'"
+
+echo "✅ All data cleared."

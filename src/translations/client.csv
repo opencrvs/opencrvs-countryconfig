@@ -755,10 +755,9 @@ countries.YEM,,Yemen,Yémen
 countries.ZAF,,South Africa,Afrique du Sud
 countries.ZMB,,Zambia,Zambie
 countries.ZWE,,Zimbabwe,Zimbabwe
-dashboard.dashboardTitle,Dashboard title,Dashboard,Tableau de bord
-dashboard.leaderboardTitle,Leaderboards title,Leaderboards,Classements
-dashboard.noContent,No content information for dashboard,No content to show. Make sure the following variables are configured in the <strong>client-config.js</strong> provided by your country config package:<br /><ul><li><strong>LEADERBOARDS_DASHBOARD_URL</strong></li><li><strong>REGISTRATIONS_DASHBOARD_URL</strong></li><li><strong>STATISTICS_DASHBOARD_URL</strong></li></ul>,Aucun contenu à afficher. Assurez-vous que les variables suivantes sont configurées dans le <strong>client-config.js</strong> fourni par le package de configuration de votre pays:<br /><ul><li><strong>LEADERBOARDS_DASHBOARD_URL</strong></li><li><strong>REGISTRATIONS_DASHBOARD_URL</strong></li><li><strong>STATISTICS_DASHBOARD_URL</strong></li></ul>
-dashboard.statisticTitle,Statistics title,Statistics,Statistiques
+dashboard.completenessTitle,Completeness title,Completeness Dashboard,Tableau de bord de complétude
+dashboard.registrationsTitle,Registrations title,Registrations Dashboard,Tableau de bord des enregistrements
+dashboard.registryTitle,Registry title,Registry,Registre
 duplicates.button.markAsDuplicate,Mark as duplicate button text,Mark as duplicate,Marquer comme duplicata
 duplicates.button.notDuplicate,Not a duplicate button text,Not a duplicate,Pas un duplicata
 duplicates.compare.supportingDocuments,Supporting documents header for duplicates comparison,Supporting documents,Documents justificatifs
@@ -1568,7 +1567,6 @@ navigation.declarationForms,Declaration forms label in navigation,Declaration fo
 navigation.emailAllUsers,Email all users label in navigation,Email all users,Envoyer un e-mail à tous les utilisateurs
 navigation.informantNotification,Informant notifications label in navigation,Informant notifications,Notifications des informateurs
 navigation.integration,Integration forms label in navigation,Integrations,Intégrations
-navigation.leaderboards,Leaderboards Dashboard Section,Leaderboards,Classements
 navigation.myDrafts,My drafts label in navigation,My drafts,Mes brouillons
 navigation.organisation,Organisations label in navigation,Organisation,Organisation
 navigation.outbox,Label for navigation item outbox,Outbox,Boîte d'envoi
