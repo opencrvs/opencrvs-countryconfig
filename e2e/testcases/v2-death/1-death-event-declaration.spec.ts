@@ -1,7 +1,7 @@
 import { expect, test, type Page } from '@playwright/test'
 import { loginToV2 } from '../../helpers'
 import { faker } from '@faker-js/faker'
-import { ensureOutboxIsEmpty } from '../../v2-utils'
+import { ensureOutboxIsEmpty, type } from '../../v2-utils'
 const deceased = {
   name: {
     firstname: faker.person.firstName('male')
@@ -259,6 +259,14 @@ test.describe('1. Death event declaration', () => {
       })
 
       test.skip('1.6.2 Click the "continue" button without selecting any relationship to deceased', async () => {})
+
+      test('misc: shows validatoin error for phone number', async () => {
+        await type(page, '#informant____phoneNo', '123')
+        await expect(page.locator('#informant____phoneNo_error')).toHaveText(
+          'Must be a valid 10 digit number that starts with 0(7|9)'
+        )
+        await type(page, '#informant____phoneNo', '')
+      })
 
       test('1.6.3 Select eny option in relatinship to deceased and click the "continue" button', async () => {
         await page.getByText('Select').click()
