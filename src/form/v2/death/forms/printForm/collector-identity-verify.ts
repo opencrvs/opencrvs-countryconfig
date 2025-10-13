@@ -49,6 +49,7 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
         { fieldId: 'spouse.brn' },
         { fieldId: 'spouse.name' },
         { fieldId: 'spouse.dob' },
+        { fieldId: 'spouse.age' },
         { fieldId: 'spouse.nationality' }
       ]
     }
@@ -79,6 +80,7 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
         { fieldId: 'informant.brn' },
         { fieldId: 'informant.name' },
         { fieldId: 'informant.dob' },
+        { fieldId: 'informant.age' },
         { fieldId: 'informant.nationality' }
       ]
     }
