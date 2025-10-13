@@ -92,7 +92,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       },
       isDefault: false,
       fee: {
-        onTime: 8,
+        onTime: 0,
         late: 11.5,
         delayed: 17
       },
@@ -105,14 +105,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
           italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
           bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
         }
-      },
-      conditionals: [
-        {
-          type: 'SHOW',
-          // Show only if original certificate was printed
-          conditional: event.hasAction(ActionType.PRINT_CERTIFICATE).minCount(1)
-        }
-      ]
+      }
     },
     {
       id: 'birth-registration-receipt',
@@ -172,7 +165,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       },
       isDefault: false,
       fee: {
-        onTime: 6,
+        onTime: 0,
         late: 9,
         delayed: 14.5
       },

@@ -32,7 +32,16 @@ export const env = cleanEnv(process.env, {
   }),
   QA_ENV: bool({ default: false }),
   V2_EVENTS: bool({ default: false }),
+  ESIGNET_REDIRECT_URL: url({ devDefault: 'http://localhost:20260/authorize' }),
+  OPENID_PROVIDER_CLIENT_ID: str({ devDefault: 'mock-client_id' }),
+  OPENID_PROVIDER_CLAIMS: str({
+    devDefault: 'name,family_name,given_name,middle_name,birthdate,address'
+  }),
+  MOSIP_API_USERINFO_URL: url({
+    devDefault: 'http://localhost:2024/esignet/get-oidp-user-info'
+  }),
   ANALYTICS_DATABASE_URL: url({
+    default: undefined,
     devDefault:
       'postgres://events_analytics:analytics_password@localhost:5432/events',
     desc: 'The database URL for reads and writes to `analytics.events`. See `/infrastructure/postgres/setup-analytics.sh` for how the default database is set up for your country.'
