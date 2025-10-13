@@ -151,3 +151,4 @@ echo "🚀 Reinitializing Postgres with on-deploy.sh..."
 
 docker service update --force opencrvs_postgres-on-update
 
+echo "✅ All data cleared."
