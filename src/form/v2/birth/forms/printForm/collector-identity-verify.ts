@@ -36,7 +36,7 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
           )
         )
       },
-      { type: ConditionalType.DISPLAY_ON_AUDIT_DETAILS, conditional: never() }
+      { type: ConditionalType.DISPLAY_ON_REVIEW, conditional: never() }
     ],
     label: {
       defaultMessage: '',
@@ -70,7 +70,7 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
           )
         )
       },
-      { type: ConditionalType.DISPLAY_ON_AUDIT_DETAILS, conditional: never() }
+      { type: ConditionalType.DISPLAY_ON_REVIEW, conditional: never() }
     ],
     label: {
       defaultMessage: '',
@@ -102,7 +102,7 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
           not(field('informant.relation').isEqualTo(InformantType.MOTHER))
         )
       },
-      { type: ConditionalType.DISPLAY_ON_AUDIT_DETAILS, conditional: never() }
+      { type: ConditionalType.DISPLAY_ON_REVIEW, conditional: never() }
     ],
     label: {
       defaultMessage: '',
