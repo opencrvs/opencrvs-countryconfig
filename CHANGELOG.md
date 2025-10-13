@@ -28,6 +28,8 @@
 ### Bug fixes
 
 - Allow non-interactive upgrades with apt [#10204](https://github.com/opencrvs/opencrvs-core/issues/10204)
+- Don't restart events service after data cleanup [#10704](https://github.com/opencrvs/opencrvs-core/issues/10704)
+
 
 ## 1.8.1
 
