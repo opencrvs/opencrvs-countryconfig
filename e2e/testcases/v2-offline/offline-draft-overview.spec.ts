@@ -22,7 +22,7 @@ test.describe.serial('Can Open Draft offline', () => {
   test('Login', async () => {
     await loginToV2(page)
     await expect(page.getByText('Farajaland CRS')).toBeVisible({
-      timeout: 60000
+      timeout: 30000
     })
     await expect(page.locator('#content-name')).toHaveText('Assigned to you')
   })
