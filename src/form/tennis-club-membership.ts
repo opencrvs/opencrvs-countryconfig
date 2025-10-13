@@ -626,6 +626,7 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
           configuration: {
             data: [
               {
+                id: 'service',
                 label: {
                   defaultMessage: 'Service',
                   description: 'Title for the data entry',
@@ -634,6 +635,7 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
                 value: 'Member registration older than 30 years'
               },
               {
+                id: 'fee',
                 label: {
                   defaultMessage: 'Fee',
                   description: 'Title for the data entry',
