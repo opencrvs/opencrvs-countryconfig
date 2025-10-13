@@ -15,7 +15,6 @@ import {
   field,
   FieldConfig,
   FieldType,
-  never,
   not,
   or
 } from '@opencrvs/toolkit/events'
@@ -35,11 +34,10 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
             field('informant.relation').isEqualTo(InformantType.MOTHER)
           )
         )
-      },
-      { type: ConditionalType.DISPLAY_ON_REVIEW, conditional: never() }
+      }
     ],
     label: {
-      defaultMessage: '',
+      defaultMessage: 'Identity details',
       description: 'Title for the data section',
       id: 'event.birth.action.certificate.form.section.verifyIdentity.data.label'
     },
@@ -69,11 +67,10 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
             field('informant.relation').isEqualTo(InformantType.FATHER)
           )
         )
-      },
-      { type: ConditionalType.DISPLAY_ON_REVIEW, conditional: never() }
+      }
     ],
     label: {
-      defaultMessage: '',
+      defaultMessage: 'Identity details',
       description: 'Title for the data section',
       id: 'event.birth.action.certificate.form.section.verifyIdentity.data.label'
     },
@@ -101,11 +98,10 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
           not(field('informant.relation').isEqualTo(InformantType.FATHER)),
           not(field('informant.relation').isEqualTo(InformantType.MOTHER))
         )
-      },
-      { type: ConditionalType.DISPLAY_ON_REVIEW, conditional: never() }
+      }
     ],
     label: {
-      defaultMessage: '',
+      defaultMessage: 'Identity details',
       description: 'Title for the data section',
       id: 'event.birth.action.certificate.form.section.verifyIdentity.data.label'
     },
