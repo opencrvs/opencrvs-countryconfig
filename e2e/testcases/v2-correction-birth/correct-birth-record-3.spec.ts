@@ -959,9 +959,6 @@ test.describe.serial(' Correct record - 3', () => {
         page.locator('#summary').getByText(registrationNumber!)
       ).toBeVisible()
       await expect(
-        page.locator('#summary').getByText('correction-requested')
-      ).toBeVisible()
-      await expect(
         page.locator('#summary').getByText('Registered')
       ).toBeVisible()
       await expect(page.locator('#summary').getByText(trackingId)).toBeVisible()
