@@ -172,5 +172,7 @@ test.describe.serial('Validate collect payment page', () => {
     await expect(
       page.getByText('Birth registration before 30 days of date of birth')
     ).toBeVisible()
+
+    await expect(page.getByText('Identity details')).not.toBeVisible()
   })
 })
