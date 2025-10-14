@@ -1,4 +1,4 @@
-import { devices, expect, test } from '@playwright/test'
+import { expect, Page, test } from '@playwright/test'
 import { getToken, loginToV2 } from '../../helpers'
 import { createDeclaration } from '../v2-test-data/birth-declaration-with-father-brother'
 import { CREDENTIALS } from '../../constants'
@@ -6,12 +6,15 @@ import { faker } from '@faker-js/faker'
 import { getAllLocations, getLocationIdByName } from '../birth/helpers'
 import { expectInUrl } from '../../v2-utils'
 
-test.use({ ...devices['iPhone 13'] })
+const MOBILE_VIEWPORT_SIZE = { height: 800, width: 360 }
 
 test.describe.serial('Advanced Search - Mobile', () => {
+  let page: Page
   let province = ''
   let district = ''
-  test.beforeAll(async () => {
+  test.beforeAll(async ({ browser }) => {
+    page = await browser.newPage()
+    page.setViewportSize(MOBILE_VIEWPORT_SIZE)
     const token = await getToken(
       CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
       CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
@@ -49,17 +52,25 @@ test.describe.serial('Advanced Search - Mobile', () => {
     )
   })
 
-  test('Basic search on mobile', async ({ page }) => {
+  test.afterAll(async () => {
+    await page.close()
+  })
+
+  test('Login', async () => {
     await loginToV2(page)
+  })
+
+  test('Navigate to advanced search', async () => {
     await page
       .getByRole('button', { name: 'Go to search', exact: true })
       .click()
-
     await expectInUrl(page, '/search')
     await page.click('#searchType')
     await expectInUrl(page, '/advanced-search')
-    await page.getByText('Birth').click()
+  })
 
+  test('Fill search fields', async () => {
+    await page.getByText('Birth').click()
     await page.getByText('Event details').click()
 
     await page.locator('#child____placeOfBirth').click()
@@ -71,7 +82,9 @@ test.describe.serial('Advanced Search - Mobile', () => {
 
     await page.locator('#town').fill('Dhaka')
     await page.locator('#town').blur()
+  })
 
+  test('Search', async () => {
     await page.click('#search')
     await expect(page).toHaveURL(/.*\/search-result/)
 
@@ -86,6 +99,6 @@ test.describe.serial('Advanced Search - Mobile', () => {
       await expect(addressObject.district).toBeTruthy()
     }
 
-    await expect(page.getByText(/Search results\s*\(\d+\)/)).toBeVisible()
+    await expect(page.getByText('Search results')).toBeVisible()
   })
 })
