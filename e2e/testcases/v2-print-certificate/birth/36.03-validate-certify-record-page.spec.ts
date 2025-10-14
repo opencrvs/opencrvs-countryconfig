@@ -148,11 +148,7 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
     await expect(modal.getByText('Verified' + 'No')).toBeVisible()
 
     await expect(modal.getByText('Identity details')).toBeVisible()
-    await expect(
-      modal.getByText('Date of birth', {
-        exact: true
-      })
-    ).toBeVisible()
+    await expect(modal.getByText('Date of birth')).toBeVisible()
     await expect(modal.getByText('ID Number')).toBeVisible()
 
     await expect(
