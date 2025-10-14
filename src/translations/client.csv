@@ -979,7 +979,7 @@ event.death.action.declare.form.section.informant.field.nationality.label,This i
 event.death.action.declare.form.section.informant.field.nid.label,This is the label for the field,ID Number,Numéro d'identité
 event.death.action.declare.form.section.informant.field.other.relation.label,This is the label for the field,Relationship to deceased,Relation avec le défunt
 event.death.action.declare.form.section.informant.field.passport.label,This is the label for the field,ID Number,Numéro d'identité
-event.death.action.declare.form.section.informant.field.phoneNo.error,The error message that appears on phone numbers where the first two characters must be 07 or 09,and length must be 10,and length must be 10
+event.death.action.declare.form.section.informant.field.phoneNo.error,The error message that appears on phone numbers where the first two characters must be 07 or 09 and length must be 10,Must be a valid 10 digit number that starts with 0(7|9),Doit être un nombre valide de 10 chiffres qui commence par 0(7|9)
 event.death.action.declare.form.section.informant.field.phoneNo.label,This is the label for the field,Phone number,Numéro de téléphone
 event.death.action.declare.form.section.informant.field.relation.label,This is the label for the field,Informant type,Type d'informateur
 event.death.action.declare.form.section.person.field.brn.label,This is the label for the field,ID Number,Numéro d'identité
