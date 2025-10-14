@@ -51,10 +51,6 @@ test.describe.serial('Advanced Search - Mobile', () => {
     )
   })
 
-  test.afterAll(async () => {
-    await page.close()
-  })
-
   test('Log in and navigate to advanced search page', async () => {
     await loginToV2(page)
     await page
