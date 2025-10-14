@@ -9,11 +9,9 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { conditionals } from '@countryconfig/form/common/custom-validation-conditionals/custom-conditionals'
 import { Event } from '@countryconfig/form/types/types'
 import { Request, ResponseToolkit } from '@hapi/hapi'
-import { ActionType, event, field } from '@opencrvs/toolkit/events'
-import { x } from 'joi'
+import { ActionType, event, not } from '@opencrvs/toolkit/events'
 
 type FontFamilyTypes = {
   normal: string
@@ -263,7 +261,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       conditionals: [
         {
           type: 'SHOW',
-          conditional: field('child.dob').isAfter().days(365).inPast()
+          conditional: not(event.hasAction(ActionType.PRINT_CERTIFICATE))
         }
       ]
     },
