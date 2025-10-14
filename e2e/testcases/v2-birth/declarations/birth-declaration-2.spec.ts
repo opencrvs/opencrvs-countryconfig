@@ -563,7 +563,6 @@ test.describe.serial('2. Birth declaration case - 2', () => {
     })
   })
 
-  // @TODO: This is not yet supported on V2, please add this test case when it is!
   test.describe('2.2 Declaration Review by RA', async () => {
     test('2.2.1 Navigate to the declaration review page', async () => {
       await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
