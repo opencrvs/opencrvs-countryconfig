@@ -1,4 +1,4 @@
-import { devices, expect, test, type Page } from '@playwright/test'
+import { devices, expect, test } from '@playwright/test'
 import { getToken, loginToV2 } from '../../helpers'
 import { createDeclaration } from '../v2-test-data/birth-declaration-with-father-brother'
 import { CREDENTIALS } from '../../constants'
@@ -9,11 +9,9 @@ import { expectInUrl } from '../../v2-utils'
 test.use({ ...devices['iPhone 13'] })
 
 test.describe.serial('Advanced Search - Mobile', () => {
-  let page: Page
   let province = ''
   let district = ''
-  test.beforeAll(async ({ browser }) => {
-    page = await browser.newPage()
+  test.beforeAll(async () => {
     const token = await getToken(
       CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
       CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
@@ -51,7 +49,7 @@ test.describe.serial('Advanced Search - Mobile', () => {
     )
   })
 
-  test('Log in and navigate to advanced search page', async () => {
+  test('Search on mobile', async ({ page }) => {
     await loginToV2(page)
     await page
       .getByRole('button', { name: 'Go to search', exact: true })
@@ -61,9 +59,7 @@ test.describe.serial('Advanced Search - Mobile', () => {
     await page.click('#searchType')
     await expectInUrl(page, '/advanced-search')
     await page.getByText('Birth').click()
-  })
 
-  test('Fill search filters: childs place of birth', async () => {
     await page.getByText('Event details').click()
 
     await page.locator('#child____placeOfBirth').click()
@@ -75,9 +71,7 @@ test.describe.serial('Advanced Search - Mobile', () => {
 
     await page.locator('#town').fill('Dhaka')
     await page.locator('#town').blur()
-  })
 
-  test('Search and see results', async () => {
     await page.click('#search')
     await expect(page).toHaveURL(/.*\/search-result/)
 
