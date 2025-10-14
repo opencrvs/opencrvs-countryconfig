@@ -12,7 +12,6 @@ test.describe.serial('Advanced Search - Mobile', () => {
   let page: Page
   let province = ''
   let district = ''
-  let record: Awaited<ReturnType<typeof createDeclaration>>
   test.beforeAll(async ({ browser }) => {
     page = await browser.newPage()
     const token = await getToken(
@@ -28,7 +27,7 @@ test.describe.serial('Advanced Search - Mobile', () => {
       throw new Error('Province or district not found')
     }
 
-    record = await createDeclaration(
+    await createDeclaration(
       token,
       {
         'child.dob': faker.date
@@ -50,11 +49,6 @@ test.describe.serial('Advanced Search - Mobile', () => {
       'REGISTER',
       'PRIVATE_HOME'
     )
-
-    fullNameOfChild =
-      record.declaration['child.name'].firstname +
-      ' ' +
-      record.declaration['child.name'].surname
   })
 
   test.afterAll(async () => {
