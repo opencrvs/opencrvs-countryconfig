@@ -148,29 +148,26 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
     await expect(modal.getByText('Verified' + 'No')).toBeVisible()
 
     await expect(modal.getByText('Identity details')).toBeVisible()
-    await expect(modal.getByText('Date of birth')).toBeVisible()
-    await expect(modal.getByText('ID Number')).toBeVisible()
+    await expect(modal.getByText('Date of birth:')).toBeVisible()
+    await expect(
+      modal.getByText(`ID Number: ${declaration['mother.nid']}}`)
+    ).toBeVisible()
+    await expect(modal.getByText('Type of ID: National ID')).toBeVisible()
 
     await expect(
-      modal.getByText(declaration['mother.nid'].toString())
-    ).toBeVisible()
-    await expect(modal.getByText('Type of ID')).toBeVisible()
-    await expect(modal.getByText('National ID')).toBeVisible()
-    await expect(
       modal.getByText(
-        `${declaration['mother.name'].firstname} ${declaration['mother.name'].surname}`
+        `Mother's name: ${declaration['mother.name'].firstname} ${declaration['mother.name'].surname}`
       )
     ).toBeVisible()
 
-    await expect(modal.getByText('Nationality')).toBeVisible()
-    await expect(modal.getByText('Farajaland')).toBeVisible()
+    await expect(modal.getByText('Nationality: Farajaland')).toBeVisible()
 
     await expect(modal.getByText('Payment details')).toBeVisible()
-    await expect(modal.getByText('Fee')).toBeVisible()
-    await expect(modal.getByText('$5.00')).toBeVisible()
-    await expect(modal.getByText('Service')).toBeVisible()
+    await expect(modal.getByText('Fee: $5.00')).toBeVisible()
     await expect(
-      modal.getByText('Birth registration before 30 days of date of birth')
+      modal.getByText(
+        'Service: Birth registration before 30 days of date of birth'
+      )
     ).toBeVisible()
 
     // Expect 5 rows
