@@ -260,7 +260,7 @@ test.describe('1. Death event declaration', () => {
 
       test.skip('1.6.2 Click the "continue" button without selecting any relationship to deceased', async () => {})
 
-      test('misc: shows validatoin error for phone number', async () => {
+      test('misc: shows validation error for phone number', async () => {
         await type(page, '#informant____phoneNo', '123')
         await expect(page.locator('#informant____phoneNo_error')).toHaveText(
           'Must be a valid 10 digit number that starts with 0(7|9)'
