@@ -49,7 +49,7 @@ test.describe.serial('Advanced Search - Mobile', () => {
     )
   })
 
-  test('Search on mobile', async ({ page }) => {
+  test('Basic search on mobile', async ({ page }) => {
     await loginToV2(page)
     await page
       .getByRole('button', { name: 'Go to search', exact: true })
