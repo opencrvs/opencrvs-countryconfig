@@ -92,6 +92,6 @@ test.describe.serial('Advanced Search - Mobile', () => {
       await expect(addressObject.district).toBeTruthy()
     }
 
-    await expect(page.getByText('Search results')).toBeVisible()
+    await expect(page.getByText(/Search results\s*\(\d+\)/)).toBeVisible()
   })
 })
