@@ -278,7 +278,7 @@ export const expectAddress = async (
 }
 
 /*
-  The deletion section is formatted like bellow:
+  The deletion section is formatted like below:
   	'-'
     'Farajaland'
     'Central'
