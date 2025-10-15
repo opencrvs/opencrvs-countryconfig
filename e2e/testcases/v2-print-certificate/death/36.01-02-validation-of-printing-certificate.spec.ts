@@ -177,7 +177,7 @@ test.describe
   let page: Page
   let declaration: Declaration
 
-  const informantAge = faker.number.int({ min: 18, max: 90 }).toString()
+  const informantAge = faker.number.int({ min: 18, max: 90 })
 
   const declarationOverrides = {
     'informant.relation': 'SON',
