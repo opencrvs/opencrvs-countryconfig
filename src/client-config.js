@@ -29,11 +29,8 @@ window.config = {
         defaultMessage: 'Development dashboard',
         description: 'Menu item for development dashboard'
       },
-      url: 'http://localhost:3040/ping',
+      url: 'http://localhost:3040/ping'
     }
   ],
-  FEATURES: {
-    // The V2_EVENTS variable is passed down from src/index.ts:309
-    V2_EVENTS: {{ V2_EVENTS }}
-  }
+  FEATURES: {}
 }
