@@ -42,8 +42,11 @@ test.describe.serial('44.14.0 Validate "Certified copy" option', () => {
   test('44.14.1 "Certified Copy" is not available in certificate types', async () => {
     await page.locator('#certificateTemplateId svg').click()
     await expect(
+      page.getByText('Birth Certificate', { exact: true })
+    ).toHaveCount(2) // One as a selected option, another in dropdown
+    await expect(
       page.getByText('Birth Certificate Certified Copy', { exact: true })
-    ).toHaveCount(0)
+    ).not.toBeVisible()
     await page.locator('body').click()
   })
 
@@ -75,6 +78,9 @@ test.describe.serial('44.14.0 Validate "Certified copy" option', () => {
     await page.locator('#certificateTemplateId svg').click()
     await expect(
       page.getByText('Birth Certificate Certified Copy', { exact: true })
-    ).toHaveCount(1)
+    ).toBeVisible()
+    await expect(
+      page.getByText('Birth Certificate', { exact: true })
+    ).not.toBeVisible()
   })
 })
