@@ -70,6 +70,8 @@ export function makeNotificationHandler<T extends TriggerEvent>(event: T) {
 
     const payloadValidation = TriggerPayload[event].safeParse(maybePayload)
 
+    console.log('payloadValidation', payloadValidation)
+
     if (!payloadValidation.success) {
       return h
         .response({
@@ -117,12 +119,15 @@ export async function sendUserNotification<T extends TriggerEvent>(
   event: T,
   payload: TriggerPayload[T]
 ) {
+  console.log('here???')
   const variable = {
     ...convertPayloadToVariable({ event, payload } as TriggerEventPayloadPair),
     applicationName: applicationConfig.APPLICATION_NAME,
     countryLogo: COUNTRY_LOGO_URL
   }
 
+  console.log('variable')
+  console.log(variable)
   await notify({
     event,
     variable,
@@ -147,6 +152,8 @@ export async function notify({
   deliveryMethod
 }: NotificationParams) {
   const { email, mobile, name, bcc } = recipient
+
+  console.log('notify???')
 
   if (deliveryMethod === 'email') {
     if (!email) {
@@ -284,6 +291,8 @@ function convertPayloadToVariable({
       }
 
     case TriggerEvent.TWO_FA:
+    case TriggerEvent.CHANGE_EMAIL_ADDRESS:
+    case TriggerEvent.CHANGE_PHONE_NUMBER:
       return {
         firstname,
         code: payload.code
