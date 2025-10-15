@@ -210,6 +210,16 @@ export const father = defineFormPage({
             requireFatherDetails
           )
         }
+      ],
+      validation: [
+        {
+          validator: field('father.age').asAge().isBetween(12, 120),
+          message: {
+            defaultMessage: 'Age must be between 12 and 120',
+            description: 'Error message for invalid age',
+            id: 'event.action.declare.form.section.person.field.age.error'
+          }
+        }
       ]
     },
     {
