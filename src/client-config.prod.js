@@ -33,7 +33,7 @@ window.config = {
         defaultMessage: 'Registrations Dashboard',
         description: 'Menu item for registrations dashboard'
       },
-      url: `${scheme}//metabase.${hostname}/public/dashboard/03be04d6-bde0-4fa7-9141-21cea2a7518b#bordered=false&titled=false&refresh=300`, // Filled in below
+      url: `${scheme}//metabase.${hostname}/public/dashboard/03be04d6-bde0-4fa7-9141-21cea2a7518b#bordered=false&titled=false&refresh=300` // Filled in below
     },
     {
       id: 'completeness',
@@ -42,7 +42,7 @@ window.config = {
         defaultMessage: 'Completeness Dashboard',
         description: 'Menu item for completeness dashboard'
       },
-      url: `${scheme}//metabase.${hostname}/public/dashboard/41940907-8542-4e18-a05d-2408e7e9838a#bordered=false&titled=false&refresh=300`,
+      url: `${scheme}//metabase.${hostname}/public/dashboard/41940907-8542-4e18-a05d-2408e7e9838a#bordered=false&titled=false&refresh=300`
     },
     {
       id: 'registry',
@@ -51,11 +51,8 @@ window.config = {
         defaultMessage: 'Registry',
         description: 'Menu item for registry dashboard'
       },
-      url: `${scheme}//metabase.${hostname}/public/dashboard/dc66b77a-79df-4f68-8fc8-5e5d5a2d7a35#bordered=false&titled=false&refresh=300`,
+      url: `${scheme}//metabase.${hostname}/public/dashboard/dc66b77a-79df-4f68-8fc8-5e5d5a2d7a35#bordered=false&titled=false&refresh=300`
     }
   ],
-  FEATURES: {
-    // The V2_EVENTS variable is passed down from src/index.ts:309
-    V2_EVENTS: {{ V2_EVENTS }}
-  }
+  FEATURES: {}
 }
