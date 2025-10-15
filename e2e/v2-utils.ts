@@ -48,29 +48,11 @@ export async function selectAction(
     await ensureAssigned(page)
   }
 
+  await page.getByRole('button', { name: 'Action', exact: true }).click()
+
   if (isMobile(page)) {
-    await page.getByRole('button', { name: 'Action', exact: true }).click()
     await page.locator('#page-title').getByText(action, { exact: true }).click()
     return
-  }
-
-  // Keep retrying the click until the dropdown is visible
-  let isVisible = false
-  let attempts = 0
-  const maxAttempts = 10
-
-  while (!isVisible && attempts < maxAttempts) {
-    await page.getByRole('button', { name: 'Action', exact: true }).click()
-    isVisible = await page
-      .locator('#action-Dropdown-Content')
-      .getByText(action, { exact: true })
-      .isVisible()
-
-    if (!isVisible) {
-      // Small wait before retrying
-      await page.waitForTimeout(500)
-      attempts++
-    }
   }
 
   await page
