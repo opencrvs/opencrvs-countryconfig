@@ -1,4 +1,4 @@
-import { Page, expect } from '@playwright/test'
+import { Locator, Page, expect } from '@playwright/test'
 import {
   SAFE_INPUT_CHANGE_TIMEOUT_MS,
   SAFE_OUTBOX_TIMEOUT_MS
@@ -122,4 +122,26 @@ export async function ensureOutboxIsEmpty(page: Page) {
 export async function type(page: Page, locator: string, text: string) {
   await page.locator(locator).fill(text)
   await page.locator(locator).blur()
+}
+
+export const assertTexts = async ({
+  root,
+  texts,
+  locator,
+  testId
+}: {
+  root: Page | Locator
+  texts: string[]
+  locator?: string
+  testId?: string
+}) => {
+  for (const text of texts) {
+    if (locator) {
+      await expect(root.locator(locator).getByText(text)).toBeVisible()
+    } else if (testId) {
+      await expect(root.getByTestId(testId).getByText(text)).toBeVisible()
+    } else {
+      await expect(root.getByText(text)).toBeVisible()
+    }
+  }
 }

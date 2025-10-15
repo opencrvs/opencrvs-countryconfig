@@ -1,12 +1,6 @@
-import { expect, test, type Page } from '@playwright/test'
+import { expect, test } from '@playwright/test'
 import { loginToV2 } from '../../helpers'
-
-const assertPills = async (page: Page, pills: string[]) => {
-  pills.push('Event: Death')
-  for (const pill of pills) {
-    await expect(page.getByText(pill)).toBeVisible()
-  }
-}
+import { assertTexts } from '../../v2-utils'
 
 test.describe("Advanced Search 8 - Death - Deceased's place of death", () => {
   test.beforeEach(async ({ page }) => {
@@ -45,10 +39,15 @@ test.describe("Advanced Search 8 - Death - Deceased's place of death", () => {
     await page.getByTestId('search').click()
     await expect(page.getByText(/Search results\s*\(\d+\)/)).toBeVisible()
 
-    await assertPills(page, [
-      "Deceased's Health Institution: Water FallsRural Health Centre, Ienge, Pualula, Farajaland",
-      'Place of death: Health Institution'
-    ])
+    await assertTexts({
+      root: page,
+      texts: [
+        'Event: Death',
+        "Deceased's Health Institution: Water FallsRural Health Centre, Ienge, Pualula, Farajaland",
+        'Place of death: Health Institution'
+      ],
+      testId: 'search-result'
+    })
   })
   test('8.3 Select Residential address', async ({ page }) => {
     await page.getByTestId('select__eventDetails____placeOfDeath').click()
@@ -63,10 +62,15 @@ test.describe("Advanced Search 8 - Death - Deceased's place of death", () => {
     await page.getByTestId('search').click()
     await expect(page.getByText(/Search results\s*\(\d+\)/)).toBeVisible()
 
-    await assertPills(page, [
-      'Usual place of residence: Farajaland, Central, Ibombo',
-      'Place of death: Residential address'
-    ])
+    await assertTexts({
+      root: page,
+      texts: [
+        'Event: Death',
+        'Usual place of residence: Farajaland, Central, Ibombo',
+        'Place of death: Residential address'
+      ],
+      testId: 'search-result'
+    })
   })
   test('8.4 Select Other', async ({ page }) => {
     await page.getByTestId('select__eventDetails____placeOfDeath').click()
@@ -80,9 +84,16 @@ test.describe("Advanced Search 8 - Death - Deceased's place of death", () => {
 
     await page.getByTestId('search').click()
     await expect(page.getByText(/Search results\s*\(\d+\)/)).toBeVisible()
-    await assertPills(page, [
-      'Death location address: Farajaland, Central, Ibombo',
-      'Place of death: Other'
-    ])
+    await assertTexts({
+      root: page,
+      texts: [
+        'Event: Death',
+        'Death location address: Farajaland, Central, Ibombo',
+        'Place of death: Other'
+      ],
+      testId: 'search-result'
+    })
+
+    const t = page.locator('#abcd')
   })
 })

@@ -3,7 +3,7 @@ import { getToken, loginToV2 } from '../../helpers'
 import { createDeclaration } from '../v2-test-data/birth-declaration-with-father-brother'
 import { CREDENTIALS } from '../../constants'
 import { getMonthFormatted } from './helper'
-import { type } from '../../v2-utils'
+import { assertTexts, type } from '../../v2-utils'
 
 test.describe
   .serial("Advanced Search - Birth Event Declaration - Informant's details", () => {
@@ -66,15 +66,15 @@ test.describe
       const searchResult = await page.locator('#content-name').textContent()
       const searchResultCountNumberInBracketsRegex = /\((\d+)\)$/
       expect(searchResult).toMatch(searchResultCountNumberInBracketsRegex)
-      await expect(page.getByText('Event: Birth')).toBeVisible()
-      await expect(
-        page.getByText(`Informant's Date of birth: ${yyyy}-${mm}-${dd}`)
-      ).toBeVisible()
-      await expect(
-        page.getByText(
+      await assertTexts({
+        root: page,
+        testId: 'search-result',
+        texts: [
+          'Event: Birth',
+          `Informant's Date of birth: ${yyyy}-${mm}-${dd}`,
           `Informant's Name: ${record.declaration['informant.name'].firstname} ${record.declaration['informant.name'].surname}`
-        )
-      ).toBeVisible()
+        ]
+      })
       await expect(page.getByRole('button', { name: 'Edit' })).toBeVisible()
     })
 
