@@ -123,7 +123,7 @@ export interface CreateDeclarationResponse {
 
 export async function createDeclaration(
   token: string,
-  dec?: Partial<ActionUpdate>,
+  dec?: ((_: ActionUpdate) => Partial<ActionUpdate>) | Partial<ActionUpdate>,
   action: ActionType = ActionType.REGISTER,
   placeOfDeathType?: 'DECEASED_USUAL_RESIDENCE' | 'HEALTH_FACILITY'
 ): Promise<CreateDeclarationResponse> {
