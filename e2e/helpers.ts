@@ -11,6 +11,7 @@ import {
 import { format, parseISO } from 'date-fns'
 import { isArray, random } from 'lodash'
 import fetch from 'node-fetch'
+import { isMobile } from './mobile-helpers'
 
 export async function login(page: Page, username: string, password: string) {
   const token = await getToken(username, password)
@@ -35,6 +36,13 @@ export async function createPIN(page: Page) {
 }
 
 export async function logout(page: Page) {
+  if (isMobile(page)) {
+    await page.goto(CLIENT_V2_URL)
+    await page.getByRole('button', { name: 'Toggle menu', exact: true }).click()
+    await page.getByRole('button', { name: 'Logout', exact: true }).click()
+    return
+  }
+
   await page.locator('#ProfileMenu-dropdownMenu').click()
   await page
     .locator('#ProfileMenu-dropdownMenu')
