@@ -62,14 +62,20 @@ test.describe.serial('Correct record - Change ages', () => {
         surname: faker.person.lastName()
       },
       'informant.dobUnknown': true,
-      'informant.age': { age: informantAgeBefore, asOfDate: childDob },
+      'informant.age': {
+        age: Number.parseInt(informantAgeBefore),
+        asOfDate: childDob
+      },
       'informant.nationality': 'FAR',
       'informant.idType': 'NATIONAL_ID',
       'informant.nid': faker.string.numeric(10),
       'father.detailsNotAvailable': true,
       'father.reason': 'Father is missing.',
       'mother.dobUnknown': true,
-      'mother.age': { age: motherAgeBefore, asOfDate: childDob },
+      'mother.age': {
+        age: Number.parseInt(motherAgeBefore),
+        asOfDate: childDob
+      },
       ...(await getPlaceOfBirth('PRIVATE_HOME')),
       'mother.name': {
         firstname: faker.person.firstName(),
