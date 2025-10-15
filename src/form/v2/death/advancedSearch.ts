@@ -9,8 +9,44 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { AdvancedSearchConfig, event, field } from '@opencrvs/toolkit/events'
-import { placeOfDeathOptions } from './forms/pages/eventDetails'
+import {
+  AdvancedSearchConfig,
+  ConditionalType,
+  event,
+  field,
+  TranslationConfig
+} from '@opencrvs/toolkit/events'
+import { createSelectOptions } from '../utils'
+
+const PlaceOfDeath = {
+  HEALTH_FACILITY: 'HEALTH_FACILITY',
+  DECEASED_USUAL_RESIDENCE: 'DECEASED_USUAL_RESIDENCE',
+  OTHER: 'OTHER'
+} as const
+
+const placeOfDeathMessageDescriptors = {
+  HEALTH_FACILITY: {
+    defaultMessage: 'Health Institution',
+    description: 'Select item for Health Institution',
+    id: 'form.field.label.healthInstitution'
+  },
+  DECEASED_USUAL_RESIDENCE: {
+    defaultMessage: 'Residential address',
+    description: 'Select item for Private Home',
+    id: 'form.field.label.privateHome'
+  },
+  OTHER: {
+    defaultMessage: 'Other',
+    description: 'Select item for Other location',
+    id: 'form.field.label.otherInstitution'
+  }
+} satisfies Record<keyof typeof PlaceOfDeath, TranslationConfig>
+
+const placeOfDeathOptions = createSelectOptions(
+  PlaceOfDeath,
+  placeOfDeathMessageDescriptors
+)
+
 const deceasedPrefix = {
   id: 'death.search.criteria.label.prefix.deceased',
   defaultMessage: "Deceased's",
@@ -66,6 +102,16 @@ export const advancedSearchDeath = [
       }).exact(),
       field('eventDetails.deathLocation', {
         searchCriteriaLabelPrefix: deceasedPrefix
+      }).exact(),
+      field('deceased.address', {
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: field('eventDetails.placeOfDeath').isEqualTo(
+              PlaceOfDeath.DECEASED_USUAL_RESIDENCE
+            )
+          }
+        ]
       }).exact(),
       field('eventDetails.deathLocationOther', {}).exact()
     ]
