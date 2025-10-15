@@ -10,6 +10,8 @@ import {
   ensureAssigned,
   ensureOutboxIsEmpty,
   expectInUrl,
+  navigateToWorkqueue,
+  selectAction,
   type
 } from '../../v2-utils'
 import { formatV2ChildName } from '../v2-birth/helpers'
@@ -43,18 +45,12 @@ test.describe.serial('Birth correction flow - Mobile', () => {
   })
 
   test('Navigate to the correction form', async () => {
-    await page.getByRole('button', { name: 'Toggle menu', exact: true }).click()
-    await page.getByRole('button', { name: 'Ready to print' }).click()
+    await navigateToWorkqueue(page, 'Ready to print')
     await page
       .getByRole('button', { name: formatV2ChildName(declaration) })
       .click()
 
-    await ensureAssigned(page)
-    await page.getByRole('button', { name: 'Action', exact: true }).click()
-    await page
-      .locator('#page-title')
-      .getByText('Correct record', { exact: true })
-      .click()
+    await selectAction(page, 'Correct record')
   })
 
   test('Fill in the correction details form', async () => {
@@ -161,10 +157,7 @@ test.describe.serial('Birth correction flow - Mobile', () => {
     })
 
     test("Find the event in the 'Ready for review' workflow", async () => {
-      await page
-        .getByRole('button', { name: 'Toggle menu', exact: true })
-        .click()
-      await page.getByRole('button', { name: 'Ready for review' }).click()
+      await navigateToWorkqueue(page, 'Ready for review')
 
       await page
         .getByRole('button', { name: formatV2ChildName(declaration) })
@@ -172,12 +165,7 @@ test.describe.serial('Birth correction flow - Mobile', () => {
     })
 
     test('Navigate to correction review', async () => {
-      await ensureAssigned(page)
-      await page.getByRole('button', { name: 'Action', exact: true }).click()
-      await page
-        .locator('#page-title')
-        .getByText('Review', { exact: true })
-        .click()
+      await selectAction(page, 'Review')
 
       await expect(page.getByText('RequesterInformant (Mother)')).toBeVisible()
       await expect(

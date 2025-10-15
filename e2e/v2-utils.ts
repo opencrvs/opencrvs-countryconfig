@@ -1,8 +1,30 @@
 import { Page, expect } from '@playwright/test'
 import {
+  CLIENT_V2_URL,
   SAFE_INPUT_CHANGE_TIMEOUT_MS,
   SAFE_OUTBOX_TIMEOUT_MS
 } from './constants'
+import { isMobile } from './mobile-helpers'
+
+type Workqueue =
+  | 'Ready to print'
+  | 'Ready for review'
+  | 'Notifications'
+  | 'Requires updates'
+  | 'In external validation'
+  | 'Assigned to you'
+  | 'Recent'
+  | 'Sent for review'
+  | 'Outbox'
+
+export async function navigateToWorkqueue(page: Page, workqueue: Workqueue) {
+  if (isMobile(page)) {
+    await page.goto(CLIENT_V2_URL)
+    await page.getByRole('button', { name: 'Toggle menu', exact: true }).click()
+  }
+
+  await page.getByRole('button', { name: workqueue }).click()
+}
 
 export async function selectAction(
   page: Page,
@@ -24,6 +46,12 @@ export async function selectAction(
     action !== 'View'
   ) {
     await ensureAssigned(page)
+  }
+
+  if (isMobile(page)) {
+    await page.getByRole('button', { name: 'Action', exact: true }).click()
+    await page.locator('#page-title').getByText(action, { exact: true }).click()
+    return
   }
 
   // Keep retrying the click until the dropdown is visible
