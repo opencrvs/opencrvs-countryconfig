@@ -105,11 +105,14 @@ test.describe.serial('Certified copies renders spouse age correctly', () => {
       CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
       CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
     )
-    const res = await createDeclaration(token, {
+    const res = await createDeclaration(token, (mockDeclaration) => ({
       'spouse.dobUnknown': true,
-      'spouse.age': '25',
+      'spouse.age': {
+        age: '25',
+        asOfDate: mockDeclaration['eventDetails.date'] as string
+      },
       'spouse.dob': undefined
-    })
+    }))
     declaration = res.declaration
     page = await browser.newPage()
   })
@@ -174,6 +177,8 @@ test.describe
   let page: Page
   let declaration: Declaration
 
+  const informantAge = faker.number.int({ min: 18, max: 90 }).toString()
+
   const declarationOverrides = {
     'informant.relation': 'SON',
     'informant.name': {
@@ -181,7 +186,6 @@ test.describe
       surname: faker.person.lastName()
     },
     'informant.dobUnknown': true,
-    'informant.age': faker.number.int({ min: 18, max: 90 }).toString(),
     'informant.dob': undefined,
     'informant.nationality': 'FAR',
     'informant.idType': 'NATIONAL_ID',
@@ -195,7 +199,13 @@ test.describe
       CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
     )
 
-    const res = await createDeclaration(token, declarationOverrides)
+    const res = await createDeclaration(token, (mockDeclaration) => ({
+      ...declarationOverrides,
+      'informant.age': {
+        age: informantAge,
+        asOfDate: mockDeclaration['eventDetails.event'] as string
+      }
+    }))
 
     declaration = res.declaration
     page = await browser.newPage()
@@ -248,11 +258,7 @@ test.describe
         .isVisible()
 
       await page.getByText('Age of informant').isVisible()
-      await page
-        .getByText(
-          joinValuesWith([declarationOverrides['informant.age'], 'years'])
-        )
-        .isVisible()
+      await page.getByText(joinValuesWith([informantAge, 'years'])).isVisible()
 
       await page.getByText('Nationality').isVisible()
       await page
