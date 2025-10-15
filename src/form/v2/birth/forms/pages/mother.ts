@@ -184,7 +184,7 @@ export const mother = defineFormPage({
     },
     {
       id: 'mother.age',
-      type: FieldType.TEXT,
+      type: FieldType.AGE,
       required: true,
       label: {
         defaultMessage: 'Age of mother',
@@ -192,6 +192,7 @@ export const mother = defineFormPage({
         id: 'event.birth.action.declare.form.section.mother.field.age.label'
       },
       configuration: {
+        asOfDate: field('child.dob'),
         postfix: {
           defaultMessage: 'years',
           description: 'This is the postfix for age field',
