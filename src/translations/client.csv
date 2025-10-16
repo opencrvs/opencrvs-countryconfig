@@ -795,6 +795,7 @@ error.userListError,Error message when user list loads fails,Failed to load user
 error.weAreTryingToFixThisError,Error description,This page could not be found,"Ce n'est pas vous, c'est nous. C'est notre faute."
 errors.notAssigned,User not assigned error toast message,You've been unassigned from the event,Vous avez été désassigné de l'événement
 errors.somethingWentWrong,Error toast message for general errors,Something went wrong. Please try again,Une erreur s'est produite. Veuillez réessayer
+event.action.declare.form.section.person.field.age.error,Error message for invalid age,Age must be between 12 and 120,L'auteur doit avoir entre 12 et 120 ans
 event.action.notAvailableForEvent,Shown when user tries to perform an action that is not available for the event,The action you're trying to perform is not available for this event anymore,L'action que vous essayez d'effectuer n'est plus disponible pour cet événement
 event.action.outbox-retry.label,Label for retry button for outbox,Retry,Réessayer
 event.action.review-correction.label,Label for review correction button in dropdown menu,Review,Revoir
@@ -942,6 +943,7 @@ event.death.action.declare.form.review.title,Title of the form to show in review
 event.death.action.declare.form.section.deceased.field.address.label,This is the label for the field,Usual place of residence,Lieu de résidence habituel
 event.death.action.declare.form.section.deceased.field.addressHelper.label,This is the label for the field,Usual place of residence,Lieu de résidence habituel
 event.death.action.declare.form.section.deceased.field.age.checkbox.label,This is the label for the field,Exact date of birth unknown,Date exacte de naissance inconnue
+event.death.action.declare.form.section.deceased.field.age.error,Error message for invalid age,Age must be between 0 and 120,L'auteur doit avoir entre 0 et 120 ans
 event.death.action.declare.form.section.deceased.field.age.label,This is the label for the field,Age of deceased,Âge du défunt
 event.death.action.declare.form.section.deceased.field.age.postfix,This is the postfix for age field,years,ans
 event.death.action.declare.form.section.deceased.field.deathLocation.label,This is the label for the field,Health Institution,Établissement de santé
