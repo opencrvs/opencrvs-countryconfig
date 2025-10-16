@@ -12,8 +12,6 @@ const thisYear = new Date().getFullYear().toString()
 test.describe
   .serial('Advanced Search - Birth Event Declaration - Registration details', () => {
   let page: Page
-  let [yyyy, mm, dd] = ['', '', '']
-  let fullNameOfChild = ''
 
   test.beforeAll(async ({ browser }) => {
     page = await browser.newPage()
@@ -22,19 +20,16 @@ test.describe
       CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
     )
 
-    const record: Awaited<ReturnType<typeof createDeclaration>> =
-      await createDeclaration(token, {
-        'child.dob': faker.date
-          // Randomly chosen DOB between 2010-01-01 and 2020-12-31
-          // Ensures the created record appears on the first page of search results
-          .between({ from: '2010-01-01', to: '2020-12-31' })
-          .toISOString()
-          .split('T')[0],
-        'child.reason': 'Other', // needed for late dob value
-        'child.gender': 'female'
-      })
-    ;[yyyy, mm, dd] = record.declaration['child.dob'].split('-')
-    fullNameOfChild = `${record.declaration['child.name'].firstname} ${record.declaration['child.name'].surname}`
+    await createDeclaration(token, {
+      'child.dob': faker.date
+        // Randomly chosen DOB between 2010-01-01 and 2020-12-31
+        // Ensures the created record appears on the first page of search results
+        .between({ from: '2010-01-01', to: '2020-12-31' })
+        .toISOString()
+        .split('T')[0],
+      'child.reason': 'Other', // needed for late dob value
+      'child.gender': 'female'
+    })
   })
 
   test.afterAll(async () => {

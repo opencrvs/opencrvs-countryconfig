@@ -12,7 +12,11 @@ import {
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
 import { fillDate, validateAddress } from '../helpers'
-import { ensureOutboxIsEmpty, selectAction } from '../../../v2-utils'
+import {
+  ensureAssigned,
+  ensureOutboxIsEmpty,
+  selectAction
+} from '../../../v2-utils'
 
 test.describe.serial('1. Birth declaration case - 1', () => {
   let page: Page
@@ -498,6 +502,19 @@ test.describe.serial('1. Birth declaration case - 1', () => {
           name: formatName(declaration.child.name)
         })
         .click()
+
+      await ensureAssigned(page)
+
+      await expect(page.getByTestId('assignedTo-value')).toHaveText(
+        'Felix Katongo'
+      )
+
+      const assignmentAuditRow = page.locator('#row_4')
+      await expect(assignmentAuditRow.getByText('Assigned')).toBeVisible()
+      await expect(assignmentAuditRow.getByText('Felix Katongo')).toBeVisible()
+      await expect(
+        assignmentAuditRow.getByText('Registration Officer')
+      ).toBeVisible()
 
       await selectAction(page, 'Review')
     })
