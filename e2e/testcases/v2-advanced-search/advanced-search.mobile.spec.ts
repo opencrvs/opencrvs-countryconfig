@@ -5,8 +5,7 @@ import { CREDENTIALS } from '../../constants'
 import { faker } from '@faker-js/faker'
 import { getAllLocations, getLocationIdByName } from '../birth/helpers'
 import { expectInUrl } from '../../v2-utils'
-
-const MOBILE_VIEWPORT_SIZE = { height: 800, width: 360 }
+import { setMobileViewport } from '../../mobile-helpers'
 
 test.describe.serial('Advanced Search - Mobile', () => {
   let page: Page
@@ -14,7 +13,7 @@ test.describe.serial('Advanced Search - Mobile', () => {
   let district = ''
   test.beforeAll(async ({ browser }) => {
     page = await browser.newPage()
-    page.setViewportSize(MOBILE_VIEWPORT_SIZE)
+    setMobileViewport(page)
     const token = await getToken(
       CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
       CREDENTIALS.LOCAL_REGISTRAR.PASSWORD

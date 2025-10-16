@@ -20,7 +20,7 @@ test.describe.serial('1. User conditional form flow', () => {
         familyName: faker.person.lastName('male')
       },
       gender: 'Male',
-      birthDate: getRandomDate(0, 200)
+      birthDate: getRandomDate(61, 200) // min age 61 to ensure senior pass id is shown
     },
     recommender: {
       name: {

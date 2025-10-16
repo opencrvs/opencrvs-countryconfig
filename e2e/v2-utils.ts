@@ -1,8 +1,30 @@
 import { Locator, Page, expect } from '@playwright/test'
 import {
+  CLIENT_V2_URL,
   SAFE_INPUT_CHANGE_TIMEOUT_MS,
   SAFE_OUTBOX_TIMEOUT_MS
 } from './constants'
+import { isMobile } from './mobile-helpers'
+
+type Workqueue =
+  | 'Ready to print'
+  | 'Ready for review'
+  | 'Notifications'
+  | 'Requires updates'
+  | 'In external validation'
+  | 'Assigned to you'
+  | 'Recent'
+  | 'Sent for review'
+  | 'Outbox'
+
+export async function navigateToWorkqueue(page: Page, workqueue: Workqueue) {
+  if (isMobile(page)) {
+    await page.goto(CLIENT_V2_URL)
+    await page.getByRole('button', { name: 'Toggle menu', exact: true }).click()
+  }
+
+  await page.getByRole('button', { name: workqueue }).click()
+}
 
 export async function selectAction(
   page: Page,
@@ -26,23 +48,11 @@ export async function selectAction(
     await ensureAssigned(page)
   }
 
-  // Keep retrying the click until the dropdown is visible
-  let isVisible = false
-  let attempts = 0
-  const maxAttempts = 10
+  await page.getByRole('button', { name: 'Action', exact: true }).click()
 
-  while (!isVisible && attempts < maxAttempts) {
-    await page.getByRole('button', { name: 'Action', exact: true }).click()
-    isVisible = await page
-      .locator('#action-Dropdown-Content')
-      .getByText(action, { exact: true })
-      .isVisible()
-
-    if (!isVisible) {
-      // Small wait before retrying
-      await page.waitForTimeout(500)
-      attempts++
-    }
+  if (isMobile(page)) {
+    await page.locator('#page-title').getByText(action, { exact: true }).click()
+    return
   }
 
   await page

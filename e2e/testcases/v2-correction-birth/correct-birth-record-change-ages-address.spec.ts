@@ -50,6 +50,10 @@ test.describe.serial('Correct record - Change ages', () => {
       throw new Error('Province or district not found')
     }
 
+    const childDob = new Date(Date.now() - 60 * 60 * 24 * 1000)
+      .toISOString()
+      .split('T')[0]
+
     const payload = {
       'informant.relation': 'BROTHER',
       'informant.email': 'brothers@email.com',
@@ -58,14 +62,20 @@ test.describe.serial('Correct record - Change ages', () => {
         surname: faker.person.lastName()
       },
       'informant.dobUnknown': true,
-      'informant.age': informantAgeBefore,
+      'informant.age': {
+        age: Number.parseInt(informantAgeBefore),
+        asOfDate: childDob
+      },
       'informant.nationality': 'FAR',
       'informant.idType': 'NATIONAL_ID',
       'informant.nid': faker.string.numeric(10),
       'father.detailsNotAvailable': true,
       'father.reason': 'Father is missing.',
       'mother.dobUnknown': true,
-      'mother.age': motherAgeBefore,
+      'mother.age': {
+        age: Number.parseInt(motherAgeBefore),
+        asOfDate: childDob
+      },
       ...(await getPlaceOfBirth('PRIVATE_HOME')),
       'mother.name': {
         firstname: faker.person.firstName(),
@@ -98,9 +108,7 @@ test.describe.serial('Correct record - Change ages', () => {
         surname: faker.person.lastName()
       },
       'child.gender': 'female',
-      'child.dob': new Date(Date.now() - 60 * 60 * 24 * 1000)
-        .toISOString()
-        .split('T')[0]
+      'child.dob': childDob
     }
 
     const res = await createDeclaration(token, payload)
@@ -187,7 +195,7 @@ test.describe.serial('Correct record - Change ages', () => {
   test('Change informant age', async () => {
     await page.getByTestId('change-button-informant.age').click()
 
-    await page.getByTestId('text__informant____age').fill(informantAgeAfter)
+    await page.getByTestId('number__informant____age').fill(informantAgeAfter)
 
     await page
       .getByRole('button', { name: 'Back to review', exact: true })
@@ -237,7 +245,7 @@ test.describe.serial('Correct record - Change ages', () => {
   test('Change mother age', async () => {
     await page.getByTestId('change-button-mother.age').click()
 
-    await page.getByTestId('text__mother____age').fill(motherAgeAfter)
+    await page.getByTestId('number__mother____age').fill(motherAgeAfter)
 
     await page
       .getByRole('button', { name: 'Back to review', exact: true })

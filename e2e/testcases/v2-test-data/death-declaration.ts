@@ -52,7 +52,9 @@ export async function getDeclaration({
   partialDeclaration = {},
   placeOfDeathType: placeOfDeathType = 'DECEASED_USUAL_RESIDENCE'
 }: {
-  partialDeclaration?: Record<string, any>
+  partialDeclaration?:
+    | ((_: Record<string, any>) => Record<string, any>)
+    | Record<string, any>
   placeOfDeathType?: 'DECEASED_USUAL_RESIDENCE' | 'HEALTH_FACILITY'
 }) {
   const locations = await getAllLocations('ADMIN_STRUCTURE')
@@ -97,11 +99,16 @@ export async function getDeclaration({
     ...(await getPlaceOfDeath(placeOfDeathType))
   }
 
+  const overrides =
+    typeof partialDeclaration === 'function'
+      ? partialDeclaration(mockDeclaration)
+      : partialDeclaration
+
   // 💡 Merge overriden fields, clear payload
   return omitBy(
     {
       ...mockDeclaration,
-      ...partialDeclaration
+      ...overrides
     },
     (d) => d === undefined
   ) as typeof mockDeclaration
@@ -116,7 +123,7 @@ export interface CreateDeclarationResponse {
 
 export async function createDeclaration(
   token: string,
-  dec?: Partial<ActionUpdate>,
+  dec?: ((_: ActionUpdate) => Partial<ActionUpdate>) | Partial<ActionUpdate>,
   action: ActionType = ActionType.REGISTER,
   placeOfDeathType?: 'DECEASED_USUAL_RESIDENCE' | 'HEALTH_FACILITY'
 ): Promise<CreateDeclarationResponse> {
