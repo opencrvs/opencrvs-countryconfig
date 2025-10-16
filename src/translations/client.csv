@@ -800,6 +800,7 @@ event.action.notAvailableForEvent,Shown when user tries to perform an action tha
 event.action.outbox-retry.label,Label for retry button for outbox,Retry,Réessayer
 event.action.review-correction.label,Label for review correction button in dropdown menu,Review,Revoir
 event.birth.action.archive.label,Label for archive record button in dropdown menu,Archive,Aarchiver
+event.birth.action.certificate.form.section.verifyIdentity.data.label,Label for identity verification data block,"Identity details","Détails de l'identité"
 event.birth.action.certificate.form.section.collectPayment.data.label,Title for the data section,Payment details,Détails du paiement
 event.birth.action.certificate.form.section.collectPayment.fee.label,Title for the data entry,Fee,Frais
 event.birth.action.certificate.form.section.collectPayment.service.label,Title for the data entry,Service,Service

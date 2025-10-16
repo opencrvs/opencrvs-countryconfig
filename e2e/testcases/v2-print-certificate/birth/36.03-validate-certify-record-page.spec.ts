@@ -139,16 +139,43 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
     await ensureAssigned(page)
     await page.getByRole('button', { name: 'Certified', exact: true }).click()
 
-    await expect(page.getByText('Type' + 'Birth Certificate')).toBeVisible()
-    await expect(
-      page.getByText('Requester' + 'Print and issue to Informant (Mother)')
-    ).toBeVisible()
-    await expect(page.getByText('Verified' + 'No')).toBeVisible()
+    const modal = page.getByTestId('event-history-modal')
 
-    // Expect 3 rows
-    await expect(page.locator('#event-history-modal #row_0')).toBeVisible()
-    await expect(page.locator('#event-history-modal #row_1')).toBeVisible()
-    await expect(page.locator('#event-history-modal #row_2')).toBeVisible()
-    await expect(page.locator('#event-history-modal #row_3')).not.toBeVisible()
+    await expect(modal.getByText('Type' + 'Birth Certificate')).toBeVisible()
+    await expect(
+      modal.getByText('Requester' + 'Print and issue to Informant (Mother)')
+    ).toBeVisible()
+    await expect(modal.getByText('Verified' + 'No')).toBeVisible()
+
+    await expect(modal.getByText('Identity details')).toBeVisible()
+    await expect(modal.getByText('Date of birth:')).toBeVisible()
+    await expect(
+      modal.getByText(`ID Number: ${declaration['mother.nid']}`)
+    ).toBeVisible()
+    await expect(modal.getByText('Type of ID: National ID')).toBeVisible()
+
+    await expect(
+      modal.getByText(
+        `Mother's name: ${declaration['mother.name'].firstname} ${declaration['mother.name'].surname}`
+      )
+    ).toBeVisible()
+
+    await expect(modal.getByText('Nationality: Farajaland')).toBeVisible()
+
+    await expect(modal.getByText('Payment details')).toBeVisible()
+    await expect(modal.getByText('Fee: $5.00')).toBeVisible()
+    await expect(
+      modal.getByText(
+        'Service: Birth registration before 30 days of date of birth'
+      )
+    ).toBeVisible()
+
+    // Expect 5 rows
+    await expect(modal.locator('#row_0')).toBeVisible()
+    await expect(modal.locator('#row_1')).toBeVisible()
+    await expect(modal.locator('#row_2')).toBeVisible()
+    await expect(modal.locator('#row_3')).toBeVisible()
+    await expect(modal.locator('#row_4')).toBeVisible()
+    await expect(modal.locator('#row_5')).not.toBeVisible()
   })
 })
