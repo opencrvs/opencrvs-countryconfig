@@ -297,13 +297,13 @@ const RequestDeathDeclarationAction = {
   createdByRole: 'LOCAL_REGISTRAR',
   createdAtLocation: '9e069dda-0d83-4f67-a4f2-9adbf5658e2e' as unknown as UUID,
   declaration: {
-    'spouse.age': '41',
+    'spouse.age': { age: '41', asOfDate: '2025-08-19' },
     'spouse.name': {
       firstname: 'Toki',
       surname: 'Kozuki',
       middlename: ''
     },
-    'deceased.age': '31',
+    'deceased.age': { age: '31', asOfDate: '2025-08-19' },
     'deceased.name': {
       firstname: 'Oden',
       surname: 'Kozuki',
@@ -353,13 +353,13 @@ const DeathDeclarationAction = {
   createdByRole: 'LOCAL_REGISTRAR',
   createdAtLocation: '9e069dda-0d83-4f67-a4f2-9adbf5658e2e' as unknown as UUID,
   declaration: {
-    'spouse.age': '41',
+    'spouse.age': { age: '41', asOfDate: '2025-08-19' },
     'spouse.name': {
       firstname: 'Toki',
       surname: 'Kozuki',
       middlename: ''
     },
-    'deceased.age': '31',
+    'deceased.age': { age: '31', asOfDate: '2025-08-19' },
     'deceased.name': {
       firstname: 'Oden',
       surname: 'Kozuki',
