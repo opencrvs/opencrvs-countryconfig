@@ -123,6 +123,7 @@ export const DEATH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
           configuration: {
             data: [
               {
+                id: 'service',
                 label: {
                   defaultMessage: 'Service',
                   description: 'Title for the data entry',
@@ -137,6 +138,7 @@ export const DEATH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
                 }
               },
               {
+                id: 'fee',
                 label: {
                   defaultMessage: 'Fee',
                   description: 'Title for the data entry',
@@ -170,6 +172,7 @@ export const DEATH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
           configuration: {
             data: [
               {
+                id: 'service',
                 label: {
                   defaultMessage: 'Service',
                   description: 'Title for the data entry',
@@ -184,6 +187,7 @@ export const DEATH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
                 }
               },
               {
+                id: 'fee',
                 label: {
                   defaultMessage: 'Fee',
                   description: 'Title for the data entry',
