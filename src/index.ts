@@ -63,7 +63,12 @@ import {
   onAnyActionHandler
 } from '@countryconfig/api/custom-event/handler'
 import { readFileSync } from 'fs'
-import { ActionType, EventDocument } from '@opencrvs/toolkit/events'
+import {
+  ActionDocument,
+  ActionStatus,
+  ActionType,
+  EventDocument
+} from '@opencrvs/toolkit/events'
 import { Event } from './form/types/types'
 import { onRegisterHandler } from './api/registration'
 import { workqueueconfigHandler } from './api/workqueue/handler'
@@ -279,6 +284,7 @@ export async function createServer() {
   server.route({
     method: 'GET',
     path: '/ping',
+    // eslint-disable-next-line no-unused-vars
     handler: (request: any, h: any) => {
       // Perform any health checks and return true or false for success prop
       return {
@@ -704,10 +710,20 @@ export async function createServer() {
 
     if (wasRequestForActionConfirmation && wasActionAcceptedImmediately) {
       const event = request.payload as EventDocument
+
+      const eventWithOptimisticallyApprovedLastAction = {
+        ...event,
+        actions: event.actions.map((action, index) =>
+          index === event.actions.length - 1
+            ? { ...action, status: ActionStatus.Accepted }
+            : action
+        ) as ActionDocument[]
+      }
+
       const client = getClient()
       try {
         await client.transaction().execute(async (trx) => {
-          await importEvent(event, trx)
+          await importEvent(eventWithOptimisticallyApprovedLastAction, trx)
         })
       } catch (error) {
         // eslint-disable-next-line no-console

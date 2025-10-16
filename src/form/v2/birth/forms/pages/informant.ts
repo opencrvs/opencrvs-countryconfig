@@ -225,7 +225,7 @@ export const informant = defineFormPage({
     },
     {
       id: 'informant.age',
-      type: FieldType.TEXT,
+      type: FieldType.AGE,
       required: true,
       label: {
         defaultMessage: 'Age of informant',
@@ -233,6 +233,7 @@ export const informant = defineFormPage({
         id: 'event.birth.action.declare.form.section.informant.field.age.label'
       },
       configuration: {
+        asOfDate: field('child.dob'),
         postfix: {
           defaultMessage: 'years',
           description: 'This is the postfix for age field',
@@ -246,6 +247,16 @@ export const informant = defineFormPage({
             field('informant.dobUnknown').isEqualTo(true),
             informantOtherThanParent
           )
+        }
+      ],
+      validation: [
+        {
+          validator: field('informant.age').asAge().isBetween(12, 120),
+          message: {
+            defaultMessage: 'Age must be between 12 and 120',
+            description: 'Error message for invalid age',
+            id: 'event.action.declare.form.section.person.field.age.error'
+          }
         }
       ],
       parent: field('informant.relation')

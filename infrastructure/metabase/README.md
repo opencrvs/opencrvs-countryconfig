@@ -10,13 +10,20 @@
 
 # OpenCRVS Dashboards
 
+### Requirements
+
+```
+❯ java -version
+openjdk version "21.0.8" 2025-07-15
+```
+
 ### Run in development mode
 
 By default, Metabase is not started as part of the OpenCRVS stack as running it requires quite a bit of resources. You can use the following commands to use metabase in development:
 
 `yarn metabase` – Starts Metabase in port http://localhost:4444
 `yarn db:shell` - In the metabase directory – open a SQL shell for the database Metabase created
-`yarn db:clear:all` - Clears all analytics databases
+`yarn db:clear:all` - Clear data from analytics dashboard
 
 ### Default credentials
 
