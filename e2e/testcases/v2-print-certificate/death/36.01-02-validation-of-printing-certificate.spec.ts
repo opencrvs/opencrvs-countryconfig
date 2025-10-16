@@ -100,6 +100,8 @@ test.describe.serial('Certified copies renders spouse age correctly', () => {
   let page: Page
   let declaration: Declaration
 
+  const spouseAge = 25
+
   test.beforeAll(async ({ browser }) => {
     const token = await getToken(
       CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
@@ -108,7 +110,7 @@ test.describe.serial('Certified copies renders spouse age correctly', () => {
     const res = await createDeclaration(token, (mockDeclaration) => ({
       'spouse.dobUnknown': true,
       'spouse.age': {
-        age: '25',
+        age: spouseAge,
         asOfDate: mockDeclaration['eventDetails.date'] as string
       },
       'spouse.dob': undefined
@@ -162,9 +164,7 @@ test.describe.serial('Certified copies renders spouse age correctly', () => {
         .isVisible()
 
       await page.getByText('Age of spouse').isVisible()
-      await page
-        .getByText(joinValuesWith([declaration['spouse.age'], 'years']))
-        .isVisible()
+      await page.getByText(joinValuesWith([spouseAge, 'years'])).isVisible()
 
       await page.getByText('Nationality').isVisible()
       await page.getByText(declaration['spouse.nationality']).isVisible()
