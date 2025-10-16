@@ -22,7 +22,13 @@ import {
 } from '@opencrvs/toolkit/events'
 import { not, never } from '@opencrvs/toolkit/conditionals'
 
-import { createSelectOptions, emptyMessage } from '@countryconfig/form/v2/utils'
+import {
+  connectToMOSIPIdReader,
+  connectToMOSIPVerificationStatus,
+  createSelectOptions,
+  emptyMessage,
+  getMOSIPIntegrationFields
+} from '@countryconfig/form/v2/utils'
 import {
   invalidNameValidator,
   MAX_NAME_LENGTH,
@@ -73,129 +79,123 @@ export const deceased = defineFormPage({
     id: 'form.death.deceased.title'
   },
   fields: [
-    {
-      id: 'deceased.verified',
-      type: FieldType.VERIFICATION_STATUS,
-      label: {
-        id: 'deceased.verified.status',
-        defaultMessage: 'Verification status',
-        description: 'The title for the status field label'
-      },
-      configuration: {
-        status: {
-          id: 'deceased.verified.status.text',
-          defaultMessage:
-            '{value, select, authenticated {ID Authenticated} verified {ID Verified} failed {Unverified ID} pending {Pending verification} other {Invalid value}}',
-          description:
-            'Status text shown on the pill on both form declaration and review page'
+    ...getMOSIPIntegrationFields('deceased', {
+      existingConditionals: []
+    }),
+    connectToMOSIPIdReader(
+      {
+        id: 'deceased.name',
+        type: FieldType.NAME,
+        configuration: { maxLength: MAX_NAME_LENGTH },
+        required: true,
+        hideLabel: true,
+        label: {
+          defaultMessage: "Deceased's name",
+          description: 'This is the label for the field',
+          id: 'event.death.action.declare.form.section.deceased.field.name.label'
         },
-        description: {
-          id: 'deceased.verified.status.description',
-          defaultMessage:
-            '{value, select, authenticated {Identity authenticated with National ID system} verified {Identity verified with National ID system} pending {Identity pending verification with National ID system} failed {Identity verification with National ID system failed} other {Invalid value}}',
-          description: 'Description text of the status'
-        }
-      }
-    },
-    {
-      id: 'deceased.name',
-      type: FieldType.NAME,
-      configuration: { maxLength: MAX_NAME_LENGTH },
-      required: true,
-      hideLabel: true,
-      label: {
-        defaultMessage: "Deceased's name",
-        description: 'This is the label for the field',
-        id: 'event.death.action.declare.form.section.deceased.field.name.label'
+        validation: [invalidNameValidator('deceased.name')]
       },
-      validation: [invalidNameValidator('deceased.name')]
-    },
-    {
-      id: 'deceased.gender',
-      type: FieldType.SELECT,
-      required: true,
-      label: {
-        defaultMessage: 'Sex',
-        description: 'This is the label for the field',
-        id: 'event.death.action.declare.form.section.deceased.field.gender.label'
-      },
-      options: genderOptions
-    },
-    {
-      id: 'deceased.dob',
-      type: FieldType.DATE,
-      required: true,
-      validation: [
-        {
-          message: {
-            defaultMessage: 'Must be a valid Birthdate',
-            description: 'This is the error message for invalid date',
-            id: 'event.death.action.declare.form.section.deceased.field.dob.error'
-          },
-          validator: field('deceased.dob').isBefore().now()
+      { valuePath: 'data.name', disableIfDataInPath: 'data.name' }
+    ),
+    connectToMOSIPIdReader(
+      {
+        id: 'deceased.gender',
+        type: FieldType.SELECT,
+        required: true,
+        label: {
+          defaultMessage: 'Sex',
+          description: 'This is the label for the field',
+          id: 'event.death.action.declare.form.section.deceased.field.gender.label'
         },
-        {
-          message: {
-            defaultMessage: 'Date of birth must be before the date of death',
-            description:
-              'This is the error message for date of birth later than date of death',
-            id: 'event.death.action.declare.form.section.deceased.field.dob.error.laterThanDeath'
+        options: genderOptions
+      },
+      { valuePath: 'data.gender', disableIfDataInPath: 'data.gender' }
+    ),
+    connectToMOSIPIdReader(
+      {
+        id: 'deceased.dob',
+        type: FieldType.DATE,
+        required: true,
+        validation: [
+          {
+            message: {
+              defaultMessage: 'Must be a valid Birthdate',
+              description: 'This is the error message for invalid date',
+              id: 'event.death.action.declare.form.section.deceased.field.dob.error'
+            },
+            validator: field('deceased.dob').isBefore().now()
           },
-          validator: field('deceased.dob')
-            .isBefore()
-            .date(field('eventDetails.date'))
-        }
-      ],
-      label: {
-        defaultMessage: 'Date of birth',
-        description: 'This is the label for the field',
-        id: 'event.death.action.declare.form.section.deceased.field.dob.label'
+          {
+            message: {
+              defaultMessage: 'Date of birth must be before the date of death',
+              description:
+                'This is the error message for date of birth later than date of death',
+              id: 'event.death.action.declare.form.section.deceased.field.dob.error.laterThanDeath'
+            },
+            validator: field('deceased.dob')
+              .isBefore()
+              .date(field('eventDetails.date'))
+          }
+        ],
+        label: {
+          defaultMessage: 'Date of birth',
+          description: 'This is the label for the field',
+          id: 'event.death.action.declare.form.section.deceased.field.dob.label'
+        },
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: not(field(`deceased.dobUnknown`).isEqualTo(true))
+          }
+        ]
       },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: not(field(`deceased.dobUnknown`).isEqualTo(true))
-        }
-      ]
-    },
-    {
-      id: `deceased.dobUnknown`,
-      type: FieldType.CHECKBOX,
-      label: {
-        defaultMessage: 'Exact date of birth unknown',
-        description: 'This is the label for the field',
-        id: `v2.event.death.action.declare.form.section.deceased.field.age.checkbox.label`
+      { valuePath: 'data.birthDate', disableIfDataInPath: 'data.birthDate' }
+    ),
+    connectToMOSIPIdReader(
+      {
+        id: `deceased.dobUnknown`,
+        type: FieldType.CHECKBOX,
+        label: {
+          defaultMessage: 'Exact date of birth unknown',
+          description: 'This is the label for the field',
+          id: `v2.event.death.action.declare.form.section.deceased.field.age.checkbox.label`
+        },
+        conditionals: [
+          {
+            type: ConditionalType.DISPLAY_ON_REVIEW,
+            conditional: never()
+          }
+        ]
       },
-      conditionals: [
-        {
-          type: ConditionalType.DISPLAY_ON_REVIEW,
-          conditional: never()
-        }
-      ]
-    },
-    {
-      id: `deceased.age`,
-      type: FieldType.TEXT,
-      required: true,
-      label: {
-        defaultMessage: `Age of deceased`,
-        description: 'This is the label for the field',
-        id: 'event.death.action.declare.form.section.deceased.field.age.label'
+      { hideIfDataInPath: 'data.dateOfBirth' }
+    ),
+    connectToMOSIPIdReader(
+      {
+        id: `deceased.age`,
+        type: FieldType.TEXT,
+        required: true,
+        label: {
+          defaultMessage: `Age of deceased`,
+          description: 'This is the label for the field',
+          id: 'event.death.action.declare.form.section.deceased.field.age.label'
+        },
+        configuration: {
+          postfix: {
+            defaultMessage: 'years',
+            description: 'This is the postfix for age field',
+            id: `v2.event.death.action.declare.form.section.deceased.field.age.postfix`
+          }
+        },
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: field(`deceased.dobUnknown`).isEqualTo(true)
+          }
+        ]
       },
-      configuration: {
-        postfix: {
-          defaultMessage: 'years',
-          description: 'This is the postfix for age field',
-          id: `v2.event.death.action.declare.form.section.deceased.field.age.postfix`
-        }
-      },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: field(`deceased.dobUnknown`).isEqualTo(true)
-        }
-      ]
-    },
+      { hideIfDataInPath: 'data.dateOfBirth' }
+    ),
     {
       id: `deceased.nationality`,
       type: FieldType.COUNTRY,
@@ -207,46 +207,52 @@ export const deceased = defineFormPage({
       },
       defaultValue: 'FAR'
     },
-    {
-      id: `deceased.idType`,
-      type: FieldType.SELECT,
-      required: true,
-      label: {
-        defaultMessage: 'Type of ID',
-        description: 'This is the label for the field',
-        id: `v2.event.death.action.declare.form.section.person.field.idType.label`
+    connectToMOSIPVerificationStatus(
+      {
+        id: `deceased.idType`,
+        type: FieldType.SELECT,
+        required: true,
+        label: {
+          defaultMessage: 'Type of ID',
+          description: 'This is the label for the field',
+          id: `v2.event.death.action.declare.form.section.person.field.idType.label`
+        },
+        options: idTypeOptions
       },
-      options: idTypeOptions
-    },
-    {
-      id: 'deceased.nid',
-      type: FieldType.ID,
-      required: true,
-      label: {
-        defaultMessage: 'ID Number',
-        description: 'This is the label for the field',
-        id: `v2.event.death.action.declare.form.section.person.field.nid.label`
+      { hideIfAuthenticated: true }
+    ),
+    connectToMOSIPVerificationStatus(
+      {
+        id: 'deceased.nid',
+        type: FieldType.ID,
+        required: true,
+        label: {
+          defaultMessage: 'ID Number',
+          description: 'This is the label for the field',
+          id: `v2.event.death.action.declare.form.section.person.field.nid.label`
+        },
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: field('deceased.idType').isEqualTo(IdType.NATIONAL_ID)
+          }
+        ],
+        validation: [
+          nationalIdValidator('deceased.nid'),
+          {
+            message: {
+              defaultMessage: 'National id must be unique',
+              description: 'This is the error message for non-unique ID Number',
+              id: 'event.death.action.declare.form.nid.unique'
+            },
+            validator: and(
+              not(field('deceased.nid').isEqualTo(field('informant.nid')))
+            )
+          }
+        ]
       },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: field('deceased.idType').isEqualTo(IdType.NATIONAL_ID)
-        }
-      ],
-      validation: [
-        nationalIdValidator('deceased.nid'),
-        {
-          message: {
-            defaultMessage: 'National id must be unique',
-            description: 'This is the error message for non-unique ID Number',
-            id: 'event.death.action.declare.form.nid.unique'
-          },
-          validator: and(
-            not(field('deceased.nid').isEqualTo(field('informant.nid')))
-          )
-        }
-      ]
-    },
+      { hideIfAuthenticated: true }
+    ),
     {
       id: `deceased.passport`,
       type: FieldType.TEXT,

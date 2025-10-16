@@ -61,6 +61,7 @@ services:
       - OPENID_PROVIDER_CLIENT_ID=${OPENID_PROVIDER_CLIENT_ID:-}
       - OPENID_PROVIDER_CLAIMS=${OPENID_PROVIDER_CLAIMS:-}
       - MOSIP_API_USERINFO_URL=${MOSIP_API_USERINFO_URL}
+      - V2_EVENTS=true
     deploy:
       replicas: 1
     networks:

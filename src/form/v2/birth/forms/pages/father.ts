@@ -20,7 +20,12 @@ import {
   user
 } from '@opencrvs/toolkit/events'
 import { or, not } from '@opencrvs/toolkit/conditionals'
-import { emptyMessage } from '@countryconfig/form/v2/utils'
+import {
+  connectToMOSIPIdReader,
+  connectToMOSIPVerificationStatus,
+  emptyMessage,
+  getMOSIPIntegrationFields
+} from '@countryconfig/form/v2/utils'
 import {
   invalidNameValidator,
   MAX_NAME_LENGTH,
@@ -107,140 +112,130 @@ export const father = defineFormPage({
         }
       ]
     },
-    {
-      id: 'father.verified',
-      type: FieldType.VERIFICATION_STATUS,
-      label: {
-        id: 'father.verified.status',
-        defaultMessage: 'Verification status',
-        description: 'The title for the status field label'
-      },
-      configuration: {
-        status: {
-          id: 'father.verified.status.text',
-          defaultMessage:
-            '{value, select, authenticated {ID Authenticated} verified {ID Verified} failed {Unverified ID} pending {Pending verification} other {Invalid value}}',
-          description:
-            'Status text shown on the pill on both form declaration and review page'
-        },
-        description: {
-          id: 'father.verified.status.description',
-          defaultMessage:
-            '{value, select, authenticated {Identity authenticated with National ID system} verified {Identity verified with National ID system} pending {Identity pending verification with National ID system} failed {Identity verification with National ID system failed} other {Invalid value}}',
-          description: 'Description text of the status'
-        }
-      },
-      conditionals: [
+    ...getMOSIPIntegrationFields('father', {
+      existingConditionals: [
         {
           type: ConditionalType.SHOW,
           conditional: requireFatherDetails
         }
       ]
-    },
-    {
-      id: 'father.name',
-      type: FieldType.NAME,
-      required: true,
-      configuration: { maxLength: MAX_NAME_LENGTH },
-      hideLabel: true,
-      label: {
-        defaultMessage: "Father's name",
-        description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.father.field.name.label'
+    }),
+    connectToMOSIPIdReader(
+      {
+        id: 'father.name',
+        type: FieldType.NAME,
+        required: true,
+        configuration: { maxLength: MAX_NAME_LENGTH },
+        hideLabel: true,
+        label: {
+          defaultMessage: "Father's name",
+          description: 'This is the label for the field',
+          id: 'event.birth.action.declare.form.section.father.field.name.label'
+        },
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: requireFatherDetails
+          }
+        ],
+        validation: [invalidNameValidator('father.name')]
       },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: requireFatherDetails
-        }
-      ],
-      validation: [invalidNameValidator('father.name')]
-    },
-    {
-      id: 'father.dob',
-      type: 'DATE',
-      analytics: true,
-      required: true,
-      secured: true,
-      validation: [
-        {
-          message: {
-            defaultMessage: 'Must be a valid Birthdate',
-            description: 'This is the error message for invalid date',
-            id: 'event.birth.action.declare.form.section.person.field.dob.error'
+      { valuePath: 'data.name', disableIfDataInPath: 'data.name' }
+    ),
+    connectToMOSIPIdReader(
+      {
+        id: 'father.dob',
+        type: 'DATE',
+        analytics: true,
+        required: true,
+        secured: true,
+        validation: [
+          {
+            message: {
+              defaultMessage: 'Must be a valid Birthdate',
+              description: 'This is the error message for invalid date',
+              id: 'event.birth.action.declare.form.section.person.field.dob.error'
+            },
+            validator: field('father.dob').isBefore().now()
           },
-          validator: field('father.dob').isBefore().now()
+          {
+            message: {
+              defaultMessage: "Birth date must be before child's birth date",
+              description:
+                "This is the error message for a birth date after child's birth date",
+              id: 'event.birth.action.declare.form.section.person.dob.afterChild'
+            },
+            validator: field('father.dob').isBefore().date(field('child.dob'))
+          }
+        ],
+        label: {
+          defaultMessage: 'Date of birth',
+          description: 'This is the label for the field',
+          id: 'event.birth.action.declare.form.section.person.field.dob.label'
         },
-        {
-          message: {
-            defaultMessage: "Birth date must be before child's birth date",
-            description:
-              "This is the error message for a birth date after child's birth date",
-            id: 'event.birth.action.declare.form.section.person.dob.afterChild'
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: and(
+              not(field('father.dobUnknown').isEqualTo(true)),
+              requireFatherDetails
+            )
+          }
+        ]
+      },
+      { valuePath: 'data.birthDate', disableIfDataInPath: 'data.birthDate' }
+    ),
+    connectToMOSIPIdReader(
+      {
+        id: 'father.dobUnknown',
+        type: FieldType.CHECKBOX,
+        label: {
+          defaultMessage: 'Exact date of birth unknown',
+          description: 'This is the label for the field',
+          id: 'event.birth.action.declare.form.section.person.field.age.checkbox.label'
+        },
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: requireFatherDetails
           },
-          validator: field('father.dob').isBefore().date(field('child.dob'))
-        }
-      ],
-      label: {
-        defaultMessage: 'Date of birth',
-        description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.person.field.dob.label'
+          {
+            type: ConditionalType.DISPLAY_ON_REVIEW,
+            conditional: never()
+          }
+        ]
       },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: and(
-            not(field('father.dobUnknown').isEqualTo(true)),
-            requireFatherDetails
-          )
-        }
-      ]
-    },
-    {
-      id: 'father.dobUnknown',
-      type: FieldType.CHECKBOX,
-      label: {
-        defaultMessage: 'Exact date of birth unknown',
-        description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.person.field.age.checkbox.label'
-      },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: requireFatherDetails
+      { hideIfDataInPath: 'data.birthDate' }
+    ),
+    connectToMOSIPIdReader(
+      {
+        id: 'father.age',
+        type: FieldType.TEXT,
+        required: true,
+        label: {
+          defaultMessage: 'Age of father',
+          description: 'This is the label for the field',
+          id: 'event.birth.action.declare.form.section.father.field.age.label'
         },
-        {
-          type: ConditionalType.DISPLAY_ON_REVIEW,
-          conditional: never()
-        }
-      ]
-    },
-    {
-      id: 'father.age',
-      type: FieldType.TEXT,
-      required: true,
-      label: {
-        defaultMessage: 'Age of father',
-        description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.father.field.age.label'
+        configuration: {
+          postfix: {
+            defaultMessage: 'years',
+            description: 'This is the postfix for age field',
+            id: 'event.birth.action.declare.form.section.person.field.age.postfix'
+          }
+        },
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: and(
+              field('father.dobUnknown').isEqualTo(true),
+              requireFatherDetails
+            )
+          }
+        ]
       },
-      configuration: {
-        postfix: {
-          defaultMessage: 'years',
-          description: 'This is the postfix for age field',
-          id: 'event.birth.action.declare.form.section.person.field.age.postfix'
-        }
-      },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: and(
-            field('father.dobUnknown').isEqualTo(true),
-            requireFatherDetails
-          )
-        }
-      ]
-    },
+      { hideIfDataInPath: 'data.birthDate' }
+    ),
     {
       id: 'father.nationality',
       type: FieldType.COUNTRY,
@@ -258,56 +253,62 @@ export const father = defineFormPage({
       ],
       defaultValue: 'FAR'
     },
-    {
-      id: 'father.idType',
-      type: FieldType.SELECT,
-      required: true,
-      label: {
-        defaultMessage: 'Type of ID',
-        description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.person.field.idType.label'
+    connectToMOSIPVerificationStatus(
+      {
+        id: 'father.idType',
+        type: FieldType.SELECT,
+        required: true,
+        label: {
+          defaultMessage: 'Type of ID',
+          description: 'This is the label for the field',
+          id: 'event.birth.action.declare.form.section.person.field.idType.label'
+        },
+        options: idTypeOptions,
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: requireFatherDetails
+          }
+        ]
       },
-      options: idTypeOptions,
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: requireFatherDetails
-        }
-      ]
-    },
-    {
-      id: 'father.nid',
-      type: FieldType.ID,
-      required: true,
-      label: {
-        defaultMessage: 'ID Number',
-        description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.person.field.nid.label'
+      { hideIfAuthenticated: true }
+    ),
+    connectToMOSIPVerificationStatus(
+      {
+        id: 'father.nid',
+        type: FieldType.ID,
+        required: true,
+        label: {
+          defaultMessage: 'ID Number',
+          description: 'This is the label for the field',
+          id: 'event.birth.action.declare.form.section.person.field.nid.label'
+        },
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: and(
+              field('father.idType').isEqualTo(IdType.NATIONAL_ID),
+              requireFatherDetails
+            )
+          }
+        ],
+        validation: [
+          nationalIdValidator('father.nid'),
+          {
+            message: {
+              defaultMessage: 'National id must be unique',
+              description: 'This is the error message for non-unique ID Number',
+              id: 'event.birth.action.declare.form.nid.unique'
+            },
+            validator: and(
+              not(field('father.nid').isEqualTo(field('mother.nid'))),
+              not(field('father.nid').isEqualTo(field('informant.nid')))
+            )
+          }
+        ]
       },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: and(
-            field('father.idType').isEqualTo(IdType.NATIONAL_ID),
-            requireFatherDetails
-          )
-        }
-      ],
-      validation: [
-        nationalIdValidator('father.nid'),
-        {
-          message: {
-            defaultMessage: 'National id must be unique',
-            description: 'This is the error message for non-unique ID Number',
-            id: 'event.birth.action.declare.form.nid.unique'
-          },
-          validator: and(
-            not(field('father.nid').isEqualTo(field('mother.nid'))),
-            not(field('father.nid').isEqualTo(field('informant.nid')))
-          )
-        }
-      ]
-    },
+      { hideIfAuthenticated: true }
+    ),
     {
       id: 'father.passport',
       type: FieldType.TEXT,

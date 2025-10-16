@@ -21,7 +21,12 @@ import {
   user
 } from '@opencrvs/toolkit/events'
 import { not } from '@opencrvs/toolkit/conditionals'
-import { emptyMessage } from '../../../utils'
+import {
+  connectToMOSIPIdReader,
+  connectToMOSIPVerificationStatus,
+  emptyMessage,
+  getMOSIPIntegrationFields
+} from '../../../utils'
 import {
   invalidNameValidator,
   MAX_NAME_LENGTH,
@@ -105,129 +110,119 @@ export const spouse = defineFormPage({
         }
       ]
     },
-    {
-      id: 'spouse.verified',
-      type: FieldType.VERIFICATION_STATUS,
-      label: {
-        id: 'spouse.verified.status',
-        defaultMessage: 'Verification status',
-        description: 'The title for the status field label'
-      },
-      configuration: {
-        status: {
-          id: 'spouse.verified.status.text',
-          defaultMessage:
-            '{value, select, authenticated {ID Authenticated} verified {ID Verified} failed {Unverified ID} pending {Pending verification} other {Invalid value}}',
-          description:
-            'Status text shown on the pill on both form declaration and review page'
-        },
-        description: {
-          id: 'spouse.verified.status.description',
-          defaultMessage:
-            '{value, select, authenticated {Identity authenticated with National ID system} verified {Identity verified with National ID system} pending {Identity pending verification with National ID system} failed {Identity verification with National ID system failed} other {Invalid value}}',
-          description: 'Description text of the status'
-        }
-      },
-      conditionals: [
+    ...getMOSIPIntegrationFields('spouse', {
+      existingConditionals: [
         {
           type: ConditionalType.SHOW,
           conditional: requireSpouseDetails
         }
       ]
-    },
-    {
-      id: 'spouse.name',
-      configuration: { maxLength: MAX_NAME_LENGTH },
-      type: FieldType.NAME,
-      required: true,
-      hideLabel: true,
-      label: {
-        defaultMessage: "Spouse's name",
-        description: 'This is the label for the field',
-        id: 'event.death.action.declare.form.section.spouse.field.name.label'
+    }),
+    connectToMOSIPIdReader(
+      {
+        id: 'spouse.name',
+        configuration: { maxLength: MAX_NAME_LENGTH },
+        type: FieldType.NAME,
+        required: true,
+        hideLabel: true,
+        label: {
+          defaultMessage: "Spouse's name",
+          description: 'This is the label for the field',
+          id: 'event.death.action.declare.form.section.spouse.field.name.label'
+        },
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: requireSpouseDetails
+          }
+        ],
+        validation: [invalidNameValidator('spouse.name')]
       },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: requireSpouseDetails
-        }
-      ],
-      validation: [invalidNameValidator('spouse.name')]
-    },
-    {
-      id: 'spouse.dob',
-      type: FieldType.DATE,
-      required: true,
-      validation: [
-        {
-          message: {
-            defaultMessage: 'Must be a valid Birthdate',
-            description: 'This is the error message for invalid date',
-            id: 'event.death.action.declare.form.section.spouse.field.dob.error'
+      { valuePath: 'data.name', disableIfDataInPath: 'data.name' }
+    ),
+    connectToMOSIPIdReader(
+      {
+        id: 'spouse.dob',
+        type: FieldType.DATE,
+        required: true,
+        validation: [
+          {
+            message: {
+              defaultMessage: 'Must be a valid Birthdate',
+              description: 'This is the error message for invalid date',
+              id: 'event.death.action.declare.form.section.spouse.field.dob.error'
+            },
+            validator: field('spouse.dob').isBefore().now()
+          }
+        ],
+        label: {
+          defaultMessage: 'Date of birth',
+          description: 'This is the label for the field',
+          id: 'event.death.action.declare.form.section.spouse.field.dob.label'
+        },
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: and(
+              not(field('spouse.dobUnknown').isEqualTo(true)),
+              requireSpouseDetails
+            )
+          }
+        ]
+      },
+      { valuePath: 'data.birthDate', disableIfDataInPath: 'data.birthDate' }
+    ),
+    connectToMOSIPIdReader(
+      {
+        id: 'spouse.dobUnknown',
+        type: FieldType.CHECKBOX,
+        label: {
+          defaultMessage: 'Exact date of birth unknown',
+          description: 'This is the label for the field',
+          id: 'event.death.action.declare.form.section.spouse.field.age.checkbox.label'
+        },
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: requireSpouseDetails
           },
-          validator: field('spouse.dob').isBefore().now()
-        }
-      ],
-      label: {
-        defaultMessage: 'Date of birth',
-        description: 'This is the label for the field',
-        id: 'event.death.action.declare.form.section.spouse.field.dob.label'
+          {
+            type: ConditionalType.DISPLAY_ON_REVIEW,
+            conditional: never()
+          }
+        ]
       },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: and(
-            not(field('spouse.dobUnknown').isEqualTo(true)),
-            requireSpouseDetails
-          )
-        }
-      ]
-    },
-    {
-      id: 'spouse.dobUnknown',
-      type: FieldType.CHECKBOX,
-      label: {
-        defaultMessage: 'Exact date of birth unknown',
-        description: 'This is the label for the field',
-        id: 'event.death.action.declare.form.section.spouse.field.age.checkbox.label'
-      },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: requireSpouseDetails
+      { hideIfDataInPath: 'data.birthDate' }
+    ),
+    connectToMOSIPIdReader(
+      {
+        id: 'spouse.age',
+        type: FieldType.TEXT,
+        required: true,
+        label: {
+          defaultMessage: 'Age of spouse',
+          description: 'This is the label for the field',
+          id: 'event.death.action.declare.form.section.spouse.field.age.label'
         },
-        {
-          type: ConditionalType.DISPLAY_ON_REVIEW,
-          conditional: never()
-        }
-      ]
-    },
-    {
-      id: 'spouse.age',
-      type: FieldType.TEXT,
-      required: true,
-      label: {
-        defaultMessage: 'Age of spouse',
-        description: 'This is the label for the field',
-        id: 'event.death.action.declare.form.section.spouse.field.age.label'
+        configuration: {
+          postfix: {
+            defaultMessage: 'years',
+            description: 'This is the postfix for age field',
+            id: 'event.death.action.declare.form.section.spouse.field.age.postfix'
+          }
+        },
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: and(
+              field('spouse.dobUnknown').isEqualTo(true),
+              requireSpouseDetails
+            )
+          }
+        ]
       },
-      configuration: {
-        postfix: {
-          defaultMessage: 'years',
-          description: 'This is the postfix for age field',
-          id: 'event.death.action.declare.form.section.spouse.field.age.postfix'
-        }
-      },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: and(
-            field('spouse.dobUnknown').isEqualTo(true),
-            requireSpouseDetails
-          )
-        }
-      ]
-    },
+      { hideIfDataInPath: 'data.birthDate' }
+    ),
     {
       id: 'spouse.nationality',
       type: FieldType.COUNTRY,
@@ -245,56 +240,62 @@ export const spouse = defineFormPage({
       ],
       defaultValue: 'FAR'
     },
-    {
-      id: 'spouse.idType',
-      type: FieldType.SELECT,
-      required: true,
-      label: {
-        defaultMessage: 'Type of ID',
-        description: 'This is the label for the field',
-        id: 'event.death.action.declare.form.section.spouse.field.idType.label'
+    connectToMOSIPVerificationStatus(
+      {
+        id: 'spouse.idType',
+        type: FieldType.SELECT,
+        required: true,
+        label: {
+          defaultMessage: 'Type of ID',
+          description: 'This is the label for the field',
+          id: 'event.death.action.declare.form.section.spouse.field.idType.label'
+        },
+        options: idTypeOptions,
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: requireSpouseDetails
+          }
+        ]
       },
-      options: idTypeOptions,
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: requireSpouseDetails
-        }
-      ]
-    },
-    {
-      id: 'spouse.nid',
-      type: FieldType.ID,
-      required: true,
-      label: {
-        defaultMessage: 'ID Number',
-        description: 'This is the label for the field',
-        id: 'event.death.action.declare.form.section.spouse.field.nid.label'
+      { hideIfAuthenticated: true }
+    ),
+    connectToMOSIPVerificationStatus(
+      {
+        id: 'spouse.nid',
+        type: FieldType.ID,
+        required: true,
+        label: {
+          defaultMessage: 'ID Number',
+          description: 'This is the label for the field',
+          id: 'event.death.action.declare.form.section.spouse.field.nid.label'
+        },
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: and(
+              field('spouse.idType').isEqualTo(IdType.NATIONAL_ID),
+              requireSpouseDetails
+            )
+          }
+        ],
+        validation: [
+          nationalIdValidator('spouse.nid'),
+          {
+            message: {
+              defaultMessage: 'National id must be unique',
+              description: 'This is the error message for non-unique ID Number',
+              id: 'event.death.action.declare.form.nid.unique'
+            },
+            validator: and(
+              not(field('spouse.nid').isEqualTo(field('informant.nid'))),
+              not(field('spouse.nid').isEqualTo(field('deceased.nid')))
+            )
+          }
+        ]
       },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: and(
-            field('spouse.idType').isEqualTo(IdType.NATIONAL_ID),
-            requireSpouseDetails
-          )
-        }
-      ],
-      validation: [
-        nationalIdValidator('spouse.nid'),
-        {
-          message: {
-            defaultMessage: 'National id must be unique',
-            description: 'This is the error message for non-unique ID Number',
-            id: 'event.death.action.declare.form.nid.unique'
-          },
-          validator: and(
-            not(field('spouse.nid').isEqualTo(field('informant.nid'))),
-            not(field('spouse.nid').isEqualTo(field('deceased.nid')))
-          )
-        }
-      ]
-    },
+      { hideIfAuthenticated: true }
+    ),
     {
       id: 'spouse.passport',
       type: FieldType.TEXT,

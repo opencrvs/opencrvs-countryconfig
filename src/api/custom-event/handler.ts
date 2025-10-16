@@ -72,7 +72,7 @@ export async function onBirthActionHandler(
     declaration['mother.nid'] &&
     declaration['mother.name']
 
-  if (isMotherAvailable)
+  if (isMotherAvailable && declaration['mother.verified'] !== 'authenticated')
     updatedFields['mother.verified'] = await mosipInteropClient.verifyNid({
       dob: declaration['mother.dob'],
       nid: declaration['mother.nid'],
@@ -86,7 +86,7 @@ export async function onBirthActionHandler(
     declaration['father.nid'] &&
     declaration['father.name']
 
-  if (isFatherAvailable)
+  if (isFatherAvailable && declaration['father.verified'] !== 'authenticated')
     updatedFields['father.verified'] = await mosipInteropClient.verifyNid({
       dob: declaration['father.dob'],
       nid: declaration['father.nid'],
@@ -100,7 +100,10 @@ export async function onBirthActionHandler(
     declaration['informant.nid'] &&
     declaration['informant.name']
 
-  if (isInformantAvailable)
+  if (
+    isInformantAvailable &&
+    declaration['informant.verified'] !== 'authenticated'
+  )
     updatedFields['informant.verified'] = await mosipInteropClient.verifyNid({
       dob: declaration['informant.dob'],
       nid: declaration['informant.nid'],
@@ -138,7 +141,10 @@ export async function onDeathActionHandler(
     declaration['deceased.nid'] &&
     declaration['deceased.name']
 
-  if (isDeceasedAvailable)
+  if (
+    isDeceasedAvailable &&
+    declaration['deceased.verified'] !== 'authenticated'
+  )
     updatedFields['deceased.verified'] = await mosipInteropClient.verifyNid({
       dob: declaration['deceased.dob'],
       nid: declaration['deceased.nid'],
@@ -151,7 +157,10 @@ export async function onDeathActionHandler(
     declaration['informant.nid'] &&
     declaration['informant.name']
 
-  if (isInformantAvailable)
+  if (
+    isInformantAvailable &&
+    declaration['informant.verified'] !== 'authenticated'
+  )
     updatedFields['informant.verified'] = await mosipInteropClient.verifyNid({
       dob: declaration['informant.dob'],
       nid: declaration['informant.nid'],
@@ -163,7 +172,7 @@ export async function onDeathActionHandler(
     declaration['spouse.nid'] &&
     declaration['spouse.name']
 
-  if (isSpouseAvailable)
+  if (isSpouseAvailable && declaration['spouse.verified'] !== 'authenticated')
     updatedFields['spouse.verified'] = await mosipInteropClient.verifyNid({
       dob: declaration['spouse.dob'],
       nid: declaration['spouse.nid'],
