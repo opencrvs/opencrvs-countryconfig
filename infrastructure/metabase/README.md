@@ -10,6 +10,13 @@
 
 # OpenCRVS Dashboards
 
+### Requirements
+
+```
+❯ java -version
+openjdk version "21.0.8" 2025-07-15
+```
+
 ### Run in development mode
 
 By default, Metabase is not started as part of the OpenCRVS stack as running it requires quite a bit of resources. You can use the following commands to use metabase in development:
