@@ -136,11 +136,16 @@ function convertDotKeysToUnderscore(
   return newObj
 }
 
-export async function upsertAnalyticsEventActions(
+async function upsertAnalyticsEventActions(
   event: EventDocument,
   eventConfig: EventConfig,
   trx: Kysely<any>
 ) {
+  await trx
+    .deleteFrom('analytics.event_actions')
+    .where('event_id', '=', event.id)
+    .execute()
+
   for (let i = 0; i < event.actions.length; i++) {
     const actionsFromStartToCurrentPoint = event.actions
       .sort((a, b) => {
