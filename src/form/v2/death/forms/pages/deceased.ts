@@ -173,7 +173,7 @@ export const deceased = defineFormPage({
     connectToMOSIPIdReader(
       {
         id: `deceased.age`,
-        type: FieldType.TEXT,
+        type: FieldType.AGE,
         required: true,
         label: {
           defaultMessage: `Age of deceased`,
@@ -181,6 +181,7 @@ export const deceased = defineFormPage({
           id: 'event.death.action.declare.form.section.deceased.field.age.label'
         },
         configuration: {
+          asOfDate: field('eventDetails.date'),
           postfix: {
             defaultMessage: 'years',
             description: 'This is the postfix for age field',
@@ -191,6 +192,16 @@ export const deceased = defineFormPage({
           {
             type: ConditionalType.SHOW,
             conditional: field(`deceased.dobUnknown`).isEqualTo(true)
+          }
+        ],
+        validation: [
+          {
+            validator: field('deceased.age').asAge().isBetween(0, 120),
+            message: {
+              defaultMessage: 'Age must be between 0 and 120',
+              description: 'Error message for invalid age',
+              id: 'event.death.action.declare.form.section.deceased.field.age.error'
+            }
           }
         ]
       },

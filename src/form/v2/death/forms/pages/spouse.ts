@@ -197,7 +197,7 @@ export const spouse = defineFormPage({
     connectToMOSIPIdReader(
       {
         id: 'spouse.age',
-        type: FieldType.TEXT,
+        type: FieldType.AGE,
         required: true,
         label: {
           defaultMessage: 'Age of spouse',
@@ -205,6 +205,7 @@ export const spouse = defineFormPage({
           id: 'event.death.action.declare.form.section.spouse.field.age.label'
         },
         configuration: {
+          asOfDate: field('eventDetails.date'),
           postfix: {
             defaultMessage: 'years',
             description: 'This is the postfix for age field',
@@ -218,6 +219,16 @@ export const spouse = defineFormPage({
               field('spouse.dobUnknown').isEqualTo(true),
               requireSpouseDetails
             )
+          }
+        ],
+        validation: [
+          {
+            validator: field('spouse.age').asAge().isBetween(12, 120),
+            message: {
+              defaultMessage: 'Age must be between 12 and 120',
+              description: 'Error message for invalid age',
+              id: 'event.action.declare.form.section.person.field.age.error'
+            }
           }
         ]
       },
