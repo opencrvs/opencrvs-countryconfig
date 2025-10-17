@@ -140,7 +140,7 @@ docker run --rm --network=$NETWORK  \
   -e POSTGRES_DB="${POSTGRES_DB}" \
   -e EVENTS_MIGRATOR_ROLE="${EVENTS_MIGRATOR_ROLE}" \
   -e EVENTS_APP_ROLE="${EVENTS_APP_ROLE}" \
-  -e ANALYTICS_POSTGRES_USER="${ANALYTICS_POSTGRES_USER}" \
+  -e ANALYTICS_POSTGRES_ROLE="${ANALYTICS_POSTGRES_ROLE}" \
   -e ANALYTICS_POSTGRES_DB="${ANALYTICS_POSTGRES_DB}" \
   postgres:17.6 bash -c '
 psql -h postgres -U "$POSTGRES_USER" -d postgres -v ON_ERROR_STOP=1 <<EOF
@@ -156,13 +156,5 @@ echo "✅ Database and roles dropped."
 echo "🚀 Reinitializing Postgres with on-deploy.sh..."
 
 docker service update --force opencrvs_postgres-on-update
-
-docker service scale opencrvs_dashboards=0
-docker service scale opencrvs_dashboards=1
-
-# Restart events service
-#-----------------------------
-docker service scale opencrvs_events=0
-docker service scale opencrvs_events=1
 
 echo "✅ All data cleared."
