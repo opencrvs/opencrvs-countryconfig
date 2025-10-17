@@ -7,7 +7,7 @@ import {
 import { CREDENTIALS } from '../../constants'
 import { faker } from '@faker-js/faker'
 import { getMonthFormatted } from './helper'
-import { type } from '../../v2-utils'
+import { assertTexts, type } from '../../v2-utils'
 
 test.describe
   .serial("Advanced Search - Birth Event Declaration - Father's details", () => {
@@ -70,15 +70,15 @@ test.describe
       const searchResult = await page.locator('#content-name').textContent()
       const searchResultCountNumberInBracketsRegex = /\((\d+)\)$/
       expect(searchResult).toMatch(searchResultCountNumberInBracketsRegex)
-      await expect(page.getByText('Event: Birth')).toBeVisible()
-      await expect(
-        page.getByText(`Father's Date of birth: ${yyyy}-${mm}-${dd}`)
-      ).toBeVisible()
-      await expect(
-        page.getByText(
+      await assertTexts({
+        root: page,
+        testId: 'search-result',
+        texts: [
+          'Event: Birth',
+          `Father's Date of birth: ${yyyy}-${mm}-${dd}`,
           `Father's Name: ${record.declaration['father.name'].firstname ?? faker.person.firstName} ${record.declaration['father.name'].surname}`
-        )
-      ).toBeVisible()
+        ]
+      })
       await expect(page.getByRole('button', { name: 'Edit' })).toBeVisible()
     })
 

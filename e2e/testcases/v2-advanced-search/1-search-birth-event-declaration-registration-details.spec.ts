@@ -3,7 +3,7 @@ import { getToken, loginToV2 } from '../../helpers'
 import { createDeclaration } from '../v2-test-data/birth-declaration-with-father-brother'
 import { CREDENTIALS } from '../../constants'
 import { faker } from '@faker-js/faker'
-import { type } from '../../v2-utils'
+import { assertTexts, type } from '../../v2-utils'
 
 const todayDate = `${new Date().getDate() < 10 ? '0' : ''}${new Date().getDate().toString()}`
 const thisMonth = `${new Date().getMonth() < 9 ? '0' : ''}${(new Date().getMonth() + 1).toString()}`
@@ -107,19 +107,17 @@ test.describe
       const searchResult = await page.locator('#content-name').textContent()
       const searchResultCountNumberInBracketsRegex = /\((\d+)\)$/
       await expect(searchResult).toMatch(searchResultCountNumberInBracketsRegex)
-      await expect(page.getByText('Event: Birth')).toBeVisible()
-      // Check for each pill
-      await expect(page.getByText('Event: Birth')).toBeVisible()
-      await expect(
-        page.getByText(
-          `Date of registration: ${thisYear}-${thisMonth}-${todayDate}`
-        )
-      ).toBeVisible()
-      await expect(
-        page.getByText('Place of registration: Ibombo District Office')
-      ).toBeVisible()
-      await expect(page.getByText('Status of record: Registered')).toBeVisible()
-      await expect(page.getByText('Time period: Last 7 days')).toBeVisible()
+      await assertTexts({
+        root: page,
+        testId: 'search-result',
+        texts: [
+          'Event: Birth',
+          `Date of registration: ${thisYear}-${thisMonth}-${todayDate}`,
+          'Place of registration: Ibombo District Office',
+          'Status of record: Registered',
+          'Time period: Last 7 days'
+        ]
+      })
 
       // Check for Edit button
       await expect(page.getByRole('button', { name: 'Edit' })).toBeVisible()

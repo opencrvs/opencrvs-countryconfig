@@ -4,7 +4,7 @@ import { createDeclaration } from '../v2-test-data/birth-declaration-with-father
 import { CREDENTIALS } from '../../constants'
 import { faker } from '@faker-js/faker'
 import { getMonthFormatted } from './helper'
-import { type } from '../../v2-utils'
+import { assertTexts, type } from '../../v2-utils'
 
 test.describe
   .serial("Advanced Search - Birth Event Declaration - Child's details", () => {
@@ -81,18 +81,17 @@ test.describe
       const searchResult = await page.locator('#content-name').textContent()
       const searchResultCountNumberInBracketsRegex = /\((\d+)\)$/
       expect(searchResult).toMatch(searchResultCountNumberInBracketsRegex)
-      await expect(page.getByText('Event: Birth')).toBeVisible()
-      await expect(
-        page.getByText(`Child's Date of birth: ${yyyy}-${mm}-${dd}`)
-      ).toBeVisible()
-      await expect(page.getByText("Child's Sex: Female")).toBeVisible()
-      await expect(
-        page.getByText(
-          `Child's Name: ${record.declaration['child.name'].firstname} ${record.declaration['child.name'].surname}`
-        )
-      ).toBeVisible()
+      await assertTexts({
+        root: page,
+        testId: 'search-result',
+        texts: [
+          'Event: Birth',
+          `Child's Date of birth: ${yyyy}-${mm}-${dd}`,
+          "Child's Sex: Female",
+          `Child's Name: ${fullNameOfChild}`
+        ]
+      })
       await expect(page.getByRole('button', { name: 'Edit' })).toBeVisible()
-      await expect(page.getByText(fullNameOfChild).last()).toBeVisible()
     })
 
     test('2.5.3 - Validate clicking on the search edit button', async () => {
