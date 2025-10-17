@@ -169,7 +169,12 @@ export const getMOSIPIntegrationFields = (
         description:
           'This is the label for the query param reader field - usually this is hidden'
       },
-      configuration: {}
+      configuration: {
+        formProjection: {
+          code: 'code',
+          state: 'state'
+        }
+      }
     },
 
     /*
