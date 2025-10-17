@@ -192,7 +192,7 @@ export const spouse = defineFormPage({
           }
         ]
       },
-      { hideIfDataInPath: 'data.birthDate' }
+      { disableIfDataInPath: 'data.birthDate' }
     ),
     connectToMOSIPIdReader(
       {
@@ -232,7 +232,7 @@ export const spouse = defineFormPage({
           }
         ]
       },
-      { hideIfDataInPath: 'data.birthDate' }
+      { disableIfDataInPath: 'data.birthDate' }
     ),
     {
       id: 'spouse.nationality',
