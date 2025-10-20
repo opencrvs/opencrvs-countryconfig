@@ -163,6 +163,7 @@ export const getMOSIPIntegrationFields = (
     {
       id: `${page}.query-params`,
       type: FieldType.QUERY_PARAM_READER,
+      parent: field(`${page}.verified`),
       label: {
         id: 'form.query-params.label',
         defaultMessage: 'Query param reader',
@@ -170,11 +171,9 @@ export const getMOSIPIntegrationFields = (
           'This is the label for the query param reader field - usually this is hidden'
       },
       configuration: {
-        formProjection: {
-          code: 'code',
-          state: 'state'
-        }
-      }
+        pickParams: ['code', 'state']
+      },
+      value: field(`${page}.verified`)
     },
 
     /*
