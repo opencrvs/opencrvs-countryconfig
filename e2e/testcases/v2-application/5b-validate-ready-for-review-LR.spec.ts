@@ -8,7 +8,7 @@ import {
 } from '../v2-test-data/birth-declaration'
 import { ActionType } from '@opencrvs/toolkit/events'
 import { formatV2ChildName } from '../v2-birth/helpers'
-import { ensureOutboxIsEmpty, selectAction } from '../../v2-utils'
+import { ensureOutboxIsEmpty, expectInUrl, selectAction } from '../../v2-utils'
 import { getRowByTitle } from '../v2-print-certificate/birth/helpers'
 
 test.describe
@@ -87,11 +87,11 @@ test.describe
     await expect(page.getByText('Register the birth?')).toBeVisible()
     await page.locator('#confirm_Validate').click()
 
-    // Should not redirect back to Ready for review workqueue, rather go to the first one
-    await expect(page.locator('#content-name')).toHaveText('Assigned to you')
+    // Should redirect back to Ready for review workqueue
+    await expect(page.locator('#content-name')).toHaveText('Ready for review')
 
     await ensureOutboxIsEmpty(page)
-    await page.getByText('Ready for review').click()
+    await expectInUrl(page, 'workqueue/in-review-all')
 
     await expect(
       page.getByRole('button', { name: formatV2ChildName(declaration) })

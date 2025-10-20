@@ -11,13 +11,14 @@ import {
   selectCertificationType,
   selectRequesterType
 } from './helpers'
-import { ensureAssigned, expectInUrl } from '../../../v2-utils'
+import { ensureAssigned, expectInUrl, type } from '../../../v2-utils'
+import { formatV2ChildName } from '../../v2-birth/helpers'
 
 test.describe.serial('3.0 Validate "Certify record" page', () => {
   let eventId: string
   let declaration: Declaration
   let page: Page
-
+  let trackingId: string | undefined
   test.beforeAll(async ({ browser }) => {
     const token = await getToken(
       CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
@@ -26,6 +27,7 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
     const res = await createDeclaration(token)
     eventId = res.eventId
     declaration = res.declaration
+    trackingId = res.trackingId
     page = await browser.newPage()
   })
 
@@ -136,19 +138,54 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
   })
 
   test('3.8 Validate Certified -modal', async () => {
+    if (!trackingId) {
+      throw new Error('Tracking ID is undefined')
+    }
+    await type(page, '#searchText', trackingId)
+    await page.locator('#searchIconButton').click()
+    await page
+      .getByRole('button', { name: formatV2ChildName(declaration) })
+      .click()
     await ensureAssigned(page)
     await page.getByRole('button', { name: 'Certified', exact: true }).click()
 
-    await expect(page.getByText('Type' + 'Birth Certificate')).toBeVisible()
-    await expect(
-      page.getByText('Requester' + 'Print and issue to Informant (Mother)')
-    ).toBeVisible()
-    await expect(page.getByText('Verified' + 'No')).toBeVisible()
+    const modal = page.getByTestId('event-history-modal')
 
-    // Expect 3 rows
-    await expect(page.locator('#event-history-modal #row_0')).toBeVisible()
-    await expect(page.locator('#event-history-modal #row_1')).toBeVisible()
-    await expect(page.locator('#event-history-modal #row_2')).toBeVisible()
-    await expect(page.locator('#event-history-modal #row_3')).not.toBeVisible()
+    await expect(modal.getByText('Type' + 'Birth Certificate')).toBeVisible()
+    await expect(
+      modal.getByText('Requester' + 'Print and issue to Informant (Mother)')
+    ).toBeVisible()
+    await expect(modal.getByText('Verified' + 'No')).toBeVisible()
+
+    await expect(modal.getByText('Identity details')).toBeVisible()
+    await expect(modal.getByText('Date of birth:')).toBeVisible()
+    await expect(
+      modal.getByText(`ID Number: ${declaration['mother.nid']}`)
+    ).toBeVisible()
+    await expect(modal.getByText('Type of ID: National ID')).toBeVisible()
+
+    await expect(
+      modal.getByText(
+        `Mother's name: ${declaration['mother.name'].firstname} ${declaration['mother.name'].surname}`
+      )
+    ).toBeVisible()
+
+    await expect(modal.getByText('Nationality: Farajaland')).toBeVisible()
+
+    await expect(modal.getByText('Payment details')).toBeVisible()
+    await expect(modal.getByText('Fee: $5.00')).toBeVisible()
+    await expect(
+      modal.getByText(
+        'Service: Birth registration before 30 days of date of birth'
+      )
+    ).toBeVisible()
+
+    // Expect 5 rows
+    await expect(modal.locator('#row_0')).toBeVisible()
+    await expect(modal.locator('#row_1')).toBeVisible()
+    await expect(modal.locator('#row_2')).toBeVisible()
+    await expect(modal.locator('#row_3')).toBeVisible()
+    await expect(modal.locator('#row_4')).toBeVisible()
+    await expect(modal.locator('#row_5')).not.toBeVisible()
   })
 })

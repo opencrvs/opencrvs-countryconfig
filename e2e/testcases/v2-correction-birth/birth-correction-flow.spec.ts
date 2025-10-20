@@ -240,7 +240,7 @@ test.describe.serial('Birth correction flow', () => {
     ).toBeVisible()
 
     await page.getByRole('button', { name: 'Confirm', exact: true }).click()
-    await expectInUrl(page, `/events/overview/${eventId}`)
+    await expectInUrl(page, `/workqueue/ready-to-print`)
     await ensureOutboxIsEmpty(page)
   })
 
@@ -317,7 +317,19 @@ test.describe.serial('Birth correction flow', () => {
       await page.getByRole('button', { name: 'Approve', exact: true }).click()
       await page.getByRole('button', { name: 'Confirm', exact: true }).click()
 
-      await expectInUrl(page, `/events/overview/${eventId}`)
+      await expectInUrl(page, `/workqueue/in-review-all`)
+      await ensureOutboxIsEmpty(page)
+      await page.getByRole('button', { name: 'Ready to print' }).click()
+      await page
+        .getByRole('button', {
+          name: formatV2ChildName({
+            'child.name': {
+              firstname: newFirstName,
+              surname: declaration['child.name'].surname
+            }
+          })
+        })
+        .click()
 
       await expect(
         page.getByText(

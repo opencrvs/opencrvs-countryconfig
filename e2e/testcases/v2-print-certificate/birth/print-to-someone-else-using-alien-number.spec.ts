@@ -12,7 +12,8 @@ import {
   navigateToCertificatePrintAction,
   printAndExpectPopup
 } from './helpers'
-import { ensureAssigned } from '../../../v2-utils'
+import { ensureAssigned, type } from '../../../v2-utils'
+import { formatV2ChildName } from '../../v2-birth/helpers'
 
 async function selectIdType(page: Page, idType: string) {
   await page.locator('#collector____OTHER____idType').click()
@@ -23,6 +24,7 @@ test.describe
   .serial('Print to someone else using Alien Number as ID type', () => {
   let declaration: Declaration
   let page: Page
+  let trackingId: string | undefined
 
   test.beforeAll(async ({ browser }) => {
     const token = await getToken(
@@ -31,6 +33,7 @@ test.describe
     )
     const res = await createDeclaration(token)
     declaration = res.declaration
+    trackingId = res.trackingId
     page = await browser.newPage()
   })
 
@@ -67,6 +70,14 @@ test.describe
   })
 
   test('Validate Certified -modal', async () => {
+    if (!trackingId) {
+      throw new Error('Tracking ID is undefined')
+    }
+    await type(page, '#searchText', trackingId)
+    await page.locator('#searchIconButton').click()
+    await page
+      .getByRole('button', { name: formatV2ChildName(declaration) })
+      .click()
     await ensureAssigned(page)
     await page.getByRole('button', { name: 'Certified', exact: true }).click()
 
@@ -82,5 +93,9 @@ test.describe
     await expect(
       page.getByText('Relationship to child' + 'Uncle')
     ).toBeVisible()
+
+    await expect(page.getByText('Payment details')).toBeVisible()
+    await expect(page.getByText('Fee')).toBeVisible()
+    await expect(page.getByText('$5.00')).toBeVisible()
   })
 })

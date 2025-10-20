@@ -403,7 +403,7 @@ test.describe('Events REST API', () => {
       expect(response.status).toBe(400)
       const body = await response.json()
       expect(body.message).toBe(
-        '[{"message":"Invalid input","id":"child.name","value":{}}]'
+        '[{"message":"Invalid input","id":"child.name","value":{"surname":12345}}]'
       )
     })
 
@@ -879,7 +879,7 @@ test.describe('Events REST API', () => {
 
       await printAndExpectPopup(page)
 
-      await expectInUrl(page, `/events/overview/${eventId}`)
+      await expectInUrl(page, `/workqueue/ready-to-print`)
     })
   })
 })

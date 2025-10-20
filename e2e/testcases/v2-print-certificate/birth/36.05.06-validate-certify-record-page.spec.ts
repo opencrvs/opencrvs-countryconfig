@@ -12,8 +12,9 @@ import {
   navigateToCertificatePrintAction,
   printAndExpectPopup
 } from './helpers'
-import { ensureAssigned, expectInUrl } from '../../../v2-utils'
+import { ensureAssigned, type, expectInUrl } from '../../../v2-utils'
 import { REQUIRED_VALIDATION_ERROR } from '../../v2-birth/helpers'
+import { formatV2ChildName } from '../../v2-birth/helpers'
 
 async function selectIdType(page: Page, idType: string) {
   await page.locator('#collector____OTHER____idType').click()
@@ -24,6 +25,7 @@ test.describe.serial('Validate collect payment page', () => {
   let eventId: string
   let declaration: Declaration
   let page: Page
+  let trackingId: string | undefined
 
   test.beforeAll(async ({ browser }) => {
     const token = await getToken(
@@ -33,6 +35,7 @@ test.describe.serial('Validate collect payment page', () => {
     const res = await createDeclaration(token)
     eventId = res.eventId
     declaration = res.declaration
+    trackingId = res.trackingId
     page = await browser.newPage()
   })
 
@@ -143,6 +146,14 @@ test.describe.serial('Validate collect payment page', () => {
   })
 
   test('5.10 Validate Certified -modal', async () => {
+    if (!trackingId) {
+      throw new Error('Tracking ID is undefined')
+    }
+    await type(page, '#searchText', trackingId)
+    await page.locator('#searchIconButton').click()
+    await page
+      .getByRole('button', { name: formatV2ChildName(declaration) })
+      .click()
     await ensureAssigned(page)
     await page.getByRole('button', { name: 'Certified', exact: true }).click()
 
@@ -164,5 +175,15 @@ test.describe.serial('Validate collect payment page', () => {
       page.getByRole('button', { name: 'Signed Affidavit' })
     ).toBeVisible()
     await expect(page.getByText('Verified' + 'No')).toBeVisible()
+
+    await expect(page.getByText('Payment details')).toBeVisible()
+    await expect(page.getByText('Fee')).toBeVisible()
+    await expect(page.getByText('$5.00')).toBeVisible()
+    await expect(page.getByText('Service')).toBeVisible()
+    await expect(
+      page.getByText('Birth registration before 30 days of date of birth')
+    ).toBeVisible()
+
+    await expect(page.getByText('Identity details')).not.toBeVisible()
   })
 })

@@ -4,7 +4,7 @@ import { createDeclaration } from '../v2-test-data/birth-declaration-with-father
 import { CREDENTIALS } from '../../constants'
 import { faker } from '@faker-js/faker'
 import { getAllLocations, getLocationIdByName } from '../birth/helpers'
-import { type } from '../../v2-utils'
+import { assertTexts, type } from '../../v2-utils'
 
 test.describe
   .serial("Advanced Search - Birth Event Declaration - Child's details", () => {
@@ -99,18 +99,18 @@ test.describe
       const searchResult = await page.locator('#content-name').textContent()
       const searchResultCountNumberInBracketsRegex = /\((\d+)\)$/
       expect(searchResult).toMatch(searchResultCountNumberInBracketsRegex)
-      await expect(page.getByText('Event: Birth')).toBeVisible()
-      await expect(
-        page.getByText(`Child's Date of birth: ${yyyy}-${mm}-${dd}`)
-      ).toBeVisible()
-      await expect(page.getByText("Child's Sex: Female")).toBeVisible()
-      await expect(
-        page.getByText(
-          "Child's Location of birth: Ibombo Rural Health Centre, Ibombo, Central, Farajaland"
-        )
-      ).toBeVisible()
+      await assertTexts({
+        root: page,
+        testId: 'search-result',
+        texts: [
+          'Event: Birth',
+          `Child's Date of birth: ${yyyy}-${mm}-${dd}`,
+          "Child's Sex: Female",
+          `Child's Location of birth: Ibombo Rural Health Centre, Ibombo, Central, Farajaland`,
+          `Child's Name: ${fullNameOfChild}`
+        ]
+      })
       await expect(page.getByRole('button', { name: 'Edit' })).toBeVisible()
-      await expect(page.getByText(fullNameOfChild).last()).toBeVisible()
     })
 
     test('3.1.3 - Validate clicking on the search edit button', async () => {
@@ -236,15 +236,17 @@ test.describe
       const searchResult = await page.locator('#content-name').textContent()
       const searchResultCountNumberInBracketsRegex = /\((\d+)\)$/
       expect(searchResult).toMatch(searchResultCountNumberInBracketsRegex)
-      await expect(page.getByText('Event: Birth')).toBeVisible()
-      await expect(
-        page.getByText(`Location of birth: Farajaland, Central, Ibombo, Dhaka`)
-      ).toBeVisible()
-      await expect(
-        page.getByText('Place of delivery: Residential address')
-      ).toBeVisible()
+      await assertTexts({
+        root: page,
+        testId: 'search-result',
+        texts: [
+          'Event: Birth',
+          `Location of birth: Farajaland, Central, Ibombo, Dhaka`,
+          'Place of delivery: Residential address',
+          fullNameOfChild
+        ]
+      })
       await expect(page.getByRole('button', { name: 'Edit' })).toBeVisible()
-      await expect(page.getByText(fullNameOfChild).last()).toBeVisible()
     })
 
     test('3.2.3 - Validate clicking on the search edit button', async () => {
