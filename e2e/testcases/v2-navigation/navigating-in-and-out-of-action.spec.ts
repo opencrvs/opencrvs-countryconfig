@@ -78,8 +78,8 @@ test.describe.serial('Navigating in and out of action', () => {
     await page.getByRole('button', { name: 'Print', exact: true }).click()
 
     // Wait for PDF the load and the page to be redirected to the overview page
-    await page.waitForURL(`**/events/overview/${eventId}`)
-    await expectInUrl(page, `/events/overview/${eventId}`)
+    await page.waitForURL(`**/workqueue/ready-to-print`)
+    await expectInUrl(page, `/workqueue/ready-to-print`)
   })
 
   test('Browser back button should take user to the front page instead of action flow', async () => {

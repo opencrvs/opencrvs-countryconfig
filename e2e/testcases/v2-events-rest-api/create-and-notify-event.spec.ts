@@ -879,7 +879,7 @@ test.describe('Events REST API', () => {
 
       await printAndExpectPopup(page)
 
-      await expectInUrl(page, `/events/overview/${eventId}`)
+      await expectInUrl(page, `/workqueue/ready-to-print`)
     })
   })
 })
