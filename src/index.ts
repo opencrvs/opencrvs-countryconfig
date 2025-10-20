@@ -13,7 +13,6 @@ require('dotenv').config()
 
 import StreamArray from 'stream-json/streamers/StreamArray'
 import path from 'path'
-import Handlebars from 'handlebars'
 import * as Hapi from '@hapi/hapi'
 import * as Pino from 'hapi-pino'
 import * as JWT from 'hapi-auth-jwt2'
@@ -27,7 +26,6 @@ import {
   GATEWAY_URL,
   LOGIN_URL,
   SENTRY_DSN,
-  V2_EVENTS,
   COUNTRY_CONFIG_HOST,
   COUNTRY_CONFIG_PORT,
   CHECK_INVALID_TOKEN,
@@ -332,11 +330,7 @@ export async function createServer() {
           ? '/client-config.prod.js'
           : '/client-config.js'
 
-      const template = Handlebars.compile(
-        readFileSync(join(__dirname, file), 'utf8')
-      )
-      const result = template({ V2_EVENTS })
-      return h.response(result).type('application/javascript')
+      return h.file(join(__dirname, file))
     },
     options: {
       auth: false,
