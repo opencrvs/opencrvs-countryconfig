@@ -51,13 +51,18 @@ PGPASSWORD="$POSTGRES_PASSWORD" psql -v ON_ERROR_STOP=1 -h "$POSTGRES_HOST" -p "
 CREATE SCHEMA IF NOT EXISTS analytics;
 
 CREATE TABLE IF NOT EXISTS analytics.locations (
-  id uuid PRIMARY KEY,
+  id TEXT PRIMARY KEY,
   name text NOT NULL,
-  parent_id uuid REFERENCES analytics.locations(id),
+  parent_id TEXT REFERENCES analytics.locations(id),
   location_type TEXT NOT NULL
 );
 
-CREATE UNIQUE INDEX IF NOT EXISTS analytics_locations_pkey ON analytics.locations(id uuid_ops);
+INSERT INTO analytics.locations (id, name, parent_id, location_type)
+SELECT id, name, parent_id, location_type FROM app.locations
+ON CONFLICT (id) DO UPDATE
+SET name = EXCLUDED.name,
+  parent_id = EXCLUDED.parent_id,
+  location_type = EXCLUDED.location_type;
 
 CREATE TABLE IF NOT EXISTS analytics.event_actions (
   event_type text NOT NULL,
@@ -65,7 +70,7 @@ CREATE TABLE IF NOT EXISTS analytics.event_actions (
   annotation jsonb,
   assigned_to text,
   created_at timestamp with time zone NOT NULL DEFAULT now(),
-  created_at_location uuid,
+  created_at_location TEXT,
   created_by text NOT NULL,
   created_by_role text NOT NULL,
   created_by_signature text,

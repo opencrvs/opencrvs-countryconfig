@@ -284,6 +284,8 @@ function convertPayloadToVariable({
       }
 
     case TriggerEvent.TWO_FA:
+    case TriggerEvent.CHANGE_EMAIL_ADDRESS:
+    case TriggerEvent.CHANGE_PHONE_NUMBER:
       return {
         firstname,
         code: payload.code
