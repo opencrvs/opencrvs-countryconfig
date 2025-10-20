@@ -228,7 +228,7 @@ test.describe.serial('Birth Record correction flow', () => {
 
     await page.getByRole('button', { name: 'Confirm', exact: true }).click()
 
-    await expectInUrl(page, `/events/overview/${eventId}`)
+    await expectInUrl(page, `/workqueue/ready-to-print`)
 
     await page.waitForResponse((response) =>
       response
@@ -239,6 +239,9 @@ test.describe.serial('Birth Record correction flow', () => {
 
   test('Record correction action appears in audit history', async () => {
     await page.reload()
+    await page
+      .getByRole('button', { name: formatV2ChildName(declaration) })
+      .click()
     await ensureAssigned(page)
 
     // Go to second page of audit history list
