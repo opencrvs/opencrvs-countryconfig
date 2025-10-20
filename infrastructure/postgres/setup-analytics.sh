@@ -57,13 +57,6 @@ CREATE TABLE IF NOT EXISTS analytics.locations (
   location_type TEXT NOT NULL
 );
 
-INSERT INTO analytics.locations (id, name, parent_id, location_type)
-SELECT id, name, parent_id, location_type FROM app.locations
-ON CONFLICT (id) DO UPDATE
-SET name = EXCLUDED.name,
-  parent_id = EXCLUDED.parent_id,
-  location_type = EXCLUDED.location_type;
-
 CREATE TABLE IF NOT EXISTS analytics.event_actions (
   event_type text NOT NULL,
   action_type TEXT NOT NULL,
