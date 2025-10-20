@@ -73,6 +73,6 @@ test.describe
     // Check that the popup URL contains PDF content
     await expect(popup.url()).toBe('about:blank')
     await expect(download.suggestedFilename()).toMatch(/^.*\.pdf$/)
-    await expectInUrl(page, `/events/overview/${eventId}`)
+    await expectInUrl(page, `/workqueue/ready-to-print`)
   })
 })

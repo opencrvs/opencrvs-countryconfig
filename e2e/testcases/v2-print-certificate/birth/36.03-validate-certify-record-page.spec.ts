@@ -11,13 +11,14 @@ import {
   selectCertificationType,
   selectRequesterType
 } from './helpers'
-import { ensureAssigned, expectInUrl } from '../../../v2-utils'
+import { ensureAssigned, expectInUrl, type } from '../../../v2-utils'
+import { formatV2ChildName } from '../../v2-birth/helpers'
 
 test.describe.serial('3.0 Validate "Certify record" page', () => {
   let eventId: string
   let declaration: Declaration
   let page: Page
-
+  let trackingId: string | undefined
   test.beforeAll(async ({ browser }) => {
     const token = await getToken(
       CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
@@ -26,6 +27,7 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
     const res = await createDeclaration(token)
     eventId = res.eventId
     declaration = res.declaration
+    trackingId = res.trackingId
     page = await browser.newPage()
   })
 
@@ -136,6 +138,14 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
   })
 
   test('3.8 Validate Certified -modal', async () => {
+    if (!trackingId) {
+      throw new Error('Tracking ID is undefined')
+    }
+    await type(page, '#searchText', trackingId)
+    await page.locator('#searchIconButton').click()
+    await page
+      .getByRole('button', { name: formatV2ChildName(declaration) })
+      .click()
     await ensureAssigned(page)
     await page.getByRole('button', { name: 'Certified', exact: true }).click()
 

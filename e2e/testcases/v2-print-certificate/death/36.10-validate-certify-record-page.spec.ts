@@ -66,6 +66,6 @@ test.describe.serial('10.0 Validate "Review" page', () => {
 
   test('10.3 On click print button, user will navigate to a new tab from where user can download PDF', async () => {
     await printAndExpectPopup(page)
-    await expectInUrl(page, `/events/overview/${eventId}`)
+    await expectInUrl(page, `/workqueue/ready-to-print`)
   })
 })
