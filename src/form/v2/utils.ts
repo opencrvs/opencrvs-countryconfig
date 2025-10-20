@@ -8,6 +8,7 @@ import {
   field,
   FieldConditional,
   FieldConfigInput,
+  never,
   SelectOption,
   TranslationConfig
 } from '@opencrvs/toolkit/events'
@@ -163,6 +164,12 @@ export const getMOSIPIntegrationFields = (
     {
       id: `${page}.query-params`,
       type: FieldType.QUERY_PARAM_READER,
+      conditionals: [
+        {
+          type: ConditionalType.DISPLAY_ON_REVIEW,
+          conditional: never()
+        }
+      ],
       label: {
         id: 'form.query-params.label',
         defaultMessage: 'Query param reader',
@@ -183,6 +190,12 @@ export const getMOSIPIntegrationFields = (
     {
       id: `${page}.verify-nid-http-fetch`,
       type: FieldType.HTTP,
+      conditionals: [
+        {
+          type: ConditionalType.DISPLAY_ON_REVIEW,
+          conditional: never()
+        }
+      ],
       label: {
         defaultMessage: 'Fetch applicant information',
         description: 'Fetch applicant information',
@@ -223,6 +236,10 @@ export const getMOSIPIntegrationFields = (
           conditional: not(
             field(`${page}.verify-nid-http-fetch`).get('loading').isFalsy()
           )
+        },
+        {
+          type: ConditionalType.DISPLAY_ON_REVIEW,
+          conditional: never()
         }
       ],
       label: {
@@ -315,11 +332,7 @@ export const connectToMOSIPVerificationStatus = (
       ...fieldInput,
       conditionals: upsertConditional(fieldInput.conditionals || [], {
         type: ConditionalType.SHOW,
-        conditional: not(
-          field(`${page}.verify-nid-http-fetch`)
-            .get('data.verificationStatus')
-            .isEqualTo('authenticated')
-        )
+        conditional: not(field(`${page}.verified`).isEqualTo('authenticated'))
       })
     }
   }
