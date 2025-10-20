@@ -1,6 +1,9 @@
 #!/bin/bash
 set -euo pipefail
 
+# NOTE!
+# This setup is ran before core migrations. Therefore you CAN NOT refer to the tables or data in core.
+
 # Configuration
 : "${POSTGRES_HOST:=localhost}"
 : "${POSTGRES_PORT:=5432}"
