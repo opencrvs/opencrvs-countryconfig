@@ -109,6 +109,17 @@ export const deceased = defineFormPage({
             id: 'event.death.action.declare.form.section.deceased.field.dob.error'
           },
           validator: field('deceased.dob').isBefore().now()
+        },
+        {
+          message: {
+            defaultMessage: 'Date of birth must be before the date of death',
+            description:
+              'This is the error message for date of birth later than date of death',
+            id: 'event.death.action.declare.form.section.deceased.field.dob.error.laterThanDeath'
+          },
+          validator: field('deceased.dob')
+            .isBefore()
+            .date(field('eventDetails.date'))
         }
       ],
       label: {
@@ -140,7 +151,7 @@ export const deceased = defineFormPage({
     },
     {
       id: `deceased.age`,
-      type: FieldType.TEXT,
+      type: FieldType.AGE,
       required: true,
       label: {
         defaultMessage: `Age of deceased`,
@@ -148,6 +159,7 @@ export const deceased = defineFormPage({
         id: 'event.death.action.declare.form.section.deceased.field.age.label'
       },
       configuration: {
+        asOfDate: field('eventDetails.date'),
         postfix: {
           defaultMessage: 'years',
           description: 'This is the postfix for age field',
@@ -158,6 +170,16 @@ export const deceased = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: field(`deceased.dobUnknown`).isEqualTo(true)
+        }
+      ],
+      validation: [
+        {
+          validator: field('deceased.age').asAge().isBetween(0, 120),
+          message: {
+            defaultMessage: 'Age must be between 0 and 120',
+            description: 'Error message for invalid age',
+            id: 'event.death.action.declare.form.section.deceased.field.age.error'
+          }
         }
       ]
     },

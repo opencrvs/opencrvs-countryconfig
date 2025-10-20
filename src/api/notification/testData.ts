@@ -1,4 +1,4 @@
-import { Recipient } from '@opencrvs/toolkit/notification'
+import { Recipient, TriggerEvent } from '@opencrvs/toolkit/notification'
 import { UUID } from '@opencrvs/toolkit/events'
 import { TriggerEventPayloadPair } from './handler'
 import {
@@ -71,6 +71,20 @@ export const userNotificationTestData: TriggerEventPayloadPair[] = [
         role: 'NATIONAL_SYSTEM_ADMIN'
       }
     }
+  },
+  {
+    event: TriggerEvent.CHANGE_EMAIL_ADDRESS,
+    payload: {
+      recipient,
+      code: '654321'
+    }
+  },
+  {
+    event: TriggerEvent.CHANGE_PHONE_NUMBER,
+    payload: {
+      recipient,
+      code: '123456'
+    }
   }
 ]
 
@@ -80,7 +94,7 @@ const CreateAction = {
   createdByUserType: 'user',
   createdAt: '2025-08-20T03:24:04.815Z',
   createdBy: '68a33795caf0b9e13a86d51f',
-  createdByRole: 'SOCIAL_WORKER',
+  createdByRole: 'HOSPITAL_CLERK',
   createdAtLocation: '9e069dda-0d83-4f67-a4f2-9adbf5658e2e' as unknown as UUID,
   declaration: {},
   status: ActionStatus.Accepted,
@@ -93,7 +107,7 @@ const AssignAction = {
   createdByUserType: 'user',
   createdAt: '2025-08-20T03:24:04.815Z',
   createdBy: '68a33795caf0b9e13a86d51f',
-  createdByRole: 'SOCIAL_WORKER',
+  createdByRole: 'HOSPITAL_CLERK',
   createdAtLocation: '9e069dda-0d83-4f67-a4f2-9adbf5658e2e' as unknown as UUID,
   declaration: {},
   status: 'Accepted',
@@ -107,7 +121,7 @@ const RequestBirthNotificationAction = {
   createdByUserType: 'user',
   createdAt: '2025-08-20T03:24:49.861Z',
   createdBy: '68a33795caf0b9e13a86d51f',
-  createdByRole: 'SOCIAL_WORKER',
+  createdByRole: 'HOSPITAL_CLERK',
   createdAtLocation: '9e069dda-0d83-4f67-a4f2-9adbf5658e2e' as unknown as UUID,
   declaration: {
     'child.name': {
@@ -145,7 +159,7 @@ const RequestBirthDeclarationAction = {
   createdByUserType: 'user',
   createdAt: '2025-08-20T03:24:49.861Z',
   createdBy: '68a33795caf0b9e13a86d51f',
-  createdByRole: 'SOCIAL_WORKER',
+  createdByRole: 'HOSPITAL_CLERK',
   createdAtLocation: '9e069dda-0d83-4f67-a4f2-9adbf5658e2e' as unknown as UUID,
   declaration: {
     'child.name': {
@@ -183,7 +197,7 @@ const BirthDeclarationAction = {
   createdByUserType: 'user',
   createdAt: '2025-08-20T03:24:49.861Z',
   createdBy: '68a33795caf0b9e13a86d51f',
-  createdByRole: 'SOCIAL_WORKER',
+  createdByRole: 'HOSPITAL_CLERK',
   createdAtLocation: '9e069dda-0d83-4f67-a4f2-9adbf5658e2e' as unknown as UUID,
   declaration: {
     'child.name': {
@@ -221,7 +235,7 @@ const RequestRegistrationAction = {
   createdByUserType: 'user',
   createdAt: '2025-08-20T03:24:49.861Z',
   createdBy: '68a33795caf0b9e13a86d51f',
-  createdByRole: 'SOCIAL_WORKER',
+  createdByRole: 'HOSPITAL_CLERK',
   createdAtLocation: '9e069dda-0d83-4f67-a4f2-9adbf5658e2e' as unknown as UUID,
   declaration: {},
   annotation: {},
@@ -235,7 +249,7 @@ const RequestRejectionAction = {
   createdByUserType: 'user',
   createdAt: '2025-08-20T03:24:49.861Z',
   createdBy: '68a33795caf0b9e13a86d51f',
-  createdByRole: 'SOCIAL_WORKER',
+  createdByRole: 'HOSPITAL_CLERK',
   createdAtLocation: '9e069dda-0d83-4f67-a4f2-9adbf5658e2e' as unknown as UUID,
   declaration: {},
   annotation: {},
@@ -297,13 +311,13 @@ const RequestDeathDeclarationAction = {
   createdByRole: 'LOCAL_REGISTRAR',
   createdAtLocation: '9e069dda-0d83-4f67-a4f2-9adbf5658e2e' as unknown as UUID,
   declaration: {
-    'spouse.age': '41',
+    'spouse.age': { age: '41', asOfDate: '2025-08-19' },
     'spouse.name': {
       firstname: 'Toki',
       surname: 'Kozuki',
       middlename: ''
     },
-    'deceased.age': '31',
+    'deceased.age': { age: '31', asOfDate: '2025-08-19' },
     'deceased.name': {
       firstname: 'Oden',
       surname: 'Kozuki',
@@ -353,13 +367,13 @@ const DeathDeclarationAction = {
   createdByRole: 'LOCAL_REGISTRAR',
   createdAtLocation: '9e069dda-0d83-4f67-a4f2-9adbf5658e2e' as unknown as UUID,
   declaration: {
-    'spouse.age': '41',
+    'spouse.age': { age: '41', asOfDate: '2025-08-19' },
     'spouse.name': {
       firstname: 'Toki',
       surname: 'Kozuki',
       middlename: ''
     },
-    'deceased.age': '31',
+    'deceased.age': { age: '31', asOfDate: '2025-08-19' },
     'deceased.name': {
       firstname: 'Oden',
       surname: 'Kozuki',

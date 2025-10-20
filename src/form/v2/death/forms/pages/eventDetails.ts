@@ -159,6 +159,18 @@ export const eventDetails = defineFormPage({
             id: 'event.death.action.declare.form.section.event.field.date.error'
           },
           validator: field('eventDetails.date').isBefore().now()
+        },
+        {
+          message: {
+            defaultMessage:
+              "Date of death must be after the deceased's birth date",
+            description:
+              'This is the error message for date of death before date of birth',
+            id: 'event.death.action.declare.form.section.event.field.date.error.beforeBirth'
+          },
+          validator: field('eventDetails.date')
+            .isAfter()
+            .date(field('deceased.dob'))
         }
       ],
       label: {
@@ -172,7 +184,7 @@ export const eventDetails = defineFormPage({
       type: FieldType.TEXT,
       required: true,
       label: {
-        defaultMessage: 'Reason',
+        defaultMessage: 'Reason for late registration',
         description: 'This is the label for the field',
         id: 'event.death.action.declare.form.section.event.field.reason.label'
       },
@@ -258,7 +270,7 @@ export const eventDetails = defineFormPage({
       ]
     },
     {
-      id: 'eventDetails.divider_1',
+      id: 'eventDetails.divider1',
       type: FieldType.DIVIDER,
       label: emptyMessage
     },
@@ -273,7 +285,7 @@ export const eventDetails = defineFormPage({
       configuration: { styles: { fontVariant: 'h3' } }
     },
     {
-      id: 'eventDetails.divider_2',
+      id: 'eventDetails.divider2',
       type: FieldType.DIVIDER,
       label: emptyMessage
     },

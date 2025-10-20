@@ -30,7 +30,8 @@ import {
   COUNTRY_CONFIG_PORT,
   CHECK_INVALID_TOKEN,
   AUTH_URL,
-  DEFAULT_TIMEOUT
+  DEFAULT_TIMEOUT,
+  GATEWAY_URL
 } from '@countryconfig/constants'
 import {
   contentHandler,
@@ -62,7 +63,12 @@ import {
   onAnyActionHandler
 } from '@countryconfig/api/custom-event/handler'
 import { readFileSync } from 'fs'
-import { ActionType, EventDocument } from '@opencrvs/toolkit/events'
+import {
+  ActionDocument,
+  ActionStatus,
+  ActionType,
+  EventDocument
+} from '@opencrvs/toolkit/events'
 import { Event } from './form/types/types'
 import { onRegisterHandler } from './api/registration'
 import { workqueueconfigHandler } from './api/workqueue/handler'
@@ -70,11 +76,13 @@ import getUserNotificationRoutes from './config/routes/userNotificationRoutes'
 import {
   importEvent,
   importEvents,
+  importLocations,
   syncLocationLevels,
   syncLocationStatistics
 } from './analytics/analytics'
 import { getClient } from './analytics/postgres'
 import { env } from './environment'
+import { createClient } from '@opencrvs/toolkit/api'
 
 export interface ITokenPayload {
   sub: string
@@ -276,6 +284,7 @@ export async function createServer() {
   server.route({
     method: 'GET',
     path: '/ping',
+    // eslint-disable-next-line no-unused-vars
     handler: (request: any, h: any) => {
       // Perform any health checks and return true or false for success prop
       return {
@@ -605,6 +614,12 @@ export async function createServer() {
           if (queue.length > 0) {
             await importEvents(queue, trx)
           }
+
+          // Import locations
+          const url = new URL('events', GATEWAY_URL).toString()
+          const client = createClient(url, req.headers.authorization)
+          const locations = await client.locations.list.query()
+          await importLocations(locations)
         })
 
         logger.info('Reindexed all events into analytics.')
@@ -687,6 +702,7 @@ export async function createServer() {
     const parsedPath = /^\/trigger\/events\/[^/]+\/actions\/([^/]+)$/.exec(
       request.route.path
     )
+
     const actionType = parsedPath?.[1] as ActionType | null
     const wasRequestForActionConfirmation =
       actionType && request.method === 'post'
@@ -694,10 +710,26 @@ export async function createServer() {
 
     if (wasRequestForActionConfirmation && wasActionAcceptedImmediately) {
       const event = request.payload as EventDocument
+
+      const eventWithOptimisticallyApprovedLastAction = {
+        ...event,
+        actions: event.actions.map((action, index) =>
+          index === event.actions.length - 1
+            ? { ...action, status: ActionStatus.Accepted }
+            : action
+        ) as ActionDocument[]
+      }
+
       const client = getClient()
-      await client.transaction().execute(async (trx) => {
-        await importEvent(event, trx)
-      })
+      try {
+        await client.transaction().execute(async (trx) => {
+          await importEvent(eventWithOptimisticallyApprovedLastAction, trx)
+        })
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error)
+        throw error
+      }
     }
     return h.continue
   })
@@ -711,10 +743,10 @@ export async function createServer() {
     await server.start()
     await syncLocationLevels()
     await syncLocationStatistics()
-    server.log(
-      'info',
-      `server started on ${COUNTRY_CONFIG_HOST}:${COUNTRY_CONFIG_PORT}`
-    )
+
+    const logMsg = `Server successfully started on ${COUNTRY_CONFIG_HOST}:${COUNTRY_CONFIG_PORT}`
+    logger.info(logMsg)
+    server.log('info', logMsg)
   }
 
   return { server, start, stop }

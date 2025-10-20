@@ -184,7 +184,7 @@ export const mother = defineFormPage({
     },
     {
       id: 'mother.age',
-      type: FieldType.TEXT,
+      type: FieldType.AGE,
       required: true,
       label: {
         defaultMessage: 'Age of mother',
@@ -192,6 +192,7 @@ export const mother = defineFormPage({
         id: 'event.birth.action.declare.form.section.mother.field.age.label'
       },
       configuration: {
+        asOfDate: field('child.dob'),
         postfix: {
           defaultMessage: 'years',
           description: 'This is the postfix for age field',
@@ -205,6 +206,16 @@ export const mother = defineFormPage({
             field('mother.dobUnknown').isEqualTo(true),
             requireMotherDetails
           )
+        }
+      ],
+      validation: [
+        {
+          validator: field('mother.age').asAge().isBetween(12, 120),
+          message: {
+            defaultMessage: 'Age must be between 12 and 120',
+            description: 'Error message for invalid age',
+            id: 'event.action.declare.form.section.person.field.age.error'
+          }
         }
       ]
     },
@@ -314,7 +325,7 @@ export const mother = defineFormPage({
       ]
     },
     {
-      id: 'mother.addressDivider_1',
+      id: 'mother.addressDivider1',
       type: FieldType.DIVIDER,
       label: emptyMessage,
       conditionals: [
@@ -380,7 +391,7 @@ export const mother = defineFormPage({
       }
     },
     {
-      id: 'mother.addressDivider_2',
+      id: 'mother.addressDivider2',
       type: FieldType.DIVIDER,
       label: emptyMessage,
       conditionals: [

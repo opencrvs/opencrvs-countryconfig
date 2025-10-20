@@ -19,7 +19,9 @@ import {
   FieldType,
   PageTypes,
   field,
-  event
+  event,
+  user,
+  or
 } from '@opencrvs/toolkit/events'
 import { Event } from './types/types'
 import { MAX_NAME_LENGTH } from './v2/birth/validators'
@@ -148,6 +150,28 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
             description: 'This is the label for the field',
             id: 'event.tennis-club-membership.action.declare.form.section.who.field.image.label'
           }
+        },
+        {
+          id: 'applicant.isRecommendedByFieldAgent',
+          type: FieldType.CHECKBOX,
+          analytics: true,
+          required: false,
+          label: {
+            defaultMessage:
+              'Field shown when field agent is submitting application.',
+            description: 'This is the label for the field',
+            id: 'event.tennis-club-membership.action.declare.form.section.who.field.isRecommendedByFieldAgent.label'
+          },
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: or(
+                user.hasRole('SOCIAL_WORKER'),
+                user.hasRole('FIELD_AGENT'),
+                user.hasRole('HOSPITAL_CLERK')
+              )
+            }
+          ]
         }
       ]
     },
@@ -375,7 +399,7 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
           ]
         },
         {
-          id: 'collector.DRIVING_LICENSE.details',
+          id: 'collector.DRIVING-LICENCE.details',
           type: 'TEXT',
           required: true,
           label: {
@@ -394,7 +418,7 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
           ]
         },
         {
-          id: 'collector.REFUGEE_NUMBER.details',
+          id: 'collector.REFUGEE-NUMBER.details',
           type: 'TEXT',
           required: true,
           label: {
@@ -413,7 +437,7 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
           ]
         },
         {
-          id: 'collector.ALIEN_NUMBER.details',
+          id: 'collector.ALIEN-NUMBER.details',
           type: 'TEXT',
           required: true,
           label: {
@@ -602,6 +626,7 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
           configuration: {
             data: [
               {
+                id: 'service',
                 label: {
                   defaultMessage: 'Service',
                   description: 'Title for the data entry',
@@ -610,6 +635,7 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
                 value: 'Member registration older than 30 years'
               },
               {
+                id: 'fee',
                 label: {
                   defaultMessage: 'Fee',
                   description: 'Title for the data entry',
