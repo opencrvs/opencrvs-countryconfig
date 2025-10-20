@@ -889,6 +889,7 @@ event.death.action.certificate.form.section.requester.printInAdvance.label,This 
 event.death.action.certificate.form.section.requester.spouse.label,This is the label for the field,Print and issue to Spouse,Imprimer et délivrer au conjoint
 event.death.action.certificate.form.section.who.title,This is the title of the section,Certify record,Certifier l'enregistrement
 event.death.action.certificate.form.verify,This is the label for the verification button,Verified,Vérifié
+event.death.action.certificate.form.section.verifyIdentity.data.label,Label for identity verification data block,Identity details,Détails de l'identité
 event.death.action.collect-certificate.label,This is shown as the action name anywhere the user can trigger the action from,Print certificate,Imprimer le certificat
 event.death.action.correction.documents.supportingDocs.affidavit.label,Label for the affidavit option,Affidavit,Affidavit
 event.death.action.correction.documents.supportingDocs.courtDocument.label,Label for the court document option,Court Document,Document judiciaire
