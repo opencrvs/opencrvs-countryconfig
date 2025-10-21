@@ -22,13 +22,7 @@ import {
   user
 } from '@opencrvs/toolkit/events'
 import { not } from '@opencrvs/toolkit/conditionals'
-import {
-  connectToMOSIPIdReader,
-  connectToMOSIPVerificationStatus,
-  createSelectOptions,
-  emptyMessage,
-  getMOSIPIntegrationFields
-} from '../../../utils'
+import { createSelectOptions, emptyMessage } from '../../../utils'
 import {
   invalidNameValidator,
   MAX_NAME_LENGTH,
@@ -44,6 +38,11 @@ import {
   defaultStreetAddressConfiguration,
   getNestedFieldValidators
 } from '@countryconfig/form/street-address-configuration'
+import {
+  getMOSIPIntegrationFields,
+  connectToMOSIPIdReader,
+  connectToMOSIPVerificationStatus
+} from '@countryconfig/form/v2/mosip'
 
 export const InformantType = {
   SPOUSE: 'SPOUSE',
