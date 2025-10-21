@@ -33,6 +33,9 @@ export METABASE_DATABASE_NAME=events
 export METABASE_DATABASE_HOST=localhost
 export METABASE_DATABASE_USER=postgres
 
+rm -f data/metabase/*
+rm -f infrastructure/metabase/data/metabase/*
+
 # enable job control
 set -m
 

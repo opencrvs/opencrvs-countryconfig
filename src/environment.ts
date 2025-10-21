@@ -39,7 +39,6 @@ export const env = cleanEnv(process.env, {
   MOSIP_API_USERINFO_URL: url({
     devDefault: 'http://localhost:2024/esignet/get-oidp-user-info'
   }),
-  V2_EVENTS: bool({ default: false }),
   ANALYTICS_DATABASE_URL: url({
     devDefault:
       'postgres://events_analytics:analytics_password@localhost:5432/events',

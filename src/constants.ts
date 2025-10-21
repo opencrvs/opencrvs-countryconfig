@@ -31,7 +31,6 @@ export const CHECK_INVALID_TOKEN = env.CHECK_INVALID_TOKEN
 
 export const PRODUCTION = env.isProd
 export const QA_ENV = env.QA_ENV
-export const V2_EVENTS = env.V2_EVENTS
 export const ANALYTICS_DATABASE_URL = env.ANALYTICS_DATABASE_URL
 
 // e-signet
