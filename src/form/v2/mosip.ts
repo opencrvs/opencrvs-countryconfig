@@ -315,11 +315,7 @@ export const connectToMOSIPVerificationStatus = (
       ...fieldInput,
       conditionals: upsertConditional(fieldInput.conditionals || [], {
         type: ConditionalType.SHOW,
-        conditional: not(
-          field(`${page}.verify-nid-http-fetch`)
-            .get('data.verificationStatus')
-            .isEqualTo('authenticated')
-        )
+        conditional: not(field(`${page}.verified`).isEqualTo('authenticated'))
       })
     }
   }
