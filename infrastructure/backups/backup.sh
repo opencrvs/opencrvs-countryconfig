@@ -266,12 +266,7 @@ echo ""
 create_elasticsearch_backup() {
   indices=$(get_target_indices)
   echo "List indices for backup: $indices"
-  indices=$(get_target_indices)
-  echo "List indices for backup: $indices"
   OUTPUT=""
-  json_payload="{\"indices\": \"${indices}\"}"
-  OUTPUT=$(docker run --rm --network=$NETWORK appropriate/curl curl -sS -X PUT -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs/snapshot_${LABEL:-$BACKUP_DATE}?wait_for_completion=true&pretty" -d "$json_payload" 2>/dev/null) || true
-
   json_payload="{\"indices\": \"${indices}\"}"
   OUTPUT=$(docker run --rm --network=$NETWORK appropriate/curl curl -sS -X PUT -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs/snapshot_${LABEL:-$BACKUP_DATE}?wait_for_completion=true&pretty" -d "$json_payload" 2>/dev/null) || true
 
