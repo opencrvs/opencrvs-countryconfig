@@ -884,9 +884,9 @@ event.death.action.certificate.form.section.requester.label,This is the label fo
 event.death.action.certificate.form.section.requester.other.label,This is the label for the field,Print and issue to someone else,Imprimer et délivrer à quelqu'un d'autre
 event.death.action.certificate.form.section.requester.printInAdvance.label,This is the label for the field,Print in advance,Imprimer à l'avance
 event.death.action.certificate.form.section.requester.spouse.label,This is the label for the field,Print and issue to Spouse,Imprimer et délivrer au conjoint
+event.death.action.certificate.form.section.verifyIdentity.data.label,Label for identity verification data block,Identity details,Détails de l'identité
 event.death.action.certificate.form.section.who.title,This is the title of the section,Certify record,Certifier l'enregistrement
 event.death.action.certificate.form.verify,This is the label for the verification button,Verified,Vérifié
-event.death.action.certificate.form.section.verifyIdentity.data.label,Label for identity verification data block,Identity details,Détails de l'identité
 event.death.action.collect-certificate.label,This is shown as the action name anywhere the user can trigger the action from,Print certificate,Imprimer le certificat
 event.death.action.correction.documents.supportingDocs.affidavit.label,Label for the affidavit option,Affidavit,Affidavit
 event.death.action.correction.documents.supportingDocs.courtDocument.label,Label for the court document option,Court Document,Document judiciaire
@@ -1142,6 +1142,11 @@ field.age.asOf,This is the label for the as of -text on the age field,as of,à l
 fieldAgentHome.queryError,The text when error ocurred loading rejected declarations,An error occurred while loading declarations,Une erreur s'est produite lors du chargement des déclarations
 file.upload.fileSize.error,Error message when the selected file is too large,File size must be less than {maxSize}mb,La taille du fichier doit être inférieure à {maxSize}M
 file.upload.fileType.error,Error message when the selected file type is not supported,File format not supported. Please attach {types} (max {maxSize}mb),Format de fichier non pris en charge. Veuillez joindre un {types} (max {maxSize}mb)
+flags.builtin.correction-requested.label,Label for flag,Correction requested,Correction demandée
+flags.builtin.incomplete.label,Label for flag,Incomplete,Incomplet
+flags.builtin.pending-certification.label,Label for flag,Pending certification,En attente de certification
+flags.builtin.potential-duplicate.label,Label for flag,Potential duplicate,Doublon potentiel
+flags.builtin.rejected.label,Label for flag,Rejected,Rejeté
 form.birth.child.title,Form section title for Child,Child's details,information de l'enfant
 form.customField.label.numberOfDependants,,No. of dependants,Nombre de personnes à charge
 form.customField.label.reasonForLateRegistrationBirth,,Reason for delayed registration,Raison du retard d'inscription
