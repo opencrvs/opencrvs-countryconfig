@@ -149,8 +149,9 @@ echo "🧹 cleanup for indices: $approved_words from $indices"
 echo "--------------------------"
 for index in ${indices[@]}; do
   for approved in $approved_words; do
+    echo "Checking index $index against approved pattern $approved..."
     case "$index" in
-    "$approved_words"*) 
+    "$approved"*)
         echo "Delete index $index..."
         docker run --rm --network=$NETWORK appropriate/curl curl -sS -XDELETE "http://$(elasticsearch_host)/$index"
         break
@@ -214,7 +215,7 @@ if [ -f "$ROOT_PATH/backups/postgres/events-${LABEL}.dump" ]; then
     -e PGPASSWORD=$POSTGRES_PASSWORD \
     --network=$NETWORK \
     postgres:17.6 \
-    bash -c "psql -h postgres -U $POSTGRES_USER -c 'DROP DATABASE IF EXISTS events;'"
+    bash -c "psql -h postgres -U $POSTGRES_USER -c 'DROP DATABASE IF EXISTS events WITH (FORCE);'"
 else
   echo "PostgreSQL backup not found for label ${LABEL}. Skipping PostgreSQL database drop..."
 fi
@@ -252,7 +253,11 @@ if [ -f "$ROOT_PATH/backups/postgres/events-${LABEL}.dump" ]; then
     -v $ROOT_PATH/backups/postgres:/backups \
     --network=$NETWORK \
     postgres:17.6 \
-    bash -c "createdb -h postgres -U $POSTGRES_USER events && pg_restore -h postgres -U $POSTGRES_USER -d events /backups/events-${LABEL}.dump"
+    bash -c "createdb -h postgres -U $POSTGRES_USER events && \
+             psql -h postgres -U $POSTGRES_USER -d events -c 'CREATE SCHEMA app AUTHORIZATION events_migrator; GRANT USAGE ON SCHEMA app TO events_app;' && \
+             pg_restore -h postgres -U $POSTGRES_USER -d events --schema=app /backups/events-${LABEL}.dump"
+  echo "Update credentials in Postgres on restore"
+  docker service update --force opencrvs_postgres-on-update
 else
   echo "PostgreSQL backup not found for label ${LABEL}. Skipping PostgreSQL database restore..."
 fi
@@ -309,3 +314,15 @@ tar -xzvf $ROOT_PATH/backups/vsexport/ocrvs-$LABEL.tar.gz -C $ROOT_PATH/vsexport
 if [ "$IS_LOCAL" = false ]; then
   docker service update --force --update-parallelism 1 opencrvs_migration
 fi
+
+##
+# ------ REINDEX -----
+##
+docker run --rm \
+  -v /opt/opencrvs/infrastructure/deployment:/workspace \
+  -w /workspace \
+  --network $NETWORK \
+  -e 'AUTH_URL=http://auth:4040/' \
+  -e 'EVENTS_URL=http://gateway:7070/events' \
+  alpine \
+  sh -c 'apk add --no-cache curl jq && sh reindex.sh'
