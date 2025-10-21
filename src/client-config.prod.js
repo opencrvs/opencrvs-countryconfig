@@ -12,10 +12,10 @@
 /**
  * When running application in slow network condition (reproducible using 3G), the client-config.js might be loaded twice.
  * This results to issues like `Uncaught SyntaxError: "identifier scheme has already been declared at (client-config.js:1:1")`.
- * 
+ *
  * On high level, refreshing the browser window requests new document page. The document page includes script tag to load client-config.js.
  * If the network is slow, the browser might start loading and executing client-config.js again before the previous one is torn down, causing the error.
- * 
+ *
  */
 ;(function initClientConfig() {
   const scheme = window.location.protocol // "http:" or "https:"
@@ -66,9 +66,6 @@
     ],
     // NOTE: This is not valid javascript until replaced during build time.
     // IIFE just reveals it.
-    FEATURES: {
-      //  The V2_EVENTS variable is passed down from src/index.ts:309
-      V2_EVENTS: {{ V2_EVENTS }}
-    }
+    FEATURES: {}
   }
 })()
