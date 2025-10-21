@@ -22,13 +22,7 @@ import {
 } from '@opencrvs/toolkit/events'
 import { not, never } from '@opencrvs/toolkit/conditionals'
 
-import {
-  connectToMOSIPIdReader,
-  connectToMOSIPVerificationStatus,
-  createSelectOptions,
-  emptyMessage,
-  getMOSIPIntegrationFields
-} from '@countryconfig/form/v2/utils'
+import { createSelectOptions, emptyMessage } from '@countryconfig/form/v2/utils'
 import {
   invalidNameValidator,
   MAX_NAME_LENGTH,
@@ -43,6 +37,11 @@ import {
   defaultStreetAddressConfiguration,
   getNestedFieldValidators
 } from '@countryconfig/form/street-address-configuration'
+import {
+  connectToMOSIPIdReader,
+  connectToMOSIPVerificationStatus,
+  getMOSIPIntegrationFields
+} from '@countryconfig/form/v2/mosip'
 
 const GenderTypes = {
   MALE: 'male',

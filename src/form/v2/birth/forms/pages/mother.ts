@@ -20,12 +20,7 @@ import {
   user
 } from '@opencrvs/toolkit/events'
 import { or, not, never } from '@opencrvs/toolkit/conditionals'
-import {
-  connectToMOSIPIdReader,
-  connectToMOSIPVerificationStatus,
-  emptyMessage,
-  getMOSIPIntegrationFields
-} from '@countryconfig/form/v2/utils'
+import { emptyMessage } from '@countryconfig/form/v2/utils'
 import {
   invalidNameValidator,
   nationalIdValidator,
@@ -41,6 +36,11 @@ import {
   defaultStreetAddressConfiguration,
   getNestedFieldValidators
 } from '@countryconfig/form/street-address-configuration'
+import {
+  getMOSIPIntegrationFields,
+  connectToMOSIPIdReader,
+  connectToMOSIPVerificationStatus
+} from '@countryconfig/form/v2/mosip'
 
 export const requireMotherDetails = or(
   field('mother.detailsNotAvailable').isFalsy(),
