@@ -283,6 +283,10 @@ export const getMOSIPIntegrationFields = (
                 field(`${page}.verify-nid-http-fetch`).get('loading').isFalsy(),
                 field(`${page}.verify-nid-http-fetch`).get('data').isFalsy()
               )
+        },
+        {
+          type: ConditionalType.DISPLAY_ON_REVIEW,
+          conditional: never()
         }
       ],
       methods: [
@@ -332,7 +336,11 @@ export const connectToMOSIPVerificationStatus = (
       ...fieldInput,
       conditionals: upsertConditional(fieldInput.conditionals || [], {
         type: ConditionalType.SHOW,
-        conditional: not(field(`${page}.verified`).isEqualTo('authenticated'))
+        conditional: not(
+          field(`${page}.verify-nid-http-fetch`)
+            .get('data.verificationStatus')
+            .isEqualTo('authenticated')
+        )
       })
     }
   }
