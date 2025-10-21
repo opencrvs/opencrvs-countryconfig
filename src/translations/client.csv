@@ -1138,6 +1138,7 @@ field.address.town.label,Label for town in address,Town,Ville
 field.name.firstname.label,This is the label for the firstname field,First name(s),Prénom(s)
 field.name.middlename.label,This is the label for the middleName field,Middle name,Deuxième prénom(s)
 field.name.surname.label,This is the label for the surname field,Last name,Nom(s)
+field.age.asOf,This is the label for the as of -text on the age field,as of,à la date du
 fieldAgentHome.queryError,The text when error ocurred loading rejected declarations,An error occurred while loading declarations,Une erreur s'est produite lors du chargement des déclarations
 file.upload.fileSize.error,Error message when the selected file is too large,File size must be less than {maxSize}mb,La taille du fichier doit être inférieure à {maxSize}M
 file.upload.fileType.error,Error message when the selected file type is not supported,File format not supported. Please attach {types} (max {maxSize}mb),Format de fichier non pris en charge. Veuillez joindre un {types} (max {maxSize}mb)
