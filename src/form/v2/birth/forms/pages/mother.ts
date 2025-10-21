@@ -209,6 +209,7 @@ export const mother = defineFormPage({
         id: 'mother.age',
         type: FieldType.AGE,
         required: true,
+        analytics: true,
         label: {
           defaultMessage: 'Age of mother',
           description: 'This is the label for the field',

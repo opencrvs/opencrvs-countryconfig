@@ -1,4 +1,4 @@
-import { Recipient } from '@opencrvs/toolkit/notification'
+import { Recipient, TriggerEvent } from '@opencrvs/toolkit/notification'
 import { UUID } from '@opencrvs/toolkit/events'
 import { TriggerEventPayloadPair } from './handler'
 import {
@@ -70,6 +70,20 @@ export const userNotificationTestData: TriggerEventPayloadPair[] = [
         id: 'admin',
         role: 'NATIONAL_SYSTEM_ADMIN'
       }
+    }
+  },
+  {
+    event: TriggerEvent.CHANGE_EMAIL_ADDRESS,
+    payload: {
+      recipient,
+      code: '654321'
+    }
+  },
+  {
+    event: TriggerEvent.CHANGE_PHONE_NUMBER,
+    payload: {
+      recipient,
+      code: '123456'
     }
   }
 ]

@@ -83,6 +83,26 @@ export default function getUserNotificationRoutes(): ServerRoute<ReqRefDefaults>
         tags: ['api'],
         description: 'Handles broadcast for all user '
       }
+    },
+    {
+      method: 'POST',
+      path: '/triggers/user/change-phone-number',
+      handler: makeNotificationHandler('change-phone-number'),
+      options: {
+        auth: false,
+        tags: ['api'],
+        description: 'Handles verification for phone number change'
+      }
+    },
+    {
+      method: 'POST',
+      path: '/triggers/user/change-email-address',
+      handler: makeNotificationHandler('change-email-address'),
+      options: {
+        auth: false,
+        tags: ['api'],
+        description: 'Handles verification for email address change'
+      }
     }
   ]
 }
