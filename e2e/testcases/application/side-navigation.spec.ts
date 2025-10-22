@@ -1,5 +1,5 @@
 import { test, type Page, expect } from '@playwright/test'
-import { loginToV2 } from '../../helpers'
+import { login } from '../../helpers'
 import { CREDENTIALS } from '../../constants'
 
 test.describe.serial('Side navigation', () => {
@@ -14,7 +14,7 @@ test.describe.serial('Side navigation', () => {
   })
 
   test('1.1. Check LOCAL REGISTRAR navigation items', async () => {
-    await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR, false, true)
+    await login(page, CREDENTIALS.LOCAL_REGISTRAR, false, true)
 
     // V2 workques is super set of V1 workqueues.
     const localRegisrarWorkqueues = [
@@ -65,7 +65,7 @@ test.describe.serial('Side navigation', () => {
   })
 
   test('1.2. Check REGISTRATION AGENT navigation items', async () => {
-    await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT, false, true)
+    await login(page, CREDENTIALS.REGISTRATION_AGENT, false, true)
 
     // V2 workques is super set of V1 workqueues.
     const registrationAgentWorkqueues = [
@@ -116,7 +116,7 @@ test.describe.serial('Side navigation', () => {
   })
 
   test('1.3. Check NATIONAL_SYSTEM_ADMIN navigation items', async () => {
-    await loginToV2(page, CREDENTIALS.NATIONAL_SYSTEM_ADMIN, false, true)
+    await login(page, CREDENTIALS.NATIONAL_SYSTEM_ADMIN, false, true)
 
     const nationalSystemAdminNavItemsWithFrame = ['Organisation', 'Team']
 

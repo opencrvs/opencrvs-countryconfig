@@ -1,8 +1,8 @@
 import { expect, test, type Page } from '@playwright/test'
-import { loginToV2 } from '../../helpers'
+import { login } from '../../helpers'
 import path from 'path'
 import { faker } from '@faker-js/faker'
-import { ensureOutboxIsEmpty, selectAction } from '../../v2-utils'
+import { ensureOutboxIsEmpty, selectAction } from '../../utils'
 import { REQUIRED_VALIDATION_ERROR } from './helpers'
 import { trackAndDeleteCreatedEvents } from '../test-data/eventDeletion'
 
@@ -27,7 +27,7 @@ test.describe.serial('1. Birth event declaration', () => {
     })
 
     test('1.1. Navigate to the birth event declaration page', async () => {
-      await loginToV2(page)
+      await login(page)
 
       await page.click('#header-new-event')
       await expect(page.getByText('New Declaration')).toBeVisible()
@@ -489,7 +489,7 @@ test.describe.serial('1. Birth event declaration', () => {
   })
   test.describe('1.10 Validate "Exit" Button', async () => {
     test.beforeEach(async ({ page }) => {
-      await loginToV2(page)
+      await login(page)
 
       await page.click('#header-new-event')
       await page.getByLabel('Birth').click()
@@ -551,7 +551,7 @@ test.describe.serial('1. Birth event declaration', () => {
 
   test.describe('1.11 Validate "Delete Declaration" Button  ', async () => {
     test.beforeEach(async ({ page }) => {
-      await loginToV2(page)
+      await login(page)
       await page.click('#header-new-event')
       await page.getByLabel('Birth').click()
       await page.getByRole('button', { name: 'Continue' }).click()

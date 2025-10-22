@@ -1,5 +1,5 @@
 import { test, expect, type Page } from '@playwright/test'
-import { loginToV2 } from '../../helpers'
+import { login } from '../../helpers'
 
 test.describe.serial('Death form - date validations', () => {
   let page: Page
@@ -13,7 +13,7 @@ test.describe.serial('Death form - date validations', () => {
   })
 
   test('Log in', async () => {
-    await loginToV2(page)
+    await login(page)
   })
 
   test('Start death event declaration', async () => {

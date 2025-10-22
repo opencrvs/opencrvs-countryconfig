@@ -3,7 +3,7 @@ import {
   auditRecord,
   formatDateTo_dMMMMyyyy,
   getToken,
-  loginToV2
+  login
 } from '../../helpers'
 import { faker } from '@faker-js/faker'
 import {
@@ -19,7 +19,7 @@ import {
 import { IdType } from '@countryconfig/form/v2/person'
 import { random } from 'lodash'
 import { formatV2ChildName, REQUIRED_VALIDATION_ERROR } from '../birth/helpers'
-import { ensureAssigned } from '../../v2-utils'
+import { ensureAssigned } from '../../utils'
 
 test.describe.serial('Correct record - change informant type', () => {
   let declaration: DeclarationV2
@@ -129,7 +129,7 @@ test.describe.serial('Correct record - change informant type', () => {
   })
 
   test('Ready to correct record > record audit', async () => {
-    await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
+    await login(page, CREDENTIALS.LOCAL_REGISTRAR)
 
     await auditRecord({
       page,

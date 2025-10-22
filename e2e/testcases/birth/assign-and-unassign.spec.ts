@@ -1,9 +1,9 @@
 import { expect, test, type Page } from '@playwright/test'
 
-import { loginToV2, getToken } from '../../helpers'
+import { login, getToken } from '../../helpers'
 import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../constants'
 import { createDeclaration, Declaration } from '../test-data/birth-declaration'
-import { ensureAssigned, selectAction } from '../../v2-utils'
+import { ensureAssigned, selectAction } from '../../utils'
 
 test.describe.serial('Assign & Unassign', () => {
   let page: Page
@@ -24,7 +24,7 @@ test.describe.serial('Assign & Unassign', () => {
   })
 
   test('Login', async () => {
-    await loginToV2(page)
+    await login(page)
   })
 
   test('Click on "Assign" from action menu', async () => {

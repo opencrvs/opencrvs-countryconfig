@@ -6,11 +6,11 @@ import {
   formatDateObjectTo_dMMMMyyyy,
   getRandomDate,
   goToSection,
-  loginToV2
+  login
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
-import { ensureOutboxIsEmpty, selectAction } from '../../../v2-utils'
+import { ensureOutboxIsEmpty, selectAction } from '../../../utils'
 
 test.describe.serial('3. Death declaration case - 3', () => {
   let page: Page
@@ -106,7 +106,7 @@ test.describe.serial('3. Death declaration case - 3', () => {
 
   test.describe('3.1 Declaration started by FA', async () => {
     test.beforeAll(async () => {
-      await loginToV2(page, CREDENTIALS.FIELD_AGENT)
+      await login(page, CREDENTIALS.FIELD_AGENT)
 
       await page.click('#header-new-event')
       await page.getByLabel('Death').click()
@@ -658,7 +658,7 @@ test.describe.serial('3. Death declaration case - 3', () => {
   })
   test.describe('3.2 Declaration Review by RA', async () => {
     test('3.2.1 Navigate to the declaration review page', async () => {
-      await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
+      await login(page, CREDENTIALS.REGISTRATION_AGENT)
 
       await ensureOutboxIsEmpty(page)
       await page.getByText('Ready for review').click()

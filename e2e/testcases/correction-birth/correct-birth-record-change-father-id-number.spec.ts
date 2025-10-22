@@ -2,7 +2,7 @@ import { expect, test, type Page } from '@playwright/test'
 import {
   auditRecord,
   getToken,
-  loginToV2,
+  login,
   logout,
   uploadImageToSection
 } from '../../helpers'
@@ -14,7 +14,7 @@ import {
 import { format, subYears } from 'date-fns'
 import { CREDENTIALS } from '../../constants'
 import { formatV2ChildName } from '../birth/helpers'
-import { ensureAssigned, selectAction } from '../../v2-utils'
+import { ensureAssigned, selectAction } from '../../utils'
 
 test.describe.serial("Correct record - Change father's ID number", () => {
   let declaration: DeclarationV2
@@ -106,7 +106,7 @@ test.describe.serial("Correct record - Change father's ID number", () => {
   })
 
   test('Login as Registration Agent', async () => {
-    await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
+    await login(page, CREDENTIALS.REGISTRATION_AGENT)
   })
 
   test('Ready to correct record > record audit', async () => {
@@ -219,7 +219,7 @@ test.describe.serial("Correct record - Change father's ID number", () => {
   })
 
   test('Login as Local Registrar', async () => {
-    await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
+    await login(page, CREDENTIALS.LOCAL_REGISTRAR)
   })
 
   test('Find the event in the "Ready for review" workflow', async () => {

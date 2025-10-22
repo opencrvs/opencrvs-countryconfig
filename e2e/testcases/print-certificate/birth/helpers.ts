@@ -1,6 +1,6 @@
 import { Page, expect } from '@playwright/test'
 import { Declaration } from '../../test-data/birth-declaration'
-import { selectAction } from '../../../v2-utils'
+import { selectAction } from '../../../utils'
 
 export async function selectCertificationType(page: Page, type: string) {
   await page.locator('#certificateTemplateId svg').click()

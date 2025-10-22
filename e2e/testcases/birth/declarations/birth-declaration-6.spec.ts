@@ -6,12 +6,12 @@ import {
   formatName,
   getRandomDate,
   goToSection,
-  loginToV2
+  login
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
 import { validateAddress } from '../helpers'
-import { ensureOutboxIsEmpty } from '../../../v2-utils'
+import { ensureOutboxIsEmpty } from '../../../utils'
 
 test.describe.serial('6. Birth declaration case - 6', () => {
   let page: Page
@@ -98,7 +98,7 @@ test.describe.serial('6. Birth declaration case - 6', () => {
 
   test.describe('6.1 Declaration started by National Registrar', async () => {
     test.beforeAll(async () => {
-      await loginToV2(page, CREDENTIALS.NATIONAL_REGISTRAR)
+      await login(page, CREDENTIALS.NATIONAL_REGISTRAR)
       await page.click('#header-new-event')
       await page.getByLabel('Birth').click()
       await page.getByRole('button', { name: 'Continue' }).click()

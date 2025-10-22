@@ -6,7 +6,7 @@ import {
   formatName,
   getRandomDate,
   goToSection,
-  loginToV2,
+  login,
   expectRowValueWithChangeButton
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
@@ -16,7 +16,7 @@ import {
   ensureAssigned,
   ensureOutboxIsEmpty,
   selectAction
-} from '../../../v2-utils'
+} from '../../../utils'
 
 test.describe.serial('1. Birth declaration case - 1', () => {
   let page: Page
@@ -93,7 +93,7 @@ test.describe.serial('1. Birth declaration case - 1', () => {
 
   test.describe('1.1 Declaration started by FA', async () => {
     test.beforeAll(async () => {
-      await loginToV2(page, CREDENTIALS.FIELD_AGENT)
+      await login(page, CREDENTIALS.FIELD_AGENT)
       await page.click('#header-new-event')
       await page.getByLabel('Birth').click()
       await page.getByRole('button', { name: 'Continue' }).click()
@@ -495,7 +495,7 @@ test.describe.serial('1. Birth declaration case - 1', () => {
 
   test.describe('1.2 Declaration Review by RA', async () => {
     test('1.2.1 Navigate to the declaration review page', async () => {
-      await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
+      await login(page, CREDENTIALS.REGISTRATION_AGENT)
       await page.getByText('Ready for review').click()
       await page
         .getByRole('button', {

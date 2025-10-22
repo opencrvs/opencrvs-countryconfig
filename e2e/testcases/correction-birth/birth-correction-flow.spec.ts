@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
-import { getToken, loginToV2, logout } from '../../helpers'
+import { getToken, login, logout } from '../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../constants'
 import {
@@ -12,7 +12,7 @@ import {
   expectInUrl,
   selectAction,
   type
-} from '../../v2-utils'
+} from '../../utils'
 import { formatV2ChildName, REQUIRED_VALIDATION_ERROR } from '../birth/helpers'
 
 test.describe.serial('Birth correction flow', () => {
@@ -35,7 +35,7 @@ test.describe.serial('Birth correction flow', () => {
     eventId = res.eventId
 
     page = await browser.newPage()
-    await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
+    await login(page, CREDENTIALS.REGISTRATION_AGENT)
   })
 
   test('Navigate to the correction form', async () => {
@@ -252,7 +252,7 @@ test.describe.serial('Birth correction flow', () => {
   test.describe('Approve correction request', () => {
     test('Login as Local Registrar', async () => {
       await logout(page)
-      await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
     })
 
     test("Find the event in the 'Ready for review' workflow", async () => {

@@ -1,7 +1,7 @@
 import { expect, test, type Page } from '@playwright/test'
-import { loginToV2 } from '../../helpers'
+import { login } from '../../helpers'
 import { faker } from '@faker-js/faker'
-import { ensureOutboxIsEmpty, type } from '../../v2-utils'
+import { ensureOutboxIsEmpty, type } from '../../utils'
 const deceased = {
   name: {
     firstname: faker.person.firstName('male')
@@ -20,7 +20,7 @@ test.describe('1. Death event declaration', () => {
     })
 
     test('1.1. Navigate to the death event declaration page', async () => {
-      await loginToV2(page)
+      await login(page)
 
       await page.click('#header-new-event')
       await expect(page.getByText('New Declaration')).toBeVisible()
@@ -437,7 +437,7 @@ test.describe('1. Death event declaration', () => {
   })
   test.describe('1.10 Validate "Exit" Button', async () => {
     test.beforeEach(async ({ page }) => {
-      await loginToV2(page)
+      await login(page)
 
       await page.click('#header-new-event')
       await page.getByLabel('Death').click()
@@ -495,7 +495,7 @@ test.describe('1. Death event declaration', () => {
 
   test.describe('1.11 Validate "Delete Declaration" Button  ', async () => {
     test.beforeEach(async ({ page }) => {
-      await loginToV2(page)
+      await login(page)
       await page.click('#header-new-event')
       await page.getByLabel('Death').click()
       await page.getByRole('button', { name: 'Continue' }).click()

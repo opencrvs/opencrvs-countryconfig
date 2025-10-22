@@ -1,6 +1,6 @@
 import { test, type Page } from '@playwright/test'
 
-import { loginToV2, getToken, formatName } from '../../helpers'
+import { login, getToken, formatName } from '../../helpers'
 import { CREDENTIALS } from '../../constants'
 import { createDeclaration, Declaration } from '../test-data/birth-declaration'
 
@@ -8,7 +8,7 @@ import {
   selectCertificationType,
   selectRequesterType
 } from '../print-certificate/birth/helpers'
-import { expectInUrl } from '../../v2-utils'
+import { expectInUrl } from '../../utils'
 
 test.describe.serial('Navigating in and out of action', () => {
   let page: Page
@@ -30,7 +30,7 @@ test.describe.serial('Navigating in and out of action', () => {
   })
 
   test('Login', async () => {
-    await loginToV2(page)
+    await login(page)
   })
 
   test("Navigate to the 'Ready to print' -workqueue", async () => {

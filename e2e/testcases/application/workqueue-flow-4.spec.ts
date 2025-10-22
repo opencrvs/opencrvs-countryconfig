@@ -6,10 +6,10 @@ import {
   formatName,
   getRandomDate,
   goToSection,
-  loginToV2
+  login
 } from '../../helpers'
 import { CREDENTIALS } from '../../constants'
-import { ensureOutboxIsEmpty, selectAction } from '../../v2-utils'
+import { ensureOutboxIsEmpty, selectAction } from '../../utils'
 import { assertRecordInWorkqueue, fillDate } from '../birth/helpers'
 
 // FA Declares => RA Validates => LR Registers
@@ -77,7 +77,7 @@ test.describe.serial('4. Workqueue flow - 4', () => {
 
   test.describe('4.1 Declare by FA', async () => {
     test.beforeAll(async () => {
-      await loginToV2(page, CREDENTIALS.FIELD_AGENT)
+      await login(page, CREDENTIALS.FIELD_AGENT)
       await page.click('#header-new-event')
       await page.getByLabel('Birth').click()
       await page.getByRole('button', { name: 'Continue' }).click()
@@ -223,7 +223,7 @@ test.describe.serial('4. Workqueue flow - 4', () => {
   })
 
   test('4.2 Workqueue for LR', async () => {
-    await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
+    await login(page, CREDENTIALS.LOCAL_REGISTRAR)
 
     await assertRecordInWorkqueue({
       page,
@@ -242,7 +242,7 @@ test.describe.serial('4. Workqueue flow - 4', () => {
 
   test.describe('4.3 Validate by RA', async () => {
     test('4.3.1 Verify workqueue', async () => {
-      await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
+      await login(page, CREDENTIALS.REGISTRATION_AGENT)
 
       await assertRecordInWorkqueue({
         page,
@@ -293,7 +293,7 @@ test.describe.serial('4. Workqueue flow - 4', () => {
   })
 
   test('4.4 FA can not see the validated record', async () => {
-    await loginToV2(page, CREDENTIALS.FIELD_AGENT, true)
+    await login(page, CREDENTIALS.FIELD_AGENT, true)
 
     await assertRecordInWorkqueue({
       page,
@@ -309,7 +309,7 @@ test.describe.serial('4. Workqueue flow - 4', () => {
 
   test.describe('4.5 Register by LR', async () => {
     test('4.5.1 Validate workqueue', async () => {
-      await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR, true)
+      await login(page, CREDENTIALS.LOCAL_REGISTRAR, true)
 
       await assertRecordInWorkqueue({
         page,
@@ -361,7 +361,7 @@ test.describe.serial('4. Workqueue flow - 4', () => {
   })
 
   test('4.6 FA can not see the registered record', async () => {
-    await loginToV2(page, CREDENTIALS.FIELD_AGENT, true)
+    await login(page, CREDENTIALS.FIELD_AGENT, true)
 
     await assertRecordInWorkqueue({
       page,
@@ -376,7 +376,7 @@ test.describe.serial('4. Workqueue flow - 4', () => {
   })
 
   test('4.7 Workqueue for RA', async () => {
-    await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT, true)
+    await login(page, CREDENTIALS.REGISTRATION_AGENT, true)
 
     await assertRecordInWorkqueue({
       page,

@@ -6,11 +6,11 @@ import {
   formatDateObjectTo_dMMMMyyyy,
   getRandomDate,
   goToSection,
-  loginToV2
+  login
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
-import { ensureOutboxIsEmpty } from '../../../v2-utils'
+import { ensureOutboxIsEmpty } from '../../../utils'
 
 test.describe.serial('7. Death declaration case - 7', () => {
   let page: Page
@@ -100,7 +100,7 @@ test.describe.serial('7. Death declaration case - 7', () => {
 
   test.describe('7.1 Declaration started by National Registrar', async () => {
     test.beforeAll(async () => {
-      await loginToV2(page, CREDENTIALS.NATIONAL_REGISTRAR)
+      await login(page, CREDENTIALS.NATIONAL_REGISTRAR)
 
       await page.click('#header-new-event')
       await page.getByLabel('Death').click()

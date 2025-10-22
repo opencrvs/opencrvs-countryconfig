@@ -1,12 +1,12 @@
 import { expect, test, type Page } from '@playwright/test'
-import { getToken, loginToV2 } from '../../helpers'
+import { getToken, login } from '../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../constants'
 import {
   createDeclaration,
   Declaration
 } from '../test-data/birth-declaration-with-mother-father'
-import { ensureAssigned, expectInUrl, selectAction } from '../../v2-utils'
+import { ensureAssigned, expectInUrl, selectAction } from '../../utils'
 import { formatV2ChildName, REQUIRED_VALIDATION_ERROR } from '../birth/helpers'
 
 test.describe.serial('Birth Record correction flow', () => {
@@ -29,7 +29,7 @@ test.describe.serial('Birth Record correction flow', () => {
     eventId = res.eventId
 
     page = await browser.newPage()
-    await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
+    await login(page, CREDENTIALS.LOCAL_REGISTRAR)
   })
 
   test('Navigate to the correction form', async () => {

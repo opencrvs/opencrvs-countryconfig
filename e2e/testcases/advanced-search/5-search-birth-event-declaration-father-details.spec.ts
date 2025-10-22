@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
-import { getToken, loginToV2 } from '../../helpers'
+import { getToken, login } from '../../helpers'
 import {
   createDeclaration,
   Declaration
@@ -7,7 +7,7 @@ import {
 import { CREDENTIALS } from '../../constants'
 import { faker } from '@faker-js/faker'
 import { getMonthFormatted } from './helper'
-import { assertTexts, type } from '../../v2-utils'
+import { assertTexts, type } from '../../utils'
 
 test.describe
   .serial("Advanced Search - Birth Event Declaration - Father's details", () => {
@@ -30,7 +30,7 @@ test.describe
   })
 
   test('2.1 - Validate log in and load search page', async () => {
-    await loginToV2(page)
+    await login(page)
     await page.click('#searchType')
     await expect(page).toHaveURL(/.*\/advanced-search/)
     await page.getByText('Birth').click()

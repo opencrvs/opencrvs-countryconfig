@@ -1,6 +1,6 @@
 import { Locator, Page, expect } from '@playwright/test'
 import {
-  CLIENT_V2_URL,
+  CLIENT_URL,
   SAFE_INPUT_CHANGE_TIMEOUT_MS,
   SAFE_OUTBOX_TIMEOUT_MS
 } from './constants'
@@ -19,7 +19,7 @@ type Workqueue =
 
 export async function navigateToWorkqueue(page: Page, workqueue: Workqueue) {
   if (isMobile(page)) {
-    await page.goto(CLIENT_V2_URL)
+    await page.goto(CLIENT_URL)
     await page.getByRole('button', { name: 'Toggle menu', exact: true }).click()
   }
 
