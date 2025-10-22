@@ -217,7 +217,7 @@ export const deceased = defineFormPage({
       },
       defaultValue: 'FAR'
     },
-    connectToMOSIPVerificationStatus(
+    connectToMOSIPIdReader(
       {
         id: `deceased.idType`,
         type: FieldType.SELECT,
@@ -229,9 +229,9 @@ export const deceased = defineFormPage({
         },
         options: idTypeOptions
       },
-      { hideIfAuthenticated: true }
+      { valuePath: 'data.idType', hideIfAuthenticated: true }
     ),
-    connectToMOSIPVerificationStatus(
+    connectToMOSIPIdReader(
       {
         id: 'deceased.nid',
         type: FieldType.ID,
@@ -261,7 +261,7 @@ export const deceased = defineFormPage({
           }
         ]
       },
-      { hideIfAuthenticated: true }
+      { valuePath: 'data.nid', hideIfAuthenticated: true }
     ),
     {
       id: `deceased.passport`,

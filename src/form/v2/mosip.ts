@@ -11,7 +11,8 @@ import {
   ConditionalType,
   FieldType,
   not,
-  never
+  never,
+  or
 } from '@opencrvs/toolkit/events'
 
 const upsertConditional = (
@@ -224,12 +225,18 @@ export const getMOSIPIntegrationFields = (
           conditional: existingShowConditional?.conditional
             ? and(
                 existingShowConditional?.conditional,
-                field(`${page}.verify-nid-http-fetch`).get('loading').isFalsy(),
-                field(`${page}.verify-nid-http-fetch`).get('data').isFalsy()
+                not(
+                  or(
+                    field(`${page}.verified`).isEqualTo('verified'),
+                    field(`${page}.verified`).isEqualTo('authenticated')
+                  )
+                )
               )
-            : and(
-                field(`${page}.verify-nid-http-fetch`).get('loading').isFalsy(),
-                field(`${page}.verify-nid-http-fetch`).get('data').isFalsy()
+            : not(
+                or(
+                  field(`${page}.verified`).isEqualTo('verified'),
+                  field(`${page}.verified`).isEqualTo('authenticated')
+                )
               )
         },
         {
