@@ -357,8 +357,7 @@ export const informant = defineFormPage({
               not(field('informant.nid').isEqualTo(field('deceased.nid')))
             )
           }
-        ],
-        parent: field('informant.relation')
+        ]
       },
       { valuePath: 'data.nid', hideIfAuthenticated: true }
     ),
