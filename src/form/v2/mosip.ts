@@ -105,9 +105,10 @@ export const getMOSIPIntegrationFields = (
         }
       },
       conditionals: existingConditionals,
-      value: field(`${page}.verify-nid-http-fetch`).get(
-        'data.verificationStatus'
-      )
+      value: [
+        field(`${page}.verify-nid-http-fetch`).get('data.verificationStatus'),
+        field(`${page}.id-reader`).get('data.verificationStatus')
+      ]
     },
 
     /*
@@ -227,6 +228,7 @@ export const getMOSIPIntegrationFields = (
                 existingShowConditional?.conditional,
                 not(
                   or(
+                    field(`${page}.verified`).isEqualTo('pending'),
                     field(`${page}.verified`).isEqualTo('verified'),
                     field(`${page}.verified`).isEqualTo('authenticated')
                   )
@@ -234,6 +236,7 @@ export const getMOSIPIntegrationFields = (
               )
             : not(
                 or(
+                  field(`${page}.verified`).isEqualTo('pending'),
                   field(`${page}.verified`).isEqualTo('verified'),
                   field(`${page}.verified`).isEqualTo('authenticated')
                 )
