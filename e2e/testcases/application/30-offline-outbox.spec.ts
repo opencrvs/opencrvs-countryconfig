@@ -6,12 +6,12 @@ import {
   formatName,
   getRandomDate,
   goToSection,
-  login
+  loginToV2
 } from '../../helpers'
 import { CREDENTIALS } from '../../constants'
 import { faker } from '@faker-js/faker'
 import { fillDate } from '../birth/helpers'
-import { ensureOutboxIsEmpty } from '../../utils'
+import { ensureOutboxIsEmpty } from '../../v2-utils'
 
 test.describe
   .serial('30: Validate user can send multiple complete and incomplete records offline', () => {
@@ -107,7 +107,7 @@ test.describe
   })
 
   test('30.0 Login', async () => {
-    await login(page, CREDENTIALS.FIELD_AGENT)
+    await loginToV2(page, CREDENTIALS.FIELD_AGENT)
 
     // this is needed to get eventConfig before going offline
     await page.click('#header-new-event')

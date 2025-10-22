@@ -5,13 +5,13 @@ import {
   goToSection,
   uploadImageToSection,
   continueForm,
-  login,
+  loginToV2,
   formatDateObjectTo_dMMMMyyyy,
   expectRowValueWithChangeButton
 } from '../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../constants'
-import { ensureOutboxIsEmpty, selectAction } from '../../utils'
+import { ensureOutboxIsEmpty, selectAction } from '../../v2-utils'
 
 test.describe.serial('8. Validate declaration review page', () => {
   let page: Page
@@ -75,7 +75,7 @@ test.describe.serial('8. Validate declaration review page', () => {
   }
   test.beforeAll(async ({ browser }) => {
     page = await browser.newPage()
-    await login(page, CREDENTIALS.FIELD_AGENT)
+    await loginToV2(page, CREDENTIALS.FIELD_AGENT)
 
     await page.click('#header-new-event')
     await page.getByLabel('Death').click()
@@ -733,7 +733,7 @@ test.describe.serial('8. Validate declaration review page', () => {
 
   test.describe('8.2 Registration agent actions', async () => {
     test('8.2.1 Navigate to the declaration preview page', async () => {
-      await login(page, CREDENTIALS.REGISTRATION_AGENT)
+      await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
 
       await ensureOutboxIsEmpty(page)
       await page.getByText('Notifications').click()
@@ -1198,7 +1198,7 @@ test.describe.serial('8. Validate declaration review page', () => {
 
   test.describe('8.3 Local registrar actions', async () => {
     test('8.3.1 Navigate to the declaration preview page', async () => {
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
 
       await ensureOutboxIsEmpty(page)
       await page.getByText('Ready for review').click()

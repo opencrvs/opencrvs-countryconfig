@@ -1,6 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 
-import { login, getToken } from '../../helpers'
+import { loginToV2, getToken } from '../../helpers'
 import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../constants'
 import { createDeclaration, Declaration } from '../test-data/birth-declaration'
 import { ActionType } from '@opencrvs/toolkit/events'
@@ -27,7 +27,7 @@ test.describe.serial('3 Validate sent for review tab', () => {
   })
 
   test('3.0 Login', async () => {
-    await login(page, CREDENTIALS.FIELD_AGENT)
+    await loginToV2(page, CREDENTIALS.FIELD_AGENT)
   })
 
   test('3.1 Go to sent for review tab', async () => {

@@ -1,6 +1,6 @@
 import { test, type Page, expect } from '@playwright/test'
 import { CREDENTIALS } from '../../../constants'
-import { login } from '../../../helpers'
+import { loginToV2 } from '../../../helpers'
 import { getToken } from '../../../helpers'
 import {
   createDeclaration,
@@ -11,7 +11,7 @@ import {
   selectCertificationType,
   navigateToCertificatePrintAction
 } from './helpers'
-import { ensureAssigned, expectInUrl } from '../../../utils'
+import { ensureAssigned, expectInUrl } from '../../../v2-utils'
 import { mockNetworkConditions } from '../../../mock-network-conditions'
 
 test.describe
@@ -36,7 +36,7 @@ test.describe
   })
 
   test('Log in', async () => {
-    await login(page)
+    await loginToV2(page)
   })
 
   test('Navigate to certificate print action', async () => {

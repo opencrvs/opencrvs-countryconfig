@@ -6,11 +6,11 @@ import {
   formatDateObjectTo_dMMMMyyyy,
   getRandomDate,
   goToSection,
-  login
+  loginToV2
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
-import { ensureOutboxIsEmpty } from '../../../utils'
+import { ensureOutboxIsEmpty } from '../../../v2-utils'
 
 test.describe.serial('6. Death declaration case - 6', () => {
   let page: Page
@@ -100,7 +100,7 @@ test.describe.serial('6. Death declaration case - 6', () => {
 
   test.describe('6.1 Declaration started by Local Registrar', async () => {
     test.beforeAll(async () => {
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
 
       await page.click('#header-new-event')
       await page.getByLabel('Death').click()
@@ -558,7 +558,7 @@ test.describe.serial('6. Death declaration case - 6', () => {
   })
   test.describe('6.2 Declaration Review by Registration Agent', async () => {
     test('6.2.1 Navigate to the declaration review page', async () => {
-      await login(page, CREDENTIALS.REGISTRATION_AGENT)
+      await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
 
       await ensureOutboxIsEmpty(page)
       await page.getByText('Ready to print').click()

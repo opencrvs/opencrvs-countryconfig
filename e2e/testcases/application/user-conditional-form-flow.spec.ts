@@ -1,9 +1,14 @@
 import { test, expect, type Page } from '@playwright/test'
-import { continueForm, formatName, getRandomDate, login } from '../../helpers'
+import {
+  continueForm,
+  formatName,
+  getRandomDate,
+  loginToV2
+} from '../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../constants'
 
-import { ensureOutboxIsEmpty, selectAction } from '../../utils'
+import { ensureOutboxIsEmpty, selectAction } from '../../v2-utils'
 
 test.describe.serial('1. User conditional form flow', () => {
   let page: Page
@@ -35,7 +40,7 @@ test.describe.serial('1. User conditional form flow', () => {
 
   test.describe('1.1 Declaration started by FA', async () => {
     test.beforeAll(async () => {
-      await login(page, CREDENTIALS.FIELD_AGENT)
+      await loginToV2(page, CREDENTIALS.FIELD_AGENT)
       await page.click('#header-new-event')
       await page.getByLabel('Tennis club membership application').click()
       await page.getByRole('button', { name: 'Continue' }).click()
@@ -120,7 +125,7 @@ test.describe.serial('1. User conditional form flow', () => {
 
   test.describe('1.2 Declaration Review by RA', async () => {
     test('1.2.1 Navigate to the declaration "read-only" page', async () => {
-      await login(page, CREDENTIALS.REGISTRATION_AGENT)
+      await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
       await page.getByText('Ready for review').click()
       await page
         .getByRole('button', {

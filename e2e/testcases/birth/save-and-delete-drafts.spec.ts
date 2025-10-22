@@ -1,8 +1,8 @@
 import { expect, Page, test } from '@playwright/test'
-import { goToSection, login, logout } from '../../helpers'
+import { goToSection, loginToV2, logout } from '../../helpers'
 import { CREDENTIALS } from '../../constants'
 import { fillChildDetails, openBirthDeclaration } from './helpers'
-import { ensureOutboxIsEmpty } from '../../utils'
+import { ensureOutboxIsEmpty } from '../../v2-utils'
 
 /**
  * Skipping tests until the outbox workqueue is implemented.
@@ -14,7 +14,7 @@ test.describe('Save and delete drafts', () => {
     let page: Page
     test.beforeAll(async ({ browser }) => {
       page = await browser.newPage()
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
       await openBirthDeclaration(page)
     })
 
@@ -38,7 +38,7 @@ test.describe('Save and delete drafts', () => {
 
     test('Saved draft is not visible to other users', async () => {
       await logout(page)
-      await login(page, CREDENTIALS.NATIONAL_REGISTRAR)
+      await loginToV2(page, CREDENTIALS.NATIONAL_REGISTRAR)
 
       await page.getByText('My drafts').click()
 
@@ -49,7 +49,7 @@ test.describe('Save and delete drafts', () => {
 
     test('Login as local registrar', async () => {
       await logout(page)
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR, true)
+      await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR, true)
     })
 
     test('Delete saved draft', async () => {
@@ -78,7 +78,7 @@ test.describe('Save and delete drafts', () => {
     let page: Page
     test.beforeAll(async ({ browser }) => {
       page = await browser.newPage()
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
       await openBirthDeclaration(page)
     })
     test('Exit without saving', async () => {

@@ -1,5 +1,5 @@
 import { test, expect, Page } from '@playwright/test'
-import { goToSection, login } from '../../helpers'
+import { goToSection, loginToV2 } from '../../helpers'
 import { CREDENTIALS } from '../../constants'
 import { trackAndDeleteCreatedEvents } from '../test-data/eventDeletion'
 
@@ -8,7 +8,7 @@ test.describe('4. Validate the informants details pages', () => {
 
   test.beforeAll(async ({ browser }) => {
     page = await browser.newPage()
-    await login(page, CREDENTIALS.FIELD_AGENT)
+    await loginToV2(page, CREDENTIALS.FIELD_AGENT)
     await page.click('#header-new-event')
     await page.getByLabel('Birth').click()
     await page.getByRole('button', { name: 'Continue' }).click()

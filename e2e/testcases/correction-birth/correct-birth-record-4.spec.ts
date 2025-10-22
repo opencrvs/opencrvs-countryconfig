@@ -4,7 +4,7 @@ import {
   formatDateTo_dMMMMyyyy,
   getToken,
   goBackToReview,
-  login,
+  loginToV2,
   uploadImageToSection
 } from '../../helpers'
 import { faker } from '@faker-js/faker'
@@ -21,7 +21,7 @@ import {
 import { IdType } from '@countryconfig/form/v2/person'
 import { random } from 'lodash'
 import { formatV2ChildName, REQUIRED_VALIDATION_ERROR } from '../birth/helpers'
-import { ensureAssigned } from '../../utils'
+import { ensureAssigned } from '../../v2-utils'
 
 test.describe.serial('Correct record - 4', () => {
   let declaration: DeclarationV2
@@ -159,7 +159,7 @@ test.describe.serial('Correct record - 4', () => {
   })
 
   test('4.1 Ready to correct record > record audit', async () => {
-    await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+    await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
 
     await auditRecord({
       page,

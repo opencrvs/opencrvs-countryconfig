@@ -5,12 +5,12 @@ import {
   formatName,
   getRandomDate,
   goToSection,
-  login,
+  loginToV2,
   logout
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
-import { ensureOutboxIsEmpty, selectAction } from '../../../utils'
+import { ensureOutboxIsEmpty, selectAction } from '../../../v2-utils'
 import { REQUIRED_VALIDATION_ERROR } from '../helpers'
 
 test.describe.serial('Change informant on review', () => {
@@ -96,7 +96,7 @@ test.describe.serial('Change informant on review', () => {
 
   test.describe('Declaration started by RA', async () => {
     test.beforeAll(async () => {
-      await login(page, CREDENTIALS.REGISTRATION_AGENT)
+      await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
       await page.click('#header-new-event')
       await page.getByLabel('Birth').click()
       await page.getByRole('button', { name: 'Continue' }).click()
@@ -261,7 +261,7 @@ test.describe.serial('Change informant on review', () => {
   test.describe('Declaration Review by Local Registrar', async () => {
     test('Navigate to the declaration review page', async () => {
       await logout(page)
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
 
       await page.getByText('Ready for review').click()
 

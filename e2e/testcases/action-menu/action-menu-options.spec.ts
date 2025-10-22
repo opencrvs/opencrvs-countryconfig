@@ -1,6 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 
-import { login, getToken } from '../../helpers'
+import { loginToV2, getToken } from '../../helpers'
 import { CREDENTIALS } from '../../constants'
 import { createDeclaration, Declaration } from '../test-data/birth-declaration'
 import { ActionType } from '@opencrvs/toolkit/events'
@@ -40,14 +40,14 @@ test.describe('Action menu options', () => {
     })
 
     test('Registration Agent', async () => {
-      await login(page, CREDENTIALS.REGISTRATION_AGENT)
+      await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
       await page.getByRole('button', { name: 'Ready for review' }).click()
       const options = await getActionMenuOptions(page, declaration)
       expect(options).toStrictEqual(['Assign', 'View', 'Review', 'Archive'])
     })
 
     test('Local Registrar', async () => {
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
       await page.getByRole('button', { name: 'Ready for review' }).click()
       const options = await getActionMenuOptions(page, declaration)
       expect(options).toStrictEqual(['Assign', 'View', 'Review', 'Archive'])
@@ -67,7 +67,7 @@ test.describe('Action menu options', () => {
     })
 
     test('Local Registrar', async () => {
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
       await page.getByRole('button', { name: 'Ready for review' }).click()
       const options = await getActionMenuOptions(page, declaration)
       expect(options).toStrictEqual(['Unassign', 'View', 'Review', 'Archive'])
@@ -87,7 +87,7 @@ test.describe('Action menu options', () => {
     })
 
     test('Local Registrar', async () => {
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
       await page.getByRole('button', { name: 'Ready to print' }).click()
       const options = await getActionMenuOptions(page, declaration)
       expect(options).toStrictEqual([

@@ -5,12 +5,12 @@ import {
   expectRowValueWithChangeButton,
   formatDateObjectTo_dMMMMyyyy,
   getRandomDate,
-  login,
+  loginToV2,
   uploadImageToSection
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
-import { ensureOutboxIsEmpty, selectAction } from '../../../utils'
+import { ensureOutboxIsEmpty, selectAction } from '../../../v2-utils'
 
 test.describe.serial('4. Death declaration case - 4', () => {
   let page: Page
@@ -104,7 +104,7 @@ test.describe.serial('4. Death declaration case - 4', () => {
 
   test.describe('4.1 Declaration started by RA', async () => {
     test.beforeAll(async () => {
-      await login(page, CREDENTIALS.REGISTRATION_AGENT)
+      await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
 
       await page.click('#header-new-event')
       await page.getByLabel('Death').click()
@@ -712,7 +712,7 @@ test.describe.serial('4. Death declaration case - 4', () => {
   })
   test.describe('4.2 Declaration Review by Local Registrar', async () => {
     test('4.2.1 Navigate to the declaration review page', async () => {
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
 
       await ensureOutboxIsEmpty(page)
       await page.getByText('Ready for review').click()

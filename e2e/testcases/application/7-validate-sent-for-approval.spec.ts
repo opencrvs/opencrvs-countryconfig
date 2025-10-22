@@ -1,6 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 
-import { login, getToken } from '../../helpers'
+import { loginToV2, getToken } from '../../helpers'
 import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../constants'
 import { createDeclaration, Declaration } from '../test-data/birth-declaration'
 import { formatV2ChildName } from '../birth/helpers'
@@ -29,7 +29,7 @@ test.describe.serial('7 Validate Sent for approval tab', () => {
   })
 
   test('7.0 Login', async () => {
-    await login(page, CREDENTIALS.REGISTRATION_AGENT)
+    await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
   })
 
   test('7.1 Go to Sent for approval tab', async () => {

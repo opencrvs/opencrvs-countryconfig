@@ -1,9 +1,9 @@
 import { expect, test, type Page } from '@playwright/test'
 
-import { formatName, login } from '../../helpers'
+import { formatName, loginToV2 } from '../../helpers'
 import { CREDENTIALS } from '../../constants'
 import { faker } from '@faker-js/faker'
-import { ensureOutboxIsEmpty } from '../../utils'
+import { ensureOutboxIsEmpty } from '../../v2-utils'
 
 test.describe.serial('Validate draft with partial name', () => {
   let page: Page
@@ -23,7 +23,7 @@ test.describe.serial('Validate draft with partial name', () => {
   })
 
   test('Record does not appear in draft ', async () => {
-    await login(page, CREDENTIALS.FIELD_AGENT)
+    await loginToV2(page, CREDENTIALS.FIELD_AGENT)
     await page.getByRole('button', { name: 'My drafts' }).click()
 
     await expect(page.getByTestId('search-result')).not.toContainText(
@@ -72,7 +72,7 @@ test.describe.serial('Validate draft with partial name', () => {
   })
 
   test('Records do not appear in draft for other user: RA ', async () => {
-    await login(page, CREDENTIALS.REGISTRATION_AGENT)
+    await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
     await page.getByRole('button', { name: 'My drafts' }).click()
 
     await expect(page.getByTestId('search-result')).not.toContainText(
@@ -84,7 +84,7 @@ test.describe.serial('Validate draft with partial name', () => {
   })
 
   test('Records do not appear in draft for other user: LR ', async () => {
-    await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+    await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
     await page.getByRole('button', { name: 'My drafts' }).click()
 
     await expect(page.getByTestId('search-result')).not.toContainText(

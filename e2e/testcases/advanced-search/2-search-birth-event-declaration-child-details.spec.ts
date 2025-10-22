@@ -1,10 +1,10 @@
 import { expect, test, type Page } from '@playwright/test'
-import { getToken, login } from '../../helpers'
+import { getToken, loginToV2 } from '../../helpers'
 import { createDeclaration } from '../test-data/birth-declaration-with-father-brother'
 import { CREDENTIALS } from '../../constants'
 import { faker } from '@faker-js/faker'
 import { getMonthFormatted } from './helper'
-import { assertTexts, type } from '../../utils'
+import { assertTexts, type } from '../../v2-utils'
 
 test.describe
   .serial("Advanced Search - Birth Event Declaration - Child's details", () => {
@@ -39,7 +39,7 @@ test.describe
   })
 
   test('2.1 - Validate log in and load search page', async () => {
-    await login(page)
+    await loginToV2(page)
     await page.click('#searchType')
     await expect(page).toHaveURL(/.*\/advanced-search/)
     await page.getByText('Birth').click()

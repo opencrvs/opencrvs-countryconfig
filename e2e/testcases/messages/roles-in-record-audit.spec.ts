@@ -1,9 +1,9 @@
 import { expect, test } from '@playwright/test'
 import { CREDENTIALS } from '../../constants'
-import { getToken, login } from '../../helpers'
+import { getToken, loginToV2 } from '../../helpers'
 import { createDeclaration } from '../test-data/birth-declaration'
 import { ActionType } from '@opencrvs/toolkit/events'
-import { ensureAssigned } from '../../utils'
+import { ensureAssigned } from '../../v2-utils'
 import { formatV2ChildName } from '../birth/helpers'
 
 const testCases = [
@@ -37,7 +37,7 @@ test.describe('Roles in Record Audit', () => {
       const token = await getToken(credential.USERNAME, credential.PASSWORD)
       const res = await createDeclaration(token, undefined, action)
 
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
 
       await expect(page.locator('#content-name')).toHaveText(
         'Assigned to you',

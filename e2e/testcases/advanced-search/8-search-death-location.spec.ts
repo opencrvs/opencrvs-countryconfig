@@ -1,10 +1,10 @@
 import { expect, test } from '@playwright/test'
-import { login } from '../../helpers'
-import { assertTexts } from '../../utils'
+import { loginToV2 } from '../../helpers'
+import { assertTexts } from '../../v2-utils'
 
 test.describe("Advanced Search 8 - Death - Deceased's place of death", () => {
   test.beforeEach(async ({ page }) => {
-    await login(page)
+    await loginToV2(page)
     await page.click('#searchType')
     await expect(page).toHaveURL(/.*\/advanced-search/)
     await page.getByText('Death').click()

@@ -1,6 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 import { CREDENTIALS } from '../../../constants'
-import { getToken, login } from '../../../helpers'
+import { getToken, loginToV2 } from '../../../helpers'
 import {
   createDeclaration,
   Declaration
@@ -11,7 +11,7 @@ import {
   selectCertificationType,
   selectRequesterType
 } from './helpers'
-import { ensureAssigned, expectInUrl, type } from '../../../utils'
+import { ensureAssigned, expectInUrl, type } from '../../../v2-utils'
 import { formatV2ChildName } from '../../birth/helpers'
 
 test.describe.serial('3.0 Validate "Certify record" page', () => {
@@ -36,7 +36,7 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
   })
 
   test('3.0.1 Log in', async () => {
-    await login(page)
+    await loginToV2(page)
   })
 
   test('3.0.2 Navigate to certificate print action', async () => {

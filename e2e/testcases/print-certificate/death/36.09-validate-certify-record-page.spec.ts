@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
-import { getToken, login } from '../../../helpers'
+import { getToken, loginToV2 } from '../../../helpers'
 import { CREDENTIALS } from '../../../constants'
 import {
   createDeclaration,
@@ -30,7 +30,7 @@ test.describe.serial('9.0 Validate "Certify record" page', () => {
   })
 
   test('9.0.1 Log in', async () => {
-    await login(page)
+    await loginToV2(page)
   })
 
   test('9.0.1 Navigate to certificate print action', async () => {

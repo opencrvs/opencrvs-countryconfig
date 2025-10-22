@@ -5,13 +5,13 @@ import {
   formatName,
   getRandomDate,
   goToSection,
-  login,
+  loginToV2,
   logout
 } from '../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../constants'
 import { fillDate } from '../birth/helpers'
-import { ensureOutboxIsEmpty, selectAction } from '../../utils'
+import { ensureOutboxIsEmpty, selectAction } from '../../v2-utils'
 
 test.describe.serial('Basic Archival flow', () => {
   let page: Page
@@ -87,7 +87,7 @@ test.describe.serial('Basic Archival flow', () => {
   })
 
   test('Login as FA', async () => {
-    await login(page, CREDENTIALS.FIELD_AGENT)
+    await loginToV2(page, CREDENTIALS.FIELD_AGENT)
   })
 
   test('Start creating new birth declaration', async () => {
@@ -284,7 +284,7 @@ test.describe.serial('Basic Archival flow', () => {
   })
 
   test('Login as RA', async () => {
-    await login(page, CREDENTIALS.REGISTRATION_AGENT)
+    await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
   })
 
   test('Navigate to the event overview page', async () => {

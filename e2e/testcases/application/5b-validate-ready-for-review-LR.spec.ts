@@ -1,11 +1,11 @@
 import { expect, test, type Page } from '@playwright/test'
 
-import { login, getToken } from '../../helpers'
+import { loginToV2, getToken } from '../../helpers'
 import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../constants'
 import { createDeclaration, Declaration } from '../test-data/birth-declaration'
 import { ActionType } from '@opencrvs/toolkit/events'
 import { formatV2ChildName } from '../birth/helpers'
-import { ensureOutboxIsEmpty, expectInUrl, selectAction } from '../../utils'
+import { ensureOutboxIsEmpty, expectInUrl, selectAction } from '../../v2-utils'
 import { getRowByTitle } from '../print-certificate/birth/helpers'
 
 test.describe
@@ -31,7 +31,7 @@ test.describe
   })
 
   test('5.0 Login', async () => {
-    await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+    await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
   })
 
   test('5.1 Go to Ready for review tab', async () => {

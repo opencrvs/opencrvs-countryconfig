@@ -1,7 +1,7 @@
 import { expect, test, type Page } from '@playwright/test'
-import { joinValuesWith, login } from '../../helpers'
+import { joinValuesWith, loginToV2 } from '../../helpers'
 import { faker } from '@faker-js/faker'
-import { ensureOutboxIsEmpty, type } from '../../utils'
+import { ensureOutboxIsEmpty, type } from '../../v2-utils'
 
 test.describe
   .serial("Advanced Search - Birth Event Declaration - Informant's details", () => {
@@ -20,7 +20,7 @@ test.describe
   })
 
   test('7.1 Create a draft birth declaration by filling in child details', async () => {
-    await login(page)
+    await loginToV2(page)
     await page.click('#header-new-event')
     await page.getByLabel('Birth').click()
     await page.getByRole('button', { name: 'Continue' }).click()

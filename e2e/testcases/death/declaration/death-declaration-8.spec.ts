@@ -4,11 +4,11 @@ import {
   drawSignature,
   expectRowValueWithChangeButton,
   goToSection,
-  login
+  loginToV2
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
-import { ensureOutboxIsEmpty, selectAction } from '../../../utils'
+import { ensureOutboxIsEmpty, selectAction } from '../../../v2-utils'
 import { REQUIRED_VALIDATION_ERROR } from '../../birth/helpers'
 
 test.describe.serial('8. Death declaration case - 8', () => {
@@ -46,7 +46,7 @@ test.describe.serial('8. Death declaration case - 8', () => {
 
   test.describe('8.1 Declaration started by FA', async () => {
     test.beforeAll(async () => {
-      await login(page, CREDENTIALS.FIELD_AGENT)
+      await loginToV2(page, CREDENTIALS.FIELD_AGENT)
 
       await page.click('#header-new-event')
       await page.getByLabel('Death').click()
@@ -289,7 +289,7 @@ test.describe.serial('8. Death declaration case - 8', () => {
 
   test.describe('8.2 Declaration Review by RA', async () => {
     test('8.2.1 Navigate to the declaration review page', async () => {
-      await login(page, CREDENTIALS.REGISTRATION_AGENT)
+      await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
 
       await ensureOutboxIsEmpty(page)
       await page.getByText('Notifications').click()

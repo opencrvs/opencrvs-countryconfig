@@ -4,13 +4,13 @@ import {
   drawSignature,
   formatName,
   goToSection,
-  login,
+  loginToV2,
   logout
 } from '../../../helpers'
 import { CREDENTIALS } from '../../../constants'
 import { faker } from '@faker-js/faker'
 import { REQUIRED_VALIDATION_ERROR } from '../helpers'
-import { ensureOutboxIsEmpty } from '../../../utils'
+import { ensureOutboxIsEmpty } from '../../../v2-utils'
 
 test.describe.serial('8. Birth declaration case - 8', () => {
   let page: Page
@@ -42,7 +42,7 @@ test.describe.serial('8. Birth declaration case - 8', () => {
 
   test.describe('8.1 Declaration started by FA', async () => {
     test.beforeAll(async () => {
-      await login(page, CREDENTIALS.FIELD_AGENT)
+      await loginToV2(page, CREDENTIALS.FIELD_AGENT)
       await page.click('#header-new-event')
       await page.getByLabel('Birth').click()
       await page.getByRole('button', { name: 'Continue' }).click()
@@ -276,7 +276,7 @@ test.describe.serial('8. Birth declaration case - 8', () => {
   test.describe('8.2 Declaration Review by RA', async () => {
     test('8.2.1 Navigate to the declaration review page', async () => {
       await logout(page)
-      await login(page, CREDENTIALS.REGISTRATION_AGENT)
+      await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
 
       await page.getByText('Notifications').click()
 

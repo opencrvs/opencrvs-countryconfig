@@ -4,12 +4,12 @@ import { Declaration } from '../../test-data/birth-declaration'
 import { getToken } from '../../../helpers'
 import { createDeclaration } from '../../test-data/birth-declaration'
 import { CREDENTIALS } from '../../../constants'
-import { login } from '../../../helpers'
+import { loginToV2 } from '../../../helpers'
 import {
   navigateToCertificatePrintAction,
   selectRequesterType
 } from './helpers'
-import { selectAction } from '../../../utils'
+import { selectAction } from '../../../v2-utils'
 import { formatV2ChildName } from '../../birth/helpers'
 
 test.describe.serial('44.14.0 Validate "Certified copy" option', () => {
@@ -31,7 +31,7 @@ test.describe.serial('44.14.0 Validate "Certified copy" option', () => {
   })
 
   test('44.14.0.1 Log in', async () => {
-    await login(page)
+    await loginToV2(page)
   })
 
   test('44.14.0.1 Navigate to certificate print action', async () => {

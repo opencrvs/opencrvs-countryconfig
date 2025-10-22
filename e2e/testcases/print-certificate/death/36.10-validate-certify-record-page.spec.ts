@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
-import { getToken, login } from '../../../helpers'
+import { getToken, loginToV2 } from '../../../helpers'
 import { CREDENTIALS } from '../../../constants'
 import {
   createDeclaration,
@@ -10,7 +10,7 @@ import {
   selectCertificationType,
   selectRequesterType
 } from './helpers'
-import { expectInUrl } from '../../../utils'
+import { expectInUrl } from '../../../v2-utils'
 import { printAndExpectPopup } from '../birth/helpers'
 
 test.describe.serial('10.0 Validate "Review" page', () => {
@@ -34,7 +34,7 @@ test.describe.serial('10.0 Validate "Review" page', () => {
   })
 
   test('10.0.1 Log in', async () => {
-    await login(page)
+    await loginToV2(page)
   })
 
   test('10.0.2 Navigate to certificate print action', async () => {

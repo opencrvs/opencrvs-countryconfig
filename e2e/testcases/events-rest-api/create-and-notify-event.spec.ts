@@ -8,11 +8,11 @@ import {
   formatName,
   getClientToken,
   getToken,
-  login
+  loginToV2
 } from '../../helpers'
 import { addDays, format, subDays } from 'date-fns'
 import { faker } from '@faker-js/faker'
-import { ensureAssigned, expectInUrl, selectAction } from '../../utils'
+import { ensureAssigned, expectInUrl, selectAction } from '../../v2-utils'
 import { getAllLocations } from '../birth/helpers'
 
 import decode from 'jwt-decode'
@@ -593,7 +593,7 @@ test.describe('Events REST API', () => {
         familyName: faker.person.lastName()
       }
 
-      const token = await login(page)
+      const token = await loginToV2(page)
       const { sub } = decode<{ sub: string }>(token)
 
       const location = await fetchUserLocationHierarchy(sub, {
@@ -738,7 +738,7 @@ test.describe('Events REST API', () => {
     })
 
     test('Login', async () => {
-      token = await login(page)
+      token = await loginToV2(page)
     })
 
     test('Notify event an event via integration', async () => {

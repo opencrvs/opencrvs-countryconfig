@@ -6,12 +6,12 @@ import {
   formatName,
   getRandomDate,
   goToSection,
-  login
+  loginToV2
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
 import { validateAddress } from '../helpers'
-import { ensureOutboxIsEmpty } from '../../../utils'
+import { ensureOutboxIsEmpty } from '../../../v2-utils'
 
 test.describe.serial('5. Birth declaration case - 5', () => {
   let page: Page
@@ -99,7 +99,7 @@ test.describe.serial('5. Birth declaration case - 5', () => {
 
   test.describe('5.1 Declaration started by Local Registrar', async () => {
     test.beforeAll(async () => {
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
       await page.click('#header-new-event')
       await page.getByLabel('Birth').click()
       await page.getByRole('button', { name: 'Continue' }).click()

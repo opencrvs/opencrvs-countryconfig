@@ -4,7 +4,7 @@ import {
   formatDateTo_dMMMMyyyy,
   getToken,
   goBackToReview,
-  login,
+  loginToV2,
   uploadImage
 } from '../../helpers'
 import { faker } from '@faker-js/faker'
@@ -21,7 +21,11 @@ import {
 import { format, subDays, subYears } from 'date-fns'
 import { formatV2ChildName } from '../birth/helpers'
 import { IdType } from '@countryconfig/form/v2/person'
-import { ensureAssigned, ensureOutboxIsEmpty, expectInUrl } from '../../utils'
+import {
+  ensureAssigned,
+  ensureOutboxIsEmpty,
+  expectInUrl
+} from '../../v2-utils'
 
 test.describe.serial(' Correct record - 3', () => {
   let declaration: DeclarationV2
@@ -150,7 +154,7 @@ test.describe.serial(' Correct record - 3', () => {
 
   test.describe('3.1 Print > Event overview', async () => {
     test('3.1.1 Print', async () => {
-      await login(page, CREDENTIALS.REGISTRATION_AGENT)
+      await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
 
       await auditRecord({
         page,
@@ -939,7 +943,7 @@ test.describe.serial(' Correct record - 3', () => {
 
       page = await browser.newPage()
 
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
     })
 
     test('3.8.1 Record audit by local registrar', async () => {

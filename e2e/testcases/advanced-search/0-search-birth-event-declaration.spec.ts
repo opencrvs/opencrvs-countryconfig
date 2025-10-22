@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
-import { login } from '../../helpers'
+import { loginToV2 } from '../../helpers'
 
 test.describe.serial('Advanced Search - Birth Event Declaration', () => {
   let page: Page
@@ -13,7 +13,7 @@ test.describe.serial('Advanced Search - Birth Event Declaration', () => {
   })
 
   test('0.1 - Validate navigating to advanced search', async () => {
-    await login(page)
+    await loginToV2(page)
 
     await page.click('#searchType')
     await expect(page).toHaveURL(/.*\/advanced-search/)

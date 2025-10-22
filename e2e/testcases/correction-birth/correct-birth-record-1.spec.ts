@@ -5,7 +5,7 @@ import {
   getLocationNameFromFhirId,
   getToken,
   goBackToReview,
-  login,
+  loginToV2,
   uploadImage
 } from '../../helpers'
 import { faker } from '@faker-js/faker'
@@ -21,7 +21,7 @@ import {
   expectInUrl,
   selectAction,
   type
-} from '../../utils'
+} from '../../v2-utils'
 import { formatV2ChildName } from '../birth/helpers'
 
 test.describe('1. Correct record - 1', () => {
@@ -63,7 +63,7 @@ test.describe('1. Correct record - 1', () => {
 
   test.describe('1.1 Validate verbiage', async () => {
     test.beforeEach(async ({ page }) => {
-      await login(page, CREDENTIALS.REGISTRATION_AGENT)
+      await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
       await page.getByRole('button', { name: 'Ready to print' }).click()
       await page
         .getByRole('button', { name: formatV2ChildName(declaration) })
@@ -190,7 +190,7 @@ test.describe('1. Correct record - 1', () => {
 
     test.beforeAll(async ({ browser }) => {
       page = await browser.newPage()
-      await login(page, CREDENTIALS.REGISTRATION_AGENT)
+      await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
     })
 
     test.afterAll(async () => {
@@ -674,7 +674,7 @@ test.describe('1. Correct record - 1', () => {
       test.beforeAll(async ({ browser }) => {
         await page.close()
         page = await browser.newPage()
-        await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+        await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
       })
 
       test('1.2.6.1 Record audit by local registrar', async () => {

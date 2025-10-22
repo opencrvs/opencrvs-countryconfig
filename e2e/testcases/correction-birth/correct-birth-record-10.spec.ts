@@ -5,7 +5,7 @@ import {
   getLocationNameFromFhirId,
   getToken,
   goBackToReview,
-  login,
+  loginToV2,
   uploadImage
 } from '../../helpers'
 import { faker } from '@faker-js/faker'
@@ -15,7 +15,7 @@ import {
   createDeclaration,
   Declaration
 } from '../test-data/birth-declaration-with-mother-father'
-import { ensureAssigned, expectInUrl, selectAction, type } from '../../utils'
+import { ensureAssigned, expectInUrl, selectAction, type } from '../../v2-utils'
 import { formatV2ChildName, REQUIRED_VALIDATION_ERROR } from '../birth/helpers'
 import { getMixedPath } from '@opencrvs/toolkit/events'
 
@@ -60,7 +60,7 @@ test.describe('10. Correct record', () => {
 
     test.beforeAll(async ({ browser }) => {
       page = await browser.newPage()
-      await login(page, CREDENTIALS.REGISTRATION_AGENT)
+      await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
     })
 
     test.afterAll(async () => {
@@ -588,7 +588,7 @@ test.describe('10. Correct record', () => {
       test.beforeAll(async ({ browser }) => {
         await page.close()
         page = await browser.newPage()
-        await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+        await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
       })
 
       test('10.1.6.1 Record audit by local registrar', async () => {

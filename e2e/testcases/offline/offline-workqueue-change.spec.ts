@@ -1,10 +1,10 @@
 import { expect, test } from '@playwright/test'
 
-import { login } from '../../helpers'
+import { loginToV2 } from '../../helpers'
 import { mockNetworkConditions } from '../../mock-network-conditions'
 
 test('Can Change Workqueue offline', async ({ page }) => {
-  await login(page)
+  await loginToV2(page)
   await expect(page.getByText('Farajaland CRS')).toBeVisible({
     timeout: 30000
   })

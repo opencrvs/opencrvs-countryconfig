@@ -2,6 +2,7 @@ import { Locator, Page, expect } from '@playwright/test'
 import {
   AUTH_URL,
   CLIENT_URL,
+  CLIENT_V2_URL,
   CREDENTIALS,
   GATEWAY_HOST,
   SAFE_INPUT_CHANGE_TIMEOUT_MS,
@@ -12,6 +13,21 @@ import { isArray, random } from 'lodash'
 import fetch from 'node-fetch'
 import { isMobile } from './mobile-helpers'
 
+export async function login(page: Page, username: string, password: string) {
+  const token = await getToken(username, password)
+  await page.goto(`${CLIENT_URL}?token=${token}`)
+
+  await expect(
+    page.locator('#appSpinner').or(page.locator('#pin-input'))
+  ).toBeVisible()
+
+  await createPIN(page)
+
+  // Navigate to v1 frontpage
+  await page.goto(`${CLIENT_URL}/registration-home?V2_EVENTS=false`)
+  return token
+}
+
 export async function createPIN(page: Page) {
   await page.click('#pin-input')
   for (let i = 1; i <= 8; i++) {
@@ -21,7 +37,7 @@ export async function createPIN(page: Page) {
 
 export async function logout(page: Page) {
   if (isMobile(page)) {
-    await page.goto(CLIENT_URL)
+    await page.goto(CLIENT_V2_URL)
     await page.getByRole('button', { name: 'Toggle menu', exact: true }).click()
     await page.getByRole('button', { name: 'Logout', exact: true }).click()
     return
@@ -38,14 +54,18 @@ export async function logout(page: Page) {
   await page.context().clearCookies()
 }
 
-export async function login(
+export async function loginToV2(
   page: Page,
   credentials = CREDENTIALS.LOCAL_REGISTRAR,
-  skipPin?: boolean
+  skipPin?: boolean,
+  /** whether to render v2 as first class citizen, sets V2 as the default view. */
+  defaultToV2?: boolean
 ) {
   const token = await getToken(credentials.USERNAME, credentials.PASSWORD)
   expect(token).toBeDefined()
-  await page.goto(`${CLIENT_URL}?token=${token}`)
+  await page.goto(
+    `${CLIENT_URL}?token=${token}${defaultToV2 ? '&V2_EVENTS=true' : ''}`
+  )
 
   await expect(
     page.locator('#appSpinner').or(page.locator('#pin-input'))
@@ -55,7 +75,7 @@ export async function login(
     await createPIN(page)
   }
 
-  await page.goto(CLIENT_URL)
+  await page.goto(defaultToV2 ? CLIENT_URL : CLIENT_V2_URL)
 
   return token
 }
@@ -120,11 +140,11 @@ type DeclarationSection =
   | 'witnessOne'
   | 'witnessTwo'
 type CorrectionSection = 'summary'
-type ReviewSection = 'review'
+type V2ReviewSection = 'review'
 
 export const goToSection = async (
   page: Page,
-  section: DeclarationSection | CorrectionSection | ReviewSection
+  section: DeclarationSection | CorrectionSection | V2ReviewSection
 ) => {
   while (!page.url().includes(`/${section}`)) {
     await page.getByRole('button', { name: 'Continue' }).click()

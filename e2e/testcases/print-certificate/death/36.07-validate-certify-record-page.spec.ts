@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
-import { getToken, login } from '../../../helpers'
+import { getToken, loginToV2 } from '../../../helpers'
 import { CREDENTIALS } from '../../../constants'
 import {
   createDeclaration,
@@ -10,7 +10,7 @@ import {
   selectCertificationType,
   selectRequesterType
 } from './helpers'
-import { expectInUrl } from '../../../utils'
+import { expectInUrl } from '../../../v2-utils'
 
 test.describe.serial('7.0 Validate "Certify record" page', () => {
   let eventId: string
@@ -33,7 +33,7 @@ test.describe.serial('7.0 Validate "Certify record" page', () => {
   })
 
   test('7.0.1 Log in', async () => {
-    await login(page)
+    await loginToV2(page)
   })
 
   test('7.0.2 Navigate to certificate print action', async () => {

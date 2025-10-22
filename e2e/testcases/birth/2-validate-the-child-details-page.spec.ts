@@ -1,10 +1,10 @@
 import { test, expect, Page } from '@playwright/test'
-import { goToSection, login } from '../../helpers'
+import { goToSection, loginToV2 } from '../../helpers'
 import { NAME_VALIDATION_ERROR, REQUIRED_VALIDATION_ERROR } from './helpers'
 import { trackAndDeleteCreatedEvents } from '../test-data/eventDeletion'
 
 const loginAndBeginBirthDeclaration = async ({ page }: { page: Page }) => {
-  await login(page)
+  await loginToV2(page)
 
   await page.click('#header-new-event')
 

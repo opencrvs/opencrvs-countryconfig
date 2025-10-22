@@ -1,6 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 import { CREDENTIALS } from '../../../constants'
-import { login } from '../../../helpers'
+import { loginToV2 } from '../../../helpers'
 import { getToken } from '../../../helpers'
 import {
   createDeclaration,
@@ -12,7 +12,7 @@ import {
   navigateToCertificatePrintAction,
   printAndExpectPopup
 } from './helpers'
-import { ensureAssigned, type, expectInUrl } from '../../../utils'
+import { ensureAssigned, type, expectInUrl } from '../../../v2-utils'
 import { REQUIRED_VALIDATION_ERROR } from '../../birth/helpers'
 import { formatV2ChildName } from '../../birth/helpers'
 
@@ -44,7 +44,7 @@ test.describe.serial('Validate collect payment page', () => {
   })
 
   test('5.0.1 Log in', async () => {
-    await login(page)
+    await loginToV2(page)
   })
 
   test('5.0.2 Navigate to certificate print action', async () => {

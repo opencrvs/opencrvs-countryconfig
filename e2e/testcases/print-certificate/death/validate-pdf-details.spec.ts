@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
-import { getToken, login } from '../../../helpers'
+import { getToken, loginToV2 } from '../../../helpers'
 import { CREDENTIALS } from '../../../constants'
 import {
   createDeclaration,
@@ -34,7 +34,7 @@ test.describe.serial("Validate 'Death Certificate' PDF details", () => {
   })
 
   test('Log in', async () => {
-    await login(page)
+    await loginToV2(page)
   })
 
   test('Go to review', async () => {
@@ -87,7 +87,7 @@ test.describe
   })
 
   test('Log in', async () => {
-    await login(page)
+    await loginToV2(page)
   })
 
   test('Go to review', async () => {

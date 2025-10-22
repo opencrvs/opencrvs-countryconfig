@@ -1,10 +1,10 @@
 import { expect, Page, test } from '@playwright/test'
-import { getToken, login } from '../../helpers'
+import { getToken, loginToV2 } from '../../helpers'
 import { createDeclaration } from '../test-data/birth-declaration-with-father-brother'
 import { CREDENTIALS } from '../../constants'
 import { faker } from '@faker-js/faker'
 import { getAllLocations, getLocationIdByName } from '../birth/helpers'
-import { expectInUrl } from '../../utils'
+import { expectInUrl } from '../../v2-utils'
 import { setMobileViewport } from '../../mobile-helpers'
 
 test.describe.serial('Advanced Search - Mobile', () => {
@@ -56,7 +56,7 @@ test.describe.serial('Advanced Search - Mobile', () => {
   })
 
   test('Login', async () => {
-    await login(page)
+    await loginToV2(page)
   })
 
   test('Navigate to advanced search', async () => {
