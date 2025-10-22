@@ -320,8 +320,7 @@ export const informant = defineFormPage({
             type: ConditionalType.SHOW,
             conditional: informantOtherThanSpouse
           }
-        ],
-        parent: field('informant.relation')
+        ]
       },
       { valuePath: 'data.idType', hideIfAuthenticated: true }
     ),
