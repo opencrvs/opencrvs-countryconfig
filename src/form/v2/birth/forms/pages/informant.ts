@@ -305,7 +305,7 @@ export const informant = defineFormPage({
       defaultValue: 'FAR',
       parent: field('informant.relation')
     },
-    connectToMOSIPVerificationStatus(
+    connectToMOSIPIdReader(
       {
         id: 'informant.idType',
         type: FieldType.SELECT,
@@ -324,9 +324,9 @@ export const informant = defineFormPage({
         ],
         parent: field('informant.relation')
       },
-      { hideIfAuthenticated: true }
+      { valuePath: 'data.idType', hideIfAuthenticated: true }
     ),
-    connectToMOSIPVerificationStatus(
+    connectToMOSIPIdReader(
       {
         id: 'informant.nid',
         type: FieldType.ID,
@@ -361,7 +361,7 @@ export const informant = defineFormPage({
         ],
         parent: field('informant.relation')
       },
-      { hideIfAuthenticated: true }
+      { valuePath: 'data.nid', hideIfAuthenticated: true }
     ),
     {
       id: 'informant.passport',

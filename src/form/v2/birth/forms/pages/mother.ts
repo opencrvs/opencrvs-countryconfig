@@ -262,7 +262,7 @@ export const mother = defineFormPage({
       ],
       defaultValue: 'FAR'
     },
-    connectToMOSIPVerificationStatus(
+    connectToMOSIPIdReader(
       {
         id: 'mother.idType',
         type: FieldType.SELECT,
@@ -280,9 +280,9 @@ export const mother = defineFormPage({
           }
         ]
       },
-      { hideIfAuthenticated: true }
+      { valuePath: 'data.idType', hideIfAuthenticated: true }
     ),
-    connectToMOSIPVerificationStatus(
+    connectToMOSIPIdReader(
       {
         id: 'mother.nid',
         type: FieldType.ID,
@@ -316,7 +316,7 @@ export const mother = defineFormPage({
           }
         ]
       },
-      { hideIfAuthenticated: true }
+      { valuePath: 'data.nid', hideIfAuthenticated: true }
     ),
     {
       id: 'mother.passport',

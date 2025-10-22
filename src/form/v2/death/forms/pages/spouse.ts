@@ -251,7 +251,7 @@ export const spouse = defineFormPage({
       ],
       defaultValue: 'FAR'
     },
-    connectToMOSIPVerificationStatus(
+    connectToMOSIPIdReader(
       {
         id: 'spouse.idType',
         type: FieldType.SELECT,
@@ -269,9 +269,9 @@ export const spouse = defineFormPage({
           }
         ]
       },
-      { hideIfAuthenticated: true }
+      { valuePath: 'data.idType', hideIfAuthenticated: true }
     ),
-    connectToMOSIPVerificationStatus(
+    connectToMOSIPIdReader(
       {
         id: 'spouse.nid',
         type: FieldType.ID,
@@ -305,7 +305,7 @@ export const spouse = defineFormPage({
           }
         ]
       },
-      { hideIfAuthenticated: true }
+      { valuePath: 'data.nid', hideIfAuthenticated: true }
     ),
     {
       id: 'spouse.passport',
