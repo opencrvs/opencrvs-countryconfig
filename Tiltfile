@@ -3,7 +3,8 @@
 # For more information about variables, please check:
 # https://github.com/opencrvs/infrastructure/blob/develop/Tiltfile
 
-core_images_tag = "v1.9.0-beta-6"
+core_images_tag = "develop"
+# Build countryconfig image in local registry (use any name and tag you want)
 countryconfig_image_name="opencrvs/ocrvs-countryconfig"
 countryconfig_image_tag="local"
 
