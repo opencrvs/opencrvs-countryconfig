@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker'
 import { test, type Page, expect } from '@playwright/test'
 import { CREDENTIALS, GATEWAY_HOST } from '../../constants'
-import { createPIN, getClientToken, getToken, login } from '../../helpers'
+import { getClientToken, getToken, login } from '../../helpers'
 import { ConvertEnumsToStrings, createDeclaration } from '../birth/helpers'
 import { BirthInputDetails } from '../birth/types'
 import {

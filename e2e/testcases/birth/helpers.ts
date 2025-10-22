@@ -324,52 +324,6 @@ export async function createDeclaration(token: string, details: BirthDetails) {
   return res.json().then((r) => r.data.createBirthRegistration)
 }
 
-export const fetchDeclaration = async (
-  token: string,
-  compositionId: string
-) => {
-  const res = await fetch(`${GATEWAY_HOST}/graphql`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
-    },
-    body: JSON.stringify({
-      query: GET_BIRTH_REGISTRATION_FOR_REVIEW,
-      variables: {
-        id: compositionId
-      }
-    })
-  })
-  return await res.json()
-}
-
-export const registerDeclaration = async (
-  token: string,
-  compositionId: string
-) => {
-  await fetchDeclaration(token, compositionId)
-  const res = await fetch(`${GATEWAY_HOST}/graphql`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
-    },
-    body: JSON.stringify({
-      query: REGISTER_BIRTH_DECLARATION,
-      variables: {
-        id: compositionId,
-        details: {
-          createdAt: new Date().toISOString()
-        } satisfies ConvertEnumsToStrings<BirthRegistrationInput>
-      }
-    })
-  })
-  const t = await res.json()
-
-  return await t
-}
-
 export type ConvertEnumsToStrings<T> = T extends (infer U)[]
   ? ConvertEnumsToStrings<U>[]
   : T extends string

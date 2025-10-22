@@ -1,11 +1,6 @@
 import { test, expect, type Page } from '@playwright/test'
 import path from 'path'
-import {
-  ensureLoginPageReady,
-  continueForm,
-  createPIN,
-  login
-} from '../../helpers'
+import { ensureLoginPageReady, continueForm, login } from '../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS, LOGIN_URL } from '../../constants'
 
