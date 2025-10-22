@@ -177,7 +177,7 @@ export const informant = defineFormPage({
         ],
         validation: [invalidNameValidator('informant.name')]
       },
-      { valuePath: 'data.name', disableIfDataInPath: 'data.name' }
+      { valuePath: 'data.name', disableIfAuthenticated: true }
     ),
     connectToMOSIPIdReader(
       {
@@ -220,9 +220,9 @@ export const informant = defineFormPage({
           }
         ]
       },
-      { valuePath: 'data.birthDate', disableIfDataInPath: 'data.birthDate' }
+      { valuePath: 'data.birthDate', disableIfAuthenticated: true }
     ),
-    connectToMOSIPIdReader(
+    connectToMOSIPVerificationStatus(
       {
         id: 'informant.dobUnknown',
         type: FieldType.CHECKBOX,
@@ -243,9 +243,9 @@ export const informant = defineFormPage({
         ],
         parent: field('informant.relation')
       },
-      { disableIfDataInPath: 'data.birthDate' }
+      { disableIfAuthenticated: true }
     ),
-    connectToMOSIPIdReader(
+    connectToMOSIPVerificationStatus(
       {
         id: 'informant.age',
         type: FieldType.AGE,
@@ -285,7 +285,7 @@ export const informant = defineFormPage({
         ],
         parent: field('informant.relation')
       },
-      { disableIfDataInPath: 'data.birthDate' }
+      { disableIfAuthenticated: true }
     ),
     {
       id: 'informant.nationality',

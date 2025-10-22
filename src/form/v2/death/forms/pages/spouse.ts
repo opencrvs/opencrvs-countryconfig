@@ -138,7 +138,7 @@ export const spouse = defineFormPage({
         ],
         validation: [invalidNameValidator('spouse.name')]
       },
-      { valuePath: 'data.name', disableIfDataInPath: 'data.name' }
+      { valuePath: 'data.name', disableIfAuthenticated: true }
     ),
     connectToMOSIPIdReader(
       {
@@ -170,9 +170,9 @@ export const spouse = defineFormPage({
           }
         ]
       },
-      { valuePath: 'data.birthDate', disableIfDataInPath: 'data.birthDate' }
+      { valuePath: 'data.birthDate', disableIfAuthenticated: true }
     ),
-    connectToMOSIPIdReader(
+    connectToMOSIPVerificationStatus(
       {
         id: 'spouse.dobUnknown',
         type: FieldType.CHECKBOX,
@@ -192,9 +192,9 @@ export const spouse = defineFormPage({
           }
         ]
       },
-      { disableIfDataInPath: 'data.birthDate' }
+      { disableIfAuthenticated: true }
     ),
-    connectToMOSIPIdReader(
+    connectToMOSIPVerificationStatus(
       {
         id: 'spouse.age',
         type: FieldType.AGE,
@@ -232,7 +232,7 @@ export const spouse = defineFormPage({
           }
         ]
       },
-      { disableIfDataInPath: 'data.birthDate' }
+      { disableIfAuthenticated: true }
     ),
     {
       id: 'spouse.nationality',

@@ -95,7 +95,7 @@ export const deceased = defineFormPage({
         },
         validation: [invalidNameValidator('deceased.name')]
       },
-      { valuePath: 'data.name', disableIfDataInPath: 'data.name' }
+      { valuePath: 'data.name', disableIfAuthenticated: true }
     ),
     connectToMOSIPIdReader(
       {
@@ -109,7 +109,7 @@ export const deceased = defineFormPage({
         },
         options: genderOptions
       },
-      { valuePath: 'data.gender', disableIfDataInPath: 'data.gender' }
+      { valuePath: 'data.gender', disableIfAuthenticated: true }
     ),
     connectToMOSIPIdReader(
       {
@@ -149,9 +149,9 @@ export const deceased = defineFormPage({
           }
         ]
       },
-      { valuePath: 'data.birthDate', disableIfDataInPath: 'data.birthDate' }
+      { valuePath: 'data.birthDate', disableIfAuthenticated: true }
     ),
-    connectToMOSIPIdReader(
+    connectToMOSIPVerificationStatus(
       {
         id: `deceased.dobUnknown`,
         type: FieldType.CHECKBOX,
@@ -167,9 +167,9 @@ export const deceased = defineFormPage({
           }
         ]
       },
-      { hideIfDataInPath: 'data.dateOfBirth' }
+      { disableIfAuthenticated: true }
     ),
-    connectToMOSIPIdReader(
+    connectToMOSIPVerificationStatus(
       {
         id: `deceased.age`,
         type: FieldType.AGE,
@@ -204,7 +204,7 @@ export const deceased = defineFormPage({
           }
         ]
       },
-      { hideIfDataInPath: 'data.dateOfBirth' }
+      { disableIfAuthenticated: true }
     ),
     {
       id: `deceased.nationality`,
