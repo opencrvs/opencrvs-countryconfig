@@ -40,57 +40,29 @@ export const connectToMOSIPIdReader = (
   fieldInput: FieldConfigInput,
   {
     valuePath,
-    disableIfDataInPath,
-    hideIfDataInPath
+    disableIfAuthenticated,
+    hideIfAuthenticated
   }: {
-    valuePath?: string
-    disableIfDataInPath?: string
-    hideIfDataInPath?: string
-  } = {}
+    valuePath: string
+    disableIfAuthenticated?: boolean
+    hideIfAuthenticated?: boolean
+  }
 ): FieldConfigInput => {
   const page = fieldInput.id.split('.')[0]
-  let output: FieldConfigInput = {
-    parent: [
-      field(`${page}.id-reader`),
-      field(`${page}.verify-nid-http-fetch`)
-    ],
-    ...fieldInput
-  }
-
-  if (valuePath) {
-    output = {
-      ...output,
+  return connectToMOSIPVerificationStatus(
+    {
+      parent: [
+        field(`${page}.id-reader`),
+        field(`${page}.verify-nid-http-fetch`)
+      ],
+      ...fieldInput,
       value: [
         field(`${page}.verify-nid-http-fetch`).get(valuePath),
         field(`${page}.id-reader`).get(valuePath)
       ]
-    }
-  }
-
-  if (disableIfDataInPath) {
-    output = {
-      ...output,
-      conditionals: upsertConditional(fieldInput.conditionals || [], {
-        type: ConditionalType.ENABLE,
-        conditional: field(`${page}.verify-nid-http-fetch`)
-          .get(disableIfDataInPath)
-          .isFalsy()
-      })
-    }
-  }
-
-  if (hideIfDataInPath) {
-    output = {
-      ...output,
-      conditionals: upsertConditional(fieldInput.conditionals || [], {
-        type: ConditionalType.SHOW,
-        conditional: field(`${page}.verify-nid-http-fetch`)
-          .get(hideIfDataInPath)
-          .isFalsy()
-      })
-    }
-  }
-  return output
+    },
+    { hideIfAuthenticated, disableIfAuthenticated }
+  )
 }
 
 export const getMOSIPIntegrationFields = (
@@ -156,10 +128,7 @@ export const getMOSIPIntegrationFields = (
           'This is the label for the query param reader field - usually this is hidden'
       },
       configuration: {
-        formProjection: {
-          code: 'code',
-          state: 'state'
-        }
+        pickParams: ['code', 'state']
       }
     },
 
@@ -304,9 +273,11 @@ export const getMOSIPIntegrationFields = (
 export const connectToMOSIPVerificationStatus = (
   fieldInput: FieldConfigInput,
   {
-    hideIfAuthenticated
+    hideIfAuthenticated,
+    disableIfAuthenticated
   }: {
     hideIfAuthenticated?: boolean
+    disableIfAuthenticated?: boolean
   }
 ): FieldConfigInput => {
   const page = fieldInput.id.split('.')[0]
@@ -315,6 +286,15 @@ export const connectToMOSIPVerificationStatus = (
       ...fieldInput,
       conditionals: upsertConditional(fieldInput.conditionals || [], {
         type: ConditionalType.SHOW,
+        conditional: not(field(`${page}.verified`).isEqualTo('authenticated'))
+      })
+    }
+  }
+  if (disableIfAuthenticated) {
+    return {
+      ...fieldInput,
+      conditionals: upsertConditional(fieldInput.conditionals || [], {
+        type: ConditionalType.ENABLE,
         conditional: not(field(`${page}.verified`).isEqualTo('authenticated'))
       })
     }
