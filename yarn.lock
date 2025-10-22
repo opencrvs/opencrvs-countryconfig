@@ -834,15 +834,15 @@
   dependencies:
     "@octokit/openapi-types" "^18.0.0"
 
-"@opencrvs/mosip@1.9.0-beta.3":
-  version "1.9.0-beta.3"
-  resolved "https://registry.yarnpkg.com/@opencrvs/mosip/-/mosip-1.9.0-beta.3.tgz#37394eab3ce5781cbcc665beb038b76905982caa"
-  integrity sha512-2CDQVcbYcEaCgZvV0wuJ9j8bsYcxmHZ8fQL3pDD/1WgrawnWbam9HhdEmrILr0T2Kq6wB/mWRh03jy2WbUoMyQ==
+"@opencrvs/mosip@1.9.0-beta.4":
+  version "1.9.0-beta.4"
+  resolved "https://registry.yarnpkg.com/@opencrvs/mosip/-/mosip-1.9.0-beta.4.tgz#343d5b320e61cf2e9ca78064158413f38380e673"
+  integrity sha512-+ugGwetC3kUv63LFkhTeEND7BtwaXOWEHz9FUJ3Y5h69BgE0VB8eXeDwfrGQEWk55+8RM4JrftAInJlgSCUuTA==
 
-"@opencrvs/toolkit@1.8.1-rc.c8c6227":
-  version "1.8.1-rc.c8c6227"
-  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-1.8.1-rc.c8c6227.tgz#bac5a80475c4578e6aa802ae70aa4491872c6008"
-  integrity sha512-RdTYBVgJRc2aSrKuLbDRYpAXu1TOssTra6cTuPwoJV23X48NOWuyrSImHf0PUKyS2puF/6v73G1QYyE5FK38Kg==
+"@opencrvs/toolkit@1.8.1-rc.a080254":
+  version "1.8.1-rc.a080254"
+  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-1.8.1-rc.a080254.tgz#dc26b6af38aad5bb48350785b906b1741f793fbe"
+  integrity sha512-WZrTmLsk9BjonmKWkJrVFfqLZ74Y6WRaC9bCB/oBAzw8rD0COHVdcLWHqTlSgaafME6+fJmIfEJi2mKaAeKh/Q==
   dependencies:
     "@trpc/client" "11.4.3"
     "@trpc/server" "11.4.3"
