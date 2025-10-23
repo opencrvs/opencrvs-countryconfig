@@ -291,35 +291,42 @@ export const connectToMOSIPVerificationStatus = (
   }
 ): FieldConfigInput => {
   const page = fieldInput.id.split('.')[0]
-  if (Array.isArray(hideIf)) {
-    return {
-      ...fieldInput,
-      conditionals: upsertConditional(fieldInput.conditionals || [], {
-        type: ConditionalType.SHOW,
-        conditional: not(
-          hideIf.reduce(
-            (acc, status) =>
-              or(acc, field(`${page}.verified`).isEqualTo(status)),
-            never()
-          )
+  let updatedConditionals = fieldInput.conditionals || []
+
+  if (Array.isArray(hideIf) && hideIf.length > 0) {
+    const hideConditional = {
+      type: ConditionalType.SHOW,
+      conditional: not(
+        hideIf.reduce(
+          (acc, status) => or(acc, field(`${page}.verified`).isEqualTo(status)),
+          never()
         )
-      })
+      )
     }
+    updatedConditionals = upsertConditional(
+      updatedConditionals,
+      hideConditional
+    )
   }
-  if (Array.isArray(disableIf)) {
-    return {
-      ...fieldInput,
-      conditionals: upsertConditional(fieldInput.conditionals || [], {
-        type: ConditionalType.ENABLE,
-        conditional: not(
-          disableIf.reduce(
-            (acc, status) =>
-              or(acc, field(`${page}.verified`).isEqualTo(status)),
-            never()
-          )
+
+  if (Array.isArray(disableIf) && disableIf.length > 0) {
+    const disableConditional = {
+      type: ConditionalType.ENABLE,
+      conditional: not(
+        disableIf.reduce(
+          (acc, status) => or(acc, field(`${page}.verified`).isEqualTo(status)),
+          never()
         )
-      })
+      )
     }
+    updatedConditionals = upsertConditional(
+      updatedConditionals,
+      disableConditional
+    )
   }
-  return fieldInput
+
+  return {
+    ...fieldInput,
+    conditionals: updatedConditionals
+  }
 }
