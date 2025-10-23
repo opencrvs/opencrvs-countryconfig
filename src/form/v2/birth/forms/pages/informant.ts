@@ -177,7 +177,10 @@ export const informant = defineFormPage({
         ],
         validation: [invalidNameValidator('informant.name')]
       },
-      { valuePath: 'data.name', disableIfAuthenticated: true }
+      {
+        valuePath: 'data.name',
+        disableIf: ['pending', 'verified', 'authenticated']
+      }
     ),
     connectToMOSIPIdReader(
       {
@@ -220,7 +223,10 @@ export const informant = defineFormPage({
           }
         ]
       },
-      { valuePath: 'data.birthDate', disableIfAuthenticated: true }
+      {
+        valuePath: 'data.birthDate',
+        disableIf: ['pending', 'verified', 'authenticated']
+      }
     ),
     connectToMOSIPVerificationStatus(
       {
@@ -243,7 +249,7 @@ export const informant = defineFormPage({
         ],
         parent: field('informant.relation')
       },
-      { disableIfAuthenticated: true }
+      { disableIf: ['pending', 'verified', 'authenticated'] }
     ),
     connectToMOSIPVerificationStatus(
       {
@@ -285,7 +291,7 @@ export const informant = defineFormPage({
         ],
         parent: field('informant.relation')
       },
-      { disableIfAuthenticated: true }
+      { disableIf: ['pending', 'verified', 'authenticated'] }
     ),
     {
       id: 'informant.nationality',
@@ -323,7 +329,11 @@ export const informant = defineFormPage({
           }
         ]
       },
-      { valuePath: 'data.idType', hideIfAuthenticated: true }
+      {
+        valuePath: 'data.idType',
+        hideIf: ['authenticated'],
+        disableIf: ['pending', 'verified']
+      }
     ),
     connectToMOSIPIdReader(
       {
@@ -359,7 +369,11 @@ export const informant = defineFormPage({
           }
         ]
       },
-      { valuePath: 'data.nid', hideIfAuthenticated: true }
+      {
+        valuePath: 'data.nid',
+        hideIf: ['authenticated'],
+        disableIf: ['pending', 'verified']
+      }
     ),
     {
       id: 'informant.passport',

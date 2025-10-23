@@ -41,12 +41,12 @@ export const connectToMOSIPIdReader = (
   fieldInput: FieldConfigInput,
   {
     valuePath,
-    disableIfAuthenticated,
-    hideIfAuthenticated
+    disableIf,
+    hideIf
   }: {
     valuePath: string
-    disableIfAuthenticated?: boolean
-    hideIfAuthenticated?: boolean
+    disableIf?: string[]
+    hideIf?: string[]
   }
 ): FieldConfigInput => {
   const page = fieldInput.id.split('.')[0]
@@ -62,7 +62,7 @@ export const connectToMOSIPIdReader = (
         field(`${page}.id-reader`).get(valuePath)
       ]
     },
-    { hideIfAuthenticated, disableIfAuthenticated }
+    { hideIf, disableIf }
   )
 }
 
@@ -283,29 +283,41 @@ export const getMOSIPIntegrationFields = (
 export const connectToMOSIPVerificationStatus = (
   fieldInput: FieldConfigInput,
   {
-    hideIfAuthenticated,
-    disableIfAuthenticated
+    hideIf,
+    disableIf
   }: {
-    hideIfAuthenticated?: boolean
-    disableIfAuthenticated?: boolean
+    hideIf?: string[]
+    disableIf?: string[]
   }
 ): FieldConfigInput => {
   const page = fieldInput.id.split('.')[0]
-  if (hideIfAuthenticated) {
+  if (Array.isArray(hideIf)) {
     return {
       ...fieldInput,
       conditionals: upsertConditional(fieldInput.conditionals || [], {
         type: ConditionalType.SHOW,
-        conditional: not(field(`${page}.verified`).isEqualTo('authenticated'))
+        conditional: not(
+          hideIf.reduce(
+            (acc, status) =>
+              or(acc, field(`${page}.verified`).isEqualTo(status)),
+            never()
+          )
+        )
       })
     }
   }
-  if (disableIfAuthenticated) {
+  if (disableIf) {
     return {
       ...fieldInput,
       conditionals: upsertConditional(fieldInput.conditionals || [], {
         type: ConditionalType.ENABLE,
-        conditional: not(field(`${page}.verified`).isEqualTo('authenticated'))
+        conditional: not(
+          disableIf.reduce(
+            (acc, status) =>
+              or(acc, field(`${page}.verified`).isEqualTo(status)),
+            never()
+          )
+        )
       })
     }
   }
