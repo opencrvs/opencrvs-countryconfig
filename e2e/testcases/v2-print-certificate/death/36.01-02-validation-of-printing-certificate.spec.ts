@@ -1,13 +1,13 @@
 import { expect, test, type Page } from '@playwright/test'
-import { getToken, joinValuesWith, login } from '../../../helpers'
+import { getToken, joinValuesWith, loginToV2 } from '../../../helpers'
 import { CREDENTIALS } from '../../../constants'
 import {
   createDeclaration,
   Declaration
-} from '../../test-data/death-declaration'
+} from '../../v2-test-data/death-declaration'
 import { navigateToCertificatePrintAction } from '../death/helpers'
-import { REQUIRED_VALIDATION_ERROR } from '../../birth/helpers'
-import { expectInUrl } from '../../../utils'
+import { REQUIRED_VALIDATION_ERROR } from '../../v2-birth/helpers'
+import { expectInUrl } from '../../../v2-utils'
 import { faker } from '@faker-js/faker'
 
 test.describe.serial('Certified copies', () => {
@@ -29,7 +29,7 @@ test.describe.serial('Certified copies', () => {
   })
 
   test('1.0.1 Log in', async () => {
-    await login(page)
+    await loginToV2(page)
   })
 
   test('1.0.2 Click on "Print certificate" from action menu', async () => {
