@@ -95,7 +95,10 @@ export const deceased = defineFormPage({
         },
         validation: [invalidNameValidator('deceased.name')]
       },
-      { valuePath: 'data.name', disableIfAuthenticated: true }
+      {
+        valuePath: 'data.name',
+        disableIf: ['pending', 'verified', 'authenticated']
+      }
     ),
     connectToMOSIPIdReader(
       {
@@ -109,7 +112,10 @@ export const deceased = defineFormPage({
         },
         options: genderOptions
       },
-      { valuePath: 'data.gender', disableIfAuthenticated: true }
+      {
+        valuePath: 'data.gender',
+        disableIf: ['pending', 'verified', 'authenticated']
+      }
     ),
     connectToMOSIPIdReader(
       {
@@ -149,7 +155,10 @@ export const deceased = defineFormPage({
           }
         ]
       },
-      { valuePath: 'data.birthDate', disableIfAuthenticated: true }
+      {
+        valuePath: 'data.birthDate',
+        disableIf: ['pending', 'verified', 'authenticated']
+      }
     ),
     connectToMOSIPVerificationStatus(
       {
@@ -167,7 +176,7 @@ export const deceased = defineFormPage({
           }
         ]
       },
-      { disableIfAuthenticated: true }
+      { disableIf: ['pending', 'verified', 'authenticated'] }
     ),
     connectToMOSIPVerificationStatus(
       {
@@ -204,7 +213,7 @@ export const deceased = defineFormPage({
           }
         ]
       },
-      { disableIfAuthenticated: true }
+      { disableIf: ['pending', 'verified', 'authenticated'] }
     ),
     {
       id: `deceased.nationality`,
@@ -229,7 +238,11 @@ export const deceased = defineFormPage({
         },
         options: idTypeOptions
       },
-      { valuePath: 'data.idType', hideIfAuthenticated: true }
+      {
+        valuePath: 'data.idType',
+        hideIf: ['authenticated'],
+        disableIf: ['pending', 'verified']
+      }
     ),
     connectToMOSIPIdReader(
       {
@@ -261,7 +274,11 @@ export const deceased = defineFormPage({
           }
         ]
       },
-      { valuePath: 'data.nid', hideIfAuthenticated: true }
+      {
+        valuePath: 'data.nid',
+        hideIf: ['authenticated'],
+        disableIf: ['pending', 'verified']
+      }
     ),
     {
       id: `deceased.passport`,
