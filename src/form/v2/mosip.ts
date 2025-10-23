@@ -230,7 +230,8 @@ export const getMOSIPIntegrationFields = (
                   or(
                     field(`${page}.verified`).isEqualTo('pending'),
                     field(`${page}.verified`).isEqualTo('verified'),
-                    field(`${page}.verified`).isEqualTo('authenticated')
+                    field(`${page}.verified`).isEqualTo('authenticated'),
+                    field(`${page}.verified`).isEqualTo('failed')
                   )
                 )
               )
@@ -238,7 +239,8 @@ export const getMOSIPIntegrationFields = (
                 or(
                   field(`${page}.verified`).isEqualTo('pending'),
                   field(`${page}.verified`).isEqualTo('verified'),
-                  field(`${page}.verified`).isEqualTo('authenticated')
+                  field(`${page}.verified`).isEqualTo('authenticated'),
+                  field(`${page}.verified`).isEqualTo('failed')
                 )
               )
         },
