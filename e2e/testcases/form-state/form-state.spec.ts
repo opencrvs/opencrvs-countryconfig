@@ -1,5 +1,5 @@
 import { expect, Page, test } from '@playwright/test'
-import { drawSignature, getToken, goToSection, loginToV2 } from '../../helpers'
+import { drawSignature, getToken, goToSection, login } from '../../helpers'
 import { faker } from '@faker-js/faker'
 import { fillChildDetails, openBirthDeclaration } from '../birth/helpers'
 import { CREDENTIALS } from '../../constants'
@@ -26,7 +26,7 @@ test.describe('Form state', () => {
     })
 
     test('Login', async () => {
-      await loginToV2(page)
+      await login(page)
     })
 
     test('Create a draft', async () => {
@@ -81,7 +81,7 @@ test.describe('Form state', () => {
       await page.close()
     })
     test('Login', async () => {
-      await loginToV2(page)
+      await login(page)
     })
 
     // First create a draft event, which we will come back to later
@@ -148,7 +148,7 @@ test.describe('Form state', () => {
     })
 
     test('Login', async () => {
-      await loginToV2(page)
+      await login(page)
     })
 
     test('Create a declaration', async () => {

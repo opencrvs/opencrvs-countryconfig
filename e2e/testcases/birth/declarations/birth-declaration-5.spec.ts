@@ -6,7 +6,7 @@ import {
   formatName,
   getRandomDate,
   goToSection,
-  loginToV2
+  login
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
@@ -99,7 +99,7 @@ test.describe.serial('5. Birth declaration case - 5', () => {
 
   test.describe('5.1 Declaration started by Local Registrar', async () => {
     test.beforeAll(async () => {
-      await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
       await page.click('#header-new-event')
       await page.getByLabel('Birth').click()
       await page.getByRole('button', { name: 'Continue' }).click()

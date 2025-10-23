@@ -1,5 +1,5 @@
 import { test, expect, type Page } from '@playwright/test'
-import { formatName, goToSection, loginToV2 } from '../../../helpers'
+import { formatName, goToSection, login } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../../constants'
 import { ensureOutboxIsEmpty } from '../../../v2-utils'
@@ -26,7 +26,7 @@ test.describe.serial('Submit and verify incomplete birth declaration', () => {
 
   test.describe('Declaration started by FA', async () => {
     test.beforeAll(async () => {
-      await loginToV2(page, CREDENTIALS.FIELD_AGENT)
+      await login(page, CREDENTIALS.FIELD_AGENT)
       await page.click('#header-new-event')
       await page.getByLabel('Birth').click()
       await page.getByRole('button', { name: 'Continue' }).click()

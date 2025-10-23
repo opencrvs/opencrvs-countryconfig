@@ -1,5 +1,5 @@
 import { expect, Page, test } from '@playwright/test'
-import { getToken, loginToV2 } from '../../helpers'
+import { getToken, login } from '../../helpers'
 import { createDeclaration } from '../test-data/birth-declaration-with-father-brother'
 import { CREDENTIALS } from '../../constants'
 import { faker } from '@faker-js/faker'
@@ -56,7 +56,7 @@ test.describe.serial('Advanced Search - Mobile', () => {
   })
 
   test('Login', async () => {
-    await loginToV2(page)
+    await login(page)
   })
 
   test('Navigate to advanced search', async () => {

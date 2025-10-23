@@ -4,7 +4,7 @@ import {
   formatDateTo_dMMMMyyyy,
   getToken,
   goBackToReview,
-  loginToV2,
+  login,
   uploadImageToSection
 } from '../../helpers'
 import { faker } from '@faker-js/faker'
@@ -159,7 +159,7 @@ test.describe.serial('Correct record - 4', () => {
   })
 
   test('4.1 Ready to correct record > record audit', async () => {
-    await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
+    await login(page, CREDENTIALS.LOCAL_REGISTRAR)
 
     await auditRecord({
       page,

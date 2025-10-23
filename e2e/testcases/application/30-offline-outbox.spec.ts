@@ -6,7 +6,7 @@ import {
   formatName,
   getRandomDate,
   goToSection,
-  loginToV2
+  login
 } from '../../helpers'
 import { CREDENTIALS } from '../../constants'
 import { faker } from '@faker-js/faker'
@@ -107,7 +107,7 @@ test.describe
   })
 
   test('30.0 Login', async () => {
-    await loginToV2(page, CREDENTIALS.FIELD_AGENT)
+    await login(page, CREDENTIALS.FIELD_AGENT)
 
     // this is needed to get eventConfig before going offline
     await page.click('#header-new-event')

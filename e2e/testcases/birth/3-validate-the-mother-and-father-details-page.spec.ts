@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test'
-import { goToSection, loginToV2 } from '../../helpers'
+import { goToSection, login } from '../../helpers'
 import { REQUIRED_VALIDATION_ERROR } from './helpers'
 import { trackAndDeleteCreatedEvents } from '../test-data/eventDeletion'
 
@@ -7,7 +7,7 @@ test.describe('3. Validate the mothers and fathers details pages', () => {
   trackAndDeleteCreatedEvents()
 
   test.beforeEach(async ({ page }) => {
-    await loginToV2(page)
+    await login(page)
 
     await page.click('#header-new-event')
 

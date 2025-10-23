@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
-import { auditRecord, getToken, goBackToReview, loginToV2 } from '../../helpers'
+import { auditRecord, getToken, goBackToReview, login } from '../../helpers'
 import { faker } from '@faker-js/faker'
 import {
   createDeclaration as createDeclarationV2,
@@ -101,7 +101,7 @@ test.describe.serial('Request and accept correction (offline)', () => {
 
   test.describe('Request correction as Registration Agent', () => {
     test('Login as Registration Agent', async () => {
-      await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
+      await login(page, CREDENTIALS.REGISTRATION_AGENT)
     })
 
     test('Navigate to record correction', async () => {
@@ -194,7 +194,7 @@ test.describe.serial('Request and accept correction (offline)', () => {
 
   test.describe('Accept correction as Local Registrar (offline)', () => {
     test('Login as Local Registrar', async () => {
-      await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
     })
 
     test('Navigate to correction review', async () => {

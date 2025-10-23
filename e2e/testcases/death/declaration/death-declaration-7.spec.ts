@@ -6,7 +6,7 @@ import {
   formatDateObjectTo_dMMMMyyyy,
   getRandomDate,
   goToSection,
-  loginToV2
+  login
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
@@ -100,7 +100,7 @@ test.describe.serial('7. Death declaration case - 7', () => {
 
   test.describe('7.1 Declaration started by National Registrar', async () => {
     test.beforeAll(async () => {
-      await loginToV2(page, CREDENTIALS.NATIONAL_REGISTRAR)
+      await login(page, CREDENTIALS.NATIONAL_REGISTRAR)
 
       await page.click('#header-new-event')
       await page.getByLabel('Death').click()

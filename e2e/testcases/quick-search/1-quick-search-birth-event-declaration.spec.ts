@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
-import { getToken, loginToV2 } from '../../helpers'
+import { getToken, login } from '../../helpers'
 import {
   createDeclaration,
   getChildNameFromRecord
@@ -44,7 +44,7 @@ test.describe
   })
 
   test('1.1 Should search from home page using informant email and return correct record', async () => {
-    await loginToV2(page)
+    await login(page)
     await page
       .locator('#searchText')
       .fill(recordWithDefaultEmail.declaration['informant.email']) // search by email

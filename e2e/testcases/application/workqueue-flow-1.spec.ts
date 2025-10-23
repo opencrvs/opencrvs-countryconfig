@@ -6,7 +6,7 @@ import {
   formatName,
   getRandomDate,
   goToSection,
-  loginToV2
+  login
 } from '../../helpers'
 import { CREDENTIALS } from '../../constants'
 import {
@@ -82,7 +82,7 @@ test.describe.serial('1. Workqueue flow - 1', () => {
 
   test.describe('1.1 Notify by FA', async () => {
     test.beforeAll(async () => {
-      await loginToV2(page, CREDENTIALS.FIELD_AGENT)
+      await login(page, CREDENTIALS.FIELD_AGENT)
       await page.click('#header-new-event')
       await page.getByLabel('Birth').click()
       await page.getByRole('button', { name: 'Continue' }).click()
@@ -151,7 +151,7 @@ test.describe.serial('1. Workqueue flow - 1', () => {
 
   test.describe('1.2 Validate by RA', async () => {
     test('1.2.1 Verify workqueue', async () => {
-      await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
+      await login(page, CREDENTIALS.REGISTRATION_AGENT)
 
       await assertRecordInWorkqueue({
         page,
@@ -288,7 +288,7 @@ test.describe.serial('1. Workqueue flow - 1', () => {
   })
 
   test('1.3 FA can not see the validated record', async () => {
-    await loginToV2(page, CREDENTIALS.FIELD_AGENT, true)
+    await login(page, CREDENTIALS.FIELD_AGENT, true)
 
     await assertRecordInWorkqueue({
       page,
@@ -304,7 +304,7 @@ test.describe.serial('1. Workqueue flow - 1', () => {
 
   test.describe('1.4 Register by LR', async () => {
     test('1.4.1 Validate workqueue', async () => {
-      await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
 
       await assertRecordInWorkqueue({
         page,
@@ -411,7 +411,7 @@ test.describe.serial('1. Workqueue flow - 1', () => {
   })
 
   test('1.6 FA can not see the registered record', async () => {
-    await loginToV2(page, CREDENTIALS.FIELD_AGENT, true)
+    await login(page, CREDENTIALS.FIELD_AGENT, true)
 
     await assertRecordInWorkqueue({
       page,
@@ -426,7 +426,7 @@ test.describe.serial('1. Workqueue flow - 1', () => {
   })
 
   test("1.7 RA can't see the record", async () => {
-    await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT, true)
+    await login(page, CREDENTIALS.REGISTRATION_AGENT, true)
 
     await assertRecordInWorkqueue({
       page,

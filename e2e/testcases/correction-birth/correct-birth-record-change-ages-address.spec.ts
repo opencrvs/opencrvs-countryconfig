@@ -2,7 +2,7 @@ import { expect, test, type Page } from '@playwright/test'
 import {
   auditRecord,
   getToken,
-  loginToV2,
+  login,
   logout,
   uploadImageToSection
 } from '../../helpers'
@@ -124,7 +124,7 @@ test.describe.serial('Correct record - Change ages', () => {
   })
 
   test('Login as Registration Agent', async () => {
-    await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
+    await login(page, CREDENTIALS.REGISTRATION_AGENT)
   })
 
   test('Ready to correct record > record audit', async () => {
@@ -299,7 +299,7 @@ test.describe.serial('Correct record - Change ages', () => {
   })
 
   test('Login as Local Registrar', async () => {
-    await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
+    await login(page, CREDENTIALS.LOCAL_REGISTRAR)
   })
 
   test('Find the event in the "Ready for review" workflow', async () => {

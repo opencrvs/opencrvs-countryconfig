@@ -6,7 +6,7 @@ import {
   formatName,
   getRandomDate,
   goToSection,
-  loginToV2,
+  login,
   logout,
   uploadImage,
   uploadImageToSection
@@ -124,7 +124,7 @@ test.describe.serial('3. Birth declaration case - 3', () => {
 
   test.describe('3.1 Declaration started by RA', async () => {
     test.beforeAll(async () => {
-      await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
+      await login(page, CREDENTIALS.REGISTRATION_AGENT)
       await page.click('#header-new-event')
       await page.getByLabel('Birth').click()
       await page.getByRole('button', { name: 'Continue' }).click()
@@ -729,7 +729,7 @@ test.describe.serial('3. Birth declaration case - 3', () => {
   test.describe('3.2 Declaration Review by Local Registrar', async () => {
     test('3.2.1 Navigate to the declaration review page', async () => {
       await logout(page)
-      await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
       await page.getByText('Ready for review').click()
 
       await page

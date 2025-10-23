@@ -4,7 +4,7 @@ import { Declaration } from '../../test-data/birth-declaration'
 import { getToken } from '../../../helpers'
 import { createDeclaration } from '../../test-data/birth-declaration'
 import { CREDENTIALS } from '../../../constants'
-import { loginToV2 } from '../../../helpers'
+import { login } from '../../../helpers'
 import {
   navigateToCertificatePrintAction,
   selectRequesterType
@@ -31,7 +31,7 @@ test.describe.serial('44.14.0 Validate "Certified copy" option', () => {
   })
 
   test('44.14.0.1 Log in', async () => {
-    await loginToV2(page)
+    await login(page)
   })
 
   test('44.14.0.1 Navigate to certificate print action', async () => {

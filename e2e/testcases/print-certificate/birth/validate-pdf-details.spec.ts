@@ -1,6 +1,6 @@
 import { test, type Page, expect } from '@playwright/test'
 import { Declaration } from '../../test-data/birth-declaration'
-import { loginToV2 } from '../../../helpers'
+import { login } from '../../../helpers'
 import { createDeclaration } from '../../test-data/birth-declaration'
 import { CREDENTIALS } from '../../../constants'
 import { getToken } from '../../../helpers'
@@ -40,7 +40,7 @@ test.describe
   })
 
   test('Log in', async () => {
-    await loginToV2(page)
+    await login(page)
   })
 
   test('Print birth certificate once', async () => {
@@ -112,7 +112,7 @@ test.describe.serial("Validate 'Birth Certificate' PDF details", () => {
   })
 
   test('Log in', async () => {
-    await loginToV2(page)
+    await login(page)
   })
 
   test('Go to review', async () => {

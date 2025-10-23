@@ -1,6 +1,6 @@
 import { test, type Page, expect } from '@playwright/test'
 import { CREDENTIALS } from '../../../constants'
-import { loginToV2 } from '../../../helpers'
+import { login } from '../../../helpers'
 import { getToken } from '../../../helpers'
 import {
   createDeclaration,
@@ -36,7 +36,7 @@ test.describe
   })
 
   test('Log in', async () => {
-    await loginToV2(page)
+    await login(page)
   })
 
   test('Navigate to certificate print action', async () => {

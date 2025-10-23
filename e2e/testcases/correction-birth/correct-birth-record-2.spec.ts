@@ -3,7 +3,7 @@ import {
   formatDateTo_dMMMMyyyy,
   formatName,
   getToken,
-  loginToV2,
+  login,
   uploadImage
 } from '../../helpers'
 import { faker } from '@faker-js/faker'
@@ -59,7 +59,7 @@ test.describe.serial('Correct record - 2', () => {
   })
 
   test('2.1 Certificate preview', async () => {
-    await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
+    await login(page, CREDENTIALS.REGISTRATION_AGENT)
     await page.getByRole('button', { name: 'Ready to print' }).click()
     await navigateToCertificatePrintAction(page, declaration)
     await selectCertificationType(page, 'Birth Certificate')
@@ -249,7 +249,7 @@ test.describe.serial('Correct record - 2', () => {
     test.beforeAll(async ({ browser }) => {
       await page.close()
       page = await browser.newPage()
-      await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
     })
 
     test('2.8.1 Record audit by local registrar', async () => {

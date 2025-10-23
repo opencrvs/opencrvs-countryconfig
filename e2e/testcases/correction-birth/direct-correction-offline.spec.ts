@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
-import { auditRecord, getToken, goBackToReview, loginToV2 } from '../../helpers'
+import { auditRecord, getToken, goBackToReview, login } from '../../helpers'
 import { faker } from '@faker-js/faker'
 import {
   createDeclaration as createDeclarationV2,
@@ -100,7 +100,7 @@ test.describe.serial('Direct correction offline', () => {
   })
 
   test('Navigate to record correction', async () => {
-    await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
+    await login(page, CREDENTIALS.LOCAL_REGISTRAR)
 
     await auditRecord({
       page,

@@ -1,6 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 
-import { formatName, goToSection, loginToV2 } from '../../helpers'
+import { formatName, goToSection, login } from '../../helpers'
 import { CREDENTIALS } from '../../constants'
 import { faker } from '@faker-js/faker'
 import { getRowByTitle } from '../print-certificate/birth/helpers'
@@ -22,7 +22,7 @@ test.describe.serial('1: Validate my draft tab', () => {
   })
 
   test('1.1 Record does not appear in draft ', async () => {
-    await loginToV2(page, CREDENTIALS.FIELD_AGENT)
+    await login(page, CREDENTIALS.FIELD_AGENT)
     await page.getByRole('button', { name: 'My drafts' }).click()
 
     await expect(page.getByTestId('search-result')).not.toContainText(
@@ -54,7 +54,7 @@ test.describe.serial('1: Validate my draft tab', () => {
   })
 
   test('1.4 Record does not appear in draft for other user: RA ', async () => {
-    await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
+    await login(page, CREDENTIALS.REGISTRATION_AGENT)
     await page.getByRole('button', { name: 'My drafts' }).click()
 
     await expect(page.getByTestId('search-result')).not.toContainText(
@@ -63,7 +63,7 @@ test.describe.serial('1: Validate my draft tab', () => {
   })
 
   test('1.5 Record does not appear in draft for other user: LR ', async () => {
-    await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
+    await login(page, CREDENTIALS.LOCAL_REGISTRAR)
     await page.getByRole('button', { name: 'My drafts' }).click()
 
     await expect(page.getByTestId('search-result')).not.toContainText(
@@ -72,7 +72,7 @@ test.describe.serial('1: Validate my draft tab', () => {
   })
 
   test('1.6 Record does not appear in draft after notifying ', async () => {
-    await loginToV2(page, CREDENTIALS.FIELD_AGENT, true)
+    await login(page, CREDENTIALS.FIELD_AGENT, true)
     await page.getByRole('button', { name: 'My drafts' }).click()
 
     await getRowByTitle(page, formatName(name))

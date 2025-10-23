@@ -1,6 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 import { Declaration } from '../../test-data/birth-declaration'
-import { loginToV2 } from '../../../helpers'
+import { login } from '../../../helpers'
 import { createDeclaration } from '../../test-data/birth-declaration'
 import { CREDENTIALS } from '../../../constants'
 import { getToken } from '../../../helpers'
@@ -33,7 +33,7 @@ test.describe.serial('10.0 Validate "Review" page', () => {
   })
 
   test('10.0.1 Log in', async () => {
-    await loginToV2(page)
+    await login(page)
   })
 
   test('10.0.2 Navigate to certificate print action', async () => {

@@ -5,7 +5,7 @@ import {
   getRandomDate,
   goToSection,
   formatName,
-  loginToV2,
+  login,
   formatDateObjectTo_dMMMMyyyy,
   expectRowValueWithChangeButton
 } from '../../helpers'
@@ -69,7 +69,7 @@ test.describe.serial('8. Validate declaration review page', () => {
 
   test.beforeAll(async ({ browser }) => {
     page = await browser.newPage()
-    await loginToV2(page, CREDENTIALS.FIELD_AGENT)
+    await login(page, CREDENTIALS.FIELD_AGENT)
     await page.click('#header-new-event')
     await page.getByLabel('Birth').click()
     await page.getByRole('button', { name: 'Continue' }).click()
@@ -879,7 +879,7 @@ test.describe.serial('8. Validate declaration review page', () => {
 
   test.describe('8.2 Registration agent actions', async () => {
     test('8.2.1 Navigate to the declaration preview page', async () => {
-      await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
+      await login(page, CREDENTIALS.REGISTRATION_AGENT)
 
       await page.getByText('Ready for review').click()
 
@@ -1191,7 +1191,7 @@ test.describe.serial('8. Validate declaration review page', () => {
 
   test.describe('8.3 Local registrar actions', async () => {
     test('8.3.1 Navigate to the declaration preview page', async () => {
-      await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
 
       await page.getByText('Ready for review').click()
 

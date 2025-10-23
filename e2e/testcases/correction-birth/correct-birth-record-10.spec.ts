@@ -5,7 +5,7 @@ import {
   getLocationNameFromFhirId,
   getToken,
   goBackToReview,
-  loginToV2,
+  login,
   uploadImage
 } from '../../helpers'
 import { faker } from '@faker-js/faker'
@@ -60,7 +60,7 @@ test.describe('10. Correct record', () => {
 
     test.beforeAll(async ({ browser }) => {
       page = await browser.newPage()
-      await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
+      await login(page, CREDENTIALS.REGISTRATION_AGENT)
     })
 
     test.afterAll(async () => {
@@ -588,7 +588,7 @@ test.describe('10. Correct record', () => {
       test.beforeAll(async ({ browser }) => {
         await page.close()
         page = await browser.newPage()
-        await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
+        await login(page, CREDENTIALS.LOCAL_REGISTRAR)
       })
 
       test('10.1.6.1 Record audit by local registrar', async () => {

@@ -4,7 +4,7 @@ import {
   drawSignature,
   formatName,
   goToSection,
-  loginToV2
+  login
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
@@ -37,7 +37,7 @@ test.describe.serial('10. Birth declaration case - 10', () => {
 
   test.describe('10.1 Declaration started by FA', async () => {
     test.beforeAll(async () => {
-      await loginToV2(page, CREDENTIALS.FIELD_AGENT)
+      await login(page, CREDENTIALS.FIELD_AGENT)
       await page.click('#header-new-event')
       await page.getByLabel('Birth').click()
       await page.getByRole('button', { name: 'Continue' }).click()
@@ -192,7 +192,7 @@ test.describe.serial('10. Birth declaration case - 10', () => {
 
   test.describe('10.2 Declaration Review by RA', async () => {
     test('10.2.1 Navigate to the declaration review page', async () => {
-      await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
+      await login(page, CREDENTIALS.REGISTRATION_AGENT)
 
       await page.getByText('Notifications').click()
 

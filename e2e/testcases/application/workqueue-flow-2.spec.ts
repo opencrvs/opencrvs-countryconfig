@@ -6,7 +6,7 @@ import {
   formatName,
   getRandomDate,
   goToSection,
-  loginToV2
+  login
 } from '../../helpers'
 import { CREDENTIALS } from '../../constants'
 import { ensureOutboxIsEmpty, selectAction } from '../../v2-utils'
@@ -77,7 +77,7 @@ test.describe.serial('2. Workqueue flow - 2', () => {
 
   test.describe('2.1 Notify by FA', async () => {
     test.beforeAll(async () => {
-      await loginToV2(page, CREDENTIALS.FIELD_AGENT)
+      await login(page, CREDENTIALS.FIELD_AGENT)
       await page.click('#header-new-event')
       await page.getByLabel('Birth').click()
       await page.getByRole('button', { name: 'Continue' }).click()
@@ -146,7 +146,7 @@ test.describe.serial('2. Workqueue flow - 2', () => {
 
   test.describe('2.2 Register by LR', async () => {
     test('2.2.1 Verify workqueue', async () => {
-      await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
 
       await assertRecordInWorkqueue({
         page,
@@ -281,7 +281,7 @@ test.describe.serial('2. Workqueue flow - 2', () => {
   })
 
   test('2.3 FA can see the record', async () => {
-    await loginToV2(page, CREDENTIALS.FIELD_AGENT, true)
+    await login(page, CREDENTIALS.FIELD_AGENT, true)
 
     await assertRecordInWorkqueue({
       page,
@@ -296,7 +296,7 @@ test.describe.serial('2. Workqueue flow - 2', () => {
   })
 
   test('2.4 RA can see the record in ready to print', async () => {
-    await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
+    await login(page, CREDENTIALS.REGISTRATION_AGENT)
 
     await assertRecordInWorkqueue({
       page,

@@ -1,6 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 
-import { loginToV2, getToken } from '../../../helpers'
+import { login, getToken } from '../../../helpers'
 import { CREDENTIALS } from '../../../constants'
 import {
   createDeclaration,
@@ -29,7 +29,7 @@ test.describe.serial('Print certificate', () => {
   })
 
   test('1.0.1 Log in', async () => {
-    await loginToV2(page)
+    await login(page)
   })
 
   test('1.0.2 Click on "Print certificate" from action menu', async () => {

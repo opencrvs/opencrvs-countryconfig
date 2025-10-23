@@ -1,6 +1,6 @@
 import { expect, Page, test } from '@playwright/test'
 
-import { formatName, loginToV2 } from '../../helpers'
+import { formatName, login } from '../../helpers'
 import { mockNetworkConditions } from '../../mock-network-conditions'
 import { faker } from '@faker-js/faker'
 import { ensureOutboxIsEmpty } from '../../v2-utils'
@@ -20,7 +20,7 @@ test.describe.serial('Can Open Draft offline', () => {
   })
 
   test('Login', async () => {
-    await loginToV2(page)
+    await login(page)
     await expect(page.getByText('Farajaland CRS')).toBeVisible({
       timeout: 30000
     })

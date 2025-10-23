@@ -3,7 +3,7 @@ import {
   auditRecord,
   formatDateTo_dMMMMyyyy,
   getToken,
-  loginToV2
+  login
 } from '../../helpers'
 import { faker } from '@faker-js/faker'
 import {
@@ -129,7 +129,7 @@ test.describe.serial('Correct record - change informant type', () => {
   })
 
   test('Ready to correct record > record audit', async () => {
-    await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
+    await login(page, CREDENTIALS.LOCAL_REGISTRAR)
 
     await auditRecord({
       page,
