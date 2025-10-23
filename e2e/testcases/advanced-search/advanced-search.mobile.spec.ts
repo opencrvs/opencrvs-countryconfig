@@ -4,7 +4,7 @@ import { createDeclaration } from '../test-data/birth-declaration-with-father-br
 import { CREDENTIALS } from '../../constants'
 import { faker } from '@faker-js/faker'
 import { getAllLocations, getLocationIdByName } from '../birth/helpers'
-import { expectInUrl } from '../../v2-utils'
+import { expectInUrl } from '../../utils'
 import { setMobileViewport } from '../../mobile-helpers'
 
 test.describe.serial('Advanced Search - Mobile', () => {

@@ -21,11 +21,7 @@ import {
 import { format, subDays, subYears } from 'date-fns'
 import { formatV2ChildName } from '../birth/helpers'
 import { IdType } from '@countryconfig/form/v2/person'
-import {
-  ensureAssigned,
-  ensureOutboxIsEmpty,
-  expectInUrl
-} from '../../v2-utils'
+import { ensureAssigned, ensureOutboxIsEmpty, expectInUrl } from '../../utils'
 
 test.describe.serial(' Correct record - 3', () => {
   let declaration: DeclarationV2

@@ -21,7 +21,7 @@ import {
 import { IdType } from '@countryconfig/form/v2/person'
 import { random } from 'lodash'
 import { formatV2ChildName, REQUIRED_VALIDATION_ERROR } from '../birth/helpers'
-import { ensureAssigned } from '../../v2-utils'
+import { ensureAssigned } from '../../utils'
 
 test.describe.serial('Correct record - 4', () => {
   let declaration: DeclarationV2

@@ -10,7 +10,7 @@ import {
   selectRequesterType
 } from './helpers'
 import { selectCertificationType } from './helpers'
-import { expectInUrl } from '../../../v2-utils'
+import { expectInUrl } from '../../../utils'
 
 test.describe.serial('10.0 Validate "Review" page', () => {
   let declaration: Declaration

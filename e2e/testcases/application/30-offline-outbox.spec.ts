@@ -11,7 +11,7 @@ import {
 import { CREDENTIALS } from '../../constants'
 import { faker } from '@faker-js/faker'
 import { fillDate } from '../birth/helpers'
-import { ensureOutboxIsEmpty } from '../../v2-utils'
+import { ensureOutboxIsEmpty } from '../../utils'
 
 test.describe
   .serial('30: Validate user can send multiple complete and incomplete records offline', () => {

@@ -14,7 +14,7 @@ import {
 import { format, subYears } from 'date-fns'
 import { CREDENTIALS } from '../../constants'
 import { formatV2ChildName } from '../birth/helpers'
-import { ensureAssigned, selectAction } from '../../v2-utils'
+import { ensureAssigned, selectAction } from '../../utils'
 
 test.describe.serial("Correct record - Change father's ID number", () => {
   let declaration: DeclarationV2

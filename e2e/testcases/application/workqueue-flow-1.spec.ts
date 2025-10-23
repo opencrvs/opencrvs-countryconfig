@@ -9,11 +9,7 @@ import {
   login
 } from '../../helpers'
 import { CREDENTIALS } from '../../constants'
-import {
-  ensureAssigned,
-  ensureOutboxIsEmpty,
-  selectAction
-} from '../../v2-utils'
+import { ensureAssigned, ensureOutboxIsEmpty, selectAction } from '../../utils'
 import { assertRecordInWorkqueue, fillDate } from '../birth/helpers'
 import { getRowByTitle } from '../print-certificate/birth/helpers'
 

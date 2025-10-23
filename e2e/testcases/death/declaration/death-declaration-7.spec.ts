@@ -10,7 +10,7 @@ import {
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
-import { ensureOutboxIsEmpty } from '../../../v2-utils'
+import { ensureOutboxIsEmpty } from '../../../utils'
 
 test.describe.serial('7. Death declaration case - 7', () => {
   let page: Page

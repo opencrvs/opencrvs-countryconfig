@@ -10,7 +10,7 @@ import {
 import { CREDENTIALS } from '../../../constants'
 import { faker } from '@faker-js/faker'
 import { REQUIRED_VALIDATION_ERROR } from '../helpers'
-import { ensureOutboxIsEmpty } from '../../../v2-utils'
+import { ensureOutboxIsEmpty } from '../../../utils'
 
 test.describe.serial('8. Birth declaration case - 8', () => {
   let page: Page

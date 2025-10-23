@@ -13,7 +13,7 @@ import {
   navigateToWorkqueue,
   selectAction,
   type
-} from '../../v2-utils'
+} from '../../utils'
 import { formatV2ChildName } from '../birth/helpers'
 import { setMobileViewport } from '../../mobile-helpers'
 

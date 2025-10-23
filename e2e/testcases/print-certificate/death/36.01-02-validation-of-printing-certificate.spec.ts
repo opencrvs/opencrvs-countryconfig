@@ -7,7 +7,7 @@ import {
 } from '../../test-data/death-declaration'
 import { navigateToCertificatePrintAction } from './helpers'
 import { REQUIRED_VALIDATION_ERROR } from '../../birth/helpers'
-import { expectInUrl } from '../../../v2-utils'
+import { expectInUrl } from '../../../utils'
 import { faker } from '@faker-js/faker'
 
 test.describe.serial('Certified copies', () => {

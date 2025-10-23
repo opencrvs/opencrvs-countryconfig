@@ -12,7 +12,7 @@ import {
   navigateToCertificatePrintAction,
   printAndExpectPopup
 } from './helpers'
-import { ensureAssigned, type, expectInUrl } from '../../../v2-utils'
+import { ensureAssigned, type, expectInUrl } from '../../../utils'
 import { REQUIRED_VALIDATION_ERROR } from '../../birth/helpers'
 import { formatV2ChildName } from '../../birth/helpers'
 

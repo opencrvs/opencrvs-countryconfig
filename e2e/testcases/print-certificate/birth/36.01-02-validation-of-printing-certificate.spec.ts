@@ -7,7 +7,7 @@ import {
   Declaration
 } from '../../test-data/birth-declaration'
 import { navigateToCertificatePrintAction } from './helpers'
-import { expectInUrl } from '../../../v2-utils'
+import { expectInUrl } from '../../../utils'
 import { REQUIRED_VALIDATION_ERROR } from '../../birth/helpers'
 
 test.describe.serial('Print certificate', () => {

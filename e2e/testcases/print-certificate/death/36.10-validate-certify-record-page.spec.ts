@@ -10,7 +10,7 @@ import {
   selectCertificationType,
   selectRequesterType
 } from './helpers'
-import { expectInUrl } from '../../../v2-utils'
+import { expectInUrl } from '../../../utils'
 import { printAndExpectPopup } from '../birth/helpers'
 
 test.describe.serial('10.0 Validate "Review" page', () => {

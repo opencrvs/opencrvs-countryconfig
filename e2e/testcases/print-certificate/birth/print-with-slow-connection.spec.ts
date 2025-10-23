@@ -11,7 +11,7 @@ import {
   selectCertificationType,
   navigateToCertificatePrintAction
 } from './helpers'
-import { ensureAssigned, expectInUrl } from '../../../v2-utils'
+import { ensureAssigned, expectInUrl } from '../../../utils'
 import { mockNetworkConditions } from '../../../mock-network-conditions'
 
 test.describe

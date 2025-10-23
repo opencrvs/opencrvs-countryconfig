@@ -6,7 +6,7 @@ import {
   createDeclaration,
   Declaration
 } from '../test-data/birth-declaration-with-mother-father'
-import { ensureAssigned, expectInUrl, selectAction } from '../../v2-utils'
+import { ensureAssigned, expectInUrl, selectAction } from '../../utils'
 import { formatV2ChildName, REQUIRED_VALIDATION_ERROR } from '../birth/helpers'
 
 test.describe.serial('Birth Record correction flow', () => {

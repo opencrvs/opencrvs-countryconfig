@@ -3,7 +3,7 @@ import { continueForm, formatName, getRandomDate, login } from '../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../constants'
 
-import { ensureOutboxIsEmpty, selectAction } from '../../v2-utils'
+import { ensureOutboxIsEmpty, selectAction } from '../../utils'
 
 test.describe.serial('1. User conditional form flow', () => {
   let page: Page

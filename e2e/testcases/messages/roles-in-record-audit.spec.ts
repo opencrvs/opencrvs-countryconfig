@@ -3,7 +3,7 @@ import { CREDENTIALS } from '../../constants'
 import { getToken, login } from '../../helpers'
 import { createDeclaration } from '../test-data/birth-declaration'
 import { ActionType } from '@opencrvs/toolkit/events'
-import { ensureAssigned } from '../../v2-utils'
+import { ensureAssigned } from '../../utils'
 import { formatV2ChildName } from '../birth/helpers'
 
 const testCases = [

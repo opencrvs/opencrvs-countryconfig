@@ -11,7 +11,7 @@ import {
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../constants'
 import { fillDate } from '../birth/helpers'
-import { ensureOutboxIsEmpty, selectAction } from '../../v2-utils'
+import { ensureOutboxIsEmpty, selectAction } from '../../utils'
 
 test.describe.serial('Basic Archival flow', () => {
   let page: Page

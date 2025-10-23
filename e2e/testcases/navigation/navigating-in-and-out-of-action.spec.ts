@@ -9,7 +9,7 @@ import {
   selectCertificationType,
   selectRequesterType
 } from '../print-certificate/birth/helpers'
-import { expectInUrl } from '../../v2-utils'
+import { expectInUrl } from '../../utils'
 
 test.describe.serial('Navigating in and out of action', () => {
   let page: Page

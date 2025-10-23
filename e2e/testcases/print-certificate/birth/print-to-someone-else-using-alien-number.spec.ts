@@ -12,7 +12,7 @@ import {
   navigateToCertificatePrintAction,
   printAndExpectPopup
 } from './helpers'
-import { ensureAssigned, type } from '../../../v2-utils'
+import { ensureAssigned, type } from '../../../utils'
 import { formatV2ChildName } from '../../birth/helpers'
 
 async function selectIdType(page: Page, idType: string) {

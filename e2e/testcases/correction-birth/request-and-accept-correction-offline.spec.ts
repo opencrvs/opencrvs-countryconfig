@@ -8,7 +8,7 @@ import {
 import { format, subYears } from 'date-fns'
 import { CREDENTIALS, SAFE_OUTBOX_TIMEOUT_MS } from '../../constants'
 import { formatV2ChildName } from '../birth/helpers'
-import { ensureAssigned, selectAction, type } from '../../v2-utils'
+import { ensureAssigned, selectAction, type } from '../../utils'
 
 test.describe.serial('Request and accept correction (offline)', () => {
   let declaration: DeclarationV2

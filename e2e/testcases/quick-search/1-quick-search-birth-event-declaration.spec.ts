@@ -6,7 +6,7 @@ import {
 } from '../test-data/birth-declaration-with-father-brother'
 import { CREDENTIALS } from '../../constants'
 import { faker } from '@faker-js/faker'
-import { ensureAssigned } from '../../v2-utils'
+import { ensureAssigned } from '../../utils'
 
 test.describe
   .serial("Qucik Search - Birth Event Declaration - Child's details", () => {

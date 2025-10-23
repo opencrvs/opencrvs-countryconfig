@@ -3,7 +3,7 @@ import { getToken, login } from '../../helpers'
 import { createDeclaration } from '../test-data/birth-declaration-with-father-brother'
 import { CREDENTIALS } from '../../constants'
 import { getMonthFormatted } from './helper'
-import { assertTexts, type } from '../../v2-utils'
+import { assertTexts, type } from '../../utils'
 
 test.describe
   .serial("Advanced Search - Birth Event Declaration - Mother's details", () => {

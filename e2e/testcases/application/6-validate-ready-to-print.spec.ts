@@ -4,7 +4,7 @@ import { login, getToken } from '../../helpers'
 import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../constants'
 import { createDeclaration, Declaration } from '../test-data/birth-declaration'
 import { formatV2ChildName } from '../birth/helpers'
-import { selectAction } from '../../v2-utils'
+import { selectAction } from '../../utils'
 
 test.describe.serial('6 Validate Ready to print tab', () => {
   let page: Page

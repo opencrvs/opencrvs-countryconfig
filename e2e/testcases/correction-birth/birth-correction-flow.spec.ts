@@ -12,7 +12,7 @@ import {
   expectInUrl,
   selectAction,
   type
-} from '../../v2-utils'
+} from '../../utils'
 import { formatV2ChildName, REQUIRED_VALIDATION_ERROR } from '../birth/helpers'
 
 test.describe.serial('Birth correction flow', () => {

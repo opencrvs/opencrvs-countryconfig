@@ -2,7 +2,7 @@ import { expect, Page, test } from '@playwright/test'
 import { goToSection, login, logout } from '../../helpers'
 import { CREDENTIALS } from '../../constants'
 import { fillChildDetails, openBirthDeclaration } from './helpers'
-import { ensureOutboxIsEmpty } from '../../v2-utils'
+import { ensureOutboxIsEmpty } from '../../utils'
 
 /**
  * Skipping tests until the outbox workqueue is implemented.

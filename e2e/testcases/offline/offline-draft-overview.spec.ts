@@ -3,7 +3,7 @@ import { expect, Page, test } from '@playwright/test'
 import { formatName, login } from '../../helpers'
 import { mockNetworkConditions } from '../../mock-network-conditions'
 import { faker } from '@faker-js/faker'
-import { ensureOutboxIsEmpty } from '../../v2-utils'
+import { ensureOutboxIsEmpty } from '../../utils'
 
 test.describe.serial('Can Open Draft offline', () => {
   let page: Page

@@ -12,7 +12,7 @@ import {
   createDeclaration,
   Declaration
 } from '../test-data/birth-declaration-with-mother-father'
-import { ensureAssigned, expectInUrl, selectAction, type } from '../../v2-utils'
+import { ensureAssigned, expectInUrl, selectAction, type } from '../../utils'
 import {
   navigateToCertificatePrintAction,
   selectCertificationType,

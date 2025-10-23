@@ -7,7 +7,7 @@ import {
 import { CREDENTIALS } from '../../constants'
 import { faker } from '@faker-js/faker'
 import { getMonthFormatted } from './helper'
-import { assertTexts, type } from '../../v2-utils'
+import { assertTexts, type } from '../../utils'
 
 test.describe
   .serial("Advanced Search - Birth Event Declaration - Father's details", () => {

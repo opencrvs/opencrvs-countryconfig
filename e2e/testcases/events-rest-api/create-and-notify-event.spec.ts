@@ -12,7 +12,7 @@ import {
 } from '../../helpers'
 import { addDays, format, subDays } from 'date-fns'
 import { faker } from '@faker-js/faker'
-import { ensureAssigned, expectInUrl, selectAction } from '../../v2-utils'
+import { ensureAssigned, expectInUrl, selectAction } from '../../utils'
 import { getAllLocations } from '../birth/helpers'
 
 import decode from 'jwt-decode'

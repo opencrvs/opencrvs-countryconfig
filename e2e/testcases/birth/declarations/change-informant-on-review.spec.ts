@@ -10,7 +10,7 @@ import {
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
-import { ensureOutboxIsEmpty, selectAction } from '../../../v2-utils'
+import { ensureOutboxIsEmpty, selectAction } from '../../../utils'
 import { REQUIRED_VALIDATION_ERROR } from '../helpers'
 
 test.describe.serial('Change informant on review', () => {

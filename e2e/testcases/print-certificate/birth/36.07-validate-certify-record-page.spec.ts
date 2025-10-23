@@ -12,7 +12,7 @@ import {
   selectCertificationType,
   selectRequesterType
 } from './helpers'
-import { expectInUrl } from '../../../v2-utils'
+import { expectInUrl } from '../../../utils'
 
 test.describe.serial('7.0 Validate "Certify record" page', () => {
   let eventId: string

@@ -12,7 +12,7 @@ import {
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
 import { fillDate, validateAddress } from '../helpers'
-import { ensureOutboxIsEmpty, selectAction } from '../../../v2-utils'
+import { ensureOutboxIsEmpty, selectAction } from '../../../utils'
 
 test.describe.serial('4. Birth declaration case - 4', () => {
   let page: Page

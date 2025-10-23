@@ -9,7 +9,7 @@ import {
   login
 } from '../../helpers'
 import { CREDENTIALS } from '../../constants'
-import { ensureOutboxIsEmpty, selectAction } from '../../v2-utils'
+import { ensureOutboxIsEmpty, selectAction } from '../../utils'
 import { assertRecordInWorkqueue, fillDate } from '../birth/helpers'
 
 // FA Declares => RA Validates => LR Registers

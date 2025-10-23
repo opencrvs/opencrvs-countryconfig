@@ -4,7 +4,7 @@ import { createDeclaration } from '../test-data/birth-declaration-with-father-br
 import { CREDENTIALS } from '../../constants'
 import { faker } from '@faker-js/faker'
 import { getMonthFormatted } from './helper'
-import { assertTexts, type } from '../../v2-utils'
+import { assertTexts, type } from '../../utils'
 
 test.describe
   .serial("Advanced Search - Birth Event Declaration - Child's details", () => {

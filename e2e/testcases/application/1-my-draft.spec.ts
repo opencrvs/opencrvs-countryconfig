@@ -4,7 +4,7 @@ import { formatName, goToSection, login } from '../../helpers'
 import { CREDENTIALS } from '../../constants'
 import { faker } from '@faker-js/faker'
 import { getRowByTitle } from '../print-certificate/birth/helpers'
-import { ensureOutboxIsEmpty } from '../../v2-utils'
+import { ensureOutboxIsEmpty } from '../../utils'
 
 test.describe.serial('1: Validate my draft tab', () => {
   let page: Page

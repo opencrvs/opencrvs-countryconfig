@@ -7,7 +7,7 @@ import {
   login
 } from '../../../helpers'
 import { CREDENTIALS } from '../../../constants'
-import { ensureOutboxIsEmpty, selectAction } from '../../../v2-utils'
+import { ensureOutboxIsEmpty, selectAction } from '../../../utils'
 import { REQUIRED_VALIDATION_ERROR } from '../../birth/helpers'
 
 test.describe.serial('10. Death declaration case - 10', () => {

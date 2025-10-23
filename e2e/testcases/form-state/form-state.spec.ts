@@ -4,7 +4,7 @@ import { faker } from '@faker-js/faker'
 import { fillChildDetails, openBirthDeclaration } from '../birth/helpers'
 import { CREDENTIALS } from '../../constants'
 import { createDeclaration, Declaration } from '../test-data/birth-declaration'
-import { selectAction } from '../../v2-utils'
+import { selectAction } from '../../utils'
 import {
   navigateToCertificatePrintAction,
   selectRequesterType

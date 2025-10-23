@@ -10,7 +10,7 @@ import {
   selectCertificationType,
   selectRequesterType
 } from './helpers'
-import { expectInUrl } from '../../../v2-utils'
+import { expectInUrl } from '../../../utils'
 import { REQUIRED_VALIDATION_ERROR } from '../../birth/helpers'
 
 async function selectIdType(page: Page, idType: string) {

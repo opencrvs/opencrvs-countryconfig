@@ -14,7 +14,7 @@ import {
 } from '../test-data/birth-declaration'
 import { CREDENTIALS } from '../../constants'
 import { formatV2ChildName } from '../birth/helpers'
-import { ensureAssigned, selectAction } from '../../v2-utils'
+import { ensureAssigned, selectAction } from '../../utils'
 import { getAllLocations, getLocationIdByName } from '../birth/helpers'
 import { AddressType } from '@opencrvs/toolkit/events'
 

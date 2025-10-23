@@ -2,7 +2,7 @@ import { expect, test, type Page } from '@playwright/test'
 import { login } from '../../helpers'
 import path from 'path'
 import { faker } from '@faker-js/faker'
-import { ensureOutboxIsEmpty, selectAction } from '../../v2-utils'
+import { ensureOutboxIsEmpty, selectAction } from '../../utils'
 import { REQUIRED_VALIDATION_ERROR } from './helpers'
 import { trackAndDeleteCreatedEvents } from '../test-data/eventDeletion'
 

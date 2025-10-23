@@ -9,7 +9,7 @@ import {
   navigateToCertificatePrintAction,
   selectRequesterType
 } from './helpers'
-import { selectAction } from '../../../v2-utils'
+import { selectAction } from '../../../utils'
 import { formatV2ChildName } from '../../birth/helpers'
 
 test.describe.serial('44.14.0 Validate "Certified copy" option', () => {

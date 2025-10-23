@@ -9,7 +9,7 @@ import {
   selectRequesterType
 } from './helpers'
 import { selectCertificationType } from './helpers'
-import { selectAction } from '../../../v2-utils'
+import { selectAction } from '../../../utils'
 import { formatV2ChildName } from '../../birth/helpers'
 
 test.describe

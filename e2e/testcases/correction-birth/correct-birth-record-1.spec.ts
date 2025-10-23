@@ -21,7 +21,7 @@ import {
   expectInUrl,
   selectAction,
   type
-} from '../../v2-utils'
+} from '../../utils'
 import { formatV2ChildName } from '../birth/helpers'
 
 test.describe('1. Correct record - 1', () => {

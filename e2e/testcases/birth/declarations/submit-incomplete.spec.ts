@@ -2,7 +2,7 @@ import { test, expect, type Page } from '@playwright/test'
 import { formatName, goToSection, login } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../../constants'
-import { ensureOutboxIsEmpty } from '../../../v2-utils'
+import { ensureOutboxIsEmpty } from '../../../utils'
 
 test.describe.serial('Submit and verify incomplete birth declaration', () => {
   let page: Page

@@ -3,7 +3,7 @@ import { expect, test, type Page } from '@playwright/test'
 import { login, getToken } from '../../helpers'
 import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../constants'
 import { createDeclaration, Declaration } from '../test-data/birth-declaration'
-import { ensureAssigned, selectAction } from '../../v2-utils'
+import { ensureAssigned, selectAction } from '../../utils'
 
 test.describe.serial('Assign & Unassign', () => {
   let page: Page

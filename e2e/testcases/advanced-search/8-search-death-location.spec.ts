@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test'
 import { login } from '../../helpers'
-import { assertTexts } from '../../v2-utils'
+import { assertTexts } from '../../utils'
 
 test.describe("Advanced Search 8 - Death - Deceased's place of death", () => {
   test.beforeEach(async ({ page }) => {

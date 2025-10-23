@@ -11,7 +11,7 @@ import {
   selectCertificationType,
   selectRequesterType
 } from './helpers'
-import { ensureAssigned, expectInUrl, type } from '../../../v2-utils'
+import { ensureAssigned, expectInUrl, type } from '../../../utils'
 import { formatV2ChildName } from '../../birth/helpers'
 
 test.describe.serial('3.0 Validate "Certify record" page', () => {

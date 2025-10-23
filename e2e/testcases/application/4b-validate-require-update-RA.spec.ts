@@ -5,11 +5,7 @@ import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../constants'
 import { createDeclaration, Declaration } from '../test-data/birth-declaration'
 import { ActionType } from '@opencrvs/toolkit/events'
 import { formatV2ChildName } from '../birth/helpers'
-import {
-  ensureAssigned,
-  ensureOutboxIsEmpty,
-  selectAction
-} from '../../v2-utils'
+import { ensureAssigned, ensureOutboxIsEmpty, selectAction } from '../../utils'
 import { getRowByTitle } from '../print-certificate/birth/helpers'
 import { faker } from '@faker-js/faker'
 
