@@ -306,7 +306,7 @@ export const connectToMOSIPVerificationStatus = (
       })
     }
   }
-  if (disableIf) {
+  if (Array.isArray(disableIf)) {
     return {
       ...fieldInput,
       conditionals: upsertConditional(fieldInput.conditionals || [], {
