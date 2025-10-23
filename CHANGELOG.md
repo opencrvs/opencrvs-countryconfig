@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.9.1
+
+### Breaking changes
+
+- **Remove Unused Scopes**: Removed `RECORD_PRINT_RECORDS_SUPPORTING_DOCUMENTS` and `RECORD_EXPORT_RECORDS` scopes from `REGISTRATION_AGENT`, `LOCAL_REGISTRAR` and `NATIONAL_REGISTRAR`
+
 ## 1.9.0
 
 ### New features
@@ -24,12 +30,10 @@
 
 - Restricted filesystem usage for journal service and file rotation strategy [#10518](https://github.com/opencrvs/opencrvs-core/issues/10518))
 
-
 ### Bug fixes
 
 - Allow non-interactive upgrades with apt [#10204](https://github.com/opencrvs/opencrvs-core/issues/10204)
 - Don't restart events service after data cleanup [#10704](https://github.com/opencrvs/opencrvs-core/issues/10704)
-
 
 ## 1.8.1
 
