@@ -220,7 +220,7 @@
       {{#ifCond (lookup $declaration 'mother.dob') '!==' undefined }}
       <tspan x="307" y="286.104">{{$lookup $declaration 'mother.dob'}}</tspan>
       {{else}}
-      <tspan x="307" y="286.104">{{$lookup $declaration 'mother.age.age'}} {{#ifCond (lookup $declaration 'mother.age') '!==' undefined }}years old{{/ifCond}}</tspan>
+      <tspan x="307" y="286.104">{{$lookup $declaration 'mother.age'}} {{#ifCond (lookup $declaration 'mother.age') '!==' undefined }}years old{{/ifCond}}</tspan>
       {{/ifCond}}
     </text>
   </g>
@@ -305,7 +305,7 @@
       {{#ifCond (lookup $declaration 'father.dob') '!==' undefined }}
       <tspan x="307" y="412.104">{{$lookup $declaration 'father.dob'}}</tspan>
       {{else}}
-      <tspan x="307" y="412.104">{{$lookup $declaration 'father.age.age'}} {{#ifCond (lookup $declaration 'father.age') '!==' undefined }}years old{{/ifCond}}</tspan>
+      <tspan x="307" y="412.104">{{$lookup $declaration 'father.age'}} {{#ifCond (lookup $declaration 'father.age') '!==' undefined }}years old{{/ifCond}}</tspan>
       {{/ifCond}}
     </text>
   </g>

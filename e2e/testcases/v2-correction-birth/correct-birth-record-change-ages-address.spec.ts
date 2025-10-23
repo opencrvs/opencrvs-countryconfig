@@ -64,7 +64,7 @@ test.describe.serial('Correct record - Change ages', () => {
       'informant.dobUnknown': true,
       'informant.age': {
         age: Number.parseInt(informantAgeBefore),
-        asOfDate: childDob
+        asOfDateRef: 'child.dob'
       },
       'informant.nationality': 'FAR',
       'informant.idType': 'NATIONAL_ID',
@@ -74,7 +74,7 @@ test.describe.serial('Correct record - Change ages', () => {
       'mother.dobUnknown': true,
       'mother.age': {
         age: Number.parseInt(motherAgeBefore),
-        asOfDate: childDob
+        asOfDateRef: 'child.dob'
       },
       ...(await getPlaceOfBirth('PRIVATE_HOME')),
       'mother.name': {
@@ -195,7 +195,7 @@ test.describe.serial('Correct record - Change ages', () => {
   test('Change informant age', async () => {
     await page.getByTestId('change-button-informant.age').click()
 
-    await page.getByTestId('number__informant____age').fill(informantAgeAfter)
+    await page.getByTestId('age__informant____age').fill(informantAgeAfter)
 
     await page
       .getByRole('button', { name: 'Back to review', exact: true })
@@ -245,7 +245,7 @@ test.describe.serial('Correct record - Change ages', () => {
   test('Change mother age', async () => {
     await page.getByTestId('change-button-mother.age').click()
 
-    await page.getByTestId('number__mother____age').fill(motherAgeAfter)
+    await page.getByTestId('age__mother____age').fill(motherAgeAfter)
 
     await page
       .getByRole('button', { name: 'Back to review', exact: true })
