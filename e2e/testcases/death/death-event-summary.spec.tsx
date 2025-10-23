@@ -6,7 +6,7 @@ import {
   getRandomDate,
   goToSection,
   joinValuesWith,
-  loginToV2
+  login
 } from '../../helpers'
 
 test.describe.serial('Death event summary', () => {
@@ -55,7 +55,7 @@ test.describe.serial('Death event summary', () => {
   })
 
   test('Log in', async () => {
-    await loginToV2(page)
+    await login(page)
   })
 
   test('Start death event declaration', async () => {
