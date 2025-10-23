@@ -64,7 +64,7 @@ test.describe.serial('Correct record - Change ages', () => {
       'informant.dobUnknown': true,
       'informant.age': {
         age: Number.parseInt(informantAgeBefore),
-        asOfDate: childDob
+        asOfDateRef: 'child.dob'
       },
       'informant.nationality': 'FAR',
       'informant.idType': 'NATIONAL_ID',
@@ -74,7 +74,7 @@ test.describe.serial('Correct record - Change ages', () => {
       'mother.dobUnknown': true,
       'mother.age': {
         age: Number.parseInt(motherAgeBefore),
-        asOfDate: childDob
+        asOfDateRef: 'child.dob'
       },
       ...(await getPlaceOfBirth('PRIVATE_HOME')),
       'mother.name': {

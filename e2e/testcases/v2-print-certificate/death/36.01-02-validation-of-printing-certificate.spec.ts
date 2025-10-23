@@ -111,7 +111,7 @@ test.describe.serial('Certified copies renders spouse age correctly', () => {
       'spouse.dobUnknown': true,
       'spouse.age': {
         age: spouseAge,
-        asOfDate: mockDeclaration['eventDetails.date'] as string
+        asOfDateRef: 'eventDetails.date'
       },
       'spouse.dob': undefined
     }))
@@ -203,7 +203,7 @@ test.describe
       ...declarationOverrides,
       'informant.age': {
         age: informantAge,
-        asOfDate: mockDeclaration['eventDetails.event'] as string
+        asOfDateRef: 'eventDetails.date'
       }
     }))
 
