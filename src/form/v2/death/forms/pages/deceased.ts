@@ -112,7 +112,10 @@ export const deceased = defineFormPage({
         },
         options: genderOptions
       },
-      { valuePath: 'data.gender', disableIfAuthenticated: true }
+      {
+        valuePath: 'data.gender',
+        disableIf: ['pending', 'verified', 'authenticated']
+      }
     ),
     connectToMOSIPIdReader(
       {
