@@ -32,7 +32,8 @@ import { differenceInDays } from 'date-fns'
 import { ExpressionBuilder, Kysely } from 'kysely'
 import { chunk, pickBy } from 'lodash'
 import { getClient } from './postgres'
-import { getStatistics, readCSVToJSON } from '@countryconfig/utils'
+import { getStatistics } from '@countryconfig/utils'
+import { COUNTRY_NAMES_BY_CODE } from './countries'
 
 /**
  * You can control which events you want to track in analytics by adding them here.
@@ -116,15 +117,7 @@ async function getCountryPlaceOfBirthResolved(
 
   const country = maybeAddress.data.country
 
-  const messages = await readCSVToJSON<{ id: string; en: string }[]>(
-    'src/translations/client.csv'
-  )
-
-  const countryMessage = messages.find(
-    ({ id }) => id === `countries.${country}`
-  )
-
-  return countryMessage ? countryMessage.en : 'Farajaland'
+  return COUNTRY_NAMES_BY_CODE[country] || 'Farajaland'
 }
 
 async function precalculateAdditionalAnalytics(
