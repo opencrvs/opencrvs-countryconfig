@@ -33,13 +33,31 @@
     SENTRY: '',
     DASHBOARDS: [
       {
-        id: 'leaderboards',
+        id: 'registrations',
         title: {
-          id: 'navigation.leaderboards',
-          defaultMessage: 'Development dashboard',
-          description: 'Menu item for development dashboard'
+          id: 'dashboard.registrationsTitle',
+          defaultMessage: 'Registrations Dashboard',
+          description: 'Menu item for registrations dashboard'
         },
-        url: 'http://localhost:3040/ping'
+        url: `http://localhost:4444/public/dashboard/03be04d6-bde0-4fa7-9141-21cea2a7518b#bordered=false&titled=false&refresh=300` // Filled in below
+      },
+      {
+        id: 'completeness',
+        title: {
+          id: 'dashboard.completenessTitle',
+          defaultMessage: 'Completeness Dashboard',
+          description: 'Menu item for completeness dashboard'
+        },
+        url: `http://localhost:4444/public/dashboard/41940907-8542-4e18-a05d-2408e7e9838a#bordered=false&titled=false&refresh=300`
+      },
+      {
+        id: 'registry',
+        title: {
+          id: 'dashboard.registryTitle',
+          defaultMessage: 'Registry',
+          description: 'Menu item for registry dashboard'
+        },
+        url: `http://localhost:4444/public/dashboard/dc66b77a-79df-4f68-8fc8-5e5d5a2d7a35#bordered=false&titled=false&refresh=300`
       }
     ],
     FEATURES: {}
