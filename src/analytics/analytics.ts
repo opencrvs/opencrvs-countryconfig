@@ -20,6 +20,7 @@ import {
   ActionDocument,
   ActionStatus,
   ActionType,
+  AddressFieldValue,
   EventConfig,
   EventDocument,
   EventState,
@@ -31,7 +32,7 @@ import { differenceInDays } from 'date-fns'
 import { ExpressionBuilder, Kysely } from 'kysely'
 import { chunk, pickBy } from 'lodash'
 import { getClient } from './postgres'
-import { getStatistics } from '@countryconfig/utils'
+import { getStatistics, readCSVToJSON } from '@countryconfig/utils'
 
 /**
  * You can control which events you want to track in analytics by adding them here.
@@ -97,7 +98,36 @@ function getAnnotation(
   }
 }
 
-function precalculateAdditionalAnalytics(
+async function getCountryPlaceOfBirthResolved(
+  declaration: ActionDocument['declaration']
+) {
+  const placeOfBirth =
+    'child.birthLocation.privateHome' in declaration
+      ? declaration['child.birthLocation.privateHome']
+      : 'child.birthLocation.other' in declaration
+        ? declaration['child.birthLocation.other']
+        : null
+
+  const maybeAddress = AddressFieldValue.safeParse(placeOfBirth)
+
+  if (!maybeAddress.success) {
+    return 'Farajaland'
+  }
+
+  const country = maybeAddress.data.country
+
+  const messages = await readCSVToJSON<{ id: string; en: string }[]>(
+    'src/translations/client.csv'
+  )
+
+  const countryMessage = messages.find(
+    ({ id }) => id === `countries.${country}`
+  )
+
+  return countryMessage ? countryMessage.en : 'Farajaland'
+}
+
+async function precalculateAdditionalAnalytics(
   action: ActionDocument,
   declaration: ActionDocument['declaration'],
   eventConfig: EventConfig
@@ -116,7 +146,9 @@ function precalculateAdditionalAnalytics(
       'child.age.days': differenceInDays(
         createdAt,
         new Date(childDoB as string)
-      )
+      ),
+      'child.countryPlaceOfBirth':
+        await getCountryPlaceOfBirthResolved(declaration)
     }
   }
 
@@ -203,7 +235,7 @@ async function upsertAnalyticsEventActions(
       registeredAt: registerAction ? registerAction.createdAt : null,
       annotation: convertDotKeysToUnderscore(annotation),
       declaration: convertDotKeysToUnderscore(
-        precalculateAdditionalAnalytics(
+        await precalculateAdditionalAnalytics(
           action,
           pickDeclarationAnalyticsFields(
             actionAtCurrentPoint.declaration,
