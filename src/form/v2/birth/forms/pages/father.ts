@@ -191,7 +191,7 @@ export const father = defineFormPage({
         disableIf: ['pending', 'verified', 'authenticated']
       }
     ),
-    connectToMOSIPVerificationStatus(
+    connectToMOSIPIdReader(
       {
         id: 'father.dobUnknown',
         type: FieldType.CHECKBOX,
@@ -211,7 +211,10 @@ export const father = defineFormPage({
           }
         ]
       },
-      { disableIf: ['pending', 'verified', 'authenticated'] }
+      {
+        valuePath: 'data.dobUnknown',
+        disableIf: ['pending', 'verified', 'authenticated']
+      }
     ),
     connectToMOSIPVerificationStatus(
       {
