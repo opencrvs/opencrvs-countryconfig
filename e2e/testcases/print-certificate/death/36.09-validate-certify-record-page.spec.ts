@@ -1,12 +1,27 @@
 import { expect, test, type Page } from '@playwright/test'
-import { DeathDeclaration } from '../../death/types'
-import { getDeathDeclarationForPrintCertificate } from './certificate-helper'
+import { getToken, login } from '../../../helpers'
+import { CREDENTIALS } from '../../../constants'
+import {
+  createDeclaration,
+  Declaration
+} from '../../test-data/death-declaration'
+import {
+  navigateToCertificatePrintAction,
+  selectCertificationType,
+  selectRequesterType
+} from './helpers'
 
-test.describe.serial('9.0 Validate "Payment" page', () => {
-  let declaration: DeathDeclaration
+test.describe.serial('9.0 Validate "Certify record" page', () => {
   let page: Page
+  let declaration: Declaration
 
   test.beforeAll(async ({ browser }) => {
+    const token = await getToken(
+      CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
+      CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+    )
+    const res = await createDeclaration(token)
+    declaration = res.declaration
     page = await browser.newPage()
   })
 
@@ -14,29 +29,25 @@ test.describe.serial('9.0 Validate "Payment" page', () => {
     await page.close()
   })
 
-  test('9.1 Review page validations', async () => {
-    const response = await getDeathDeclarationForPrintCertificate(page)
-    declaration = response.declaration
-    await page
-      .locator('#certificateTemplateId-form-input > span')
-      .first()
-      .click()
-    await page
-      .getByText('Death Certificate Certified Copy', { exact: true })
-      .click()
-    await page.getByLabel('Print and issue to informant (Spouse)').check()
-    await page.getByRole('button', { name: 'Continue' }).click()
-    await expect(
-      page.url().includes(`/print/check/${declaration.id}/death/informant`)
-    ).toBeTruthy()
+  test('9.0.1 Log in', async () => {
+    await login(page)
+  })
 
+  test('9.0.1 Navigate to certificate print action', async () => {
+    await page.getByRole('button', { name: 'Ready to print' }).click()
+    await navigateToCertificatePrintAction(page, declaration)
+  })
+
+  test('9.1 Review page validations', async () => {
+    await selectCertificationType(page, 'Death Certificate Certified Copy')
+    await selectRequesterType(page, 'Print and issue to Informant (Spouse)')
+
+    await page.getByRole('button', { name: 'Continue' }).click()
     await page.getByRole('button', { name: 'Verified' }).click()
-    await expect(
-      page.url().includes(`/review/${declaration.id}/death`)
-    ).toBeTruthy()
+    await page.getByRole('button', { name: 'Continue' }).click()
 
     await expect(page.locator('#content-name')).toContainText(
-      'Ready to certify?'
+      'Print certificate'
     )
     await expect(
       page.getByText(

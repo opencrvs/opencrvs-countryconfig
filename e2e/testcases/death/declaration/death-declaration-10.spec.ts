@@ -1,29 +1,30 @@
 import { test, expect, type Page } from '@playwright/test'
 import {
-  assignRecord,
-  createPIN,
+  continueForm,
   drawSignature,
-  expectOutboxToBeEmpty,
-  expectTextWithChangeLink,
-  getAction,
+  expectRowValueWithChangeButton,
   goToSection,
   login
 } from '../../../helpers'
 import { CREDENTIALS } from '../../../constants'
+import { ensureOutboxIsEmpty, selectAction } from '../../../utils'
+import { REQUIRED_VALIDATION_ERROR } from '../../birth/helpers'
 
 test.describe.serial('10. Death declaration case - 10', () => {
   let page: Page
-  const REQUIRED = 'Required for registration'
+
   const declaration = {
     deceased: {
+      nationality: 'Farajaland',
       address: {
         country: 'Farajaland',
         province: 'Central',
         district: 'Ibombo'
-      },
-      nationality: 'Farajaland'
+      }
     },
-    informantType: 'Grandson'
+    informant: {
+      relation: 'Grandson'
+    }
   }
   test.beforeAll(async ({ browser }) => {
     page = await browser.newPage()
@@ -35,19 +36,16 @@ test.describe.serial('10. Death declaration case - 10', () => {
 
   test.describe('10.1 Declaration started by FA', async () => {
     test.beforeAll(async () => {
-      await login(
-        page,
-        CREDENTIALS.FIELD_AGENT.USERNAME,
-        CREDENTIALS.FIELD_AGENT.PASSWORD
-      )
-      await page.click('#header_new_event')
+      await login(page, CREDENTIALS.FIELD_AGENT)
+
+      await page.click('#header-new-event')
       await page.getByLabel('Death').click()
       await page.getByRole('button', { name: 'Continue' }).click()
       await page.getByRole('button', { name: 'Continue' }).click()
     })
 
     test('10.1.1 Fill deceased details', async () => {
-      await page.getByRole('button', { name: 'Continue' }).click()
+      await continueForm(page)
     })
 
     test('10.1.2 Fill event details', async () => {
@@ -55,9 +53,9 @@ test.describe.serial('10. Death declaration case - 10', () => {
     })
 
     test('10.1.3 Fill informant details', async () => {
-      await page.locator('#informantType').click()
+      await page.locator('#informant____relation').click()
       await page
-        .getByText(declaration.informantType, {
+        .getByText(declaration.informant.relation, {
           exact: true
         })
         .click()
@@ -67,87 +65,87 @@ test.describe.serial('10. Death declaration case - 10', () => {
     })
 
     test('10.1.4 Go to preview', async () => {
-      await goToSection(page, 'preview')
+      await goToSection(page, 'review')
     })
 
     test('10.1.5 Verify information on preview page', async () => {
       /*
-       * Expected result: should require
+       * Expected result: should include
        * - Deceased's First Name
        * - Deceased's Family Name
        * - Change button
        */
-      await expectTextWithChangeLink(page.locator('#deceased-content #Full'), [
-        REQUIRED
-      ])
+      await expectRowValueWithChangeButton(
+        page,
+        'deceased.name',
+        REQUIRED_VALIDATION_ERROR
+      )
 
       /*
        * Expected result: should require
        * - Deceased's Gender
        * - Change button
        */
-      await expectTextWithChangeLink(page.locator('#deceased-content #Sex'), [
-        REQUIRED
-      ])
+      await expectRowValueWithChangeButton(
+        page,
+        'deceased.gender',
+        REQUIRED_VALIDATION_ERROR
+      )
 
       /*
        * Expected result: should require
        * - Deceased's date of birth
        * - Change button
        */
-      await expectTextWithChangeLink(page.locator('#deceased-content #Date'), [
-        REQUIRED
-      ])
+      await expectRowValueWithChangeButton(
+        page,
+        'deceased.dob',
+        REQUIRED_VALIDATION_ERROR
+      )
 
       /*
        * Expected result: should include
        * - Deceased's Nationality
        * - Change button
        */
-      await expectTextWithChangeLink(
-        page.locator('#deceased-content #Nationality'),
-        [declaration.deceased.nationality]
+      await expectRowValueWithChangeButton(
+        page,
+        'deceased.nationality',
+        'Farajaland'
       )
       /*
        * Expected result: should require
        * - Deceased's Type of Id
        * - Change button
        */
-      await expectTextWithChangeLink(page.locator('#deceased-content #Type'), [
-        REQUIRED
-      ])
+      await expectRowValueWithChangeButton(
+        page,
+        'deceased.idType',
+        REQUIRED_VALIDATION_ERROR
+      )
 
       /*
        * Expected result: should include
        * - Deceased's address
        * - Change button
        */
-      await expectTextWithChangeLink(page.locator('#deceased-content #Usual'), [
-        declaration.deceased.address.country,
-        declaration.deceased.address.district,
-        declaration.deceased.address.province
-      ])
+      await expectRowValueWithChangeButton(
+        page,
+        'deceased.address',
+        declaration.deceased.address.country +
+          declaration.deceased.address.province +
+          declaration.deceased.address.district
+      )
 
       /*
        * Expected result: should require
        * - Date of death
        * - Change button
        */
-      await expect(page.locator('#deathEvent-content #Date')).toContainText(
-        'Must be a valid date of death'
-      )
-      await expect(page.locator('#deathEvent-content #Date')).toContainText(
-        'Change'
-      )
-
-      /*
-       * Expected result: should include
-       * - Cause of death has been established
-       * - Change button
-       */
-      await expectTextWithChangeLink(
-        page.locator('#deathEvent-content #Cause'),
-        ['No']
+      await expectRowValueWithChangeButton(
+        page,
+        'eventDetails.date',
+        REQUIRED_VALIDATION_ERROR
       )
 
       /*
@@ -155,9 +153,10 @@ test.describe.serial('10. Death declaration case - 10', () => {
        * - Place of death
        * - Change button
        */
-      await expectTextWithChangeLink(
-        page.locator('#deathEvent-content #Place'),
-        [REQUIRED]
+      await expectRowValueWithChangeButton(
+        page,
+        'eventDetails.placeOfDeath',
+        REQUIRED_VALIDATION_ERROR
       )
 
       /*
@@ -165,9 +164,10 @@ test.describe.serial('10. Death declaration case - 10', () => {
        * - Informant type
        * - Change button
        */
-      await expectTextWithChangeLink(
-        page.locator('#informant-content #Informant'),
-        [declaration.informantType]
+      await expectRowValueWithChangeButton(
+        page,
+        'informant.relation',
+        declaration.informant.relation
       )
 
       /*
@@ -175,11 +175,10 @@ test.describe.serial('10. Death declaration case - 10', () => {
        * - Informant's Email
        * - Change button
        */
-      await expect(page.locator('#informant-content #Email')).toContainText(
-        REQUIRED
-      )
-      await expect(page.locator('#informant-content #Email')).toContainText(
-        'Change'
+      await expectRowValueWithChangeButton(
+        page,
+        'informant.email',
+        REQUIRED_VALIDATION_ERROR
       )
 
       /*
@@ -189,27 +188,32 @@ test.describe.serial('10. Death declaration case - 10', () => {
        * - Change button
        */
 
-      await expectTextWithChangeLink(page.locator('#spouse-content #Full'), [
-        REQUIRED
-      ])
+      await expectRowValueWithChangeButton(
+        page,
+        'spouse.name',
+        REQUIRED_VALIDATION_ERROR
+      )
 
       /*
        * Expected result: should require
        * - Spouse's date of birth
        * - Change button
        */
-      await expectTextWithChangeLink(page.locator('#spouse-content #Date'), [
-        REQUIRED
-      ])
+      await expectRowValueWithChangeButton(
+        page,
+        'spouse.dob',
+        REQUIRED_VALIDATION_ERROR
+      )
 
       /*
        * Expected result: should include
        * - Spouse's Nationality
        * - Change button
        */
-      await expectTextWithChangeLink(
-        page.locator('#spouse-content #Nationality'),
-        ['Farajaland']
+      await expectRowValueWithChangeButton(
+        page,
+        'spouse.nationality',
+        'Farajaland'
       )
 
       /*
@@ -217,23 +221,25 @@ test.describe.serial('10. Death declaration case - 10', () => {
        * - Spouse's Type of Id
        * - Change button
        */
-      await expectTextWithChangeLink(page.locator('#spouse-content #Type'), [
-        REQUIRED
-      ])
+      await expectRowValueWithChangeButton(
+        page,
+        'spouse.idType',
+        REQUIRED_VALIDATION_ERROR
+      )
 
       /*
        * Expected result: should require
        * - Spouse's address
        * - Change button
        */
-      await expect(page.locator('#spouse-content #Same')).toContainText('Yes')
+      await expectRowValueWithChangeButton(page, 'spouse.addressSameAs', 'Yes')
     })
 
     test('10.1.6 Fill up informant signature', async () => {
-      await page.getByRole('button', { name: 'Sign' }).click()
-      await drawSignature(page)
+      await page.getByRole('button', { name: 'Sign', exact: true }).click()
+      await drawSignature(page, 'review____signature_canvas_element', false)
       await page
-        .locator('#informantSignature_modal')
+        .locator('#review____signature_modal')
         .getByRole('button', { name: 'Apply' })
         .click()
     })
@@ -242,118 +248,123 @@ test.describe.serial('10. Death declaration case - 10', () => {
       await page.getByRole('button', { name: 'Send for review' }).click()
       await expect(page.getByText('Send for review?')).toBeVisible()
       await page.getByRole('button', { name: 'Confirm' }).click()
+      await ensureOutboxIsEmpty(page)
       await expect(page.getByText('Farajaland CRS')).toBeVisible()
 
       /*
-       * Expected result: should redirect to registration home
+       * Expected result: should redirect to assigned to you workqueue
        */
-      expect(page.url().includes('registration-home')).toBeTruthy()
+      expect(page.url().includes('assigned-to-you')).toBeTruthy()
 
-      await expectOutboxToBeEmpty(page)
+      await page.getByText('Sent for review').click()
+
+      /*
+       * Expected result: The declaration should be in sent for review
+       */
+      await expect(
+        page
+          .getByRole('button', {
+            name: 'No name provided'
+          })
+          .first()
+      ).toBeVisible()
     })
   })
 
   test.describe('10.2 Declaration Review by RA', async () => {
     test('10.2.1 Navigate to the declaration review page', async () => {
-      await login(
-        page,
-        CREDENTIALS.REGISTRATION_AGENT.USERNAME,
-        CREDENTIALS.REGISTRATION_AGENT.PASSWORD
-      )
-      await page.getByRole('button', { name: 'In Progress' }).click()
-      await page.getByRole('button', { name: 'Field Agents' }).click()
+      await login(page, CREDENTIALS.REGISTRATION_AGENT)
 
-      await expect(page.locator('#name_0')).toBeVisible()
-      const [firstButton] = await page
+      await ensureOutboxIsEmpty(page)
+      await page.getByText('Notifications').click()
+
+      await page
         .getByRole('button', {
           name: 'No name provided'
         })
-        .all()
-      await firstButton.click()
-      await assignRecord(page)
-      await page.getByRole('button', { name: 'Action' }).first().click()
-      await getAction(page, 'Update declaration').click()
+        .first()
+        .click()
     })
 
     test('10.2.2 Verify information on review page', async () => {
+      await selectAction(page, 'Review')
       /*
-       * Expected result: should require
+       * Expected result: should include
        * - Deceased's First Name
        * - Deceased's Family Name
        * - Change button
        */
-      await expectTextWithChangeLink(page.locator('#deceased-content #Full'), [
-        REQUIRED,
-        REQUIRED
-      ])
+      await expectRowValueWithChangeButton(
+        page,
+        'deceased.name',
+        REQUIRED_VALIDATION_ERROR
+      )
 
       /*
        * Expected result: should require
        * - Deceased's Gender
        * - Change button
        */
-      await expectTextWithChangeLink(page.locator('#deceased-content #Sex'), [
-        REQUIRED
-      ])
+      await expectRowValueWithChangeButton(
+        page,
+        'deceased.gender',
+        REQUIRED_VALIDATION_ERROR
+      )
 
       /*
        * Expected result: should require
        * - Deceased's date of birth
        * - Change button
        */
-      await expectTextWithChangeLink(page.locator('#deceased-content #Date'), [
-        REQUIRED
-      ])
+      await expectRowValueWithChangeButton(
+        page,
+        'deceased.dob',
+        REQUIRED_VALIDATION_ERROR
+      )
 
       /*
        * Expected result: should include
        * - Deceased's Nationality
        * - Change button
        */
-      await expectTextWithChangeLink(
-        page.locator('#deceased-content #Nationality'),
-        [declaration.deceased.nationality]
+      await expectRowValueWithChangeButton(
+        page,
+        'deceased.nationality',
+        'Farajaland'
       )
       /*
        * Expected result: should require
        * - Deceased's Type of Id
        * - Change button
        */
-      await expectTextWithChangeLink(page.locator('#deceased-content #Type'), [
-        REQUIRED
-      ])
+      await expectRowValueWithChangeButton(
+        page,
+        'deceased.idType',
+        REQUIRED_VALIDATION_ERROR
+      )
 
       /*
        * Expected result: should include
        * - Deceased's address
        * - Change button
        */
-      await expectTextWithChangeLink(page.locator('#deceased-content #Usual'), [
-        declaration.deceased.address.country,
-        declaration.deceased.address.district,
-        declaration.deceased.address.province
-      ])
+      await expectRowValueWithChangeButton(
+        page,
+        'deceased.address',
+        declaration.deceased.address.country +
+          declaration.deceased.address.province +
+          declaration.deceased.address.district
+      )
 
       /*
        * Expected result: should require
        * - Date of death
        * - Change button
        */
-      await expect(page.locator('#deathEvent-content #Date')).toContainText(
-        'Must be a valid date of death'
-      )
-      await expect(page.locator('#deathEvent-content #Date')).toContainText(
-        'Change'
-      )
-
-      /*
-       * Expected result: should include
-       * - Cause of death has been established
-       * - Change button
-       */
-      await expectTextWithChangeLink(
-        page.locator('#deathEvent-content #Cause'),
-        ['No']
+      await expectRowValueWithChangeButton(
+        page,
+        'eventDetails.date',
+        REQUIRED_VALIDATION_ERROR
       )
 
       /*
@@ -361,9 +372,10 @@ test.describe.serial('10. Death declaration case - 10', () => {
        * - Place of death
        * - Change button
        */
-      await expectTextWithChangeLink(
-        page.locator('#deathEvent-content #Place'),
-        [REQUIRED]
+      await expectRowValueWithChangeButton(
+        page,
+        'eventDetails.placeOfDeath',
+        REQUIRED_VALIDATION_ERROR
       )
 
       /*
@@ -371,9 +383,10 @@ test.describe.serial('10. Death declaration case - 10', () => {
        * - Informant type
        * - Change button
        */
-      await expectTextWithChangeLink(
-        page.locator('#informant-content #Informant'),
-        [declaration.informantType]
+      await expectRowValueWithChangeButton(
+        page,
+        'informant.relation',
+        declaration.informant.relation
       )
 
       /*
@@ -381,11 +394,10 @@ test.describe.serial('10. Death declaration case - 10', () => {
        * - Informant's Email
        * - Change button
        */
-      await expect(page.locator('#informant-content #Email')).toContainText(
-        'Must be a valid email address'
-      )
-      await expect(page.locator('#informant-content #Email')).toContainText(
-        'Change'
+      await expectRowValueWithChangeButton(
+        page,
+        'informant.email',
+        REQUIRED_VALIDATION_ERROR
       )
 
       /*
@@ -395,27 +407,32 @@ test.describe.serial('10. Death declaration case - 10', () => {
        * - Change button
        */
 
-      await expectTextWithChangeLink(page.locator('#spouse-content #Full'), [
-        REQUIRED
-      ])
+      await expectRowValueWithChangeButton(
+        page,
+        'spouse.name',
+        REQUIRED_VALIDATION_ERROR
+      )
 
       /*
        * Expected result: should require
        * - Spouse's date of birth
        * - Change button
        */
-      await expectTextWithChangeLink(page.locator('#spouse-content #Date'), [
-        REQUIRED
-      ])
+      await expectRowValueWithChangeButton(
+        page,
+        'spouse.dob',
+        REQUIRED_VALIDATION_ERROR
+      )
 
       /*
        * Expected result: should include
        * - Spouse's Nationality
        * - Change button
        */
-      await expectTextWithChangeLink(
-        page.locator('#spouse-content #Nationality'),
-        ['Farajaland']
+      await expectRowValueWithChangeButton(
+        page,
+        'spouse.nationality',
+        'Farajaland'
       )
 
       /*
@@ -423,16 +440,18 @@ test.describe.serial('10. Death declaration case - 10', () => {
        * - Spouse's Type of Id
        * - Change button
        */
-      await expectTextWithChangeLink(page.locator('#spouse-content #Type'), [
-        REQUIRED
-      ])
+      await expectRowValueWithChangeButton(
+        page,
+        'spouse.idType',
+        REQUIRED_VALIDATION_ERROR
+      )
 
       /*
        * Expected result: should require
        * - Spouse's address
        * - Change button
        */
-      await expect(page.locator('#spouse-content #Same')).toContainText('Yes')
+      await expectRowValueWithChangeButton(page, 'spouse.addressSameAs', 'Yes')
     })
   })
 })
