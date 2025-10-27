@@ -12,7 +12,8 @@ import {
   FieldType,
   not,
   never,
-  or
+  or,
+  FieldReference
 } from '@opencrvs/toolkit/events'
 
 const upsertConditional = (
@@ -38,7 +39,7 @@ const upsertConditional = (
 }
 
 export const connectToMOSIPIdReader = (
-  fieldInput: FieldConfigInput,
+  { parent, ...fieldInput }: FieldConfigInput & { parent?: FieldReference },
   {
     valuePath,
     disableIf,
@@ -50,11 +51,13 @@ export const connectToMOSIPIdReader = (
   }
 ): FieldConfigInput => {
   const page = fieldInput.id.split('.')[0]
+
   return connectToMOSIPVerificationStatus(
     {
       parent: [
         field(`${page}.id-reader`),
-        field(`${page}.verify-nid-http-fetch`)
+        field(`${page}.verify-nid-http-fetch`),
+        ...(parent ? [parent] : [])
       ],
       ...fieldInput,
       value: [
