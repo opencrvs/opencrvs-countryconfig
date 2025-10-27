@@ -99,7 +99,7 @@ function getAnnotation(
   }
 }
 
-async function getCountryPlaceOfBirthResolved(
+function getCountryPlaceOfBirthResolved(
   declaration: ActionDocument['declaration']
 ) {
   const placeOfBirth =
@@ -120,7 +120,7 @@ async function getCountryPlaceOfBirthResolved(
   return COUNTRY_NAMES_BY_CODE[country] || 'Farajaland'
 }
 
-async function precalculateAdditionalAnalytics(
+function precalculateAdditionalAnalytics(
   action: ActionDocument,
   declaration: ActionDocument['declaration'],
   eventConfig: EventConfig
@@ -140,8 +140,7 @@ async function precalculateAdditionalAnalytics(
         createdAt,
         new Date(childDoB as string)
       ),
-      'child.countryPlaceOfBirth':
-        await getCountryPlaceOfBirthResolved(declaration)
+      'child.countryPlaceOfBirth': getCountryPlaceOfBirthResolved(declaration)
     }
   }
 
@@ -228,7 +227,7 @@ async function upsertAnalyticsEventActions(
       registeredAt: registerAction ? registerAction.createdAt : null,
       annotation: convertDotKeysToUnderscore(annotation),
       declaration: convertDotKeysToUnderscore(
-        await precalculateAdditionalAnalytics(
+        precalculateAdditionalAnalytics(
           action,
           pickDeclarationAnalyticsFields(
             actionAtCurrentPoint.declaration,
