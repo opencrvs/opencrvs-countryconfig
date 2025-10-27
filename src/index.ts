@@ -709,7 +709,16 @@ export async function createServer() {
         ...event,
         actions: event.actions.map((action, index) =>
           index === event.actions.length - 1
-            ? { ...action, status: ActionStatus.Accepted }
+            ? {
+                ...action,
+                status: ActionStatus.Accepted,
+                ...(actionType === ActionType.REGISTER
+                  ? {
+                      registrationNumber: (response as any).source
+                        .registrationNumber as string
+                    }
+                  : {})
+              }
             : action
         ) as ActionDocument[]
       }
