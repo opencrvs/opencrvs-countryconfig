@@ -1,24 +1,21 @@
 import { test, expect, type Page } from '@playwright/test'
 import {
-  assignRecord,
-  auditRecord,
   continueForm,
-  createPIN,
   drawSignature,
-  expectOutboxToBeEmpty,
   formatName,
-  getAction,
   goToSection,
   login,
+  logout,
   uploadImage,
   uploadImageToSection
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
+import { REQUIRED_VALIDATION_ERROR } from '../helpers'
+import { ensureOutboxIsEmpty } from '../../../utils'
 
 test.describe.serial('7. Birth declaration case - 7', () => {
   let page: Page
-  const required = 'Required for registration'
   const declaration = {
     child: {
       name: {
@@ -29,10 +26,12 @@ test.describe.serial('7. Birth declaration case - 7', () => {
     attendantAtBirth: 'None',
     informantType: 'Legal guardian',
     mother: {
-      detailsDontExist: true
+      detailsDontExist: true,
+      reason: 'Mother is unknown'
     },
     father: {
-      detailsDontExist: true
+      detailsDontExist: true,
+      reason: 'Father is unknown'
     }
   }
   test.beforeAll(async ({ browser }) => {
@@ -45,26 +44,18 @@ test.describe.serial('7. Birth declaration case - 7', () => {
 
   test.describe('7.1 Declaration started by FA', async () => {
     test.beforeAll(async () => {
-      await login(
-        page,
-        CREDENTIALS.FIELD_AGENT.USERNAME,
-        CREDENTIALS.FIELD_AGENT.PASSWORD
-      )
-      await page.click('#header_new_event')
+      await login(page, CREDENTIALS.FIELD_AGENT)
+      await page.click('#header-new-event')
       await page.getByLabel('Birth').click()
       await page.getByRole('button', { name: 'Continue' }).click()
       await page.getByRole('button', { name: 'Continue' }).click()
     })
 
     test('7.1.1 Fill child details', async () => {
-      await page
-        .locator('#firstNamesEng')
-        .fill(declaration.child.name.firstNames)
-      await page
-        .locator('#familyNameEng')
-        .fill(declaration.child.name.familyName)
+      await page.locator('#firstname').fill(declaration.child.name.firstNames)
+      await page.locator('#surname').fill(declaration.child.name.familyName)
 
-      await page.locator('#attendantAtBirth').click()
+      await page.locator('#child____attendantAtBirth').click()
       await page
         .getByText(declaration.attendantAtBirth, {
           exact: true
@@ -74,24 +65,25 @@ test.describe.serial('7. Birth declaration case - 7', () => {
     })
 
     test('7.1.2 Fill informant details', async () => {
-      await page.locator('#informantType').click()
+      await page.locator('#informant____relation').click()
       await page
         .getByText(declaration.informantType, {
           exact: true
         })
         .click()
 
-      await page.waitForTimeout(500) // Temporary measurement untill the bug is fixed. BUG: rerenders after selecting relation with child
       await page.getByRole('button', { name: 'Continue' }).click()
     })
 
     test("7.1.3 Fill mother's details", async () => {
       await page.getByLabel("Mother's details are not available").check()
+      await page.locator('#mother____reason').fill(declaration.mother.reason)
       await continueForm(page)
     })
 
     test("7.1.4 Fill father's details", async () => {
       await page.getByLabel("Father's details are not available").check()
+      await page.locator('#father____reason').fill(declaration.father.reason)
       await continueForm(page)
     })
 
@@ -99,160 +91,150 @@ test.describe.serial('7. Birth declaration case - 7', () => {
       await goToSection(page, 'documents')
       await uploadImage(
         page,
-        page.locator('button[name="uploadDocForChildDOB"]')
+        page.locator('button[name="documents____proofOfBirth"]')
       )
 
       /*
        * Expected result:
        * As mother and father's details are not given, upload document for mother and father should not be visible
        */
-      await expect(page.locator('#uploadDocForMother')).toBeHidden()
-      await expect(page.locator('#uploadDocForFather')).toBeHidden()
+      await expect(page.locator('#documents____proofOfMother')).toBeHidden()
 
       await uploadImageToSection({
         page,
-        sectionLocator: page.locator('#uploadDocForInformant'),
-        sectionTitle: 'Birth certificate',
-        buttonLocator: page.locator('button[name="uploadDocForInformant"]')
-      })
-
-      await uploadImageToSection({
-        page,
-        sectionLocator: page.locator('#uploadDocForProofOfLegalGuardian'),
-        sectionTitle: 'Proof of legal guardianship',
+        sectionLocator: page.locator('#documents____proofOfInformant'),
+        sectionTitle: 'Birth Certificate',
         buttonLocator: page.locator(
-          'button[name="uploadDocForProofOfLegalGuardian"]'
+          'button[name="documents____proofOfInformant"]'
         )
       })
+
+      await uploadImageToSection({
+        page,
+        sectionLocator: page.locator('#documents____proofOther'),
+        sectionTitle: 'Proof of legal guardianship',
+        buttonLocator: page.locator('button[name="documents____proofOther"]')
+      })
     })
 
-    test('7.1.6 Go to preview', async () => {
-      await goToSection(page, 'preview')
+    test('7.1.6 Go to review', async () => {
+      await goToSection(page, 'review')
     })
 
-    test('7.1.7 Verify information on preview page', async () => {
+    test('7.1.7 Verify information on review page', async () => {
       /*
        * Expected result: should include
        * - Child's First Name
        * - Child's Family Name
        */
-      await expect(page.locator('#child-content #Full')).toContainText(
-        declaration.child.name.firstNames
+      await expect(page.getByTestId('row-value-child.name')).toHaveText(
+        declaration.child.name.firstNames +
+          ' ' +
+          declaration.child.name.familyName
       )
-      await expect(page.locator('#child-content #Full')).toContainText(
-        declaration.child.name.familyName
-      )
+
       /*
        * Expected result: should require
        * - Child's Gender
        */
-      await expect(page.locator('#child-content #Sex')).toContainText(required)
+      await expect(page.getByTestId('row-value-child.gender')).toContainText(
+        REQUIRED_VALIDATION_ERROR
+      )
 
       /*
        * Expected result: should require
        * - Child's date of birth
        */
-      await expect(page.locator('#child-content #Date')).toContainText(required)
+      await expect(page.getByTestId('row-value-child.dob')).toContainText(
+        REQUIRED_VALIDATION_ERROR
+      )
 
       /*
        * Expected result: should require
        * - Child's Place of birth type
        * - Child's Place of birth details
        */
-      await expect(page.locator('#child-content #Place')).toContainText(
-        required
-      )
-      await expect(page.locator('#child-content #Place')).toContainText(
-        required
-      )
+      await expect(
+        page.getByTestId('row-value-child.placeOfBirth')
+      ).toContainText(REQUIRED_VALIDATION_ERROR)
 
       /*
        * Expected result: should include
        * - Informant's relation to child
        */
-      await expect(page.locator('#informant-content')).toContainText(
-        declaration.informantType
-      )
+      await expect(
+        page.getByTestId('row-value-informant.relation')
+      ).toContainText(declaration.informantType)
 
       /*
        * Expected result: should require
        * - Informant's Email
        */
-      await expect(page.locator('#informant-content #Email')).toContainText(
-        required
+      await expect(page.getByTestId('row-value-informant.email')).toContainText(
+        REQUIRED_VALIDATION_ERROR
       )
       /*
        * Expected result: should require
        * - Informant's First Name
        * - Informant's Family Name
        */
-      await expect(page.locator('#informant-content #Full')).toContainText(
-        required
+      await expect(page.getByTestId('row-value-informant.name')).toContainText(
+        REQUIRED_VALIDATION_ERROR
       )
-      await expect(page.locator('#informant-content #Full')).toContainText(
-        required
-      )
-
       /*
        * Expected result: should require
        * - Informant's date of birth
        */
-      await expect(page.locator('#informant-content #Date')).toContainText(
-        required
+      await expect(page.getByTestId('row-value-informant.dob')).toContainText(
+        REQUIRED_VALIDATION_ERROR
       )
 
       /*
        * Expected result: should require
        * - Informant's Type of Id
        */
-      await expect(page.locator('#informant-content #Type')).toContainText(
-        required
-      )
+      await expect(
+        page.getByTestId('row-value-informant.idType')
+      ).toContainText(REQUIRED_VALIDATION_ERROR)
 
       /*
        * Expected result: should require
        * - Reason of why mother's details not available
        */
-      await expect(page.locator('#mother-content #Reason')).toContainText(
-        required
+      await expect(page.getByTestId('row-value-mother.reason')).toContainText(
+        declaration.mother.reason
       )
 
       /*
        * Expected result: should require
        * - Reason of why father's details not available
        */
-      await expect(page.locator('#father-content #Reason')).toContainText(
-        required
+      await expect(page.getByTestId('row-value-father.reason')).toContainText(
+        declaration.father.reason
       )
     })
 
     test('7.1.8 Fill up informant signature', async () => {
-      await page.getByRole('button', { name: 'Sign' }).click()
-      await drawSignature(page)
+      await page.locator('#review____comment').fill(faker.lorem.sentence())
+      await page.getByRole('button', { name: 'Sign', exact: true }).click()
+      await drawSignature(page, 'review____signature_canvas_element', false)
       await page
-        .locator('#informantSignature_modal')
+        .locator('#review____signature_modal')
         .getByRole('button', { name: 'Apply' })
         .click()
+
+      await expect(page.getByRole('dialog')).not.toBeVisible()
     })
 
     test('7.1.9 Send for review', async () => {
       await page.getByRole('button', { name: 'Send for review' }).click()
       await expect(page.getByText('Send for review?')).toBeVisible()
       await page.getByRole('button', { name: 'Confirm' }).click()
-      await expect(page.getByText('Farajaland CRS')).toBeVisible()
 
-      /*
-       * Expected result: should redirect to registration home
-       */
-      expect(page.url().includes('registration-home')).toBeTruthy()
+      await ensureOutboxIsEmpty(page)
 
-      await expectOutboxToBeEmpty(page)
+      await page.getByText('Sent for review').click()
 
-      await page.getByRole('button', { name: 'Sent for review' }).click()
-
-      /*
-       * Expected result: The declaration should be in sent for review
-       */
       await expect(
         page.getByRole('button', {
           name: formatName(declaration.child.name)
@@ -263,123 +245,79 @@ test.describe.serial('7. Birth declaration case - 7', () => {
 
   test.describe('7.2 Declaration Review by RA', async () => {
     test('7.2.1 Navigate to the declaration review page', async () => {
-      await login(
-        page,
-        CREDENTIALS.REGISTRATION_AGENT.USERNAME,
-        CREDENTIALS.REGISTRATION_AGENT.PASSWORD
-      )
-      await page.getByRole('button', { name: 'In Progress' }).click()
-      await page.getByRole('button', { name: 'Field Agents' }).click()
+      await logout(page)
+      await login(page, CREDENTIALS.REGISTRATION_AGENT)
 
-      await expect(
-        page.getByRole('button', {
+      await page.getByText('Notifications').click()
+
+      await page
+        .getByRole('button', {
           name: formatName(declaration.child.name)
         })
-      ).toBeVisible()
-
-      await auditRecord({
-        page,
-        name: formatName(declaration.child.name)
-      })
-
-      await assignRecord(page)
-      await page.getByRole('button', { name: 'Action' }).first().click()
-      await getAction(page, 'Update declaration').click()
+        .click()
+      await page.getByRole('button', { name: 'Action', exact: true }).click()
+      await page.getByText('View', { exact: true }).click()
     })
 
-    test('7.2.2 Verify information on preview page', async () => {
+    test('7.2.2 Verify information on review page', async () => {
       /*
        * Expected result: should include
        * - Child's First Name
        * - Child's Family Name
        */
-      await expect(page.locator('#child-content #Full')).toContainText(
-        declaration.child.name.firstNames
+      await expect(page.getByTestId('row-value-child.name')).toHaveText(
+        declaration.child.name.firstNames +
+          ' ' +
+          declaration.child.name.familyName
       )
-      await expect(page.locator('#child-content #Full')).toContainText(
-        declaration.child.name.familyName
-      )
+
       /*
        * Expected result: should require
        * - Child's Gender
        */
-      await expect(page.locator('#child-content #Sex')).toContainText(required)
+      await expect(page.getByTestId('row-value-child.gender')).toContainText(
+        REQUIRED_VALIDATION_ERROR
+      )
 
       /*
        * Expected result: should require
        * - Child's date of birth
        */
-      await expect(page.locator('#child-content #Date')).toContainText(required)
+      await expect(page.getByTestId('row-value-child.dob')).toContainText(
+        REQUIRED_VALIDATION_ERROR
+      )
 
       /*
        * Expected result: should require
        * - Child's Place of birth type
        * - Child's Place of birth details
        */
-      await expect(page.locator('#child-content #Place')).toContainText(
-        required
-      )
-      await expect(page.locator('#child-content #Place')).toContainText(
-        required
-      )
+      await expect(
+        page.getByTestId('row-value-child.placeOfBirth')
+      ).toContainText(REQUIRED_VALIDATION_ERROR)
 
       /*
        * Expected result: should include
        * - Informant's relation to child
        */
-      await expect(page.locator('#informant-content')).toContainText(
-        declaration.informantType
-      )
+      await expect(
+        page.getByTestId('row-value-informant.relation')
+      ).toContainText(declaration.informantType)
 
       /*
        * Expected result: should require
        * - Informant's Email
        */
-      await expect(page.locator('#informant-content #Email')).toContainText(
-        'Must be a valid email address'
+      await expect(page.getByTestId('row-value-informant.email')).toContainText(
+        REQUIRED_VALIDATION_ERROR
       )
       /*
        * Expected result: should require
        * - Informant's First Name
        * - Informant's Family Name
        */
-      await expect(page.locator('#informant-content #Full')).toContainText(
-        required
-      )
-      await expect(page.locator('#informant-content #Full')).toContainText(
-        required
-      )
-
-      /*
-       * Expected result: should require
-       * - Informant's date of birth
-       */
-      await expect(page.locator('#informant-content #Date')).toContainText(
-        required
-      )
-
-      /*
-       * Expected result: should require
-       * - Informant's Type of Id
-       */
-      await expect(page.locator('#informant-content #Type')).toContainText(
-        required
-      )
-
-      /*
-       * Expected result: should require
-       * - Reason of why mother's details not available
-       */
-      await expect(page.locator('#mother-content #Reason')).toContainText(
-        required
-      )
-
-      /*
-       * Expected result: should require
-       * - Reason of why father's details not available
-       */
-      await expect(page.locator('#father-content #Reason')).toContainText(
-        required
+      await expect(page.getByTestId('row-value-informant.name')).toContainText(
+        REQUIRED_VALIDATION_ERROR
       )
     })
   })

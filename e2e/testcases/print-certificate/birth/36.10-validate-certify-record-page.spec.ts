@@ -1,12 +1,30 @@
 import { expect, test, type Page } from '@playwright/test'
-import { BirthDeclaration } from '../../birth/types'
-import { getDeclarationForPrintCertificate } from './certificate-helper'
+import { Declaration } from '../../test-data/birth-declaration'
+import { login } from '../../../helpers'
+import { createDeclaration } from '../../test-data/birth-declaration'
+import { CREDENTIALS } from '../../../constants'
+import { getToken } from '../../../helpers'
+import {
+  navigateToCertificatePrintAction,
+  printAndExpectPopup,
+  selectRequesterType
+} from './helpers'
+import { selectCertificationType } from './helpers'
+import { expectInUrl } from '../../../utils'
 
 test.describe.serial('10.0 Validate "Review" page', () => {
-  let declaration: BirthDeclaration
+  let declaration: Declaration
   let page: Page
+  let eventId: string
 
   test.beforeAll(async ({ browser }) => {
+    const token = await getToken(
+      CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
+      CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+    )
+    const res = await createDeclaration(token)
+    declaration = res.declaration
+    eventId = res.eventId
     page = await browser.newPage()
   })
 
@@ -14,48 +32,29 @@ test.describe.serial('10.0 Validate "Review" page', () => {
     await page.close()
   })
 
+  test('10.0.1 Log in', async () => {
+    await login(page)
+  })
+
+  test('10.0.2 Navigate to certificate print action', async () => {
+    await page.getByRole('button', { name: 'Ready to print' }).click()
+    await navigateToCertificatePrintAction(page, declaration)
+  })
+
   test('10.1 Review page validations', async () => {
-    const response = await getDeclarationForPrintCertificate(page)
-    declaration = response.declaration
-    await page
-      .locator('#certificateTemplateId-form-input > span')
-      .first()
-      .click()
-    await page
-      .getByText('Birth Certificate Certified Copy', { exact: true })
-      .click()
-    await page.getByLabel('Print and issue to informant (Brother)').check()
+    await selectCertificationType(page, 'Birth Certificate')
+    await selectRequesterType(page, 'Print and issue to Informant (Mother)')
     await page.getByRole('button', { name: 'Continue' }).click()
-    await expect(
-      page.url().includes(`/print/check/${declaration.id}/birth/informant`)
-    ).toBeTruthy()
-
     await page.getByRole('button', { name: 'Verified' }).click()
-    await expect(
-      page.url().includes(`/review/${declaration.id}/birth`)
-    ).toBeTruthy()
+    await page.getByRole('button', { name: 'Continue' }).click()
 
-    await expect(page.locator('#content-name')).toContainText(
-      'Ready to certify?'
-    )
-    await expect(
-      page.getByText(
-        'Please confirm that the informant has reviewed that the information on the certificate is correct and that it is ready to print.'
-      )
-    ).toBeVisible()
-    await expect(
-      page.getByRole('button', { name: 'No, make correction' })
-    ).toBeVisible()
-    await expect(
-      page.getByRole('button', { name: 'Yes, print certificate' })
-    ).toBeVisible()
     await page.getByRole('button', { name: 'Yes, print certificate' }).click()
     await expect(page.locator('#confirm-print-modal')).toBeVisible()
     await expect(page.locator('#confirm-print-modal')).toContainText(
       'Print and issue certificate?'
     )
     await expect(page.locator('#confirm-print-modal')).toContainText(
-      'A Pdf of the certificate will open in a new tab for printing and issuing'
+      'A Pdf of the certificate will open in a new tab for printing and issuing.'
     )
   })
 
@@ -64,8 +63,9 @@ test.describe.serial('10.0 Validate "Review" page', () => {
     await expect(page.locator('#confirm-print-modal')).toBeHidden()
   })
 
-  test('10.3 On click print button, user will navigate to a new tab from where user can download PDF', async () => {
-    await page.getByRole('button', { name: 'Yes, print certificate' }).click()
-    await page.getByRole('button', { name: 'Print', exact: true }).click()
+  test('10.3 Click print button, user will navigate to a new tab from where user can download PDF', async () => {
+    await printAndExpectPopup(page)
+
+    await expectInUrl(page, `/workqueue/ready-to-print`)
   })
 })
