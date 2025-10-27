@@ -24,7 +24,8 @@ import {
   EventDocument,
   EventState,
   getActionAnnotationFields,
-  getCurrentEventState
+  getCurrentEventState,
+  Location
 } from '@opencrvs/toolkit/events'
 import { differenceInDays } from 'date-fns'
 import { ExpressionBuilder, Kysely } from 'kysely'
@@ -135,11 +136,16 @@ function convertDotKeysToUnderscore(
   return newObj
 }
 
-export async function upsertAnalyticsEventActions(
+async function upsertAnalyticsEventActions(
   event: EventDocument,
   eventConfig: EventConfig,
   trx: Kysely<any>
 ) {
+  await trx
+    .deleteFrom('analytics.event_actions')
+    .where('event_id', '=', event.id)
+    .execute()
+
   for (let i = 0; i < event.actions.length; i++) {
     const actionsFromStartToCurrentPoint = event.actions
       .sort((a, b) => {
@@ -230,6 +236,43 @@ export async function importEvent(event: EventDocument, trx: Kysely<any>) {
 
   await upsertAnalyticsEventActions(event, eventConfig, trx)
   logger.info(`Event with id "${event.id}" logged into analytics`)
+}
+
+export async function importLocations(locations: Location[]) {
+  const client = getClient()
+  await client.transaction().execute(async (trx) => {
+    for (const [index, batch] of chunk(
+      locations,
+      INSERT_MAX_CHUNK_SIZE
+    ).entries()) {
+      logger.info(
+        `Importing ${Math.min((index + 1) * INSERT_MAX_CHUNK_SIZE, locations.length)}/${locations.length} locations`
+      )
+
+      await trx
+        .insertInto('analytics.locations')
+        .values(
+          batch.map((l) => ({
+            id: l.id,
+            name: l.name,
+            parentId: l.parentId,
+            locationType: l.locationType
+          }))
+        )
+        .onConflict((oc) =>
+          oc
+            .column('id')
+            .doUpdateSet(
+              (eb: ExpressionBuilder<any, 'analytics.locations'>) => ({
+                name: eb.ref('excluded.name'),
+                parentId: eb.ref('excluded.parentId'),
+                locationType: eb.ref('excluded.locationType')
+              })
+            )
+        )
+        .execute()
+    }
+  })
 }
 
 export async function importEvents(events: EventDocument[], trx: Kysely<any>) {

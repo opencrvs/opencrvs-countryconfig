@@ -11,7 +11,7 @@
 
 import { Event } from '@countryconfig/form/types/types'
 import { Request, ResponseToolkit } from '@hapi/hapi'
-import { ActionType, event, field } from '@opencrvs/toolkit/events'
+import { ActionType, event, not } from '@opencrvs/toolkit/events'
 
 type FontFamilyTypes = {
   normal: string
@@ -268,7 +268,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       conditionals: [
         {
           type: 'SHOW',
-          conditional: field('child.dob').isAfter().days(365).inPast()
+          conditional: not(event.hasAction(ActionType.PRINT_CERTIFICATE))
         }
       ]
     },

@@ -755,10 +755,9 @@ countries.YEM,,Yemen,Yémen
 countries.ZAF,,South Africa,Afrique du Sud
 countries.ZMB,,Zambia,Zambie
 countries.ZWE,,Zimbabwe,Zimbabwe
-dashboard.dashboardTitle,Dashboard title,Dashboard,Tableau de bord
-dashboard.leaderboardTitle,Leaderboards title,Leaderboards,Classements
-dashboard.noContent,No content information for dashboard,No content to show. Make sure the following variables are configured in the <strong>client-config.js</strong> provided by your country config package:<br /><ul><li><strong>LEADERBOARDS_DASHBOARD_URL</strong></li><li><strong>REGISTRATIONS_DASHBOARD_URL</strong></li><li><strong>STATISTICS_DASHBOARD_URL</strong></li></ul>,Aucun contenu à afficher. Assurez-vous que les variables suivantes sont configurées dans le <strong>client-config.js</strong> fourni par le package de configuration de votre pays:<br /><ul><li><strong>LEADERBOARDS_DASHBOARD_URL</strong></li><li><strong>REGISTRATIONS_DASHBOARD_URL</strong></li><li><strong>STATISTICS_DASHBOARD_URL</strong></li></ul>
-dashboard.statisticTitle,Statistics title,Statistics,Statistiques
+dashboard.completenessTitle,Completeness title,Completeness Dashboard,Tableau de bord de complétude
+dashboard.registrationsTitle,Registrations title,Registrations Dashboard,Tableau de bord des enregistrements
+dashboard.registryTitle,Registry title,Registry,Registre
 duplicates.button.markAsDuplicate,Mark as duplicate button text,Mark as duplicate,Marquer comme duplicata
 duplicates.button.notDuplicate,Not a duplicate button text,Not a duplicate,Pas un duplicata
 duplicates.compare.supportingDocuments,Supporting documents header for duplicates comparison,Supporting documents,Documents justificatifs
@@ -793,6 +792,8 @@ error.userListError,Error message when user list loads fails,Failed to load user
 error.weAreTryingToFixThisError,Error description,This page could not be found,"Ce n'est pas vous, c'est nous. C'est notre faute."
 errors.notAssigned,User not assigned error toast message,You've been unassigned from the event,Vous avez été désassigné de l'événement
 errors.somethingWentWrong,Error toast message for general errors,Something went wrong. Please try again,Une erreur s'est produite. Veuillez réessayer
+event.action.declare.form.section.person.field.age.error,Error message for invalid age,Age must be between 12 and 120,L'auteur doit avoir entre 12 et 120 ans
+event.action.notAvailableForEvent,Shown when user tries to perform an action that is not available for the event,The action you're trying to perform is not available for this event anymore,L'action que vous essayez d'effectuer n'est plus disponible pour cet événement
 event.action.outbox-retry.label,Label for retry button for outbox,Retry,Réessayer
 event.action.review-correction.label,Label for review correction button in dropdown menu,Review,Revoir
 event.birth.action.archive.label,Label for archive record button in dropdown menu,Archive,Aarchiver
@@ -802,6 +803,7 @@ event.birth.action.certificate.form.section.collectPayment.service.label,Title f
 event.birth.action.certificate.form.section.collectPayment.service.label.afterLateRegistrationTarget,Birth registration after 365 days of date of birth,Birth registration after 365 days of date of birth,Enregistrement de naissance après 365 jours de la date de naissance
 event.birth.action.certificate.form.section.collectPayment.service.label.beforeRegistrationTarget,Birth registration before 30 days of date of birth,Birth registration before 30 days of date of birth,Enregistrement de naissance avant 30 jours de la date de naissance
 event.birth.action.certificate.form.section.collectPayment.service.label.inBetweenRegistrationTargets,Birth registration after 30 days but before 365 days of date of birth,Birth registration after 30 days but before 365 days of date of birth,Enregistrement de naissance après 30 jours mais avant 365 jours de la date de naissance
+event.birth.action.certificate.form.section.verifyIdentity.data.label,Label for identity verification data block,Identity details,Détails de l'identité
 event.birth.action.collect-certificate.label,This is shown as the action name anywhere the user can trigger the action from,Print,Imprimer
 event.birth.action.correction.form.section.requester.identity.verify.title,This is the title of the section,Verify their identity,Vérifier l'identité
 event.birth.action.declare.form.label,This is what this form is referred as in the system,Birth decalration form,Birth decalration form
@@ -882,6 +884,7 @@ event.death.action.certificate.form.section.requester.label,This is the label fo
 event.death.action.certificate.form.section.requester.other.label,This is the label for the field,Print and issue to someone else,Imprimer et délivrer à quelqu'un d'autre
 event.death.action.certificate.form.section.requester.printInAdvance.label,This is the label for the field,Print in advance,Imprimer à l'avance
 event.death.action.certificate.form.section.requester.spouse.label,This is the label for the field,Print and issue to Spouse,Imprimer et délivrer au conjoint
+event.death.action.certificate.form.section.verifyIdentity.data.label,Label for identity verification data block,Identity details,Détails de l'identité
 event.death.action.certificate.form.section.who.title,This is the title of the section,Certify record,Certifier l'enregistrement
 event.death.action.certificate.form.verify,This is the label for the verification button,Verified,Vérifié
 event.death.action.collect-certificate.label,This is shown as the action name anywhere the user can trigger the action from,Print certificate,Imprimer le certificat
@@ -939,18 +942,19 @@ event.death.action.declare.form.review.title,Title of the form to show in review
 event.death.action.declare.form.section.deceased.field.address.label,This is the label for the field,Usual place of residence,Lieu de résidence habituel
 event.death.action.declare.form.section.deceased.field.addressHelper.label,This is the label for the field,Usual place of residence,Lieu de résidence habituel
 event.death.action.declare.form.section.deceased.field.age.checkbox.label,This is the label for the field,Exact date of birth unknown,Date exacte de naissance inconnue
+event.death.action.declare.form.section.deceased.field.age.error,Error message for invalid age,Age must be between 0 and 120,L'auteur doit avoir entre 0 et 120 ans
 event.death.action.declare.form.section.deceased.field.age.label,This is the label for the field,Age of deceased,Âge du défunt
 event.death.action.declare.form.section.deceased.field.age.postfix,This is the postfix for age field,years,ans
 event.death.action.declare.form.section.deceased.field.deathLocation.label,This is the label for the field,Health Institution,Établissement de santé
 event.death.action.declare.form.section.deceased.field.deathLocationOther.label,This is the label for the field,Death location address,Adresse du lieu de décès
 event.death.action.declare.form.section.deceased.field.dob.error,This is the error message for invalid date,Must be a valid Birthdate,Doit être une date de naissance valide
+event.death.action.declare.form.section.deceased.field.dob.error.laterThanDeath,This is the error message for date of birth later than date of death,Date of birth must be before the date of death,La date de naissance doit être antérieure à la date de décès
 event.death.action.declare.form.section.deceased.field.dob.label,This is the label for the field,Date of birth,Date de naissance
 event.death.action.declare.form.section.deceased.field.gender.label,This is the label for the field,Sex,Sexe
 event.death.action.declare.form.section.deceased.field.maritalStatus.label,This is the label for the field,Marital Status,État civil
 event.death.action.declare.form.section.deceased.field.name.label,This is the label for the field,Deceased's name,Nom du défunt
 event.death.action.declare.form.section.deceased.field.numberOfDependants.label,This is the label for the field,No. of dependants,Nombre de personnes à charge
 event.death.action.declare.form.section.deceased.field.placeOfDeath.label,This is the label for the field,Place of death,Lieu du décès
-event.death.action.declare.form.section.deceased.field.dob.error.laterThanDeath,This is the error message for date of birth later than date of death,Date of birth must be before the date of death,La date de naissance doit être antérieure à la date de décès
 event.death.action.declare.form.section.documents.field.proofOfCauseOfDeath.label,This is the label for the field,Proof of cause of death,Preuve de la cause du décès
 event.death.action.declare.form.section.documents.field.proofOfDeath.label,This is the label for the field,Proof of death of deceased,Preuve du décès du défunt
 event.death.action.declare.form.section.documents.field.proofOfDeceased.label,This is the label for the field,Proof of deceased's ID,Preuve de l'identité du défunt
@@ -958,12 +962,12 @@ event.death.action.declare.form.section.documents.field.proofOfInformant.label,T
 event.death.action.declare.form.section.event.field.addressHelper.label,This is the label for the field,Place of death,Lieu du décès
 event.death.action.declare.form.section.event.field.causeOfDeath.label,This is the label for the field,Cause of death has been established,La cause du décès a été établie
 event.death.action.declare.form.section.event.field.date.error,This is the error message for invalid date,Must be a valid date,Doit être une date valide
+event.death.action.declare.form.section.event.field.date.error.beforeBirth,This is the error message for date of death before date of birth,Date of death must be after the deceased's birth date,La date du décès doit être postérieure à la date de naissance du défunt
 event.death.action.declare.form.section.event.field.date.label,This is the label for the field,Date of death,Date du décès
 event.death.action.declare.form.section.event.field.description.label,Description of cause of death by lay person or verbal autopsy,Description,Description
 event.death.action.declare.form.section.event.field.manner.label,This is the label for the field,Manner of death,Mode de décès
 event.death.action.declare.form.section.event.field.reason.label,This is the label for the field,Reason for late registration,Raison de l'inscription tardive
 event.death.action.declare.form.section.event.field.sourceCauseDeath.label,This is the label for the field,Source of cause of death,Source de la cause du décès
-event.death.action.declare.form.section.event.field.date.error.beforeBirth,This is the error message for date of death before date of birth,Date of death must be after the deceased's birth date,La date du décès doit être postérieure à la date de naissance du défunt
 event.death.action.declare.form.section.informant.field.address.addressSameAs.label,This is the label for the field,Same as deceased's usual place of residence?,Identique au lieu de résidence habituel du défunt ?
 event.death.action.declare.form.section.informant.field.address.label,This is the label for the field,Usual place of residence,Lieu de résidence habituel
 event.death.action.declare.form.section.informant.field.addressHelper.label,This is the label for the field,Usual place of residence,Lieu de résidence habituel
@@ -980,7 +984,7 @@ event.death.action.declare.form.section.informant.field.nationality.label,This i
 event.death.action.declare.form.section.informant.field.nid.label,This is the label for the field,ID Number,Numéro d'identité
 event.death.action.declare.form.section.informant.field.other.relation.label,This is the label for the field,Relationship to deceased,Relation avec le défunt
 event.death.action.declare.form.section.informant.field.passport.label,This is the label for the field,ID Number,Numéro d'identité
-event.death.action.declare.form.section.informant.field.phoneNo.error,The error message that appears on phone numbers where the first two characters must be 07 or 09,and length must be 10,and length must be 10
+event.death.action.declare.form.section.informant.field.phoneNo.error,The error message that appears on phone numbers where the first two characters must be 07 or 09 and length must be 10,Must be a valid 10 digit number that starts with 0(7|9),Doit être un nombre valide de 10 chiffres qui commence par 0(7|9)
 event.death.action.declare.form.section.informant.field.phoneNo.label,This is the label for the field,Phone number,Numéro de téléphone
 event.death.action.declare.form.section.informant.field.relation.label,This is the label for the field,Informant type,Type d'informateur
 event.death.action.declare.form.section.person.field.brn.label,This is the label for the field,ID Number,Numéro d'identité
@@ -1040,9 +1044,11 @@ event.death.summary.informant.contact.label,This is the label for the informant 
 event.death.summary.informant.contact.value,This is the contact value of the informant,{informant.phoneNo} {informant.email},{informant.phoneNo} {informant.email}
 event.death.title,This is the title of the summary,{deceased.name.firstname} {deceased.name.surname},{deceased.name.firstname} {deceased.name.surname}
 event.default.action.certificate.template.type.label,Select certificate template,Type,Taper
+event.default.action.certificate.template.type.notFound,Select certificate template options not found,"No template available for this event, contact Admin","Aucun modèle disponible pour cette event, contactez l’admin"
 event.history.role,Label for the role in event history,"{role, select, LOCAL_REGISTRAR {Local Registrar} FIELD_AGENT {Field Agent} POLICE_OFFICER {Police Officer} REGISTRATION_AGENT {Registration Agent} HEALTHCARE_WORKER {Healthcare Worker} HOSPITAL_CLERK {Hospital Clerk} LOCAL_SYSTEM_ADMIN {Administrator} NATIONAL_REGISTRAR {Registrar General} PERFORMANCE_MANAGER {Operations Manager} NATIONAL_SYSTEM_ADMIN {National Administrator} COMMUNITY_LEADER {Community Leader} HEALTH {Health integration} IMPORT {Import integration} NATIONAL_ID {National ID integration} RECORD_SEARCH {Record search integration} WEBHOOK {Webhook} other {Unknown}}","{role, select, LOCAL_REGISTRAR {Officier d'état civil local} POLICE_OFFICER {Agent de police} FIELD_AGENT {Agent de terrain} REGISTRATION_AGENT {Agent d'enregistrement} HEALTHCARE_WORKER {Professionnel de santé} PERFORMANCE_MANAGER {Responsable des opérations} LOCAL_SYSTEM_ADMIN {Administrateur} NATIONAL_SYSTEM_ADMIN {Administrateur national} NATIONAL_REGISTRAR {Registraire général} HOSPITAL_CLERK {Employé administratif à l'hôpital} HEALTH {Intégration santé} IMPORT {Intégration d'importation} NATIONAL_ID {Intégration ID nationale} RECORD_SEARCH {Intégration de recherche d'enregistrements} WEBHOOK {Webhook} COMMUNITY_LEADER {Responsable communautaire} other {Inconnu}}"
 event.history.system,Name for system initiated actions in the event history,System,System
 event.history.systemDefaultName,Fallback for system integration name in the event history,System integration,Intégration système
+event.not.downloaded,Shown when user tries to perform an action on event that is not available,Please ensure the event is first assigned and downloaded to the browser.,Veuillez vous assurer que l'événement est d'abord attribué et téléchargé dans le navigateur.
 event.summary.assignedTo.empty,Not assigned message,Not assigned,Non assigné
 event.summary.assignedTo.label,Assigned to label,Assigned to,Assigné à
 event.summary.assignedTo.value,Assigned to value,{event.assignedTo},{event.assignedTo}
@@ -1135,6 +1141,11 @@ field.name.surname.label,This is the label for the surname field,Last name,Nom(s
 fieldAgentHome.queryError,The text when error ocurred loading rejected declarations,An error occurred while loading declarations,Une erreur s'est produite lors du chargement des déclarations
 file.upload.fileSize.error,Error message when the selected file is too large,File size must be less than {maxSize}mb,La taille du fichier doit être inférieure à {maxSize}M
 file.upload.fileType.error,Error message when the selected file type is not supported,File format not supported. Please attach {types} (max {maxSize}mb),Format de fichier non pris en charge. Veuillez joindre un {types} (max {maxSize}mb)
+flags.builtin.correction-requested.label,Label for flag,Correction requested,Correction demandée
+flags.builtin.incomplete.label,Label for flag,Incomplete,Incomplet
+flags.builtin.pending-certification.label,Label for flag,Pending certification,En attente de certification
+flags.builtin.potential-duplicate.label,Label for flag,Potential duplicate,Doublon potentiel
+flags.builtin.rejected.label,Label for flag,Rejected,Rejeté
 form.birth.child.title,Form section title for Child,Child's details,information de l'enfant
 form.customField.label.numberOfDependants,,No. of dependants,Nombre de personnes à charge
 form.customField.label.reasonForLateRegistrationBirth,,Reason for delayed registration,Raison du retard d'inscription
@@ -1564,7 +1575,6 @@ navigation.declarationForms,Declaration forms label in navigation,Declaration fo
 navigation.emailAllUsers,Email all users label in navigation,Email all users,Envoyer un e-mail à tous les utilisateurs
 navigation.informantNotification,Informant notifications label in navigation,Informant notifications,Notifications des informateurs
 navigation.integration,Integration forms label in navigation,Integrations,Intégrations
-navigation.leaderboards,Leaderboards Dashboard Section,Leaderboards,Classements
 navigation.myDrafts,My drafts label in navigation,My drafts,Mes brouillons
 navigation.organisation,Organisations label in navigation,Organisation,Organisation
 navigation.outbox,Label for navigation item outbox,Outbox,Boîte d'envoi
@@ -1681,6 +1691,7 @@ print.cert.coll.other.aff.form.title,Form title for other collector affidavit fo
 print.cert.coll.other.aff.label,File label for signed affidavit,Signed affidavit,Affidavit signé
 print.cert.coll.other.aff.paragraph,Form paragraph for other collector affidavit form,This document should clearly prove that the individual has the authority to collect the certificate,Ce document doit prouver clairement que la personne est habilitée à collecter le certificat.
 print.cert.coll.other.aff.title,Modal title for other coller form submission without signed affidavit,Print without signed affidavit?,Continuer sans affidavit signé ?
+print.certificate,label for the print button used in the offline flow,Print,Imprimer
 print.certificate.addAnotherSignature,,Add another,Ajouter un autre
 print.certificate.birthService,Amount due on certificate for birth label,Service: <strong>Birth registration after {service} of D.o.B.</strong><br/>Amount Due:,Service: <strong>Enregistrement de la naissance après  {service} de D.o.B.</strong><br/>Montant dû:
 print.certificate.button.confirmPrint,The text for print button,"Yes, print certificate","Oui, imprimer le certificat"
@@ -2237,6 +2248,8 @@ verifyCertificate.successTitle,title for success alert,Valid QR code,Code QR val
 verifyCertificate.successUrl,title for success alert for url validation,URL Verification,Vérification des URL
 verifyCertificate.timeOut,message when time out after few minute,You been timed out,Délais expirée
 verifyCertificate.toastMessage,Message for the toast when time spend 1 minute,"After verifying the certificate, please close the browser window","Après avoir vérifié le certificat, veuillez fermer la fenêtre du navigateur."
+views.idReader.label.manualInput,Label that shows below the divider on the id reader component,Complete fields below,Remplissez les champs ci-dessous
+views.idReader.label.or,Label that shows on the divider,Or,Ou
 views.idVerification.banner.actions.reset,,Reset,Réinitialiser
 views.idVerification.banner.actions.revoke,,Revoke,Révoquer
 views.idVerification.banner.authenticated.description,,"This identity has been successfully authenticated with the Farajaland’s National ID System. To make edits, please remove the authentication first.",Cette identité a été authentifiée avec succès avec le système national d'identité de Farajaland.

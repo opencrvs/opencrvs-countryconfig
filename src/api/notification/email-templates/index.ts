@@ -76,6 +76,14 @@ export const TriggerVariable = {
   [TriggerEvent.ALL_USER_NOTIFICATION]: z.object({
     subject: z.string(),
     body: z.string()
+  }),
+  [TriggerEvent.CHANGE_EMAIL_ADDRESS]: z.object({
+    firstname: z.string(),
+    code: z.string()
+  }),
+  [TriggerEvent.CHANGE_PHONE_NUMBER]: z.object({
+    firstname: z.string(),
+    code: z.string()
   })
 } as const
 

@@ -265,7 +265,7 @@ export const child = defineFormPage({
       ]
     },
     {
-      id: 'child.divider_1',
+      id: 'child.divider1',
       type: FieldType.DIVIDER,
       label: emptyMessage
     },
@@ -304,6 +304,7 @@ export const child = defineFormPage({
     },
     {
       id: 'child.birthLocation.privateHome',
+      analytics: true,
       type: FieldType.ADDRESS,
       secured: true,
       hideLabel: true,
@@ -348,6 +349,8 @@ export const child = defineFormPage({
     {
       id: 'child.birthLocation.other',
       type: FieldType.ADDRESS,
+      analytics: true,
+
       secured: true,
       hideLabel: true,
       label: {
@@ -387,7 +390,7 @@ export const child = defineFormPage({
       }
     },
     {
-      id: 'child.divider_2',
+      id: 'child.divider2',
       type: FieldType.DIVIDER,
       label: emptyMessage
     },
