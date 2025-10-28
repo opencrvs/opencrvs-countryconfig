@@ -377,48 +377,62 @@ export const informant = defineFormPage({
         disableIf: ['pending', 'verified']
       }
     ),
-    {
-      id: 'informant.passport',
-      type: FieldType.TEXT,
-      required: true,
-      label: {
-        defaultMessage: 'ID Number',
-        description: 'This is the label for the field',
-        id: 'event.death.action.declare.form.section.informant.field.passport.label'
+    connectToMOSIPIdReader(
+      {
+        id: 'informant.passport',
+        type: FieldType.TEXT,
+        required: true,
+        label: {
+          defaultMessage: 'ID Number',
+          description: 'This is the label for the field',
+          id: 'event.death.action.declare.form.section.informant.field.passport.label'
+        },
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: and(
+              field('informant.idType').isEqualTo(IdType.PASSPORT),
+              informantOtherThanSpouse
+            )
+          }
+        ],
+        parent: field('informant.relation')
       },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: and(
-            field('informant.idType').isEqualTo(IdType.PASSPORT),
-            informantOtherThanSpouse
-          )
-        }
-      ],
-      parent: field('informant.relation')
-    },
-    {
-      id: 'informant.brn',
-      type: FieldType.TEXT,
-      required: true,
-      label: {
-        defaultMessage: 'ID Number',
-        description: 'This is the label for the field',
-        id: 'event.death.action.declare.form.section.informant.field.brn.label'
+      {
+        valuePath: 'data.passport',
+        hideIf: ['authenticated'],
+        disableIf: ['pending', 'verified']
+      }
+    ),
+    connectToMOSIPIdReader(
+      {
+        id: 'informant.brn',
+        type: FieldType.TEXT,
+        required: true,
+        label: {
+          defaultMessage: 'ID Number',
+          description: 'This is the label for the field',
+          id: 'event.death.action.declare.form.section.informant.field.brn.label'
+        },
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: and(
+              field('informant.idType').isEqualTo(
+                IdType.BIRTH_REGISTRATION_NUMBER
+              ),
+              informantOtherThanSpouse
+            )
+          }
+        ],
+        parent: field('informant.relation')
       },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: and(
-            field('informant.idType').isEqualTo(
-              IdType.BIRTH_REGISTRATION_NUMBER
-            ),
-            informantOtherThanSpouse
-          )
-        }
-      ],
-      parent: field('informant.relation')
-    },
+      {
+        valuePath: 'data.brn',
+        hideIf: ['authenticated'],
+        disableIf: ['pending', 'verified']
+      }
+    ),
     {
       id: 'informant.addressSameAs',
       type: FieldType.RADIO_GROUP,
