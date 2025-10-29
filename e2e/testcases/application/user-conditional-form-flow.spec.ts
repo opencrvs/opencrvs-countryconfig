@@ -101,14 +101,14 @@ test.describe.serial('1. User conditional form flow', () => {
       ).toBeVisible()
     })
 
-    test('1.1.6 Navigate to the declaration "read-only" page', async () => {
+    test('1.1.6 Navigate to the declaration "Record" tab', async () => {
       await page
         .getByRole('button', {
           name: formatName(declaration.applicant.name)
         })
         .click()
 
-      await selectAction(page, 'View')
+      await page.getByRole('button', { name: 'Record', exact: true }).click()
 
       await expect(
         page.getByText(
@@ -119,7 +119,7 @@ test.describe.serial('1. User conditional form flow', () => {
   })
 
   test.describe('1.2 Declaration Review by RA', async () => {
-    test('1.2.1 Navigate to the declaration "read-only" page', async () => {
+    test('1.2.1 Navigate to the declaration "Record" tab', async () => {
       await login(page, CREDENTIALS.REGISTRATION_AGENT)
       await page.getByText('Ready for review').click()
       await page
@@ -128,7 +128,7 @@ test.describe.serial('1. User conditional form flow', () => {
         })
         .click()
 
-      await selectAction(page, 'View')
+      await page.getByRole('button', { name: 'Record', exact: true }).click()
 
       await expect(
         page.getByText(

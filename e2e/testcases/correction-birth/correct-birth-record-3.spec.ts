@@ -179,8 +179,8 @@ test.describe.serial(' Correct record - 3', () => {
       await page.getByRole('button', { name: 'Print', exact: true }).click()
 
       // Wait for PDF the load and the page to be redirected to the overview page
-      await page.waitForURL(`**/events/overview/${eventId}`)
-      await expectInUrl(page, `/events/overview/${eventId}`)
+      await page.waitForURL(`**/events/${eventId}`)
+      await expectInUrl(page, `/events/${eventId}`)
     })
 
     test('3.1.2 Record audit', async () => {
@@ -911,7 +911,7 @@ test.describe.serial(' Correct record - 3', () => {
      * - be navigated to sent for approval tab
      * - include the declaration in this tab
      */
-    expect(page.url().includes(`events/overview/${eventId}`)).toBeTruthy()
+    expect(page.url().includes(`events/${eventId}`)).toBeTruthy()
     await page.getByRole('button', { name: 'Outbox' }).click()
 
     /*
@@ -1113,11 +1113,12 @@ test.describe.serial(' Correct record - 3', () => {
        * - be navigated to ready to print tab
        * - include the updated declaration in this tab
        */
-      expect(page.url().includes(`events/overview/${eventId}`)).toBeTruthy()
+      expect(page.url().includes(`events/${eventId}`)).toBeTruthy()
       await ensureOutboxIsEmpty(page)
     })
 
     test('3.8.4 Validate history in record audit', async () => {
+      await page.getByRole('button', { name: 'Audit' }).click()
       await ensureAssigned(page)
       await page.getByRole('button', { name: 'Next page' }).click()
 

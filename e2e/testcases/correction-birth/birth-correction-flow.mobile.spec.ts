@@ -7,7 +7,6 @@ import {
   Declaration
 } from '../test-data/birth-declaration-with-mother-father'
 import {
-  ensureAssigned,
   ensureOutboxIsEmpty,
   expectInUrl,
   navigateToWorkqueue,

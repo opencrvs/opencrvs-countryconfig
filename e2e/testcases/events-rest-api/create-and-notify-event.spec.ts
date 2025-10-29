@@ -655,7 +655,7 @@ test.describe('Events REST API', () => {
       await page.locator('#close-btn').click()
 
       // View the event details
-      await selectAction(page, 'View')
+      await page.getByRole('button', { name: 'Record', exact: true }).click()
       await expect(page.getByTestId('row-value-child.name')).toHaveText(
         formatName(childName)
       )

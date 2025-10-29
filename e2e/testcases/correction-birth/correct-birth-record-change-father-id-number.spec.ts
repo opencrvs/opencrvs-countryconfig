@@ -245,7 +245,7 @@ test.describe.serial("Correct record - Change father's ID number", () => {
 
     await ensureAssigned(page)
 
-    await selectAction(page, 'View')
+    await page.getByRole('button', { name: 'Record', exact: true }).click()
 
     await expect(
       page.getByTestId('row-value-father.nid').getByText(newIdNumber)

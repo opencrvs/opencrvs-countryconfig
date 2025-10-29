@@ -265,9 +265,7 @@ test.describe.serial('Birth correction flow', () => {
 
     test('Correction request action appears in audit history', async () => {
       await ensureAssigned(page)
-
-      // Go to second page of audit history list
-      await page.getByRole('button', { name: 'Next page' }).click()
+      await page.getByRole('button', { name: 'Audit' }).click()
       await expect(
         page.getByRole('button', { name: 'Correction requested', exact: true })
       ).toBeVisible()
@@ -344,6 +342,7 @@ test.describe.serial('Birth correction flow', () => {
 
     test('Correction approved action appears in audit history', async () => {
       await ensureAssigned(page)
+      await page.getByRole('button', { name: 'Audit' }).click()
 
       // Go to second page of audit history list
       await page.getByRole('button', { name: 'Next page' }).click()

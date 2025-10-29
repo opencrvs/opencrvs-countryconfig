@@ -635,33 +635,12 @@ test.describe('10. Correct record', () => {
         await page.getByRole('button', { name: 'Approve', exact: true }).click()
         await page.getByRole('button', { name: 'Confirm', exact: true }).click()
 
-        await expectInUrl(page, `/events/overview/${eventId}`)
+        await expectInUrl(page, `/events/${eventId}`)
       })
       test.describe('10.1.6.4 Validate history in record audit', async () => {
-        test('10.1.6.4.1 Validate entries in record audit', async () => {
-          if (!trackingId) {
-            throw new Error('Tracking ID is required')
-          }
-
-          await type(page, '#searchText', trackingId)
-          await page.locator('#searchIconButton').click()
-          await page
-            .getByRole('button', {
-              name: formatV2ChildName({
-                'child.name': {
-                  firstname: updatedChildDetails.firstNames,
-                  surname: updatedChildDetails.familyName
-                }
-              })
-            })
-            .click()
-
+        test('10.1.6.4.1 Validate correction requested modal', async () => {
           await ensureAssigned(page)
-        })
-
-        test('10.1.6.4.2 Validate correction requested modal', async () => {
-          await page.getByRole('button', { name: 'Next page' }).click()
-
+          await page.getByRole('button', { name: 'Audit' }).click()
           await page
             .getByRole('button', { name: 'Correction requested', exact: true })
             .click()
@@ -707,7 +686,8 @@ test.describe('10. Correct record', () => {
           await page.locator('#close-btn').click()
         })
 
-        test('10.1.6.4.3 Validate correction approved modal', async () => {
+        test('10.1.6.4.2 Validate correction approved modal', async () => {
+          await page.getByRole('button', { name: 'Next page' }).click()
           await page
             .getByRole('button', { name: 'Correction approved', exact: true })
             .click()

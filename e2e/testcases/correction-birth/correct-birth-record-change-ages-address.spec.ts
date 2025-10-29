@@ -325,7 +325,7 @@ test.describe.serial('Correct record - Change ages', () => {
 
     await ensureAssigned(page)
 
-    await selectAction(page, 'View')
+    await page.getByRole('button', { name: 'Record', exact: true }).click()
 
     await expect(
       page.getByTestId('row-value-informant.age').getByText(informantAgeAfter)

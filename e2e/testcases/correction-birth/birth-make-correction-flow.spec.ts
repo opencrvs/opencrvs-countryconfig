@@ -240,9 +240,8 @@ test.describe.serial('Birth Record correction flow', () => {
       .getByRole('button', { name: formatV2ChildName(declaration) })
       .click()
     await ensureAssigned(page)
+    await page.getByRole('button', { name: 'Audit' }).click()
 
-    // Go to second page of audit history list
-    await page.getByRole('button', { name: 'Next page' }).click()
     await expect(
       page.getByRole('button', { name: 'Record corrected', exact: true })
     ).toBeVisible()
