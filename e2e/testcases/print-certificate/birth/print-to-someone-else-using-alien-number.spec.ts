@@ -79,6 +79,7 @@ test.describe
       .getByRole('button', { name: formatV2ChildName(declaration) })
       .click()
     await ensureAssigned(page)
+    await page.getByRole('button', { name: 'Audit' }).click()
     await page.getByRole('button', { name: 'Certified', exact: true }).click()
 
     await expect(page.getByText('Type' + 'Birth Certificate')).toBeVisible()
