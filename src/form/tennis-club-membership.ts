@@ -21,7 +21,9 @@ import {
   field,
   event,
   user,
-  or
+  or,
+  defineConditional,
+  never
 } from '@opencrvs/toolkit/events'
 import { Event } from './types/types'
 import { MAX_NAME_LENGTH } from './v2/birth/validators'
@@ -221,10 +223,70 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
           }
         },
         {
+          id: 'recommender.search',
+          type: FieldType.SEARCH,
+          label: {
+            defaultMessage: 'Registration Number of recommender',
+            description: 'This is the label for the field',
+            id: 'event.tennis-club-membership.action.declare.form.section.recommender.field.search.label'
+          },
+          configuration: {
+            query: {
+              type: 'or',
+              clauses: [
+                {
+                  'legalStatuses.REGISTERED.registrationNumber': {
+                    term: '{term}',
+                    type: 'exact'
+                  }
+                }
+              ]
+            },
+            limit: 10,
+            offset: 0,
+            validation: {
+              validator: defineConditional({
+                type: 'string',
+                pattern: '^[A-Za-z0-9]{12}$',
+                description: 'Must be alpha-numeric and 12 characters long'
+              }),
+              message: {
+                defaultMessage:
+                  'Invalid value: Must be alpha-numeric and 12 characters long',
+                description: 'Error message for invalid value',
+                id: 'tennis-club-membership.searchField.validation.invalid'
+              }
+            },
+            indicators: {
+              ok: {
+                defaultMessage: 'Valid',
+                description: 'OK button text',
+                id: 'tennis-club-membership.searchField.indicators.ok'
+              }
+            }
+          },
+          conditionals: [
+            {
+              type: ConditionalType.DISPLAY_ON_REVIEW,
+              conditional: never()
+            }
+          ]
+        },
+        {
           id: 'recommender.name',
           configuration: { maxLength: MAX_NAME_LENGTH },
           type: FieldType.NAME,
           required: true,
+          parent: field('recommender.search'),
+          value: [
+            field('recommender.search').getByPath([
+              'data',
+              'results',
+              'declaration',
+              'applicant.name'
+            ]),
+            field('recommender.name')
+          ],
           conditionals: [
             {
               type: ConditionalType.SHOW,
@@ -242,6 +304,13 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
           id: 'recommender.id',
           type: 'TEXT',
           required: true,
+          parent: field('recommender.search'),
+          value: [
+            field('recommender.search').get(
+              'data.results.legalStatuses.REGISTERED.registrationNumber'
+            ),
+            field('recommender.id')
+          ],
           conditionals: [
             {
               type: ConditionalType.SHOW,
