@@ -875,8 +875,6 @@ event.death.action.certificate.form.cancel.confirmation.title,This is the title 
 event.death.action.certificate.form.label,This is what this form is referred as in the system,Death certificate collector,Collecteur de certificat de décès
 event.death.action.certificate.form.section.collectPayment.data.label,Title for the data section,Payment details,Détails du paiement
 event.death.action.certificate.form.section.collectPayment.fee.label,Title for the data entry,Fee,Frais
-event.death.action.certificate.form.section.collectPayment.fee.label,Title for the data entry,Fee,Frais
-event.death.action.certificate.form.section.collectPayment.service.label,Title for the data entry,Service,Service
 event.death.action.certificate.form.section.collectPayment.service.label,Title for the data entry,Service,Service
 event.death.action.certificate.form.section.collectPayment.service.label.afterRegistrationTarget,Death registration after 45 days of date of death message,Death registration after 45 days of date of death,Enregistrement du décès après 45 jours de la date du décès
 event.death.action.certificate.form.section.collectPayment.service.label.beforeRegistrationTarget,Death registration before 45 days of date of death message,Death registration before 45 days of date of death,Enregistrement du décès avant 45 jours de la date du décès
@@ -933,8 +931,6 @@ event.death.action.correction.reason.option.materialOmission.label,Label for the
 event.death.action.correction.reason.option.other.label,Label for the other option,Other,Autre
 event.death.action.correction.reason.other.label,Label for the reason,Specify reason,Préciser la raison
 event.death.action.declare.form.label,This is what this form is referred as in the system,Death declaration form,Formulaire de déclaration de décès
-event.death.action.declare.form.nid.unique,This is the error message for non-unique ID Number,National id must be unique,L'identifiant national doit être unique
-event.death.action.declare.form.nid.unique,This is the error message for non-unique ID Number,National id must be unique,L'identifiant national doit être unique
 event.death.action.declare.form.nid.unique,This is the error message for non-unique ID Number,National id must be unique,L'identifiant national doit être unique
 event.death.action.declare.form.review.comment.label,Label for the comment field in the review section,Comment,Commentaire
 event.death.action.declare.form.review.signature.label,Label for the signature field in the review section,Signature of informant,Signature de l'informateur
@@ -1073,7 +1069,6 @@ event.tennis-club-membership.action.collect-certificate.label,This is shown as t
 event.tennis-club-membership.action.declare.form.label,This is what this form is referred as in the system,Tennis club membership application,Tennis club membership application
 event.tennis-club-membership.action.declare.form.review.title,Title of the form to show in review page,"{applicant.name.firstname, select, __EMPTY__ {Member declaration} other {{applicant.name.surname, select, __EMPTY__ {Member declaration for {applicant.name.firstname}} other {Member declaration for {applicant.name.firstname} {applicant.name.surname}}}}}","{applicant.name.firstname, select, __EMPTY__ {Déclaration des membres} other {{applicant.name.surname, select, __EMPTY__ {Déclaration des membres pour {applicant.name.firstname}} other {Déclaration des membres pour {applicant.name.firstname} {applicant.name.surname}}}}}"
 event.tennis-club-membership.action.declare.form.section.recommender.field.firstname.label,This is the label for the field,Recommender's first name,Recommender's first name
-event.tennis-club-membership.action.declare.form.section.recommender.field.firstname.label,This is the label for the field,Recommender's name,Nom du recommandataire
 event.tennis-club-membership.action.declare.form.section.recommender.field.id.label,This is the label for the field,Recommender's membership ID,Recommender's membership ID
 event.tennis-club-membership.action.declare.form.section.recommender.field.none.label,This is the label for the field,No recommender,No recommender
 event.tennis-club-membership.action.declare.form.section.recommender.title,This is the title of the section,Who is recommending the applicant?,Who is recommending the applicant?
@@ -2011,6 +2006,12 @@ search.searchResultFor,The search result text,Search result for “{param}”,r�
 search.searchingFor,The searching for text,Searching for “{param}”,Recherche de  “{param}”
 search.totalResultText,The total result text,"{total, plural, =0 {} one {# record found} other {# records found}} ","{total, plural, =0 {} one {# record found} other {# records found}}"
 search.waitingForConnection,The text when there is no connectivity,Reconnect to load declarations,Se reconnecter pour charger les déclarations
+searchField.indicators.confirmButton,Confirm button text,Search,Rechercher
+searchField.indicators.httpError,HTTP error indicator,"{statusCode, select, 408{Timed out} other{An error occurred while fetching data}}","{statusCode, select, 408{Délai d'attente dépassé} other{Une erreur s'est produite lors de la récupération des données}}"
+searchField.indicators.loading,Loading indicator,Searching...,Recherche en cours...
+searchField.indicators.noResultsError,No results found indicator,No record found,Aucun enregistrement trouvé
+searchField.indicators.offline,Offline indicator,Search is unavailable while offline,La recherche n'est pas disponible hors ligne
+searchField.indicators.ok,OK button text,Found {count} results,{count} résultats trouvés
 serviceWorker.cacheKey.WorkBoxRuntime.error.button.logout,Button label for logging out when WorkBox runtime cache key is missing,Log out,Se déconnecter
 serviceWorker.cacheKey.WorkBoxRuntime.error.button.reload,Button label for logging out when WorkBox runtime cache key is missing,Reload,Recharger
 serviceWorker.cacheKey.WorkBoxRuntime.error.content,Content shown when WorkBox runtime cache key is missing,"Something went wrong with loading the app. Reload this page, or log out and log back in to continue.",Un problème est survenu lors du chargement de l’application. Rechargez cette page ou déconnectez-vous puis reconnectez-vous pour continuer.
