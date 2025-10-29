@@ -1,4 +1,4 @@
-import { test, type Page } from '@playwright/test'
+import { expect, test, type Page } from '@playwright/test'
 
 import { login, getToken, formatName } from '../../helpers'
 import { CREDENTIALS } from '../../constants'
@@ -9,6 +9,7 @@ import {
   selectRequesterType
 } from '../print-certificate/birth/helpers'
 import { expectInUrl } from '../../utils'
+import { ActionType } from '@opencrvs/toolkit/events'
 
 test.describe.serial('Navigating in and out of action', () => {
   let page: Page
@@ -19,7 +20,7 @@ test.describe.serial('Navigating in and out of action', () => {
       CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
       CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
     )
-    const res = await createDeclaration(token)
+    const res = await createDeclaration(token, undefined, ActionType.VALIDATE)
     declaration = res.declaration
     eventId = res.eventId
     page = await browser.newPage()
@@ -33,7 +34,49 @@ test.describe.serial('Navigating in and out of action', () => {
     await login(page)
   })
 
-  test("Navigate to the 'Ready to print' -workqueue", async () => {
+  test('Navigate to the "Ready for review" -workqueue', async () => {
+    await page.getByRole('button', { name: 'Ready for review' }).click()
+  })
+
+  test("Enter the 'Review' -action from workqueue", async () => {
+    const childName = formatName({
+      firstNames: declaration['child.name'].firstname,
+      familyName: declaration['child.name'].surname
+    })
+
+    const row = page.locator('div', { hasText: childName }).first()
+
+    await row
+      .getByRole('button', { name: 'Assign record', exact: true })
+      .first()
+      .click()
+
+    await row
+      .getByRole('button', { name: 'Review', exact: true })
+      .first()
+      .click()
+  })
+
+  test('Register the event', async () => {
+    await page.getByRole('button', { name: 'Register' }).click()
+    await expect(page.getByText('Register the birth?')).toBeVisible()
+    await page.locator('#confirm_Register').click()
+
+    // Should redirect back to Ready for review workqueue
+    await page.waitForURL(`**/workqueue/in-review-all`)
+    await expectInUrl(page, '/workqueue/in-review-all')
+  })
+
+  test('Browser back button should take user to the another workqueue instead of action flow', async () => {
+    await page.goBack()
+    await page.waitForURL(`**/workqueue/in-review-all`)
+    await expectInUrl(page, '/workqueue/in-review-all')
+    await page.goBack()
+    await page.waitForURL(`**/workqueue/assigned-to-you`)
+    await expectInUrl(page, '/workqueue/assigned-to-you')
+  })
+
+  test('Navigate to the "Ready to print" -workqueue', async () => {
     await page.getByRole('button', { name: 'Ready to print' }).click()
   })
 
