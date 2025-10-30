@@ -39,7 +39,7 @@ The analytics system consists of several key components:
 ```
 
 1. **OpenCRVS Core Services**: Submits all performed event actions to country config
-2. **PostgreSQL Analytics Database**: Stores processed analytics data country defined database. By default this is in PostgreSQL in `analytics` schema
+2. **PostgreSQL Analytics Database**: Stores processed analytics data in country-defined database. By default this is in PostgreSQL in `analytics` schema
 3. **Metabase**: Connects to PostgreSQL and provides visualization capabilities
 
 ## Data Sources
