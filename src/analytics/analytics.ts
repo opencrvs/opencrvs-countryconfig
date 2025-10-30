@@ -20,6 +20,7 @@ import {
   ActionDocument,
   ActionStatus,
   ActionType,
+  AddressFieldValue,
   EventConfig,
   EventDocument,
   EventState,
@@ -32,6 +33,7 @@ import { ExpressionBuilder, Kysely } from 'kysely'
 import { chunk, pickBy } from 'lodash'
 import { getClient } from './postgres'
 import { getStatistics } from '@countryconfig/utils'
+import { COUNTRY_NAMES_BY_CODE } from './countries'
 
 /**
  * You can control which events you want to track in analytics by adding them here.
@@ -97,6 +99,27 @@ function getAnnotation(
   }
 }
 
+function getCountryPlaceOfBirthResolved(
+  declaration: ActionDocument['declaration']
+) {
+  const placeOfBirth =
+    'child.birthLocation.privateHome' in declaration
+      ? declaration['child.birthLocation.privateHome']
+      : 'child.birthLocation.other' in declaration
+        ? declaration['child.birthLocation.other']
+        : null
+
+  const maybeAddress = AddressFieldValue.safeParse(placeOfBirth)
+
+  if (!maybeAddress.success) {
+    return 'Farajaland'
+  }
+
+  const country = maybeAddress.data.country
+
+  return COUNTRY_NAMES_BY_CODE[country] || 'Farajaland'
+}
+
 function precalculateAdditionalAnalytics(
   action: ActionDocument,
   declaration: ActionDocument['declaration'],
@@ -116,7 +139,8 @@ function precalculateAdditionalAnalytics(
       'child.age.days': differenceInDays(
         createdAt,
         new Date(childDoB as string)
-      )
+      ),
+      'child.countryPlaceOfBirth': getCountryPlaceOfBirthResolved(declaration)
     }
   }
 
