@@ -259,9 +259,22 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
             },
             indicators: {
               ok: {
-                defaultMessage: 'Valid',
+                defaultMessage: 'Recommender found',
                 description: 'OK button text',
                 id: 'tennis-club-membership.searchField.indicators.ok'
+              },
+              clearModal: {
+                title: {
+                  defaultMessage: 'Clear recommender?',
+                  description: 'Title for the clear confirmation modal',
+                  id: 'tennis-club-membership.searchField.indicators.clearModal.title'
+                },
+                description: {
+                  defaultMessage:
+                    'This will remove the details of the current recommender.',
+                  description: 'Description for the clear confirmation modal',
+                  id: 'tennis-club-membership.searchField.indicators.clearModal.description'
+                }
               }
             }
           },
@@ -278,15 +291,12 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
           type: FieldType.NAME,
           required: true,
           parent: field('recommender.search'),
-          value: [
-            field('recommender.search').getByPath([
-              'data',
-              'results',
-              'declaration',
-              'applicant.name'
-            ]),
-            field('recommender.name')
-          ],
+          value: field('recommender.search').getByPath([
+            'data',
+            'firstResult',
+            'declaration',
+            'applicant.name'
+          ]),
           conditionals: [
             {
               type: ConditionalType.SHOW,
@@ -305,12 +315,9 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
           type: 'TEXT',
           required: true,
           parent: field('recommender.search'),
-          value: [
-            field('recommender.search').get(
-              'data.results.legalStatuses.REGISTERED.registrationNumber'
-            ),
-            field('recommender.id')
-          ],
+          value: field('recommender.search').get(
+            'data.firstResult.legalStatuses.REGISTERED.registrationNumber'
+          ),
           conditionals: [
             {
               type: ConditionalType.SHOW,
