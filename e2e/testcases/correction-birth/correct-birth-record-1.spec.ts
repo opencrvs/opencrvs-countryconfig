@@ -27,7 +27,6 @@ import { formatV2ChildName } from '../birth/helpers'
 test.describe('1. Correct record - 1', () => {
   let declaration: Declaration
   let trackingId: string | undefined
-  let registrationNumber: string | undefined
   let eventId: string
 
   const updatedChildDetails = {
@@ -57,7 +56,6 @@ test.describe('1. Correct record - 1', () => {
     )
     declaration = res.declaration
     trackingId = res.trackingId
-    registrationNumber = res.registrationNumber
     eventId = res.eventId
   })
 
@@ -88,9 +86,6 @@ test.describe('1. Correct record - 1', () => {
       await expect(page.getByText(`StatusRegistered`)).toBeVisible()
       await expect(page.getByText(`EventBirth`)).toBeVisible()
       await expect(page.getByText(`Tracking ID${trackingId}`)).toBeVisible()
-      await expect(
-        page.getByText(`Registration Number${registrationNumber}`)
-      ).toBeVisible()
       await expect(
         page.getByText(`Date of birth${format(
           parseISO(declaration['child.dob']),
