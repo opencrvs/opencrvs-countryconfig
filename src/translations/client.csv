@@ -2006,6 +2006,11 @@ search.searchResultFor,The search result text,Search result for “{param}”,r�
 search.searchingFor,The searching for text,Searching for “{param}”,Recherche de  “{param}”
 search.totalResultText,The total result text,"{total, plural, =0 {} one {# record found} other {# records found}} ","{total, plural, =0 {} one {# record found} other {# records found}}"
 search.waitingForConnection,The text when there is no connectivity,Reconnect to load declarations,Se reconnecter pour charger les déclarations
+searchField.indicators.clearButton,Clear button text,Clear,Effacer
+searchField.indicators.clearModal.cancel,Cancel button for clear confirmation modal,Cancel,Annuler
+searchField.indicators.clearModal.confirm,Confirm button for clear confirmation modal,Confirm,Confirmer
+searchField.indicators.clearModal.description,Description for the clear confirmation modal,This will remove the current search results.,Cela supprimera les résultats de recherche actuels.
+searchField.indicators.clearModal.title,Title for the clear confirmation modal,Clear search results?,Effacer les résultats de recherche ?
 searchField.indicators.confirmButton,Confirm button text,Search,Rechercher
 searchField.indicators.httpError,HTTP error indicator,"{statusCode, select, 408{Timed out} other{An error occurred while fetching data}}","{statusCode, select, 408{Délai d'attente dépassé} other{Une erreur s'est produite lors de la récupération des données}}"
 searchField.indicators.loading,Loading indicator,Searching...,Recherche en cours...
