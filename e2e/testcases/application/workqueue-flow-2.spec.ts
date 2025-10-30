@@ -9,7 +9,11 @@ import {
   login
 } from '../../helpers'
 import { CREDENTIALS } from '../../constants'
-import { ensureOutboxIsEmpty, selectAction } from '../../utils'
+import {
+  ensureInExternalValidationIsEmpty,
+  ensureOutboxIsEmpty,
+  selectAction
+} from '../../utils'
 import { assertRecordInWorkqueue, fillDate } from '../birth/helpers'
 
 // FA Notifies => LR Registers
@@ -263,6 +267,7 @@ test.describe.serial('2. Workqueue flow - 2', () => {
       await page.locator('#confirm_Declare').click()
 
       await ensureOutboxIsEmpty(page)
+      await ensureInExternalValidationIsEmpty(page)
 
       await assertRecordInWorkqueue({
         page,
