@@ -857,9 +857,9 @@ event.birth.action.declare.label,This is shown as the action name anywhere the u
 event.birth.action.delete.label,Label for delete button in dropdown menu,Delete,Supprimer
 event.birth.action.form.section.collector.other.field.name.label,This is the label for the name field of OTHER collector,Collector's name,Nom du collecteur
 event.birth.action.mark-as-duplicate.label,Label for review potential duplicate button in dropdown menu,Review,Revoir
-event.birth.action.register.label,Label for review record button in dropdown menu,Review,Revoir
+event.birth.action.register.label,Label for review record button in dropdown menu,Register,Enregistrer
 event.birth.action.request-correction.label,This is shown as the action name anywhere the user can trigger the action from,Correct record,Enregistrement correct
-event.birth.action.validate.label,This is shown as the action name anywhere the user can trigger the action from,Review,Revoir
+event.birth.action.validate.label,This is shown as the action name anywhere the user can trigger the action from,Validate,Valider
 event.birth.label,This is what this event is referred as in the system,Birth,Naissance
 event.birth.summary.child.dob.empty,Label for date of birth not available,No date of birth,Pas de date de naissance
 event.birth.summary.child.placeOfBirth.empty,Label for place of birth not available,No place of birth,Pas de lieu de naissance
