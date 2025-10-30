@@ -174,13 +174,15 @@ test.describe.serial('Request and accept correction (offline)', () => {
         .click()
       await page.getByRole('button', { name: 'Confirm' }).click()
 
-      expect(page.url().includes(`events/overview/${eventId}`)).toBeTruthy()
+      expect(page.url().includes(`events/${eventId}`)).toBeTruthy()
 
       await expect(
         page.locator('#content-name', {
           hasText: formatV2ChildName(declaration)
         })
       ).toBeVisible()
+
+      await page.getByTestId('exit-event').click()
 
       await page.getByRole('button', { name: 'Outbox' }).click()
       await expect(await page.locator('#no-record')).toContainText(
@@ -214,7 +216,7 @@ test.describe.serial('Request and accept correction (offline)', () => {
       await page.getByRole('button', { name: 'Approve', exact: true }).click()
       await page.getByRole('button', { name: 'Confirm', exact: true }).click()
 
-      expect(page.url().includes(`events/overview/${eventId}`)).toBeTruthy()
+      expect(page.url().includes(`events/${eventId}`)).toBeTruthy()
 
       // We expect to see the optimistically updated new child name instead of the old one
       await expect(
@@ -222,6 +224,8 @@ test.describe.serial('Request and accept correction (offline)', () => {
           hasText: formatV2ChildName({ 'child.name': updatedChildDetails })
         })
       ).toBeVisible()
+
+      await page.getByTestId('exit-event').click()
 
       await page.getByRole('button', { name: 'Outbox' }).click()
       await expect(page.locator('#wait-connection-text')).toBeVisible()

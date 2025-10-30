@@ -20,6 +20,10 @@ async function createPIN(page: Page) {
 }
 
 export async function logout(page: Page) {
+  if (await page.getByTestId('exit-event').isVisible()) {
+    await page.getByTestId('exit-event').click()
+  }
+
   if (isMobile(page)) {
     await page.goto(CLIENT_URL)
     await page.getByRole('button', { name: 'Toggle menu', exact: true }).click()

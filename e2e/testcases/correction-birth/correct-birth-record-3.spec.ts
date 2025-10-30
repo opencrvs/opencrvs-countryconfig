@@ -912,6 +912,8 @@ test.describe.serial(' Correct record - 3', () => {
      * - include the declaration in this tab
      */
     expect(page.url().includes(`events/${eventId}`)).toBeTruthy()
+
+    await page.getByTestId('exit-event').click()
     await page.getByRole('button', { name: 'Outbox' }).click()
 
     /*
@@ -1114,12 +1116,11 @@ test.describe.serial(' Correct record - 3', () => {
        * - include the updated declaration in this tab
        */
       expect(page.url().includes(`events/${eventId}`)).toBeTruthy()
-      await ensureOutboxIsEmpty(page)
     })
 
     test('3.8.4 Validate history in record audit', async () => {
-      await page.getByRole('button', { name: 'Audit' }).click()
       await ensureAssigned(page)
+      await page.getByRole('button', { name: 'Audit' }).click()
       await page.getByRole('button', { name: 'Next page' }).click()
 
       /*

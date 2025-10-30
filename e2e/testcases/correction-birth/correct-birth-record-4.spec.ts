@@ -898,6 +898,7 @@ test.describe.serial('Correct record - 4', () => {
      * - include the declaration in this tab
      */
     expect(page.url().includes(`events/${eventId}`)).toBeTruthy()
+    await page.getByTestId('exit-event').click()
     await page.getByRole('button', { name: 'Outbox' }).click()
 
     /*
