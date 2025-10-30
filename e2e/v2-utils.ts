@@ -1,6 +1,7 @@
 import { Locator, Page, expect } from '@playwright/test'
 import {
   CLIENT_V2_URL,
+  SAFE_IN_EXTERNAL_VALIDATION_MS,
   SAFE_INPUT_CHANGE_TIMEOUT_MS,
   SAFE_OUTBOX_TIMEOUT_MS
 } from './constants'
@@ -127,6 +128,16 @@ export async function ensureOutboxIsEmpty(page: Page) {
       timeout: SAFE_OUTBOX_TIMEOUT_MS
     }
   )
+}
+
+export async function ensureInExternalValidationIsEmpty(page: Page) {
+  await page.waitForTimeout(SAFE_INPUT_CHANGE_TIMEOUT_MS)
+
+  await expect(
+    page.locator('#navigation_workqueue_in-external-validation')
+  ).toHaveText('In external validation', {
+    timeout: SAFE_IN_EXTERNAL_VALIDATION_MS
+  })
 }
 
 export async function type(page: Page, locator: string, text: string) {

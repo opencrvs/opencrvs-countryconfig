@@ -7,7 +7,7 @@ import {
   createDeclaration,
   Declaration
 } from '../v2-test-data/birth-declaration'
-import { selectAction } from '../../v2-utils'
+import { ensureInExternalValidationIsEmpty, selectAction } from '../../v2-utils'
 import {
   navigateToCertificatePrintAction,
   selectRequesterType
@@ -161,6 +161,7 @@ test.describe('Form state', () => {
       )
       declaration = (await createDeclaration(token)).declaration
       await page.reload()
+      await ensureInExternalValidationIsEmpty(page)
     })
     test('Form states and annotations are not persisted', async () => {
       expect(declaration).toBeDefined()

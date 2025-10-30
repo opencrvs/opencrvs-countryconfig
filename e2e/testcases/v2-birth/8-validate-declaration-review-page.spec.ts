@@ -12,7 +12,11 @@ import {
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../constants'
 import { fillDate } from './helpers'
-import { ensureOutboxIsEmpty, selectAction } from '../../v2-utils'
+import {
+  ensureInExternalValidationIsEmpty,
+  ensureOutboxIsEmpty,
+  selectAction
+} from '../../v2-utils'
 
 test.describe.serial('8. Validate declaration review page', () => {
   let page: Page
@@ -1501,6 +1505,7 @@ test.describe.serial('8. Validate declaration review page', () => {
     test('8.3.8 Confirm the declaration to ready for print', async () => {
       await page.locator('#confirm_Register').click()
       await ensureOutboxIsEmpty(page)
+      await ensureInExternalValidationIsEmpty(page)
       await page.getByText('Ready to print').click()
 
       /*

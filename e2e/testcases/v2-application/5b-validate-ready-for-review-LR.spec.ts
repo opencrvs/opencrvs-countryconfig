@@ -8,7 +8,12 @@ import {
 } from '../v2-test-data/birth-declaration'
 import { ActionType } from '@opencrvs/toolkit/events'
 import { formatV2ChildName } from '../v2-birth/helpers'
-import { ensureOutboxIsEmpty, expectInUrl, selectAction } from '../../v2-utils'
+import {
+  ensureInExternalValidationIsEmpty,
+  ensureOutboxIsEmpty,
+  expectInUrl,
+  selectAction
+} from '../../v2-utils'
 import { getRowByTitle } from '../v2-print-certificate/birth/helpers'
 
 test.describe
@@ -91,6 +96,7 @@ test.describe
     await expect(page.locator('#content-name')).toHaveText('Ready for review')
 
     await ensureOutboxIsEmpty(page)
+    await ensureInExternalValidationIsEmpty(page)
     await expectInUrl(page, 'workqueue/in-review-all')
 
     await expect(

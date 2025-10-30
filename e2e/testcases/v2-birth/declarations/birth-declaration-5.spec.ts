@@ -11,7 +11,10 @@ import {
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
 import { validateAddress } from '../helpers'
-import { ensureOutboxIsEmpty } from '../../../v2-utils'
+import {
+  ensureInExternalValidationIsEmpty,
+  ensureOutboxIsEmpty
+} from '../../../v2-utils'
 
 test.describe.serial('5. Birth declaration case - 5', () => {
   let page: Page
@@ -516,6 +519,7 @@ test.describe.serial('5. Birth declaration case - 5', () => {
       await page.locator('#confirm_Declare').click()
 
       await ensureOutboxIsEmpty(page)
+      await ensureInExternalValidationIsEmpty(page)
 
       await page.getByText('Ready to print').click()
 

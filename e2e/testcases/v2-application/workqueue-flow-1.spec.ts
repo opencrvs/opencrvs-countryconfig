@@ -11,6 +11,7 @@ import {
 import { CREDENTIALS } from '../../constants'
 import {
   ensureAssigned,
+  ensureInExternalValidationIsEmpty,
   ensureOutboxIsEmpty,
   selectAction
 } from '../../v2-utils'
@@ -338,6 +339,7 @@ test.describe.serial('1. Workqueue flow - 1', () => {
         .click()
       await page.locator('#confirm_Register').click()
       await ensureOutboxIsEmpty(page)
+      await ensureInExternalValidationIsEmpty(page)
 
       await assertRecordInWorkqueue({
         page,
