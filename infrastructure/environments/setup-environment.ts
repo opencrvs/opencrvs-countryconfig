@@ -890,7 +890,7 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
     ...existingRepositoryVariable,
     ...existingEnvironmentSecrets
   ]
-  var enableEncryption = true
+  let enableEncryption = true
   if (
     existingEnvironmentVariables.length > 0 ||
     existingEnvironmentSecrets.length > 0
