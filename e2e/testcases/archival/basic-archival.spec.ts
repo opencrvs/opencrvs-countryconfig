@@ -304,17 +304,16 @@ test.describe.serial('Basic Archival flow', () => {
 
   test('Archive the declaration', async () => {
     await selectAction(page, 'Archive')
-    await expect(page.getByText('Archive declaration?')).toBeVisible()
     await expect(
       page.getByText(
-        'This will archive the record and remove it from your workspace'
+        'This will remove the declaration from the workqueue and change the status to Archive. To revert this change you will need to search for the declaration.'
       )
     ).toBeVisible()
     await page.getByRole('button', { name: 'Archive', exact: true }).click()
   })
 
   test('Archived declaration is not visible in workqueues', async () => {
-    await page.getByText('Ready for review').click()
+    await page.getByRole('button', { name: 'Ready for review' }).click()
     await expect(
       page.getByRole('button', {
         name: formatName(declaration.child.name)
