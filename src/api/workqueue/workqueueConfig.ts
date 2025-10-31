@@ -272,7 +272,7 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of requires updates workqueue'
     },
     query: {
-      status: { type: 'anyOf', terms: ['DECLARED', 'NOTIFIED'] },
+      status: { type: 'anyOf', terms: ['DECLARED', 'NOTIFIED', 'VALIDATED'] },
       flags: {
         anyOf: [InherentFlags.REJECTED]
       },
