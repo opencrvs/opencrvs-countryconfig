@@ -41,6 +41,7 @@ export async function selectAction(
     | 'Correct record'
     | 'Archive'
     | 'Reject'
+    | 'Review correction request'
 ) {
   if (await page.getByRole('button', { name: 'Assign record' }).isVisible()) {
     await ensureAssigned(page)

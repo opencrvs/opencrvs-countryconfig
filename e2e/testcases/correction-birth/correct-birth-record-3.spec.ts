@@ -21,7 +21,12 @@ import {
 import { format, subDays, subYears } from 'date-fns'
 import { formatV2ChildName } from '../birth/helpers'
 import { IdType } from '@countryconfig/form/v2/person'
-import { ensureAssigned, ensureOutboxIsEmpty, expectInUrl } from '../../utils'
+import {
+  ensureAssigned,
+  ensureOutboxIsEmpty,
+  expectInUrl,
+  selectAction
+} from '../../utils'
 
 test.describe.serial(' Correct record - 3', () => {
   let declaration: DeclarationV2
@@ -956,8 +961,7 @@ test.describe.serial(' Correct record - 3', () => {
       ).toBeVisible()
       await expect(page.locator('#summary').getByText(trackingId)).toBeVisible()
 
-      await page.getByRole('button', { name: 'Action' }).click()
-      await page.locator('#action-dropdownMenu').getByText('Review').click()
+      await selectAction(page, 'Review correction request')
       await visible(page, 'Correction request')
     })
     test('3.8.2 Correction request summary screen', async () => {

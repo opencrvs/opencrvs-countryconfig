@@ -265,7 +265,7 @@ test.describe.serial('Correct record - 2', () => {
     })
 
     test('2.8.2 Correction review page', async () => {
-      await selectAction(page, 'Review')
+      await selectAction(page, 'Review correction request')
       await expect(page.getByText('Requester' + 'Father')).toBeVisible()
       await expect(
         page.getByText(

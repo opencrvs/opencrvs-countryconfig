@@ -685,7 +685,7 @@ test.describe('1. Correct record - 1', () => {
       })
 
       test('1.2.6.2 Correction review', async () => {
-        await selectAction(page, 'Review')
+        await selectAction(page, 'Review correction request')
 
         await expect(
           page.getByText('Requester' + 'Informant (Mother)')
