@@ -8,13 +8,14 @@ import {
   goToSection,
   login,
   logout,
+  switchEventTab,
   uploadImage,
   uploadImageToSection
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
 import { fillDate, validateAddress } from '../helpers'
-import { ensureOutboxIsEmpty, selectAction } from '../../../utils'
+import { ensureOutboxIsEmpty } from '../../../utils'
 
 test.describe.serial('3. Birth declaration case - 3', () => {
   let page: Page
@@ -727,7 +728,7 @@ test.describe.serial('3. Birth declaration case - 3', () => {
   })
 
   test.describe('3.2 Declaration Review by Local Registrar', async () => {
-    test('3.2.1 Navigate to the declaration review page', async () => {
+    test('3.2.1 Navigate to the declaration "Record" -tab', async () => {
       await logout(page)
       await login(page, CREDENTIALS.LOCAL_REGISTRAR)
       await page.getByText('Ready for review').click()
@@ -738,10 +739,10 @@ test.describe.serial('3. Birth declaration case - 3', () => {
         })
         .click()
 
-      await selectAction(page, 'Review')
+      await switchEventTab(page, 'Record')
     })
 
-    test('3.2.2 Verify information on review page', async () => {
+    test('3.2.2 Verify information on "Record" -tab', async () => {
       /*
        * Expected result: should include
        * - Child's First Name
