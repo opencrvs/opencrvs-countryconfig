@@ -51,8 +51,6 @@ test.describe
   test('4.0.3 Reject a declaration', async () => {
     await selectAction(page, 'Reject')
 
-    await page.getByRole('button', { name: 'Reject' }).click()
-
     await page.getByTestId('reject-reason').fill(faker.lorem.sentence())
 
     await page.getByRole('button', { name: 'Send For Update' }).click()
@@ -96,25 +94,16 @@ test.describe
       .click()
 
     // User should navigate to record audit page
-    await expectInUrl(page, `events/${eventId}?workqueue=in-review`)
+    await expectInUrl(page, `events/${eventId}?workqueue=requires-updates-self`)
   })
 
   test('4.4 Click validate action', async () => {
     await ensureAssigned(page)
     await page.goBack()
 
-    const row = getRowByTitle(page, formatV2ChildName(declaration))
-
-    await row.getByRole('button', { name: 'Assign record' }).click()
-    await row.getByRole('button', { name: 'Review' }).click()
-
-    expect(
-      page.url().includes(`events/validate/${eventId}/review`)
-    ).toBeTruthy()
+    await selectAction(page, 'Validate')
   })
   test('4.5 Complete validate action', async () => {
-    await page.getByRole('button', { name: 'Send for approval' }).click()
-    await expect(page.getByText('Send for approval?')).toBeVisible()
     await page.getByRole('button', { name: 'Confirm' }).click()
 
     // Should redirect back to requires update workqueue
