@@ -198,7 +198,15 @@ export const birthEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.birth.action.validate.label'
       },
-      review: BIRTH_DECLARATION_REVIEW,
+      // TODO CIHAN: do we need this at all?
+      review: {
+        title: {
+          defaultMessage: 'Validate',
+          description: 'Title of the form to show in review page',
+          id: 'event.birth.action.validate.form.review.title'
+        },
+        fields: []
+      },
       deduplication: {
         id: 'birth-deduplication',
         label: {
@@ -218,7 +226,15 @@ export const birthEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.birth.action.register.label'
       },
-      review: BIRTH_DECLARATION_REVIEW,
+      // TODO CIHAN: do we need this at all?
+      review: {
+        title: {
+          defaultMessage: 'Register',
+          description: 'Title of the form to show in review page',
+          id: 'event.birth.action.register.form.review.title'
+        },
+        fields: []
+      },
       deduplication: {
         id: 'birth-deduplication',
         label: {
