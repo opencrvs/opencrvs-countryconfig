@@ -102,7 +102,6 @@ test.describe
 
   test('4.4 Click validate action', async () => {
     await ensureAssigned(page)
-    await page.goBack()
 
     await selectAction(page, 'Validate')
   })
