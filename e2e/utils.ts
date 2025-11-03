@@ -101,6 +101,10 @@ export async function ensureAssigned(page: Page) {
   await expect(
     page.getByRole('button', { name: 'Assign record' })
   ).not.toBeVisible({ timeout: SAFE_OUTBOX_TIMEOUT_MS })
+
+  await expect(page.locator('#action-loading-undefined')).not.toBeVisible({
+    timeout: SAFE_OUTBOX_TIMEOUT_MS
+  })
 }
 
 export async function expectInUrl(page: Page, assertionString: string) {

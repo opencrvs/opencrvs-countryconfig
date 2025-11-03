@@ -5,7 +5,12 @@ import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../constants'
 import { createDeclaration, Declaration } from '../test-data/birth-declaration'
 import { ActionType } from '@opencrvs/toolkit/events'
 import { formatV2ChildName } from '../birth/helpers'
-import { ensureOutboxIsEmpty, expectInUrl, selectAction } from '../../utils'
+import {
+  ensureAssigned,
+  ensureOutboxIsEmpty,
+  expectInUrl,
+  selectAction
+} from '../../utils'
 import { getRowByTitle } from '../print-certificate/birth/helpers'
 
 test.describe
@@ -69,20 +74,16 @@ test.describe
       .getByRole('button', { name: formatV2ChildName(declaration) })
       .click()
 
-    // User should navigate to record audit page
-    expect(page.url().includes(`events/overview/${eventId}`)).toBeTruthy()
+    await expectInUrl(page, `events/${eventId}?workqueue=in-review`)
   })
 
-  test('5.5 Click validate action', async () => {
-    await selectAction(page, 'Review')
-    expect(
-      page.url().includes(`events/validate/${eventId}/review`)
-    ).toBeTruthy()
+  test('5.5 Click register action', async () => {
+    await ensureAssigned(page)
+    await selectAction(page, 'Register')
   })
+
   test('5.5 Complete Registration', async () => {
-    await page.getByRole('button', { name: 'Register' }).click()
-    await expect(page.getByText('Register the birth?')).toBeVisible()
-    await page.locator('#confirm_Validate').click()
+    await page.getByRole('button', { name: 'Confirm' }).click()
 
     // Should redirect back to Ready for review workqueue
     await expect(page.locator('#content-name')).toHaveText('Ready for review')

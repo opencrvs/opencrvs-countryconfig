@@ -136,24 +136,7 @@ test.describe.serial('1. User conditional form flow', () => {
         )
       ).not.toBeVisible()
 
-      await page.getByTestId('exit-button').click()
-    })
-
-    test('1.2.2 Navigate to the declaration "Review" page', async () => {
-      await page.getByText('Ready for review').click()
-      await page
-        .getByRole('button', {
-          name: formatName(declaration.applicant.name)
-        })
-        .click()
-
-      await selectAction(page, 'Review')
-
-      await expect(
-        page.getByText(
-          'Field shown when field agent is submitting application.'
-        )
-      ).not.toBeVisible()
+      await page.getByTestId('exit-event').click()
     })
   })
 })
