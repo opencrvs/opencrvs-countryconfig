@@ -9,7 +9,12 @@ import {
   login
 } from '../../helpers'
 import { CREDENTIALS } from '../../constants'
-import { ensureAssigned, ensureOutboxIsEmpty, selectAction } from '../../utils'
+import {
+  ensureAssigned,
+  ensureInExternalValidationIsEmpty,
+  ensureOutboxIsEmpty,
+  selectAction
+} from '../../utils'
 import { assertRecordInWorkqueue, fillDate } from '../birth/helpers'
 import { getRowByTitle } from '../print-certificate/birth/helpers'
 
@@ -329,6 +334,7 @@ test.describe.serial('1. Workqueue flow - 1', () => {
       await page.getByRole('button', { name: 'Confirm' }).click()
 
       await ensureOutboxIsEmpty(page)
+      await ensureInExternalValidationIsEmpty(page)
 
       await assertRecordInWorkqueue({
         page,

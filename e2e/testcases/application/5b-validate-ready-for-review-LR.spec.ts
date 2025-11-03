@@ -7,6 +7,7 @@ import { ActionType } from '@opencrvs/toolkit/events'
 import { formatV2ChildName } from '../birth/helpers'
 import {
   ensureAssigned,
+  ensureInExternalValidationIsEmpty,
   ensureOutboxIsEmpty,
   expectInUrl,
   selectAction
@@ -89,6 +90,7 @@ test.describe
     await expect(page.locator('#content-name')).toHaveText('Ready for review')
 
     await ensureOutboxIsEmpty(page)
+    await ensureInExternalValidationIsEmpty(page)
     await expectInUrl(page, 'workqueue/in-review-all')
 
     await expect(

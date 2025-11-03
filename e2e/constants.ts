@@ -33,6 +33,7 @@ export const SAFE_INPUT_CHANGE_TIMEOUT_MS = 500
  * and outbox is now empty
  */
 export const SAFE_OUTBOX_TIMEOUT_MS = 30 * 1000
+export const SAFE_IN_EXTERNAL_VALIDATION_MS = 30 * 1000
 export const SAFE_WORKQUEUE_TIMEOUT_MS = 5 * 1000
 const TEST_USER_PASSWORD = 'test'
 

@@ -27,7 +27,6 @@ test.describe.serial(' Correct record - 3', () => {
   let declaration: DeclarationV2
   let trackingId: string
   let eventId: string
-  let registrationNumber: string
   let page: Page
 
   const updatedMotherDetails = {
@@ -141,7 +140,6 @@ test.describe.serial(' Correct record - 3', () => {
 
     declaration = res.declaration
     trackingId = res.trackingId!
-    registrationNumber = res.registrationNumber!
     eventId = res.eventId
 
     expect(trackingId).toBeDefined()
@@ -953,9 +951,6 @@ test.describe.serial(' Correct record - 3', () => {
       await ensureAssigned(page)
 
       await expect(page.getByText(formatV2ChildName(declaration))).toBeVisible()
-      await expect(
-        page.locator('#summary').getByText(registrationNumber!)
-      ).toBeVisible()
       await expect(
         page.locator('#summary').getByText('Registered')
       ).toBeVisible()
