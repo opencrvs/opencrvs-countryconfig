@@ -206,7 +206,7 @@ test.describe.serial('Request and accept correction (offline)', () => {
         .getByRole('button', { name: formatV2ChildName(declaration) })
         .click()
 
-      await selectAction(page, 'Review')
+      await selectAction(page, 'Review correction request')
     })
 
     test('Accept correction offline', async () => {
