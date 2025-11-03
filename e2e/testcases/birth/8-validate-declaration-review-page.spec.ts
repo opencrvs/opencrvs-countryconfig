@@ -7,7 +7,8 @@ import {
   formatName,
   login,
   formatDateObjectTo_dMMMMyyyy,
-  expectRowValueWithChangeButton
+  expectRowValueWithChangeButton,
+  expectRowValue
 } from '../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../constants'
@@ -65,7 +66,7 @@ test.describe.serial('8. Validate declaration review page', () => {
     }
   }
 
-  let comment = faker.lorem.sentence()
+  const comment = faker.lorem.sentence()
 
   test.beforeAll(async ({ browser }) => {
     page = await browser.newPage()
@@ -889,298 +890,15 @@ test.describe.serial('8. Validate declaration review page', () => {
         })
         .click()
     })
-    test('8.2.1.1 Verify information added on previous pages', async () => {
-      await selectAction(page, 'Review')
-      /*
-       * Expected result: should include
-       * - Child's First Name
-       * - Child's Family Name
-       * - Change button
-       */
-      await expectRowValueWithChangeButton(
-        page,
-        'child.name',
-        declaration.child.name.firstNames +
-          ' ' +
-          declaration.child.name.familyName
-      )
-
-      /*
-       * Expected result: should include
-       * - Child's Gender
-       * - Change button
-       */
-      await expectRowValueWithChangeButton(
-        page,
-        'child.gender',
-        declaration.child.gender
-      )
-
-      /*
-       * Expected result: should include
-       * - Child's date of birth
-       * - Change button
-       */
-      await expectRowValueWithChangeButton(
-        page,
-        'child.dob',
-        formatDateObjectTo_dMMMMyyyy(declaration.child.birthDate)
-      )
-
-      /*
-       * Expected result: should include
-       * - Child's Place of birth type
-       * - Child's Place of birth details
-       * - Change button
-       */
-      await expectRowValueWithChangeButton(
-        page,
-        'child.placeOfBirth',
-        declaration.placeOfBirth
-      )
-      await expectRowValueWithChangeButton(
-        page,
-        'child.birthLocation',
-        declaration.birthLocation
-      )
-
-      /*
-       * Expected result: should include
-       * - Child's Attendant at birth
-       * - Change button
-       */
-      await expectRowValueWithChangeButton(
-        page,
-        'child.attendantAtBirth',
-        declaration.attendantAtBirth
-      )
-
-      /*
-       * Expected result: should include
-       * - Child's Birth type
-       * - Change button
-       */
-      await expectRowValueWithChangeButton(
-        page,
-        'child.birthType',
-        declaration.birthType
-      )
-
-      /*
-       * Expected result: should include
-       * - Child's Weight at birth
-       * - Change button
-       */
-      await expectRowValueWithChangeButton(
-        page,
-        'child.weightAtBirth',
-        declaration.weightAtBirth.toString()
-      )
-
-      /*
-       * Expected result: should include
-       * - Informant's relation to child
-       * - Change button
-       */
-      await expectRowValueWithChangeButton(
-        page,
-        'informant.relation',
-        declaration.informantType
-      )
-      /*
-       * Expected result: should include
-       * - Informant's Email
-       * - Change button
-       */
-      await expectRowValueWithChangeButton(
-        page,
-        'informant.email',
-        declaration.informantEmail
-      )
-
-      /*
-       * Expected result: should include
-       * - Mother's First Name
-       * - Mother's Family Name
-       * - Change button
-       */
-      await expectRowValueWithChangeButton(
-        page,
-        'mother.name',
-        declaration.mother.name.firstNames
-      )
-
-      /*
-       * Expected result: should include
-       * - Mother's date of birth
-       * - Change button
-       */
-      await expectRowValueWithChangeButton(
-        page,
-        'mother.dob',
-        formatDateObjectTo_dMMMMyyyy(declaration.mother.birthDate)
-      )
-
-      /*
-       * Expected result: should include
-       * - Mother's Nationality
-       * - Change button
-       */
-      await expectRowValueWithChangeButton(
-        page,
-        'mother.nationality',
-        declaration.mother.nationality
-      )
-
-      /*
-       * Expected result: should include
-       * - Mother's Type of Id
-       * - Mother's Id Number
-       * - Change button
-       */
-      await expectRowValueWithChangeButton(
-        page,
-        'mother.idType',
-        declaration.mother.identifier.type
-      )
-      await expectRowValueWithChangeButton(
-        page,
-        'mother.passport',
-        declaration.mother.identifier.id
-      )
-
-      /*
-       * Expected result: should include
-       * - Mother's address
-       * - Change button
-       */
-      await expectRowValueWithChangeButton(
-        page,
-        'mother.address',
-        declaration.mother.address.country
-      )
-      await expectRowValueWithChangeButton(
-        page,
-        'mother.address',
-        declaration.mother.address.district
-      )
-      await expectRowValueWithChangeButton(
-        page,
-        'mother.address',
-        declaration.mother.address.province
-      )
-
-      /*
-       * Expected result: should include
-       * - Father's First Name
-       * - Father's Family Name
-       * - Change button
-       */
-      await expectRowValueWithChangeButton(
-        page,
-        'father.name',
-        declaration.father.name.firstNames +
-          ' ' +
-          declaration.father.name.familyName
-      )
-
-      /*
-       * Expected result: should include
-       * - Father's date of birth
-       * - Change button
-       */
-      await expectRowValueWithChangeButton(
-        page,
-        'father.dob',
-        formatDateObjectTo_dMMMMyyyy(declaration.father.birthDate)
-      )
-
-      /*
-       * Expected result: should include
-       * - Father's Nationality
-       * - Change button
-       */
-      await expectRowValueWithChangeButton(
-        page,
-        'father.nationality',
-        declaration.father.nationality
-      )
-
-      /*
-       * Expected result: should include
-       * - Father's Type of Id
-       * - Father's Id Number
-       * - Change button
-       */
-      await expectRowValueWithChangeButton(
-        page,
-        'father.idType',
-        declaration.father.identifier.type
-      )
-      await expectRowValueWithChangeButton(
-        page,
-        'father.passport',
-        declaration.father.identifier.id
-      )
-
-      /*
-       * Expected result: should include
-       * - Father's address
-       * - Change button
-       */
-      await expectRowValueWithChangeButton(page, 'father.addressSameAs', 'Yes')
+    test('8.2.2 Validate', async () => {
+      await selectAction(page, 'Validate')
     })
 
-    test.describe('8.2.2 Click any "Change" link', async () => {
-      test.skip('Skipped for now', async () => {})
-    })
-    test.describe('8.2.3 Validate supporting document', async () => {
-      test.skip('Skipped for now', async () => {})
-    })
-    test.describe('8.2.4 Validate additional comments box', async () => {
-      test.skip('Skipped for now', async () => {})
-    })
-    test.describe('8.2.5 Validate the declaration send button', async () => {
-      test.skip('Skipped for now', async () => {})
-    })
-
-    test('8.2.6 Validate previous signature and comment, add new signature and comment', async () => {
-      await expect(page.locator('#review____comment')).toContainText(comment)
-      await expect(page.getByAltText('Upload Signature')).toBeVisible()
-
-      comment = faker.lorem.sentence()
-
-      await page.locator('#review____comment').clear()
-      await page.locator('#review____comment').fill(comment)
-
-      await page
-        .locator('#review____signature-form-input')
-        .getByText('Delete')
-        .click()
-
-      await page.getByRole('button', { name: 'Sign', exact: true }).click()
-      await drawSignature(page, 'review____signature_canvas_element', false)
-      await page
-        .locator('#review____signature_modal')
-        .getByRole('button', { name: 'Apply' })
-        .click()
-
-      await expect(page.getByRole('dialog')).not.toBeVisible()
-    })
-
-    test('8.2.7 Click send button', async () => {
-      await page.getByRole('button', { name: 'Send for approval' }).click()
-      await expect(page.getByText('Send for approval?')).toBeVisible()
-    })
-
-    test('8.2.8 Confirm the declaration to send for approval', async () => {
+    test('8.2.3 Confirm the declaration to send for approval', async () => {
       await page.getByRole('button', { name: 'Confirm' }).click()
       await ensureOutboxIsEmpty(page)
       await page.getByText('Sent for approval').click()
 
-      /*
-       * @TODO: When workflows are implemented on V2, this should navigate to correct workflow first.
-       */
       await expect(
         page.getByRole('button', {
           name: formatName(declaration.child.name)
@@ -1201,15 +919,16 @@ test.describe.serial('8. Validate declaration review page', () => {
         })
         .click()
     })
-    test('8.3.1.1 Verify information added on previous pages', async () => {
-      await selectAction(page, 'Review')
+
+    test('8.3.1.1 Assert values', async () => {
+      await page.getByRole('button', { name: 'Record', exact: true }).click()
       /*
        * Expected result: should include
        * - Child's First Name
        * - Child's Family Name
        * - Change button
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'child.name',
         declaration.child.name.firstNames +
@@ -1222,18 +941,14 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Child's Gender
        * - Change button
        */
-      await expectRowValueWithChangeButton(
-        page,
-        'child.gender',
-        declaration.child.gender
-      )
+      await expectRowValue(page, 'child.gender', declaration.child.gender)
 
       /*
        * Expected result: should include
        * - Child's date of birth
        * - Change button
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'child.dob',
         formatDateObjectTo_dMMMMyyyy(declaration.child.birthDate)
@@ -1245,12 +960,8 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Child's Place of birth details
        * - Change button
        */
-      await expectRowValueWithChangeButton(
-        page,
-        'child.placeOfBirth',
-        declaration.placeOfBirth
-      )
-      await expectRowValueWithChangeButton(
+      await expectRowValue(page, 'child.placeOfBirth', declaration.placeOfBirth)
+      await expectRowValue(
         page,
         'child.birthLocation',
         declaration.birthLocation
@@ -1261,7 +972,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Child's Attendant at birth
        * - Change button
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'child.attendantAtBirth',
         declaration.attendantAtBirth
@@ -1272,18 +983,14 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Child's Birth type
        * - Change button
        */
-      await expectRowValueWithChangeButton(
-        page,
-        'child.birthType',
-        declaration.birthType
-      )
+      await expectRowValue(page, 'child.birthType', declaration.birthType)
 
       /*
        * Expected result: should include
        * - Child's Weight at birth
        * - Change button
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'child.weightAtBirth',
         declaration.weightAtBirth.toString()
@@ -1294,7 +1001,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Informant's relation to child
        * - Change button
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'informant.relation',
         declaration.informantType
@@ -1304,11 +1011,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Informant's Email
        * - Change button
        */
-      await expectRowValueWithChangeButton(
-        page,
-        'informant.email',
-        declaration.informantEmail
-      )
+      await expectRowValue(page, 'informant.email', declaration.informantEmail)
 
       /*
        * Expected result: should include
@@ -1316,7 +1019,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Mother's Family Name
        * - Change button
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'mother.name',
         declaration.mother.name.firstNames
@@ -1327,7 +1030,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Mother's date of birth
        * - Change button
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'mother.dob',
         formatDateObjectTo_dMMMMyyyy(declaration.mother.birthDate)
@@ -1338,7 +1041,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Mother's Nationality
        * - Change button
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'mother.nationality',
         declaration.mother.nationality
@@ -1350,12 +1053,12 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Mother's Id Number
        * - Change button
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'mother.idType',
         declaration.mother.identifier.type
       )
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'mother.passport',
         declaration.mother.identifier.id
@@ -1366,17 +1069,17 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Mother's address
        * - Change button
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'mother.address',
         declaration.mother.address.country
       )
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'mother.address',
         declaration.mother.address.district
       )
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'mother.address',
         declaration.mother.address.province
@@ -1388,7 +1091,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Father's Family Name
        * - Change button
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'father.name',
         declaration.father.name.firstNames +
@@ -1401,7 +1104,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Father's date of birth
        * - Change button
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'father.dob',
         formatDateObjectTo_dMMMMyyyy(declaration.father.birthDate)
@@ -1412,7 +1115,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Father's Nationality
        * - Change button
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'father.nationality',
         declaration.father.nationality
@@ -1424,12 +1127,12 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Father's Id Number
        * - Change button
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'father.idType',
         declaration.father.identifier.type
       )
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'father.passport',
         declaration.father.identifier.id
@@ -1440,66 +1143,15 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Father's address
        * - Change button
        */
-      await expectRowValueWithChangeButton(page, 'father.addressSameAs', 'Yes')
+      await expectRowValue(page, 'father.addressSameAs', 'Yes')
     })
 
-    const newFamilyNameForChild = faker.person.lastName('male')
-
-    test("8.3.2.1 Update child's family name", async () => {
-      await page.getByTestId('change-button-child.name').click()
-      await page.getByRole('button', { name: 'Continue' }).click()
-
-      await page.locator('#surname').fill(newFamilyNameForChild)
-
-      await page.getByRole('button', { name: 'Back to review' }).click()
-    })
-
-    test("8.3.2.2 Review child's changed family name", async () => {
-      await expect(page.getByTestId('row-value-child.name')).toContainText(
-        newFamilyNameForChild
-      )
-    })
-
-    test.describe('8.3.3 Validate supporting document', async () => {
-      test.skip('Skipped for now', async () => {})
-    })
-    test.describe('8.3.4 Validate additional comments box', async () => {
-      test.skip('Skipped for now', async () => {})
-    })
-    test.describe('8.3.5 Validate the register button', async () => {
-      test.skip('Skipped for now', async () => {})
-    })
-
-    test('8.3.6 Validate previous signature and comment, add new signature and comment', async () => {
-      await expect(page.locator('#review____comment')).toContainText(comment)
-      await expect(page.getByAltText('Upload Signature')).toBeVisible()
-
-      comment = faker.lorem.sentence()
-
-      await page.locator('#review____comment').clear()
-      await page.locator('#review____comment').fill(comment)
-
-      await page
-        .locator('#review____signature-form-input')
-        .getByText('Delete')
-        .click()
-
-      await page.getByRole('button', { name: 'Sign', exact: true }).click()
-      await drawSignature(page, 'review____signature_canvas_element', false)
-      await page
-        .locator('#review____signature_modal')
-        .getByRole('button', { name: 'Apply' })
-        .click()
-
-      await expect(page.getByRole('dialog')).not.toBeVisible()
-    })
-
-    test('8.3.7 Click send button', async () => {
-      await page.getByRole('button', { name: 'Register' }).click()
+    test('8.3.1.2 Register', async () => {
+      await selectAction(page, 'Register')
+      await page.getByRole('button', { name: 'Confirm' }).click()
     })
 
     test('8.3.8 Confirm the declaration to ready for print', async () => {
-      await page.locator('#confirm_Register').click()
       await ensureOutboxIsEmpty(page)
       await page.getByText('Ready to print').click()
 
@@ -1508,7 +1160,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        */
       await expect(
         page.getByRole('button', {
-          name: `${declaration.child.name.firstNames} ${newFamilyNameForChild}`
+          name: formatName(declaration.child.name)
         })
       ).toBeVisible()
     })

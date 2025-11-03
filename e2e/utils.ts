@@ -41,7 +41,9 @@ export async function selectAction(
     | 'Archive'
     | 'Reject'
 ) {
-  await ensureAssigned(page)
+  if (await page.getByRole('button', { name: 'Assign record' }).isVisible()) {
+    await ensureAssigned(page)
+  }
 
   await page.getByRole('button', { name: 'Action', exact: true }).click()
 
