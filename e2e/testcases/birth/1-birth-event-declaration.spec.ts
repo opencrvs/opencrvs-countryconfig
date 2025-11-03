@@ -228,18 +228,6 @@ test.describe.serial('1. Birth event declaration', () => {
         ).toBeVisible()
       })
 
-      // @TODO: This kind of login is not implemented in V2 events yet
-      test.skip('1.5.2 Click the "continue" button without selecting any relationship to child', async () => {
-        await page.getByRole('button', { name: 'Continue' }).click()
-
-        /*
-         * Expected result: should throw error:
-         * - Required
-         */
-        await expect(page.getByText("Informant's details")).toBeVisible()
-        await expect(page.getByText(REQUIRED_VALIDATION_ERROR)).toBeVisible()
-      })
-
       test('1.5.3 Select any option in relationship to child and click the "continue" button', async () => {
         await page.getByText('Select').click()
         await page.getByText('Mother', { exact: true }).click()
