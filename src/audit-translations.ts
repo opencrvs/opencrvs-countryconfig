@@ -239,8 +239,8 @@ async function extractUsedTranslations() {
           // Use defaultMessage for English
           entry[lang] = msg.defaultMessage || ''
         } else {
-          // Empty strings for other languages
-          entry[lang] = ''
+          // "NEED TRANSLATION" for other languages to make it obvious
+          entry[lang] = 'NEED TRANSLATION'
         }
       })
       return entry
@@ -345,6 +345,27 @@ async function extractUsedTranslations() {
     )
     await writeJSONToCSV(matchedOutputFile, sortedMatchedTranslations)
 
+    // Create new consolidated client.csv
+    // 1. Rename current client.csv to client.old.csv
+    const oldClientFile = path.join(
+      COUNTRY_CONFIG_PATH,
+      'src/translations/client.old.csv'
+    )
+    await fs.promises.rename(translationFile, oldClientFile)
+
+    // 2. Create new client.csv with: used + matched + missing
+    const newClientTranslations = [
+      ...sortedUsedTranslations,
+      ...sortedMatchedTranslations,
+      ...sortedMissingTranslations
+    ]
+    // Sort the combined list
+    const sortedNewClientTranslations = sortBy(
+      newClientTranslations,
+      (row) => row.id
+    )
+    await writeJSONToCSV(translationFile, sortedNewClientTranslations)
+
     console.log(chalk.green.bold('✓ Success!'))
     console.log(
       `Written ${sortedUsedTranslations.length} used translations to ${chalk.white(usedOutputFile)}`
@@ -357,6 +378,12 @@ async function extractUsedTranslations() {
     )
     console.log(
       `Written ${sortedMatchedTranslations.length} matched translations to ${chalk.white(matchedOutputFile)}`
+    )
+    console.log()
+    console.log(chalk.blue.bold('Created new consolidated client.csv'))
+    console.log(`Renamed old client.csv to ${chalk.white(oldClientFile)}`)
+    console.log(
+      `New client.csv contains ${sortedNewClientTranslations.length} translations (used + matched + missing)`
     )
     console.log()
 
