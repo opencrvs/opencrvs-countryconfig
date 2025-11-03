@@ -39,6 +39,7 @@ export async function selectAction(
     | 'Delete'
     | 'Correct record'
     | 'Archive'
+    | 'Reject'
 ) {
   await ensureAssigned(page)
 

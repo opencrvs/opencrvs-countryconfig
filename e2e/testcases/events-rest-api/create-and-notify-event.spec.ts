@@ -641,6 +641,8 @@ test.describe('Events REST API', () => {
 
       await ensureAssigned(page)
 
+      await page.getByRole('button', { name: 'Audit' }).click()
+
       await expect(page.locator('#row_0')).toContainText('Sent incomplete')
       await expect(page.locator('#row_0')).toContainText(clientName)
       await expect(page.locator('#row_0')).toContainText('Health integration')
@@ -877,6 +879,111 @@ test.describe('Events REST API', () => {
       await printAndExpectPopup(page)
 
       await expectInUrl(page, `/workqueue/ready-to-print`)
+    })
+  })
+
+  test.describe
+    .serial('Local Registrar can reject an event notified via integration', async () => {
+    const childName = {
+      firstname: faker.person.firstName(),
+      surname: faker.person.lastName()
+    }
+
+    let token: string
+    let page: Page
+    let eventId: string
+
+    test.beforeAll(async ({ browser }) => {
+      page = await browser.newPage()
+    })
+
+    test.afterAll(async () => {
+      await page.close()
+    })
+
+    test('Login', async () => {
+      token = await login(page)
+    })
+
+    let trackingId: string
+
+    test('Notify event an event via integration', async () => {
+      const createEventResponse = await fetchClientAPI(
+        '/api/events/events',
+        'POST',
+        clientToken,
+        {
+          type: EVENT_TYPE,
+          transactionId: uuidv4()
+        }
+      )
+
+      const createEventResponseBody = await createEventResponse.json()
+      eventId = createEventResponseBody.id
+      const { sub } = decode<{ sub: string }>(token)
+
+      const location = await fetchUserLocationHierarchy(sub, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+
+      const declaration = {
+        ...(await getDeclaration({})),
+        'child.name': childName,
+        'child.dob': undefined
+      }
+
+      const res = await fetchClientAPI(
+        '/api/events/events/notifications',
+        'POST',
+        clientToken,
+        {
+          eventId,
+          transactionId: uuidv4(),
+          type: 'NOTIFY',
+          declaration,
+          annotation: {},
+          createdAtLocation: location[location.length - 1]
+        }
+      )
+
+      trackingId = (await res.json()).trackingId
+    })
+
+    test("Navigate to event via 'Notifications' -workqueue", async () => {
+      await page.getByRole('button', { name: 'Notifications' }).click()
+      await page
+        .getByText(await formatV2ChildName({ 'child.name': childName }))
+        .click()
+    })
+
+    test('Review event', async () => {
+      await selectAction(page, 'Review')
+    })
+
+    test('Reject event', async () => {
+      await page.getByRole('button', { name: 'Reject' }).click()
+      await page.getByTestId('reject-reason').fill(faker.lorem.sentence())
+      await page.getByRole('button', { name: 'Send For Update' }).click()
+    })
+
+    test('Navigate to event via search', async () => {
+      await page.getByRole('button', { name: 'Search' }).click()
+      await page.getByPlaceholder('Search').fill(trackingId)
+      await page.getByRole('button', { name: 'Search' }).click()
+      await page
+        .getByText(await formatV2ChildName({ 'child.name': childName }))
+        .click()
+
+      await ensureAssigned(page)
+    })
+
+    test('Audit event', async () => {
+      await page.getByRole('button', { name: 'Audit' }).click()
+      await expect(page.locator('#row_0')).toContainText('Sent incomplete')
+      await expect(page.locator('#row_0')).toContainText(clientName)
+      await expect(page.locator('#row_3')).toContainText('Rejected')
     })
   })
 })

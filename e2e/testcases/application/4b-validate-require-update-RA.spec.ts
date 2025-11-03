@@ -49,8 +49,7 @@ test.describe
   })
 
   test('4.0.3 Reject a declaration', async () => {
-    // TODO CIHAN: reject
-    await selectAction(page, 'Review')
+    await selectAction(page, 'Reject')
 
     await page.getByRole('button', { name: 'Reject' }).click()
 

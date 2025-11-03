@@ -44,10 +44,7 @@ test.describe
   })
 
   test('4.0.3 Reject a declaration', async () => {
-    // TODO CIHAN: reject
-    await selectAction(page, 'Review')
-
-    await page.getByRole('button', { name: 'Reject' }).click()
+    await selectAction(page, 'Reject')
 
     await page.getByTestId('reject-reason').fill(faker.lorem.sentence())
 
@@ -92,7 +89,7 @@ test.describe
       .click()
 
     // User should navigate to record audit page
-    await expectInUrl(page, `events/${eventId}?workqueue=in-review`)
+    await expectInUrl(page, `events/${eventId}?workqueue=requires-updates-self`)
   })
 
   test('4.5 Acting directly from workqueue should redirect to the same workqueue', async () => {
