@@ -94,7 +94,10 @@ test.describe
       .click()
 
     // User should navigate to record audit page
-    await expectInUrl(page, `events/${eventId}?workqueue=requires-updates-self`)
+    await expectInUrl(
+      page,
+      `events/${eventId}?workqueue=requires-updates-office`
+    )
   })
 
   test('4.4 Click validate action', async () => {
