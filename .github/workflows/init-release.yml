@@ -19,6 +19,11 @@ jobs:
   release_workflow:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - name: Determine the Base Branch
         id: get_base_branch
         run: |
@@ -36,65 +41,20 @@ jobs:
           else
             previous_version="$((x)).$((y)).$((z-1))"
             base_branch="release/$previous_version"
+            if ! git ls-remote --exit-code --heads origin $base_branch; then
+              echo "The branch $base_branch does not exist. Please create it before starting a new Hot-fix release." >> GITHUB_STEP_SUMMARY
+              exit 1
+            fi
           fi
-          echo "target_branch=master" >> $GITHUB_OUTPUT
           echo "base_branch=$base_branch" >> $GITHUB_OUTPUT
-                 
-      - name: Start a new release ${{ inputs.version }} from ${{ steps.get_base_branch.outputs.base_branch }}
-        uses: hoangvvo/gitflow-workflow-action@0.3.8
-        with:
-          develop_branch: ${{ steps.get_base_branch.outputs.base_branch }}
-          main_branch: ${{ steps.get_base_branch.outputs.target_branch }}
-          merge_back_from_main: false
-          version: ${{ inputs.version }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Checkout the release branch
-        uses: actions/checkout@v4
-        with:
-          ref: "release/${{ inputs.version }}"
-
-      - name: Clear auto-generated PR comment
+      
+      - name: Create a new release branch
         run: |
-          REPO="${{ github.repository }}"
-          PR_BRANCH="release/${{ inputs.version }}"
-          PR_NUMBER=$(gh pr list --head "$PR_BRANCH" --repo "$REPO" --json number -q '.[0].number')
-          cd "$GITHUB_WORKSPACE"
-          if [ -f .github/TEMPLATES/RELEASE_PR_TEMPLATE.md ]; then
-            BODY=$(jq -Rs . < .github/TEMPLATES/RELEASE_PR_TEMPLATE.md)
-          else
-            BODY=$(jq -n --arg body "" '$body')
-          fi
-          echo "{\"body\": $BODY}" > body.json
-          gh api \
-            --method PATCH \
-            -H "Accept: application/vnd.github.v3+json" \
-            /repos/"$REPO"/issues/"$PR_NUMBER" \
-            --input body.json 
-          rm body.json
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          git checkout $base_branch
+          version="${{ inputs.version }}"
+          release_branch="release/$version"
+          git checkout -b $release_branch
+          git push origin $release_branch
+
+
     
-      - name: Update version numbers and CHANGELOG
-        run: |
-          cd "$GITHUB_WORKSPACE"
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          yarn version --new-version ${{ inputs.version }} --no-git-tag-version
-          git add .
-          git commit -m "chore: update version to ${{ inputs.version }}"
-
-          sed -i '1,2d' CHANGELOG.md
-          cp CHANGELOG.md COPY_CHANGELOG.md
-          {
-            echo "# Changelog"
-            echo ""
-            echo "## ${{ inputs.version }} Release Candidate"
-            echo ""
-            cat COPY_CHANGELOG.md 
-          } > CHANGELOG.md
-          git add CHANGELOG.md
-          git commit -m "docs: update changelog for ${{ inputs.version }} release candidate"
-          git push origin "release/${{ inputs.version }}"
