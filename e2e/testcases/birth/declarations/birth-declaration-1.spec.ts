@@ -511,7 +511,7 @@ test.describe.serial('1. Birth declaration case - 1', () => {
       await expect(assignmentAuditRow.getByText('Assigned')).toBeVisible()
       await expect(assignmentAuditRow.getByText('Felix Katongo')).toBeVisible()
       await expect(
-        assignmentAuditRow.getByText('Registration Agent')
+        assignmentAuditRow.getByText('Registration Officer')
       ).toBeVisible()
     })
 
