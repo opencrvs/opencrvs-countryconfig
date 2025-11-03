@@ -268,7 +268,6 @@ async function extractUsedTranslations() {
         matchingUnused = unusedTranslations.find((unused) => {
           // Check if unused key is v2.{missingKey}
           const unusedWithoutV2 = unused.id.replace(/^v2\./, '')
-          const missingWithV2 = `v2.${missingTranslation.id}`
 
           return (
             // Case 1: unused = v2.something, missing = something
@@ -282,19 +281,22 @@ async function extractUsedTranslations() {
       }
 
       if (matchingUnused) {
+        // Store the matched unused translation for type safety
+        const matched = matchingUnused
+
         // Create a new entry with:
         // - ID from MISSING (new key used in code)
         // - Description and all language values from UNUSED (old key's translations)
         const matchedEntry: CountryCSVRow = {
           id: missingTranslation.id, // Use the new key ID
-          description: matchingUnused.description // Use old key's description
+          description: matched.description // Use old key's description
         }
         // Copy all language values from the unused (old) translation
         languageColumns.forEach((lang) => {
-          matchedEntry[lang] = matchingUnused[lang]
+          matchedEntry[lang] = matched[lang]
         })
         matchedTranslations.push(matchedEntry)
-        matchedUnusedIds.add(matchingUnused.id) // Track that this unused key was matched
+        matchedUnusedIds.add(matched.id) // Track that this unused key was matched
       } else {
         unmatchedMissing.push(missingTranslation)
       }
