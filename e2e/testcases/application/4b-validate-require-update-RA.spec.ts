@@ -49,6 +49,7 @@ test.describe
   })
 
   test('4.0.3 Reject a declaration', async () => {
+    await ensureAssigned(page)
     await selectAction(page, 'Reject')
 
     await page.getByTestId('reject-reason').fill(faker.lorem.sentence())
