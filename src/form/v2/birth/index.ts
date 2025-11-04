@@ -198,7 +198,6 @@ export const birthEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.birth.action.validate.label'
       },
-      // TODO CIHAN: do we need this at all?
       review: {
         title: {
           defaultMessage: 'Validate',
@@ -226,7 +225,6 @@ export const birthEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.birth.action.register.label'
       },
-      // TODO CIHAN: do we need this at all?
       review: {
         title: {
           defaultMessage: 'Register',
