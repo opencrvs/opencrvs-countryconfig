@@ -81,6 +81,9 @@ test.describe
   test('5.5 Click register action', async () => {
     await ensureAssigned(page)
     await selectAction(page, 'Register')
+    await expect(
+      page.getByRole('heading', { name: 'Register', exact: true })
+    ).toBeVisible()
   })
 
   test('5.5 Complete Registration', async () => {

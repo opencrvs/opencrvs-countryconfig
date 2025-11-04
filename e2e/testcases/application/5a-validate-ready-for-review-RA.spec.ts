@@ -80,6 +80,16 @@ test.describe
   test('5.4 Click validate action', async () => {
     await ensureAssigned(page)
     await selectAction(page, 'Validate')
+
+    await expect(
+      page.getByRole('heading', { name: 'Validate', exact: true })
+    ).toBeVisible()
+
+    await expect(
+      page.getByText(
+        'The informant will receive an email with a registration number that they can use to collect the certificate.'
+      )
+    ).toBeVisible()
   })
 
   test('5.5 Complete validate action', async () => {
