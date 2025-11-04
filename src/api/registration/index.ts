@@ -13,6 +13,7 @@ import { generateRegistrationNumber } from './registrationNumber'
 import { createClient } from '@opencrvs/toolkit/api'
 import {
   ActionInput,
+  aggregateActionDeclarations,
   EventDocument,
   getPendingAction
 } from '@opencrvs/toolkit/events'
@@ -21,6 +22,10 @@ import { v4 as uuidv4 } from 'uuid'
 import { sendInformantNotification } from '../notification/informantNotification'
 import { logger } from '@countryconfig/logger'
 import { createMosipInteropClient } from '@opencrvs/mosip/api'
+import {
+  shouldBirthRegistrationBeForwardedToMosip,
+  shouldDeathRegistrationBeForwardedToMosip
+} from '@countryconfig/form/v2/mosip'
 
 export interface ActionConfirmationRequest extends Hapi.Request {
   payload: EventDocument
@@ -151,12 +156,14 @@ export async function onMosipBirthRegisterHandler(
 ) {
   const token = request.auth.artifacts.token as string
   const event = request.payload
+  const declaration = aggregateActionDeclarations(event)
 
   const registrationNumber = generateRegistrationNumber()
 
-  const shouldForwardToMosip = true // This should be determined by your custom logic, e.g., based on verification status
-
-  if (!shouldForwardToMosip) {
+  if (!shouldBirthRegistrationBeForwardedToMosip(declaration)) {
+    logger.info(
+      'Birth registration will not be forwarded to MOSIP based on custom logic.'
+    )
     await sendInformantNotification({ event, token, registrationNumber })
     return h
       .response({ registrationNumber: generateRegistrationNumber() })
@@ -207,12 +214,11 @@ export async function onMosipDeathRegisterHandler(
 ) {
   const token = request.auth.artifacts.token as string
   const event = request.payload
+  const declaration = aggregateActionDeclarations(event)
 
   const registrationNumber = generateRegistrationNumber()
 
-  const shouldForwardToMosip = true // This should be determined by your custom logic, e.g., based on verification status
-
-  if (!shouldForwardToMosip) {
+  if (!shouldDeathRegistrationBeForwardedToMosip(declaration)) {
     await sendInformantNotification({ event, token, registrationNumber })
     return h
       .response({ registrationNumber: generateRegistrationNumber() })
