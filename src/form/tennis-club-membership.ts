@@ -21,7 +21,9 @@ import {
   field,
   event,
   user,
-  or
+  or,
+  defineConditional,
+  never
 } from '@opencrvs/toolkit/events'
 import { Event } from './types/types'
 import { MAX_NAME_LENGTH } from './v2/birth/validators'
@@ -221,10 +223,80 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
           }
         },
         {
+          id: 'recommender.search',
+          type: FieldType.SEARCH,
+          label: {
+            defaultMessage: 'Registration Number of recommender',
+            description: 'This is the label for the field',
+            id: 'event.tennis-club-membership.action.declare.form.section.recommender.field.search.label'
+          },
+          configuration: {
+            query: {
+              type: 'or',
+              clauses: [
+                {
+                  'legalStatuses.REGISTERED.registrationNumber': {
+                    term: '{term}',
+                    type: 'exact'
+                  }
+                }
+              ]
+            },
+            limit: 10,
+            offset: 0,
+            validation: {
+              validator: defineConditional({
+                type: 'string',
+                pattern: '^[A-Za-z0-9]{12}$',
+                description: 'Must be alpha-numeric and 12 characters long'
+              }),
+              message: {
+                defaultMessage:
+                  'Invalid value: Must be alpha-numeric and 12 characters long',
+                description: 'Error message for invalid value',
+                id: 'tennis-club-membership.searchField.validation.invalid'
+              }
+            },
+            indicators: {
+              ok: {
+                defaultMessage: 'Recommender found',
+                description: 'OK button text',
+                id: 'tennis-club-membership.searchField.indicators.ok'
+              },
+              clearModal: {
+                title: {
+                  defaultMessage: 'Clear recommender?',
+                  description: 'Title for the clear confirmation modal',
+                  id: 'tennis-club-membership.searchField.indicators.clearModal.title'
+                },
+                description: {
+                  defaultMessage:
+                    'This will remove the details of the current recommender.',
+                  description: 'Description for the clear confirmation modal',
+                  id: 'tennis-club-membership.searchField.indicators.clearModal.description'
+                }
+              }
+            }
+          },
+          conditionals: [
+            {
+              type: ConditionalType.DISPLAY_ON_REVIEW,
+              conditional: never()
+            }
+          ]
+        },
+        {
           id: 'recommender.name',
           configuration: { maxLength: MAX_NAME_LENGTH },
           type: FieldType.NAME,
           required: true,
+          parent: field('recommender.search'),
+          value: field('recommender.search').getByPath([
+            'data',
+            'firstResult',
+            'declaration',
+            'applicant.name'
+          ]),
           conditionals: [
             {
               type: ConditionalType.SHOW,
@@ -242,6 +314,10 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
           id: 'recommender.id',
           type: 'TEXT',
           required: true,
+          parent: field('recommender.search'),
+          value: field('recommender.search').get(
+            'data.firstResult.legalStatuses.REGISTERED.registrationNumber'
+          ),
           conditionals: [
             {
               type: ConditionalType.SHOW,
