@@ -110,6 +110,9 @@ export const spouse = defineFormPage({
         }
       ]
     },
+    // fields:
+    // spouse.verified, spouse.query-params, spouse.verify-nid-http-fetch,
+    // spouse.fetch-loader, spouse.id-reader
     ...getMOSIPIntegrationFields('spouse', {
       existingConditionals: [
         {

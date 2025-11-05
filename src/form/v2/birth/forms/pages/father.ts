@@ -112,6 +112,9 @@ export const father = defineFormPage({
         }
       ]
     },
+    // fields:
+    // father.verified, father.query-params, father.verify-nid-http-fetch,
+    // father.fetch-loader, father.id-reader
     ...getMOSIPIntegrationFields('father', {
       existingConditionals: [
         {

@@ -78,6 +78,9 @@ export const deceased = defineFormPage({
     id: 'form.death.deceased.title'
   },
   fields: [
+    // fields:
+    // deceased.verified, deceased.query-params, deceased.verify-nid-http-fetch,
+    // deceased.fetch-loader, deceased.id-reader
     ...getMOSIPIntegrationFields('deceased', {
       existingConditionals: []
     }),
