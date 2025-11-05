@@ -976,10 +976,13 @@ test.describe('Events REST API', () => {
         .getByText(await formatV2ChildName({ 'child.name': childName }))
         .click()
 
-      await ensureAssigned(page)
+      await expect(page.locator('#content-name')).toHaveText(
+        await formatV2ChildName({ 'child.name': childName })
+      )
     })
 
     test('Audit event', async () => {
+      await ensureAssigned(page)
       await page.getByRole('button', { name: 'Audit' }).click()
       await expect(page.locator('#row_0')).toContainText('Sent incomplete')
       await expect(page.locator('#row_0')).toContainText(clientName)
