@@ -828,7 +828,14 @@ export const tennisClubMembershipEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.tennis-club-membership.action.validate.label'
       },
-      review: TENNIS_CLUB_DECLARATION_REVIEW
+      review: {
+        title: {
+          defaultMessage: 'Validate',
+          description: 'Title of the form to show in review page',
+          id: 'event.birth.action.validate.form.review.title'
+        },
+        fields: []
+      }
     },
     {
       type: ActionType.REGISTER,
@@ -838,7 +845,14 @@ export const tennisClubMembershipEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.tennis-club-membership.action.register.label'
       },
-      review: TENNIS_CLUB_DECLARATION_REVIEW
+      review: {
+        title: {
+          defaultMessage: 'Register',
+          description: 'Title of the form to show in review page',
+          id: 'event.birth.action.register.form.review.title'
+        },
+        fields: []
+      }
     },
     {
       type: ActionType.PRINT_CERTIFICATE,
