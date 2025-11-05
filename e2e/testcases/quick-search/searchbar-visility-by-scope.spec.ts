@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 import { CREDENTIALS, SAFE_OUTBOX_TIMEOUT_MS } from '../../constants'
-import { loginToV2 } from '../../helpers'
+import { login } from '../../helpers'
 const testCases = [
   {
     credential: CREDENTIALS.FIELD_AGENT,
@@ -36,7 +36,7 @@ test.describe('Search bar should be visible only if the user has search scope', 
     test(`${credential.USERNAME} ${hasSearch ? 'has' : 'does not have'} search scope`, async ({
       page
     }) => {
-      await loginToV2(page, credential)
+      await login(page, credential)
 
       await expect(page.getByText('Farajaland CRS')).toBeVisible({
         timeout: SAFE_OUTBOX_TIMEOUT_MS
