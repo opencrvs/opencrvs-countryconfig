@@ -242,7 +242,8 @@ export async function onMosipDeathRegisterHandler(
         deathCertificateNumber: registrationNumber,
         fullName: '@TODO',
         dateOfBirth: '@TODO',
-        gender: '@TODO'
+        gender: '@TODO',
+        nationalIdNumber: declaration['deceased.nid']
       },
       notification: {
         recipientEmail: '@TODO',
