@@ -132,7 +132,7 @@ const placeOfDeathMessageDescriptors = {
   }
 } satisfies Record<keyof typeof PlaceOfDeath, TranslationConfig>
 
-export const placeOfDeathOptions = createSelectOptions(
+const placeOfDeathOptions = createSelectOptions(
   PlaceOfDeath,
   placeOfDeathMessageDescriptors
 )
@@ -168,9 +168,10 @@ export const eventDetails = defineFormPage({
               'This is the error message for date of death before date of birth',
             id: 'event.death.action.declare.form.section.event.field.date.error.beforeBirth'
           },
-          validator: field('eventDetails.date')
-            .isAfter()
-            .date(field('deceased.dob'))
+          validator: or(
+            field('eventDetails.date').isAfter().date(field('deceased.dob')),
+            field('deceased.dobUnknown').isEqualTo(true)
+          )
         }
       ],
       label: {

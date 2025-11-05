@@ -239,8 +239,21 @@ docker run --rm \
 echo ""
 echo "Delete all currently existing snapshots"
 echo ""
-docker run --rm --network=$NETWORK appropriate/curl curl -sS -X DELETE -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs"
+# Get list of snapshots as a simple array
+snapshots=$(docker run --rm --network="$NETWORK" appropriate/curl \
+  -s "http://$(elasticsearch_host)/_snapshot/ocrvs/_all" | jq -r '.snapshots[].snapshot' || true)
+echo "Found snapshots:"
+echo "$snapshots" | sed 's/^/ - /'
 
+for snap in $snapshots; do
+  echo "Deleting snapshot: $snap"
+  docker run --rm --network="$NETWORK" appropriate/curl \
+    -s -X DELETE -H "Content-Type: application/json;charset=UTF-8" \
+    "http://$(elasticsearch_host)/_snapshot/ocrvs/${snap}?wait_for_completion=true&pretty"
+done
+docker run --rm --network=$NETWORK appropriate/curl curl -sS -X DELETE -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs"
+echo "Waiting for snapshots to be removed"
+sleep 30
 #-------------------------------------------------------------------------------------
 echo ""
 echo "Register backup folder as an Elasticsearch repository for backing up the search data"
@@ -266,12 +279,7 @@ echo ""
 create_elasticsearch_backup() {
   indices=$(get_target_indices)
   echo "List indices for backup: $indices"
-  indices=$(get_target_indices)
-  echo "List indices for backup: $indices"
   OUTPUT=""
-  json_payload="{\"indices\": \"${indices}\"}"
-  OUTPUT=$(docker run --rm --network=$NETWORK appropriate/curl curl -sS -X PUT -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs/snapshot_${LABEL:-$BACKUP_DATE}?wait_for_completion=true&pretty" -d "$json_payload" 2>/dev/null) || true
-
   json_payload="{\"indices\": \"${indices}\"}"
   OUTPUT=$(docker run --rm --network=$NETWORK appropriate/curl curl -sS -X PUT -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs/snapshot_${LABEL:-$BACKUP_DATE}?wait_for_completion=true&pretty" -d "$json_payload" 2>/dev/null) || true
 

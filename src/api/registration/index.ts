@@ -13,12 +13,19 @@ import { generateRegistrationNumber } from './registrationNumber'
 import { createClient } from '@opencrvs/toolkit/api'
 import {
   ActionInput,
+  aggregateActionDeclarations,
   EventDocument,
   getPendingAction
 } from '@opencrvs/toolkit/events'
-import { GATEWAY_URL } from '@countryconfig/constants'
+import { GATEWAY_URL, MOSIP_INTEROP_URL } from '@countryconfig/constants'
 import { v4 as uuidv4 } from 'uuid'
 import { sendInformantNotification } from '../notification/informantNotification'
+import { logger } from '@countryconfig/logger'
+import { createMosipInteropClient } from '@opencrvs/mosip/api'
+import {
+  shouldBirthRegistrationBeForwardedToMosip,
+  shouldDeathRegistrationBeForwardedToMosip
+} from '@countryconfig/form/v2/mosip'
 
 export interface ActionConfirmationRequest extends Hapi.Request {
   payload: EventDocument
@@ -141,4 +148,117 @@ async function rejectRequestedRegistration(
   })
 
   return event
+}
+
+export async function onMosipBirthRegisterHandler(
+  request: ActionConfirmationRequest,
+  h: Hapi.ResponseToolkit
+) {
+  const token = request.auth.artifacts.token as string
+  const event = request.payload
+  const declaration = aggregateActionDeclarations(event)
+
+  const registrationNumber = generateRegistrationNumber()
+
+  if (!shouldBirthRegistrationBeForwardedToMosip(declaration)) {
+    logger.info(
+      'Birth registration will not be forwarded to MOSIP based on custom logic.'
+    )
+    await sendInformantNotification({ event, token, registrationNumber })
+    return h
+      .response({ registrationNumber: generateRegistrationNumber() })
+      .code(200)
+  }
+
+  try {
+    logger.info(
+      'Passed country specified custom logic check for id creation. Forwarding to MOSIP...'
+    )
+
+    const mosipInteropClient = createMosipInteropClient(
+      MOSIP_INTEROP_URL,
+      `Bearer ${token}`
+    )
+
+    // @TODO: Check whether this might crash country-config if MOSIP doesn't respond
+    mosipInteropClient.register({
+      trackingId: event.trackingId,
+      requestFields: {
+        birthCertificateNumber: registrationNumber,
+        fullName: '@TODO',
+        dateOfBirth: '@TODO',
+        gender: '@TODO'
+      },
+      notification: {
+        recipientEmail: '@TODO',
+        recipientFullName: '@TODO',
+        recipientPhone: '@TODO'
+      },
+      metaInfo: {},
+      audit: {}
+    })
+
+    return h.response().code(202)
+  } catch (error) {
+    return h
+      .response({
+        reason: 'Unexpected error in OpenCRVS-MOSIP interoperability layer'
+      })
+      .code(400)
+  }
+}
+
+export async function onMosipDeathRegisterHandler(
+  request: ActionConfirmationRequest,
+  h: Hapi.ResponseToolkit
+) {
+  const token = request.auth.artifacts.token as string
+  const event = request.payload
+  const declaration = aggregateActionDeclarations(event)
+
+  const registrationNumber = generateRegistrationNumber()
+
+  if (!shouldDeathRegistrationBeForwardedToMosip(declaration)) {
+    await sendInformantNotification({ event, token, registrationNumber })
+    return h
+      .response({ registrationNumber: generateRegistrationNumber() })
+      .code(200)
+  }
+
+  try {
+    logger.info(
+      'Passed country specified custom logic check for id creation. Forwarding to MOSIP...'
+    )
+
+    const mosipInteropClient = createMosipInteropClient(
+      MOSIP_INTEROP_URL,
+      `Bearer ${token}`
+    )
+
+    // @TODO: Check whether this might crash country-config if MOSIP doesn't respond
+    mosipInteropClient.register({
+      trackingId: event.trackingId,
+      requestFields: {
+        deathCertificateNumber: registrationNumber,
+        fullName: '@TODO',
+        dateOfBirth: '@TODO',
+        gender: '@TODO'
+      },
+      notification: {
+        recipientEmail: '@TODO',
+        recipientFullName: '@TODO',
+        recipientPhone: '@TODO'
+      },
+      metaInfo: {},
+      audit: {}
+    })
+
+    return h.response().code(202)
+  } catch (error) {
+    return h
+      .response({
+        reason: 'Unexpected error in OpenCRVS-MOSIP interoperability layer'
+      })
+      .code(400)
+  }
 }

@@ -13,7 +13,6 @@ require('dotenv').config()
 
 import StreamArray from 'stream-json/streamers/StreamArray'
 import path from 'path'
-import Handlebars from 'handlebars'
 import * as Hapi from '@hapi/hapi'
 import * as Pino from 'hapi-pino'
 import * as JWT from 'hapi-auth-jwt2'
@@ -27,7 +26,6 @@ import {
   GATEWAY_URL,
   LOGIN_URL,
   SENTRY_DSN,
-  V2_EVENTS,
   COUNTRY_CONFIG_HOST,
   COUNTRY_CONFIG_PORT,
   CHECK_INVALID_TOKEN,
@@ -62,25 +60,23 @@ import { fontsHandler } from './api/fonts/handler'
 import { recordNotificationHandler } from './api/record-notification/handler'
 import {
   getCustomEventsHandler,
-  onAnyActionHandler
+  onAnyActionHandler,
+  onBirthActionHandler,
+  onDeathActionHandler
 } from '@countryconfig/api/custom-event/handler'
-import { readFileSync } from 'fs'
-import { ActionType, EventDocument } from '@opencrvs/toolkit/events'
+import {
+  ActionDocument,
+  ActionStatus,
+  ActionType,
+  EventDocument
+} from '@opencrvs/toolkit/events'
 import { Event } from './form/types/types'
-import { onRegisterHandler } from './api/registration'
+import {
+  onMosipBirthRegisterHandler,
+  onMosipDeathRegisterHandler,
+  onRegisterHandler
+} from './api/registration'
 import { env } from './environment'
-import {
-  mosipRegistrationForApprovalHandler,
-  mosipRegistrationForReviewHandler,
-  mosipRegistrationHandler,
-  verify
-} from '@opencrvs/mosip'
-import {
-  fhirBirthToMosip,
-  fhirDeathToMosip,
-  shouldForwardToIDSystem
-} from './utils/mosip'
-import { getEventType } from './utils/fhir'
 import { workqueueconfigHandler } from './api/workqueue/handler'
 import getUserNotificationRoutes from './config/routes/userNotificationRoutes'
 import {
@@ -293,6 +289,7 @@ export async function createServer() {
   server.route({
     method: 'GET',
     path: '/ping',
+    // eslint-disable-next-line no-unused-vars
     handler: (request: any, h: any) => {
       // Perform any health checks and return true or false for success prop
       return {
@@ -326,11 +323,7 @@ export async function createServer() {
           ? '/client-config.prod.js'
           : '/client-config.js'
 
-      const template = Handlebars.compile(
-        readFileSync(join(__dirname, file), 'utf8')
-      )
-      const result = template({ V2_EVENTS })
-      return h.response(result).type('application/javascript')
+      return h.file(join(__dirname, file))
     },
     options: {
       auth: false,
@@ -447,33 +440,7 @@ export async function createServer() {
   server.route({
     method: 'POST',
     path: '/event-registration',
-    handler: async (request, h) => {
-      const url = env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
-      const result = await verify({ url, request })
-      const bundle = request.payload as fhir.Bundle
-
-      if (shouldForwardToIDSystem(request.payload as fhir.Bundle, result)) {
-        const payload =
-          getEventType(bundle) === 'BIRTH'
-            ? fhirBirthToMosip(bundle)
-            : fhirDeathToMosip(bundle)
-
-        logger.info(
-          'Passed country specified custom logic check for id creation. Forwarding to MOSIP...'
-        )
-
-        return mosipRegistrationHandler({
-          url,
-          headers: request.headers,
-          payload
-        })(request, h)
-      } else {
-        logger.info(
-          'Failed country specified custom logic check for id creation. Bypassing id system...'
-        )
-        return eventRegistrationHandler(request, h)
-      }
-    },
+    handler: eventRegistrationHandler,
     options: {
       tags: ['api'],
       description:
@@ -735,38 +702,21 @@ export async function createServer() {
 
   server.route({
     method: 'POST',
-    path: '/trigger/events/{event}/actions/sent-notification',
-    handler: mosipRegistrationForReviewHandler({
-      url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
-    }),
+    path: '/trigger/events/birth/actions/{action}',
+    handler: onBirthActionHandler,
     options: {
-      tags: ['api', 'custom-event'],
-      description: 'Receives notifications on sent-notification action'
+      tags: ['api', 'events'],
+      description: 'Receives notifications on event actions'
     }
   })
 
   server.route({
     method: 'POST',
-    path: '/trigger/events/{event}/actions/sent-notification-for-review',
-    handler: mosipRegistrationForReviewHandler({
-      url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
-    }),
+    path: '/trigger/events/death/actions/{action}',
+    handler: onDeathActionHandler,
     options: {
-      tags: ['api', 'custom-event'],
-      description:
-        'Receives notifications on sent-notification-for-review action'
-    }
-  })
-
-  server.route({
-    method: 'POST',
-    path: '/trigger/events/{event}/actions/sent-for-approval',
-    handler: mosipRegistrationForApprovalHandler({
-      url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
-    }),
-    options: {
-      tags: ['api', 'custom-event'],
-      description: 'Receives notifications on sent-for-approval action'
+      tags: ['api', 'events'],
+      description: 'Receives notifications on event actions'
     }
   })
 
@@ -783,7 +733,7 @@ export async function createServer() {
   server.route({
     method: 'POST',
     path: `/trigger/events/${Event.Birth}/actions/${ActionType.REGISTER}`,
-    handler: onRegisterHandler,
+    handler: onMosipBirthRegisterHandler,
     options: {
       tags: ['api', 'events'],
       description: 'Receives notifications on event actions'
@@ -793,7 +743,7 @@ export async function createServer() {
   server.route({
     method: 'POST',
     path: `/trigger/events/${Event.Death}/actions/${ActionType.REGISTER}`,
-    handler: onRegisterHandler,
+    handler: onMosipDeathRegisterHandler,
     options: {
       tags: ['api', 'events'],
       description: 'Receives notifications on event actions'
@@ -830,10 +780,30 @@ export async function createServer() {
 
     if (wasRequestForActionConfirmation && wasActionAcceptedImmediately) {
       const event = request.payload as EventDocument
+
+      const eventWithOptimisticallyApprovedLastAction = {
+        ...event,
+        actions: event.actions.map((action, index) =>
+          index === event.actions.length - 1
+            ? {
+                ...action,
+                status: ActionStatus.Accepted,
+                ...(actionType === ActionType.REGISTER
+                  ? {
+                      registrationNumber: (
+                        response.source as { registrationNumber: string }
+                      ).registrationNumber
+                    }
+                  : {})
+              }
+            : action
+        ) as ActionDocument[]
+      }
+
       const client = getClient()
       try {
         await client.transaction().execute(async (trx) => {
-          await importEvent(event, trx)
+          await importEvent(eventWithOptimisticallyApprovedLastAction, trx)
         })
       } catch (error) {
         // eslint-disable-next-line no-console

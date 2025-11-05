@@ -131,7 +131,9 @@ export const TriggerToSMSTemplate = {
   ['reset-password']: 'resetUserPasswordNotification',
   ['reset-password-by-admin']: 'resetUserPasswordByAdminNotification',
   ['2fa']: 'authenticationCodeNotification',
-  ['all-user-notification']: 'allUserNotification'
+  ['all-user-notification']: 'allUserNotification',
+  ['change-email-address']: 'authenticationCodeNotification',
+  ['change-phone-number']: 'authenticationCodeNotification'
 } satisfies Record<TriggerEvent, SMSTemplateType>
 
 function isTriggerEvent(event: any): event is TriggerEvent {
