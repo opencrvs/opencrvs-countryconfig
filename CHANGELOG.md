@@ -27,6 +27,12 @@
 
 - Tiltfile: Improved Kubernetes support for development environment [#10672](https://github.com/opencrvs/opencrvs-core/issues/10672)
 
+- Updated `@opencrvs/mosip` to v1.9.0 with the following enhancement:
+
+  - Integrated with OpenCRVS v1.9.0's new event system backend APIs [#50](https://github.com/opencrvs/opencrvs-countryconfig-mosip/pull/50)
+
+- Added helper methods to support MOSIP integration field configurations in forms
+
 ### Bug fixes
 
 - Allow non-interactive upgrades with apt [#10204](https://github.com/opencrvs/opencrvs-core/issues/10204)
