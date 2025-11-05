@@ -9,6 +9,7 @@
 ### Improvements
 
 - Make encryption step optional [#1123](https://github.com/opencrvs/opencrvs-countryconfig/pull/1123)
+- Added validation for ENCRYPTION_KEY [#10896](https://github.com/opencrvs/opencrvs-core/issues/10896)
 
 ## 1.9.0
 
