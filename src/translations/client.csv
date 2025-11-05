@@ -354,6 +354,7 @@ constants.phoneNumber,Phone label,Phone number,Numéro de téléphone
 constants.policeOfficer,The description for Police Officer type,Police Officer,Agent de police
 constants.reason,Label for Reason the declaration was rejected,Reason,Raison
 constants.record,Label for header table header Record,Record,Dossier
+constants.audit,Label for the audit header,Audit,Audit
 constants.refresh,label for refresh,refresh,Rafraîchir
 constants.registered,A label for registered,Registered,Enregistré
 constants.registered.status,A label for registered,Registered,Enregistré
@@ -857,6 +858,7 @@ event.birth.action.declare.form.section.person.field.nid.label,This is the label
 event.birth.action.declare.form.section.person.field.occupation.label,This is the label for the field,Occupation,Profession
 event.birth.action.declare.form.section.person.field.passport.label,This is the label for the field,ID Number,Numéro d'identification
 event.birth.action.declare.label,This is shown as the action name anywhere the user can trigger the action from,Declare,Declare
+event.birth.action.reject.label,This is the label for the reject action,Reject,Rejeter
 event.birth.action.delete.label,Label for delete button in dropdown menu,Delete,Supprimer
 event.birth.action.form.section.collector.other.field.name.label,This is the label for the name field of OTHER collector,Collector's name,Nom du collecteur
 event.birth.action.mark-as-duplicate.label,Label for review potential duplicate button in dropdown menu,Review,Revoir
@@ -1117,6 +1119,8 @@ event.tennis-club-membership.summary.field.recommender.firstname.empty,Shown whe
 event.tennis-club-membership.summary.field.recommender.firstname.label,Label for the recommender's first name field,Recommender's First Name,Recommender's First Name
 event.tennis-club-membership.summary.field.recommender.id.empty,Shown when the recommender id is missing in summary,Recommender's id missing,Recommender's id missing
 event.tennis-club-membership.summary.field.recommender.id.label,Label for the recommender's ID field,Recommender's ID,Recommender's ID
+events.overview.tabs.record,Title of the Record tab,Record,Enregistrement
+events.overview.tabs.audit,Title of the Audit tab,Audit,Audit
 events.history.status,Events status history,"{status, select, CREATE {Declaration started} NOTIFY {Sent incomplete} VALIDATE {Sent for approval} DRAFT {Draft} DECLARE {Sent for review} REGISTER {Registered} PRINT_CERTIFICATE {Certified} REJECT {Rejected} ARCHIVE {Archived} DUPLICATE_DETECTED {Flagged as potential duplicate} MARKED_AS_DUPLICATE {Marked as a duplicate} MARK_AS_NOT_DUPLICATE {Marked not a duplicate} CORRECTED {Record corrected} REQUEST_CORRECTION {Correction requested} APPROVE_CORRECTION {Correction approved} REJECT_CORRECTION {Correction rejected} READ {Viewed} ASSIGN {Assigned} UNASSIGN {Unassigned} UPDATE {Updated} other {Unknown}}","{status, select, CREATE {Déclaration commencée} NOTIFY {Envoyé incomplet} VALIDATE {Envoyé pour approbation} DRAFT {Brouillon} DECLARE {Envoyé pour révision} REGISTER {Enregistré} PRINT_CERTIFICATE {Certifié} REJECT {Rejeté} ARCHIVE {Archivé} DUPLICATE_DETECTED {Marqué comme doublon} MARKED_AS_DUPLICATE {Marqué comme doublon} MARK_AS_NOT_DUPLICATE {Marqué comme non en doublon} CORRECTED {Enregistrement corrigé} REQUEST_CORRECTION {Correction demandée} APPROVE_CORRECTION {Correction approuvée} REJECT_CORRECTION {Correction refusée} READ {Consulté} ASSIGN {Attribué} UNASSIGN {Désattribué} UPDATE {Mis à jour} other {Inconnu}}"
 events.outbox.processingAction,Message in outbox when processing action,"{action, select, DECLARE {Sending} REGISTER {Registering} VALIDATE {Sending for approval} NOTIFY {Sending} REJECT {Sending for updates} ARCHIVE {Archiving} PRINT_CERTIFICATE {Certifying} REQUEST_CORRECTION {Requesting correction} APPROVE_CORRECTION {Approving correction} REJECT_CORRECTION {Rejecting correction} ASSIGN {Assigning} UNASSIGN {Unassigning} other {processing action}}","{action, select, DECLARE {Envoi} REGISTER {Enregistrement} VALIDATE {Envoi pour approbation} NOTIFY {Envoi} REJECT {Envoi pour mise à jour} ARCHIVE {Archivage} PRINT_CERTIFICATE {Certification} REQUEST_CORRECTION {Demande de correction} APPROVE_CORRECTION {Approbation de la correction} REJECT_CORRECTION {Rejet de la correction} ASSIGN {Attribution} UNASSIGN {Désattribution} other {action en cours}}"
 events.outbox.waitingForAction,Message in outbox when waiting for action,"Waiting to {action, select, DECLARE {send} CREATE {send} REGISTER {register} VALIDATE {send for approval} NOTIFY {send} REJECT {send for updates} ARCHIVE {archive} PRINT_CERTIFICATE {certify} REQUEST_CORRECTION {request correction} APPROVE_CORRECTION {approve correction} REJECT_CORRECTION {reject correction} ASSIGN {assign} UNASSIGN {unassign} other {action}}","En attente de {action, select, DECLARE {l'envoi} CREATE {l'envoi} REGISTER {l'enregistrement} VALIDATE {l'envoi pour approbation} NOTIFY {l'envoi} REJECT {l'envoi pour mise à jour} ARCHIVE {l'archivage} PRINT_CERTIFICATE {la certification} REQUEST_CORRECTION {la demande de correction} APPROVE_CORRECTION {l'approbation de la correction} REJECT_CORRECTION {le rejet de la correction} ASSIGN {l'attribution} UNASSIGN {la désattribution} other {l'action}}"
@@ -2160,6 +2164,7 @@ user.profile.startDate,Title for startDate field,Start date,Date de début
 user.profile.userName,Title for userName field,Username,Nom d'utilisateur
 userRole.administrator,Name for user role Administrator,Administrator,Administrateur
 userRole.communityLeader, Name for user role Community Leader,Community Leader,Leader communautaire
+user.avatar,Aria label for user avatar button,User avatar,Avatar utilisateur
 userRole.communityLeader,Name for user role Community Leader,Community Leader,Leader communautaire
 userRole.fieldAgent,Name for user role Field Agent,Field Agent,Agent de terrain
 userRole.healthcareWorker,Name for user role Healthcare Worker,Healthcare Worker,Personnel de santé
