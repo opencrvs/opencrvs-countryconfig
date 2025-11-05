@@ -149,6 +149,9 @@ export const informant = defineFormPage({
       ],
       parent: field('informant.relation')
     },
+    // fields:
+    // informant.verified, informant.query-params, informant.verify-nid-http-fetch,
+    // informant.fetch-loader, informant.id-reader
     ...getMOSIPIntegrationFields('informant', {
       existingConditionals: [
         {
@@ -366,7 +369,7 @@ export const informant = defineFormPage({
               id: 'event.birth.action.declare.form.nid.unique'
             },
             validator: and(
-              not(field('informant.nid').isEqualTo(field('mother.nid'))),
+              not(field('informant.nid').isEqualTo(field('informant.nid'))),
               not(field('informant.nid').isEqualTo(field('father.nid')))
             )
           }

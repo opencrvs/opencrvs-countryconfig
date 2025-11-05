@@ -1,11 +1,6 @@
 import { test, expect, type Page } from '@playwright/test'
 import path from 'path'
-import {
-  ensureLoginPageReady,
-  continueForm,
-  createPIN,
-  login
-} from '../../helpers'
+import { ensureLoginPageReady, continueForm, login } from '../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS, LOGIN_URL } from '../../constants'
 
@@ -33,11 +28,7 @@ test.describe.serial('1. Create user -1', () => {
 
   test.describe('1.1 User creation started by national system admin', async () => {
     test.beforeAll(async () => {
-      await login(
-        page,
-        CREDENTIALS.NATIONAL_SYSTEM_ADMIN.USERNAME,
-        CREDENTIALS.NATIONAL_SYSTEM_ADMIN.PASSWORD
-      )
+      await login(page, CREDENTIALS.NATIONAL_SYSTEM_ADMIN)
       await page.getByRole('button', { name: 'Team' }).click()
       await expect(page.getByText('HQ Office')).toBeVisible()
       await page.click('#add-user')

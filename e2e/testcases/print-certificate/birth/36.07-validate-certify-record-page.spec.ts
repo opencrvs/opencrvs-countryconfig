@@ -1,14 +1,35 @@
 import { expect, test, type Page } from '@playwright/test'
-import { BirthDeclaration } from '../../birth/types'
-import { getDeclarationForPrintCertificate } from './certificate-helper'
-import { format } from 'date-fns'
-import { CLIENT_URL } from '../../../constants'
+import { CREDENTIALS } from '../../../constants'
+import { getToken } from '../../../helpers'
+import { login } from '../../../helpers'
+import {
+  createDeclaration,
+  getDeclaration,
+  Declaration
+} from '../../test-data/birth-declaration'
+import {
+  navigateToCertificatePrintAction,
+  selectCertificationType,
+  selectRequesterType
+} from './helpers'
+import { expectInUrl } from '../../../utils'
 
 test.describe.serial('7.0 Validate "Certify record" page', () => {
-  let declaration: BirthDeclaration
+  let eventId: string
+  let declaration: Declaration
   let page: Page
 
   test.beforeAll(async ({ browser }) => {
+    const token = await getToken(
+      CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
+      CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+    )
+    const res = await createDeclaration(
+      token,
+      await getDeclaration({ informantRelation: 'BROTHER' })
+    )
+    eventId = res.eventId
+    declaration = res.declaration
     page = await browser.newPage()
   })
 
@@ -16,63 +37,44 @@ test.describe.serial('7.0 Validate "Certify record" page', () => {
     await page.close()
   })
 
-  test('7.1 continue with "Print and issue to informant (Brother)" redirect to Collector details page', async () => {
-    const response = await getDeclarationForPrintCertificate(page)
-    declaration = response.declaration
-    await page
-      .locator('#certificateTemplateId-form-input > span')
-      .first()
-      .click()
+  test('7.0.1 Log in', async () => {
+    await login(page)
+  })
 
-    await page.getByLabel('Print and issue to informant (Brother)').check()
+  test('7.0.2 Navigate to certificate print action', async () => {
+    await page.getByRole('button', { name: 'Ready to print' }).click()
+    await navigateToCertificatePrintAction(page, declaration)
+  })
+
+  test('7.1 continue with "Print and issue to Informant (Brother)" redirect to Collector details page', async () => {
+    await selectCertificationType(page, 'Birth Certificate')
+    await selectRequesterType(page, 'Print and issue to Informant (Brother)')
     await page.getByRole('button', { name: 'Continue' }).click()
-    await expect(
-      page.url().includes(`/print/check/${declaration.id}/birth/informant`)
-    ).toBeTruthy()
-
-    await page.getByRole('button', { name: 'Verified' }).click()
-    await expect(
-      page.url().includes(`/print/payment/${declaration.id}/birth`)
-    ).toBeTruthy()
-
-    await expect(page.locator('#content-name')).toContainText('Collect payment')
-    await expect(page.locator('#service')).toContainText(
-      'Birth registration before 30 days of date of birth'
+    await expectInUrl(
+      page,
+      `/print-certificate/${eventId}/pages/collector.identity.verify`
     )
-    await expect(page.locator('#amountDue')).toContainText('$5.00')
-    await expect(page.locator('#Continue')).toBeVisible()
+    await page.getByRole('button', { name: 'Verified' }).click()
+    await expectInUrl(
+      page,
+      `/print-certificate/${eventId}/pages/collector.collect.payment`
+    )
+
+    await expect(page.locator('#content-name')).toContainText('Collect Payment')
+    await expect(
+      page.getByText('Birth registration before 30 days of date of birth')
+    ).toBeVisible()
+    await expect(page.getByText('$5.00')).toBeVisible()
   })
 
   test('7.2 should navigate to ready to certify page on continue button click', async () => {
-    await page.locator('#Continue').click()
-    await expect(
-      page.url().includes(`/review/${declaration.id}/birth`)
-    ).toBeTruthy()
-  })
-
-  test('7.3 should skip payment page if payment is 0', async () => {
-    await page.goto(`${CLIENT_URL}/registration-home/print/1`)
-    const response = await getDeclarationForPrintCertificate(page, {
-      child: { birthDate: format(new Date(), 'yyyy-MM-dd') },
-      isLoggedIn: true
-    })
-    declaration = response.declaration
-    await page
-      .locator('#certificateTemplateId-form-input > span')
-      .first()
-      .click()
-    await page
-      .getByText('Birth Certificate Certified Copy', { exact: true })
-      .click()
-    await page.getByLabel('Print and issue to informant (Brother)').check()
     await page.getByRole('button', { name: 'Continue' }).click()
-    await expect(
-      page.url().includes(`/print/check/${declaration.id}/birth/informant`)
-    ).toBeTruthy()
-
-    await page.getByRole('button', { name: 'Verified' }).click()
-    await expect(
-      page.url().includes(`/review/${declaration.id}/birth`)
-    ).toBeTruthy()
+    await expectInUrl(
+      page,
+      `/print-certificate/${eventId}/review?templateId=v2.birth-certificate`
+    )
   })
+
+  // @TODO: this is not implemented in events v2 yet
+  test.skip('7.3 should skip payment page if payment is 0', async () => {})
 })

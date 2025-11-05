@@ -20,11 +20,6 @@ export const GATEWAY_HOST =
     ? 'http://localhost:7070'
     : SCHEME + '://gateway.' + DOMAIN
 
-export const CLIENT_V2_URL =
-  process.env.NODE_ENV === 'development'
-    ? 'http://localhost:3000/v2'
-    : SCHEME + '://register.' + DOMAIN + '/v2'
-
 /*
  * This timeout is to ensure that all previous actions have been completed
  * including filling inputs and that the changed values have been reflected
