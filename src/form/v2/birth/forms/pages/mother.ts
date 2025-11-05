@@ -109,6 +109,9 @@ export const mother = defineFormPage({
         }
       ]
     },
+    // fields:
+    // mother.verified, mother.query-params, mother.verify-nid-http-fetch,
+    // mother.fetch-loader, mother.id-reader
     ...getMOSIPIntegrationFields('mother', {
       existingConditionals: [
         {
