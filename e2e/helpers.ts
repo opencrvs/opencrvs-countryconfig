@@ -20,6 +20,10 @@ async function createPIN(page: Page) {
 }
 
 export async function logout(page: Page) {
+  if (await page.getByTestId('exit-event').isVisible()) {
+    await page.getByTestId('exit-event').click()
+  }
+
   if (isMobile(page)) {
     await page.goto(CLIENT_URL)
     await page.getByRole('button', { name: 'Toggle menu', exact: true }).click()
@@ -556,6 +560,16 @@ export const fetchUserLocationHierarchy = async (
   return res.data.getUser.primaryOffice.hierarchy.map(({ id }) => id)
 }
 
+export async function expectRowValue(
+  page: Page,
+  fieldName: string,
+  assertionText: string
+) {
+  await expect(page.getByTestId(`row-value-${fieldName}`)).toContainText(
+    assertionText
+  )
+}
+
 export async function expectRowValueWithChangeButton(
   page: Page,
   fieldName: string,
@@ -566,4 +580,8 @@ export async function expectRowValueWithChangeButton(
   )
 
   await expect(page.getByTestId(`change-button-${fieldName}`)).toBeVisible()
+}
+
+export async function switchEventTab(page: Page, tab: 'Audit' | 'Record') {
+  await page.getByRole('button', { name: tab, exact: true }).click()
 }

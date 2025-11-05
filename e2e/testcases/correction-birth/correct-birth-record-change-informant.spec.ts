@@ -325,7 +325,8 @@ test.describe.serial('Correct record - change informant type', () => {
     await page.getByRole('button', { name: 'Correct record' }).click()
     await page.getByRole('button', { name: 'Confirm' }).click()
 
-    expect(page.url().includes(`events/overview/${eventId}`)).toBeTruthy()
+    await expect(page.url().includes(`events/${eventId}`)).toBeTruthy()
+    await page.getByTestId('exit-event').click()
     await page.getByRole('button', { name: 'Outbox' }).click()
 
     await page.waitForTimeout(SAFE_INPUT_CHANGE_TIMEOUT_MS)
@@ -346,6 +347,7 @@ test.describe.serial('Correct record - change informant type', () => {
     })
 
     await ensureAssigned(page)
+    await page.getByRole('button', { name: 'Audit' }).click()
 
     await expect(
       page

@@ -86,6 +86,6 @@ test.describe.serial('Navigating in and out of action', () => {
 
   test('Browser forward button should take user back to the event overview page', async () => {
     await page.goForward()
-    await expectInUrl(page, `/events/overview/${eventId}`)
+    await expectInUrl(page, `/events/${eventId}?workqueue=ready-to-print`)
   })
 })

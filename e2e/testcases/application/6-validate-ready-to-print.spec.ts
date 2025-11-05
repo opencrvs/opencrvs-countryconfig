@@ -4,7 +4,7 @@ import { login, getToken } from '../../helpers'
 import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../constants'
 import { createDeclaration, Declaration } from '../test-data/birth-declaration'
 import { formatV2ChildName } from '../birth/helpers'
-import { selectAction } from '../../utils'
+import { ensureAssigned, expectInUrl, selectAction } from '../../utils'
 
 test.describe.serial('6 Validate Ready to print tab', () => {
   let page: Page
@@ -70,16 +70,15 @@ test.describe.serial('6 Validate Ready to print tab', () => {
       .getByRole('button', { name: formatV2ChildName(declaration) })
       .click()
 
-    // User should navigate to record audit page
-    expect(page.url().includes(`events/overview/${eventId}`)).toBeTruthy()
+    await expectInUrl(page, `events/${eventId}?workqueue=ready-to-print`)
   })
 
   test('6.5 Click Print action', async () => {
     await selectAction(page, 'Print')
-    expect(
-      page
-        .url()
-        .includes(`/events/print-certificate/${eventId}/pages/collector`)
-    ).toBeTruthy()
+    await expect(page.locator('#content-name')).toHaveText('Certify record')
+    await expectInUrl(
+      page,
+      `/events/print-certificate/${eventId}/pages/collector?workqueue=ready-to-print`
+    )
   })
 })

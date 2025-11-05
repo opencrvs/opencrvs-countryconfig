@@ -311,7 +311,7 @@ test.describe.serial('Correct record - Change ages', () => {
   })
 
   test('Approve correction request', async () => {
-    await selectAction(page, 'Review')
+    await selectAction(page, 'Review correction request')
     await page.getByRole('button', { name: 'Approve', exact: true }).click()
     await page.getByRole('button', { name: 'Confirm', exact: true }).click()
   })
@@ -325,7 +325,7 @@ test.describe.serial('Correct record - Change ages', () => {
 
     await ensureAssigned(page)
 
-    await selectAction(page, 'View')
+    await page.getByRole('button', { name: 'Record', exact: true }).click()
 
     await expect(
       page.getByTestId('row-value-informant.age').getByText(informantAgeAfter)

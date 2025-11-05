@@ -897,7 +897,8 @@ test.describe.serial('Correct record - 4', () => {
      * - be navigated to sent for approval tab
      * - include the declaration in this tab
      */
-    expect(page.url().includes(`events/overview/${eventId}`)).toBeTruthy()
+    expect(page.url().includes(`events/${eventId}`)).toBeTruthy()
+    await page.getByTestId('exit-event').click()
     await page.getByRole('button', { name: 'Outbox' }).click()
 
     /*
@@ -927,6 +928,7 @@ test.describe.serial('Correct record - 4', () => {
     })
 
     await ensureAssigned(page)
+    await page.getByRole('button', { name: 'Audit' }).click()
 
     /*
      * Expected result: should show in task history

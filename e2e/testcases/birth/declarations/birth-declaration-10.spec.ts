@@ -4,7 +4,8 @@ import {
   drawSignature,
   formatName,
   goToSection,
-  login
+  login,
+  switchEventTab
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
@@ -191,7 +192,7 @@ test.describe.serial('10. Birth declaration case - 10', () => {
   })
 
   test.describe('10.2 Declaration Review by RA', async () => {
-    test('10.2.1 Navigate to the declaration review page', async () => {
+    test("10.2.1 Navigate to the declaration 'Record' tab", async () => {
       await login(page, CREDENTIALS.REGISTRATION_AGENT)
 
       await page.getByText('Notifications').click()
@@ -203,10 +204,10 @@ test.describe.serial('10. Birth declaration case - 10', () => {
         })
         .click()
       await page.getByRole('button', { name: 'Action', exact: true }).click()
-      await page.getByText('View', { exact: true }).click()
+      await switchEventTab(page, 'Record')
     })
 
-    test('10.2.2 Verify information on preview page', async () => {
+    test("10.2.2 Verify information on 'Record' tab", async () => {
       /*
        * Expected result: should include
        * - Child's First Name

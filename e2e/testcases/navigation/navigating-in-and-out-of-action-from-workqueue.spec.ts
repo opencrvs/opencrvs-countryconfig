@@ -8,7 +8,7 @@ import {
   selectCertificationType,
   selectRequesterType
 } from '../print-certificate/birth/helpers'
-import { expectInUrl } from '../../utils'
+import { expectInUrl, selectAction } from '../../utils'
 import { ActionType } from '@opencrvs/toolkit/events'
 
 test.describe.serial('Navigating in and out of action', () => {
@@ -58,25 +58,21 @@ test.describe.serial('Navigating in and out of action', () => {
   })
 
   test('Register the event', async () => {
-    await page.getByRole('button', { name: 'Register' }).click()
-    await expect(page.getByText('Register the birth?')).toBeVisible()
-    await page.locator('#confirm_Register').click()
+    await selectAction(page, 'Register')
+    await page.getByRole('button', { name: 'Confirm' }).click()
 
     // Should redirect back to Ready for review workqueue
     await page.waitForURL(`**/workqueue/in-review-all`)
     await expectInUrl(page, '/workqueue/in-review-all')
   })
 
-  test('Browser back button should take user to the another workqueue instead of action flow', async () => {
+  test('Browser back button should take user back to the event overview page "Record" -tab', async () => {
     await page.goBack()
-    await page.waitForURL(`**/workqueue/in-review-all`)
-    await expectInUrl(page, '/workqueue/in-review-all')
-    await page.goBack()
-    await page.waitForURL(`**/workqueue/assigned-to-you`)
-    await expectInUrl(page, '/workqueue/assigned-to-you')
+    await expectInUrl(page, `/events/${eventId}/record?workqueue=in-review-all`)
   })
 
   test('Navigate to the "Ready to print" -workqueue', async () => {
+    await page.getByTestId('exit-event').click()
     await page.getByRole('button', { name: 'Ready to print' }).click()
   })
 
@@ -96,7 +92,7 @@ test.describe.serial('Navigating in and out of action', () => {
 
     await page.getByRole('button', { name: 'Assign', exact: true }).click()
 
-    // Click the "Review" button inside that row
+    // Click the "Print" button inside that row
     await row
       .getByRole('button', { name: 'Print', exact: true })
       .first()
@@ -124,10 +120,10 @@ test.describe.serial('Navigating in and out of action', () => {
     await expectInUrl(page, '/workqueue/ready-to-print')
   })
 
-  test('Browser back button should take user to the front page instead of action flow', async () => {
+  test('Browser back button should take user to the "In review all" workqueue instead of action flow', async () => {
     await page.goBack()
-    await page.waitForURL(`**/workqueue/assigned-to-you`)
-    await expectInUrl(page, '/workqueue/assigned-to-you')
+    await page.waitForURL(`**/workqueue/in-review-all`)
+    await expectInUrl(page, `/workqueue/in-review-all`)
   })
 
   test('Browser forward button should take user back to the workqueue', async () => {
