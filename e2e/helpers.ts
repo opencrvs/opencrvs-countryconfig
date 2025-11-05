@@ -5,7 +5,8 @@ import {
   CREDENTIALS,
   GATEWAY_HOST,
   SAFE_INPUT_CHANGE_TIMEOUT_MS,
-  SAFE_OUTBOX_TIMEOUT_MS
+  SAFE_OUTBOX_TIMEOUT_MS,
+  SAFE_WORKQUEUE_TIMEOUT_MS
 } from './constants'
 import { format, parseISO } from 'date-fns'
 import { isArray, random } from 'lodash'
@@ -566,7 +567,8 @@ export async function expectRowValue(
   assertionText: string
 ) {
   await expect(page.getByTestId(`row-value-${fieldName}`)).toContainText(
-    assertionText
+    assertionText,
+    { timeout: SAFE_OUTBOX_TIMEOUT_MS }
   )
 }
 
