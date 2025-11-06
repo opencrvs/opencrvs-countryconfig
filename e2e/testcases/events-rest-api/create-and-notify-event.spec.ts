@@ -1,6 +1,10 @@
 import { expect, Page, test } from '@playwright/test'
 import { v4 as uuidv4 } from 'uuid'
-import { CLIENT_URL, GATEWAY_HOST } from '../../constants'
+import {
+  CLIENT_URL,
+  GATEWAY_HOST,
+  SAFE_IN_EXTERNAL_VALIDATION_MS
+} from '../../constants'
 import { CREDENTIALS } from '../../constants'
 import {
   drawSignature,
@@ -8,7 +12,8 @@ import {
   formatName,
   getClientToken,
   getToken,
-  login
+  login,
+  switchEventTab
 } from '../../helpers'
 import { addDays, format, subDays } from 'date-fns'
 import { faker } from '@faker-js/faker'
@@ -979,11 +984,13 @@ test.describe('Events REST API', () => {
       await expect(page.locator('#content-name')).toHaveText(
         await formatV2ChildName({ 'child.name': childName })
       )
+      await page.waitForTimeout(SAFE_IN_EXTERNAL_VALIDATION_MS)
+      await ensureAssigned(page)
+      await page.waitForTimeout(SAFE_IN_EXTERNAL_VALIDATION_MS)
     })
 
     test('Audit event', async () => {
-      await ensureAssigned(page)
-      await page.getByRole('button', { name: 'Audit' }).click()
+      await switchEventTab(page, 'Audit')
       await expect(page.locator('#row_0')).toContainText('Sent incomplete')
       await expect(page.locator('#row_0')).toContainText(clientName)
       await expect(page.locator('#row_3')).toContainText('Rejected')
