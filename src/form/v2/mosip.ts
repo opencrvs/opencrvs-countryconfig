@@ -3,6 +3,7 @@ import {
   OPENID_PROVIDER_CLIENT_ID,
   ESIGNET_REDIRECT_URL
 } from '@countryconfig/constants'
+import { logger } from '@countryconfig/logger'
 import {
   FieldConditional,
   and,
@@ -15,6 +16,7 @@ import {
   or,
   FieldReference
 } from '@opencrvs/toolkit/events'
+import { differenceInYears } from 'date-fns'
 
 const upsertConditional = (
   conditionals: FieldConditional[],
@@ -334,4 +336,58 @@ export const connectToMOSIPVerificationStatus = (
     ...fieldInput,
     conditionals: updatedConditionals
   }
+}
+
+/**
+ * Determines whether the birth registration should be forwarded to MOSIP.
+ * @param declaration The declaration object containing event data.
+ * @returns True if the registration should be forwarded, false otherwise.
+ */
+export function shouldBirthRegistrationBeForwardedToMosip(
+  declaration: Record<string, any>
+): boolean {
+  logger.info('Evaluating whether to forward birth registration to MOSIP...')
+  if (declaration['child.dob'] === undefined) {
+    logger.info('Missing child.dob in declaration, cannot forward to MOSIP')
+    return false
+  }
+  if (
+    declaration['mother.verified'] !== 'verified' &&
+    declaration['mother.verified'] !== 'authenticated' &&
+    declaration['father.verified'] !== 'verified' &&
+    declaration['father.verified'] !== 'authenticated'
+  ) {
+    logger.info(
+      'Neither mother nor father is verified or authenticated, cannot forward to MOSIP'
+    )
+    return false
+  }
+
+  const childAge = differenceInYears(
+    new Date(),
+    new Date(declaration['child.dob'])
+  )
+  logger.info(`Child age is ${childAge} years`)
+
+  return childAge <= 10
+}
+
+/**
+ * Determines whether the death registration should be forwarded to MOSIP.
+ * @param declaration The declaration object containing event data.
+ * @returns True if the registration should be forwarded, false otherwise.
+ */
+export function shouldDeathRegistrationBeForwardedToMosip(
+  declaration: Record<string, any>
+): boolean {
+  const informantRelation = declaration['informant.relation']
+  if (informantRelation === 'SPOUSE')
+    return (
+      declaration['spouse.verified'] === 'verified' ||
+      declaration['spouse.verified'] === 'authenticated'
+    )
+  return (
+    declaration['informant.verified'] === 'verified' ||
+    declaration['informant.verified'] === 'authenticated'
+  )
 }

@@ -149,6 +149,9 @@ export const informant = defineFormPage({
       ],
       parent: field('informant.relation')
     },
+    // fields:
+    // informant.verified, informant.query-params, informant.verify-nid-http-fetch,
+    // informant.fetch-loader, informant.id-reader
     ...getMOSIPIntegrationFields('informant', {
       existingConditionals: [
         {
