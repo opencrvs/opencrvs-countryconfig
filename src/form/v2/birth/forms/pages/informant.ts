@@ -369,7 +369,7 @@ export const informant = defineFormPage({
               id: 'event.birth.action.declare.form.nid.unique'
             },
             validator: and(
-              not(field('informant.nid').isEqualTo(field('informant.nid'))),
+              not(field('informant.nid').isEqualTo(field('mother.nid'))),
               not(field('informant.nid').isEqualTo(field('father.nid')))
             )
           }
