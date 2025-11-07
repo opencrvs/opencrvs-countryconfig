@@ -196,7 +196,6 @@ export async function createDeclaration(
     transactionId: uuidv4(),
     declaration,
     annotation,
-    duplicates: [],
     keepAssignment: true
   })
 
