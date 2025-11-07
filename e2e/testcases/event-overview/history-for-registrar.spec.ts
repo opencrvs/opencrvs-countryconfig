@@ -44,7 +44,6 @@ test.describe
       'Assigned',
       'Sent for review',
       'Sent for approval',
-      'Waiting for external validation',
       'Registered',
       'Unassigned',
       'Viewed',
