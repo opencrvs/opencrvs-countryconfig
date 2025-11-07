@@ -21,10 +21,17 @@ for NODE in "${NODES[@]}"; do
   fi
 done
 
+sleep 10 # Wait few seconds for complete cleanup
+
 # Create VMs
 for NODE in "${NODES[@]}"; do
   orb create --arch arm64 "$IMG" "$NODE"
   orb start "$NODE"
+done
+
+for NODE in "${NODES[@]}"; do
+  echo "apt-get -y install openssh-server" | orb exec -u root -m "$NODE" bash
+  ssh-keygen -R $NODE.orb.local
 done
 
 # Provision user setup script
@@ -65,6 +72,10 @@ echo '$PUBKEY' >> /home/provision/.ssh/authorized_keys
 chmod 600 /home/provision/.ssh/authorized_keys
 chown -R provision:provision /home/provision/.ssh
 "
-
+# Get private key for ansible
+mkdir -p .ssh
+orb exec -u root -m manager chmod 444 /tmp/ssh-key
+orb pull -m manager /tmp/ssh-key ./.ssh/ssh-key
+chmod 400 ./.ssh/ssh-key
 # Clean up private keys on manager
 orb exec -u root -m manager rm -f /tmp/ssh-key /tmp/ssh-key.pub

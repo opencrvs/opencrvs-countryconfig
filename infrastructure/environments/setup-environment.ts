@@ -702,6 +702,20 @@ const derivedVariables = [
     scope: 'ENVIRONMENT'
   },
   {
+    name: 'POSTGRES_USER',
+    valueLabel: 'POSTGRES_USER',
+    valueType: 'SECRET',
+    type: 'disabled',
+    scope: 'ENVIRONMENT'
+  },
+  {
+    name: 'POSTGRES_PASSWORD',
+    valueLabel: 'POSTGRES_PASSWORD',
+    valueType: 'SECRET',
+    type: 'disabled',
+    scope: 'ENVIRONMENT'
+  },
+  {
     name: 'SUPER_USER_PASSWORD',
     valueLabel: 'SUPER_USER_PASSWORD',
     valueType: 'SECRET',
@@ -1204,6 +1218,40 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
       ),
       value: findExistingOrDefine(
         'MONGODB_ADMIN_PASSWORD',
+        'SECRET',
+        'ENVIRONMENT',
+        generateLongPassword()
+      ),
+      scope: 'ENVIRONMENT' as const
+    },
+    {
+      name: 'POSTGRES_USER',
+      type: 'SECRET' as const,
+      didExist: findExistingValue(
+        'POSTGRES_USER',
+        'SECRET',
+        'ENVIRONMENT',
+        existingValues
+      ),
+      value: findExistingOrDefine(
+        'POSTGRES_USER',
+        'SECRET',
+        'ENVIRONMENT',
+        generateLongPassword()
+      ),
+      scope: 'ENVIRONMENT' as const
+    },
+    {
+      name: 'POSTGRES_PASSWORD',
+      type: 'SECRET' as const,
+      didExist: findExistingValue(
+        'POSTGRES_PASSWORD',
+        'SECRET',
+        'ENVIRONMENT',
+        existingValues
+      ),
+      value: findExistingOrDefine(
+        'POSTGRES_PASSWORD',
         'SECRET',
         'ENVIRONMENT',
         generateLongPassword()

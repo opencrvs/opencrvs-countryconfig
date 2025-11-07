@@ -45,8 +45,6 @@ export enum Event {
   Death = 'death',
   Marriage = 'marriage',
 
-  // events v2 enums
-  V2_BIRTH = 'v2.birth',
   TENNIS_CLUB_MEMBERSHIP = 'tennis-club-membership'
 }
 

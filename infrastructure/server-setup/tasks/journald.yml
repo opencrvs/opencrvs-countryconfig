@@ -1,0 +1,24 @@
+- name: Create journald configuration directory
+  file:
+    path: /etc/systemd/journald.conf.d
+    state: directory
+    mode: '0755'
+    owner: root
+    group: root
+
+- name: Create custom journald configuration
+  copy:
+    content: |
+      [Journal]
+      RateLimitIntervalSec=30s
+      RateLimitBurst=1000
+      SystemMaxUse=1G
+      SystemMaxFileSize=50M
+      SystemMaxFiles=10
+    dest: /etc/systemd/journald.conf.d/99-custom.conf
+    mode: '0644'
+    owner: root
+    group: root
+- name: Reload systemd daemon
+  systemd:
+    daemon_reload: yes

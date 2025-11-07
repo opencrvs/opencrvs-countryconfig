@@ -17,6 +17,9 @@ UNIX_TS=$(date +%s)
 echo "$PUB_KEY" | docker secret create jwt-public-key.$UNIX_TS -
 echo "$PRIV_KEY" | docker secret create jwt-private-key.$UNIX_TS -
 
+INFRASTRUCTURE_DIRECTORY=$(dirname "$0")
+cat $INFRASTRUCTURE_DIRECTORY/redis-acl.conf | docker secret create redis-acl.$UNIX_TS -
+
 sed -i "s/{{ts}}/$UNIX_TS/g" "$@"
 echo "DONE - `date --iso-8601=ns`"
 echo

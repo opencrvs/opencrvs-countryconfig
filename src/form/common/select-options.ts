@@ -19,7 +19,6 @@ import {
   ISelectOption,
   TEXT
 } from '../types/types'
-import { SelectOption } from '@opencrvs/toolkit/events'
 
 // THIS FILE ALLOWS YOU TO CUSTOMISE EVERY DEFAULT SELECT OPTION IN OPENCRVS WHETHER OR NOT THE FIELD IS REQUIRED OR CUSTOM
 
@@ -321,7 +320,7 @@ export const mannerOfDeathOptions: ISelectOption[] = [
   }
 ]
 
-export const maritalStatusOptions: SelectOption[] = [
+export const maritalStatusOptions = [
   {
     value: 'SINGLE',
     label: {
@@ -372,7 +371,7 @@ export const maritalStatusOptions: SelectOption[] = [
   }
 ]
 
-export const typeOfMarriageOptions: SelectOption[] = [
+export const typeOfMarriageOptions = [
   {
     value: 'MONOGAMY',
     label: formMessageDescriptors.monogamy
@@ -383,7 +382,7 @@ export const typeOfMarriageOptions: SelectOption[] = [
   }
 ]
 
-export const educationalAttainmentOptions: SelectOption[] = [
+export const educationalAttainmentOptions = [
   {
     value: 'NO_SCHOOLING',
     label: {

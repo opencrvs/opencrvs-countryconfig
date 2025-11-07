@@ -20,7 +20,7 @@ env:
   UPSTREAM_REPOSITORY: ${{ github.repository }}
   # Check token under Olli's account
   GH_TOKEN: ${{ secrets.FORK_ORGANISATION_TOKEN }}
-  FORK_REPOSITORY_PATH: "${{ vars.FORK_REPOSITORY_ORGANISATION }}/${{ vars.FORK_REPOSITORY_NAME }}"
+  FORK_REPOSITORY_PATH: '${{ vars.FORK_REPOSITORY_ORGANISATION }}/${{ vars.FORK_REPOSITORY_NAME }}'
 
 jobs:
   check_farajaland_branch:
@@ -74,13 +74,14 @@ jobs:
           git merge upstream/${BASE_BRANCH}
 
       - if: steps.merge.outcome == 'success'
-        name: "Push ${BASE_BRANCH} to Farajaland repository"
+        name: 'Push ${BASE_BRANCH} to Farajaland repository'
         run: |
           git remote -v
           git push origin ${BASE_BRANCH}
 
       - if: steps.merge.outcome == 'failure'
         name: Handle merge conflicts and push opencrvs-farajaland/sync-with-${{ github.event.pull_request.base.ref }}
+        continue-on-error: true
         run: |
           git merge --abort
           git checkout upstream/${BASE_BRANCH}

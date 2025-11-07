@@ -8,27 +8,64 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
-const scheme = window.location.protocol; // "http:" or "https:"
-const hostname = "{{hostname}}"; // Replace dynamically if needed
-const sentry = "{{sentry}}"; // Replace dynamically if needed
 
-window.config = {
-  API_GATEWAY_URL: `${scheme}//gateway.${hostname}/`,
-  CONFIG_API_URL: `${scheme}//config.${hostname}`,
-  LOGIN_URL: `${scheme}//login.${hostname}`,
-  AUTH_URL: `${scheme}//gateway.${hostname}/auth/`,
-  MINIO_URL: `${scheme}//minio.${hostname}/ocrvs/`,
-  MINIO_BUCKET: 'ocrvs',
-  COUNTRY_CONFIG_URL: `${scheme}//countryconfig.${hostname}`,
-  // Country code in uppercase ALPHA-3 format
-  COUNTRY: 'FAR',
-  LANGUAGES: 'en,fr',
-  SENTRY: sentry,
-  LEADERBOARDS_DASHBOARD_URL:
-    `${scheme}//metabase.${hostname}/public/dashboard/acae0527-74be-4804-a3ee-f8b3c9c8784c#bordered=false&titled=false&refresh=300`,
-  REGISTRATIONS_DASHBOARD_URL:
-    `${scheme}//metabase.${hostname}/public/dashboard/fec78656-e4f9-4b51-b540-0fed81dbd821#bordered=false&titled=false&refresh=300`,
-  STATISTICS_DASHBOARD_URL:
-    `${scheme}//metabase.${hostname}/public/dashboard/a17e9bc0-15a2-4bd1-92fa-ab0f346227ca#bordered=false&titled=false&refresh=300`,
-  FEATURES: {}
-}
+/**
+ * When running application in slow network condition (reproducible using 3G), the client-config.js might be loaded twice.
+ * This results to issues like `Uncaught SyntaxError: "identifier scheme has already been declared at (client-config.js:1:1")`.
+ *
+ * On high level, refreshing the browser window requests new document page. The document page includes script tag to load client-config.js.
+ * If the network is slow, the browser might start loading and executing client-config.js again before the previous one is torn down, causing the error.
+ *
+ */
+;(function initClientConfig() {
+  const scheme = window.location.protocol // "http:" or "https:"
+  const hostname = '{{hostname}}' // Replaced dynamically
+  const sentry = '{{sentry}}' // Replaced dynamically
+
+  window.config = {
+    API_GATEWAY_URL: `${scheme}//gateway.${hostname}/`,
+    CONFIG_API_URL: `${scheme}//config.${hostname}`,
+    LOGIN_URL: `${scheme}//login.${hostname}`,
+    AUTH_URL: `${scheme}//gateway.${hostname}/auth/`,
+    MINIO_URL: `${scheme}//minio.${hostname}/ocrvs/`,
+    MINIO_BASE_URL: `${scheme}//minio.${hostname}`, // URL without path/bucket information, used for file uploads, v2
+    MINIO_BUCKET: 'ocrvs',
+    COUNTRY_CONFIG_URL: `${scheme}//countryconfig.${hostname}`,
+    // Country code in uppercase ALPHA-3 format
+    COUNTRY: 'FAR',
+    LANGUAGES: 'en,fr',
+    SENTRY: sentry,
+    DASHBOARDS: [
+      {
+        id: 'registrations',
+        title: {
+          id: 'dashboard.registrationsTitle',
+          defaultMessage: 'Registrations Dashboard',
+          description: 'Menu item for registrations dashboard'
+        },
+        url: `${scheme}//metabase.${hostname}/public/dashboard/03be04d6-bde0-4fa7-9141-21cea2a7518b#bordered=false&titled=false&refresh=300`
+      },
+      {
+        id: 'completeness',
+        title: {
+          id: 'dashboard.completenessTitle',
+          defaultMessage: 'Completeness Dashboard',
+          description: 'Menu item for completeness dashboard'
+        },
+        url: `${scheme}//metabase.${hostname}/public/dashboard/41940907-8542-4e18-a05d-2408e7e9838a#bordered=false&titled=false&refresh=300`
+      },
+      {
+        id: 'registry',
+        title: {
+          id: 'dashboard.registryTitle',
+          defaultMessage: 'Registry',
+          description: 'Menu item for registry dashboard'
+        },
+        url: `${scheme}//metabase.${hostname}/public/dashboard/dc66b77a-79df-4f68-8fc8-5e5d5a2d7a35#bordered=false&titled=false&refresh=300`
+      }
+    ],
+    // NOTE: This is not valid javascript until replaced during build time.
+    // IIFE just reveals it.
+    FEATURES: {}
+  }
+})()
