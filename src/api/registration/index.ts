@@ -15,7 +15,8 @@ import {
   ActionInput,
   aggregateActionDeclarations,
   EventDocument,
-  getPendingAction
+  getPendingAction,
+  NameFieldValue
 } from '@opencrvs/toolkit/events'
 import { GATEWAY_URL, MOSIP_INTEROP_URL } from '@countryconfig/constants'
 import { v4 as uuidv4 } from 'uuid'
@@ -179,15 +180,22 @@ export async function onMosipBirthRegisterHandler(
       MOSIP_INTEROP_URL,
       `Bearer ${token}`
     )
+    const childName = declaration['child.name'] as NameFieldValue | undefined
 
     // @TODO: Check whether this might crash country-config if MOSIP doesn't respond
     mosipInteropClient.register({
       trackingId: event.trackingId,
       requestFields: {
         birthCertificateNumber: registrationNumber,
-        fullName: '@TODO',
-        dateOfBirth: '@TODO',
-        gender: '@TODO'
+        fullName: [
+          childName?.firstname,
+          childName?.middlename,
+          childName?.surname
+        ]
+          .filter(Boolean)
+          .join(' '),
+        dateOfBirth: declaration['child.dob'],
+        gender: declaration['child.gender']
       },
       notification: {
         recipientEmail: '@TODO',
@@ -235,14 +243,25 @@ export async function onMosipDeathRegisterHandler(
       `Bearer ${token}`
     )
 
+    const deceasedName = declaration['deceased.name'] as
+      | NameFieldValue
+      | undefined
+
     // @TODO: Check whether this might crash country-config if MOSIP doesn't respond
     mosipInteropClient.register({
       trackingId: event.trackingId,
       requestFields: {
         deathCertificateNumber: registrationNumber,
-        fullName: '@TODO',
-        dateOfBirth: '@TODO',
-        gender: '@TODO'
+        fullName: [
+          deceasedName?.firstname,
+          deceasedName?.middlename,
+          deceasedName?.surname
+        ]
+          .filter(Boolean)
+          .join(' '),
+        dateOfBirth: declaration['deceased.dob'],
+        gender: declaration['deceased.gender'],
+        nationalIdNumber: declaration['deceased.nid']
       },
       notification: {
         recipientEmail: '@TODO',
