@@ -24,8 +24,8 @@ import { sendInformantNotification } from '../notification/informantNotification
 import { logger } from '@countryconfig/logger'
 import { createMosipInteropClient } from '@opencrvs/mosip/api'
 import {
-  shouldBirthRegistrationBeForwardedToMosip,
-  shouldDeathRegistrationBeForwardedToMosip
+  shouldForwardBirthRegistrationToMosip,
+  shouldForwardDeathRegistrationToMosip
 } from '@countryconfig/form/v2/mosip'
 
 export interface ActionConfirmationRequest extends Hapi.Request {
@@ -161,7 +161,7 @@ export async function onMosipBirthRegisterHandler(
 
   const registrationNumber = generateRegistrationNumber()
 
-  if (!shouldBirthRegistrationBeForwardedToMosip(declaration)) {
+  if (!shouldForwardBirthRegistrationToMosip(declaration)) {
     logger.info(
       'Birth registration will not be forwarded to MOSIP based on custom logic.'
     )
@@ -226,7 +226,7 @@ export async function onMosipDeathRegisterHandler(
 
   const registrationNumber = generateRegistrationNumber()
 
-  if (!shouldDeathRegistrationBeForwardedToMosip(declaration)) {
+  if (!shouldForwardDeathRegistrationToMosip(declaration)) {
     await sendInformantNotification({ event, token, registrationNumber })
     return h
       .response({ registrationNumber: generateRegistrationNumber() })
