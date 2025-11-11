@@ -201,14 +201,6 @@ export const deathEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.death.action.validate.label'
       },
-      review: {
-        title: {
-          defaultMessage: 'Validate',
-          description: 'Title of the form to show in review page',
-          id: 'event.birth.action.validate.form.review.title'
-        },
-        fields: []
-      },
       deduplication: {
         id: 'death-deduplication',
         label: {
@@ -227,14 +219,6 @@ export const deathEvent = defineConfig({
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.death.action.register.label'
-      },
-      review: {
-        title: {
-          defaultMessage: 'Register',
-          description: 'Title of the form to show in review page',
-          id: 'event.birth.action.register.form.review.title'
-        },
-        fields: []
       },
       deduplication: {
         id: 'death-deduplication',
