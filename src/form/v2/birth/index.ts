@@ -220,6 +220,20 @@ export const birthEvent = defineConfig({
       ]
     },
     {
+      type: ActionType.CUSTOM,
+      name: 'APPROVE',
+      label: {
+        defaultMessage: 'Approve',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'event.birth.action.approve.label'
+      },
+      form: [],
+      flags: [
+        { id: 'approval-required-for-late-registration', operation: 'remove' }
+      ]
+    },
+    {
       type: ActionType.VALIDATE,
       label: {
         defaultMessage: 'Validate',
