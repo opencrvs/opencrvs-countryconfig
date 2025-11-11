@@ -834,10 +834,10 @@
   dependencies:
     "@octokit/openapi-types" "^18.0.0"
 
-"@opencrvs/toolkit@1.9.0-rc.f73868a":
-  version "1.9.0-rc.f73868a"
-  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-1.9.0-rc.f73868a.tgz#d21f3b037552584fc43a0a87af2fa735296c900a"
-  integrity sha512-V6vO+/AlD4ravxeQnHEwPSwTZgdZwe3OZqJp2Z1M1VSA5iAhgRGHh3zZiRrlJto/PYSYS171WTzn/uZgEWB+4Q==
+"@opencrvs/toolkit@1.9.0-rc.f2d330d":
+  version "1.9.0-rc.f2d330d"
+  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-1.9.0-rc.f2d330d.tgz#9a5d8597711bde3d7cdb5ab02126386d91afe6c9"
+  integrity sha512-Ne+UMRbyHT7/YFXv/P8dW/qPujF3gUwtUUUHoxSI/JElKzmXIVVSbICVr35a0ko3NcrDpCPb1gCLCczYKIgS+g==
   dependencies:
     "@trpc/client" "11.4.3"
     "@trpc/server" "11.4.3"
@@ -846,7 +846,7 @@
     object-hash "^3.0.0"
     superjson "1.9.0-0"
     uuid "^9.0.0"
-    zod-openapi "^4.2.4"
+    zod-openapi "^5.4.3"
 
 "@pkgjs/parseargs@^0.11.0":
   version "0.11.0"
@@ -5817,12 +5817,12 @@ yocto-queue@^0.1.0:
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
 
-zod-openapi@^4.2.4:
-  version "4.2.4"
-  resolved "https://registry.yarnpkg.com/zod-openapi/-/zod-openapi-4.2.4.tgz#44a0ec81ace6d64d705c8e4232095fac313359cf"
-  integrity sha512-tsrQpbpqFCXqVXUzi3TPwFhuMtLN3oNZobOtYnK6/5VkXsNdnIgyNr4r8no4wmYluaxzN3F7iS+8xCW8BmMQ8g==
+zod-openapi@^5.4.3:
+  version "5.4.3"
+  resolved "https://registry.yarnpkg.com/zod-openapi/-/zod-openapi-5.4.3.tgz#ec886fac181b778bc2e9ccc3462c470543f23e26"
+  integrity sha512-6kJ/gJdvHZtuxjYHoMtkl2PixCwRuZ/s79dVkEr7arHvZGXfx7Cvh53X3HfJ5h9FzGelXOXlnyjwfX0sKEPByw==
 
-zod@^3.24.1:
-  version "3.24.1"
-  resolved "https://registry.yarnpkg.com/zod/-/zod-3.24.1.tgz#27445c912738c8ad1e9de1bea0359fa44d9d35ee"
-  integrity sha512-muH7gBL9sI1nciMZV67X5fTKKBLtwpZ5VBp1vsOQzj1MhrBZ4wlVCm3gedKZWLp0Oyel8sIGfeiz54Su+OVT+A==
+zod@^4.1.12:
+  version "4.1.12"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-4.1.12.tgz#64f1ea53d00eab91853195653b5af9eee68970f0"
+  integrity sha512-JInaHOamG8pt5+Ey8kGmdcAcg3OL9reK8ltczgHTAwNhMys/6ThXHityHxVV2p3fkw/c+MAvBHFVYHFZDmjMCQ==
