@@ -189,7 +189,8 @@ export const informant = defineFormPage({
             conditional: informantOtherThanSpouse
           }
         ],
-        validation: [invalidNameValidator('informant.name')]
+        validation: [invalidNameValidator('informant.name')],
+        parent: field('informant.relation')
       },
       {
         valuePath: 'data.name',
@@ -224,7 +225,8 @@ export const informant = defineFormPage({
               informantOtherThanSpouse
             )
           }
-        ]
+        ],
+        parent: field('informant.relation')
       },
       {
         valuePath: 'data.birthDate',
@@ -332,7 +334,8 @@ export const informant = defineFormPage({
             type: ConditionalType.SHOW,
             conditional: informantOtherThanSpouse
           }
-        ]
+        ],
+        parent: field('informant.relation')
       },
       {
         valuePath: 'data.idType',
@@ -372,7 +375,8 @@ export const informant = defineFormPage({
               not(field('informant.nid').isEqualTo(field('deceased.nid')))
             )
           }
-        ]
+        ],
+        parent: field('informant.relation')
       },
       {
         valuePath: 'data.nid',
@@ -458,7 +462,8 @@ export const informant = defineFormPage({
             YesNoTypes.YES
           )
         }
-      ]
+      ],
+      parent: field('informant.relation')
     },
     {
       id: 'informant.addressDivider1',
