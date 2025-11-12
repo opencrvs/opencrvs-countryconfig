@@ -473,6 +473,7 @@ export const informant = defineFormPage({
     {
       id: 'informant.address',
       type: FieldType.ADDRESS,
+      required: true,
       hideLabel: true,
       label: {
         defaultMessage: 'Usual place of residence',
