@@ -69,6 +69,12 @@ test.describe.serial('Correct record - Change ages', () => {
       'informant.nationality': 'FAR',
       'informant.idType': 'NATIONAL_ID',
       'informant.nid': faker.string.numeric(10),
+      'informant.address': {
+        country: 'FAR',
+        province,
+        district,
+        addressType: AddressType.DOMESTIC
+      },
       'father.detailsNotAvailable': true,
       'father.reason': 'Father is missing.',
       'mother.dobUnknown': true,
