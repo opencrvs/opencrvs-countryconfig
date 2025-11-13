@@ -22,6 +22,7 @@ export const invalidNameValidator = (fieldName: string) => ({
   },
   validator: field(fieldName).object({
     firstname: field('firstname').isValidEnglishName(),
+    middlename: field('middlename').isValidEnglishName(),
     surname: field('surname').isValidEnglishName()
   })
 })
