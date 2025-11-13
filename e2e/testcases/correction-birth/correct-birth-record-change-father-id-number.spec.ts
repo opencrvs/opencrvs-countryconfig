@@ -50,9 +50,7 @@ test.describe.serial("Correct record - Change father's ID number", () => {
         'child.placeOfBirth': 'PRIVATE_HOME',
         'child.birthLocation.privateHome': {
           country: 'FAR',
-          addressType: 'DOMESTIC',
-          province: 'Central',
-          district: 'Ibombo'
+          addressType: 'DOMESTIC'
         },
         'child.attendantAtBirth': 'PHYSICIAN',
         'child.birthType': 'SINGLE',
@@ -73,9 +71,7 @@ test.describe.serial("Correct record - Change father's ID number", () => {
         'mother.previousBirths': 0,
         'mother.address': {
           country: 'FAR',
-          addressType: 'DOMESTIC',
-          province: 'Central',
-          district: 'Ibombo'
+          addressType: 'DOMESTIC'
         },
 
         'father.name': {

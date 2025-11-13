@@ -106,22 +106,22 @@ export async function getDeclaration({
     'mother.nid': faker.string.numeric(10),
     'mother.address': {
       country: 'FAR',
-      province,
-      district,
-      town: null,
-      residentialArea: null,
-      street: null,
-      number: null,
-      zipCode: null,
-      village: null,
-      state: null,
-      district2: null,
-      cityOrTown: null,
-      addressLine1: null,
-      addressLine2: null,
-      addressLine3: null,
-      postcodeOrZip: null,
-      addressType: AddressType.DOMESTIC
+      addressType: AddressType.DOMESTIC,
+      administrativeArea: district,
+      streetLevelDetails: {
+        town: null,
+        residentialArea: null,
+        street: null,
+        number: null,
+        zipCode: null,
+        state: null,
+        district2: null,
+        cityOrTown: null,
+        addressLine1: null,
+        addressLine2: null,
+        addressLine3: null,
+        postcodeOrZip: null
+      }
     },
     'child.name': {
       firstname: faker.person.firstName(),
