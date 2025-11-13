@@ -209,8 +209,8 @@ test.describe
       await page.getByText('Residential address', { exact: true }).click()
 
       page.locator('#country').getByText('Farajaland')
-      page.locator('#province').getByText('Central')
-      page.locator('#district').getByText('Ibombo')
+      await expect(page.getByLabel(/Province/i)).toHaveText('Central')
+      await expect(page.getByLabel(/District/i)).toHaveText('Ibombo')
 
       await page.locator('#town').fill('Dhaka')
       await page.locator('#town').blur()
