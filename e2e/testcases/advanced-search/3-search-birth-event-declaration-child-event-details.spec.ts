@@ -266,8 +266,12 @@ test.describe
       expect(page.url()).toContain(`eventType=birth`)
 
       await expect(page.locator('#country')).toHaveText('Farajaland')
-      await expect(page.locator('#province')).toHaveText('Central')
-      await expect(page.locator('#district')).toHaveText('Ibombo')
+      await expect(page.locator('#searchable-select-province')).toHaveText(
+        'Central'
+      )
+      await expect(page.locator('#searchable-select-district')).toHaveText(
+        'Ibombo'
+      )
       await expect(page.locator('#town')).toHaveValue('Dhaka')
     })
   })
