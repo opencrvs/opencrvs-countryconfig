@@ -44,9 +44,7 @@ test.describe.serial('Request and accept correction (offline)', () => {
         'child.placeOfBirth': 'PRIVATE_HOME',
         'child.birthLocation.privateHome': {
           country: 'FAR',
-          addressType: 'DOMESTIC',
-          province: 'Central',
-          district: 'Ibombo'
+          addressType: 'DOMESTIC'
         },
         'child.attendantAtBirth': 'PHYSICIAN',
         'child.birthType': 'SINGLE',
@@ -67,9 +65,7 @@ test.describe.serial('Request and accept correction (offline)', () => {
         'mother.previousBirths': 0,
         'mother.address': {
           country: 'FAR',
-          addressType: 'DOMESTIC',
-          province: 'Central',
-          district: 'Ibombo'
+          addressType: 'DOMESTIC'
         },
         'father.name': {
           firstname: faker.person.firstName('male'),

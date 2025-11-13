@@ -324,11 +324,13 @@ test.describe('Events REST API', () => {
       expect(response.status).toBe(400)
       const body = await response.json()
       expect(body.message).toBe(
-        `[{"message":"Unexpected field","id":"foo.bar","value":"this should cause an error"},{"message":"Invalid input","id":"child.name","value":{"surname":"${fakeSurname}"}}]`
+        `[{"message":"Unexpected field","id":"foo.bar","value":"this should cause an error"}]`
       )
     })
 
-    test('HTTP 400 with payload containing declaration with invalid values', async () => {
+    test('HTTP 200 with payload containing declaration with half filled names', async ({
+      page
+    }) => {
       const createEventResponse = await fetchClientAPI(
         '/api/events/events',
         'POST',
@@ -339,8 +341,15 @@ test.describe('Events REST API', () => {
         }
       )
 
+      const token = await login(page)
+      const { sub } = decode<{ sub: string }>(token)
       const createEventResponseBody = await createEventResponse.json()
       const eventId = createEventResponseBody.id
+      const location = await fetchUserLocationHierarchy(sub, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
 
       const fakeSurname = faker.person.lastName()
 
@@ -352,6 +361,7 @@ test.describe('Events REST API', () => {
           eventId,
           transactionId: uuidv4(),
           type: 'NOTIFY',
+          createdAtLocation: location[location.length - 1],
           declaration: {
             'child.name': { surname: fakeSurname },
             // this should cause an error because the date is in the future
@@ -361,11 +371,7 @@ test.describe('Events REST API', () => {
         }
       )
 
-      expect(response.status).toBe(400)
-      const body = await response.json()
-      expect(body.message).toBe(
-        `[{"message":"Invalid input","id":"child.name","value":{"surname":"${fakeSurname}"}}]`
-      )
+      expect(response.status).toBe(200)
     })
 
     test('HTTP 400 with payload containing declaration with values of wrong type', async () => {
@@ -741,7 +747,7 @@ test.describe('Events REST API', () => {
       token = await login(page)
     })
 
-    test('Notify event an event via integration', async () => {
+    test('Notify an event via integration', async () => {
       const createEventResponse = await fetchClientAPI(
         '/api/events/events',
         'POST',
@@ -768,7 +774,7 @@ test.describe('Events REST API', () => {
         'child.dob': undefined
       }
 
-      await fetchClientAPI(
+      const response = await fetchClientAPI(
         '/api/events/events/notifications',
         'POST',
         clientToken,
@@ -781,6 +787,7 @@ test.describe('Events REST API', () => {
           createdAtLocation: location[location.length - 1]
         }
       )
+      expect(response.status).toBe(200)
     })
 
     test("Navigate to event via 'Notifications' -workqueue", async () => {

@@ -90,9 +90,7 @@ test.describe.serial('Correct record - change informant type', () => {
         'child.placeOfBirth': 'PRIVATE_HOME',
         'child.birthLocation.privateHome': {
           country: 'FAR',
-          addressType: 'DOMESTIC',
-          province: 'Central',
-          district: 'Ibombo'
+          addressType: 'DOMESTIC'
         },
         'child.attendantAtBirth': 'PHYSICIAN',
         'child.birthType': 'SINGLE',
@@ -113,9 +111,7 @@ test.describe.serial('Correct record - change informant type', () => {
         'mother.previousBirths': 0,
         'mother.address': {
           country: 'FAR',
-          addressType: 'DOMESTIC',
-          province: 'Central',
-          district: 'Ibombo'
+          addressType: 'DOMESTIC'
         }
       },
       'REGISTER',

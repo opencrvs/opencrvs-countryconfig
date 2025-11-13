@@ -16,7 +16,9 @@ import {
   or,
   FieldReference
 } from '@opencrvs/toolkit/events'
-import { differenceInYears } from 'date-fns'
+import { addYears, isAfter } from 'date-fns'
+
+const CHILD_MAX_AGE_YEARS_FOR_MOSIP = 10
 
 const upsertConditional = (
   conditionals: FieldConditional[],
@@ -169,8 +171,8 @@ export const getMOSIPIntegrationFields = (
           redirectUri: '/' // noop
         },
         params: {
-          code: field(`${page}.query-params`).get('code'),
-          state: field(`${page}.query-params`).get('state')
+          code: field(`${page}.query-params`).get('data.code'),
+          state: field(`${page}.query-params`).get('data.state')
         },
         errorValue: {
           verificationStatus: 'failed'
@@ -343,7 +345,7 @@ export const connectToMOSIPVerificationStatus = (
  * @param declaration The declaration object containing event data.
  * @returns True if the registration should be forwarded, false otherwise.
  */
-export function shouldBirthRegistrationBeForwardedToMosip(
+export function shouldForwardBirthRegistrationToMosip(
   declaration: Record<string, any>
 ): boolean {
   logger.info('Evaluating whether to forward birth registration to MOSIP...')
@@ -363,13 +365,12 @@ export function shouldBirthRegistrationBeForwardedToMosip(
     return false
   }
 
-  const childAge = differenceInYears(
-    new Date(),
-    new Date(declaration['child.dob'])
+  const mosipEligibilityExpiryDate = addYears(
+    new Date(declaration['child.dob']),
+    CHILD_MAX_AGE_YEARS_FOR_MOSIP
   )
-  logger.info(`Child age is ${childAge} years`)
 
-  return childAge <= 10
+  return !isAfter(Date.now(), mosipEligibilityExpiryDate)
 }
 
 /**
@@ -377,7 +378,7 @@ export function shouldBirthRegistrationBeForwardedToMosip(
  * @param declaration The declaration object containing event data.
  * @returns True if the registration should be forwarded, false otherwise.
  */
-export function shouldDeathRegistrationBeForwardedToMosip(
+export function shouldForwardDeathRegistrationToMosip(
   declaration: Record<string, any>
 ): boolean {
   const informantRelation = declaration['informant.relation']
