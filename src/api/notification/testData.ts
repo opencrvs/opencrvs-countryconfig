@@ -136,7 +136,8 @@ const RequestBirthNotificationAction = {
     },
     'mother.address': {
       country: 'FAR',
-      addressType: 'DOMESTIC'
+      addressType: 'DOMESTIC',
+      administrativeArea: 'afaead2b-7ef5-4adb-b4bf-3d2b8437c284'
     },
     'informant.email': 'rouge@portgas.com',
     'informant.phoneNo': '0734231245',
@@ -171,7 +172,8 @@ const RequestBirthDeclarationAction = {
     },
     'mother.address': {
       country: 'FAR',
-      addressType: 'DOMESTIC'
+      addressType: 'DOMESTIC',
+      administrativeArea: 'afaead2b-7ef5-4adb-b4bf-3d2b8437c284'
     },
     'informant.email': 'rouge@portgas.com',
     'informant.phoneNo': '0734231245',
@@ -206,7 +208,8 @@ const BirthDeclarationAction = {
     },
     'mother.address': {
       country: 'FAR',
-      addressType: 'DOMESTIC'
+      addressType: 'DOMESTIC',
+      administrativeArea: 'afaead2b-7ef5-4adb-b4bf-3d2b8437c284'
     },
     'informant.email': 'rouge@portgas.com',
     'informant.phoneNo': '0734231245',
@@ -274,7 +277,8 @@ const RequestDeathNotificationAction = {
 
     'deceased.address': {
       country: 'FAR',
-      addressType: 'DOMESTIC'
+      addressType: 'DOMESTIC',
+      administrativeArea: 'afaead2b-7ef5-4adb-b4bf-3d2b8437c284'
     },
     'informant.relation': 'SPOUSE'
   },
@@ -319,7 +323,8 @@ const RequestDeathDeclarationAction = {
 
     'deceased.address': {
       country: 'FAR',
-      addressType: 'DOMESTIC'
+      addressType: 'DOMESTIC',
+      administrativeArea: 'afaead2b-7ef5-4adb-b4bf-3d2b8437c284'
     },
     'eventDetails.date': '2025-08-19',
     'spouse.dobUnknown': true,
@@ -372,7 +377,8 @@ const DeathDeclarationAction = {
 
     'deceased.address': {
       country: 'FAR',
-      addressType: 'DOMESTIC'
+      addressType: 'DOMESTIC',
+      administrativeArea: 'afaead2b-7ef5-4adb-b4bf-3d2b8437c284'
     },
     'eventDetails.date': '2025-08-19',
     'spouse.dobUnknown': true,
