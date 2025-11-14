@@ -372,6 +372,7 @@ export const spouse = defineFormPage({
     {
       id: 'spouse.address',
       type: FieldType.ADDRESS,
+      required: true,
       hideLabel: true,
       label: {
         defaultMessage: 'Usual place of residence',
