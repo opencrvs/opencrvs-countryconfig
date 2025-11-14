@@ -58,6 +58,23 @@ const TENNIS_CLUB_DECLARATION_REVIEW = {
         defaultMessage: 'Draw signature',
         description: 'Title for the modal to draw signature'
       }
+    },
+    {
+      type: FieldType.ALPHA_PRINT_BUTTON,
+      id: 'review.print',
+      label: {
+        defaultMessage: 'Print declaration',
+        description: 'Print',
+        id: 'event.tennis-club-membership.action.declare.form.review.print.label'
+      },
+      configuration: {
+        template: 'v2.tennis-club-membership-certified-certificate',
+        buttonLabel: {
+          defaultMessage: 'Print declaration summary',
+          description: "Print button's label",
+          id: 'event.tennis-club-membership.action.declare.form.review.print.button.label'
+        }
+      }
     }
   ]
 }
