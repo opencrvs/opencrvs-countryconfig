@@ -85,6 +85,8 @@ CREATE TABLE IF NOT EXISTS analytics.event_actions (
   UNIQUE (id, event_id)
 );
 
+ALTER TABLE analytics.event_actions ADD COLUMN IF NOT EXISTS custom_action_type TEXT;
+
 CREATE TABLE IF NOT EXISTS analytics.location_levels (
   id text PRIMARY KEY,
   level int NOT NULL,

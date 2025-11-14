@@ -26,8 +26,6 @@ import { InformantType as BirthInformantType } from '@countryconfig/form/v2/birt
 import { InformantTemplateType } from './sms-service'
 import { generateFailureLog, NotificationParams, notify } from './handler'
 import { InformantType as DeathInformantType } from '@countryconfig/form/v2/death/forms/pages/informant'
-import { birthEvent } from '@countryconfig/form/v2/birth'
-import { deathEvent } from '@countryconfig/form/v2/death'
 
 const resolveName = (name: FieldUpdateValue) => {
   const nameObj = {
@@ -72,18 +70,6 @@ function getInformant(eventType: string, declaration: Record<string, any>) {
     return declaration['informant.relation'] === DeathInformantType.SPOUSE
       ? declaration['spouse.name']
       : declaration['informant.name']
-  }
-
-  throw new Error('Invalid event type')
-}
-
-function getEventConfig(eventType: string) {
-  if (eventType === Event.Birth) {
-    return birthEvent
-  }
-
-  if (eventType === Event.Death) {
-    return deathEvent
   }
 
   throw new Error('Invalid event type')
