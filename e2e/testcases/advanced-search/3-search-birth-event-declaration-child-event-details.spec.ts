@@ -209,8 +209,8 @@ test.describe
       await page.getByText('Residential address', { exact: true }).click()
 
       page.locator('#country').getByText('Farajaland')
-      page.locator('#province').getByText('Central')
-      page.locator('#district').getByText('Ibombo')
+      page.locator('#searchable-select-province').getByText('Central')
+      page.locator('#searchable-select-district').getByText('Ibombo')
 
       await page.locator('#town').fill('Dhaka')
       await page.locator('#town').blur()
@@ -266,8 +266,12 @@ test.describe
       expect(page.url()).toContain(`eventType=birth`)
 
       await expect(page.locator('#country')).toHaveText('Farajaland')
-      await expect(page.locator('#province')).toHaveText('Central')
-      await expect(page.locator('#district')).toHaveText('Ibombo')
+      await expect(page.locator('#searchable-select-province')).toHaveText(
+        'Central'
+      )
+      await expect(page.locator('#searchable-select-district')).toHaveText(
+        'Ibombo'
+      )
       await expect(page.locator('#town')).toHaveValue('Dhaka')
     })
   })
