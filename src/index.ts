@@ -626,7 +626,11 @@ export async function createServer() {
       }
     },
     handler: async (req, h) => {
-      if (!env.ANALYTICS_DATABASE_URL) {
+      const shouldReindex = Boolean(env.ANALYTICS_DATABASE_URL)
+
+      logger.info('Reindex requested...', { shouldReindex })
+
+      if (!shouldReindex) {
         // kill client upload immediately
         if (!req.raw.req.destroyed) {
           req.raw.req.destroy()
@@ -644,17 +648,22 @@ export async function createServer() {
       const client = getClient()
 
       try {
+        logger.info('Starting reindex of all events into analytics...')
+
         await client.transaction().execute(async (trx) => {
           for await (const { value } of stream) {
             queue.push(value)
 
             if (queue.length >= BATCH_SIZE) {
               const batch = queue.splice(0, queue.length)
+
+              logger.info(`Importing batch of ${batch.length} events...`)
               await importEvents(batch, trx)
             }
           }
 
           if (queue.length > 0) {
+            logger.info(`Importing final batch of ${queue.length} events...`)
             await importEvents(queue, trx)
           }
 
@@ -662,17 +671,21 @@ export async function createServer() {
           const url = new URL('events', GATEWAY_URL).toString()
           const client = createClient(url, req.headers.authorization)
           const locations = await client.locations.list.query()
+
+          logger.info('Importing locations...')
           await importLocations(locations)
         })
 
-        logger.info('Reindexed all events into analytics.')
+        logger.info(
+          'Reindexed all events & locations into analytics successfully.'
+        )
 
         return h.response().code(200)
       } catch (e) {
+        logger.error(e)
+
         // stop consuming the stream if something failed on import
         if (!stream.destroyed) stream.destroy(e)
-
-        logger.error(e)
 
         return h.response({ error: 'Unexpected error' }).code(500)
       }
