@@ -115,9 +115,7 @@ test.describe.serial('Correct record - 4', () => {
         'child.placeOfBirth': 'PRIVATE_HOME',
         'child.birthLocation.privateHome': {
           country: 'FAR',
-          addressType: 'DOMESTIC',
-          province: 'Central',
-          district: 'Ibombo'
+          addressType: 'DOMESTIC'
         },
         'child.attendantAtBirth': 'PHYSICIAN',
         'child.birthType': 'SINGLE',
@@ -138,9 +136,7 @@ test.describe.serial('Correct record - 4', () => {
         'mother.previousBirths': 0,
         'mother.address': {
           country: 'FAR',
-          addressType: 'DOMESTIC',
-          province: 'Central',
-          district: 'Ibombo'
+          addressType: 'DOMESTIC'
         },
         ...father
       },
