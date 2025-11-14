@@ -10,9 +10,11 @@
  */
 import {
   ActionType,
+  and,
   ConditionalType,
   defineConfig,
-  field
+  field,
+  not
 } from '@opencrvs/toolkit/events'
 import {
   BIRTH_DECLARATION_FORM,
@@ -24,6 +26,7 @@ import { BIRTH_CERTIFICATE_COLLECTOR_FORM } from './forms/printForm'
 import { PlaceOfBirth } from './forms/pages/child'
 import { CORRECTION_FORM } from './forms/correctionForm'
 import { dedupConfig } from './dedupConfig'
+import { applicationConfig } from '@countryconfig/api/application/application-config'
 
 export const birthEvent = defineConfig({
   id: Event.Birth,
@@ -45,6 +48,17 @@ export const birthEvent = defineConfig({
     description:
       'This is a fallback title if actual title resolves to empty string'
   },
+  flags: [
+    {
+      id: 'approval-required-for-late-registration',
+      label: {
+        id: 'event.birth.flag.approval-required-for-late-registration',
+        defaultMessage: 'Approval required for late registration',
+        description: 'Flag label for approval required for late registration'
+      },
+      requiresAction: true
+    }
+  ],
   summary: {
     fields: [
       {
@@ -188,7 +202,22 @@ export const birthEvent = defineConfig({
           id: 'event.birth.action.detect-duplicate.label'
         },
         query: dedupConfig
-      }
+      },
+      flags: [
+        {
+          id: 'approval-required-for-late-registration',
+          operation: 'add',
+          conditional: and(
+            not(
+              field('child.dob')
+                .isAfter()
+                .days(applicationConfig.BIRTH.LATE_REGISTRATION_TARGET)
+                .inPast()
+            ),
+            field('child.dob').isBefore().now()
+          )
+        }
+      ]
     },
     {
       type: ActionType.VALIDATE,
@@ -198,7 +227,6 @@ export const birthEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.birth.action.validate.label'
       },
-      review: BIRTH_DECLARATION_REVIEW,
       deduplication: {
         id: 'birth-deduplication',
         label: {
@@ -218,7 +246,6 @@ export const birthEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.birth.action.register.label'
       },
-      review: BIRTH_DECLARATION_REVIEW,
       deduplication: {
         id: 'birth-deduplication',
         label: {
