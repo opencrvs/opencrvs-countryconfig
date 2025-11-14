@@ -52,11 +52,10 @@ async function getPlaceOfBirth(type: 'PRIVATE_HOME' | 'HEALTH_FACILITY') {
 
   if (type === 'PRIVATE_HOME') {
     const locations = await getAllLocations('ADMIN_STRUCTURE')
-    const province = getLocationIdByName(locations, 'Central')
     const district = getLocationIdByName(locations, 'Ibombo')
 
-    if (!province || !district) {
-      throw new Error('Province or district not found')
+    if (!district) {
+      throw new Error('District not found')
     }
 
     return {
@@ -64,8 +63,8 @@ async function getPlaceOfBirth(type: 'PRIVATE_HOME' | 'HEALTH_FACILITY') {
       'child.birthLocation.privateHome': {
         country: 'FAR',
         addressType: AddressType.DOMESTIC,
-        province,
-        district
+        administrativeArea: district,
+        streetLevelDetails: { town: 'Dhaka' }
       }
     }
   }
