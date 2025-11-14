@@ -221,7 +221,7 @@ export const birthEvent = defineConfig({
     },
     {
       type: ActionType.CUSTOM,
-      customActionType: 'APPROVE',
+      customActionType: 'Approve',
       label: {
         defaultMessage: 'Approve',
         description:
