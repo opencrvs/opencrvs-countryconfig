@@ -24,7 +24,7 @@ import { emptyMessage } from '@countryconfig/form/v2/utils'
 import {
   invalidNameValidator,
   nationalIdValidator,
-  MAX_NAME_LENGTH
+  farajalandNameConfig
 } from '@countryconfig/form/v2/birth/validators'
 import { InformantType } from './informant'
 import { IdType, idTypeOptions } from '../../../person'
@@ -108,7 +108,7 @@ export const mother = defineFormPage({
       id: 'mother.name',
       type: FieldType.NAME,
       required: true,
-      configuration: { maxLength: MAX_NAME_LENGTH },
+      configuration: farajalandNameConfig,
       hideLabel: true,
       label: {
         defaultMessage: "Mother's name",
