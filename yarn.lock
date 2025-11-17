@@ -1738,7 +1738,6 @@
   dependencies:
     "@octokit/openapi-types" "^18.0.0"
 
-<<<<<<< HEAD
 "@opencrvs/mosip@1.9.0-beta.7":
   version "1.9.0-beta.7"
   resolved "https://registry.yarnpkg.com/@opencrvs/mosip/-/mosip-1.9.0-beta.7.tgz#fc2a04233257d8337550ff41cf25710c67e3df17"
@@ -1748,12 +1747,6 @@
   version "1.9.0-rc.17fd57f"
   resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-1.9.0-rc.17fd57f.tgz#9d0e0fdeef17530d1074d7f2215b4f6b570a7863"
   integrity sha512-7NS4WSf8HTvZUcxMls/pbRZ/SwiGRUrd4S5oZTkOqLXP3erqRWfBXnKQ1ya4+e7zn1QG/WeP9gQ45hG07uKCPw==
-=======
-"@opencrvs/toolkit@1.9.0-rc.df81614":
-  version "1.9.0-rc.df81614"
-  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-1.9.0-rc.df81614.tgz#9815e10c0202feac82edfd5e568dc261a21d1c14"
-  integrity sha512-mKa10rqCBNQLNtpVLh+enDTSX5Z/I6LM4EK2j4sVggGqsK0RnFVGOoaKuOe44DXPl04bakQWMYUXfqstihd1Ug==
->>>>>>> upstream/ocrvs-10720-init
   dependencies:
     "@trpc/client" "11.4.3"
     "@trpc/server" "11.4.3"
