@@ -45,3 +45,11 @@ export const nationalIdValidator = (fieldId: string) => ({
     }
   })
 })
+
+export const farajalandNameConfig = {
+  name: {
+    firstname: { required: true },
+    surname: { required: true }
+  },
+  maxLength: MAX_NAME_LENGTH
+}
