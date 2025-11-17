@@ -671,10 +671,10 @@ test.describe.serial(' Correct record - 3', () => {
       await page.locator('#child____placeOfBirth').click()
       await page.getByText(updatedChildDetails.placeOfBirth).click()
 
-      await page.getByTestId('location__province').click()
+      await page.getByLabel(/Province/i).click()
       await page.getByText(updatedChildDetails.birthLocation.province).click()
 
-      await page.getByTestId('location__district').click()
+      await page.getByLabel(/District/i).click()
       await page.getByText(updatedChildDetails.birthLocation.district).click()
 
       await page.locator('#town').fill(updatedChildDetails.birthLocation.town)

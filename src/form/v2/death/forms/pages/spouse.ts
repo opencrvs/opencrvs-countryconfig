@@ -23,8 +23,8 @@ import {
 import { not } from '@opencrvs/toolkit/conditionals'
 import { emptyMessage } from '../../../utils'
 import {
+  farajalandNameConfig,
   invalidNameValidator,
-  MAX_NAME_LENGTH,
   nationalIdValidator
 } from '@countryconfig/form/v2/birth/validators'
 import {
@@ -124,7 +124,7 @@ export const spouse = defineFormPage({
     connectToMOSIPIdReader(
       {
         id: 'spouse.name',
-        configuration: { maxLength: MAX_NAME_LENGTH },
+        configuration: farajalandNameConfig,
         type: FieldType.NAME,
         required: true,
         hideLabel: true,

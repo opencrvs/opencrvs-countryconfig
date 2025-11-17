@@ -24,8 +24,8 @@ import { not, never } from '@opencrvs/toolkit/conditionals'
 
 import { createSelectOptions, emptyMessage } from '@countryconfig/form/v2/utils'
 import {
+  farajalandNameConfig,
   invalidNameValidator,
-  MAX_NAME_LENGTH,
   nationalIdValidator
 } from '@countryconfig/form/v2/birth/validators'
 import {
@@ -88,7 +88,7 @@ export const deceased = defineFormPage({
       {
         id: 'deceased.name',
         type: FieldType.NAME,
-        configuration: { maxLength: MAX_NAME_LENGTH },
+        configuration: farajalandNameConfig,
         required: true,
         hideLabel: true,
         label: {

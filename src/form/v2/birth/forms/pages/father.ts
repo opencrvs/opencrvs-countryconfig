@@ -22,8 +22,8 @@ import {
 import { or, not } from '@opencrvs/toolkit/conditionals'
 import { emptyMessage } from '@countryconfig/form/v2/utils'
 import {
+  farajalandNameConfig,
   invalidNameValidator,
-  MAX_NAME_LENGTH,
   nationalIdValidator
 } from '@countryconfig/form/v2/birth/validators'
 import { InformantType } from './informant'
@@ -128,7 +128,7 @@ export const father = defineFormPage({
         id: 'father.name',
         type: FieldType.NAME,
         required: true,
-        configuration: { maxLength: MAX_NAME_LENGTH },
+        configuration: farajalandNameConfig,
         hideLabel: true,
         label: {
           defaultMessage: "Father's name",
