@@ -67,11 +67,10 @@ export async function getDeclaration({
   placeOfBirthType?: 'PRIVATE_HOME' | 'HEALTH_FACILITY'
 }) {
   const locations = await getAllLocations('ADMIN_STRUCTURE')
-  const province = getLocationIdByName(locations, 'Central')
   const district = getLocationIdByName(locations, 'Ibombo')
 
-  if (!province || !district) {
-    throw new Error('Province or district not found')
+  if (!district) {
+    throw new Error('District not found')
   }
 
   const mockDeclaration = {
@@ -85,9 +84,9 @@ export async function getDeclaration({
     'mother.nid': faker.string.numeric(10),
     'mother.address': {
       country: 'FAR',
-      province,
-      district,
-      addressType: AddressType.DOMESTIC
+      addressType: AddressType.DOMESTIC,
+      administrativeArea: district,
+      streetLevelDetails: { town: 'Dhaka' }
     },
     'father.name': {
       firstname: faker.person.firstName(),
@@ -100,9 +99,9 @@ export async function getDeclaration({
     'father.addressSameAs': 'NO',
     'father.address': {
       country: 'FAR',
-      province,
-      district,
-      addressType: AddressType.DOMESTIC
+      addressType: AddressType.DOMESTIC,
+      administrativeArea: district,
+      streetLevelDetails: { town: 'Dhaka' }
     },
     'child.name': {
       firstname: faker.person.firstName(),

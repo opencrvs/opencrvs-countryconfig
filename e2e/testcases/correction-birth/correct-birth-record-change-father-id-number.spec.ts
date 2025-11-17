@@ -48,12 +48,6 @@ test.describe.serial("Correct record - Change father's ID number", () => {
         'child.dob': format(subYears(new Date(), 1), 'yyyy-MM-dd'),
         'child.reason': 'Late',
         'child.placeOfBirth': 'PRIVATE_HOME',
-        'child.birthLocation.privateHome': {
-          country: 'FAR',
-          addressType: 'DOMESTIC',
-          province: 'Central',
-          district: 'Ibombo'
-        },
         'child.attendantAtBirth': 'PHYSICIAN',
         'child.birthType': 'SINGLE',
         'child.weightAtBirth': 3,
@@ -71,13 +65,6 @@ test.describe.serial("Correct record - Change father's ID number", () => {
         'mother.educationalAttainment': 'NO_SCHOOLING',
         'mother.occupation': 'Housewife',
         'mother.previousBirths': 0,
-        'mother.address': {
-          country: 'FAR',
-          addressType: 'DOMESTIC',
-          province: 'Central',
-          district: 'Ibombo'
-        },
-
         'father.name': {
           firstname: faker.person.firstName('male'),
           surname: faker.person.lastName('male')

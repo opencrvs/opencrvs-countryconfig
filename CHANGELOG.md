@@ -6,6 +6,13 @@
 
 - **Remove Unused Scopes**: Removed `RECORD_PRINT_RECORDS_SUPPORTING_DOCUMENTS` and `RECORD_EXPORT_RECORDS` scopes from `REGISTRATION_AGENT`, `LOCAL_REGISTRAR` and `NATIONAL_REGISTRAR`
 
+- **Field Configuration Change**: Updated country configuration to match the new `QUERY_PARAM_READER` structure.
+  Query parameters are now accessed under `data.*` (e.g. `data.code`, `data.state`)
+  instead of at the root.
+
+  This affects redirect callback handling. Update any manual testing URLs
+  or integration environment redirects to use the new structure
+
 ### Improvements
 
 - Make encryption step optional [#1123](https://github.com/opencrvs/opencrvs-countryconfig/pull/1123)

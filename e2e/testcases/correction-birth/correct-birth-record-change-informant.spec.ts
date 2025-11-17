@@ -88,12 +88,6 @@ test.describe.serial('Correct record - change informant type', () => {
         'child.dob': format(subYears(new Date(), 1), 'yyyy-MM-dd'),
         'child.reason': 'Late',
         'child.placeOfBirth': 'PRIVATE_HOME',
-        'child.birthLocation.privateHome': {
-          country: 'FAR',
-          addressType: 'DOMESTIC',
-          province: 'Central',
-          district: 'Ibombo'
-        },
         'child.attendantAtBirth': 'PHYSICIAN',
         'child.birthType': 'SINGLE',
         'child.weightAtBirth': 3,
@@ -110,13 +104,7 @@ test.describe.serial('Correct record - change informant type', () => {
         'mother.maritalStatus': 'SINGLE',
         'mother.educationalAttainment': 'NO_SCHOOLING',
         'mother.occupation': 'Housewife',
-        'mother.previousBirths': 0,
-        'mother.address': {
-          country: 'FAR',
-          addressType: 'DOMESTIC',
-          province: 'Central',
-          district: 'Ibombo'
-        }
+        'mother.previousBirths': 0
       },
       'REGISTER',
       'PRIVATE_HOME'

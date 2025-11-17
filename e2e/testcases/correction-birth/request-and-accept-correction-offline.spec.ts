@@ -42,12 +42,6 @@ test.describe.serial('Request and accept correction (offline)', () => {
         'child.dob': format(subYears(new Date(), 1), 'yyyy-MM-dd'),
         'child.reason': 'Late',
         'child.placeOfBirth': 'PRIVATE_HOME',
-        'child.birthLocation.privateHome': {
-          country: 'FAR',
-          addressType: 'DOMESTIC',
-          province: 'Central',
-          district: 'Ibombo'
-        },
         'child.attendantAtBirth': 'PHYSICIAN',
         'child.birthType': 'SINGLE',
         'child.weightAtBirth': 3,
@@ -65,12 +59,6 @@ test.describe.serial('Request and accept correction (offline)', () => {
         'mother.educationalAttainment': 'NO_SCHOOLING',
         'mother.occupation': 'Housewife',
         'mother.previousBirths': 0,
-        'mother.address': {
-          country: 'FAR',
-          addressType: 'DOMESTIC',
-          province: 'Central',
-          district: 'Ibombo'
-        },
         'father.name': {
           firstname: faker.person.firstName('male'),
           surname: faker.person.lastName('male')
