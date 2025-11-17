@@ -264,25 +264,6 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       ]
     },
     {
-      id: 'v2.birth-certificate-multipage',
-      event: Event.Birth,
-      isV2Template: true,
-      label: {
-        id: 'certificates.birth.certificate.multipage',
-        defaultMessage: 'Birth Certificate Multipage',
-        description: 'The label for a birth certificate'
-      },
-      isDefault: false,
-      fee: {
-        onTime: 7,
-        late: 10.6,
-        delayed: 18
-      },
-      svgUrl:
-        '/api/countryconfig/certificates/v2.birth-certificate-multipage.svg',
-      fonts: libreBaskervilleFont
-    },
-    {
       id: 'v2.tennis-club-membership-certificate',
       event: Event.TENNIS_CLUB_MEMBERSHIP,
       isV2Template: true,
@@ -326,6 +307,25 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       svgUrl:
         '/api/countryconfig/certificates/v2.tennis-club-membership-certified-certificate.svg',
       fonts: notoSansFont
+    },
+    {
+      id: 'v2.tennis-club-membership-certificate-multipage',
+      event: Event.TENNIS_CLUB_MEMBERSHIP,
+      isV2Template: true,
+      label: {
+        id: 'certificates.tennis-club-membership.certificate.multipage',
+        defaultMessage: 'Tennis Club Membership Certificate Multipage',
+        description: 'The label for a tennis club membership certificate'
+      },
+      isDefault: false,
+      fee: {
+        onTime: 7,
+        late: 10.6,
+        delayed: 18
+      },
+      svgUrl:
+        '/api/countryconfig/certificates/v2.tennis-club-membership-certificate-multipage.svg',
+      fonts: libreBaskervilleFont
     },
     {
       id: 'v2.death-certificate',
