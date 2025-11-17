@@ -221,17 +221,29 @@ export const birthEvent = defineConfig({
     },
     {
       type: ActionType.CUSTOM,
-      name: 'APPROVE',
+      customActionType: 'Approve',
       label: {
         defaultMessage: 'Approve',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.birth.action.approve.label'
       },
+      confirmationText: {
+        defaultMessage:
+          'This birth has been registered late. You are now approving it for further validation and registration.',
+        description: 'This is the confirmation text for the approve action',
+        id: 'event.birth.action.approve.confirmationText'
+      },
       form: [],
       flags: [
         { id: 'approval-required-for-late-registration', operation: 'remove' }
-      ]
+      ],
+      auditHistoryLabel: {
+        defaultMessage: 'Approved late registration',
+        description:
+          'The label to show in audit history for the approve action',
+        id: 'event.birth.action.approve.audit-history-label'
+      }
     },
     {
       type: ActionType.VALIDATE,

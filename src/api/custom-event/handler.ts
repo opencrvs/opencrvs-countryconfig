@@ -31,6 +31,13 @@ export function getCustomEventsHandler(
     .code(200)
 }
 
+export async function onCustomActionHandler(
+  request: ActionConfirmationRequest,
+  h: Hapi.ResponseToolkit
+) {
+  return h.response().code(200)
+}
+
 export async function onAnyActionHandler(
   request: ActionConfirmationRequest,
   h: Hapi.ResponseToolkit
@@ -40,6 +47,7 @@ export async function onAnyActionHandler(
   const token = request.auth.artifacts.token as string
 
   const event = request.payload
+
   await sendInformantNotification({ event, token })
 
   return h.response().code(200)
