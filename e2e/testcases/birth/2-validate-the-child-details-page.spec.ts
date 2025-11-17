@@ -135,7 +135,7 @@ test.describe.serial("2. Validate the child's details page", () => {
       await expect(
         page
           .locator('[data-testid="row-value-child.name"]')
-          .getByText(NAME_VALIDATION_ERROR)
+          .getByText(REQUIRED_VALIDATION_ERROR)
       ).toBeVisible()
     })
   })
