@@ -495,10 +495,10 @@ test.describe.serial(' Correct record - 3', () => {
         expect(page.url().includes('mother')).toBeTruthy()
         expect(page.url().includes('#mother____address')).toBeTruthy()
 
-        await page.locator('#province').click()
+        await page.locator('#searchable-select-province').click()
         await page.getByText(updatedMotherDetails.address.province).click()
 
-        await page.locator('#district').click()
+        await page.locator('#searchable-select-district').click()
         await page.getByText(updatedMotherDetails.address.district).click()
 
         await page.locator('#town').fill(updatedMotherDetails.address.town)
