@@ -58,6 +58,23 @@ const TENNIS_CLUB_DECLARATION_REVIEW = {
         defaultMessage: 'Draw signature',
         description: 'Title for the modal to draw signature'
       }
+    },
+    {
+      type: FieldType.ALPHA_PRINT_BUTTON,
+      id: 'review.print',
+      label: {
+        defaultMessage: 'Print declaration',
+        description: 'Print',
+        id: 'event.tennis-club-membership.action.declare.form.review.print.label'
+      },
+      configuration: {
+        template: 'v2.tennis-club-membership-certified-certificate',
+        buttonLabel: {
+          defaultMessage: 'Print declaration summary',
+          description: "Print button's label",
+          id: 'event.tennis-club-membership.action.declare.form.review.print.button.label'
+        }
+      }
     }
   ]
 }
@@ -280,6 +297,10 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
           },
           conditionals: [
             {
+              type: ConditionalType.SHOW,
+              conditional: field('recommender.none').isFalsy()
+            },
+            {
               type: ConditionalType.DISPLAY_ON_REVIEW,
               conditional: never()
             }
@@ -328,6 +349,66 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
             defaultMessage: "Recommender's membership ID",
             description: 'This is the label for the field',
             id: 'event.tennis-club-membership.action.declare.form.section.recommender.field.id.label'
+          }
+        },
+        {
+          id: 'recommender2.id',
+          type: 'TEXT',
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: field('recommender.none').isFalsy()
+            }
+          ],
+          label: {
+            defaultMessage: "2nd recommender's membership ID",
+            description: 'This is the label for the field',
+            id: 'event.tennis-club-membership.action.declare.form.section.recommender2.field.id.label'
+          }
+        },
+        {
+          id: 'recommender3.id',
+          type: 'TEXT',
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: field('recommender.none').isFalsy()
+            }
+          ],
+          label: {
+            defaultMessage: "3rd recommender's membership ID",
+            description: 'This is the label for the field',
+            id: 'event.tennis-club-membership.action.declare.form.section.recommender3.field.id.label'
+          }
+        },
+        {
+          id: 'recommender4.id',
+          type: 'TEXT',
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: field('recommender.none').isFalsy()
+            }
+          ],
+          label: {
+            defaultMessage: "4th recommender's membership ID",
+            description: 'This is the label for the field',
+            id: 'event.tennis-club-membership.action.declare.form.section.recommender4.field.id.label'
+          }
+        },
+        {
+          id: 'recommender5.id',
+          type: 'TEXT',
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: field('recommender.none').isFalsy()
+            }
+          ],
+          label: {
+            defaultMessage: "5th recommender's membership ID",
+            description: 'This is the label for the field',
+            id: 'event.tennis-club-membership.action.declare.form.section.recommender5.field.id.label'
           }
         }
       ]
@@ -1099,7 +1180,29 @@ export const tennisClubMembershipEvent = defineConfig({
         description: 'Recommender details search field section title',
         id: 'event.tennis-club-membership.search.recommender'
       },
-      fields: [field('recommender.name').fuzzy()]
+      fields: [
+        field('recommender.name').fuzzy(),
+        {
+          fieldId: 'recommender.id',
+          fieldType: 'field',
+          type: FieldType.TEXT,
+          config: {
+            type: 'fuzzy',
+            searchFields: [
+              'recommender.id',
+              'recommender2.id',
+              'recommender3.id',
+              'recommender4.id',
+              'recommender5.id'
+            ]
+          },
+          label: {
+            defaultMessage: "Recommender's Id",
+            description: 'Recommender id search field title',
+            id: 'event.tennis-club-membership.search.recommender.id'
+          }
+        }
+      ]
     }
   ]
 })
