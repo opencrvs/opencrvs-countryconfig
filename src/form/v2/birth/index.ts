@@ -239,7 +239,7 @@ export const birthEvent = defineConfig({
         { id: 'approval-required-for-late-registration', operation: 'remove' }
       ],
       auditHistoryLabel: {
-        defaultMessage: 'Approved late registration',
+        defaultMessage: 'Approved',
         description:
           'The label to show in audit history for the approve action',
         id: 'event.birth.action.approve.audit-history-label'

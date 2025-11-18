@@ -100,14 +100,16 @@ export interface ITokenPayload {
 export default function getPlugins() {
   const plugins: any[] = [inert, JWT, H2o2]
 
-  plugins.push({
-    plugin: Pino,
-    options: {
-      prettyPrint: false,
-      logPayload: false,
-      instance: logger
-    }
-  })
+  if (process.env.NODE_ENV !== 'test') {
+    plugins.push({
+      plugin: Pino,
+      options: {
+        prettyPrint: false,
+        logPayload: false,
+        instance: logger
+      }
+    })
+  }
 
   if (SENTRY_DSN) {
     plugins.push({
