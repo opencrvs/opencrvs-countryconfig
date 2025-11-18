@@ -4,13 +4,14 @@ import {
   drawSignature,
   formatName,
   goToSection,
-  login
+  login,
+  switchEventTab
 } from '../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../constants'
-import { ensureAssigned, ensureOutboxIsEmpty } from '../../utils'
+import { ensureAssigned, ensureOutboxIsEmpty, selectAction } from '../../utils'
 
-test.describe.serial('Add custom late birth registration flag', () => {
+test.describe.serial('Approval of late birth registration', () => {
   let page: Page
   const childName = {
     firstNames: faker.person.firstName('male'),
@@ -33,7 +34,7 @@ test.describe.serial('Add custom late birth registration flag', () => {
       await page.getByRole('button', { name: 'Continue' }).click()
     })
 
-    test('Fill child details', async () => {
+    test('Fill child details with birth date from over a year ago', async () => {
       await page.locator('#firstname').fill(childName.firstNames)
       await page.locator('#surname').fill(childName.familyName)
       await page.locator('#child____gender').click()
@@ -81,18 +82,6 @@ test.describe.serial('Add custom late birth registration flag', () => {
 
       await page.locator('#mother____idType').click()
       await page.getByText('None', { exact: true }).click()
-
-      await page.locator('#country').click()
-      await page.locator('#country input').fill('Farajaland'.slice(0, 3))
-      await page
-        .locator('#country')
-        .getByText('Farajaland', { exact: true })
-        .click()
-
-      await page.locator('#province').click()
-      await page.getByText('Sulaka', { exact: true }).click()
-      await page.locator('#district').click()
-      await page.getByText('Irundu', { exact: true }).click()
 
       await continueForm(page)
     })
@@ -155,6 +144,67 @@ test.describe.serial('Add custom late birth registration flag', () => {
       await expect(
         page.getByText('Approval required for late registration')
       ).toBeVisible()
+    })
+
+    // @TODO: This test should be added after action conditionals are implemented
+    test.skip('RA should not have the option to Approve', async () => {
+      await page.getByRole('button', { name: 'Action', exact: true }).click()
+      await expect(page.getByText('Approve', { exact: true })).not.toBeVisible()
+    })
+  })
+
+  test.describe('Declaration Review by LR', async () => {
+    test('Navigate to the declaration review page', async () => {
+      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await page.getByText('Ready for review').click()
+      await page
+        .getByRole('button', {
+          name: formatName(childName)
+        })
+        .click()
+
+      await ensureAssigned(page)
+    })
+
+    test("Event should have the 'Approval required for late registration' flag", async () => {
+      await expect(
+        page.getByText('Approval required for late registration')
+      ).toBeVisible()
+    })
+
+    test('Approve', async () => {
+      await selectAction(page, 'Approve')
+      await expect(
+        page.getByText(
+          'This birth has been registered late. You are now approving it for further validation and registration.'
+        )
+      ).toBeVisible()
+
+      await page.getByRole('button', { name: 'Confirm' }).click()
+    })
+
+    test('Validate flag is removed after approval', async () => {
+      await page
+        .getByRole('button', {
+          name: formatName(childName)
+        })
+        .click()
+      await ensureAssigned(page)
+
+      await expect(
+        page.getByText('Approval required for late registration')
+      ).not.toBeVisible()
+    })
+
+    test('Validate that action appears in audit trail', async () => {
+      await switchEventTab(page, 'Audit')
+
+      await page
+        .getByRole('button', {
+          name: 'Approved late registration',
+          exact: true
+        })
+        .click()
     })
   })
 })
