@@ -228,7 +228,7 @@ export const birthEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.birth.action.approve.label'
       },
-      confirmationText: {
+      supportingCopy: {
         defaultMessage:
           'This birth has been registered late. You are now approving it for further validation and registration.',
         description: 'This is the confirmation text for the approve action',
