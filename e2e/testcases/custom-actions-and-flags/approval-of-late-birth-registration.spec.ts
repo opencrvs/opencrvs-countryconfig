@@ -199,12 +199,7 @@ test.describe.serial('Approval of late birth registration', () => {
     test('Validate that action appears in audit trail', async () => {
       await switchEventTab(page, 'Audit')
 
-      await page
-        .getByRole('button', {
-          name: 'Approved late registration',
-          exact: true
-        })
-        .click()
+      await page.getByRole('button', { name: 'Approved', exact: true }).click()
     })
   })
 })
