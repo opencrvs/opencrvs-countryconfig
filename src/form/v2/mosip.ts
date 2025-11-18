@@ -1,7 +1,8 @@
 import {
   MOSIP_API_USERINFO_URL,
   OPENID_PROVIDER_CLIENT_ID,
-  ESIGNET_REDIRECT_URL
+  ESIGNET_REDIRECT_URL,
+  DOMAIN
 } from '@countryconfig/constants'
 import {
   FieldConditional,
@@ -164,7 +165,7 @@ export const getMOSIPIntegrationFields = (
         },
         body: {
           clientId: OPENID_PROVIDER_CLIENT_ID,
-          redirectUri: '/' // noop
+          redirectUri: `https://register.${DOMAIN}` // noop when using mocks, a "registered" URL with either MOSIP or E-Signet
         },
         params: {
           code: field(`${page}.query-params`).get('code'),
