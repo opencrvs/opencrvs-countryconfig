@@ -75,8 +75,12 @@ test.describe('Informant details resets when relation is changed', () => {
 
       await expect(page.getByText('Estonia')).toBeHidden()
       await expect(page.locator('#country')).toHaveText('Farajaland')
-      await expect(page.locator('#province')).toHaveText('Central')
-      await expect(page.locator('#district')).toHaveText('Ibombo')
+      await expect(page.locator('#searchable-select-province')).toHaveText(
+        'Central'
+      )
+      await expect(page.locator('#searchable-select-district')).toHaveText(
+        'Ibombo'
+      )
 
       await expect(page.locator('#informant____phoneNo')).toHaveValue('')
       await expect(page.locator('#informant____email')).toHaveValue('')

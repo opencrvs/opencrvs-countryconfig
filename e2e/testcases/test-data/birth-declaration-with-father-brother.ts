@@ -125,8 +125,7 @@ export async function getDeclaration({
     'informant.nid': faker.string.numeric(10),
     'informant.address': {
       country: 'FAR',
-      province,
-      district,
+      administrativeArea: district,
       addressType: AddressType.DOMESTIC
     }
   }
