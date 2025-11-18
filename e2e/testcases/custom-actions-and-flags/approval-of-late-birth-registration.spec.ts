@@ -184,6 +184,7 @@ test.describe.serial('Approval of late birth registration', () => {
     })
 
     test('Validate flag is removed after approval', async () => {
+      await page.getByText('Ready for review').click()
       await page
         .getByRole('button', {
           name: formatName(childName)
