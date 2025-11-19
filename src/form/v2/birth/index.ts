@@ -234,7 +234,19 @@ export const birthEvent = defineConfig({
         description: 'This is the confirmation text for the approve action',
         id: 'event.birth.action.approve.confirmationText'
       },
-      form: [],
+      form: [
+        {
+          id: 'notes',
+          type: 'TEXTAREA',
+          required: true,
+          label: {
+            defaultMessage: 'Reason for delayed registration',
+            description: 'This is the label for the field',
+            id: 'event.birth.action.declare.form.section.child.field.reason.label'
+          },
+          conditionals: []
+        }
+      ],
       flags: [
         { id: 'approval-required-for-late-registration', operation: 'remove' }
       ],
