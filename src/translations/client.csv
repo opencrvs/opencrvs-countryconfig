@@ -25,6 +25,7 @@ advancedSearch.form.deceasedDetails,The title of Deceased details accordion,Dece
 advancedSearch.form.eventDetails,The title of event details accordion,Event details,Détails de l'évènement
 advancedSearch.form.fatherDetails,The title of Father details accordion,Father details,Information du père
 advancedSearch.form.informantDetails,The title informant details form,Informant details,information de l'informateur
+event.birth.custom.action.approve.field.notes.label,This is the label for the field for a custom action,Notes,Remarques
 advancedSearch.form.motherDetails,The title of Mother details accordion,Mother details,Information de la mère
 advancedSearch.form.placeOfRegistration,Label for input Place of registration,Place of registration,Lieu d'enregistrement
 advancedSearch.form.placeOfRegistrationHelperText,Helper text for input Place of registration,"Search for a province, district or registration office","Rechercher une province, un district ou un bureau d'enregistrement"

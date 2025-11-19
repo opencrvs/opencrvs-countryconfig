@@ -240,11 +240,10 @@ export const birthEvent = defineConfig({
           type: 'TEXTAREA',
           required: true,
           label: {
-            defaultMessage: 'Reason for delayed registration',
-            description: 'This is the label for the field',
-            id: 'event.birth.action.declare.form.section.child.field.reason.label'
-          },
-          conditionals: []
+            defaultMessage: 'Notes',
+            description: 'This is the label for the field for a custom action',
+            id: 'event.birth.custom.action.approve.field.notes.label'
+          }
         }
       ],
       flags: [
