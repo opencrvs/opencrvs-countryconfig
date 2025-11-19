@@ -1,6 +1,10 @@
 import { expect, Page, test } from '@playwright/test'
 import { v4 as uuidv4 } from 'uuid'
-import { CLIENT_URL, GATEWAY_HOST } from '../../constants'
+import {
+  CLIENT_URL,
+  GATEWAY_HOST,
+  SAFE_IN_EXTERNAL_VALIDATION_MS
+} from '../../constants'
 import { CREDENTIALS } from '../../constants'
 import {
   drawSignature,
@@ -8,7 +12,8 @@ import {
   formatName,
   getClientToken,
   getToken,
-  login
+  login,
+  switchEventTab
 } from '../../helpers'
 import { addDays, format, subDays } from 'date-fns'
 import { faker } from '@faker-js/faker'
@@ -647,21 +652,23 @@ test.describe('Events REST API', () => {
 
       await ensureAssigned(page)
 
-      await expect(page.locator('#row_0')).toContainText('Sent incomplete')
+      await page.getByRole('button', { name: 'Audit' }).click()
+
+      await expect(page.locator('#row_0')).toContainText('Notified')
       await expect(page.locator('#row_0')).toContainText(clientName)
       await expect(page.locator('#row_0')).toContainText('Health integration')
 
-      // Open modal by clicking 'Sent incomplete' action row
-      await page.getByText('Sent incomplete').click()
+      // Open modal by clicking 'Notified' action row
+      await page.getByText('Notified').click()
       const modal = await page.getByTestId('event-history-modal')
-      expect(modal).toContainText('Sent incomplete')
+      expect(modal).toContainText('Notified')
       expect(modal).toContainText(clientName)
 
       // Close the modal
       await page.locator('#close-btn').click()
 
       // View the event details
-      await selectAction(page, 'View')
+      await page.getByRole('button', { name: 'Record', exact: true }).click()
       await expect(page.getByTestId('row-value-child.name')).toHaveText(
         formatName(childName)
       )
@@ -884,6 +891,116 @@ test.describe('Events REST API', () => {
       await printAndExpectPopup(page)
 
       await expectInUrl(page, `/workqueue/ready-to-print`)
+    })
+  })
+
+  test.describe
+    .serial('Local Registrar can reject an event notified via integration', async () => {
+    const childName = {
+      firstname: faker.person.firstName(),
+      surname: faker.person.lastName()
+    }
+
+    let token: string
+    let page: Page
+    let eventId: string
+
+    test.beforeAll(async ({ browser }) => {
+      page = await browser.newPage()
+    })
+
+    test.afterAll(async () => {
+      await page.close()
+    })
+
+    test('Login', async () => {
+      token = await login(page)
+    })
+
+    let trackingId: string
+
+    test('Notify event an event via integration', async () => {
+      const createEventResponse = await fetchClientAPI(
+        '/api/events/events',
+        'POST',
+        clientToken,
+        {
+          type: EVENT_TYPE,
+          transactionId: uuidv4()
+        }
+      )
+
+      const createEventResponseBody = await createEventResponse.json()
+      eventId = createEventResponseBody.id
+      const { sub } = decode<{ sub: string }>(token)
+
+      const location = await fetchUserLocationHierarchy(sub, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+
+      const declaration = {
+        ...(await getDeclaration({})),
+        'child.name': childName,
+        'child.dob': undefined
+      }
+
+      const res = await fetchClientAPI(
+        '/api/events/events/notifications',
+        'POST',
+        clientToken,
+        {
+          eventId,
+          transactionId: uuidv4(),
+          type: 'NOTIFY',
+          declaration,
+          annotation: {},
+          createdAtLocation: location[location.length - 1]
+        }
+      )
+
+      trackingId = (await res.json()).trackingId
+    })
+
+    test("Navigate to event via 'Notifications' -workqueue", async () => {
+      await page.getByRole('button', { name: 'Notifications' }).click()
+      await page
+        .getByText(await formatV2ChildName({ 'child.name': childName }))
+        .click()
+    })
+
+    test('Review event', async () => {
+      await selectAction(page, 'Review')
+    })
+
+    test('Reject event', async () => {
+      await page.getByRole('button', { name: 'Reject' }).click()
+      await page.getByTestId('reject-reason').fill(faker.lorem.sentence())
+      await page.getByRole('button', { name: 'Send For Update' }).click()
+    })
+
+    test('Navigate to event via search', async () => {
+      await page.getByRole('button', { name: 'Search' }).click()
+      await page.getByPlaceholder('Search').fill(trackingId)
+      await page.getByRole('button', { name: 'Search' }).click()
+      await page
+        .getByText(await formatV2ChildName({ 'child.name': childName }))
+        .click()
+
+      await expect(page.locator('#content-name')).toHaveText(
+        await formatV2ChildName({ 'child.name': childName })
+      )
+      await page.waitForTimeout(SAFE_IN_EXTERNAL_VALIDATION_MS)
+      await ensureAssigned(page)
+      await page.waitForTimeout(SAFE_IN_EXTERNAL_VALIDATION_MS)
+    })
+
+    test('Audit event', async () => {
+      await switchEventTab(page, 'Audit')
+      await expect(page.locator('#row_0')).toContainText('Notified')
+      await expect(page.locator('#row_0')).toContainText(clientName)
+      await expect(page.locator('#row_3')).toContainText('Rejected')
     })
   })
 })

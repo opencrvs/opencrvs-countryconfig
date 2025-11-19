@@ -6,13 +6,14 @@ import {
   goToSection,
   login,
   logout,
+  switchEventTab,
   uploadImage,
   uploadImageToSection
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
 import { REQUIRED_VALIDATION_ERROR } from '../helpers'
-import { ensureOutboxIsEmpty } from '../../../utils'
+import { ensureAssigned, ensureOutboxIsEmpty } from '../../../utils'
 
 test.describe.serial('7. Birth declaration case - 7', () => {
   let page: Page
@@ -244,7 +245,7 @@ test.describe.serial('7. Birth declaration case - 7', () => {
   })
 
   test.describe('7.2 Declaration Review by RA', async () => {
-    test('7.2.1 Navigate to the declaration review page', async () => {
+    test('7.2.1 Navigate to the declaration "Record" -tab', async () => {
       await logout(page)
       await login(page, CREDENTIALS.REGISTRATION_AGENT)
 
@@ -255,8 +256,8 @@ test.describe.serial('7. Birth declaration case - 7', () => {
           name: formatName(declaration.child.name)
         })
         .click()
-      await page.getByRole('button', { name: 'Action', exact: true }).click()
-      await page.getByText('View', { exact: true }).click()
+      await ensureAssigned(page)
+      await switchEventTab(page, 'Record')
     })
 
     test('7.2.2 Verify information on review page', async () => {

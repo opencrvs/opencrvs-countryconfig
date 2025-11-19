@@ -85,7 +85,7 @@
     "@hapi/hapi": "^20.0.1",
     "@hapi/inert": "^6.0.3",
     "@opencrvs/mosip": "1.9.0-beta.7",
-    "@opencrvs/toolkit": "1.9.0-rc.79b0f42",
+    "@opencrvs/toolkit": "1.9.0-rc.8476ac9",
     "@types/chalk": "^2.2.0",
     "@types/code": "^4.0.3",
     "@types/csv2json": "^1.4.0",
@@ -141,7 +141,7 @@
     "uuid": "^11.1.0",
     "whatwg-fetch": "^3.0.0",
     "yargs": "^17.7.2",
-    "zod": "^3.24.1"
+    "zod": "^4.1.12"
   },
   "lint-staged": {
     "{src,e2e}/**/*.{ts,graphql}": [

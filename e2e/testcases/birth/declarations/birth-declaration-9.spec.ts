@@ -4,12 +4,13 @@ import {
   drawSignature,
   formatName,
   goToSection,
-  login
+  login,
+  switchEventTab
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
 import { REQUIRED_VALIDATION_ERROR } from '../helpers'
-import { ensureOutboxIsEmpty } from '../../../utils'
+import { ensureAssigned, ensureOutboxIsEmpty } from '../../../utils'
 
 test.describe.serial('9. Birth declaration case - 9', () => {
   let page: Page
@@ -203,8 +204,8 @@ test.describe.serial('9. Birth declaration case - 9', () => {
           name: formatName(declaration.child.name)
         })
         .click()
-      await page.getByRole('button', { name: 'Action', exact: true }).click()
-      await page.getByText('View', { exact: true }).click()
+      await ensureAssigned(page)
+      await switchEventTab(page, 'Record')
     })
 
     test('9.2.2 Verify information on preview page', async () => {

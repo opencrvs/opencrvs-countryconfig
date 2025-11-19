@@ -6,6 +6,7 @@ import { createDeclaration, Declaration } from '../test-data/birth-declaration'
 import { formatV2ChildName } from '../birth/helpers'
 import { ActionType } from '@opencrvs/toolkit/events'
 import { getRowByTitle } from '../print-certificate/birth/helpers'
+import { expectInUrl } from '../../utils'
 
 test.describe.serial('7 Validate Sent for approval tab', () => {
   let page: Page
@@ -68,6 +69,6 @@ test.describe.serial('7 Validate Sent for approval tab', () => {
       .click()
 
     // User should navigate to record audit page
-    expect(page.url().includes(`events/overview/${eventId}`)).toBeTruthy()
+    await expectInUrl(page, `events/${eventId}?workqueue=sent-for-approval`)
   })
 })

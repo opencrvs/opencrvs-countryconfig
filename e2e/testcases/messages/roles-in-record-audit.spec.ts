@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test'
 import { CREDENTIALS } from '../../constants'
-import { getToken, login } from '../../helpers'
+import { getToken, login, switchEventTab } from '../../helpers'
 import { createDeclaration } from '../test-data/birth-declaration'
 import { ActionType } from '@opencrvs/toolkit/events'
 import { ensureAssigned } from '../../utils'
@@ -59,6 +59,7 @@ test.describe('Roles in Record Audit', () => {
         .click()
 
       await ensureAssigned(page)
+      await switchEventTab(page, 'Audit')
 
       await expect(page.locator('#row_0')).toContainText(expectedAuditRole)
     })

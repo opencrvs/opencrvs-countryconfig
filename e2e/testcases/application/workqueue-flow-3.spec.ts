@@ -360,7 +360,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
       })
     })
 
-    test('3.4.2 Review', async () => {
+    test('3.4.2 Validate', async () => {
       await page.getByText('Ready for review').click()
       await page
         .getByRole('button', {
@@ -368,9 +368,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         })
         .click()
 
-      await selectAction(page, 'Review')
-
-      await page.getByRole('button', { name: 'Send for approval' }).click()
+      await selectAction(page, 'Validate')
       await page.getByRole('button', { name: 'Confirm' }).click()
 
       await assertRecordInWorkqueue({
@@ -416,7 +414,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         .getByRole('button', { name: 'Review' })
         .click()
 
-      await page.getByRole('button', { name: 'Reject' }).click()
+      await selectAction(page, 'Reject')
 
       await page.getByTestId('reject-reason').fill(faker.lorem.sentence())
 
@@ -465,7 +463,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         .getByRole('button', { name: 'Review' })
         .click()
 
-      await page.getByRole('button', { name: 'Send for approval' }).click()
+      await selectAction(page, 'Validate')
       await page.getByRole('button', { name: 'Confirm' }).click()
 
       await assertRecordInWorkqueue({
@@ -510,8 +508,8 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         .getByRole('button', { name: 'Review' })
         .click()
 
-      await page.getByRole('button', { name: 'Register' }).click()
-      await page.locator('#confirm_Register').click()
+      await selectAction(page, 'Register')
+      await page.getByRole('button', { name: 'Confirm' }).click()
       await ensureInExternalValidationIsEmpty(page)
 
       await assertRecordInWorkqueue({

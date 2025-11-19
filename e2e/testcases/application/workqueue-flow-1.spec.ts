@@ -330,14 +330,9 @@ test.describe.serial('1. Workqueue flow - 1', () => {
         })
         .click()
 
-      await selectAction(page, 'Review')
+      await selectAction(page, 'Register')
+      await page.getByRole('button', { name: 'Confirm' }).click()
 
-      await page
-        .getByRole('button', {
-          name: 'Register'
-        })
-        .click()
-      await page.locator('#confirm_Register').click()
       await ensureOutboxIsEmpty(page)
       await ensureInExternalValidationIsEmpty(page)
 

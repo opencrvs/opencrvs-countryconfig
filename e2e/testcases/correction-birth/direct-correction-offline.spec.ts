@@ -157,7 +157,7 @@ test.describe.serial('Direct correction offline', () => {
     await page.getByRole('button', { name: 'Correct record' }).click()
     await page.getByRole('button', { name: 'Confirm' }).click()
 
-    expect(page.url().includes(`events/overview/${eventId}`)).toBeTruthy()
+    expect(page.url().includes(`events/${eventId}`)).toBeTruthy()
 
     // We expect to see the optimistically updated new child name instead of the old one
     await expect(
@@ -165,6 +165,8 @@ test.describe.serial('Direct correction offline', () => {
         hasText: formatV2ChildName({ 'child.name': updatedChildDetails })
       })
     ).toBeVisible()
+
+    await page.getByTestId('exit-event').click()
 
     await page.getByRole('button', { name: 'Outbox' }).click()
     await expect(page.locator('#wait-connection-text')).toBeVisible()

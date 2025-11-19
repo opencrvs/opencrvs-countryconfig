@@ -105,7 +105,7 @@ export const assignFromWorkqueue = async (page: Page, name: string) => {
 
   await expect(
     getRowByTitle(page, name)
-      .getByRole('button', { name: 'Assign record' })
+      .getByRole('button', { name: 'User avatar' })
       .locator('img')
   ).toBeVisible({
     timeout: SAFE_OUTBOX_TIMEOUT_MS

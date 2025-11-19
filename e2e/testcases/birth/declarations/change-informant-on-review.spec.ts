@@ -258,7 +258,8 @@ test.describe.serial('Change informant on review', () => {
     })
   })
 
-  test.describe('Declaration Review by Local Registrar', async () => {
+  // @TODO: Skipped for now until 'Edit' action is implemented.
+  test.describe.skip('Declaration Review by Local Registrar', async () => {
     test('Navigate to the declaration review page', async () => {
       await logout(page)
       await login(page, CREDENTIALS.LOCAL_REGISTRAR)
