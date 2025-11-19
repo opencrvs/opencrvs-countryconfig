@@ -17,6 +17,9 @@ test.describe.serial('Approval of late birth registration', () => {
     firstNames: faker.person.firstName('male'),
     familyName: faker.person.lastName('male')
   }
+
+  const childNameFormatted = formatName(childName)
+
   test.beforeAll(async ({ browser }) => {
     page = await browser.newPage()
   })
@@ -46,11 +49,7 @@ test.describe.serial('Approval of late birth registration', () => {
       await page.locator('#child____reason').fill('Late registration reason')
 
       await page.locator('#child____placeOfBirth').click()
-      await page
-        .getByText('Health Institution', {
-          exact: true
-        })
-        .click()
+      await page.getByText('Health Institution', { exact: true }).click()
       await page
         .locator('#child____birthLocation')
         .fill('Golden Valley Rural Health Centre'.slice(0, 3))
@@ -61,11 +60,7 @@ test.describe.serial('Approval of late birth registration', () => {
 
     test('Fill informant details', async () => {
       await page.locator('#informant____relation').click()
-      await page
-        .getByText('Mother', {
-          exact: true
-        })
-        .click()
+      await page.getByText('Mother', { exact: true }).click()
 
       await page.locator('#informant____email').fill('test@example.com')
 
@@ -131,16 +126,12 @@ test.describe.serial('Approval of late birth registration', () => {
     test('Navigate to the declaration review page', async () => {
       await login(page, CREDENTIALS.REGISTRATION_AGENT)
       await page.getByText('Ready for review').click()
-      await page
-        .getByRole('button', {
-          name: formatName(childName)
-        })
-        .click()
+      await page.getByRole('button', { name: childNameFormatted }).click()
 
       await ensureAssigned(page)
     })
 
-    test("Event should have the 'Approval required for late registration' flag", async () => {
+    test("Event should have the 'Approval required for late registration' -flag", async () => {
       await expect(
         page.getByText('Approval required for late registration')
       ).toBeVisible()
@@ -157,16 +148,12 @@ test.describe.serial('Approval of late birth registration', () => {
     test('Navigate to the declaration review page', async () => {
       await login(page, CREDENTIALS.LOCAL_REGISTRAR)
       await page.getByText('Ready for review').click()
-      await page
-        .getByRole('button', {
-          name: formatName(childName)
-        })
-        .click()
+      await page.getByRole('button', { name: childNameFormatted }).click()
 
       await ensureAssigned(page)
     })
 
-    test("Event should have the 'Approval required for late registration' flag", async () => {
+    test("Event should have the 'Approval required for late registration' -flag", async () => {
       await expect(
         page.getByText('Approval required for late registration')
       ).toBeVisible()
@@ -183,13 +170,12 @@ test.describe.serial('Approval of late birth registration', () => {
       await page.getByRole('button', { name: 'Confirm' }).click()
     })
 
-    test('Validate flag is removed after approval', async () => {
-      await page.getByTestId('navigation_workqueue_in-review-all').click()
-      await page
-        .getByRole('button', {
-          name: formatName(childName)
-        })
-        .click()
+    test("Validate that the 'Approval required for late registration' -flag is removed after approval", async () => {
+      await ensureOutboxIsEmpty(page)
+      await page.locator('#searchText').fill(childNameFormatted)
+      await page.locator('#searchIconButton').click()
+      await page.getByRole('button', { name: childNameFormatted }).click()
+
       await ensureAssigned(page)
 
       await expect(
