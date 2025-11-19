@@ -180,7 +180,7 @@ test.describe.serial('Approval of late birth registration', () => {
       await page.getByRole('button', { name: 'Confirm' }).click()
     })
 
-    test.skip("Validate that the 'Approval required for late registration' -flag is removed after approval", async () => {
+    test("Validate that the 'Approval required for late registration' -flag is removed after approval", async () => {
       await ensureOutboxIsEmpty(page)
       await page.locator('#searchText').fill(childNameFormatted)
       await page.locator('#searchIconButton').click()
@@ -193,7 +193,7 @@ test.describe.serial('Approval of late birth registration', () => {
       ).not.toBeVisible()
     })
 
-    test.skip('Validate that action appears in audit trail', async () => {
+    test('Validate that action appears in audit trail', async () => {
       await switchEventTab(page, 'Audit')
 
       await page.getByRole('button', { name: 'Approved', exact: true }).click()
