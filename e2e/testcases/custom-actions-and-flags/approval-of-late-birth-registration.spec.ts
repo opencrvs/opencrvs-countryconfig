@@ -131,7 +131,7 @@ test.describe.serial('Approval of late birth registration', () => {
       await ensureAssigned(page)
     })
 
-    test("Event should have the 'Approval required for late registration' flag", async () => {
+    test("Event should have the 'Approval required for late registration' -flag", async () => {
       await expect(
         page.getByText('Approval required for late registration')
       ).toBeVisible()
@@ -153,7 +153,7 @@ test.describe.serial('Approval of late birth registration', () => {
       await ensureAssigned(page)
     })
 
-    test("Event should have the 'Approval required for late registration' flag", async () => {
+    test("Event should have the 'Approval required for late registration' -flag", async () => {
       await expect(
         page.getByText('Approval required for late registration')
       ).toBeVisible()
@@ -170,7 +170,8 @@ test.describe.serial('Approval of late birth registration', () => {
       await page.getByRole('button', { name: 'Confirm' }).click()
     })
 
-    test('Validate flag is removed after approval', async () => {
+    test("Validate that the 'Approval required for late registration' -flag is removed after approval", async () => {
+      await ensureOutboxIsEmpty(page)
       await page.locator('#searchText').fill(childNameFormatted)
       await page.locator('#searchIconButton').click()
       await page.getByRole('button', { name: childNameFormatted }).click()
