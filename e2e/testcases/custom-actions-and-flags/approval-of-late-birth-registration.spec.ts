@@ -149,7 +149,17 @@ test.describe.serial('Approval of late birth registration', () => {
       await login(page, CREDENTIALS.LOCAL_REGISTRAR)
       await page.getByText('Ready for review').click()
       await page.getByRole('button', { name: childNameFormatted }).click()
+    })
 
+    test('Approve action should be disabled before assignment', async () => {
+      await page.getByRole('button', { name: 'Action', exact: true }).click()
+      const approveButton = page.getByText('Approve', { exact: true })
+      await expect(approveButton).toBeVisible()
+      await expect(approveButton).toHaveAttribute('disabled')
+      await page.getByRole('button', { name: 'Action', exact: true }).click()
+    })
+
+    test('Assign', async () => {
       await ensureAssigned(page)
     })
 
