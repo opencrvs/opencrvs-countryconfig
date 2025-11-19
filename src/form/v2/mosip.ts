@@ -165,7 +165,7 @@ export const getMOSIPIntegrationFields = (
         },
         body: {
           clientId: OPENID_PROVIDER_CLIENT_ID,
-          redirectUri: `https://register.${DOMAIN}` // noop when using mocks, a "registered" URL with either MOSIP or E-Signet
+          redirectUri: `https://register.${DOMAIN}` // noop when using mocks. Must be a "whitelisted" URL with either MOSIP or E-Signet
         },
         params: {
           code: field(`${page}.query-params`).get('code'),
