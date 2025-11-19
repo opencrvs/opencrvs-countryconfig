@@ -58,9 +58,9 @@ import { fontsHandler } from './api/fonts/handler'
 import { recordNotificationHandler } from './api/record-notification/handler'
 import {
   getCustomEventsHandler,
-  onAnyActionHandler
+  onAnyActionHandler,
+  onCustomActionHandler
 } from '@countryconfig/api/custom-event/handler'
-import { readFileSync } from 'fs'
 import {
   ActionDocument,
   ActionStatus,
@@ -92,7 +92,7 @@ export interface ITokenPayload {
 export default function getPlugins() {
   const plugins: any[] = [inert, JWT]
 
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV !== 'test') {
     plugins.push({
       plugin: Pino,
       options: {
@@ -643,6 +643,16 @@ export async function createServer() {
 
   server.route({
     method: 'POST',
+    path: `/trigger/events/{event}/actions/${ActionType.CUSTOM}`,
+    handler: onCustomActionHandler,
+    options: {
+      tags: ['api', 'events'],
+      description: 'Receives notifications on event custom action'
+    }
+  })
+
+  server.route({
+    method: 'POST',
     path: '/trigger/events/{event}/actions/{action}',
     handler: onAnyActionHandler,
     options: {
@@ -748,9 +758,9 @@ export async function createServer() {
     await syncLocationLevels()
     await syncLocationStatistics()
 
-    const logMsg = `Server successfully started on ${COUNTRY_CONFIG_HOST}:${COUNTRY_CONFIG_PORT}`
-    logger.info(logMsg)
-    server.log('info', logMsg)
+    logger.info(
+      `Server successfully started on ${COUNTRY_CONFIG_HOST}:${COUNTRY_CONFIG_PORT}`
+    )
   }
 
   return { server, start, stop }

@@ -201,7 +201,6 @@ export const deathEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.death.action.validate.label'
       },
-      review: DEATH_DECLARATION_REVIEW,
       deduplication: {
         id: 'death-deduplication',
         label: {
@@ -221,7 +220,6 @@ export const deathEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.death.action.register.label'
       },
-      review: DEATH_DECLARATION_REVIEW,
       deduplication: {
         id: 'death-deduplication',
         label: {

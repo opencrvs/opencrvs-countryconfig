@@ -19,6 +19,11 @@ export const logger =
         ]
       })
     : pino({
+        serializers: {
+          req: () => undefined,
+          res: () => undefined,
+          responseTime: () => undefined
+        },
         transport: {
           target: 'pino-pretty',
           options: {
