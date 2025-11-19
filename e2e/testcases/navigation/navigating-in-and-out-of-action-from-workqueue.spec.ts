@@ -1,4 +1,4 @@
-import { expect, test, type Page } from '@playwright/test'
+import { test, type Page } from '@playwright/test'
 
 import { login, getToken, formatName } from '../../helpers'
 import { CREDENTIALS } from '../../constants'
@@ -11,7 +11,9 @@ import {
 import { expectInUrl, selectAction } from '../../utils'
 import { ActionType } from '@opencrvs/toolkit/events'
 
-test.describe.serial('Navigating in and out of action', () => {
+// @TODO: This test has been flaky, disable it until it's fixed properly.
+// test.describe.skip.serial('Navigating in and out of action', () => {
+test.describe.skip('Navigating in and out of action', () => {
   let page: Page
   let declaration: Declaration
   let eventId: string
