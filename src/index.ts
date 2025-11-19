@@ -693,16 +693,6 @@ export async function createServer() {
 
   server.route({
     method: 'POST',
-    path: `/trigger/events/{event}/actions/${ActionType.CUSTOM}`,
-    handler: onCustomActionHandler,
-    options: {
-      tags: ['api', 'events'],
-      description: 'Receives notifications on event custom action'
-    }
-  })
-
-  server.route({
-    method: 'POST',
     path: '/trigger/events/{event}/actions/{action}',
     handler: onAnyActionHandler,
     options: {
@@ -758,6 +748,16 @@ export async function createServer() {
     options: {
       tags: ['api', 'events'],
       description: 'Receives notifications on event actions'
+    }
+  })
+
+  server.route({
+    method: 'POST',
+    path: `/trigger/events/{event}/actions/${ActionType.CUSTOM}`,
+    handler: onCustomActionHandler,
+    options: {
+      tags: ['api', 'events'],
+      description: 'Receives notifications on event custom action'
     }
   })
 
