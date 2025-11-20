@@ -35,7 +35,6 @@ export async function onCustomActionHandler(
   request: ActionConfirmationRequest,
   h: Hapi.ResponseToolkit
 ) {
-  console.log('IS THIS CALLED???')
   return h.response().code(200)
 }
 
