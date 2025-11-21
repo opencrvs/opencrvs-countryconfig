@@ -202,7 +202,7 @@ test.describe('Form state', () => {
         .fill(faker.number.int({ min: 1, max: 1000 }).toString())
       await continueForm(page)
       await page.getByTestId('change-button-mother.name').click()
-      await page.locator('#firstname').fill(updatedMotherName)
+      await type(page, '#firstname', updatedMotherName)
       await page.reload()
       await expect(page.locator('#firstname')).toHaveValue(updatedMotherName)
     })
