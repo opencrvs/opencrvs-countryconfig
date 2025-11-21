@@ -202,11 +202,9 @@ test.describe('Form state', () => {
         .fill(faker.number.int({ min: 1, max: 1000 }).toString())
       await continueForm(page)
       await page.getByTestId('change-button-mother.name').click()
-      await page.locator('#mother____firstname').fill(updatedMotherName)
+      await page.locator('#firstname').fill(updatedMotherName)
       await page.reload()
-      await expect(page.locator('#mother____firstname')).toHaveValue(
-        updatedMotherName
-      )
+      await expect(page.locator('#firstname')).toHaveValue(updatedMotherName)
     })
 
     test('Form states and annotations are not persisted', async () => {
