@@ -4,7 +4,11 @@ import { faker } from '@faker-js/faker'
 import { fillChildDetails, openBirthDeclaration } from '../birth/helpers'
 import { CREDENTIALS } from '../../constants'
 import { createDeclaration, Declaration } from '../test-data/birth-declaration'
-import { ensureInExternalValidationIsEmpty, selectAction } from '../../utils'
+import {
+  ensureInExternalValidationIsEmpty,
+  selectAction,
+  type
+} from '../../utils'
 import {
   navigateToCertificatePrintAction,
   selectRequesterType
@@ -178,6 +182,42 @@ test.describe('Form state', () => {
       ).not.toHaveText('Print and issue to someone else')
 
       await expect(page.getByTestId('text__firstname')).not.toBeVisible()
+    })
+  })
+
+  test.describe
+    .serial('Declaration form is populated after refresh', async () => {
+    let page: Page
+
+    test.beforeAll(async ({ browser }) => {
+      page = await browser.newPage()
+    })
+
+    test.afterAll(async () => {
+      await page.close()
+    })
+
+    test('Login', async () => {
+      await login(page)
+    })
+    test('Move to birth form', async () => {
+      await page.click('#header-new-event')
+      await page.getByLabel('Birth').click()
+      await page.getByRole('button', { name: 'Continue' }).click()
+      await page.getByRole('button', { name: 'Continue' }).click()
+    })
+
+    test('Input child fields', async () => {
+      const firstname = 'foo'
+      const surname = 'bar'
+      await type(page, '#firstname', firstname)
+      await type(page, '#surname', surname)
+    })
+
+    test('refresh the page and verify fields are populated', async () => {
+      await page.reload()
+      await expect(page.locator('#firstname')).toHaveValue('foo')
+      await expect(page.locator('#surname')).toHaveValue('bar')
     })
   })
 })
