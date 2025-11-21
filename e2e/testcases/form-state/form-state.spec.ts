@@ -4,7 +4,11 @@ import { faker } from '@faker-js/faker'
 import { fillChildDetails, openBirthDeclaration } from '../birth/helpers'
 import { CREDENTIALS } from '../../constants'
 import { createDeclaration, Declaration } from '../test-data/birth-declaration'
-import { ensureInExternalValidationIsEmpty, selectAction } from '../../utils'
+import {
+  ensureInExternalValidationIsEmpty,
+  selectAction,
+  type
+} from '../../utils'
 import {
   navigateToCertificatePrintAction,
   selectRequesterType
@@ -206,8 +210,8 @@ test.describe('Form state', () => {
     test('Input child fields', async () => {
       const firstname = 'foo'
       const surname = 'bar'
-      await page.locator('#firstname').fill(firstname)
-      await page.locator('#surname').fill(surname)
+      await type(page, '#firstname', firstname)
+      await type(page, '#surname', surname)
     })
 
     test('refresh the page and verify fields are populated', async () => {
