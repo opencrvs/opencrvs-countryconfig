@@ -154,6 +154,10 @@ test.describe.serial('Approval of late birth registration', () => {
     test('Unassign', async () => {
       await page.getByRole('button', { name: 'Action', exact: true }).click()
       await page.getByText('Unassign', { exact: true }).click()
+      await page.getByRole('button', { name: 'Unassign', exact: true }).click()
+      await expect(
+        page.getByText('Not assigned', { exact: true })
+      ).toBeVisible()
     })
 
     test('Approve action should be disabled before assignment', async () => {
