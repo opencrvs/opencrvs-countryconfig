@@ -893,15 +893,6 @@ export const tennisClubMembershipEvent = defineConfig({
       review: TENNIS_CLUB_DECLARATION_REVIEW
     },
     {
-      type: ActionType.DELETE,
-      label: {
-        defaultMessage: 'Delete draft',
-        description:
-          'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'event.tennis-club-membership.action.delete.label'
-      }
-    },
-    {
       type: ActionType.VALIDATE,
       label: {
         defaultMessage: 'Validate',
