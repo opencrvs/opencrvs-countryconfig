@@ -8,7 +8,7 @@ import {
 } from '../../helpers'
 import { faker } from '@faker-js/faker'
 import { fillChildDetails, openBirthDeclaration } from '../birth/helpers'
-import { CREDENTIALS } from '../../constants'
+import { CLIENT_URL, CREDENTIALS } from '../../constants'
 import { createDeclaration, Declaration } from '../test-data/birth-declaration'
 import {
   ensureInExternalValidationIsEmpty,
@@ -210,6 +210,7 @@ test.describe('Form state', () => {
     test('Form states and annotations are not persisted', async () => {
       expect(declaration).toBeDefined()
 
+      await page.goto(CLIENT_URL)
       await page.getByRole('button', { name: 'Ready to print' }).click()
       await navigateToCertificatePrintAction(page, declaration!)
       await selectRequesterType(page, 'Print and issue to someone else')
