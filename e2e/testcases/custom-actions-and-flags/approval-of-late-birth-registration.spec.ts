@@ -5,6 +5,7 @@ import {
   formatName,
   goToSection,
   login,
+  logout,
   switchEventTab
 } from '../../helpers'
 import { faker } from '@faker-js/faker'
@@ -14,8 +15,8 @@ import { ensureAssigned, ensureOutboxIsEmpty, selectAction } from '../../utils'
 test.describe.serial('Approval of late birth registration', () => {
   let page: Page
   const childName = {
-    firstNames: faker.person.firstName('male'),
-    familyName: faker.person.lastName('male')
+    firstNames: faker.person.firstName('female'),
+    familyName: faker.person.lastName('female')
   }
 
   const childNameFormatted = formatName(childName)
@@ -41,7 +42,7 @@ test.describe.serial('Approval of late birth registration', () => {
       await page.locator('#firstname').fill(childName.firstNames)
       await page.locator('#surname').fill(childName.familyName)
       await page.locator('#child____gender').click()
-      await page.getByText('Male', { exact: true }).click()
+      await page.getByText('Female', { exact: true }).click()
 
       await page.getByPlaceholder('dd').fill('12')
       await page.getByPlaceholder('mm').fill('05')
@@ -137,7 +138,6 @@ test.describe.serial('Approval of late birth registration', () => {
       ).toBeVisible()
     })
 
-    // @TODO: This test should be added after action conditionals are implemented
     test.skip('RA should not have the option to Approve', async () => {
       await page.getByRole('button', { name: 'Action', exact: true }).click()
       await expect(page.getByText('Approve', { exact: true })).not.toBeVisible()
@@ -149,6 +149,11 @@ test.describe.serial('Approval of late birth registration', () => {
       await login(page, CREDENTIALS.LOCAL_REGISTRAR)
       await page.getByText('Ready for review').click()
       await page.getByRole('button', { name: childNameFormatted }).click()
+    })
+
+    test('Unassign', async () => {
+      await page.getByRole('button', { name: 'Action', exact: true }).click()
+      await page.getByText('Unassign', { exact: true }).click()
     })
 
     test('Approve action should be disabled before assignment', async () => {
