@@ -237,7 +237,7 @@ export const birthEvent = defineConfig({
         // flags('approval-required-for-late-registration')
         // when that flags() is supported!
         {
-          type: ConditionalType.ENABLE,
+          type: ConditionalType.SHOW,
           conditional: field('child.gender').isEqualTo('female')
         }
       ],
