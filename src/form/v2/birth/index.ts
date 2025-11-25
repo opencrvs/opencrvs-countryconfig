@@ -228,14 +228,25 @@ export const birthEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.birth.action.approve.label'
       },
+      form: [
+        {
+          id: 'notes',
+          type: 'TEXTAREA',
+          required: true,
+          label: {
+            defaultMessage: 'Notes',
+            description: 'This is the label for the field for a custom action',
+            id: 'event.birth.custom.action.approve.field.notes.label'
+          }
+        }
+      ],
       flags: [
         { id: 'approval-required-for-late-registration', operation: 'remove' }
       ],
-      form: [],
       conditionals: [
         // @TODO: this is a placeholder conditional for testing purposes, which should be replace with a conditional like:
-        // flags('approval-required-for-late-registration')
-        // when that flags() is supported!
+        // flag('approval-required-for-late-registration')
+        // when that flag() is supported!
         {
           type: ConditionalType.SHOW,
           conditional: field('child.gender').isEqualTo('female')
