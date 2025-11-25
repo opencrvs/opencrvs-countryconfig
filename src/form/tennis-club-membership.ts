@@ -150,6 +150,19 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
           }
         },
         {
+          id: 'applicant.timeOfBirth',
+          type: FieldType.TIME,
+          required: false,
+          configuration: {
+            use12HourFormat: true
+          },
+          label: {
+            defaultMessage: "Applicant's time of birth",
+            description: 'This is the label for the time of birth field',
+            id: 'event.tennis-club-membership.action.declare.form.section.who.field.timeOfBirth.label'
+          }
+        },
+        {
           id: 'applicant.image',
           type: 'FILE',
           required: false,
