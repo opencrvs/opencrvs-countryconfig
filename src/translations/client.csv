@@ -43,6 +43,7 @@ advancedSearch.form.recordStatusRegistered,Option for form field: status of reco
 advancedSearch.form.recordStatusRequireUpdate,Option for form field: status of record,Requires updates,Nécessite des mises à jour
 advancedSearch.form.recordStatusValidated,Option for form field: status of record,Validated,Validé
 advancedSearch.form.registrationDetails,The title of Registration details accordion,Registration details,Détails d'inscription
+advancedSearch.registrationNumber,Label for registration number field,Registration number,Numéro d'enregistrement
 advancedSearch.form.statusOfRecordLabel,Label for input Status of record,Status of record,Etat d'avancement du dossier
 advancedSearch.form.timePeriodHelperText,Helper text for input Time period,Period of time since the record status changed,Période écoulée depuis le changement de statut de l'enregistrement
 advancedSearch.form.timePeriodLabel,Label for input Time period,Time period,Période de temps
