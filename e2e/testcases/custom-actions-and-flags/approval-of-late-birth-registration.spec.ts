@@ -178,7 +178,7 @@ test.describe.serial('Approval of late birth registration', () => {
       ).toBeVisible()
     })
 
-    test('Approve', async () => {
+    test('Approve requires notes before confirming', async () => {
       await selectAction(page, 'Approve')
       await expect(
         page.getByText(
@@ -186,7 +186,17 @@ test.describe.serial('Approval of late birth registration', () => {
         )
       ).toBeVisible()
 
-      await page.getByRole('button', { name: 'Confirm' }).click()
+      const confirmButton = page.getByRole('button', { name: 'Confirm' })
+      await expect(confirmButton).toBeDisabled()
+
+      // Fill the required notes field
+      const notesField = page.locator('#notes')
+      await notesField.fill(
+        'Approving after verifying all late submission details.'
+      )
+
+      await expect(confirmButton).toBeEnabled()
+      await confirmButton.click()
     })
 
     test("Validate that the 'Approval required for late registration' -flag is removed after approval", async () => {
@@ -202,10 +212,12 @@ test.describe.serial('Approval of late birth registration', () => {
       ).not.toBeVisible()
     })
 
-    test('Validate that action appears in audit trail', async () => {
+    test('Validate that action and form field value appearing in audit trail', async () => {
       await switchEventTab(page, 'Audit')
-
       await page.getByRole('button', { name: 'Approved', exact: true }).click()
+      await expect(
+        page.getByText('Approving after verifying all late submission details.')
+      ).toBeVisible()
     })
   })
 })
