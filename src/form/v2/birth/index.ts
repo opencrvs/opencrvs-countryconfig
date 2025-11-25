@@ -234,7 +234,18 @@ export const birthEvent = defineConfig({
         description: 'This is the confirmation text for the approve action',
         id: 'event.birth.action.approve.confirmationText'
       },
-      form: [],
+      form: [
+        {
+          id: 'notes',
+          type: 'TEXTAREA',
+          required: true,
+          label: {
+            defaultMessage: 'Notes',
+            description: 'This is the label for the field for a custom action',
+            id: 'event.birth.custom.action.approve.field.notes.label'
+          }
+        }
+      ],
       flags: [
         { id: 'approval-required-for-late-registration', operation: 'remove' }
       ],
