@@ -411,4 +411,5 @@
     x="
   347" y=" 644"></image>
   <!-- /ifCond}} -->
+  <image width="200" height="200" xlink:href="{{ lookup (lookup ($action 'REGISTER') 'annotation') 'offerQrUri' }}" x="385" y=" 644"></image>
 </svg>
