@@ -245,8 +245,8 @@ export const birthEvent = defineConfig({
       ],
       conditionals: [
         // @TODO: this is a placeholder conditional for testing purposes, which should be replace with a conditional like:
-        // flags('approval-required-for-late-registration')
-        // when that flags() is supported!
+        // flag('approval-required-for-late-registration')
+        // when that flag() is supported!
         {
           type: ConditionalType.SHOW,
           conditional: field('child.gender').isEqualTo('female')
