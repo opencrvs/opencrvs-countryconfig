@@ -14,6 +14,7 @@ import {
   ConditionalType,
   defineConfig,
   field,
+  flag,
   not
 } from '@opencrvs/toolkit/events'
 import {
@@ -244,12 +245,9 @@ export const birthEvent = defineConfig({
         { id: 'approval-required-for-late-registration', operation: 'remove' }
       ],
       conditionals: [
-        // @TODO: this is a placeholder conditional for testing purposes, which should be replace with a conditional like:
-        // flag('approval-required-for-late-registration')
-        // when that flag() is supported!
         {
           type: ConditionalType.SHOW,
-          conditional: field('child.gender').isEqualTo('female')
+          conditional: flag('approval-required-for-late-registration')
         }
       ],
       auditHistoryLabel: {
