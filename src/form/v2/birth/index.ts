@@ -10,9 +10,12 @@
  */
 import {
   ActionType,
+  and,
   ConditionalType,
   defineConfig,
-  field
+  field,
+  flag,
+  not
 } from '@opencrvs/toolkit/events'
 import {
   BIRTH_DECLARATION_FORM,
@@ -24,6 +27,7 @@ import { BIRTH_CERTIFICATE_COLLECTOR_FORM } from './forms/printForm'
 import { PlaceOfBirth } from './forms/pages/child'
 import { CORRECTION_FORM } from './forms/correctionForm'
 import { dedupConfig } from './dedupConfig'
+import { applicationConfig } from '@countryconfig/api/application/application-config'
 
 export const birthEvent = defineConfig({
   id: Event.Birth,
@@ -45,6 +49,17 @@ export const birthEvent = defineConfig({
     description:
       'This is a fallback title if actual title resolves to empty string'
   },
+  flags: [
+    {
+      id: 'approval-required-for-late-registration',
+      label: {
+        id: 'event.birth.flag.approval-required-for-late-registration',
+        defaultMessage: 'Approval required for late registration',
+        description: 'Flag label for approval required for late registration'
+      },
+      requiresAction: true
+    }
+  ],
   summary: {
     fields: [
       {
@@ -188,6 +203,64 @@ export const birthEvent = defineConfig({
           id: 'event.birth.action.detect-duplicate.label'
         },
         query: dedupConfig
+      },
+      flags: [
+        {
+          id: 'approval-required-for-late-registration',
+          operation: 'add',
+          conditional: and(
+            not(
+              field('child.dob')
+                .isAfter()
+                .days(applicationConfig.BIRTH.LATE_REGISTRATION_TARGET)
+                .inPast()
+            ),
+            field('child.dob').isBefore().now()
+          )
+        }
+      ]
+    },
+    {
+      type: ActionType.CUSTOM,
+      customActionType: 'Approve',
+      label: {
+        defaultMessage: 'Approve',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'event.birth.action.approve.label'
+      },
+      form: [
+        {
+          id: 'notes',
+          type: 'TEXTAREA',
+          required: true,
+          label: {
+            defaultMessage: 'Notes',
+            description: 'This is the label for the field for a custom action',
+            id: 'event.birth.custom.action.approve.field.notes.label'
+          }
+        }
+      ],
+      flags: [
+        { id: 'approval-required-for-late-registration', operation: 'remove' }
+      ],
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: flag('approval-required-for-late-registration')
+        }
+      ],
+      auditHistoryLabel: {
+        defaultMessage: 'Approved',
+        description:
+          'The label to show in audit history for the approve action',
+        id: 'event.birth.action.approve.audit-history-label'
+      },
+      supportingCopy: {
+        defaultMessage:
+          'This birth has been registered late. You are now approving it for further validation and registration.',
+        description: 'This is the confirmation text for the approve action',
+        id: 'event.birth.action.approve.confirmationText'
       }
     },
     {
@@ -198,7 +271,6 @@ export const birthEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.birth.action.validate.label'
       },
-      review: BIRTH_DECLARATION_REVIEW,
       deduplication: {
         id: 'birth-deduplication',
         label: {
@@ -218,7 +290,6 @@ export const birthEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.birth.action.register.label'
       },
-      review: BIRTH_DECLARATION_REVIEW,
       deduplication: {
         id: 'birth-deduplication',
         label: {

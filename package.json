@@ -10,14 +10,8 @@
     "node": "22.x.x"
   },
   "license": "MPL-2.0",
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn precommit"
-    }
-  },
   "scripts": {
     "dev": "yarn start",
-    "precommit": "lint-staged",
     "test": "vitest",
     "test:compilation": "tsc --noEmit",
     "lint": "eslint -c .eslintrc.js",
@@ -50,7 +44,7 @@
     "eslint": "^8.43.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
-    "husky": "1.0.0-rc.13",
+    "husky": "^9.1.7",
     "inquirer": "^9.2.12",
     "js-yaml": "^4.1.0",
     "kleur": "^4.1.5",
@@ -69,7 +63,7 @@
     "@hapi/boom": "^9.1.1",
     "@hapi/hapi": "^20.0.1",
     "@hapi/inert": "^6.0.3",
-    "@opencrvs/toolkit": "1.9.0-rc.79b0f42",
+    "@opencrvs/toolkit": "1.9.0-rc.8a42cc8",
     "@types/chalk": "^2.2.0",
     "@types/csv2json": "^1.4.0",
     "@types/fhir": "^0.0.30",
@@ -114,7 +108,7 @@
     "tsconfig-paths": "^3.8.0",
     "typescript": "^5.1.6",
     "uuid": "^11.1.0",
-    "zod": "^3.24.1"
+    "zod": "^4.1.12"
   },
   "lint-staged": {
     "src/**/*.{ts,graphql}": [
@@ -129,5 +123,8 @@
   },
   "resolutions": {
     "acorn": "^6.4.1"
+  },
+  "husky": {
+    "hooks": {}
   }
 }
