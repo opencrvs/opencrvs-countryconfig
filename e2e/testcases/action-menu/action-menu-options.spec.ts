@@ -16,9 +16,7 @@ async function getActionMenuOptions(page: Page, declaration: Declaration) {
   return textContents
 }
 
-// @TODO: these tests are disabled for now, as our work in custom actions temporarily affects these in a manner which is not intended
-// These will be brought back in to use after the custom actions are hidden on the action menu correctly.
-test.describe.skip('Action menu options', () => {
+test.describe('Action menu options', () => {
   let page: Page
 
   test.beforeEach(async ({ browser }) => {
@@ -53,13 +51,7 @@ test.describe.skip('Action menu options', () => {
       await login(page, CREDENTIALS.LOCAL_REGISTRAR)
       await page.getByRole('button', { name: 'Ready for review' }).click()
       const options = await getActionMenuOptions(page, declaration)
-      expect(options).toStrictEqual([
-        'Assign',
-        'Register',
-        'Archive',
-        'Reject',
-        'Approve'
-      ])
+      expect(options).toStrictEqual(['Assign', 'Register', 'Archive', 'Reject'])
     })
   })
 
@@ -83,8 +75,7 @@ test.describe.skip('Action menu options', () => {
         'Unassign',
         'Register',
         'Archive',
-        'Reject',
-        'Approve'
+        'Reject'
       ])
     })
   })
@@ -105,12 +96,7 @@ test.describe.skip('Action menu options', () => {
       await login(page, CREDENTIALS.LOCAL_REGISTRAR)
       await page.getByRole('button', { name: 'Ready to print' }).click()
       const options = await getActionMenuOptions(page, declaration)
-      expect(options).toStrictEqual([
-        'Assign',
-        'Print',
-        'Correct record',
-        'Approve'
-      ])
+      expect(options).toStrictEqual(['Assign', 'Print', 'Correct record'])
     })
   })
 })
