@@ -14,7 +14,7 @@ import {
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
-import { fillDate, validateAddress } from '../helpers'
+import { fillDate, selectDeclarationAction, validateAddress } from '../helpers'
 import { ensureOutboxIsEmpty } from '../../../utils'
 
 test.describe.serial('3. Birth declaration case - 3', () => {
@@ -710,11 +710,8 @@ test.describe.serial('3. Birth declaration case - 3', () => {
       await expect(page.getByRole('dialog')).not.toBeVisible()
     })
 
-    test('3.1.9 Send for approval', async () => {
-      await page.getByRole('button', { name: 'Send for approval' }).click()
-      await expect(page.getByText('Send for approval?')).toBeVisible()
-      await page.getByRole('button', { name: 'Confirm' }).click()
-
+    test('3.1.9 Validate', async () => {
+      await selectDeclarationAction(page, 'Validate')
       await ensureOutboxIsEmpty(page)
 
       await page.getByText('Sent for approval').click()

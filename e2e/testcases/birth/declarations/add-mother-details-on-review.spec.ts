@@ -11,7 +11,7 @@ import {
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
 import { ensureOutboxIsEmpty, selectAction } from '../../../utils'
-import { REQUIRED_VALIDATION_ERROR } from '../helpers'
+import { REQUIRED_VALIDATION_ERROR, selectDeclarationAction } from '../helpers'
 
 test.describe.serial('Add mother details on review', () => {
   let page: Page
@@ -219,8 +219,7 @@ test.describe.serial('Add mother details on review', () => {
     })
 
     test('Send for review', async () => {
-      await page.getByRole('button', { name: 'Send for review' }).click()
-      await page.getByRole('button', { name: 'Confirm' }).click()
+      await selectDeclarationAction(page, 'Declare')
 
       await ensureOutboxIsEmpty(page)
 

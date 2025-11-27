@@ -129,3 +129,16 @@ export function getLocationIdByName(locations: fhir.Location[], name: string) {
   }
   return location.id
 }
+
+export async function selectDeclarationAction(
+  page: Page,
+  action: string,
+  confirm = true
+) {
+  await page.getByRole('button', { name: 'Action', exact: true }).click()
+  await page.getByText(action, { exact: true }).click()
+
+  if (confirm) {
+    await page.getByRole('button', { name: action, exact: true }).click()
+  }
+}

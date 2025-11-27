@@ -12,7 +12,7 @@ import {
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
-import { fillDate, validateAddress } from '../helpers'
+import { fillDate, selectDeclarationAction, validateAddress } from '../helpers'
 import { ensureAssigned, ensureOutboxIsEmpty } from '../../../utils'
 
 test.describe.serial('1. Birth declaration case - 1', () => {
@@ -474,10 +474,8 @@ test.describe.serial('1. Birth declaration case - 1', () => {
       await expect(page.getByRole('dialog')).not.toBeVisible()
     })
 
-    test('1.1.8 Send for review', async () => {
-      await page.getByRole('button', { name: 'Send for review' }).click()
-      await expect(page.getByText('Send for review?')).toBeVisible()
-      await page.getByRole('button', { name: 'Confirm' }).click()
+    test('1.1.8 Declare', async () => {
+      await selectDeclarationAction(page, 'Declare')
 
       await ensureOutboxIsEmpty(page)
 

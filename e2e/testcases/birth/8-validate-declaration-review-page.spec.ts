@@ -12,7 +12,7 @@ import {
 } from '../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../constants'
-import { fillDate } from './helpers'
+import { fillDate, selectDeclarationAction } from './helpers'
 import { ensureOutboxIsEmpty, selectAction } from '../../utils'
 
 test.describe.serial('8. Validate declaration review page', () => {
@@ -860,14 +860,12 @@ test.describe.serial('8. Validate declaration review page', () => {
       await expect(page.getByRole('dialog')).not.toBeVisible()
     })
 
-    test('8.1.7 Click send button', async () => {
-      await page.getByRole('button', { name: 'Send for review' }).click()
-      await expect(page.getByText('Send for review?')).toBeVisible()
+    test('8.1.7 Declare', async () => {
+      await selectDeclarationAction(page, 'Declare', true)
+      await ensureOutboxIsEmpty(page)
     })
 
     test('8.1.8 Confirm the declaration to send for review', async () => {
-      await page.getByRole('button', { name: 'Confirm' }).click()
-      await ensureOutboxIsEmpty(page)
       await page.getByText('Sent for review').click()
 
       await expect(

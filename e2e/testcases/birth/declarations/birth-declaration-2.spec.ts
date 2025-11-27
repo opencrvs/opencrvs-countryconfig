@@ -12,7 +12,7 @@ import {
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
-import { validateAddress } from '../helpers'
+import { selectDeclarationAction, validateAddress } from '../helpers'
 import { ensureOutboxIsEmpty } from '../../../utils'
 
 test.describe.serial('2. Birth declaration case - 2', () => {
@@ -535,6 +535,17 @@ test.describe.serial('2. Birth declaration case - 2', () => {
       )
     })
 
+    test('2.1.6.1 Validate declare action not available before filling in signature and comment', async () => {
+      await page.getByRole('button', { name: 'Action' }).click()
+      const declareButton = page.getByText('Declare', { exact: true })
+      await expect(declareButton).toBeVisible()
+      await expect(declareButton).toHaveAttribute('disabled')
+
+      const notifyButton = page.getByText('Notify', { exact: true })
+      await expect(notifyButton).toBeVisible()
+      await expect(notifyButton).not.toHaveAttribute('disabled')
+    })
+
     test('2.1.7 Fill up informant comment & signature', async () => {
       await page.locator('#review____comment').fill(faker.lorem.sentence())
       await page.getByRole('button', { name: 'Sign', exact: true }).click()
@@ -547,10 +558,8 @@ test.describe.serial('2. Birth declaration case - 2', () => {
       await expect(page.getByRole('dialog')).not.toBeVisible()
     })
 
-    test('2.1.8 Send for review', async () => {
-      await page.getByRole('button', { name: 'Send for review' }).click()
-      await expect(page.getByText('Send for review?')).toBeVisible()
-      await page.getByRole('button', { name: 'Confirm' }).click()
+    test('2.1.8 Declare', async () => {
+      await selectDeclarationAction(page, 'Declare')
 
       await ensureOutboxIsEmpty(page)
 
