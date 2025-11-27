@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.0.0
+
+### Breaking changes
+
+- New environment variables required for the `migration` service:
+  - MONGO_HOST
+  - MONGO_PORT
+  - MONGO_REPLICA_SET
+
+The default values for these variables have been added to the `docker-compose.deploy.yml` file. They should work out of the box for most deployments, but please ensure to set them correctly if you have a custom MongoDB setup.
+
 ## 1.9.1
 
 ### Breaking changes

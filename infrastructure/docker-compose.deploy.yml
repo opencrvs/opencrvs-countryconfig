@@ -943,6 +943,9 @@ services:
       - MINIO_PORT=9000
       - MINIO_BUCKET=ocrvs
       - SUPER_USER_PASSWORD=${SUPER_USER_PASSWORD}
+      - MONGO_HOST=mongo1
+      - MONGO_PORT=27017
+      - MONGO_REPLICA_SET=rs0
     deploy:
       labels:
         - 'traefik.enable=false'
