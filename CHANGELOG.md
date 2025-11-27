@@ -4,6 +4,7 @@
 
 ### Breaking changes
 
+- Switch to docker.io/chumaky/postgres_mongo_fdw:17.6_fdw5.5.2 image for migration service to support mongo fdw
 - New environment variables required for the `migration` service:
   - EVENTS_SUPERUSER_POSTGRES_URL
   - MONGO_HOST
