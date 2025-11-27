@@ -5,6 +5,7 @@
 ### Breaking changes
 
 - New environment variables required for the `migration` service:
+  - EVENTS_SUPERUSER_POSTGRES_URL
   - MONGO_HOST
   - MONGO_PORT
   - MONGO_REPLICA_SET
