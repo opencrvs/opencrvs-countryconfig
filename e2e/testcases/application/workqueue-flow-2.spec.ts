@@ -285,7 +285,7 @@ test.describe.serial('2. Workqueue flow - 2', () => {
     })
   })
 
-  test('2.3 FA can see the record', async () => {
+  test('2.3 FA can not see the registered record', async () => {
     await login(page, CREDENTIALS.FIELD_AGENT, true)
 
     await assertRecordInWorkqueue({
@@ -294,7 +294,7 @@ test.describe.serial('2. Workqueue flow - 2', () => {
       workqueues: [
         { title: 'Assigned to you', exists: false },
         { title: 'Recent', exists: false },
-        { title: 'Sent for review', exists: true },
+        { title: 'Sent for review', exists: false },
         { title: 'Requires updates', exists: false }
       ]
     })
