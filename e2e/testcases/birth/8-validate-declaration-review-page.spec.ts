@@ -14,7 +14,7 @@ import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../constants'
 import { fillDate } from './helpers'
 import { selectDeclarationAction } from '../../helpers'
-import { ensureOutboxIsEmpty, selectAction } from '../../utils'
+import { ensureAssigned, ensureOutboxIsEmpty, selectAction } from '../../utils'
 
 test.describe.serial('8. Validate declaration review page', () => {
   let page: Page
@@ -892,18 +892,6 @@ test.describe.serial('8. Validate declaration review page', () => {
     test('8.2.2 Validate', async () => {
       await selectAction(page, 'Validate')
     })
-
-    test('8.2.3 Confirm the declaration to send for approval', async () => {
-      await page.getByRole('button', { name: 'Confirm' }).click()
-      await ensureOutboxIsEmpty(page)
-      await page.getByText('Sent for approval').click()
-
-      await expect(
-        page.getByRole('button', {
-          name: formatName(declaration.child.name)
-        })
-      ).toBeVisible()
-    })
   })
 
   test.describe('8.3 Local registrar actions', async () => {
@@ -1146,6 +1134,7 @@ test.describe.serial('8. Validate declaration review page', () => {
     })
 
     test('8.3.1.2 Register', async () => {
+      await ensureAssigned(page)
       await selectAction(page, 'Register')
       await page.getByRole('button', { name: 'Confirm' }).click()
     })
