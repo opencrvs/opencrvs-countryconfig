@@ -26,7 +26,7 @@ test.describe.serial('7.0 Validate "Certify record" page', () => {
     )
     const res = await createDeclaration(
       token,
-      await getDeclaration({ informantRelation: 'BROTHER' })
+      await getDeclaration({ informantRelation: 'BROTHER', token })
     )
     eventId = res.eventId
     declaration = res.declaration

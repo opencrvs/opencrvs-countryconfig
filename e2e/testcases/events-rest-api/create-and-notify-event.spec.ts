@@ -239,7 +239,10 @@ test.describe('Events REST API', () => {
     let healthFacilityId: string
 
     test.beforeAll(async () => {
-      const healthFacilities = await getAllLocations('HEALTH_FACILITY')
+      const healthFacilities = await getAllLocations(
+        'HEALTH_FACILITY',
+        clientToken
+      )
 
       if (!healthFacilities[0].id) {
         throw new Error('No health facility found')
@@ -548,7 +551,7 @@ test.describe('Events REST API', () => {
         familyName: faker.person.lastName()
       }
 
-      const locations = await getAllLocations('ADMIN_STRUCTURE')
+      const locations = await getAllLocations('ADMIN_STRUCTURE', clientToken)
       const centralLocation = locations.find(
         (location) => location.name === 'Central'
       )
@@ -776,7 +779,7 @@ test.describe('Events REST API', () => {
       })
 
       const declaration = {
-        ...(await getDeclaration({})),
+        ...(await getDeclaration({ token })),
         'child.name': childName,
         'child.dob': undefined
       }
@@ -941,7 +944,7 @@ test.describe('Events REST API', () => {
       })
 
       const declaration = {
-        ...(await getDeclaration({})),
+        ...(await getDeclaration({ token })),
         'child.name': childName,
         'child.dob': undefined
       }

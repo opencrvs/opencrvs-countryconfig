@@ -5,13 +5,14 @@ import {
   CREDENTIALS,
   GATEWAY_HOST,
   SAFE_INPUT_CHANGE_TIMEOUT_MS,
-  SAFE_OUTBOX_TIMEOUT_MS,
-  SAFE_WORKQUEUE_TIMEOUT_MS
+  SAFE_OUTBOX_TIMEOUT_MS
 } from './constants'
 import { format, parseISO } from 'date-fns'
 import { isArray, random } from 'lodash'
 import fetch from 'node-fetch'
 import { isMobile } from './mobile-helpers'
+import { createClient } from '@opencrvs/toolkit/api'
+import { UUID } from 'crypto'
 
 async function createPIN(page: Page) {
   await page.click('#pin-input')
@@ -290,9 +291,11 @@ export const expectTextWithChangeLink = async (
   await expect(locator).toContainText('Change')
 }
 
-export const getLocationNameFromFhirId = async (fhirId: string) => {
-  const res = await fetch(`${GATEWAY_HOST}/location/${fhirId}`)
-  const location = (await res.json()) as fhir.Location
+export const getLocationNameFromId = async (id: UUID, token: string) => {
+  const client = createClient(GATEWAY_HOST + '/events', `Bearer ${token}`)
+  const [location] = await client.locations.list.query({
+    locationIds: [id]
+  })
   return location.name
 }
 
