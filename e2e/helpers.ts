@@ -587,3 +587,22 @@ export async function expectRowValueWithChangeButton(
 export async function switchEventTab(page: Page, tab: 'Audit' | 'Record') {
   await page.getByRole('button', { name: tab, exact: true }).click()
 }
+
+/** Assert whether a button on the action menu exists and is enabled/disabled */
+export async function validateActionMenuButton(
+  page: Page,
+  action: string,
+  isEnabled = true
+) {
+  await page.getByRole('button', { name: 'Action', exact: true }).click()
+  const actionButton = page.getByText(action, { exact: true })
+  await expect(actionButton).toBeVisible()
+
+  if (isEnabled) {
+    await expect(actionButton).not.toHaveAttribute('disabled')
+  } else {
+    await expect(actionButton).toHaveAttribute('disabled')
+  }
+
+  await page.getByRole('button', { name: 'Action', exact: true }).click()
+}

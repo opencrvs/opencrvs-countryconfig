@@ -5,7 +5,8 @@ import {
   formatName,
   goToSection,
   login,
-  switchEventTab
+  switchEventTab,
+  validateActionMenuButton
 } from '../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../constants'
@@ -171,11 +172,7 @@ test.describe.serial('Approval of late birth registration', () => {
     })
 
     test('Approve action should be disabled before assignment', async () => {
-      await page.getByRole('button', { name: 'Action', exact: true }).click()
-      const approveButton = page.getByText('Approve', { exact: true })
-      await expect(approveButton).toBeVisible()
-      await expect(approveButton).toHaveAttribute('disabled')
-      await page.getByRole('button', { name: 'Action', exact: true }).click()
+      await validateActionMenuButton(page, 'Approve', false)
     })
 
     test('Assign', async () => {
@@ -461,10 +458,8 @@ test.describe
     })
 
     test('Direct registration should be unavailable', async () => {
-      await page.getByRole('button', { name: 'Action', exact: true }).click()
-      const declareButton = page.getByText('Register', { exact: true })
-      await expect(declareButton).toBeVisible()
-      await expect(declareButton).toHaveAttribute('disabled')
+      await validateActionMenuButton(page, 'Declare')
+      await validateActionMenuButton(page, 'Register', false)
     })
 
     test('Change child dob to recent date', async () => {
@@ -479,10 +474,7 @@ test.describe
     })
 
     test('Direct registration should be available', async () => {
-      await page.getByRole('button', { name: 'Action', exact: true }).click()
-      const declareButton = page.getByText('Register', { exact: true })
-      await expect(declareButton).toBeVisible()
-      await expect(declareButton).not.toHaveAttribute('disabled')
+      await validateActionMenuButton(page, 'Register')
     })
   })
 })
