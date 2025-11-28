@@ -258,8 +258,8 @@ test.describe.serial('8. Birth declaration case - 8', () => {
       await expect(page.getByRole('dialog')).not.toBeVisible()
     })
 
-    test('8.1.8 Declare', async () => {
-      await selectDeclarationAction(page, 'Declare')
+    test('8.1.8 Notify', async () => {
+      await selectDeclarationAction(page, 'Notify')
 
       await ensureOutboxIsEmpty(page)
 

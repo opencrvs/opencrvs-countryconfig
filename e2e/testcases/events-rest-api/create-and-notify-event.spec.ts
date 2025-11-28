@@ -13,7 +13,9 @@ import {
   getClientToken,
   getToken,
   login,
-  switchEventTab
+  selectDeclarationAction,
+  switchEventTab,
+  validateActionMenuButton
 } from '../../helpers'
 import { addDays, format, subDays } from 'date-fns'
 import { faker } from '@faker-js/faker'
@@ -815,9 +817,7 @@ test.describe('Events REST API', () => {
         REQUIRED_VALIDATION_ERROR
       )
 
-      await expect(
-        page.getByRole('button', { name: 'Register' })
-      ).toBeDisabled()
+      await validateActionMenuButton(page, 'Register', false)
     })
 
     test('Fill missing child dob field', async () => {
@@ -858,8 +858,7 @@ test.describe('Events REST API', () => {
     })
 
     test('Register event', async () => {
-      await page.getByRole('button', { name: 'Register', exact: true }).click()
-      await page.locator('#confirm_Declare').click()
+      await selectDeclarationAction(page, 'Register')
     })
 
     test("Navigate to event via 'Ready to print' -workqueue", async () => {
@@ -975,7 +974,7 @@ test.describe('Events REST API', () => {
     })
 
     test('Reject event', async () => {
-      await page.getByRole('button', { name: 'Reject' }).click()
+      await selectDeclarationAction(page, 'Reject', false)
       await page.getByTestId('reject-reason').fill(faker.lorem.sentence())
       await page.getByRole('button', { name: 'Send For Update' }).click()
     })

@@ -1,5 +1,11 @@
 import { expect, Page, test } from '@playwright/test'
-import { drawSignature, getToken, goToSection, login } from '../../helpers'
+import {
+  drawSignature,
+  getToken,
+  goToSection,
+  login,
+  selectDeclarationAction
+} from '../../helpers'
 import { faker } from '@faker-js/faker'
 import { fillChildDetails, openBirthDeclaration } from '../birth/helpers'
 import { CREDENTIALS } from '../../constants'
@@ -43,7 +49,7 @@ test.describe('Form state', () => {
       await page.getByRole('button', { name: 'Apply' }).click()
 
       // Save & Exit draft
-      await page.getByRole('button', { name: 'Save & Exit' }).click()
+      await selectDeclarationAction(page, 'Save & Exit', false)
       await page.getByRole('button', { name: 'Confirm' }).click()
     })
 
@@ -84,10 +90,10 @@ test.describe('Form state', () => {
       await login(page)
     })
 
-    // First create a draft event, which we will come back to later
     test('Create a draft', async () => {
       await openBirthDeclaration(page)
       actionableEventChildName = await fillChildDetails(page)
+
       await page.getByRole('button', { name: 'Save & Exit' }).click()
       await page.getByRole('button', { name: 'Confirm' }).click()
 
@@ -109,7 +115,7 @@ test.describe('Form state', () => {
       await page.getByRole('button', { name: 'Apply' }).click()
 
       // Save & Exit draft
-      await page.getByRole('button', { name: 'Save & Exit' }).click()
+      await selectDeclarationAction(page, 'Save & Exit', false)
       await page.getByRole('button', { name: 'Confirm' }).click()
     })
 
