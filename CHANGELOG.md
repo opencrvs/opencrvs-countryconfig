@@ -9,6 +9,8 @@
   - EVENTS_SUPERUSER_POSTGRES_URL
   - MONGO_HOST
   - MONGO_PORT
+  - MONGODB_ADMIN_USER
+  - MONGODB_ADMIN_PASSWORD
   - MONGO_REPLICA_SET
 
 The default values for these variables have been added to the `docker-compose.deploy.yml` file. They should work out of the box for most deployments, but please ensure to set them correctly if you have a custom MongoDB setup.

@@ -932,6 +932,8 @@ services:
       - SUPER_USER_PASSWORD=${SUPER_USER_PASSWORD}
       - MONGO_HOST=mongo1
       - MONGO_PORT=27017
+      - MONGO_USERNAME=${MONGODB_ADMIN_USER}
+      - MONGO_PASSWORD=${MONGODB_ADMIN_PASSWORD}
       - MONGO_REPLICA_SET=rs0
     deploy:
       labels:
