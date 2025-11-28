@@ -1,11 +1,8 @@
 import { expect, Page, test } from '@playwright/test'
 import { goToSection, login, logout } from '../../helpers'
 import { CREDENTIALS } from '../../constants'
-import {
-  fillChildDetails,
-  openBirthDeclaration,
-  selectDeclarationAction
-} from './helpers'
+import { fillChildDetails, openBirthDeclaration } from './helpers'
+import { selectDeclarationAction } from '../../helpers'
 import { ensureOutboxIsEmpty } from '../../utils'
 
 /**

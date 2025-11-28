@@ -12,7 +12,8 @@ import {
 } from '../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../constants'
-import { fillDate, selectDeclarationAction } from './helpers'
+import { fillDate } from './helpers'
+import { selectDeclarationAction } from '../../helpers'
 import { ensureOutboxIsEmpty, selectAction } from '../../utils'
 
 test.describe.serial('8. Validate declaration review page', () => {

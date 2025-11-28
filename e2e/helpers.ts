@@ -606,3 +606,16 @@ export async function validateActionMenuButton(
 
   await page.getByRole('button', { name: 'Action', exact: true }).click()
 }
+
+export async function selectDeclarationAction(
+  page: Page,
+  action: string,
+  confirm = true
+) {
+  await page.getByRole('button', { name: 'Action', exact: true }).click()
+  await page.getByText(action, { exact: true }).click()
+
+  if (confirm) {
+    await page.getByRole('button', { name: action, exact: true }).click()
+  }
+}

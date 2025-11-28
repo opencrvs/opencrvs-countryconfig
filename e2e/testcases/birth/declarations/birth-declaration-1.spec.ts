@@ -12,7 +12,8 @@ import {
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
-import { fillDate, selectDeclarationAction, validateAddress } from '../helpers'
+import { fillDate, validateAddress } from '../helpers'
+import { selectDeclarationAction } from '../../../helpers'
 import { ensureAssigned, ensureOutboxIsEmpty } from '../../../utils'
 
 test.describe.serial('1. Birth declaration case - 1', () => {

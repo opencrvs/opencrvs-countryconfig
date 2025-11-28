@@ -6,7 +6,8 @@ import {
   formatName,
   getRandomDate,
   goToSection,
-  login
+  login,
+  selectDeclarationAction
 } from '../../helpers'
 import { CREDENTIALS } from '../../constants'
 import {
@@ -135,10 +136,8 @@ test.describe.serial('3. Workqueue flow - 3', () => {
       await expect(page.getByRole('dialog')).not.toBeVisible()
     })
 
-    test('3.1.4 Send for review', async () => {
-      await page.getByRole('button', { name: 'Send for review' }).click()
-      await expect(page.getByText('Send for review?')).toBeVisible()
-      await page.getByRole('button', { name: 'Confirm' }).click()
+    test('3.1.4 Notify', async () => {
+      await selectDeclarationAction(page, 'Notify')
 
       await ensureOutboxIsEmpty(page)
     })
@@ -187,7 +186,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
 
       await selectAction(page, 'Review')
 
-      await page.getByRole('button', { name: 'Reject' }).click()
+      await selectDeclarationAction(page, 'Reject', false)
 
       await page.getByTestId('reject-reason').fill(faker.lorem.sentence())
 
@@ -315,14 +314,11 @@ test.describe.serial('3. Workqueue flow - 3', () => {
       await page.locator('#father____addressSameAs_YES').click()
     })
 
-    test('3.3.6 Send for review', async () => {
+    test('3.3.6 Notify', async () => {
       await continueForm(page, 'Back to review')
-
       await expect(page.getByRole('dialog')).not.toBeVisible()
 
-      await page.getByRole('button', { name: 'Send for review' }).click()
-      await expect(page.getByText('Send for review?')).toBeVisible()
-      await page.getByRole('button', { name: 'Confirm' }).click()
+      await selectDeclarationAction(page, 'Notify')
 
       await ensureOutboxIsEmpty(page)
     })
@@ -414,7 +410,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         .getByRole('button', { name: 'Review' })
         .click()
 
-      await selectAction(page, 'Reject')
+      await selectDeclarationAction(page, 'Reject', false)
 
       await page.getByTestId('reject-reason').fill(faker.lorem.sentence())
 

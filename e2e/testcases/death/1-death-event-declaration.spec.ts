@@ -1,7 +1,7 @@
 import { expect, test, type Page } from '@playwright/test'
 import { login } from '../../helpers'
 import { faker } from '@faker-js/faker'
-import { ensureOutboxIsEmpty, type } from '../../utils'
+import { ensureOutboxIsEmpty, expectInUrl, type } from '../../utils'
 const deceased = {
   name: {
     firstname: faker.person.firstName('male')
@@ -364,15 +364,7 @@ test.describe('1. Death event declaration', () => {
 
       test('1.8.3 click continue', async () => {
         await page.getByRole('button', { name: 'Continue' }).click()
-
-        /*
-         * Expected result: should navigate to "Review" page
-         */
-        await expect(
-          page
-            .getByRole('button', { name: 'Send for review' })
-            .or(page.getByRole('button', { name: 'Register' }))
-        ).toBeVisible()
+        await expectInUrl(page, `/review`)
       })
     })
 

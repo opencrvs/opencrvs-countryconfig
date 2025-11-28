@@ -6,7 +6,8 @@ import {
   formatName,
   getRandomDate,
   goToSection,
-  login
+  login,
+  selectDeclarationAction
 } from '../../helpers'
 import { CREDENTIALS } from '../../constants'
 import {
@@ -128,11 +129,8 @@ test.describe.serial('1. Workqueue flow - 1', () => {
       await expect(page.getByRole('dialog')).not.toBeVisible()
     })
 
-    test('1.1.4 Send for review', async () => {
-      await page.getByRole('button', { name: 'Send for review' }).click()
-      await expect(page.getByText('Send for review?')).toBeVisible()
-      await page.getByRole('button', { name: 'Confirm' }).click()
-
+    test('1.1.4 Notify', async () => {
+      await selectDeclarationAction(page, 'Notify')
       await ensureOutboxIsEmpty(page)
     })
 
@@ -261,13 +259,11 @@ test.describe.serial('1. Workqueue flow - 1', () => {
         .click()
 
       await page.locator('#father____addressSameAs_YES').click()
+      await page.getByRole('button', { name: 'Back to review' }).click()
     })
 
-    test('1.2.6 Send for approval', async () => {
-      await goToSection(page, 'review')
-
-      await page.getByRole('button', { name: 'Send for approval' }).click()
-      await page.getByRole('button', { name: 'Confirm' }).click()
+    test('1.2.6 Validate', async () => {
+      await selectDeclarationAction(page, 'Validate')
 
       await ensureOutboxIsEmpty(page)
 

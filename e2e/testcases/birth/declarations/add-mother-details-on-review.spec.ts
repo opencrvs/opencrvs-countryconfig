@@ -11,7 +11,8 @@ import {
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
 import { ensureOutboxIsEmpty, selectAction } from '../../../utils'
-import { REQUIRED_VALIDATION_ERROR, selectDeclarationAction } from '../helpers'
+import { REQUIRED_VALIDATION_ERROR } from '../helpers'
+import { selectDeclarationAction } from '../../../helpers'
 
 test.describe.serial('Add mother details on review', () => {
   let page: Page
@@ -218,7 +219,7 @@ test.describe.serial('Add mother details on review', () => {
       await expect(page.getByRole('dialog')).not.toBeVisible()
     })
 
-    test('Send for review', async () => {
+    test('Declare', async () => {
       await selectDeclarationAction(page, 'Declare')
 
       await ensureOutboxIsEmpty(page)

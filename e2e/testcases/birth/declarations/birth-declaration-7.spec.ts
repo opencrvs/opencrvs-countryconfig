@@ -6,6 +6,7 @@ import {
   goToSection,
   login,
   logout,
+  selectDeclarationAction,
   switchEventTab,
   uploadImage,
   uploadImageToSection
@@ -227,10 +228,8 @@ test.describe.serial('7. Birth declaration case - 7', () => {
       await expect(page.getByRole('dialog')).not.toBeVisible()
     })
 
-    test('7.1.9 Send for review', async () => {
-      await page.getByRole('button', { name: 'Send for review' }).click()
-      await expect(page.getByText('Send for review?')).toBeVisible()
-      await page.getByRole('button', { name: 'Confirm' }).click()
+    test('7.1.9 Declare', async () => {
+      await selectDeclarationAction(page, 'Declare')
 
       await ensureOutboxIsEmpty(page)
 

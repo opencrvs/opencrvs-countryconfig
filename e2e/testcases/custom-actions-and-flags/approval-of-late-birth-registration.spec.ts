@@ -11,7 +11,7 @@ import {
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../constants'
 import { ensureAssigned, ensureOutboxIsEmpty, selectAction } from '../../utils'
-import { selectDeclarationAction } from '../birth/helpers'
+import { selectDeclarationAction } from '../../helpers'
 import { format, subYears, subMonths, subDays } from 'date-fns'
 
 const recentDate = subDays(new Date(), 2)
