@@ -22,12 +22,9 @@ test.describe
 
     record = await createDeclaration(token, {
       'child.dob': faker.date
-        // Randomly chosen DOB between 2010-01-01 and 2020-12-31
-        // Ensures the created record appears on the first page of search results
-        .between({ from: '2010-01-01', to: '2020-12-31' })
+        .between({ from: '2025-09-10', to: '2025-11-28' })
         .toISOString()
         .split('T')[0],
-      'child.reason': 'Other', // needed for late dob value
       'child.gender': 'female'
     })
     ;[yyyy, mm, dd] = record.declaration['child.dob'].split('-')

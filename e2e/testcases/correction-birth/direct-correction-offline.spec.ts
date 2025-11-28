@@ -5,7 +5,7 @@ import {
   createDeclaration as createDeclarationV2,
   Declaration as DeclarationV2
 } from '../test-data/birth-declaration-with-mother-father'
-import { format, subYears } from 'date-fns'
+import { format, subDays, subYears } from 'date-fns'
 import { CREDENTIALS, SAFE_OUTBOX_TIMEOUT_MS } from '../../constants'
 import { formatV2ChildName } from '../birth/helpers'
 import { ensureAssigned } from '../../utils'
@@ -39,7 +39,7 @@ test.describe.serial('Direct correction offline', () => {
           surname: faker.person.lastName()
         },
         'child.gender': 'male',
-        'child.dob': format(subYears(new Date(), 1), 'yyyy-MM-dd'),
+        'child.dob': format(subDays(new Date(), 2), 'yyyy-MM-dd'),
         'child.reason': 'Late',
         'child.placeOfBirth': 'PRIVATE_HOME',
         'child.attendantAtBirth': 'PHYSICIAN',

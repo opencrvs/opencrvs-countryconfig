@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
-import { login } from '../../helpers'
+import { login, selectDeclarationAction } from '../../helpers'
 import { faker } from '@faker-js/faker'
 import { ensureOutboxIsEmpty, expectInUrl, type } from '../../utils'
 const deceased = {
@@ -370,7 +370,7 @@ test.describe('1. Death event declaration', () => {
 
     test.describe('1.9 Validate "Save & Exit" Button  ', async () => {
       test('1.9.1 Click the "Save & Exit" button from any page', async () => {
-        await page.getByRole('button', { name: 'Save & Exit' }).click()
+        await selectDeclarationAction(page, 'Save & Exit', false)
 
         /*
          * Expected result: should open modal with:
@@ -406,7 +406,7 @@ test.describe('1. Death event declaration', () => {
       })
 
       test('1.9.3 Click Confirm', async () => {
-        await page.getByRole('button', { name: 'Save & Exit' }).click()
+        await selectDeclarationAction(page, 'Save & Exit', false)
         await page.getByRole('button', { name: 'Confirm' }).click()
 
         /*

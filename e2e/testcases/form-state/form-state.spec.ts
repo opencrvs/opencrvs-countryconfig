@@ -86,6 +86,7 @@ test.describe('Form state', () => {
     test.afterAll(async () => {
       await page.close()
     })
+
     test('Login', async () => {
       await login(page)
     })

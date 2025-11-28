@@ -9,7 +9,8 @@ import {
   formatDateObjectTo_dMMMMyyyy,
   expectRowValue,
   expectRowValueWithChangeButton,
-  switchEventTab
+  switchEventTab,
+  selectDeclarationAction
 } from '../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../constants'
@@ -703,13 +704,11 @@ test.describe.serial('8. Validate declaration review page', () => {
         .click()
     })
 
-    test('8.1.7 Click send button', async () => {
-      await page.getByRole('button', { name: 'Send for review' }).click()
-      await expect(page.getByText('Send for review?')).toBeVisible()
+    test('8.1.7 Notify', async () => {
+      await selectDeclarationAction(page, 'Notify')
     })
 
-    test('8.1.8 Confirm the declaration to send for review', async () => {
-      await page.getByRole('button', { name: 'Confirm' }).click()
+    test('8.1.8 Validate that declaration is available on "Sent for review"', async () => {
       await ensureOutboxIsEmpty(page)
       await expect(page.getByText('Farajaland CRS')).toBeVisible()
 
