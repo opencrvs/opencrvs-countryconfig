@@ -209,7 +209,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
     })
   })
 
-  test.describe('3.3 Re-notify by FA', async () => {
+  test.describe('3.3 Declare by FA', async () => {
     test('3.3.1 Login', async () => {
       await login(page, CREDENTIALS.FIELD_AGENT, true)
       await assertRecordInWorkqueue({
@@ -314,11 +314,11 @@ test.describe.serial('3. Workqueue flow - 3', () => {
       await page.locator('#father____addressSameAs_YES').click()
     })
 
-    test('3.3.6 Notify', async () => {
+    test('3.3.6 Declare', async () => {
       await continueForm(page, 'Back to review')
       await expect(page.getByRole('dialog')).not.toBeVisible()
 
-      await selectDeclarationAction(page, 'Notify')
+      await selectDeclarationAction(page, 'Declare')
 
       await ensureOutboxIsEmpty(page)
     })

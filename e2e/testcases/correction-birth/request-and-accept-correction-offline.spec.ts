@@ -40,7 +40,6 @@ test.describe.serial('Request and accept correction (offline)', () => {
         },
         'child.gender': 'male',
         'child.dob': format(subDays(new Date(), 1), 'yyyy-MM-dd'),
-        'child.reason': 'Late',
         'child.placeOfBirth': 'PRIVATE_HOME',
         'child.attendantAtBirth': 'PHYSICIAN',
         'child.birthType': 'SINGLE',

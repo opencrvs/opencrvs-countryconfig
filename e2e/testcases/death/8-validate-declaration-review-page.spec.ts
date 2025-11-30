@@ -1173,15 +1173,12 @@ test.describe.serial('8. Validate declaration review page', () => {
       test.skip('Skipped for now', async () => {})
     })
 
-    test('8.2.6 Click send button', async () => {
-      await page.getByRole('button', { name: 'Send for approval' }).click()
-      await expect(page.getByText('Send for approval?')).toBeVisible()
+    test('8.2.6 Validate', async () => {
+      await selectDeclarationAction(page, 'Validate')
+      await ensureOutboxIsEmpty(page)
     })
 
     test('8.2.7 Confirm the declaration to send for approval', async () => {
-      await page.getByRole('button', { name: 'Confirm' }).click()
-      await ensureOutboxIsEmpty(page)
-
       await page.getByText('Sent for approval').click()
       /*
        * @TODO: When workflows are implemented on V2, this should navigate to correct workflow first.

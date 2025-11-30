@@ -40,7 +40,6 @@ test.describe.serial('Direct correction offline', () => {
         },
         'child.gender': 'male',
         'child.dob': format(subDays(new Date(), 2), 'yyyy-MM-dd'),
-        'child.reason': 'Late',
         'child.placeOfBirth': 'PRIVATE_HOME',
         'child.attendantAtBirth': 'PHYSICIAN',
         'child.birthType': 'SINGLE',
