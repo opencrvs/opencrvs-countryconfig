@@ -8,7 +8,8 @@ import {
   goToSection,
   login,
   switchEventTab,
-  expectRowValue
+  expectRowValue,
+  validateActionMenuButton
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
@@ -537,14 +538,8 @@ test.describe.serial('2. Birth declaration case - 2', () => {
     })
 
     test('2.1.6.1 Validate declare action not available before filling in signature and comment', async () => {
-      await page.getByRole('button', { name: 'Action' }).click()
-      const declareButton = page.getByText('Declare', { exact: true })
-      await expect(declareButton).toBeVisible()
-      await expect(declareButton).toHaveAttribute('disabled')
-
-      const notifyButton = page.getByText('Notify', { exact: true })
-      await expect(notifyButton).toBeVisible()
-      await expect(notifyButton).not.toHaveAttribute('disabled')
+      await validateActionMenuButton(page, 'Declare', false)
+      await validateActionMenuButton(page, 'Notify', true)
     })
 
     test('2.1.7 Fill up informant comment & signature', async () => {

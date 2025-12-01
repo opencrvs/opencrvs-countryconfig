@@ -609,7 +609,14 @@ export async function validateActionMenuButton(
 
 export async function selectDeclarationAction(
   page: Page,
-  action: string,
+  action:
+    | 'Notify'
+    | 'Declare'
+    | 'Validate'
+    | 'Register'
+    | 'Reject'
+    | 'Delete declaration'
+    | 'Save & Exit',
   confirm = true
 ) {
   await page.getByRole('button', { name: 'Action', exact: true }).click()

@@ -891,6 +891,18 @@ test.describe.serial('8. Validate declaration review page', () => {
     })
     test('8.2.2 Validate', async () => {
       await selectAction(page, 'Validate')
+      await page.getByRole('button', { name: 'Confirm' }).click()
+    })
+
+    test('8.2.3 Confirm the declaration is in Sent for approval workqueue', async () => {
+      await ensureOutboxIsEmpty(page)
+      await page.getByText('Sent for approval').click()
+
+      await expect(
+        page.getByRole('button', {
+          name: formatName(declaration.child.name)
+        })
+      ).toBeVisible()
     })
   })
 
