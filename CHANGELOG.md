@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.9.1
+
+### Breaking changes
+
+- **Remove Unused Scopes**: Removed `RECORD_PRINT_RECORDS_SUPPORTING_DOCUMENTS` and `RECORD_EXPORT_RECORDS` scopes from `REGISTRATION_AGENT`, `LOCAL_REGISTRAR` and `NATIONAL_REGISTRAR`
+
+### Improvements
+
+- Make encryption step optional [#1123](https://github.com/opencrvs/opencrvs-countryconfig/pull/1123)
+- Added validation for ENCRYPTION_KEY [#10896](https://github.com/opencrvs/opencrvs-core/issues/10896)
+
 ## 1.9.0
 
 ### New features
@@ -24,14 +35,12 @@
 - Store system monitoring data for 1 month [#10515](https://github.com/opencrvs/opencrvs-core/issues/10515)
 
 - Restricted filesystem usage for journal service and file rotation strategy [#10518](https://github.com/opencrvs/opencrvs-core/issues/10518))
-
 - Tiltfile: Improved Kubernetes support for development environment [#10672](https://github.com/opencrvs/opencrvs-core/issues/10672)
 
 ### Bug fixes
 
 - Allow non-interactive upgrades with apt [#10204](https://github.com/opencrvs/opencrvs-core/issues/10204)
 - Don't restart events service after data cleanup [#10704](https://github.com/opencrvs/opencrvs-core/issues/10704)
-
 
 ## 1.8.1
 
