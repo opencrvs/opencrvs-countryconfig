@@ -8,7 +8,8 @@ import {
   goToSection,
   login,
   switchEventTab,
-  expectRowValue
+  expectRowValue,
+  selectDeclarationAction
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
@@ -526,10 +527,8 @@ test.describe.serial('5. Death declaration case - 5', () => {
         .click()
     })
 
-    test('5.1.8 Send for approval', async () => {
-      await page.getByRole('button', { name: 'Send for approval' }).click()
-      await expect(page.getByText('Send for approval?')).toBeVisible()
-      await page.getByRole('button', { name: 'Confirm' }).click()
+    test('5.1.8 Validate', async () => {
+      await selectDeclarationAction(page, 'Validate')
       await ensureOutboxIsEmpty(page)
       await expect(page.getByText('Farajaland CRS')).toBeVisible()
 

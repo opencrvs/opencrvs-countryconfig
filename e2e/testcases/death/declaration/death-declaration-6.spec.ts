@@ -7,6 +7,7 @@ import {
   getRandomDate,
   goToSection,
   login,
+  selectDeclarationAction,
   switchEventTab
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
@@ -531,9 +532,7 @@ test.describe.serial('6. Death declaration case - 6', () => {
     })
 
     test('6.1.8 Register', async () => {
-      await page.getByRole('button', { name: 'Register' }).click()
-      await expect(page.getByText('Register the death?')).toBeVisible()
-      await page.locator('#confirm_Declare').click()
+      await selectDeclarationAction(page, 'Register')
       await ensureOutboxIsEmpty(page)
       await expect(page.getByText('Farajaland CRS')).toBeVisible()
 

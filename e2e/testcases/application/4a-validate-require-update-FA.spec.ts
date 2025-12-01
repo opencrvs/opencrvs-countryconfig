@@ -1,6 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 
-import { login, getToken } from '../../helpers'
+import { login, getToken, selectDeclarationAction } from '../../helpers'
 import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../constants'
 import { createDeclaration, Declaration } from '../test-data/birth-declaration'
 import { ActionType } from '@opencrvs/toolkit/events'
@@ -100,9 +100,7 @@ test.describe
 
     await row.getByRole('button', { name: 'Review' }).click()
 
-    await page.getByRole('button', { name: 'Send for review' }).click()
-    await expect(page.getByText('Send for review?')).toBeVisible()
-    await page.getByRole('button', { name: 'Confirm' }).click()
+    await selectDeclarationAction(page, 'Declare')
 
     // Should redirect back to requires update workqueue
     await expect(page.locator('#content-name')).toHaveText('Requires updates')
