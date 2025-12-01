@@ -13,7 +13,8 @@ import {
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../constants'
 import { fillDate } from './helpers'
-import { ensureOutboxIsEmpty, selectAction } from '../../utils'
+import { selectDeclarationAction } from '../../helpers'
+import { ensureAssigned, ensureOutboxIsEmpty, selectAction } from '../../utils'
 
 test.describe.serial('8. Validate declaration review page', () => {
   let page: Page
@@ -860,14 +861,12 @@ test.describe.serial('8. Validate declaration review page', () => {
       await expect(page.getByRole('dialog')).not.toBeVisible()
     })
 
-    test('8.1.7 Click send button', async () => {
-      await page.getByRole('button', { name: 'Send for review' }).click()
-      await expect(page.getByText('Send for review?')).toBeVisible()
+    test('8.1.7 Declare', async () => {
+      await selectDeclarationAction(page, 'Declare', true)
+      await ensureOutboxIsEmpty(page)
     })
 
     test('8.1.8 Confirm the declaration to send for review', async () => {
-      await page.getByRole('button', { name: 'Confirm' }).click()
-      await ensureOutboxIsEmpty(page)
       await page.getByText('Sent for review').click()
 
       await expect(
@@ -892,10 +891,10 @@ test.describe.serial('8. Validate declaration review page', () => {
     })
     test('8.2.2 Validate', async () => {
       await selectAction(page, 'Validate')
+      await page.getByRole('button', { name: 'Confirm' }).click()
     })
 
-    test('8.2.3 Confirm the declaration to send for approval', async () => {
-      await page.getByRole('button', { name: 'Confirm' }).click()
+    test('8.2.3 Confirm the declaration is in Sent for approval workqueue', async () => {
       await ensureOutboxIsEmpty(page)
       await page.getByText('Sent for approval').click()
 
@@ -1147,6 +1146,7 @@ test.describe.serial('8. Validate declaration review page', () => {
     })
 
     test('8.3.1.2 Register', async () => {
+      await ensureAssigned(page)
       await selectAction(page, 'Register')
       await page.getByRole('button', { name: 'Confirm' }).click()
     })

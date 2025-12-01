@@ -6,6 +6,7 @@ import {
   goToSection,
   login,
   logout,
+  selectDeclarationAction,
   switchEventTab
 } from '../../../helpers'
 import { CREDENTIALS } from '../../../constants'
@@ -257,10 +258,8 @@ test.describe.serial('8. Birth declaration case - 8', () => {
       await expect(page.getByRole('dialog')).not.toBeVisible()
     })
 
-    test('8.1.8 Send for review', async () => {
-      await page.getByRole('button', { name: 'Send for review' }).click()
-      await expect(page.getByText('Send for review?')).toBeVisible()
-      await page.getByRole('button', { name: 'Confirm' }).click()
+    test('8.1.8 Notify', async () => {
+      await selectDeclarationAction(page, 'Notify')
 
       await ensureOutboxIsEmpty(page)
 

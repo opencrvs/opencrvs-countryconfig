@@ -6,7 +6,8 @@ import {
   formatName,
   getRandomDate,
   goToSection,
-  login
+  login,
+  selectDeclarationAction
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
@@ -512,9 +513,7 @@ test.describe.serial('5. Birth declaration case - 5', () => {
     })
 
     test('5.1.8 Register', async () => {
-      await page.getByRole('button', { name: 'Register' }).click()
-      await page.locator('#confirm_Declare').click()
-
+      await selectDeclarationAction(page, 'Register')
       await ensureOutboxIsEmpty(page)
 
       await page.getByText('Ready to print').click()

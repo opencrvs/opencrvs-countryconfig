@@ -1,6 +1,11 @@
 import { expect, test, type Page } from '@playwright/test'
 
-import { formatName, goToSection, login } from '../../helpers'
+import {
+  formatName,
+  goToSection,
+  login,
+  selectDeclarationAction
+} from '../../helpers'
 import { CREDENTIALS } from '../../constants'
 import { faker } from '@faker-js/faker'
 import { getRowByTitle } from '../print-certificate/birth/helpers'
@@ -83,8 +88,7 @@ test.describe.serial('1: Validate my draft tab', () => {
 
     await goToSection(page, 'review')
 
-    await page.getByRole('button', { name: 'Send for review' }).click()
-    await page.getByRole('button', { name: 'Confirm' }).click()
+    await selectDeclarationAction(page, 'Notify')
 
     await ensureOutboxIsEmpty(page)
 

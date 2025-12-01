@@ -10,6 +10,7 @@ import {
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
 import { REQUIRED_VALIDATION_ERROR } from '../helpers'
+import { selectDeclarationAction } from '../../../helpers'
 import { ensureOutboxIsEmpty } from '../../../utils'
 test.describe.serial('10. Birth declaration case - 10', () => {
   let page: Page
@@ -175,10 +176,8 @@ test.describe.serial('10. Birth declaration case - 10', () => {
       await expect(page.getByRole('dialog')).not.toBeVisible()
     })
 
-    test('10.1.8 Send for review', async () => {
-      await page.getByRole('button', { name: 'Send for review' }).click()
-      await expect(page.getByText('Send for review?')).toBeVisible()
-      await page.getByRole('button', { name: 'Confirm' }).click()
+    test('10.1.8 Notify', async () => {
+      await selectDeclarationAction(page, 'Notify')
 
       await ensureOutboxIsEmpty(page)
       await page.getByText('Sent for review').click()
