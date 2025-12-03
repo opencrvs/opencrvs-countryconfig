@@ -14,6 +14,7 @@ import {
   ConditionalType,
   defineConfig,
   field,
+  flag,
   not
 } from '@opencrvs/toolkit/events'
 import {
@@ -228,12 +229,6 @@ export const birthEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.birth.action.approve.label'
       },
-      supportingCopy: {
-        defaultMessage:
-          'This birth has been registered late. You are now approving it for further validation and registration.',
-        description: 'This is the confirmation text for the approve action',
-        id: 'event.birth.action.approve.confirmationText'
-      },
       form: [
         {
           id: 'notes',
@@ -249,11 +244,23 @@ export const birthEvent = defineConfig({
       flags: [
         { id: 'approval-required-for-late-registration', operation: 'remove' }
       ],
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: flag('approval-required-for-late-registration')
+        }
+      ],
       auditHistoryLabel: {
         defaultMessage: 'Approved',
         description:
           'The label to show in audit history for the approve action',
         id: 'event.birth.action.approve.audit-history-label'
+      },
+      supportingCopy: {
+        defaultMessage:
+          'This birth has been registered late. You are now approving it for further validation and registration.',
+        description: 'This is the confirmation text for the approve action',
+        id: 'event.birth.action.approve.confirmationText'
       }
     },
     {
@@ -264,6 +271,12 @@ export const birthEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.birth.action.validate.label'
       },
+      conditionals: [
+        {
+          type: ConditionalType.ENABLE,
+          conditional: not(flag('approval-required-for-late-registration'))
+        }
+      ],
       deduplication: {
         id: 'birth-deduplication',
         label: {
@@ -283,6 +296,12 @@ export const birthEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.birth.action.register.label'
       },
+      conditionals: [
+        {
+          type: ConditionalType.ENABLE,
+          conditional: not(flag('approval-required-for-late-registration'))
+        }
+      ],
       deduplication: {
         id: 'birth-deduplication',
         label: {
