@@ -14,8 +14,10 @@ import {
   ConditionalType,
   defineConfig,
   field,
+  FieldType,
   flag,
-  not
+  not,
+  window
 } from '@opencrvs/toolkit/events'
 import {
   BIRTH_DECLARATION_FORM,
@@ -28,6 +30,7 @@ import { PlaceOfBirth } from './forms/pages/child'
 import { CORRECTION_FORM } from './forms/correctionForm'
 import { dedupConfig } from './dedupConfig'
 import { applicationConfig } from '@countryconfig/api/application/application-config'
+import { CLIENT_APP_URL, GATEWAY_URL } from '@countryconfig/constants'
 
 export const birthEvent = defineConfig({
   id: Event.Birth,
@@ -58,6 +61,15 @@ export const birthEvent = defineConfig({
         description: 'Flag label for approval required for late registration'
       },
       requiresAction: true
+    },
+    {
+      id: 'vc-issued',
+      label: {
+        id: 'event.birth.flag.vc-issued',
+        defaultMessage: 'VC issued',
+        description: 'Flag label for VC issued'
+      },
+      requiresAction: false
     }
   ],
   summary: {
@@ -300,6 +312,114 @@ export const birthEvent = defineConfig({
         },
         query: dedupConfig
       }
+    },
+    {
+      type: ActionType.CUSTOM,
+      customActionType: 'IssueVC',
+      label: {
+        defaultMessage: 'Issue VC',
+        description: '',
+        id: 'event.birth.action.issue-vc.label'
+      },
+      flags: [
+        // @TODO: This is added in issuer service to record
+        // {
+        //   id: 'vc-issued',
+        //   operation: 'add'
+        // }
+      ],
+      conditionals: [
+        {
+          type: ConditionalType.ENABLE,
+          conditional: not(flag('vc-issued'))
+        }
+      ],
+      form: [
+        {
+          id: 'requester',
+          type: FieldType.SELECT,
+          // @TODO: import this from birth form?
+          options: [
+            {
+              value: 'mother',
+              label: {
+                defaultMessage: 'Mother',
+                description: '@TODO',
+                id: 'event.birth.custom.action.issue-vc.field.requester.option.mother'
+              }
+            },
+            {
+              value: 'father',
+              label: {
+                defaultMessage: 'Father',
+                description: '@TODO',
+                id: 'event.birth.custom.action.issue-vc.field.requester.option.father'
+              }
+            }
+          ],
+          label: {
+            defaultMessage: 'Requester',
+            description: 'Select who is requesting the VC',
+            id: 'event.birth.custom.action.issue-vc.field.requester.label'
+          }
+        },
+        {
+          id: 'request-credential-offer-button',
+          type: FieldType.BUTTON,
+          label: {
+            defaultMessage: 'Request Credential Offer',
+            description: 'Button to request the credential offer from issuer',
+            id: 'event.birth.custom.action.issue-vc.field.request-credential-offer-button.label'
+          },
+          configuration: {
+            text: {
+              defaultMessage: 'Request Credential Offer',
+              description: 'Button to request the credential offer from issuer',
+              id: 'event.birth.custom.action.issue-vc.field.request-credential-offer-button.configuration.text'
+            }
+          }
+        },
+        {
+          parent: field('request-credential-offer-button'),
+          id: 'get-credential-offer',
+          type: FieldType.HTTP,
+          label: {
+            defaultMessage: 'Get Credential Offer',
+            description:
+              'HTTP request to get the credential offer from the issuer',
+            id: 'event.birth.custom.action.issue-vc.field.get-credential-offer.label'
+          },
+          configuration: {
+            trigger: field('request-credential-offer-button'),
+            url: `${CLIENT_APP_URL}api/countryconfig/vc/offers`,
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: { pathname: window().location.get('pathname') }
+          }
+        },
+        {
+          parent: field('get-credential-offer'),
+          id: 'qr-code',
+          type: FieldType.IMAGE,
+          label: {
+            defaultMessage: 'QR Code',
+            description: 'Upload the QR code image for the VC',
+            id: 'event.birth.custom.action.issue-vc.field.qr-code.label'
+          },
+          configuration: {
+            alt: {
+              defaultMessage: 'QR Code',
+              description: 'Upload the QR code image for the VC',
+              id: 'event.birth.custom.action.issue-vc.field.qr-code.configuration.alt'
+            }
+          },
+          value: field('get-credential-offer').get(
+            'data.credential_offer_uri_qr'
+          )
+        }
+      ]
     },
     {
       type: ActionType.PRINT_CERTIFICATE,

@@ -81,6 +81,7 @@ import {
 import { getClient } from './analytics/postgres'
 import { env } from './environment'
 import { createClient } from '@opencrvs/toolkit/api'
+import getVerifiableCredentialRoutes from './api/verifiable-credentials/verifiable-credential-routes'
 
 export interface ITokenPayload {
   sub: string
@@ -692,6 +693,7 @@ export async function createServer() {
   })
 
   server.route(getUserNotificationRoutes())
+  server.route(getVerifiableCredentialRoutes())
 
   server.ext({
     type: 'onRequest',
