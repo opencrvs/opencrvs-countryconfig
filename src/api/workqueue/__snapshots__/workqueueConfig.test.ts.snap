@@ -460,7 +460,6 @@ exports[`Workqueue config > should match the snapshot (Workqueue integrity) 1`] 
           "status": {
             "terms": [
               "DECLARED",
-              "VALIDATED",
             ],
             "type": "anyOf",
           },
@@ -644,10 +643,6 @@ exports[`Workqueue config > should match the snapshot (Workqueue integrity) 1`] 
               "rejected",
             ],
           },
-          "status": {
-            "term": "VALIDATED",
-            "type": "exact",
-          },
           "updatedBy": {
             "term": {
               "$userField": "id",
@@ -659,6 +654,7 @@ exports[`Workqueue config > should match the snapshot (Workqueue integrity) 1`] 
           "flags": {
             "anyOf": [
               "correction-requested",
+              "validated",
             ],
           },
           "updatedBy": {
