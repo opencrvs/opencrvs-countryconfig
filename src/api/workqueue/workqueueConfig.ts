@@ -166,7 +166,7 @@ export const Workqueues = defineWorkqueues([
         terms: ['DECLARED', 'NOTIFIED']
       },
       flags: {
-        noneOf: [InherentFlags.REJECTED]
+        noneOf: [InherentFlags.REJECTED, 'validated']
       },
       createdBy: { type: 'exact', term: user('id') }
     },
@@ -233,7 +233,7 @@ export const Workqueues = defineWorkqueues([
             terms: ['DECLARED']
           },
           flags: {
-            noneOf: [InherentFlags.REJECTED, 'validated']
+            noneOf: [InherentFlags.REJECTED]
           },
           updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
         },
