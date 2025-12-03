@@ -800,6 +800,30 @@ export async function createServer() {
         ) as ActionDocument[]
       }
 
+      /*
+       * Forward event to integration / process management platforms
+       */
+      const urlsToForward = env.FORWARD_ACTIONS_TO.split(',').filter(Boolean)
+      for (const url of urlsToForward) {
+        try {
+          await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(eventWithOptimisticallyApprovedLastAction),
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          })
+        } catch (error) {
+          // eslint-disable-next-line no-console
+          console.error(
+            `Failed to forward event to ${url}: `,
+            (error as Error).message
+          )
+        }
+      }
+      /*
+       * Store to analytics database
+       */
       const client = getClient()
       try {
         await client.transaction().execute(async (trx) => {
