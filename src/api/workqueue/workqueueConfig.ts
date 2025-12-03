@@ -230,7 +230,7 @@ export const Workqueues = defineWorkqueues([
         {
           status: {
             type: 'anyOf',
-            terms: ['DECLARED', 'VALIDATED']
+            terms: ['DECLARED']
           },
           flags: {
             noneOf: [InherentFlags.REJECTED]
@@ -341,15 +341,10 @@ export const Workqueues = defineWorkqueues([
       clauses: [
         {
           updatedBy: { type: 'exact', term: user('id') },
-          status: { type: 'exact', term: 'VALIDATED' },
-          flags: {
-            noneOf: [InherentFlags.REJECTED]
-          }
+          flags: { noneOf: [InherentFlags.REJECTED] }
         },
         {
-          flags: {
-            anyOf: [InherentFlags.CORRECTION_REQUESTED]
-          },
+          flags: { anyOf: [InherentFlags.CORRECTION_REQUESTED, 'validated'] },
           updatedBy: { type: 'exact', term: user('id') }
         }
       ]
