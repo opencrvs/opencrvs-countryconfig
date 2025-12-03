@@ -17,6 +17,7 @@ actionModal.confirm,The label for confirm button of action modal,Confirm,Confirm
 actionModal.description,The description for action modal,The informant will be notified of this decision and a record of this decision will be recorded,L'informateur sera informé de cette décision et celle-ci sera consignée dans un dossier.
 actionModal.description.incomplete,Description shown in the action modal when a declaration is incomplete,This incomplete declaration will be submitted for review.,Cette déclaration incomplète sera soumise à l'examen.
 actionModal.title,The title for action modal,"{action, select, declare{Declare} other{{action}}} the member?","{action, select, declare{Declare} other{{action}}} the member?"
+actions.notify,Notify action label,Notify,Notifier
 advancedSearch.accordion.hide,Label for hide button when accordion is closed,Hide,Cacher
 advancedSearch.accordion.show,Label for show button when accordion is closed,Show,Voir
 advancedSearch.form.childDetails,The title of Child details accordion,Child details,information de l'enfant
@@ -25,7 +26,6 @@ advancedSearch.form.deceasedDetails,The title of Deceased details accordion,Dece
 advancedSearch.form.eventDetails,The title of event details accordion,Event details,Détails de l'évènement
 advancedSearch.form.fatherDetails,The title of Father details accordion,Father details,Information du père
 advancedSearch.form.informantDetails,The title informant details form,Informant details,information de l'informateur
-event.birth.custom.action.approve.field.notes.label,This is the label for the field for a custom action,Notes,Remarques
 advancedSearch.form.motherDetails,The title of Mother details accordion,Mother details,Information de la mère
 advancedSearch.form.placeOfRegistration,Label for input Place of registration,Place of registration,Lieu d'enregistrement
 advancedSearch.form.placeOfRegistrationHelperText,Helper text for input Place of registration,"Search for a province, district or registration office","Rechercher une province, un district ou un bureau d'enregistrement"
@@ -231,6 +231,7 @@ constants.application.title,Application title,Application,Application
 constants.applicationName,Declaration name of CRVS,OpenCRVS,OpenCRVS
 constants.archived_declaration,Application has been archived,Archived,Archivé
 constants.assignRecord,A label for the Assign record -button,Assign record,Affecter un enregistrement
+constants.audit,Label for the audit header,Audit,Audit
 constants.averageRateOfRegistrations,A label for Average rate of registrations,Avg. {amount}%,Moyenne {amount}% de la valeur
 constants.birth,A label from the birth event,Birth,Naissance
 constants.births,A label from the births event,Births,Naissances
@@ -355,7 +356,6 @@ constants.phoneNumber,Phone label,Phone number,Numéro de téléphone
 constants.policeOfficer,The description for Police Officer type,Police Officer,Agent de police
 constants.reason,Label for Reason the declaration was rejected,Reason,Raison
 constants.record,Label for header table header Record,Record,Dossier
-constants.audit,Label for the audit header,Audit,Audit
 constants.refresh,label for refresh,refresh,Rafraîchir
 constants.registered,A label for registered,Registered,Enregistré
 constants.registered.status,A label for registered,Registered,Enregistré
@@ -801,6 +801,7 @@ event.action.declare.form.section.person.field.age.error,Error message for inval
 event.action.notAvailableForEvent,Shown when user tries to perform an action that is not available for the event,The action you're trying to perform is not available for this event anymore,L'action que vous essayez d'effectuer n'est plus disponible pour cet événement
 event.action.outbox-retry.label,Label for retry button for outbox,Retry,Réessayer
 event.action.review-correction.label,Label for review correction button in dropdown menu,Review correction request,Revoir la demande de correction
+event.birth.action.approve.confirmationText,This is the confirmation text for the approve action,This birth has been registered late. You are now approving it for further validation and registration.,Cette naissance a été enregistrée en retard. Vous l'approuvez maintenant pour une validation et un enregistrement supplémentaires.
 event.birth.action.archive.label,Label for archive record button in dropdown menu,Archive,Aarchiver
 event.birth.action.certificate.form.section.collectPayment.data.label,Title for the data section,Payment details,Détails du paiement
 event.birth.action.certificate.form.section.collectPayment.fee.label,Title for the data entry,Fee,Frais
@@ -859,14 +860,14 @@ event.birth.action.declare.form.section.person.field.nid.label,This is the label
 event.birth.action.declare.form.section.person.field.occupation.label,This is the label for the field,Occupation,Profession
 event.birth.action.declare.form.section.person.field.passport.label,This is the label for the field,ID Number,Numéro d'identification
 event.birth.action.declare.label,This is shown as the action name anywhere the user can trigger the action from,Declare,Declare
-event.birth.action.reject.label,This is the label for the reject action,Reject,Rejeter
 event.birth.action.delete.label,Label for delete button in dropdown menu,Delete,Supprimer
 event.birth.action.form.section.collector.other.field.name.label,This is the label for the name field of OTHER collector,Collector's name,Nom du collecteur
 event.birth.action.mark-as-duplicate.label,Label for review potential duplicate button in dropdown menu,Review,Revoir
 event.birth.action.register.label,Label for review record button in dropdown menu,Register,Enregistrer
+event.birth.action.reject.label,This is the label for the reject action,Reject,Rejeter
 event.birth.action.request-correction.label,This is shown as the action name anywhere the user can trigger the action from,Correct record,Enregistrement correct
 event.birth.action.validate.label,This is shown as the action name anywhere the user can trigger the action from,Validate,Valider
-event.birth.action.approve.confirmationText,This is the confirmation text for the approve action,This birth has been registered late. You are now approving it for further validation and registration.,Cette naissance a été enregistrée en retard. Vous l'approuvez maintenant pour une validation et un enregistrement supplémentaires.
+event.birth.custom.action.approve.field.notes.label,This is the label for the field for a custom action,Notes,Remarques
 event.birth.label,This is what this event is referred as in the system,Birth,Naissance
 event.birth.summary.child.dob.empty,Label for date of birth not available,No date of birth,Pas de date de naissance
 event.birth.summary.child.placeOfBirth.empty,Label for place of birth not available,No place of birth,Pas de lieu de naissance
@@ -1116,11 +1117,11 @@ event.tennis-club-membership.summary.field.recommender.firstname.empty,Shown whe
 event.tennis-club-membership.summary.field.recommender.firstname.label,Label for the recommender's first name field,Recommender's First Name,Recommender's First Name
 event.tennis-club-membership.summary.field.recommender.id.empty,Shown when the recommender id is missing in summary,Recommender's id missing,Recommender's id missing
 event.tennis-club-membership.summary.field.recommender.id.label,Label for the recommender's ID field,Recommender's ID,Recommender's ID
-events.overview.tabs.record,Title of the Record tab,Record,Enregistrement
-events.overview.tabs.audit,Title of the Audit tab,Audit,Audit
 events.history.status,Events status history,"{status, select, Requested {Waiting for external validation} other {{action, select, CREATE {Declaration started} NOTIFY {Notified} VALIDATE {Sent for approval} DRAFT {Draft} DECLARE {Sent for review} REGISTER {Registered} PRINT_CERTIFICATE {Certified} REJECT {Rejected} ARCHIVE {Archived} DUPLICATE_DETECTED {Flagged as potential duplicate} MARKED_AS_DUPLICATE {Marked as a duplicate} MARK_AS_NOT_DUPLICATE {Marked not a duplicate} CORRECTED {Record corrected} REQUEST_CORRECTION {Correction requested} APPROVE_CORRECTION {Correction approved} REJECT_CORRECTION {Correction rejected} READ {Viewed} ASSIGN {Assigned} UNASSIGN {Unassigned} UPDATE {Updated} other {Unknown}}}}","{status, select, Requested {En attente de validation externe} other {{action, select, CREATE {Déclaration commencée} NOTIFY {Envoyé incomplet} VALIDATE {Envoyé pour approbation} DRAFT {Brouillon} DECLARE {Envoyé pour révision} REGISTER {Enregistré} PRINT_CERTIFICATE {Certifié} REJECT {Rejeté} ARCHIVE {Archivé} DUPLICATE_DETECTED {Marqué comme doublon} MARKED_AS_DUPLICATE {Marqué comme doublon} MARK_AS_NOT_DUPLICATE {Marqué comme non en doublon} CORRECTED {Enregistrement corrigé} REQUEST_CORRECTION {Correction demandée} APPROVE_CORRECTION {Correction approuvée} REJECT_CORRECTION {Correction refusée} READ {Consulté} ASSIGN {Attribué} UNASSIGN {Désattribué} UPDATE {Mis à jour} other {Inconnu}}}}"
 events.outbox.processingAction,Message in outbox when processing action,"{action, select, DECLARE {Sending} REGISTER {Registering} VALIDATE {Sending for approval} NOTIFY {Sending} REJECT {Sending for updates} ARCHIVE {Archiving} PRINT_CERTIFICATE {Certifying} REQUEST_CORRECTION {Requesting correction} APPROVE_CORRECTION {Approving correction} REJECT_CORRECTION {Rejecting correction} ASSIGN {Assigning} UNASSIGN {Unassigning} other {processing action}}","{action, select, DECLARE {Envoi} REGISTER {Enregistrement} VALIDATE {Envoi pour approbation} NOTIFY {Envoi} REJECT {Envoi pour mise à jour} ARCHIVE {Archivage} PRINT_CERTIFICATE {Certification} REQUEST_CORRECTION {Demande de correction} APPROVE_CORRECTION {Approbation de la correction} REJECT_CORRECTION {Rejet de la correction} ASSIGN {Attribution} UNASSIGN {Désattribution} other {action en cours}}"
 events.outbox.waitingForAction,Message in outbox when waiting for action,"Waiting to {action, select, DECLARE {send} CREATE {send} REGISTER {register} VALIDATE {send for approval} NOTIFY {send} REJECT {send for updates} ARCHIVE {archive} PRINT_CERTIFICATE {certify} REQUEST_CORRECTION {request correction} APPROVE_CORRECTION {approve correction} REJECT_CORRECTION {reject correction} ASSIGN {assign} UNASSIGN {unassign} other {action}}","En attente de {action, select, DECLARE {l'envoi} CREATE {l'envoi} REGISTER {l'enregistrement} VALIDATE {l'envoi pour approbation} NOTIFY {l'envoi} REJECT {l'envoi pour mise à jour} ARCHIVE {l'archivage} PRINT_CERTIFICATE {la certification} REQUEST_CORRECTION {la demande de correction} APPROVE_CORRECTION {l'approbation de la correction} REJECT_CORRECTION {le rejet de la correction} ASSIGN {l'attribution} UNASSIGN {la désattribution} other {l'action}}"
+events.overview.tabs.audit,Title of the Audit tab,Audit,Audit
+events.overview.tabs.record,Title of the Record tab,Record,Enregistrement
 events.status,Dynamic event status,"{status, select, OUTBOX {Syncing..} CREATED {Draft} VALIDATED {Validated} DRAFT {Draft} DECLARED {Declared} REGISTERED {Registered} CERTIFIED {Certified} REJECTED {Rejected} ARCHIVED {Archived} MARKED_AS_DUPLICATE {Marked as a duplicate} MARK_AS_NOT_DUPLICATE {Marked not a duplicate} NOTIFIED {In progress} other {Unknown}}","{status, select, OUTBOX {Synchronisation..} CREATED {Brouillon} VALIDATED {Validé} DRAFT {Brouillon} DECLARED {Déclaré} REGISTERED {Enregistré} CERTIFIED {Certifié} REJECTED {Nécessite une mise à jour} ARCHIVED {Archivé} MARKED_AS_DUPLICATE {Marqué comme doublon} MARK_AS_NOT_DUPLICATE {Marqué comme non en doublon} NOTIFIED {Notifié} other {Inconnu}}"
 exitModal.cancel, Modal cancel button,Cancel,Annuler
 exitModal.exitWithoutSaving,exitmodal without saving label,Exit without saving changes?,Quitter sans enregistrer les modifications?
@@ -2112,6 +2113,7 @@ team.user.buttons.reactivate,Label for confirmation modal for user reactivation,
 unlockApp.incorrectPin,The message displayed when a user enters an incorrect PIN,Incorrect pin. Please try again,Le code est incorrect. Veuillez réessayer
 unlockApp.lastTry,The message displayed before the 3rd attempt of an incorrect PIN,Last try,Dernier essai
 unlockApp.locked,The title displayed while creating a PIN,Your account has been locked. Please try again in 1 minute.,Votre compte a été verrouillé. Veuillez réessayer dans 1 minute.
+user.avatar,Aria label for user avatar button,User avatar,Avatar utilisateur
 user.form.buttons.submit,Label for submit button of user creation form,Create user,Créer un utilisateur
 user.form.securityquestion.answer,,Answer,Répondre à
 user.form.securityquestion.description,,"From the drop down lists below, select questions that can be used later to confirm your identity should you forget your password.","Dans les listes déroulantes ci-dessous, sélectionnez des questions qui pourront être utilisées ultérieurement pour confirmer votre identité si vous oubliez votre mot de passe."
@@ -2172,7 +2174,6 @@ user.profile.startDate,Title for startDate field,Start date,Date de début
 user.profile.userName,Title for userName field,Username,Nom d'utilisateur
 userRole.administrator,Name for user role Administrator,Administrator,Administrateur
 userRole.communityLeader, Name for user role Community Leader,Community Leader,Leader communautaire
-user.avatar,Aria label for user avatar button,User avatar,Avatar utilisateur
 userRole.communityLeader,Name for user role Community Leader,Community Leader,Leader communautaire
 userRole.fieldAgent,Name for user role Field Agent,Field Agent,Agent de terrain
 userRole.healthcareWorker,Name for user role Healthcare Worker,Healthcare Worker,Personnel de santé

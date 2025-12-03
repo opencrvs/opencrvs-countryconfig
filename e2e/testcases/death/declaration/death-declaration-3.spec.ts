@@ -8,6 +8,7 @@ import {
   getRandomDate,
   goToSection,
   login,
+  selectDeclarationAction,
   switchEventTab
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
@@ -631,10 +632,8 @@ test.describe.serial('3. Death declaration case - 3', () => {
         .click()
     })
 
-    test('3.1.8 Send for review', async () => {
-      await page.getByRole('button', { name: 'Send for review' }).click()
-      await expect(page.getByText('Send for review?')).toBeVisible()
-      await page.getByRole('button', { name: 'Confirm' }).click()
+    test('3.1.8 Declare', async () => {
+      await selectDeclarationAction(page, 'Declare')
       await ensureOutboxIsEmpty(page)
       await expect(page.getByText('Farajaland CRS')).toBeVisible()
 

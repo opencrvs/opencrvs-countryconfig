@@ -14,6 +14,7 @@ import {
   ensureOutboxIsEmpty,
   selectAction
 } from '../../utils'
+import { selectDeclarationAction } from '../../helpers'
 import { assertRecordInWorkqueue, fillDate } from '../birth/helpers'
 
 // FA Notifies => LR Registers
@@ -126,11 +127,8 @@ test.describe.serial('2. Workqueue flow - 2', () => {
       await expect(page.getByRole('dialog')).not.toBeVisible()
     })
 
-    test('2.1.4 Send for review', async () => {
-      await page.getByRole('button', { name: 'Send for review' }).click()
-      await expect(page.getByText('Send for review?')).toBeVisible()
-      await page.getByRole('button', { name: 'Confirm' }).click()
-
+    test('2.1.4 Notify', async () => {
+      await selectDeclarationAction(page, 'Notify')
       await ensureOutboxIsEmpty(page)
     })
 
@@ -262,9 +260,7 @@ test.describe.serial('2. Workqueue flow - 2', () => {
 
     test('2.2.6 Register', async () => {
       await goToSection(page, 'review')
-
-      await page.getByRole('button', { name: 'Register' }).click()
-      await page.locator('#confirm_Declare').click()
+      await selectDeclarationAction(page, 'Register')
 
       await ensureOutboxIsEmpty(page)
       await ensureInExternalValidationIsEmpty(page)
@@ -285,7 +281,7 @@ test.describe.serial('2. Workqueue flow - 2', () => {
     })
   })
 
-  test('2.3 FA can see the record', async () => {
+  test('2.3 FA can not see the registered record', async () => {
     await login(page, CREDENTIALS.FIELD_AGENT, true)
 
     await assertRecordInWorkqueue({
@@ -294,7 +290,7 @@ test.describe.serial('2. Workqueue flow - 2', () => {
       workqueues: [
         { title: 'Assigned to you', exists: false },
         { title: 'Recent', exists: false },
-        { title: 'Sent for review', exists: true },
+        { title: 'Sent for review', exists: false },
         { title: 'Requires updates', exists: false }
       ]
     })
