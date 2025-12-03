@@ -271,6 +271,12 @@ export const birthEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.birth.action.validate.label'
       },
+      conditionals: [
+        {
+          type: ConditionalType.ENABLE,
+          conditional: not(flag('approval-required-for-late-registration'))
+        }
+      ],
       deduplication: {
         id: 'birth-deduplication',
         label: {
@@ -290,6 +296,12 @@ export const birthEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.birth.action.register.label'
       },
+      conditionals: [
+        {
+          type: ConditionalType.ENABLE,
+          conditional: not(flag('approval-required-for-late-registration'))
+        }
+      ],
       deduplication: {
         id: 'birth-deduplication',
         label: {
