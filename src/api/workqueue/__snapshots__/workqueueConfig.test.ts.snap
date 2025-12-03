@@ -340,6 +340,7 @@ exports[`Workqueue config > should match the snapshot (Workqueue integrity) 1`] 
           "flags": {
             "noneOf": [
               "rejected",
+              "validated",
             ],
           },
           "status": {
@@ -396,6 +397,7 @@ exports[`Workqueue config > should match the snapshot (Workqueue integrity) 1`] 
           "flags": {
             "noneOf": [
               "rejected",
+              "validated",
             ],
           },
           "status": {
