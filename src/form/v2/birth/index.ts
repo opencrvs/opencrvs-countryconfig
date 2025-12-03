@@ -291,6 +291,10 @@ export const birthEvent = defineConfig({
         {
           type: ConditionalType.ENABLE,
           conditional: not(flag('approval-required-for-late-registration'))
+        },
+        {
+          type: ConditionalType.SHOW,
+          conditional: not(flag('validated'))
         }
       ],
       flags: [{ id: 'validated', operation: 'add' }],
@@ -304,6 +308,16 @@ export const birthEvent = defineConfig({
         },
         query: dedupConfig
       }
+    },
+    {
+      type: ActionType.REJECT,
+      label: {
+        defaultMessage: 'Reject',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'event.birth.action.reject.label'
+      },
+      flags: [{ id: 'validated', operation: 'remove' }]
     },
     {
       type: ActionType.REGISTER,
