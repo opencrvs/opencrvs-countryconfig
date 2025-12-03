@@ -194,7 +194,7 @@ export const Workqueues = defineWorkqueues([
     query: {
       status: { type: 'exact', term: EventStatus.enum.DECLARED },
       flags: {
-        noneOf: [InherentFlags.REJECTED]
+        noneOf: [InherentFlags.REJECTED, 'validated']
       },
       updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
     },
@@ -233,7 +233,7 @@ export const Workqueues = defineWorkqueues([
             terms: ['DECLARED']
           },
           flags: {
-            noneOf: [InherentFlags.REJECTED]
+            noneOf: [InherentFlags.REJECTED, 'validated']
           },
           updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
         },

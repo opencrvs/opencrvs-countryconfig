@@ -15,8 +15,7 @@ import {
   defineConfig,
   field,
   flag,
-  not,
-  user
+  not
 } from '@opencrvs/toolkit/events'
 import {
   BIRTH_DECLARATION_FORM,
@@ -227,12 +226,6 @@ export const birthEvent = defineConfig({
             ),
             field('child.dob').isBefore().now()
           )
-        },
-        // @TODO: add other roles?
-        {
-          id: 'validated',
-          operation: 'add',
-          conditional: user.hasRole('REGISTRATION_OFFICER')
         }
       ]
     },
@@ -292,10 +285,7 @@ export const birthEvent = defineConfig({
           type: ConditionalType.ENABLE,
           conditional: not(flag('approval-required-for-late-registration'))
         },
-        {
-          type: ConditionalType.SHOW,
-          conditional: not(flag('validated'))
-        }
+        { type: ConditionalType.SHOW, conditional: not(flag('validated')) }
       ],
       flags: [{ id: 'validated', operation: 'add' }],
       deduplication: {
