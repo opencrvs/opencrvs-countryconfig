@@ -98,7 +98,14 @@ export default function getVerifiableCredentialRoutes(): ServerRoute<ReqRefDefau
               jwt: {
                 proof_signing_alg_values_supported: ['ES256']
               }
-            }
+            },
+            display: [
+              {
+                name: 'Birth certificate',
+                background_color: '#cbe6ff',
+                text_color: '#000f66'
+              }
+            ]
           }
         }
       }),
