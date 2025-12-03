@@ -451,7 +451,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
       })
     })
 
-    test('3.6.2 Re-Validate', async () => {
+    test('3.6.2 Re-validate', async () => {
       await page.getByText('Requires updates').click()
 
       await assignFromWorkqueue(page, childName)
@@ -460,7 +460,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         .click()
 
       await selectAction(page, 'Validate')
-      await page.getByRole('button', { name: 'Confirm' }).click()
+      await page.getByRole('button', { name: 'Validate' }).click()
 
       await assertRecordInWorkqueue({
         page,
