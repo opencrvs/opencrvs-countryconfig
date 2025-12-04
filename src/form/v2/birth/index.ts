@@ -243,6 +243,7 @@ export const birthEvent = defineConfig({
         }
       ],
       flags: [
+        { id: InherentFlags.REJECTED, operation: 'remove' },
         { id: 'approval-required-for-late-registration', operation: 'remove' }
       ],
       conditionals: [
