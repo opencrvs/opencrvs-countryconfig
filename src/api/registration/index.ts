@@ -74,43 +74,9 @@ export async function onRegisterHandler(
 
   await sendInformantNotification({ event, token, registrationNumber })
 
-  const childName = declaration['child.name'] as NameFieldValue
-
-  const response = await fetch(
-    'https://api.paradym.id/v1/projects/MEEE/openid4vc/issuance/offer',
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-access-token': 'xccsTKN'
-      },
-      body: JSON.stringify({
-        credentials: [
-          {
-            credentialTemplateId: 'cmi8tniyv01hrs601n9qtkr7o',
-            attributes: {
-              id: registrationNumber,
-              gender: declaration['child.gender'],
-              birth_date: declaration['child.dob'],
-              given_name: childName.firstname,
-              family_name: childName.surname,
-              middle_name: childName.middlename
-            }
-          }
-        ]
-      })
-    }
-  )
-
-  const data = (await response.json()) as {
-    status: 'offered' | 'completed' | 'failed' | 'partiallyIssued' | 'expired'
-    offerQrUri?: string | undefined
-  }
-
   return h
     .response({
-      registrationNumber,
-      annotation: { offerQrUri: data.offerQrUri }
+      registrationNumber
     })
     .code(200)
 
