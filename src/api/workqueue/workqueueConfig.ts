@@ -426,7 +426,7 @@ export const Workqueues = defineWorkqueues([
   },
   {
     slug: 'late-registration-approval-required',
-    icon: 'MagnifyingGlass',
+    icon: 'FileSearch',
     name: {
       id: 'workqueues.requiresApproval.title',
       defaultMessage: 'Requires approval',
