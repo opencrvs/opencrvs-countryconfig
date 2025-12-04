@@ -226,7 +226,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
         delayed: 18
       },
       svgUrl: '/api/countryconfig/certificates/v2.birth-certificate.svg',
-      fonts: libreBaskervilleFont,
+      fonts: notoSansFont,
       conditionals: [
         {
           type: 'SHOW',
