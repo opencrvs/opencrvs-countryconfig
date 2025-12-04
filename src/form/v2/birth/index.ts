@@ -15,6 +15,7 @@ import {
   defineConfig,
   field,
   flag,
+  InherentFlags,
   not
 } from '@opencrvs/toolkit/events'
 import {
@@ -248,6 +249,10 @@ export const birthEvent = defineConfig({
         {
           type: ConditionalType.SHOW,
           conditional: flag('approval-required-for-late-registration')
+        },
+        {
+          type: ConditionalType.ENABLE,
+          conditional: not(flag(InherentFlags.POTENTIAL_DUPLICATE))
         }
       ],
       auditHistoryLabel: {
