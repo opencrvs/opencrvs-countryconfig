@@ -108,8 +108,6 @@ buttons.editRecord,Correct record button text on review certificate,"No, make co
 buttons.editRegistration,Edit registration button text,Edit registration,Modifier l'enregistrement
 buttons.exactDateUnknown,Label for DateRangePickerForFormField components daterangepicker toggle button,Exact date unknown,Date exacte inconnue
 buttons.exit,Label for Exit button on EventTopBar,Exit,Quitter
-workqueues.requiresApproval.title,Title of Requires approval workqueue,Requires approval,Nécessite une approbation
-userRole.provincialRegistrar,Name for user role Provincial Registrar,Provincial Registrar,Registraire provincial
 buttons.finish,The label for finish printing certificate button,Finish,Terminer
 buttons.forgotPassword,The label for forgot password button,Forgot password,Mot de passe oublié
 buttons.forgottenPIN,The label for forgotten pin button,Forgotten pin,Code d'accès oublié
@@ -2178,6 +2176,7 @@ userRole.nationalRegistrar,Name for user role National Registrar,National Regist
 userRole.nationalSystemAdmin,Name for user role National System Admin,National System Admin,Administrateur système national
 userRole.performanceManager,Name for user role Performance Manager,Performance Manager,Gestion des performances
 userRole.policeOfficer,Name for user role Police Officer,Police Officer,Officier de police
+userRole.provincialRegistrar,Name for user role Provincial Registrar,Provincial Registrar,Registraire provincial
 userRole.registrationAgent,Name for user role Registration Agent,Registration Agent,Agent d'enregistrement
 userSetup.complete.instruction,Instruction for the setup complete,Login to your account with your username and newly created password,Connectez-vous maintenant à votre compte avec votre nom d'utilisateur et votre mot de passe nouvellement créé.
 userSetup.complete.title,Title for the setup complete page,Account setup complete,Configuration du compte terminée
@@ -2290,6 +2289,7 @@ views.qrReader.tutorial.lightBalance,Light balance tutorial,Ensure the QR code i
 workqueues.dateOfEvent,Label for workqueue column: dateOfEvent,Date of Event,Date de l'événement
 workqueues.draft.title,Title of draft workqueue,My drafts,Mes brouillons
 workqueues.outbox.title,Title of outbox workqueue,Outbox,Boîte d'envoi
+workqueues.requiresApproval.title,Title of Requires approval workqueue,Requires approval,Nécessite une approbation
 wq.noRecords.CREATED,No records messages for empty draft tab,No records in progress,Aucun enregistrement en cours
 wq.noRecords.DECLARED,No records messages for ready for review tab,No records ready for review,Aucun document prêt à être examiné
 wq.noRecords.REGISTERED,No records messages for ready to print tab,No records ready to print,Aucun document prêt à être imprimé
