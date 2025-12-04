@@ -234,9 +234,8 @@ export const birthEvent = defineConfig({
         {
           id: 'notes',
           type: 'TEXTAREA',
-          required: true,
           label: {
-            defaultMessage: 'Notes',
+            defaultMessage: 'Comments',
             description: 'This is the label for the field for a custom action',
             id: 'event.birth.custom.action.approve.field.notes.label'
           }
