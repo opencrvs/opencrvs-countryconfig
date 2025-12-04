@@ -1,10 +1,20 @@
 import { expect, Page, test } from '@playwright/test'
-import { drawSignature, getToken, goToSection, login } from '../../helpers'
+import {
+  continueForm,
+  drawSignature,
+  getToken,
+  goToSection,
+  login
+} from '../../helpers'
 import { faker } from '@faker-js/faker'
 import { fillChildDetails, openBirthDeclaration } from '../birth/helpers'
-import { CREDENTIALS } from '../../constants'
+import { CLIENT_URL, CREDENTIALS } from '../../constants'
 import { createDeclaration, Declaration } from '../test-data/birth-declaration'
-import { ensureInExternalValidationIsEmpty, selectAction } from '../../utils'
+import {
+  ensureInExternalValidationIsEmpty,
+  selectAction,
+  type
+} from '../../utils'
 import {
   navigateToCertificatePrintAction,
   selectRequesterType
@@ -160,9 +170,47 @@ test.describe('Form state', () => {
       await page.reload()
       await ensureInExternalValidationIsEmpty(page)
     })
+
+    test('Form changes in correction are persisted after reload', async () => {
+      const updatedMotherName = faker.person.firstName('female')
+      expect(declaration).toBeDefined()
+      await page.getByRole('button', { name: 'Ready to print' }).click()
+      await navigateToCertificatePrintAction(page, declaration!)
+      await selectRequesterType(page, 'Print and issue to Informant (Mother)')
+      await continueForm(page)
+      await page.getByRole('button', { name: 'Verified' }).click()
+      await continueForm(page)
+      await page.getByRole('button', { name: 'No, make correction' }).click()
+      await page.locator('#requester____type').click()
+      await page.getByText('Informant (Mother)', { exact: true }).click()
+
+      await page.locator('#reason____option').click()
+      await page
+        .getByText(
+          'Informant provided incorrect information (Material error)',
+          {
+            exact: true
+          }
+        )
+        .click()
+
+      await page.getByRole('button', { name: 'Continue', exact: true }).click()
+      await page.getByRole('button', { name: 'Verified' }).click()
+      await continueForm(page)
+      await page
+        .locator('#fees____amount')
+        .fill(faker.number.int({ min: 1, max: 1000 }).toString())
+      await continueForm(page)
+      await page.getByTestId('change-button-mother.name').click()
+      await type(page, '#firstname', updatedMotherName)
+      await page.reload()
+      await expect(page.locator('#firstname')).toHaveValue(updatedMotherName)
+    })
+
     test('Form states and annotations are not persisted', async () => {
       expect(declaration).toBeDefined()
 
+      await page.goto(CLIENT_URL)
       await page.getByRole('button', { name: 'Ready to print' }).click()
       await navigateToCertificatePrintAction(page, declaration!)
       await selectRequesterType(page, 'Print and issue to someone else')
@@ -178,6 +226,41 @@ test.describe('Form state', () => {
       ).not.toHaveText('Print and issue to someone else')
 
       await expect(page.getByTestId('text__firstname')).not.toBeVisible()
+    })
+  })
+
+  test.describe('Declaration form is populated after refresh', async () => {
+    let page: Page
+
+    test.beforeAll(async ({ browser }) => {
+      page = await browser.newPage()
+    })
+
+    test.afterAll(async () => {
+      await page.close()
+    })
+
+    test('Login', async () => {
+      await login(page)
+    })
+    test('Move to birth form', async () => {
+      await page.click('#header-new-event')
+      await page.getByLabel('Birth').click()
+      await page.getByRole('button', { name: 'Continue' }).click()
+      await page.getByRole('button', { name: 'Continue' }).click()
+    })
+
+    test('Input child fields', async () => {
+      const firstname = 'foo'
+      const surname = 'bar'
+      await type(page, '#firstname', firstname)
+      await type(page, '#surname', surname)
+    })
+
+    test('refresh the page and verify fields are populated', async () => {
+      await page.reload()
+      await expect(page.locator('#firstname')).toHaveValue('foo')
+      await expect(page.locator('#surname')).toHaveValue('bar')
     })
   })
 })
