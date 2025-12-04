@@ -253,8 +253,8 @@ export const roles: Role[] = [
     },
     scopes: [
       SCOPES.USER_CREATE,
-      'user.create[role=FIELD_AGENT|POLICE_OFFICER|HOSPITAL_CLERK|HEALTHCARE_WORKER|COMMUNITY_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR|NATIONAL_REGISTRAR|LOCAL_SYSTEM_ADMIN|NATIONAL_SYSTEM_ADMIN|PERFORMANCE_MANAGER]',
-      'user.edit[role=FIELD_AGENT|POLICE_OFFICER|HOSPITAL_CLERK|HEALTHCARE_WORKER|COMMUNITY_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR|NATIONAL_REGISTRAR|LOCAL_SYSTEM_ADMIN|NATIONAL_SYSTEM_ADMIN|PERFORMANCE_MANAGER]',
+      'user.create[role=FIELD_AGENT|POLICE_OFFICER|HOSPITAL_CLERK|HEALTHCARE_WORKER|COMMUNITY_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR|NATIONAL_REGISTRAR|LOCAL_SYSTEM_ADMIN|NATIONAL_SYSTEM_ADMIN|PERFORMANCE_MANAGER|PROVINCIAL_REGISTRAR]',
+      'user.edit[role=FIELD_AGENT|POLICE_OFFICER|HOSPITAL_CLERK|HEALTHCARE_WORKER|COMMUNITY_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR|NATIONAL_REGISTRAR|LOCAL_SYSTEM_ADMIN|NATIONAL_SYSTEM_ADMIN|PERFORMANCE_MANAGER|PROVINCIAL_REGISTRAR]',
       SCOPES.USER_READ,
       SCOPES.USER_UPDATE,
       SCOPES.ORGANISATION_READ_LOCATIONS,
@@ -325,6 +325,20 @@ export const roles: Role[] = [
       'record.registered.print-certified-copies[event=birth|death|tennis-club-membership]',
       'record.registered.correct[event=birth|death|tennis-club-membership]',
       'record.unassign-others[event=birth|death|tennis-club-membership]'
+    ]
+  },
+  {
+    id: 'PROVINCIAL_REGISTRAR',
+    label: {
+      defaultMessage: 'Provincial Registrar',
+      description: 'Name for user role Provincial Registrar',
+      id: 'userRole.provincialRegistrar'
+    },
+    scopes: [
+      'record.read[event=birth|death|tennis-club-membership]',
+      'record.custom-action[event=birth,customActionType=Approve]',
+      'workqueue[id=late-registration-approval-required]',
+      'search[event=birth,access=all]'
     ]
   }
 ]
