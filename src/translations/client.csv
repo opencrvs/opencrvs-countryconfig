@@ -2289,7 +2289,7 @@ views.qrReader.tutorial.lightBalance,Light balance tutorial,Ensure the QR code i
 workqueues.dateOfEvent,Label for workqueue column: dateOfEvent,Date of Event,Date de l'événement
 workqueues.draft.title,Title of draft workqueue,My drafts,Mes brouillons
 workqueues.outbox.title,Title of outbox workqueue,Outbox,Boîte d'envoi
-workqueues.requiresApproval.title,Title of Requires approval workqueue,Requires approval,Nécessite une approbation
+workqueues.requiresApproval.title,Title of Requires approval workqueue,Pending approval,En attente d'approbation
 wq.noRecords.CREATED,No records messages for empty draft tab,No records in progress,Aucun enregistrement en cours
 wq.noRecords.DECLARED,No records messages for ready for review tab,No records ready for review,Aucun document prêt à être examiné
 wq.noRecords.REGISTERED,No records messages for ready to print tab,No records ready to print,Aucun document prêt à être imprimé

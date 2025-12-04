@@ -429,7 +429,7 @@ export const Workqueues = defineWorkqueues([
     icon: 'FileSearch',
     name: {
       id: 'workqueues.requiresApproval.title',
-      defaultMessage: 'Requires approval',
+      defaultMessage: 'Pending approval',
       description: 'Title of Requires approval workqueue'
     },
     query: {
