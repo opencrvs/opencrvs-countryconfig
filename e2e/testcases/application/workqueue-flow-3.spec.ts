@@ -11,6 +11,7 @@ import {
 } from '../../helpers'
 import { CREDENTIALS } from '../../constants'
 import {
+  ensureAssigned,
   ensureInExternalValidationIsEmpty,
   ensureOutboxIsEmpty,
   selectAction
@@ -206,6 +207,20 @@ test.describe.serial('3. Workqueue flow - 3', () => {
           { title: 'Ready to print', exists: false }
         ]
       })
+    })
+
+    test('3.2.3 Ensure rejection is no longer available', async () => {
+      await page.getByRole('button', { name: 'Requires updates' }).click()
+      await page
+        .getByRole('button', {
+          name: childName
+        })
+        .click()
+
+      await ensureAssigned(page)
+      await selectAction(page, 'Review')
+      await page.getByRole('button', { name: 'Action' }).click()
+      await expect(page.getByText('Reject')).not.toBeVisible()
     })
   })
 
