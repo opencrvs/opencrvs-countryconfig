@@ -108,6 +108,8 @@ buttons.editRecord,Correct record button text on review certificate,"No, make co
 buttons.editRegistration,Edit registration button text,Edit registration,Modifier l'enregistrement
 buttons.exactDateUnknown,Label for DateRangePickerForFormField components daterangepicker toggle button,Exact date unknown,Date exacte inconnue
 buttons.exit,Label for Exit button on EventTopBar,Exit,Quitter
+workqueues.requiresApproval.title,Title of Requires approval workqueue,Requires approval,Nécessite une approbation
+userRole.provincialRegistrar,Name for user role Provincial Registrar,Provincial Registrar,Registraire provincial
 buttons.finish,The label for finish printing certificate button,Finish,Terminer
 buttons.forgotPassword,The label for forgot password button,Forgot password,Mot de passe oublié
 buttons.forgottenPIN,The label for forgotten pin button,Forgotten pin,Code d'accès oublié
