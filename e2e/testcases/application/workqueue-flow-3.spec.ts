@@ -222,6 +222,13 @@ test.describe.serial('3. Workqueue flow - 3', () => {
       await page.getByRole('button', { name: 'Action' }).click()
       await expect(page.getByText('Reject')).not.toBeVisible()
     })
+
+    test('3.2.4 Unassign', async () => {
+      await page.goBack()
+      await selectAction(page, 'Unassign')
+      await page.getByRole('button', { name: 'Unassign', exact: true }).click()
+      await expect(page.getByText('Not assigned')).toBeVisible()
+    })
   })
 
   test.describe('3.3 Declare by FA', async () => {
