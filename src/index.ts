@@ -790,7 +790,7 @@ export async function createServer() {
           ? {
               ...action,
               status: ActionStatus.Accepted,
-              ...(actionType === ActionType.REGISTER
+              ...(actionType === ActionType.REGISTER && response.source
                 ? {
                     registrationNumber: (
                       response.source as { registrationNumber: string }
