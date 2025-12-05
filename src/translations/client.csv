@@ -2,6 +2,7 @@ id,description,en,fr
 action.action,Label for action button,Action,Action
 action.archive,Label for archive record button in dropdown menu,Archive declaration,Déclaration d'archive
 action.assignee,Label for asignee,Assigned to {name } at {officeName},Attribué à {name} chez {officeName}
+action.noActionsAvailable,Message shown on action menu if no actions are available,No actions available,Aucune action disponible
 action.correct,Label for correct record button in dropdown menu,Correct record,Enregistrement correct
 action.issue,Label for reinstate issue button in dropdown menu,Issue certificate,Délivrer un certificat
 action.print,Label for reinstate print button in dropdown menu,Print certified copy,Imprimer une copie certifiée
