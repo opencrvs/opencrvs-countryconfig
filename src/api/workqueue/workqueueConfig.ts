@@ -430,7 +430,7 @@ export const Workqueues = defineWorkqueues([
     name: {
       id: 'workqueues.requiresApproval.title',
       defaultMessage: 'Pending approval',
-      description: 'Title of Requires approval workqueue'
+      description: 'Title of Pending approval workqueue'
     },
     query: {
       flags: {
