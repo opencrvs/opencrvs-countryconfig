@@ -82,7 +82,8 @@ export const deceased = defineFormPage({
     // deceased.verified, deceased.query-params, deceased.verify-nid-http-fetch,
     // deceased.fetch-loader, deceased.id-reader
     ...getMOSIPIntegrationFields('deceased', {
-      existingConditionals: []
+      existingConditionals: [],
+      esignet: false
     }),
     connectToMOSIPIdReader(
       {
