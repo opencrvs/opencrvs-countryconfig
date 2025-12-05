@@ -1,6 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 
-import { login, getToken } from '../../helpers'
+import { login, getToken, selectDeclarationAction } from '../../helpers'
 import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../constants'
 import { createDeclaration, Declaration } from '../test-data/birth-declaration'
 import { ActionType } from '@opencrvs/toolkit/events'
@@ -101,13 +101,13 @@ test.describe
     )
   })
 
-  test('4.4 Click validate action', async () => {
+  test('4.4 Click Review -action', async () => {
     await ensureAssigned(page)
-
-    await selectAction(page, 'Validate')
+    await selectAction(page, 'Review')
   })
+
   test('4.5 Complete validate action', async () => {
-    await page.getByRole('button', { name: 'Confirm' }).click()
+    await selectDeclarationAction(page, 'Validate')
 
     // Should redirect back to requires update workqueue
     await expect(page.locator('#content-name')).toHaveText('Requires updates')

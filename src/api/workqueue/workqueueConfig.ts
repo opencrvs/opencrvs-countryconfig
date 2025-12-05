@@ -166,7 +166,7 @@ export const Workqueues = defineWorkqueues([
         terms: ['DECLARED', 'NOTIFIED']
       },
       flags: {
-        noneOf: [InherentFlags.REJECTED]
+        noneOf: [InherentFlags.REJECTED, 'validated']
       },
       createdBy: { type: 'exact', term: user('id') }
     },
@@ -194,7 +194,7 @@ export const Workqueues = defineWorkqueues([
     query: {
       status: { type: 'exact', term: EventStatus.enum.DECLARED },
       flags: {
-        noneOf: [InherentFlags.REJECTED]
+        noneOf: [InherentFlags.REJECTED, 'validated']
       },
       updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
     },
@@ -230,7 +230,7 @@ export const Workqueues = defineWorkqueues([
         {
           status: {
             type: 'anyOf',
-            terms: ['DECLARED', 'VALIDATED']
+            terms: ['DECLARED']
           },
           flags: {
             noneOf: [InherentFlags.REJECTED]
@@ -341,15 +341,10 @@ export const Workqueues = defineWorkqueues([
       clauses: [
         {
           updatedBy: { type: 'exact', term: user('id') },
-          status: { type: 'exact', term: 'VALIDATED' },
-          flags: {
-            noneOf: [InherentFlags.REJECTED]
-          }
+          flags: { noneOf: [InherentFlags.REJECTED] }
         },
         {
-          flags: {
-            anyOf: [InherentFlags.CORRECTION_REQUESTED]
-          },
+          flags: { anyOf: [InherentFlags.CORRECTION_REQUESTED, 'validated'] },
           updatedBy: { type: 'exact', term: user('id') }
         }
       ]
