@@ -787,30 +787,60 @@ export async function createServer() {
     const actionType = parsedPath?.[1] as ActionType | null
     const wasRequestForActionConfirmation =
       actionType && request.method === 'post'
+
+    if (!wasRequestForActionConfirmation) {
+      return h.continue
+    }
+
+    const event = request.payload as EventDocument
+
+    const eventWithOptimisticallyApprovedLastAction = {
+      ...event,
+      actions: event.actions.map((action, index) =>
+        index === event.actions.length - 1
+          ? {
+              ...action,
+              status: ActionStatus.Accepted,
+              ...(actionType === ActionType.REGISTER && response.source
+                ? {
+                    registrationNumber: (
+                      response.source as { registrationNumber: string }
+                    ).registrationNumber
+                  }
+                : {})
+            }
+          : action
+      ) as ActionDocument[]
+    }
+    /*
+     * Forward event to integration / process management platforms
+     */
+    const urlsToForward = env.FORWARD_ACTIONS_TO.split(',').filter(Boolean)
+    for (const url of urlsToForward) {
+      logger.info(`Forwarding event to ${url}`)
+      try {
+        await fetch(url, {
+          method: 'POST',
+          body: JSON.stringify(eventWithOptimisticallyApprovedLastAction),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(
+          `Failed to forward event to ${url}: `,
+          (error as Error).message
+        )
+      }
+    }
+
     const wasActionAcceptedImmediately = response.statusCode === 200
 
     if (wasRequestForActionConfirmation && wasActionAcceptedImmediately) {
-      const event = request.payload as EventDocument
-
-      const eventWithOptimisticallyApprovedLastAction = {
-        ...event,
-        actions: event.actions.map((action, index) =>
-          index === event.actions.length - 1
-            ? {
-                ...action,
-                status: ActionStatus.Accepted,
-                ...(actionType === ActionType.REGISTER
-                  ? {
-                      registrationNumber: (
-                        response.source as { registrationNumber: string }
-                      ).registrationNumber
-                    }
-                  : {})
-              }
-            : action
-        ) as ActionDocument[]
-      }
-
+      /*
+       * Store to analytics database
+       */
       const client = getClient()
       try {
         await client.transaction().execute(async (trx) => {

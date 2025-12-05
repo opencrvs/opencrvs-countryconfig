@@ -49,5 +49,10 @@ export const env = cleanEnv(process.env, {
     default: 'http://mosip-api:2024',
     devDefault: 'http://localhost:2024',
     desc: 'URL for MOSIP interoperability API'
+  }),
+  FORWARD_ACTIONS_TO: str({
+    default: '',
+    devDefault: '',
+    desc: 'Comma separated list of URLs to forward action events to'
   })
 })
