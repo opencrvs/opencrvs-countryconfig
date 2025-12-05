@@ -7,12 +7,15 @@ import {
   getRandomDate,
   goToSection,
   login,
-  expectRowValueWithChangeButton
+  switchEventTab,
+  expectRowValue,
+  validateActionMenuButton
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
 import { validateAddress } from '../helpers'
-import { ensureOutboxIsEmpty, selectAction } from '../../../utils'
+import { selectDeclarationAction } from '../../../helpers'
+import { ensureOutboxIsEmpty } from '../../../utils'
 
 test.describe.serial('2. Birth declaration case - 2', () => {
   let page: Page
@@ -534,6 +537,11 @@ test.describe.serial('2. Birth declaration case - 2', () => {
       )
     })
 
+    test('2.1.6.1 Validate declare action not available before filling in signature and comment', async () => {
+      await validateActionMenuButton(page, 'Declare', false)
+      await validateActionMenuButton(page, 'Notify', true)
+    })
+
     test('2.1.7 Fill up informant comment & signature', async () => {
       await page.locator('#review____comment').fill(faker.lorem.sentence())
       await page.getByRole('button', { name: 'Sign', exact: true }).click()
@@ -546,10 +554,8 @@ test.describe.serial('2. Birth declaration case - 2', () => {
       await expect(page.getByRole('dialog')).not.toBeVisible()
     })
 
-    test('2.1.8 Send for review', async () => {
-      await page.getByRole('button', { name: 'Send for review' }).click()
-      await expect(page.getByText('Send for review?')).toBeVisible()
-      await page.getByRole('button', { name: 'Confirm' }).click()
+    test('2.1.8 Declare', async () => {
+      await selectDeclarationAction(page, 'Declare')
 
       await ensureOutboxIsEmpty(page)
 
@@ -564,7 +570,7 @@ test.describe.serial('2. Birth declaration case - 2', () => {
   })
 
   test.describe('2.2 Declaration Review by RA', async () => {
-    test('2.2.1 Navigate to the declaration review page', async () => {
+    test('2.2.1 Navigate to the declaration "Record" -tab', async () => {
       await login(page, CREDENTIALS.REGISTRATION_AGENT)
       await page.getByRole('button', { name: 'Ready for review' }).click()
       await page
@@ -573,15 +579,15 @@ test.describe.serial('2. Birth declaration case - 2', () => {
         })
         .click()
 
-      await selectAction(page, 'Review')
+      await switchEventTab(page, 'Record')
     })
-    test('2.2.2 Verify information on review page', async () => {
+    test('2.2.2 Verify information on "Record" tab', async () => {
       /*
        * Expected result: should include
        * - Child's First Name
        * - Child's Family Name
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'child.name',
         declaration.child.name.firstNames +
@@ -593,17 +599,13 @@ test.describe.serial('2. Birth declaration case - 2', () => {
        * Expected result: should include
        * - Child's Gender
        */
-      await expectRowValueWithChangeButton(
-        page,
-        'child.gender',
-        declaration.child.gender
-      )
+      await expectRowValue(page, 'child.gender', declaration.child.gender)
 
       /*
        * Expected result: should include
        * - Child's date of birth
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'child.dob',
         formatDateObjectTo_dMMMMyyyy(declaration.child.birthDate)
@@ -613,16 +615,12 @@ test.describe.serial('2. Birth declaration case - 2', () => {
        * Expected result: should include
        * - Child's Place of birth type
        */
-      await expectRowValueWithChangeButton(
-        page,
-        'child.placeOfBirth',
-        declaration.placeOfBirth
-      )
+      await expectRowValue(page, 'child.placeOfBirth', declaration.placeOfBirth)
       /*
        * Expected result: should include
        * - Child's Place of birth details
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'child.birthLocation.privateHome',
         Object.values(declaration.birthLocation)
@@ -634,7 +632,7 @@ test.describe.serial('2. Birth declaration case - 2', () => {
        * Expected result: should include
        * - Child's Attendant at birth
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'child.attendantAtBirth',
         declaration.attendantAtBirth
@@ -644,17 +642,13 @@ test.describe.serial('2. Birth declaration case - 2', () => {
        * Expected result: should include
        * - Child's Birth type
        */
-      await expectRowValueWithChangeButton(
-        page,
-        'child.birthType',
-        declaration.birthType
-      )
+      await expectRowValue(page, 'child.birthType', declaration.birthType)
 
       /*
        * Expected result: should include
        * - Informant's relation to child
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'informant.relation',
         declaration.informantType
@@ -664,18 +658,14 @@ test.describe.serial('2. Birth declaration case - 2', () => {
        * Expected result: should include
        * - Informant's Email
        */
-      await expectRowValueWithChangeButton(
-        page,
-        'informant.email',
-        declaration.informantEmail
-      )
+      await expectRowValue(page, 'informant.email', declaration.informantEmail)
 
       /*
        * Expected result: should include
        * - Mother's First Name
        * - Mother's Family Name
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'mother.name',
         declaration.mother.name.firstNames
@@ -686,7 +676,7 @@ test.describe.serial('2. Birth declaration case - 2', () => {
        * Expected result: should include
        * - Mother's age
        */
-      // await expectRowValueWithChangeButton(
+      // await expectRowValue(
       //   page,
       //   'mother.age',
       //   joinValuesWith([declaration.mother.age, 'years'])
@@ -696,7 +686,7 @@ test.describe.serial('2. Birth declaration case - 2', () => {
        * Expected result: should include
        * - Mother's Nationality
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'mother.nationality',
         declaration.mother.nationality
@@ -706,7 +696,7 @@ test.describe.serial('2. Birth declaration case - 2', () => {
        * Expected result: should include
        * - Mother's Marital status
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'mother.maritalStatus',
         declaration.mother.maritalStatus
@@ -716,7 +706,7 @@ test.describe.serial('2. Birth declaration case - 2', () => {
        * Expected result: should include
        * - Mother's level of education
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'mother.educationalAttainment',
         declaration.mother.levelOfEducation
@@ -726,7 +716,7 @@ test.describe.serial('2. Birth declaration case - 2', () => {
        * Expected result: should include
        * - Mother's Type of Id
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'mother.idType',
         declaration.mother.identifier.type
@@ -736,7 +726,7 @@ test.describe.serial('2. Birth declaration case - 2', () => {
        * Expected result: should include
        * - Mother's Id Number
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'mother.passport',
         declaration.mother.identifier.id
@@ -746,17 +736,17 @@ test.describe.serial('2. Birth declaration case - 2', () => {
        * Expected result: should include
        * - Mother's address
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'mother.address',
         declaration.mother.address.country
       )
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'mother.address',
         declaration.mother.address.district
       )
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'mother.address',
         declaration.mother.address.province
@@ -766,7 +756,7 @@ test.describe.serial('2. Birth declaration case - 2', () => {
        * - Father's First Name
        * - Father's Family Name
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'father.name',
         declaration.father.name.firstNames +
@@ -779,7 +769,7 @@ test.describe.serial('2. Birth declaration case - 2', () => {
        * Expected result: should include
        * - Father's date of birth
        */
-      // await expectRowValueWithChangeButton(
+      // await expectRowValue(
       //   page,
       //   'father.age',
       //   joinValuesWith([declaration.father.age, 'years'])
@@ -789,7 +779,7 @@ test.describe.serial('2. Birth declaration case - 2', () => {
        * Expected result: should include
        * - Father's Nationality
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'father.nationality',
         declaration.father.nationality
@@ -799,7 +789,7 @@ test.describe.serial('2. Birth declaration case - 2', () => {
        * Expected result: should include
        * - Father's Type of Id
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'father.idType',
         declaration.father.identifier.type
@@ -809,7 +799,7 @@ test.describe.serial('2. Birth declaration case - 2', () => {
        * Expected result: should include
        * - Father's Id Number
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'father.passport',
         declaration.father.identifier.id
@@ -819,7 +809,7 @@ test.describe.serial('2. Birth declaration case - 2', () => {
        * Expected result: should include
        * - Father's Marital status
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'father.maritalStatus',
         declaration.father.maritalStatus
@@ -829,7 +819,7 @@ test.describe.serial('2. Birth declaration case - 2', () => {
        * Expected result: should include
        * - Father's level of education
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'father.educationalAttainment',
         declaration.father.levelOfEducation
@@ -839,17 +829,17 @@ test.describe.serial('2. Birth declaration case - 2', () => {
        * Expected result: should include
        * - Father's address
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'father.address',
         declaration.father.address.country
       )
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'father.address',
         declaration.father.address.district
       )
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'father.address',
         declaration.father.address.province

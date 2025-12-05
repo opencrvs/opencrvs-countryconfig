@@ -6,7 +6,8 @@ import {
   formatName,
   getRandomDate,
   goToSection,
-  login
+  login,
+  selectDeclarationAction
 } from '../../helpers'
 import { CREDENTIALS } from '../../constants'
 import {
@@ -204,10 +205,8 @@ test.describe.serial('4. Workqueue flow - 4', () => {
       await expect(page.getByRole('dialog')).not.toBeVisible()
     })
 
-    test('4.1.7 Send for review', async () => {
-      await page.getByRole('button', { name: 'Send for review' }).click()
-      await expect(page.getByText('Send for review?')).toBeVisible()
-      await page.getByRole('button', { name: 'Confirm' }).click()
+    test('4.1.7 Declare', async () => {
+      await selectDeclarationAction(page, 'Declare')
 
       await ensureOutboxIsEmpty(page)
     })
@@ -264,7 +263,7 @@ test.describe.serial('4. Workqueue flow - 4', () => {
       })
     })
 
-    test('4.3.2 Review', async () => {
+    test('4.3.2 Validate', async () => {
       await page.getByText('Ready for review').click()
       await page
         .getByRole('button', {
@@ -272,9 +271,8 @@ test.describe.serial('4. Workqueue flow - 4', () => {
         })
         .click()
 
-      await selectAction(page, 'Review')
+      await selectAction(page, 'Validate')
 
-      await page.getByRole('button', { name: 'Send for approval' }).click()
       await page.getByRole('button', { name: 'Confirm' }).click()
 
       await ensureOutboxIsEmpty(page)
@@ -338,14 +336,9 @@ test.describe.serial('4. Workqueue flow - 4', () => {
         })
         .click()
 
-      await selectAction(page, 'Review')
+      await selectAction(page, 'Register')
+      await page.getByRole('button', { name: 'Confirm' }).click()
 
-      await page
-        .getByRole('button', {
-          name: 'Register'
-        })
-        .click()
-      await page.locator('#confirm_Register').click()
       await ensureOutboxIsEmpty(page)
       await ensureInExternalValidationIsEmpty(page)
 

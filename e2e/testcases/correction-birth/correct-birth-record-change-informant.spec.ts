@@ -10,7 +10,7 @@ import {
   createDeclaration as createDeclarationV2,
   Declaration as DeclarationV2
 } from '../test-data/birth-declaration-with-mother-father'
-import { format, subYears } from 'date-fns'
+import { format, subDays, subYears } from 'date-fns'
 import {
   CREDENTIALS,
   SAFE_INPUT_CHANGE_TIMEOUT_MS,
@@ -85,7 +85,7 @@ test.describe.serial('Correct record - change informant type', () => {
           surname: faker.person.lastName()
         },
         'child.gender': 'male',
-        'child.dob': format(subYears(new Date(), 1), 'yyyy-MM-dd'),
+        'child.dob': format(subDays(new Date(), 2), 'yyyy-MM-dd'),
         'child.reason': 'Late',
         'child.placeOfBirth': 'PRIVATE_HOME',
         'child.attendantAtBirth': 'PHYSICIAN',
@@ -313,7 +313,8 @@ test.describe.serial('Correct record - change informant type', () => {
     await page.getByRole('button', { name: 'Correct record' }).click()
     await page.getByRole('button', { name: 'Confirm' }).click()
 
-    expect(page.url().includes(`events/overview/${eventId}`)).toBeTruthy()
+    await expect(page.url().includes(`events/${eventId}`)).toBeTruthy()
+    await page.getByTestId('exit-event').click()
     await page.getByRole('button', { name: 'Outbox' }).click()
 
     await page.waitForTimeout(SAFE_INPUT_CHANGE_TIMEOUT_MS)
@@ -334,6 +335,7 @@ test.describe.serial('Correct record - change informant type', () => {
     })
 
     await ensureAssigned(page)
+    await page.getByRole('button', { name: 'Audit' }).click()
 
     await expect(
       page

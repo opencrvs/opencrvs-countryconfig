@@ -2,7 +2,7 @@ import { expect, test, type Page } from '@playwright/test'
 import { login } from '../../helpers'
 import path from 'path'
 import { faker } from '@faker-js/faker'
-import { ensureOutboxIsEmpty, selectAction } from '../../utils'
+import { ensureOutboxIsEmpty, expectInUrl, selectAction } from '../../utils'
 import { REQUIRED_VALIDATION_ERROR } from './helpers'
 import { trackAndDeleteCreatedEvents } from '../test-data/eventDeletion'
 
@@ -228,18 +228,6 @@ test.describe.serial('1. Birth event declaration', () => {
         ).toBeVisible()
       })
 
-      // @TODO: This kind of login is not implemented in V2 events yet
-      test.skip('1.5.2 Click the "continue" button without selecting any relationship to child', async () => {
-        await page.getByRole('button', { name: 'Continue' }).click()
-
-        /*
-         * Expected result: should throw error:
-         * - Required
-         */
-        await expect(page.getByText("Informant's details")).toBeVisible()
-        await expect(page.getByText(REQUIRED_VALIDATION_ERROR)).toBeVisible()
-      })
-
       test('1.5.3 Select any option in relationship to child and click the "continue" button', async () => {
         await page.getByText('Select').click()
         await page.getByText('Mother', { exact: true }).click()
@@ -399,21 +387,14 @@ test.describe.serial('1. Birth event declaration', () => {
 
       test('1.8.3 click continue', async () => {
         await page.getByRole('button', { name: 'Continue' }).click()
-
-        /*
-         * Expected result: should navigate to "Review" page
-         */
-        await expect(
-          page
-            .getByRole('button', { name: 'Send for review' })
-            .or(page.getByRole('button', { name: 'Register' }))
-        ).toBeVisible()
+        await expectInUrl(page, `/review`)
       })
     })
 
     test.describe('1.9 Validate "Save & Exit" Button  ', async () => {
-      test('1.9.1 Click the "Save & Exit" button from any page', async () => {
-        await page.getByRole('button', { name: 'Save & Exit' }).click()
+      test('1.9.1 Click the "Save & Exit" button from review page', async () => {
+        await page.getByRole('button', { name: 'Action' }).click()
+        await page.getByText('Save & Exit', { exact: true }).click()
 
         /*
          * Expected result: should open modal with:
@@ -451,7 +432,9 @@ test.describe.serial('1. Birth event declaration', () => {
       })
 
       test('1.9.3 Click Confirm', async () => {
-        await page.getByRole('button', { name: 'Save & Exit' }).click()
+        await page.getByRole('button', { name: 'Action' }).click()
+        await page.getByText('Save & Exit', { exact: true }).click()
+
         await page.getByRole('button', { name: 'Confirm' }).click()
 
         /*
@@ -487,6 +470,7 @@ test.describe.serial('1. Birth event declaration', () => {
       })
     })
   })
+
   test.describe('1.10 Validate "Exit" Button', async () => {
     test.beforeEach(async ({ page }) => {
       await login(page)

@@ -6,7 +6,8 @@ import {
   getRandomDate,
   goToSection,
   login,
-  logout
+  logout,
+  selectDeclarationAction
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
@@ -242,10 +243,8 @@ test.describe.serial('Change informant on review', () => {
       await expect(page.getByRole('dialog')).not.toBeVisible()
     })
 
-    test('Send for approval', async () => {
-      await page.getByRole('button', { name: 'Send for approval' }).click()
-      await page.getByRole('button', { name: 'Confirm' }).click()
-
+    test('Validate', async () => {
+      await selectDeclarationAction(page, 'Validate')
       await ensureOutboxIsEmpty(page)
 
       await page.getByText('Sent for approval').click()
@@ -258,7 +257,8 @@ test.describe.serial('Change informant on review', () => {
     })
   })
 
-  test.describe('Declaration Review by Local Registrar', async () => {
+  // @TODO: Skipped for now until 'Edit' action is implemented.
+  test.describe.skip('Declaration Review by Local Registrar', async () => {
     test('Navigate to the declaration review page', async () => {
       await logout(page)
       await login(page, CREDENTIALS.LOCAL_REGISTRAR)

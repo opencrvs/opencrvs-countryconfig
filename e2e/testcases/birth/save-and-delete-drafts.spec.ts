@@ -2,6 +2,7 @@ import { expect, Page, test } from '@playwright/test'
 import { goToSection, login, logout } from '../../helpers'
 import { CREDENTIALS } from '../../constants'
 import { fillChildDetails, openBirthDeclaration } from './helpers'
+import { selectDeclarationAction } from '../../helpers'
 import { ensureOutboxIsEmpty } from '../../utils'
 
 /**
@@ -58,8 +59,7 @@ test.describe('Save and delete drafts', () => {
       await page.getByRole('button', { name: 'Action', exact: true }).click()
 
       await page.getByText('Declare').click()
-      await page.locator('#event-menu-dropdownMenu').click()
-      await page.getByText('Delete declaration').click()
+      await selectDeclarationAction(page, 'Delete declaration', false)
       await expect(
         page.getByText('Are you sure you want to delete this declaration?')
       ).toBeVisible()
@@ -84,7 +84,7 @@ test.describe('Save and delete drafts', () => {
     test('Exit without saving', async () => {
       const childName = await fillChildDetails(page)
       await goToSection(page, 'review')
-      await page.getByRole('button', { name: 'Exit', exact: true }).click()
+      await page.getByTestId('exit-button').click()
 
       await expect(
         page.getByText(

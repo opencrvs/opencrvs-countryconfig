@@ -5,12 +5,14 @@ import {
   formatName,
   goToSection,
   login,
-  logout
+  logout,
+  selectDeclarationAction,
+  switchEventTab
 } from '../../../helpers'
 import { CREDENTIALS } from '../../../constants'
 import { faker } from '@faker-js/faker'
 import { REQUIRED_VALIDATION_ERROR } from '../helpers'
-import { ensureOutboxIsEmpty } from '../../../utils'
+import { ensureAssigned, ensureOutboxIsEmpty } from '../../../utils'
 
 test.describe.serial('8. Birth declaration case - 8', () => {
   let page: Page
@@ -256,10 +258,8 @@ test.describe.serial('8. Birth declaration case - 8', () => {
       await expect(page.getByRole('dialog')).not.toBeVisible()
     })
 
-    test('8.1.8 Send for review', async () => {
-      await page.getByRole('button', { name: 'Send for review' }).click()
-      await expect(page.getByText('Send for review?')).toBeVisible()
-      await page.getByRole('button', { name: 'Confirm' }).click()
+    test('8.1.8 Notify', async () => {
+      await selectDeclarationAction(page, 'Notify')
 
       await ensureOutboxIsEmpty(page)
 
@@ -274,7 +274,7 @@ test.describe.serial('8. Birth declaration case - 8', () => {
   })
 
   test.describe('8.2 Declaration Review by RA', async () => {
-    test('8.2.1 Navigate to the declaration review page', async () => {
+    test('8.2.1 Navigate to the declaration "Record" -tab', async () => {
       await logout(page)
       await login(page, CREDENTIALS.REGISTRATION_AGENT)
 
@@ -286,8 +286,8 @@ test.describe.serial('8. Birth declaration case - 8', () => {
         })
         .click()
 
-      await page.getByRole('button', { name: 'Action', exact: true }).click()
-      await page.getByText('View', { exact: true }).click()
+      await ensureAssigned(page)
+      await switchEventTab(page, 'Record')
     })
 
     test('8.2.2 Verify information on preview page', async () => {

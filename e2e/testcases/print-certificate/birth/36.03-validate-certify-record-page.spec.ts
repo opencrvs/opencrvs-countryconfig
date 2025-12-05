@@ -147,6 +147,8 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
       .getByRole('button', { name: formatV2ChildName(declaration) })
       .click()
     await ensureAssigned(page)
+
+    await page.getByRole('button', { name: 'Audit' }).click()
     await page.getByRole('button', { name: 'Certified', exact: true }).click()
 
     const modal = page.getByTestId('event-history-modal')

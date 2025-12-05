@@ -126,7 +126,8 @@ export const roles: Role[] = [
       'record.register[event=birth|death|tennis-club-membership]',
       'record.registered.print-certified-copies[event=birth|death|tennis-club-membership]',
       'record.registered.correct[event=birth|death|tennis-club-membership]',
-      'record.unassign-others[event=birth|death|tennis-club-membership]'
+      'record.unassign-others[event=birth|death|tennis-club-membership]',
+      'record.custom-action[event=birth,customActionType=Approve]'
     ]
   },
   {

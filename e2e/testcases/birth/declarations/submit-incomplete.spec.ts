@@ -1,5 +1,10 @@
 import { test, expect, type Page } from '@playwright/test'
-import { formatName, goToSection, login } from '../../../helpers'
+import {
+  formatName,
+  goToSection,
+  login,
+  selectDeclarationAction
+} from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../../constants'
 import { ensureOutboxIsEmpty } from '../../../utils'
@@ -47,10 +52,7 @@ test.describe.serial('Submit and verify incomplete birth declaration', () => {
 
     test('Go to review and send for review', async () => {
       await goToSection(page, 'review')
-      await page
-        .getByRole('button', { name: 'Send for review', exact: true })
-        .click()
-      await page.getByRole('button', { name: 'Confirm', exact: true }).click()
+      await selectDeclarationAction(page, 'Notify')
     })
 
     test('Verify summary page', async () => {

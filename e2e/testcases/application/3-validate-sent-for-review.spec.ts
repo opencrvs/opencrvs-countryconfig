@@ -5,6 +5,7 @@ import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../constants'
 import { createDeclaration, Declaration } from '../test-data/birth-declaration'
 import { ActionType } from '@opencrvs/toolkit/events'
 import { formatV2ChildName } from '../birth/helpers'
+import { expectInUrl } from '../../utils'
 
 test.describe.serial('3 Validate sent for review tab', () => {
   let page: Page
@@ -70,6 +71,6 @@ test.describe.serial('3 Validate sent for review tab', () => {
       .click()
 
     // User should navigate to record audit page
-    expect(page.url().includes(`events/overview/${eventId}`)).toBeTruthy()
+    await expectInUrl(page, `events/${eventId}?workqueue=sent-for-review`)
   })
 })

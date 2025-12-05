@@ -6,7 +6,8 @@ import {
   getRandomDate,
   goToSection,
   joinValuesWith,
-  login
+  login,
+  selectDeclarationAction
 } from '../../helpers'
 
 test.describe.serial('Death event summary', () => {
@@ -140,7 +141,7 @@ test.describe.serial('Death event summary', () => {
   })
 
   test('Save draft and find it in workqueue', async () => {
-    await page.getByText('Save & Exit', { exact: true }).click()
+    await selectDeclarationAction(page, 'Save & Exit', false)
     await page.getByText('Confirm', { exact: true }).click()
 
     await page.getByRole('button', { name: 'My drafts' }).click()

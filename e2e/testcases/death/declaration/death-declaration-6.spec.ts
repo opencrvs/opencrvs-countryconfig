@@ -6,11 +6,13 @@ import {
   formatDateObjectTo_dMMMMyyyy,
   getRandomDate,
   goToSection,
-  login
+  login,
+  selectDeclarationAction,
+  switchEventTab
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
-import { ensureOutboxIsEmpty } from '../../../utils'
+import { ensureAssigned, ensureOutboxIsEmpty } from '../../../utils'
 
 test.describe.serial('6. Death declaration case - 6', () => {
   let page: Page
@@ -530,9 +532,7 @@ test.describe.serial('6. Death declaration case - 6', () => {
     })
 
     test('6.1.8 Register', async () => {
-      await page.getByRole('button', { name: 'Register' }).click()
-      await expect(page.getByText('Register the death?')).toBeVisible()
-      await page.locator('#confirm_Declare').click()
+      await selectDeclarationAction(page, 'Register')
       await ensureOutboxIsEmpty(page)
       await expect(page.getByText('Farajaland CRS')).toBeVisible()
 
@@ -557,7 +557,7 @@ test.describe.serial('6. Death declaration case - 6', () => {
     })
   })
   test.describe('6.2 Declaration Review by Registration Agent', async () => {
-    test('6.2.1 Navigate to the declaration review page', async () => {
+    test('6.2.1 Navigate to the declaration "Record" -tab', async () => {
       await login(page, CREDENTIALS.REGISTRATION_AGENT)
 
       await ensureOutboxIsEmpty(page)
@@ -573,9 +573,9 @@ test.describe.serial('6. Death declaration case - 6', () => {
         .click()
     })
 
-    test('6.2.2 Verify information on review page', async () => {
-      await page.getByRole('button', { name: 'Action', exact: true }).click()
-      await page.getByText('View', { exact: true }).click()
+    test('6.2.2 Verify information on "Record" tab', async () => {
+      await ensureAssigned(page)
+      await switchEventTab(page, 'Record')
       /*
        * Expected result: should include
        * - Deceased's First Name

@@ -7,7 +7,6 @@ import {
   Declaration
 } from '../test-data/birth-declaration-with-mother-father'
 import {
-  ensureAssigned,
   ensureOutboxIsEmpty,
   expectInUrl,
   navigateToWorkqueue,
@@ -165,7 +164,7 @@ test.describe.serial('Birth correction flow - Mobile', () => {
     })
 
     test('Navigate to correction review', async () => {
-      await selectAction(page, 'Review')
+      await selectAction(page, 'Review correction request')
 
       await expect(page.getByText('RequesterInformant (Mother)')).toBeVisible()
       await expect(

@@ -7,11 +7,14 @@ import {
   continueForm,
   login,
   formatDateObjectTo_dMMMMyyyy,
-  expectRowValueWithChangeButton
+  expectRowValue,
+  expectRowValueWithChangeButton,
+  switchEventTab,
+  selectDeclarationAction
 } from '../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../constants'
-import { ensureOutboxIsEmpty, selectAction } from '../../utils'
+import { ensureAssigned, ensureOutboxIsEmpty, selectAction } from '../../utils'
 
 test.describe.serial('8. Validate declaration review page', () => {
   let page: Page
@@ -701,13 +704,11 @@ test.describe.serial('8. Validate declaration review page', () => {
         .click()
     })
 
-    test('8.1.7 Click send button', async () => {
-      await page.getByRole('button', { name: 'Send for review' }).click()
-      await expect(page.getByText('Send for review?')).toBeVisible()
+    test('8.1.7 Notify', async () => {
+      await selectDeclarationAction(page, 'Notify')
     })
 
-    test('8.1.8 Confirm the declaration to send for review', async () => {
-      await page.getByRole('button', { name: 'Confirm' }).click()
+    test('8.1.8 Validate that declaration is available on "Sent for review"', async () => {
       await ensureOutboxIsEmpty(page)
       await expect(page.getByText('Farajaland CRS')).toBeVisible()
 
@@ -1172,15 +1173,12 @@ test.describe.serial('8. Validate declaration review page', () => {
       test.skip('Skipped for now', async () => {})
     })
 
-    test('8.2.6 Click send button', async () => {
-      await page.getByRole('button', { name: 'Send for approval' }).click()
-      await expect(page.getByText('Send for approval?')).toBeVisible()
+    test('8.2.6 Validate', async () => {
+      await selectDeclarationAction(page, 'Validate')
+      await ensureOutboxIsEmpty(page)
     })
 
     test('8.2.7 Confirm the declaration to send for approval', async () => {
-      await page.getByRole('button', { name: 'Confirm' }).click()
-      await ensureOutboxIsEmpty(page)
-
       await page.getByText('Sent for approval').click()
       /*
        * @TODO: When workflows are implemented on V2, this should navigate to correct workflow first.
@@ -1197,7 +1195,7 @@ test.describe.serial('8. Validate declaration review page', () => {
   })
 
   test.describe('8.3 Local registrar actions', async () => {
-    test('8.3.1 Navigate to the declaration preview page', async () => {
+    test('8.3.1 Navigate to the declaration "Record" tab', async () => {
       await login(page, CREDENTIALS.LOCAL_REGISTRAR)
 
       await ensureOutboxIsEmpty(page)
@@ -1211,16 +1209,18 @@ test.describe.serial('8. Validate declaration review page', () => {
             declaration.deceased.name.surname
         })
         .click()
+
+      await ensureAssigned(page)
+      await switchEventTab(page, 'Record')
     })
     test('8.3.1.1 Verify information added on previous pages', async () => {
-      await selectAction(page, 'Review')
       /*
        * Expected result: should include
        * - Deceased's First Name
        * - Deceased's Family Name
        * - Change button
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'deceased.name',
         declaration.deceased.name.firstname +
@@ -1233,18 +1233,14 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Deceased's Gender
        * - Change button
        */
-      await expectRowValueWithChangeButton(
-        page,
-        'deceased.gender',
-        declaration.deceased.gender
-      )
+      await expectRowValue(page, 'deceased.gender', declaration.deceased.gender)
 
       /*
        * Expected result: should include
        * - Deceased's date of death
        * - Change button
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'eventDetails.date',
         formatDateObjectTo_dMMMMyyyy(declaration.eventDetails.date)
@@ -1255,7 +1251,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Deceased's Nationality
        * - Change button
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'deceased.nationality',
         declaration.deceased.nationality
@@ -1266,33 +1262,25 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Deceased's Id Number
        * - Change button
        */
-      await expectRowValueWithChangeButton(
-        page,
-        'deceased.idType',
-        declaration.deceased.idType
-      )
-      await expectRowValueWithChangeButton(
-        page,
-        'deceased.brn',
-        declaration.deceased.brn
-      )
+      await expectRowValue(page, 'deceased.idType', declaration.deceased.idType)
+      await expectRowValue(page, 'deceased.brn', declaration.deceased.brn)
 
       /*
        * Expected result: should include
        * - Deceased's address
        * - Change button
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'deceased.address',
         declaration.deceased.address.country
       )
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'deceased.address',
         declaration.deceased.address.district
       )
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'deceased.address',
         declaration.deceased.address.province
@@ -1303,7 +1291,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Informant type
        * - Change button
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'informant.relation',
         declaration.informant.relation
@@ -1314,11 +1302,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Informant's Email
        * - Change button
        */
-      await expectRowValueWithChangeButton(
-        page,
-        'informant.email',
-        declaration.informant.email
-      )
+      await expectRowValue(page, 'informant.email', declaration.informant.email)
 
       /*
        * Expected result: should include
@@ -1326,7 +1310,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Spouse's Family Name
        * - Change button
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'spouse.name',
         declaration.spouse.name.firstname +
@@ -1339,7 +1323,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Spouse's date of birth
        * - Change button
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'spouse.dob',
         formatDateObjectTo_dMMMMyyyy(declaration.spouse.dob)
@@ -1350,7 +1334,7 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Spouse's Nationality
        * - Change button
        */
-      await expectRowValueWithChangeButton(
+      await expectRowValue(
         page,
         'spouse.nationality',
         declaration.spouse.nationality
@@ -1362,33 +1346,19 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Spouse's Id Number
        * - Change button
        */
-      await expectRowValueWithChangeButton(
-        page,
-        'spouse.idType',
-        declaration.spouse.idType
-      )
-      await expectRowValueWithChangeButton(
-        page,
-        'spouse.brn',
-        declaration.spouse.brn
-      )
+      await expectRowValue(page, 'spouse.idType', declaration.spouse.idType)
+      await expectRowValue(page, 'spouse.brn', declaration.spouse.brn)
 
       /*
        * Expected result: should include
        * - Spouse's address
        * - Change button
        */
-      await expectRowValueWithChangeButton(page, 'spouse.addressSameAs', 'Yes')
-
-      /*
-       * Expected result: should show additional comment
-       */
-      await expect(page.locator('#review____comment')).toContainText(
-        annotation.review.comment
-      )
+      await expectRowValue(page, 'spouse.addressSameAs', 'Yes')
     })
 
-    test.describe('8.3.2 Click any "Change" link', async () => {
+    // @TODO: Skipped for now until 'Edit' action is implemented.
+    test.describe.skip('8.3.2 Click any "Change" link', async () => {
       test("8.3.2.1 Change deceased's name", async () => {
         await page.getByTestId('change-button-deceased.name').click()
         await page.getByRole('button', { name: 'Continue' }).click()
@@ -1682,19 +1652,15 @@ test.describe.serial('8. Validate declaration review page', () => {
       test.skip('Skipped for now', async () => {})
     })
 
-    test('8.3.6 Click send button', async () => {
-      await page.getByRole('button', { name: 'Register' }).click()
-      await expect(page.getByText('Register the death?')).toBeVisible()
+    test('8.3.6 Register', async () => {
+      await selectAction(page, 'Register')
+      await page.getByRole('button', { name: 'Confirm' }).click()
     })
 
     test('8.3.7 Confirm the declaration to ready for print', async () => {
-      await page.locator('#confirm_Register').click()
       await ensureOutboxIsEmpty(page)
       await page.getByText('Ready to print').click()
 
-      /*
-       * @TODO: When workflows are implemented on V2, this should navigate to correct workflow first.
-       */
       await expect(
         page.getByRole('button', {
           name:

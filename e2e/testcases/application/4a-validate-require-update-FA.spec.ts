@@ -1,11 +1,11 @@
 import { expect, test, type Page } from '@playwright/test'
 
-import { login, getToken } from '../../helpers'
+import { login, getToken, selectDeclarationAction } from '../../helpers'
 import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../constants'
 import { createDeclaration, Declaration } from '../test-data/birth-declaration'
 import { ActionType } from '@opencrvs/toolkit/events'
 import { formatV2ChildName } from '../birth/helpers'
-import { ensureAssigned, selectAction } from '../../utils'
+import { ensureAssigned, expectInUrl, selectAction } from '../../utils'
 import { getRowByTitle } from '../print-certificate/birth/helpers'
 import { faker } from '@faker-js/faker'
 
@@ -44,9 +44,7 @@ test.describe
   })
 
   test('4.0.3 Reject a declaration', async () => {
-    await selectAction(page, 'Review')
-
-    await page.getByRole('button', { name: 'Reject' }).click()
+    await selectAction(page, 'Reject')
 
     await page.getByTestId('reject-reason').fill(faker.lorem.sentence())
 
@@ -91,7 +89,7 @@ test.describe
       .click()
 
     // User should navigate to record audit page
-    expect(page.url().includes(`events/overview/${eventId}`)).toBeTruthy()
+    await expectInUrl(page, `events/${eventId}?workqueue=requires-updates-self`)
   })
 
   test('4.5 Acting directly from workqueue should redirect to the same workqueue', async () => {
@@ -102,9 +100,7 @@ test.describe
 
     await row.getByRole('button', { name: 'Review' }).click()
 
-    await page.getByRole('button', { name: 'Send for review' }).click()
-    await expect(page.getByText('Send for review?')).toBeVisible()
-    await page.getByRole('button', { name: 'Confirm' }).click()
+    await selectDeclarationAction(page, 'Declare')
 
     // Should redirect back to requires update workqueue
     await expect(page.locator('#content-name')).toHaveText('Requires updates')

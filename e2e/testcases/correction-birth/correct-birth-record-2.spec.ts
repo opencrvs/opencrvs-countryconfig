@@ -265,7 +265,7 @@ test.describe.serial('Correct record - 2', () => {
     })
 
     test('2.8.2 Correction review page', async () => {
-      await selectAction(page, 'Review')
+      await selectAction(page, 'Review correction request')
       await expect(page.getByText('Requester' + 'Father')).toBeVisible()
       await expect(
         page.getByText(
@@ -329,22 +329,13 @@ test.describe.serial('Correct record - 2', () => {
       await page.locator('#reject-correction-reason').fill('No legal proof')
       await page.getByRole('button', { name: 'Confirm', exact: true }).click()
 
-      await expectInUrl(page, `/events/overview/${eventId}`)
+      await expectInUrl(page, `/events/${eventId}`)
     })
 
     test.describe('2.8.4 Validate history in record audit', async () => {
       test('2.8.4.1 Navigate to record audit', async () => {
-        if (!trackingId) {
-          throw new Error('Tracking ID is required')
-        }
-
-        await type(page, '#searchText', trackingId)
-        await page.locator('#searchIconButton').click()
-        await page
-          .getByRole('button', { name: formatV2ChildName(declaration) })
-          .click()
-
         await ensureAssigned(page)
+        await page.getByRole('button', { name: 'Audit' }).click()
       })
 
       test('2.8.4.2 Validate correction requested modal', async () => {

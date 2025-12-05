@@ -9,7 +9,7 @@ import { faker } from '@faker-js/faker'
 import { ensureAssigned } from '../../utils'
 
 test.describe
-  .serial("Qucik Search - Birth Event Declaration - Child's details", () => {
+  .serial("Quick Search - Birth Event Declaration - Child's details", () => {
   let page: Page
   let record: Awaited<ReturnType<typeof createDeclaration>>
   let recordWithDefaultEmail: Awaited<ReturnType<typeof createDeclaration>>
@@ -73,6 +73,7 @@ test.describe
   })
 
   test('1.3 Should perform case-insensitive email search from workqueue and display matching record', async () => {
+    await page.getByTestId('exit-event').click()
     await page.locator('#navigation_workqueue_assigned-to-you').click()
     await expect(page.locator('#searchText')).toHaveValue('')
 
@@ -102,6 +103,7 @@ test.describe
   })
 
   test('1.4 Should search from workqueue using a different email and return the correct record', async () => {
+    await page.getByTestId('exit-event').click()
     await page.locator('#navigation_workqueue_assigned-to-you').click()
     await expect(page.locator('#searchText')).toHaveValue('')
 
@@ -128,6 +130,7 @@ test.describe
   })
 
   test('1.5 Should search from workqueue using informant phone number and return the correct record', async () => {
+    await page.getByTestId('exit-event').click()
     await page.locator('#navigation_workqueue_assigned-to-you').click()
     await expect(page.locator('#searchText')).toHaveValue('')
     await page
@@ -154,6 +157,7 @@ test.describe
   })
 
   test('1.6 Should search from workqueue using informant national ID and return the correct record', async () => {
+    await page.getByTestId('exit-event').click()
     await page.locator('#navigation_workqueue_assigned-to-you').click()
     await expect(page.locator('#searchText')).toHaveValue('')
     await page.locator('#searchText').fill(record.declaration['informant.nid']) // search by id

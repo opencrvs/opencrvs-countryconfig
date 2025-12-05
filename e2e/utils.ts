@@ -39,13 +39,12 @@ export async function selectAction(
     | 'Unassign'
     | 'Delete'
     | 'Correct record'
-    | 'View'
     | 'Archive'
+    | 'Reject'
+    | 'Review correction request'
+    | 'Approve'
 ) {
-  if (
-    (await page.getByTestId('status-value').innerText()) !== 'Draft' &&
-    action !== 'View'
-  ) {
+  if (await page.getByRole('button', { name: 'Assign record' }).isVisible()) {
     await ensureAssigned(page)
   }
 
@@ -87,14 +86,15 @@ export async function ensureAssigned(page: Page) {
     await unAssignAction.click()
     // Wait for the unassign modal to appear
     await page.getByRole('button', { name: 'Unassign', exact: true }).click()
-    await expect(page.getByTestId('assignedTo-value')).toHaveText(
-      'Not assigned',
-      {
-        timeout: SAFE_OUTBOX_TIMEOUT_MS
-      }
-    )
+    await expect(
+      page.getByRole('button', { name: 'Assign record' })
+    ).toBeVisible({ timeout: SAFE_OUTBOX_TIMEOUT_MS })
+
     await page.getByRole('button', { name: 'Action' }).click()
 
+    // Seems that on slower environments actions are not immediately available after unassign.
+    // And end up having false negative for assignAction.isVisible().
+    await page.waitForTimeout(SAFE_INPUT_CHANGE_TIMEOUT_MS)
     assignAction = page
       .locator('#action-Dropdown-Content li')
       .filter({ hasText: new RegExp(`^Assign$`, 'i') })
@@ -107,12 +107,13 @@ export async function ensureAssigned(page: Page) {
     await page.getByRole('button', { name: 'Assign', exact: true }).click()
   }
 
-  await expect(page.getByTestId('assignedTo-value')).not.toHaveText(
-    'Not assigned',
-    {
-      timeout: SAFE_OUTBOX_TIMEOUT_MS
-    }
-  )
+  await expect(
+    page.getByRole('button', { name: 'Assign record' })
+  ).not.toBeVisible({ timeout: SAFE_OUTBOX_TIMEOUT_MS })
+
+  await expect(page.locator('#action-loading-undefined')).not.toBeVisible({
+    timeout: SAFE_OUTBOX_TIMEOUT_MS
+  })
 }
 
 export async function expectInUrl(page: Page, assertionString: string) {

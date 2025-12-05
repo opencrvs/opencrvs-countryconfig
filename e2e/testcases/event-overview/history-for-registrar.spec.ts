@@ -1,6 +1,6 @@
 import { test, expect, Page } from '@playwright/test'
 import { createDeclaration, Declaration } from '../test-data/birth-declaration'
-import { getToken, login } from '../../helpers'
+import { getToken, login, switchEventTab } from '../../helpers'
 import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../constants'
 import { ensureAssigned } from '../../utils'
 
@@ -38,6 +38,7 @@ test.describe
     )
   })
   test('validate Actions in history', async () => {
+    await switchEventTab(page, 'Audit')
     const rows = page.locator('#listTable-task-history [id^="row_"]')
 
     const expectedActions = [

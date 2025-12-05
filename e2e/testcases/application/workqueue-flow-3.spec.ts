@@ -6,7 +6,8 @@ import {
   formatName,
   getRandomDate,
   goToSection,
-  login
+  login,
+  selectDeclarationAction
 } from '../../helpers'
 import { CREDENTIALS } from '../../constants'
 import {
@@ -135,10 +136,8 @@ test.describe.serial('3. Workqueue flow - 3', () => {
       await expect(page.getByRole('dialog')).not.toBeVisible()
     })
 
-    test('3.1.4 Send for review', async () => {
-      await page.getByRole('button', { name: 'Send for review' }).click()
-      await expect(page.getByText('Send for review?')).toBeVisible()
-      await page.getByRole('button', { name: 'Confirm' }).click()
+    test('3.1.4 Notify', async () => {
+      await selectDeclarationAction(page, 'Notify')
 
       await ensureOutboxIsEmpty(page)
     })
@@ -187,7 +186,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
 
       await selectAction(page, 'Review')
 
-      await page.getByRole('button', { name: 'Reject' }).click()
+      await selectDeclarationAction(page, 'Reject', false)
 
       await page.getByTestId('reject-reason').fill(faker.lorem.sentence())
 
@@ -210,7 +209,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
     })
   })
 
-  test.describe('3.3 Re-notify by FA', async () => {
+  test.describe('3.3 Declare by FA', async () => {
     test('3.3.1 Login', async () => {
       await login(page, CREDENTIALS.FIELD_AGENT, true)
       await assertRecordInWorkqueue({
@@ -315,14 +314,11 @@ test.describe.serial('3. Workqueue flow - 3', () => {
       await page.locator('#father____addressSameAs_YES').click()
     })
 
-    test('3.3.6 Send for review', async () => {
+    test('3.3.6 Declare', async () => {
       await continueForm(page, 'Back to review')
-
       await expect(page.getByRole('dialog')).not.toBeVisible()
 
-      await page.getByRole('button', { name: 'Send for review' }).click()
-      await expect(page.getByText('Send for review?')).toBeVisible()
-      await page.getByRole('button', { name: 'Confirm' }).click()
+      await selectDeclarationAction(page, 'Declare')
 
       await ensureOutboxIsEmpty(page)
     })
@@ -360,7 +356,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
       })
     })
 
-    test('3.4.2 Review', async () => {
+    test('3.4.2 Validate', async () => {
       await page.getByText('Ready for review').click()
       await page
         .getByRole('button', {
@@ -368,9 +364,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         })
         .click()
 
-      await selectAction(page, 'Review')
-
-      await page.getByRole('button', { name: 'Send for approval' }).click()
+      await selectAction(page, 'Validate')
       await page.getByRole('button', { name: 'Confirm' }).click()
 
       await assertRecordInWorkqueue({
@@ -416,7 +410,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         .getByRole('button', { name: 'Review' })
         .click()
 
-      await page.getByRole('button', { name: 'Reject' }).click()
+      await selectDeclarationAction(page, 'Reject', false)
 
       await page.getByTestId('reject-reason').fill(faker.lorem.sentence())
 
@@ -465,7 +459,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         .getByRole('button', { name: 'Review' })
         .click()
 
-      await page.getByRole('button', { name: 'Send for approval' }).click()
+      await selectAction(page, 'Validate')
       await page.getByRole('button', { name: 'Confirm' }).click()
 
       await assertRecordInWorkqueue({
@@ -510,8 +504,8 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         .getByRole('button', { name: 'Review' })
         .click()
 
-      await page.getByRole('button', { name: 'Register' }).click()
-      await page.locator('#confirm_Register').click()
+      await selectAction(page, 'Register')
+      await page.getByRole('button', { name: 'Confirm' }).click()
       await ensureInExternalValidationIsEmpty(page)
 
       await assertRecordInWorkqueue({

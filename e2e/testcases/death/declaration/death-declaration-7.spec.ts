@@ -6,11 +6,13 @@ import {
   formatDateObjectTo_dMMMMyyyy,
   getRandomDate,
   goToSection,
-  login
+  login,
+  selectDeclarationAction,
+  switchEventTab
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
-import { ensureOutboxIsEmpty } from '../../../utils'
+import { ensureAssigned, ensureOutboxIsEmpty } from '../../../utils'
 
 test.describe.serial('7. Death declaration case - 7', () => {
   let page: Page
@@ -531,9 +533,7 @@ test.describe.serial('7. Death declaration case - 7', () => {
     })
 
     test('7.1.8 Register', async () => {
-      await page.getByRole('button', { name: 'Register' }).click()
-      await expect(page.getByText('Register the death?')).toBeVisible()
-      await page.locator('#confirm_Declare').click()
+      await selectDeclarationAction(page, 'Register')
       await ensureOutboxIsEmpty(page)
       await expect(page.getByText('Farajaland CRS')).toBeVisible()
 
@@ -556,7 +556,7 @@ test.describe.serial('7. Death declaration case - 7', () => {
         })
       ).toBeVisible()
     })
-    test('7.1.8 Verify information on view page', async () => {
+    test('7.1.8 Verify information on "Record" tab', async () => {
       await page
         .getByRole('button', {
           name:
@@ -566,8 +566,8 @@ test.describe.serial('7. Death declaration case - 7', () => {
         })
         .click()
 
-      await page.getByRole('button', { name: 'Action', exact: true }).click()
-      await page.getByText('View', { exact: true }).click()
+      await ensureAssigned(page)
+      await switchEventTab(page, 'Record')
 
       /*
        * Expected result: should include

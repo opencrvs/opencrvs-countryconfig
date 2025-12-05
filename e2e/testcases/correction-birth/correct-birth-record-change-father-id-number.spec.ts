@@ -11,7 +11,7 @@ import {
   createDeclaration as createDeclarationV2,
   Declaration as DeclarationV2
 } from '../test-data/birth-declaration-with-mother-father'
-import { format, subYears } from 'date-fns'
+import { format, subDays, subYears } from 'date-fns'
 import { CREDENTIALS } from '../../constants'
 import { formatV2ChildName } from '../birth/helpers'
 import { ensureAssigned, selectAction } from '../../utils'
@@ -45,8 +45,7 @@ test.describe.serial("Correct record - Change father's ID number", () => {
           surname: faker.person.lastName()
         },
         'child.gender': 'male',
-        'child.dob': format(subYears(new Date(), 1), 'yyyy-MM-dd'),
-        'child.reason': 'Late',
+        'child.dob': format(subDays(new Date(), 2), 'yyyy-MM-dd'),
         'child.placeOfBirth': 'PRIVATE_HOME',
         'child.attendantAtBirth': 'PHYSICIAN',
         'child.birthType': 'SINGLE',
@@ -218,7 +217,7 @@ test.describe.serial("Correct record - Change father's ID number", () => {
   })
 
   test('Approve correction request', async () => {
-    await selectAction(page, 'Review')
+    await selectAction(page, 'Review correction request')
     await page.getByRole('button', { name: 'Approve', exact: true }).click()
     await page.getByRole('button', { name: 'Confirm', exact: true }).click()
   })
@@ -232,7 +231,7 @@ test.describe.serial("Correct record - Change father's ID number", () => {
 
     await ensureAssigned(page)
 
-    await selectAction(page, 'View')
+    await page.getByRole('button', { name: 'Record', exact: true }).click()
 
     await expect(
       page.getByTestId('row-value-father.nid').getByText(newIdNumber)

@@ -12,6 +12,7 @@ import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
 import { ensureOutboxIsEmpty, selectAction } from '../../../utils'
 import { REQUIRED_VALIDATION_ERROR } from '../helpers'
+import { selectDeclarationAction } from '../../../helpers'
 
 test.describe.serial('Add mother details on review', () => {
   let page: Page
@@ -218,9 +219,8 @@ test.describe.serial('Add mother details on review', () => {
       await expect(page.getByRole('dialog')).not.toBeVisible()
     })
 
-    test('Send for review', async () => {
-      await page.getByRole('button', { name: 'Send for review' }).click()
-      await page.getByRole('button', { name: 'Confirm' }).click()
+    test('Declare', async () => {
+      await selectDeclarationAction(page, 'Declare')
 
       await ensureOutboxIsEmpty(page)
 
@@ -234,7 +234,8 @@ test.describe.serial('Add mother details on review', () => {
     })
   })
 
-  test.describe('Declaration Review by Local Registrar', async () => {
+  // @TODO: Skipped for now until 'Edit' action is implemented.
+  test.describe.skip('Declaration Review by Local Registrar', async () => {
     test('Navigate to the declaration review page', async () => {
       await logout(page)
       await login(page, CREDENTIALS.LOCAL_REGISTRAR)

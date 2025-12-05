@@ -26,8 +26,6 @@ import { InformantType as BirthInformantType } from '@countryconfig/form/v2/birt
 import { InformantTemplateType } from './sms-service'
 import { generateFailureLog, NotificationParams, notify } from './handler'
 import { InformantType as DeathInformantType } from '@countryconfig/form/v2/death/forms/pages/informant'
-import { birthEvent } from '@countryconfig/form/v2/birth'
-import { deathEvent } from '@countryconfig/form/v2/death'
 
 const resolveName = (name: FieldUpdateValue) => {
   const nameObj = {
@@ -77,23 +75,11 @@ function getInformant(eventType: string, declaration: Record<string, any>) {
   throw new Error('Invalid event type')
 }
 
-function getEventConfig(eventType: string) {
-  if (eventType === Event.Birth) {
-    return birthEvent
-  }
-
-  if (eventType === Event.Death) {
-    return deathEvent
-  }
-
-  throw new Error('Invalid event type')
-}
-
 async function getNotificationParams(
   event: EventDocument,
   token: string,
   registrationNumber?: string
-): Promise<NotificationParams> {
+): Promise<NotificationParams | undefined> {
   const pendingAction = getPendingAction(event.actions)
   const locations = await getLocations(token)
 
@@ -197,7 +183,7 @@ async function getNotificationParams(
     }
   }
 
-  throw new Error(`Invalid action type "${pendingAction.type}"`)
+  return
 }
 
 export async function sendInformantNotification({
@@ -215,6 +201,10 @@ export async function sendInformantNotification({
       token,
       registrationNumber
     )
+
+    if (!notificationParams) {
+      return
+    }
 
     await notify(notificationParams)
   } catch (error) {

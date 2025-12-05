@@ -7,12 +7,14 @@ import {
   getRandomDate,
   goToSection,
   login,
-  logout
+  logout,
+  selectDeclarationAction,
+  switchEventTab
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
 import { fillDate, validateAddress } from '../helpers'
-import { ensureOutboxIsEmpty, selectAction } from '../../../utils'
+import { ensureOutboxIsEmpty } from '../../../utils'
 
 test.describe.serial('4. Birth declaration case - 4', () => {
   let page: Page
@@ -622,10 +624,8 @@ test.describe.serial('4. Birth declaration case - 4', () => {
 
       await expect(page.getByRole('dialog')).not.toBeVisible()
     })
-    test('4.1.8 Send for approval', async () => {
-      await page.getByRole('button', { name: 'Send for approval' }).click()
-      await expect(page.getByText('Send for approval?')).toBeVisible()
-      await page.getByRole('button', { name: 'Confirm' }).click()
+    test('4.1.8 Validate', async () => {
+      await selectDeclarationAction(page, 'Validate')
 
       await ensureOutboxIsEmpty(page)
 
@@ -640,7 +640,7 @@ test.describe.serial('4. Birth declaration case - 4', () => {
   })
 
   test.describe('4.2 Declaration Review by Local Registrar', async () => {
-    test('4.2.1 Navigate to the declaration review page', async () => {
+    test('4.2.1 Navigate to the declaration "Record" -tab', async () => {
       await logout(page)
       await login(page, CREDENTIALS.LOCAL_REGISTRAR)
 
@@ -652,10 +652,10 @@ test.describe.serial('4. Birth declaration case - 4', () => {
         })
         .click()
 
-      await selectAction(page, 'Review')
+      await switchEventTab(page, 'Record')
     })
 
-    test('4.2.2 Verify information on review page', async () => {
+    test('4.2.2 Verify information on "Record" tab', async () => {
       /*
        * Expected result: should include
        * - Child's First Name
