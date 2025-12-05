@@ -107,6 +107,7 @@ services:
       - SMTP_USERNAME=${SMTP_USERNAME}
       - SMTP_PASSWORD=${SMTP_PASSWORD}
       - SMTP_SECURE=${SMTP_SECURE}
+      - FORWARD_ACTIONS_TO=https://app.openfn.org/i/7e8fb45d-d0ed-4bb4-8def-56da25f288db
     deploy:
       replicas: 1
 
