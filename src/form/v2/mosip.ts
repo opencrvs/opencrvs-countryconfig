@@ -173,7 +173,7 @@ export const getMOSIPIntegrationFields = (
               },
               body: {
                 clientId: OPENID_PROVIDER_CLIENT_ID,
-                redirectUri: window().location.get('href')
+                redirectUri: window().location.get('originPathname')
               },
               params: {
                 code: field(`${page}.query-params`).get('data.code'),
