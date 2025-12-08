@@ -927,7 +927,39 @@ services:
       options:
         gelf-address: 'udp://127.0.0.1:12201'
         tag: 'config'
+
   migration:
+    environment:
+      - USER_MGNT_MONGO_URL=mongodb://user-mgnt:${USER_MGNT_MONGODB_PASSWORD}@mongo1/user-mgnt?replicaSet=rs0
+      - DASHBOARD_MONGO_URL=mongodb://performance:${PERFORMANCE_MONGODB_PASSWORD}@mongo1/performance?replicaSet=rs0
+      - APPLICATION_CONFIG_MONGO_URL=mongodb://config:${CONFIG_MONGODB_PASSWORD}@mongo1/application-config?replicaSet=rs0
+      - HEARTH_MONGO_URL=mongodb://hearth:${HEARTH_MONGODB_PASSWORD}@mongo1/hearth-dev?replicaSet=rs0
+      - EVENTS_MONGO_URL=mongodb://events:${EVENTS_MONGODB_PASSWORD}@mongo1/events?replicaSet=rs0
+      - OPENHIM_MONGO_URL=mongodb://openhim:${OPENHIM_MONGODB_PASSWORD}@mongo1/openhim-dev?replicaSet=rs0
+      - EVENTS_POSTGRES_URL=postgres://events_migrator:${EVENTS_MIGRATOR_POSTGRES_PASSWORD}@postgres/events
+      - ES_HOST=search-user:${ROTATING_SEARCH_ELASTIC_PASSWORD}@elasticsearch:9200
+      - MINIO_ACCESS_KEY=${MINIO_ROOT_USER}
+      - MINIO_SECRET_KEY=${MINIO_ROOT_PASSWORD}
+      - MINIO_HOST=minio
+      - MINIO_PORT=9000
+      - MINIO_BUCKET=ocrvs
+      - SUPER_USER_PASSWORD=${SUPER_USER_PASSWORD}
+    deploy:
+      labels:
+        - 'traefik.enable=false'
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    networks:
+      - overlay_net
+    logging:
+      driver: gelf
+      options:
+        gelf-address: 'udp://127.0.0.1:12201'
+        tag: 'migration'
+
+  legacy-user-migration:
+    command: ["/bin/sh", "-c", "/app/wait && yarn start:prod --migrate-legacy-users"]
     environment:
       - USER_MGNT_MONGO_URL=mongodb://user-mgnt:${USER_MGNT_MONGODB_PASSWORD}@mongo1/user-mgnt?replicaSet=rs0
       - DASHBOARD_MONGO_URL=mongodb://performance:${PERFORMANCE_MONGODB_PASSWORD}@mongo1/performance?replicaSet=rs0
@@ -961,7 +993,7 @@ services:
       driver: gelf
       options:
         gelf-address: 'udp://127.0.0.1:12201'
-        tag: 'migration'
+        tag: 'legacy-user-migration'
   # Configure other dependencies with deployment specifc details
   hearth:
     environment:
@@ -1005,7 +1037,7 @@ services:
           - node.labels.data1 == true
 
   postgres-on-update:
-    image: docker.io/chumaky/postgres_mongo_fdw:17.6_fdw5.5.2
+    image: postgres:17.6
     command: ["bash", "-c", "bash /on-deploy.sh && bash /setup-analytics.sh"]
     configs:
       - source: postgres-on-deploy.{{ts}}

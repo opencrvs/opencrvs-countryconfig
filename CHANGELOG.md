@@ -4,13 +4,13 @@
 
 ### Breaking changes
 
-- Switch to docker.io/chumaky/postgres_mongo_fdw:17.6_fdw5.5.2 image for migration service to support mongo fdw
-- New environment variables required for the `migration` service:
+- Switch to docker.io/chumaky/postgres_mongo_fdw:17.6_fdw5.5.2 image to support `mongo_fdw`. This is required for the legacy user migrations to work. It will be switched back to the official postgres image in a future release.
+- A new service `legacy-user-migration` which runs the same migration image but with the `migrate-legacy-users` flag and with the following new environment variables:
   - EVENTS_SUPERUSER_POSTGRES_URL
   - MONGO_HOST
   - MONGO_PORT
-  - MONGODB_ADMIN_USER
-  - MONGODB_ADMIN_PASSWORD
+  - MONGO_USERNAME
+  - MONGO_PASSWORD
   - MONGO_REPLICA_SET
 
 The default values for these variables have been added to the `docker-compose.deploy.yml` file. They should work out of the box for most deployments, but please ensure to set them correctly if you have a custom MongoDB setup.
