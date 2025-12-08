@@ -1,7 +1,7 @@
 <svg width="595" height="842" viewBox="0 0 595 842" fill="none" xmlns="http://www.w3.org/2000/svg"
   xmlns:xlink="http://www.w3.org/1999/xlink">
   <rect width="595" height="842" fill="white" />
-  {{#if preview}}
+  {{#if $review}}
     <g clip-path="url(#clip0_1157_5003)">
       <text fill="#8D8D8D" xml:space="preserve" style="white-space: pre"
         font-family="Noto Sans" font-size="6" font-weight="bold" letter-spacing="0px">
@@ -12,7 +12,7 @@
     </g>
   {{/if}}
   <path d="M61.9999 762.075H533.42V761.105H61.9999V762.075Z" fill="#ECECEC" />
-  {{#if preview}}
+  {{#if $review}}
     <g clip-path="url(#clip1_1157_5003)">
       <path
         d="M324.882 62.43C324.886 72.0276 324.873 81.6282 324.889 91.2258C324.895 91.6479 324.764 92.0484 324.547 92.3867C324.345 92.6971 324.066 92.9516 323.733 93.1223L298.786 107.519C298.441 107.714 298.075 107.81 297.718 107.81C297.351 107.81 296.982 107.708 296.652 107.519L271.717 93.1348C271.376 92.964 271.087 92.7064 270.882 92.3929C270.662 92.0484 270.531 91.6479 270.531 91.2227L270.54 91.0303L270.534 62.3182C270.528 61.9333 270.634 61.5702 270.814 61.2567L270.82 61.2505C271.006 60.9277 271.276 60.6607 271.599 60.4714L296.637 46.0222C296.982 45.8267 297.351 45.7305 297.705 45.7305C298.072 45.7305 298.444 45.8329 298.77 46.0222L323.817 60.4745C324.168 60.6762 324.438 60.968 324.622 61.3001L324.628 61.3063C324.811 61.6478 324.901 62.0389 324.882 62.43Z"
@@ -121,7 +121,7 @@
     font-size="9.7" font-weight="bold" letter-spacing="0px">
     <tspan x="403.421" y="126.364">&#x2028;</tspan>
   </text>
-  {{#if preview}}
+  {{#if $review}}
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
       font-size="7.76" font-weight="bold" letter-spacing="0px">
       <tspan x="186.255" y="126.364">REPUBLIC OF FARAJALAND / REPUBLIQUE DE FARAJALAND</tspan>
@@ -412,7 +412,7 @@
       <rect width="222.13" height="30" fill="white" transform="translate(289.95 543.99)" />
     </clipPath>
   </defs>
-  {{#if preview}}
+  {{#if $review}}
     <image width="36" height="36" xlink:href="{{qrCode}}" x="500" y="770"></image>
   {{/if}}
   <!-- #ifCond printInAdvance '!==' true}} -->
