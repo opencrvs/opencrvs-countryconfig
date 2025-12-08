@@ -377,6 +377,7 @@ export const deceased = defineFormPage({
     {
       id: `deceased.address`,
       type: FieldType.ADDRESS,
+      required: true,
       hideLabel: true,
       secured: true,
       label: {
