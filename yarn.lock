@@ -834,10 +834,10 @@
   dependencies:
     "@octokit/openapi-types" "^18.0.0"
 
-"@opencrvs/toolkit@1.9.0-rc.1346624":
-  version "1.9.0-rc.1346624"
-  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-1.9.0-rc.1346624.tgz#4a605be5e913452ef7890eb879b1c3c679fac6ea"
-  integrity sha512-Fl+n1QpySvHS8niZ8cdWzeyIoScPMi+AY/7moTjV08dj3r8OdiMVm7My4+uq4cVSeqRVNnk6jGMfTiFTq16Ihg==
+"@opencrvs/toolkit@1.9.2":
+  version "1.9.2"
+  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-1.9.2.tgz#a3cfe90edce11ce4f9ac326e718bac0022229838"
+  integrity sha512-jQz1d9+qxU/8g5XxiGTXbCeXHbE0+jXtGK837O8co4GN+AxlKhT49tZ7EvfE8UfV4s+gnPrStG7WtDNd6jvESQ==
   dependencies:
     "@trpc/client" "11.4.3"
     "@trpc/server" "11.4.3"
@@ -846,7 +846,7 @@
     object-hash "^3.0.0"
     superjson "1.9.0-0"
     uuid "^9.0.0"
-    zod-openapi "^5.4.3"
+    zod-openapi "^4.2.4"
 
 "@pkgjs/parseargs@^0.11.0":
   version "0.11.0"
