@@ -11,6 +11,7 @@ import {
 } from '../../helpers'
 import { CREDENTIALS } from '../../constants'
 import {
+  ensureAssigned,
   ensureInExternalValidationIsEmpty,
   ensureOutboxIsEmpty,
   selectAction
@@ -206,6 +207,27 @@ test.describe.serial('3. Workqueue flow - 3', () => {
           { title: 'Ready to print', exists: false }
         ]
       })
+    })
+
+    test('3.2.3 Ensure rejection is no longer available', async () => {
+      await page.getByRole('button', { name: 'Requires updates' }).click()
+      await page
+        .getByRole('button', {
+          name: childName
+        })
+        .click()
+
+      await ensureAssigned(page)
+      await selectAction(page, 'Review')
+      await page.getByRole('button', { name: 'Action' }).click()
+      await expect(page.getByText('Reject')).not.toBeVisible()
+    })
+
+    test('3.2.4 Unassign', async () => {
+      await page.goBack()
+      await selectAction(page, 'Unassign')
+      await page.getByRole('button', { name: 'Unassign', exact: true }).click()
+      await expect(page.getByText('Not assigned')).toBeVisible()
     })
   })
 
@@ -451,7 +473,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
       })
     })
 
-    test('3.6.2 Re-Validate', async () => {
+    test('3.6.2 Re-validate', async () => {
       await page.getByText('Requires updates').click()
 
       await assignFromWorkqueue(page, childName)
@@ -460,7 +482,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         .click()
 
       await selectAction(page, 'Validate')
-      await page.getByRole('button', { name: 'Confirm' }).click()
+      await page.getByRole('button', { name: 'Validate' }).click()
 
       await assertRecordInWorkqueue({
         page,
