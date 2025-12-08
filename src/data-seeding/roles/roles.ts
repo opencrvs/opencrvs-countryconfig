@@ -336,8 +336,9 @@ export const roles: Role[] = [
     scopes: [
       'record.read[event=birth|death|tennis-club-membership]',
       'record.custom-action[event=birth,customActionType=APPROVE_DECLARATION]',
-      'workqueue[id=late-registration-approval-required]',
-      'search[event=birth,access=all]'
+      'workqueue[id=late-registration-approval-required|recent]',
+      'search[event=birth,access=all]',
+      'record.unassign-others[event=birth]'
     ]
   }
 ]
