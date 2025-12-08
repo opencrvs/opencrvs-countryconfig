@@ -12,7 +12,9 @@ import {
   ActionType,
   ConditionalType,
   defineConfig,
-  field
+  field,
+  not,
+  flag
 } from '@opencrvs/toolkit/events'
 import {
   DEATH_DECLARATION_REVIEW,
@@ -45,6 +47,17 @@ export const deathEvent = defineConfig({
     description:
       'This is a fallback title if actual title resolves to empty string'
   },
+  flags: [
+    {
+      id: 'validated',
+      label: {
+        id: 'event.death.flag.validated',
+        defaultMessage: 'Validated',
+        description: 'Flag label for validated'
+      },
+      requiresAction: true
+    }
+  ],
   summary: {
     fields: [
       {
@@ -201,7 +214,10 @@ export const deathEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.death.action.validate.label'
       },
-      review: DEATH_DECLARATION_REVIEW,
+      conditionals: [
+        { type: ConditionalType.SHOW, conditional: not(flag('validated')) }
+      ],
+      flags: [{ id: 'validated', operation: 'add' }],
       deduplication: {
         id: 'death-deduplication',
         label: {
@@ -214,6 +230,16 @@ export const deathEvent = defineConfig({
       }
     },
     {
+      type: ActionType.REJECT,
+      label: {
+        defaultMessage: 'Reject',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'event.death.action.reject.label'
+      },
+      flags: [{ id: 'validated', operation: 'remove' }]
+    },
+    {
       type: ActionType.REGISTER,
       label: {
         defaultMessage: 'Register',
@@ -221,7 +247,6 @@ export const deathEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.death.action.register.label'
       },
-      review: DEATH_DECLARATION_REVIEW,
       deduplication: {
         id: 'death-deduplication',
         label: {
