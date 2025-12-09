@@ -233,6 +233,7 @@ export const birthEvent = defineConfig({
     {
       type: ActionType.CUSTOM,
       customActionType: 'APPROVE_DECLARATION',
+      icon: 'Globe',
       label: {
         defaultMessage: 'Approve declaration',
         description:
