@@ -25,6 +25,7 @@ export const DECEASED_CODE = 'deceased-details'
 export const OPENCRVS_SPECIFICATION_URL = 'http://opencrvs.org/specs/'
 import { join } from 'path'
 import { stringify } from 'csv-stringify/sync'
+import { promisify } from 'util'
 
 export interface ILocation {
   id?: string

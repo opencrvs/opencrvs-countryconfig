@@ -1,7 +1,12 @@
 import { expect, test, type Page } from '@playwright/test'
-import { createPIN, getToken, login } from '../../helpers'
-import { createDeathDeclaration } from './helpers'
-import { CREDENTIALS } from '../../constants'
+import { login } from '../../helpers'
+import { faker } from '@faker-js/faker'
+import { ensureOutboxIsEmpty, type } from '../../utils'
+const deceased = {
+  name: {
+    firstname: faker.person.firstName('male')
+  }
+}
 
 test.describe('1. Death event declaration', () => {
   test.describe.serial('Fill all form sections. Save & Exit', () => {
@@ -15,15 +20,13 @@ test.describe('1. Death event declaration', () => {
     })
 
     test('1.1. Navigate to the death event declaration page', async () => {
-      await login(
-        page,
-        CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
-        CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
-      )
-      await createPIN(page)
-      await page.click('#header_new_event')
+      await login(page)
+
+      await page.click('#header-new-event')
       await expect(page.getByText('New Declaration')).toBeVisible()
-      await expect(page.getByText('Event type')).toBeVisible()
+      await expect(
+        page.getByText('What type of event do you want to declare?')
+      ).toBeVisible()
     })
 
     test.describe('1.2. Validate event selection page', async () => {
@@ -36,7 +39,7 @@ test.describe('1. Death event declaration', () => {
          */
         await expect(page.getByLabel('Birth')).toBeVisible()
         await expect(page.getByLabel('Death')).toBeVisible()
-        await expect(page.getByLabel('Marriage')).toBeVisible()
+
         await expect(
           page.getByRole('button', { name: 'Continue' })
         ).toBeVisible()
@@ -90,10 +93,10 @@ test.describe('1. Death event declaration', () => {
           page.getByRole('button', { name: 'Save & Exit' })
         ).toBeVisible()
 
-        await page.locator('#eventToggleMenu-dropdownMenu').click()
+        await page.locator('#event-menu-dropdownMenu').click()
         await expect(
           page
-            .locator('#eventToggleMenu-dropdownMenu')
+            .locator('#event-menu-dropdownMenu')
             .getByRole('listitem')
             .filter({ hasText: 'Delete declaration' })
         ).toBeVisible()
@@ -158,16 +161,18 @@ test.describe('1. Death event declaration', () => {
           page.getByRole('button', { name: 'Save & Exit' })
         ).toBeVisible()
 
-        await page.locator('#eventToggleMenu-dropdownMenu').click()
+        await page.locator('#event-menu-dropdownMenu').click()
         await expect(
           page
-            .locator('#eventToggleMenu-dropdownMenu')
+            .locator('#event-menu-dropdownMenu')
             .getByRole('listitem')
             .filter({ hasText: 'Delete declaration' })
         ).toBeVisible()
       })
 
-      test.skip('1.4.2 Validate Deceased details block', async () => {})
+      test('1.4.2 Validate Deceased details block', async () => {
+        await page.locator('#firstname').fill(deceased.name.firstname)
+      })
 
       test('1.4.3 Click "continue"', async () => {
         await page.getByRole('button', { name: 'Continue' }).click()
@@ -199,10 +204,10 @@ test.describe('1. Death event declaration', () => {
           page.getByRole('button', { name: 'Save & Exit' })
         ).toBeVisible()
 
-        await page.locator('#eventToggleMenu-dropdownMenu').click()
+        await page.locator('#event-menu-dropdownMenu').click()
         await expect(
           page
-            .locator('#eventToggleMenu-dropdownMenu')
+            .locator('#event-menu-dropdownMenu')
             .getByRole('listitem')
             .filter({ hasText: 'Delete declaration' })
         ).toBeVisible()
@@ -244,16 +249,24 @@ test.describe('1. Death event declaration', () => {
         await expect(
           page.getByRole('button', { name: 'Save & Exit' })
         ).toBeVisible()
-        await page.locator('#eventToggleMenu-dropdownMenu').click()
+        await page.locator('#event-menu-dropdownMenu').click()
         await expect(
           page
-            .locator('#eventToggleMenu-dropdownMenu')
+            .locator('#event-menu-dropdownMenu')
             .getByRole('listitem')
             .filter({ hasText: 'Delete declaration' })
         ).toBeVisible()
       })
 
       test.skip('1.6.2 Click the "continue" button without selecting any relationship to deceased', async () => {})
+
+      test('misc: shows validation error for phone number', async () => {
+        await type(page, '#informant____phoneNo', '123')
+        await expect(page.locator('#informant____phoneNo_error')).toHaveText(
+          'Must be a valid 10 digit number that starts with 0(7|9)'
+        )
+        await type(page, '#informant____phoneNo', '')
+      })
 
       test('1.6.3 Select eny option in relatinship to deceased and click the "continue" button', async () => {
         await page.getByText('Select').click()
@@ -292,10 +305,10 @@ test.describe('1. Death event declaration', () => {
         await expect(
           page.getByRole('button', { name: 'Save & Exit' })
         ).toBeVisible()
-        await page.locator('#eventToggleMenu-dropdownMenu').click()
+        await page.locator('#event-menu-dropdownMenu').click()
         await expect(
           page
-            .locator('#eventToggleMenu-dropdownMenu')
+            .locator('#event-menu-dropdownMenu')
             .getByRole('listitem')
             .filter({ hasText: 'Delete declaration' })
         ).toBeVisible()
@@ -338,10 +351,10 @@ test.describe('1. Death event declaration', () => {
         await expect(
           page.getByRole('button', { name: 'Save & Exit' })
         ).toBeVisible()
-        await page.locator('#eventToggleMenu-dropdownMenu').click()
+        await page.locator('#event-menu-dropdownMenu').click()
         await expect(
           page
-            .locator('#eventToggleMenu-dropdownMenu')
+            .locator('#event-menu-dropdownMenu')
             .getByRole('listitem')
             .filter({ hasText: 'Delete declaration' })
         ).toBeVisible()
@@ -409,20 +422,24 @@ test.describe('1. Death event declaration', () => {
          * - be navigated to "my-drafts" tab
          * - find the declared death event record on this page list with saved data
          */
+        //@todo: The user should be navigated to "my-drafts" tab by default
+        await page.getByText('My drafts').click()
+
         await expect(page.locator('#content-name')).toHaveText('My drafts')
-        await expect(page.getByText(/seconds ago/)).toBeVisible()
+
+        await ensureOutboxIsEmpty(page)
+
+        await expect(
+          page.getByText(deceased.name.firstname, { exact: true })
+        ).toBeVisible()
       })
     })
   })
   test.describe('1.10 Validate "Exit" Button', async () => {
     test.beforeEach(async ({ page }) => {
-      await login(
-        page,
-        CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
-        CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
-      )
-      await createPIN(page)
-      await page.click('#header_new_event')
+      await login(page)
+
+      await page.click('#header-new-event')
       await page.getByLabel('Death').click()
       await page.getByRole('button', { name: 'Continue' }).click()
 
@@ -466,30 +483,26 @@ test.describe('1. Death event declaration', () => {
        * Expected result: should be navigated to "my-drafts" tab but no draft will be saved
        */
 
-      await page.waitForTimeout(500) // This page renders twice at first
+      await expect(page.locator('#content-name')).toHaveText('Assigned to you')
+
+      await ensureOutboxIsEmpty(page)
 
       await expect(
-        page.locator('#content-name', { hasText: 'My drafts' })
-      ).toBeVisible()
-      await expect(page.getByText(/seconds ago/)).toBeHidden()
+        page.getByText(deceased.name.firstname, { exact: true })
+      ).toBeHidden()
     })
   })
 
   test.describe('1.11 Validate "Delete Declaration" Button  ', async () => {
     test.beforeEach(async ({ page }) => {
-      await login(
-        page,
-        CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
-        CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
-      )
-      await createPIN(page)
-      await page.click('#header_new_event')
+      await login(page)
+      await page.click('#header-new-event')
       await page.getByLabel('Death').click()
       await page.getByRole('button', { name: 'Continue' }).click()
 
-      await page.locator('#eventToggleMenu-dropdownMenu').click()
+      await page.locator('#event-menu-dropdownMenu').click()
       await page
-        .locator('#eventToggleMenu-dropdownMenu')
+        .locator('#event-menu-dropdownMenu')
         .getByRole('listitem')
         .filter({ hasText: 'Delete declaration' })
         .click()
@@ -509,9 +522,7 @@ test.describe('1. Death event declaration', () => {
         page.getByRole('heading', { name: 'Delete draft?' })
       ).toBeVisible()
       await expect(
-        page.getByText(
-          'Are you certain you want to delete this draft declaration form? Please note, this action cant be undone.'
-        )
+        page.getByText('Are you sure you want to delete this declaration?')
       ).toBeVisible()
       await expect(page.getByRole('button', { name: 'Cancel' })).toBeVisible()
       await expect(page.getByRole('button', { name: 'Confirm' })).toBeVisible()
@@ -535,25 +546,18 @@ test.describe('1. Death event declaration', () => {
        * Expected result: should be navigated to "my-drafts" tab but no draft will be saved
        */
 
-      await page.waitForTimeout(500) // This page renders twice at first
+      await expect(page.locator('#content-name')).toHaveText('Assigned to you')
+
+      await ensureOutboxIsEmpty(page)
 
       await expect(
-        page.locator('#content-name', { hasText: 'My drafts' })
-      ).toBeVisible()
-      await expect(page.getByText(/seconds ago/)).toBeHidden()
+        page.getByText(deceased.name.firstname, { exact: true })
+      ).toBeHidden()
     })
-  })
 
-  test.describe('1.12 Technical test for shortcuts', () => {
-    test('Shortcut for quickly creating declarations', async ({ page }) => {
-      const token = await getToken('k.mweene', 'test')
-      const res = await createDeathDeclaration(token)
-      expect(res).toStrictEqual({
-        trackingId: expect.any(String),
-        compositionId: expect.any(String),
-        isPotentiallyDuplicate: false,
-        __typename: 'CreatedIds'
-      })
+    // @TODO: This test is not implemented in V2 events yet
+    test.describe.skip('1.12 Technical test for shortcuts', () => {
+      test.skip('Shortcut for quickly creating declarations', async () => {})
     })
   })
 })

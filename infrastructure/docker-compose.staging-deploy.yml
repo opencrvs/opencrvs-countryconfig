@@ -107,6 +107,7 @@ services:
       - SMTP_USERNAME=${SMTP_USERNAME}
       - SMTP_PASSWORD=${SMTP_PASSWORD}
       - SMTP_SECURE=${SMTP_SECURE}
+      - FORWARD_ACTIONS_TO=https://app.openfn.org/i/7e8fb45d-d0ed-4bb4-8def-56da25f288db
     deploy:
       replicas: 1
 
@@ -141,7 +142,8 @@ services:
       - DASHBOARD_MONGO_URL=mongodb://performance:${PERFORMANCE_MONGODB_PASSWORD}@mongo1/performance?replicaSet=rs0
       - HEARTH_MONGO_URL=mongodb://hearth:${HEARTH_MONGODB_PASSWORD}@mongo1/hearth-dev?replicaSet=rs0
       - OPENHIM_MONGO_URL=mongodb://openhim:${OPENHIM_MONGODB_PASSWORD}@mongo1/openhim-dev?replicaSet=rs0
-      - WAIT_HOSTS=mongo1:27017,influxdb:8086,minio:9000,elasticsearch:9200
+      - EVENTS_POSTGRES_URL=postgres://events_migrator:${EVENTS_MIGRATOR_POSTGRES_PASSWORD}@postgres/events
+      - WAIT_HOSTS=mongo1:27017,influxdb:8086,minio:9000,elasticsearch:9200,postgres:5432
     depends_on:
       - mongo1
 

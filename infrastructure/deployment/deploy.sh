@@ -210,6 +210,20 @@ rotate_secrets() {
   configured_ssh '/opt/opencrvs/infrastructure/rotate-secrets.sh '$files_to_rotate' | tee -a '$LOG_LOCATION'/rotate-secrets.log'
 }
 
+# Take generated passwords and save them to a file
+# File is taken from github runner and transferred to the server
+# Later docker secret is created from this file and used by docker-compose
+save_redis_acl(){
+  echo "Saving redis acl"
+  printf """
+user default on >$DEFAULT_REDIS_PASSWORD ~* +@all
+user $GATEWAY_REDIS_USERNAME on >$GATEWAY_REDIS_PASSWORD ~* +@all
+user $WORKFLOW_REDIS_USERNAME on >$WORKFLOW_REDIS_PASSWORD ~* +@all
+user $AUTH_REDIS_USERNAME on >$AUTH_REDIS_PASSWORD ~* +@all
+user $WEBHOOKS_REDIS_USERNAME on >$WEBHOOKS_REDIS_PASSWORD ~* +@all
+""" > $INFRASTRUCTURE_DIRECTORY/redis-acl.conf
+  echo "Redis acl saved to $INFRASTRUCTURE_DIRECTORY/redis-acl.conf"
+}
 
 # Takes in a space separated string of docker-compose.yml files
 # returns a new line separated list of images defined in those files
@@ -256,9 +270,18 @@ get_docker_tags_from_compose_files() {
    | sed -E "s/:-[A-Za-z_0-9]+//g" \
    | sed -E "s/[{}]//g")
 
+   # FIXME: | grep -v 'docker.elastic.co/elasticsearch/elasticsearch' expression added to bypass
+   # duplicates in the docker-compose files.
+   # e/g if top level docker-compose file has elasticsearch image is docker.elastic.co/elasticsearch/elasticsearch
+   # and then redefined to ghcr.io/***/elasticsearch:8.16.4, script pull logic will try to pull
+   # both images and fail with error:
+   # Error response from daemon: Get "https://docker.elastic.co/v2/": net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers)
+   # Next steps:
+   # Use yq to parse the docker-compose files and remove duplicates.
    echo $IMAGE_TAG_LIST_WITHOUT_VARIABLE_SUBSTITUTION_DEFAULT_VALUES \
    | envsubst \
-   | sed 's/ /\n/g'
+   | sed 's/ /\n/g' \
+   | grep -v 'docker.elastic.co/elasticsearch/elasticsearch'
 }
 
 split_and_join() {
@@ -322,7 +345,21 @@ export WEBHOOKS_MONGODB_PASSWORD=`generate_password`
 export NOTIFICATION_MONGODB_PASSWORD=`generate_password`
 export EVENTS_MONGODB_PASSWORD=`generate_password`
 
-#
+export DEFAULT_REDIS_PASSWORD=`generate_password`
+export GATEWAY_REDIS_USERNAME=`generate_password`
+export GATEWAY_REDIS_PASSWORD=`generate_password`
+export WORKFLOW_REDIS_USERNAME=`generate_password`
+export WORKFLOW_REDIS_PASSWORD=`generate_password`
+export AUTH_REDIS_USERNAME=`generate_password`
+export AUTH_REDIS_PASSWORD=`generate_password`
+export WEBHOOKS_REDIS_USERNAME=`generate_password`
+export WEBHOOKS_REDIS_PASSWORD=`generate_password`
+
+export EVENTS_APP_POSTGRES_PASSWORD=`generate_password`
+export EVENTS_MIGRATOR_POSTGRES_PASSWORD=`generate_password`
+export ANALYTICS_POSTGRES_PASSWORD=`generate_password`
+export ANALYTICS_POSTGRES_USER=`generate_password`
+
 # Elasticsearch credentials
 #
 # Notice that all of these passwords change on each deployment.
@@ -347,6 +384,7 @@ for compose_file in ${COMPOSE_FILES_DOWNLOADED_FROM_CORE[@]}; do
 done
 
 validate_environment_variables
+save_redis_acl
 
 if [ "$SSH_PORT" -eq 22 ]; then
     SSH_HOST_TO_CHECK="$SSH_HOST"

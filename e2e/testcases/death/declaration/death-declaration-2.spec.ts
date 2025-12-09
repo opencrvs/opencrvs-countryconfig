@@ -1,96 +1,88 @@
 import { test, expect, type Page } from '@playwright/test'
 import {
-  assignRecord,
   continueForm,
-  createPIN,
   drawSignature,
-  expectOutboxToBeEmpty,
-  expectTextWithChangeLink,
-  formatDateObjectTo_ddMMMMyyyy,
-  getAction,
+  expectRowValueWithChangeButton,
+  formatDateObjectTo_dMMMMyyyy,
   getRandomDate,
-  goToSection,
-  joinValuesWith,
   login,
   uploadImageToSection
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
+import { ensureOutboxIsEmpty, selectAction } from '../../../utils'
 
 test.describe.serial('2. Death declaration case - 2', () => {
   let page: Page
   const declaration = {
     deceased: {
       name: {
-        firstNames: faker.person.firstName('female'),
-        familyName: faker.person.lastName('female')
+        firstname: faker.person.firstName('female'),
+        surname: faker.person.lastName('female')
       },
       gender: 'Female',
       age: 65,
       nationality: 'Guernsey',
-      identifier: {
-        id: faker.string.numeric(10),
-        type: 'Passport'
-      },
+      idType: 'Passport',
+      passport: faker.string.numeric(10),
       maritalStatus: 'Married',
       address: {
         country: 'Farajaland',
         province: 'Sulaka',
         district: 'Zobwe',
-        urbanOrRural: 'Rural',
-        village: faker.location.county()
-      }
-    },
-    event: {
-      manner: 'Accident',
-      date: getRandomDate(0, 20),
-      cause: {
-        established: true,
-        source: 'Lay reported',
-        description: "T'was an accident sire"
-      },
-      place: "Deceased's usual place of residence"
-    },
-    informantType: 'Son',
-    informantEmail: faker.internet.email(),
-    informant: {
-      name: {
-        firstNames: faker.person.firstName('male'),
-        familyName: faker.person.lastName('male')
-      },
-      birthDate: getRandomDate(50, 200),
-      nationality: 'Farajaland',
-      identifier: {
-        id: faker.string.numeric(10),
-        type: 'National ID'
-      },
-      address: {
-        sameAsDeceased: true
-      }
-    },
-    spouse: {
-      name: {
-        firstNames: faker.person.firstName('male'),
-        familyName: faker.person.lastName('male')
-      },
-      age: 68,
-      nationality: 'Canada',
-      identifier: {
-        id: faker.string.numeric(10),
-        type: 'Passport'
-      },
-      address: {
-        sameAsDeceased: false,
-        country: 'Farajaland',
-        province: 'Chuminga',
-        district: 'Nsali',
-        urbanOrRural: 'Urban',
         town: faker.location.city(),
         residentialArea: faker.location.county(),
         street: faker.location.street(),
         number: faker.location.buildingNumber(),
         postcodeOrZip: faker.location.zipCode()
       }
+    },
+    eventDetails: {
+      mannerOfDeath: 'Accident',
+      date: getRandomDate(0, 20),
+      causeOfDeathEstablished: true,
+      sourceCauseDeath: 'Lay reported',
+      description: "T'was an accident sire",
+      placeOfDeath: "Deceased's usual place of residence"
+    },
+    informant: {
+      relation: 'Son',
+      email: faker.internet.email(),
+      name: {
+        firstname: faker.person.firstName('male'),
+        surname: faker.person.lastName('male')
+      },
+      dob: getRandomDate(50, 200),
+      nationality: 'Farajaland',
+      idType: 'National ID',
+      nid: faker.string.numeric(10),
+      addressSameAs: true
+    },
+    spouse: {
+      name: {
+        firstname: faker.person.firstName('male'),
+        surname: faker.person.lastName('male')
+      },
+      age: 68,
+      nationality: 'Canada',
+      idType: 'Passport',
+      passport: faker.string.numeric(10),
+      addressSameAs: false,
+      address: {
+        country: 'Farajaland',
+        province: 'Chuminga',
+        district: 'Nsali',
+        town: faker.location.city(),
+        residentialArea: faker.location.county(),
+        street: faker.location.street(),
+        number: faker.location.buildingNumber(),
+        postcodeOrZip: faker.location.zipCode()
+      }
+    }
+  }
+  const annotation = {
+    review: {
+      comment: "He was a great person, we'll miss him"
     }
   }
   test.beforeAll(async ({ browser }) => {
@@ -103,207 +95,188 @@ test.describe.serial('2. Death declaration case - 2', () => {
 
   test.describe('2.1 Declaration started by FA', async () => {
     test.beforeAll(async () => {
-      await login(
-        page,
-        CREDENTIALS.FIELD_AGENT.USERNAME,
-        CREDENTIALS.FIELD_AGENT.PASSWORD
-      )
-      await createPIN(page)
-      await page.click('#header_new_event')
+      await login(page, CREDENTIALS.FIELD_AGENT)
+
+      await page.click('#header-new-event')
       await page.getByLabel('Death').click()
       await page.getByRole('button', { name: 'Continue' }).click()
       await page.getByRole('button', { name: 'Continue' }).click()
     })
-
     test('2.1.1 Fill deceased details', async () => {
-      await page
-        .locator('#firstNamesEng')
-        .fill(declaration.deceased.name.firstNames)
-      await page
-        .locator('#familyNameEng')
-        .fill(declaration.deceased.name.familyName)
-      await page.locator('#gender').click()
+      await page.locator('#firstname').fill(declaration.deceased.name.firstname)
+      await page.locator('#surname').fill(declaration.deceased.name.surname)
+      await page.locator('#deceased____gender').click()
       await page.getByText(declaration.deceased.gender, { exact: true }).click()
 
       await page.getByLabel('Exact date of birth unknown').check()
+
       await page
-        .locator('#ageOfIndividualInYears')
+        .locator('#deceased____age')
         .fill(declaration.deceased.age.toString())
 
-      await page.locator('#nationality').click()
+      await page.locator('#deceased____nationality').click()
       await page
         .getByText(declaration.deceased.nationality, { exact: true })
         .click()
 
-      await page.locator('#deceasedIdType').click()
-      await page
-        .getByText(declaration.deceased.identifier.type, { exact: true })
-        .click()
+      await page.locator('#deceased____idType').click()
+      await page.getByText(declaration.deceased.idType, { exact: true }).click()
 
       await page
-        .locator('#deceasedPassport')
-        .fill(declaration.deceased.identifier.id)
+        .locator('#deceased____passport')
+        .fill(declaration.deceased.passport)
 
-      await page.locator('#maritalStatus').click()
+      await page.locator('#deceased____maritalStatus').click()
       await page
         .getByText(declaration.deceased.maritalStatus, { exact: true })
         .click()
 
-      await page.locator('#statePrimaryDeceased').click()
+      await page.locator('#province').click()
       await page
         .getByText(declaration.deceased.address.province, { exact: true })
         .click()
-      await page.locator('#districtPrimaryDeceased').click()
+      await page.locator('#district').click()
       await page
         .getByText(declaration.deceased.address.district, { exact: true })
         .click()
-
-      await page.getByLabel('Rural').check()
-
+      await page.locator('#town').fill(declaration.deceased.address.town)
       await page
-        .locator('#addressLine1RuralOptionPrimaryDeceased')
-        .fill(declaration.deceased.address.village)
-
+        .locator('#residentialArea')
+        .fill(declaration.deceased.address.residentialArea)
+      await page.locator('#street').fill(declaration.deceased.address.street)
+      await page.locator('#number').fill(declaration.deceased.address.number)
+      await page
+        .locator('#zipCode')
+        .fill(declaration.deceased.address.postcodeOrZip)
       await continueForm(page)
     })
 
     test('2.1.2 Fill event details', async () => {
-      await page.getByPlaceholder('dd').fill(declaration.event.date.dd)
-      await page.getByPlaceholder('mm').fill(declaration.event.date.mm)
-      await page.getByPlaceholder('yyyy').fill(declaration.event.date.yyyy)
-
-      await page.locator('#mannerOfDeath').click()
-      await page.getByText(declaration.event.manner, { exact: true }).click()
-
-      page.getByLabel('Cause of death has been established').check()
-
-      await page.locator('#causeOfDeathMethod').click()
+      await page.getByPlaceholder('dd').fill(declaration.eventDetails.date.dd)
+      await page.getByPlaceholder('mm').fill(declaration.eventDetails.date.mm)
       await page
-        .getByText(declaration.event.cause.source, { exact: true })
+        .getByPlaceholder('yyyy')
+        .fill(declaration.eventDetails.date.yyyy)
+
+      await page.getByLabel('Cause of death has been established').check()
+
+      await page.locator('#eventDetails____sourceCauseDeath').click()
+      await page
+        .getByText(declaration.eventDetails.sourceCauseDeath, { exact: true })
         .click()
-      await page
-        .locator('#deathDescription')
-        .fill(declaration.event.cause.description)
 
-      await page.locator('#placeOfDeath').click()
-      await page.getByText(declaration.event.place, { exact: true }).click()
+      await page.locator('#eventDetails____mannerOfDeath').click()
+      await page
+        .getByText(declaration.eventDetails.mannerOfDeath, { exact: true })
+        .click()
+
+      await page
+        .locator('#eventDetails____description')
+        .fill(declaration.eventDetails.description)
+
+      await page.locator('#eventDetails____placeOfDeath').click()
+      await page
+        .getByText(declaration.eventDetails.placeOfDeath, { exact: true })
+        .click()
 
       await continueForm(page)
     })
 
     test('2.1.3 Fill informant details', async () => {
-      await page.locator('#informantType').click()
+      await page.locator('#informant____relation').click()
       await page
-        .getByText(declaration.informantType, {
+        .getByText(declaration.informant.relation, {
           exact: true
         })
         .click()
 
       await page.waitForTimeout(500) // Temporary measurement untill the bug is fixed. BUG: rerenders after selecting relation with deceased
 
-      await page.locator('#registrationEmail').fill(declaration.informantEmail)
+      await page
+        .locator('#firstname')
+        .fill(declaration.informant.name.firstname)
+      await page.locator('#surname').fill(declaration.informant.name.surname)
 
-      await page
-        .locator('#firstNamesEng')
-        .fill(declaration.informant.name.firstNames)
-      await page
-        .locator('#familyNameEng')
-        .fill(declaration.informant.name.familyName)
+      await page.getByPlaceholder('dd').fill(declaration.informant.dob.dd)
+      await page.getByPlaceholder('mm').fill(declaration.informant.dob.mm)
+      await page.getByPlaceholder('yyyy').fill(declaration.informant.dob.yyyy)
 
-      await page.getByPlaceholder('dd').fill(declaration.informant.birthDate.dd)
-      await page.getByPlaceholder('mm').fill(declaration.informant.birthDate.mm)
+      await page.locator('#informant____idType').click()
       await page
-        .getByPlaceholder('yyyy')
-        .fill(declaration.informant.birthDate.yyyy)
-
-      await page.locator('#informantIdType').click()
-      await page
-        .getByText(declaration.informant.identifier.type, { exact: true })
+        .getByText(declaration.informant.idType, { exact: true })
         .click()
 
+      await page.locator('#informant____nid').fill(declaration.informant.nid)
+
       await page
-        .locator('#informantNationalId')
-        .fill(declaration.informant.identifier.id)
+        .locator('#informant____email')
+        .fill(declaration.informant.email)
 
       await continueForm(page)
     })
 
     test('2.1.4 Fill spouse details', async () => {
-      await page
-        .locator('#firstNamesEng')
-        .fill(declaration.spouse.name.firstNames)
-      await page
-        .locator('#familyNameEng')
-        .fill(declaration.spouse.name.familyName)
+      await page.locator('#firstname').fill(declaration.spouse.name.firstname)
+      await page.locator('#surname').fill(declaration.spouse.name.surname)
 
       await page.getByLabel('Exact date of birth unknown').check()
+
       await page
-        .locator('#ageOfIndividualInYears')
+        .locator('#spouse____age')
         .fill(declaration.spouse.age.toString())
 
-      await page.locator('#nationality').click()
+      await page.locator('#spouse____nationality').click()
       await page
         .getByText(declaration.spouse.nationality, { exact: true })
         .click()
 
-      await page.locator('#spouseIdType').click()
-      await page
-        .getByText(declaration.spouse.identifier.type, { exact: true })
-        .click()
+      await page.locator('#spouse____idType').click()
+      await page.getByText(declaration.spouse.idType, { exact: true }).click()
 
       await page
-        .locator('#spousePassport')
-        .fill(declaration.spouse.identifier.id)
+        .locator('#spouse____passport')
+        .fill(declaration.spouse.passport)
 
-      await page.getByLabel('No', { exact: true }).check()
+      await page.locator('#spouse____addressSameAs_NO').check()
 
-      await page.locator('#statePrimarySpouse').click()
+      await page.locator('#province').click()
       await page
         .getByText(declaration.spouse.address.province, { exact: true })
         .click()
-      await page.locator('#districtPrimarySpouse').click()
+      await page.locator('#district').click()
       await page
         .getByText(declaration.spouse.address.district, { exact: true })
         .click()
-
+      await page.locator('#town').fill(declaration.spouse.address.town)
       await page
-        .locator('#cityPrimarySpouse')
-        .fill(declaration.spouse.address.town)
-      await page
-        .locator('#addressLine1UrbanOptionPrimarySpouse')
+        .locator('#residentialArea')
         .fill(declaration.spouse.address.residentialArea)
+      await page.locator('#street').fill(declaration.spouse.address.street)
+      await page.locator('#number').fill(declaration.spouse.address.number)
       await page
-        .locator('#addressLine2UrbanOptionPrimarySpouse')
-        .fill(declaration.spouse.address.street)
-      await page
-        .locator('#addressLine3UrbanOptionPrimarySpouse')
-        .fill(declaration.spouse.address.number)
-      await page
-        .locator('#postalCodePrimarySpouse')
+        .locator('#zipCode')
         .fill(declaration.spouse.address.postcodeOrZip)
 
       await continueForm(page)
     })
 
     test.describe('2.1.5 Upload supporting document', async () => {
-      test('2.1.5.0 Go To upload supporting document page', async () => {
-        await goToSection(page, 'documents')
-      })
-
       test('2.1.5.1 Upload proof for deceased', async () => {
         const imageUploadSectionTitles = [
           'National ID',
           'Passport',
-          'Birth certificate',
+          'Birth Certificate',
           'Other'
         ]
 
         for (const sectionTitle of imageUploadSectionTitles) {
           await uploadImageToSection({
             page,
-            sectionLocator: page.locator('#uploadDocForDeceased'),
+            sectionLocator: page.locator('#documents____proofOfDeceased'),
             sectionTitle,
-            buttonLocator: page.locator('button[name="uploadDocForDeceased"]')
+            buttonLocator: page.locator(
+              'button[name="documents____proofOfDeceased"]'
+            )
           })
         }
       })
@@ -312,16 +285,18 @@ test.describe.serial('2. Death declaration case - 2', () => {
         const imageUploadSectionTitles = [
           'National ID',
           'Passport',
-          'Birth certificate',
+          'Birth Certificate',
           'Other'
         ]
 
         for (const sectionTitle of imageUploadSectionTitles) {
           await uploadImageToSection({
             page,
-            sectionLocator: page.locator('#uploadDocForInformant'),
+            sectionLocator: page.locator('#documents____proofOfInformant'),
             sectionTitle,
-            buttonLocator: page.locator('button[name="uploadDocForInformant"]')
+            buttonLocator: page.locator(
+              'button[name="documents____proofOfInformant"]'
+            )
           })
         }
       })
@@ -339,10 +314,10 @@ test.describe.serial('2. Death declaration case - 2', () => {
         for (const sectionTitle of imageUploadSectionTitles) {
           await uploadImageToSection({
             page,
-            sectionLocator: page.locator('#uploadDocForDeceasedDeath'),
+            sectionLocator: page.locator('#documents____proofOfDeath'),
             sectionTitle,
             buttonLocator: page.locator(
-              'button[name="uploadDocForDeceasedDeath"]'
+              'button[name="documents____proofOfDeath"]'
             )
           })
         }
@@ -358,48 +333,52 @@ test.describe.serial('2. Death declaration case - 2', () => {
         for (const sectionTitle of imageUploadSectionTitles) {
           await uploadImageToSection({
             page,
-            sectionLocator: page.locator('#uploadDocForCauseOfDeath'),
+            sectionLocator: page.locator('#documents____proofOfCauseOfDeath'),
             sectionTitle,
             buttonLocator: page.locator(
-              'button[name="uploadDocForCauseOfDeath"]'
+              'button[name="documents____proofOfCauseOfDeath"]'
             )
           })
         }
+        await continueForm(page)
       })
     })
 
     test('2.1.6 Verify information on preview page', async () => {
-      await goToSection(page, 'preview')
       /*
        * Expected result: should include
        * - Deceased's First Name
        * - Deceased's Family Name
        * - Change button
        */
-      await expectTextWithChangeLink(page.locator('#deceased-content #Full'), [
-        declaration.deceased.name.firstNames,
-        declaration.deceased.name.familyName
-      ])
+      await expectRowValueWithChangeButton(
+        page,
+        'deceased.name',
+        declaration.deceased.name.firstname +
+          ' ' +
+          declaration.deceased.name.surname
+      )
 
       /*
        * Expected result: should include
        * - Deceased's Gender
        * - Change button
        */
-      await expectTextWithChangeLink(page.locator('#deceased-content #Sex'), [
+      await expectRowValueWithChangeButton(
+        page,
+        'deceased.gender',
         declaration.deceased.gender
-      ])
+      )
 
       /*
        * Expected result: should include
        * - Deceased's age
        * - Change button
        */
-      await expect(page.locator('#deceased-content #Age')).toContainText(
-        joinValuesWith([declaration.deceased.age, 'years'])
-      )
-      await expect(page.locator('#deceased-content #Age')).toContainText(
-        'Change'
+      await expectRowValueWithChangeButton(
+        page,
+        'deceased.age',
+        declaration.deceased.age.toString()
       )
 
       /*
@@ -407,31 +386,38 @@ test.describe.serial('2. Death declaration case - 2', () => {
        * - Deceased's Nationality
        * - Change button
        */
-      await expectTextWithChangeLink(
-        page.locator('#deceased-content #Nationality'),
-        [declaration.deceased.nationality]
+      await expectRowValueWithChangeButton(
+        page,
+        'deceased.nationality',
+        declaration.deceased.nationality
       )
+
       /*
        * Expected result: should include
        * - Deceased's Type of Id
        * - Deceased's Id Number
        * - Change button
        */
-      await expectTextWithChangeLink(page.locator('#deceased-content #Type'), [
-        declaration.deceased.identifier.type
-      ])
-      await expectTextWithChangeLink(page.locator('#deceased-content #ID'), [
-        declaration.deceased.identifier.id
-      ])
+      await expectRowValueWithChangeButton(
+        page,
+        'deceased.idType',
+        declaration.deceased.idType
+      )
+      await expectRowValueWithChangeButton(
+        page,
+        'deceased.passport',
+        declaration.deceased.passport
+      )
 
       /*
        * Expected result: should include
        * - Deceased's marital status
        * - Change button
        */
-      await expectTextWithChangeLink(
-        page.locator('#deceased-content #Marital'),
-        [declaration.deceased.maritalStatus]
+      await expectRowValueWithChangeButton(
+        page,
+        'deceased.maritalStatus',
+        declaration.deceased.maritalStatus
       )
 
       /*
@@ -439,21 +425,28 @@ test.describe.serial('2. Death declaration case - 2', () => {
        * - Deceased's address
        * - Change button
        */
-      await expectTextWithChangeLink(page.locator('#deceased-content #Usual'), [
-        declaration.deceased.address.country,
-        declaration.deceased.address.district,
-        declaration.deceased.address.province,
-        declaration.deceased.address.village
-      ])
+      await expectRowValueWithChangeButton(
+        page,
+        'deceased.address',
+        declaration.deceased.address.country +
+          declaration.deceased.address.province +
+          declaration.deceased.address.district +
+          declaration.deceased.address.town +
+          declaration.deceased.address.residentialArea +
+          declaration.deceased.address.street +
+          declaration.deceased.address.number +
+          declaration.deceased.address.postcodeOrZip
+      )
 
       /*
        * Expected result: should include
        * - Date of death
        * - Change button
        */
-      await expectTextWithChangeLink(
-        page.locator('#deathEvent-content #Date'),
-        [formatDateObjectTo_ddMMMMyyyy(declaration.event.date)]
+      await expectRowValueWithChangeButton(
+        page,
+        'eventDetails.date',
+        formatDateObjectTo_dMMMMyyyy(declaration.eventDetails.date)
       )
 
       /*
@@ -461,9 +454,10 @@ test.describe.serial('2. Death declaration case - 2', () => {
        * - Manner of death has been established
        * - Change button
        */
-      await expectTextWithChangeLink(
-        page.locator('#deathEvent-content #Manner'),
-        [declaration.event.manner]
+      await expectRowValueWithChangeButton(
+        page,
+        'eventDetails.mannerOfDeath',
+        declaration.eventDetails.mannerOfDeath
       )
 
       /*
@@ -471,9 +465,10 @@ test.describe.serial('2. Death declaration case - 2', () => {
        * - Cause of death has been established
        * - Change button
        */
-      await expectTextWithChangeLink(
-        page.locator('#deathEvent-content #Cause'),
-        ['Yes']
+      await expectRowValueWithChangeButton(
+        page,
+        'eventDetails.causeOfDeathEstablished',
+        'Yes'
       )
 
       /*
@@ -481,9 +476,10 @@ test.describe.serial('2. Death declaration case - 2', () => {
        * - Source cause of death
        * - Change button
        */
-      await expectTextWithChangeLink(
-        page.locator('#deathEvent-content #Source'),
-        [declaration.event.cause.source]
+      await expectRowValueWithChangeButton(
+        page,
+        'eventDetails.sourceCauseDeath',
+        declaration.eventDetails.sourceCauseDeath
       )
 
       /*
@@ -491,18 +487,21 @@ test.describe.serial('2. Death declaration case - 2', () => {
        * - Description cause of death
        * - Change button
        */
-      await expectTextWithChangeLink(
-        page.locator('#deathEvent-content #Description'),
-        [declaration.event.cause.description]
+      await expectRowValueWithChangeButton(
+        page,
+        'eventDetails.description',
+        declaration.eventDetails.description
       )
+
       /*
        * Expected result: should include
        * - Place of death
        * - Change button
        */
-      await expectTextWithChangeLink(
-        page.locator('#deathEvent-content #Place'),
-        [declaration.event.place]
+      await expectRowValueWithChangeButton(
+        page,
+        'eventDetails.placeOfDeath',
+        declaration.eventDetails.placeOfDeath
       )
 
       /*
@@ -510,9 +509,10 @@ test.describe.serial('2. Death declaration case - 2', () => {
        * - Informant type
        * - Change button
        */
-      await expectTextWithChangeLink(
-        page.locator('#informant-content #Informant'),
-        [declaration.informantType]
+      await expectRowValueWithChangeButton(
+        page,
+        'informant.relation',
+        declaration.informant.relation
       )
 
       /*
@@ -521,21 +521,23 @@ test.describe.serial('2. Death declaration case - 2', () => {
        * - Informant's Family Name
        * - Change button
        */
-      await expectTextWithChangeLink(page.locator('#informant-content #Full'), [
-        declaration.informant.name.firstNames,
-        declaration.informant.name.familyName
-      ])
+      await expectRowValueWithChangeButton(
+        page,
+        'informant.name',
+        declaration.informant.name.firstname +
+          ' ' +
+          declaration.informant.name.surname
+      )
 
       /*
        * Expected result: should include
        * - informant's date of birth
        * - Change button
        */
-      await expectTextWithChangeLink(page.locator('#informant-content #Date'), [
-        formatDateObjectTo_ddMMMMyyyy(declaration.informant.birthDate)
-      ])
-      await expect(page.locator('#informant-content #Date')).toContainText(
-        'Change'
+      await expectRowValueWithChangeButton(
+        page,
+        'informant.dob',
+        formatDateObjectTo_dMMMMyyyy(declaration.informant.dob)
       )
 
       /*
@@ -543,29 +545,37 @@ test.describe.serial('2. Death declaration case - 2', () => {
        * - informant's Nationality
        * - Change button
        */
-      await expectTextWithChangeLink(
-        page.locator('#informant-content #Nationality'),
-        [declaration.informant.nationality]
+      await expectRowValueWithChangeButton(
+        page,
+        'informant.nationality',
+        declaration.informant.nationality
       )
+
       /*
        * Expected result: should include
        * - informant's Type of Id
        * - informant's Id Number
        * - Change button
        */
-      await expectTextWithChangeLink(page.locator('#informant-content #Type'), [
-        declaration.informant.identifier.type
-      ])
-      await expectTextWithChangeLink(page.locator('#informant-content #ID'), [
-        declaration.informant.identifier.id
-      ])
+      await expectRowValueWithChangeButton(
+        page,
+        'informant.idType',
+        declaration.informant.idType
+      )
+      await expectRowValueWithChangeButton(
+        page,
+        'informant.nid',
+        declaration.informant.nid
+      )
 
       /*
        * Expected result: should include
        * - informant's address
        * - Change button
        */
-      await expect(page.locator('#informant-content #Same')).toContainText(
+      await expectRowValueWithChangeButton(
+        page,
+        'informant.addressSameAs',
         'Yes'
       )
 
@@ -574,9 +584,10 @@ test.describe.serial('2. Death declaration case - 2', () => {
        * - Informant's Email
        * - Change button
        */
-      await expectTextWithChangeLink(
-        page.locator('#informant-content #Email'),
-        [declaration.informantEmail]
+      await expectRowValueWithChangeButton(
+        page,
+        'informant.email',
+        declaration.informant.email
       )
 
       /*
@@ -585,66 +596,77 @@ test.describe.serial('2. Death declaration case - 2', () => {
        * - Spouse's Family Name
        * - Change button
        */
-      await expectTextWithChangeLink(page.locator('#spouse-content #Full'), [
-        declaration.spouse.name.firstNames,
-        declaration.spouse.name.familyName
-      ])
+      await expectRowValueWithChangeButton(
+        page,
+        'spouse.name',
+        declaration.spouse.name.firstname +
+          ' ' +
+          declaration.spouse.name.surname
+      )
 
       /*
        * Expected result: should include
        * - Spouse's age
        * - Change button
        */
-      await expectTextWithChangeLink(page.locator('#spouse-content #Age'), [
-        joinValuesWith([declaration.spouse.age, 'years'])
-      ])
+      await expectRowValueWithChangeButton(
+        page,
+        'spouse.age',
+        declaration.spouse.age.toString()
+      )
 
       /*
        * Expected result: should include
        * - Spouse's Nationality
        * - Change button
        */
-      await expectTextWithChangeLink(
-        page.locator('#spouse-content #Nationality'),
-        [declaration.spouse.nationality]
+      await expectRowValueWithChangeButton(
+        page,
+        'spouse.nationality',
+        declaration.spouse.nationality
       )
-
       /*
        * Expected result: should include
        * - Spouse's Type of Id
        * - Spouse's Id Number
        * - Change button
        */
-      await expectTextWithChangeLink(page.locator('#spouse-content #Type'), [
-        declaration.spouse.identifier.type
-      ])
-      await expectTextWithChangeLink(page.locator('#spouse-content #ID'), [
-        declaration.spouse.identifier.id
-      ])
+      await expectRowValueWithChangeButton(
+        page,
+        'spouse.idType',
+        declaration.spouse.idType
+      )
+      await expectRowValueWithChangeButton(
+        page,
+        'spouse.passport',
+        declaration.spouse.passport
+      )
 
       /*
        * Expected result: should include
        * - Spouse's address
        * - Change button
        */
-
-      await expectTextWithChangeLink(page.locator('#spouse-content #Usual'), [
-        declaration.spouse.address.country,
-        declaration.spouse.address.district,
-        declaration.spouse.address.province,
-        declaration.spouse.address.town,
-        declaration.spouse.address.residentialArea,
-        declaration.spouse.address.street,
-        declaration.spouse.address.number,
-        declaration.spouse.address.postcodeOrZip
-      ])
+      await expectRowValueWithChangeButton(
+        page,
+        'spouse.address',
+        declaration.spouse.address.country +
+          declaration.spouse.address.province +
+          declaration.spouse.address.district +
+          declaration.spouse.address.town +
+          declaration.spouse.address.residentialArea +
+          declaration.spouse.address.street +
+          declaration.spouse.address.number +
+          declaration.spouse.address.postcodeOrZip
+      )
     })
 
     test('2.1.7 Fill up informant signature', async () => {
-      await page.getByRole('button', { name: 'Sign' }).click()
-      await drawSignature(page)
+      await page.locator('#review____comment').fill(annotation.review.comment)
+      await page.getByRole('button', { name: 'Sign', exact: true }).click()
+      await drawSignature(page, 'review____signature_canvas_element', false)
       await page
-        .locator('#informantSignature_modal')
+        .locator('#review____signature_modal')
         .getByRole('button', { name: 'Apply' })
         .click()
     })
@@ -653,78 +675,82 @@ test.describe.serial('2. Death declaration case - 2', () => {
       await page.getByRole('button', { name: 'Send for review' }).click()
       await expect(page.getByText('Send for review?')).toBeVisible()
       await page.getByRole('button', { name: 'Confirm' }).click()
+      await ensureOutboxIsEmpty(page)
       await expect(page.getByText('Farajaland CRS')).toBeVisible()
 
       /*
-       * Expected result: should redirect to registration home
+       * Expected result: should redirect to assigned to you workqueue
        */
-      expect(page.url().includes('registration-home')).toBeTruthy()
+      expect(page.url().includes('assigned-to-you')).toBeTruthy()
 
-      await expectOutboxToBeEmpty(page)
-
-      await page.getByRole('button', { name: 'Sent for review' }).click()
+      await page.getByText('Sent for review').click()
 
       /*
        * Expected result: The declaration should be in sent for review
        */
       await expect(
         page.getByRole('button', {
-          name: `${declaration.deceased.name.firstNames} ${declaration.deceased.name.familyName}`
+          name:
+            declaration.deceased.name.firstname +
+            ' ' +
+            declaration.deceased.name.surname
         })
       ).toBeVisible()
     })
   })
-
   test.describe('2.2 Declaration Review by RA', async () => {
     test('2.2.1 Navigate to the declaration review page', async () => {
-      await login(
-        page,
-        CREDENTIALS.REGISTRATION_AGENT.USERNAME,
-        CREDENTIALS.REGISTRATION_AGENT.PASSWORD
-      )
-      await createPIN(page)
-      await page.getByRole('button', { name: 'Ready for review' }).click()
+      await login(page, CREDENTIALS.REGISTRATION_AGENT)
+
+      await ensureOutboxIsEmpty(page)
+      await page.getByText('Ready for review').click()
+
       await page
         .getByRole('button', {
-          name: `${declaration.deceased.name.firstNames} ${declaration.deceased.name.familyName}`
+          name:
+            declaration.deceased.name.firstname +
+            ' ' +
+            declaration.deceased.name.surname
         })
         .click()
-      await assignRecord(page)
-      await page.getByRole('button', { name: 'Action' }).first().click()
-      await getAction(page, 'Review declaration').click()
     })
 
     test('2.2.2 Verify information on review page', async () => {
+      await selectAction(page, 'Review')
       /*
        * Expected result: should include
        * - Deceased's First Name
        * - Deceased's Family Name
        * - Change button
        */
-      await expectTextWithChangeLink(page.locator('#deceased-content #Full'), [
-        declaration.deceased.name.firstNames,
-        declaration.deceased.name.familyName
-      ])
+      await expectRowValueWithChangeButton(
+        page,
+        'deceased.name',
+        declaration.deceased.name.firstname +
+          ' ' +
+          declaration.deceased.name.surname
+      )
 
       /*
        * Expected result: should include
        * - Deceased's Gender
        * - Change button
        */
-      await expectTextWithChangeLink(page.locator('#deceased-content #Sex'), [
+      await expectRowValueWithChangeButton(
+        page,
+        'deceased.gender',
         declaration.deceased.gender
-      ])
+      )
 
       /*
        * Expected result: should include
        * - Deceased's age
        * - Change button
        */
-      await expect(page.locator('#deceased-content #Age')).toContainText(
-        joinValuesWith([declaration.deceased.age, 'years'])
-      )
-      await expect(page.locator('#deceased-content #Age')).toContainText(
-        'Change'
+      await expectRowValueWithChangeButton(
+        page,
+        'deceased.age',
+        declaration.deceased.age.toString()
       )
 
       /*
@@ -732,31 +758,38 @@ test.describe.serial('2. Death declaration case - 2', () => {
        * - Deceased's Nationality
        * - Change button
        */
-      await expectTextWithChangeLink(
-        page.locator('#deceased-content #Nationality'),
-        [declaration.deceased.nationality]
+      await expectRowValueWithChangeButton(
+        page,
+        'deceased.nationality',
+        declaration.deceased.nationality
       )
+
       /*
        * Expected result: should include
        * - Deceased's Type of Id
        * - Deceased's Id Number
        * - Change button
        */
-      await expectTextWithChangeLink(page.locator('#deceased-content #Type'), [
-        declaration.deceased.identifier.type
-      ])
-      await expectTextWithChangeLink(page.locator('#deceased-content #ID'), [
-        declaration.deceased.identifier.id
-      ])
+      await expectRowValueWithChangeButton(
+        page,
+        'deceased.idType',
+        declaration.deceased.idType
+      )
+      await expectRowValueWithChangeButton(
+        page,
+        'deceased.passport',
+        declaration.deceased.passport
+      )
 
       /*
        * Expected result: should include
        * - Deceased's marital status
        * - Change button
        */
-      await expectTextWithChangeLink(
-        page.locator('#deceased-content #Marital'),
-        [declaration.deceased.maritalStatus]
+      await expectRowValueWithChangeButton(
+        page,
+        'deceased.maritalStatus',
+        declaration.deceased.maritalStatus
       )
 
       /*
@@ -764,21 +797,28 @@ test.describe.serial('2. Death declaration case - 2', () => {
        * - Deceased's address
        * - Change button
        */
-      await expectTextWithChangeLink(page.locator('#deceased-content #Usual'), [
-        declaration.deceased.address.country,
-        declaration.deceased.address.district,
-        declaration.deceased.address.province,
-        declaration.deceased.address.village
-      ])
+      await expectRowValueWithChangeButton(
+        page,
+        'deceased.address',
+        declaration.deceased.address.country +
+          declaration.deceased.address.province +
+          declaration.deceased.address.district +
+          declaration.deceased.address.town +
+          declaration.deceased.address.residentialArea +
+          declaration.deceased.address.street +
+          declaration.deceased.address.number +
+          declaration.deceased.address.postcodeOrZip
+      )
 
       /*
        * Expected result: should include
        * - Date of death
        * - Change button
        */
-      await expectTextWithChangeLink(
-        page.locator('#deathEvent-content #Date'),
-        [formatDateObjectTo_ddMMMMyyyy(declaration.event.date)]
+      await expectRowValueWithChangeButton(
+        page,
+        'eventDetails.date',
+        formatDateObjectTo_dMMMMyyyy(declaration.eventDetails.date)
       )
 
       /*
@@ -786,9 +826,10 @@ test.describe.serial('2. Death declaration case - 2', () => {
        * - Manner of death has been established
        * - Change button
        */
-      await expectTextWithChangeLink(
-        page.locator('#deathEvent-content #Manner'),
-        [declaration.event.manner]
+      await expectRowValueWithChangeButton(
+        page,
+        'eventDetails.mannerOfDeath',
+        declaration.eventDetails.mannerOfDeath
       )
 
       /*
@@ -796,9 +837,10 @@ test.describe.serial('2. Death declaration case - 2', () => {
        * - Cause of death has been established
        * - Change button
        */
-      await expectTextWithChangeLink(
-        page.locator('#deathEvent-content #Cause'),
-        ['Yes']
+      await expectRowValueWithChangeButton(
+        page,
+        'eventDetails.causeOfDeathEstablished',
+        'Yes'
       )
 
       /*
@@ -806,9 +848,10 @@ test.describe.serial('2. Death declaration case - 2', () => {
        * - Source cause of death
        * - Change button
        */
-      await expectTextWithChangeLink(
-        page.locator('#deathEvent-content #Source'),
-        [declaration.event.cause.source]
+      await expectRowValueWithChangeButton(
+        page,
+        'eventDetails.sourceCauseDeath',
+        declaration.eventDetails.sourceCauseDeath
       )
 
       /*
@@ -816,18 +859,21 @@ test.describe.serial('2. Death declaration case - 2', () => {
        * - Description cause of death
        * - Change button
        */
-      await expectTextWithChangeLink(
-        page.locator('#deathEvent-content #Description'),
-        [declaration.event.cause.description]
+      await expectRowValueWithChangeButton(
+        page,
+        'eventDetails.description',
+        declaration.eventDetails.description
       )
+
       /*
        * Expected result: should include
        * - Place of death
        * - Change button
        */
-      await expectTextWithChangeLink(
-        page.locator('#deathEvent-content #Place'),
-        [declaration.event.place]
+      await expectRowValueWithChangeButton(
+        page,
+        'eventDetails.placeOfDeath',
+        declaration.eventDetails.placeOfDeath
       )
 
       /*
@@ -835,9 +881,10 @@ test.describe.serial('2. Death declaration case - 2', () => {
        * - Informant type
        * - Change button
        */
-      await expectTextWithChangeLink(
-        page.locator('#informant-content #Informant'),
-        [declaration.informantType]
+      await expectRowValueWithChangeButton(
+        page,
+        'informant.relation',
+        declaration.informant.relation
       )
 
       /*
@@ -846,48 +893,61 @@ test.describe.serial('2. Death declaration case - 2', () => {
        * - Informant's Family Name
        * - Change button
        */
-      await expectTextWithChangeLink(page.locator('#informant-content #Full'), [
-        declaration.informant.name.firstNames,
-        declaration.informant.name.familyName
-      ])
+      await expectRowValueWithChangeButton(
+        page,
+        'informant.name',
+        declaration.informant.name.firstname +
+          ' ' +
+          declaration.informant.name.surname
+      )
 
       /*
        * Expected result: should include
        * - informant's date of birth
        * - Change button
        */
-      await expectTextWithChangeLink(page.locator('#informant-content #Date'), [
-        formatDateObjectTo_ddMMMMyyyy(declaration.informant.birthDate)
-      ])
+      await expectRowValueWithChangeButton(
+        page,
+        'informant.dob',
+        formatDateObjectTo_dMMMMyyyy(declaration.informant.dob)
+      )
 
       /*
        * Expected result: should include
        * - informant's Nationality
        * - Change button
        */
-      await expectTextWithChangeLink(
-        page.locator('#informant-content #Nationality'),
-        [declaration.informant.nationality]
+      await expectRowValueWithChangeButton(
+        page,
+        'informant.nationality',
+        declaration.informant.nationality
       )
+
       /*
        * Expected result: should include
        * - informant's Type of Id
        * - informant's Id Number
        * - Change button
        */
-      await expectTextWithChangeLink(page.locator('#informant-content #Type'), [
-        declaration.informant.identifier.type
-      ])
-      await expectTextWithChangeLink(page.locator('#informant-content #ID'), [
-        declaration.informant.identifier.id
-      ])
+      await expectRowValueWithChangeButton(
+        page,
+        'informant.idType',
+        declaration.informant.idType
+      )
+      await expectRowValueWithChangeButton(
+        page,
+        'informant.nid',
+        declaration.informant.nid
+      )
 
       /*
        * Expected result: should include
        * - informant's address
        * - Change button
        */
-      await expect(page.locator('#informant-content #Same')).toContainText(
+      await expectRowValueWithChangeButton(
+        page,
+        'informant.addressSameAs',
         'Yes'
       )
 
@@ -896,9 +956,10 @@ test.describe.serial('2. Death declaration case - 2', () => {
        * - Informant's Email
        * - Change button
        */
-      await expectTextWithChangeLink(
-        page.locator('#informant-content #Email'),
-        [declaration.informantEmail]
+      await expectRowValueWithChangeButton(
+        page,
+        'informant.email',
+        declaration.informant.email
       )
 
       /*
@@ -907,58 +968,69 @@ test.describe.serial('2. Death declaration case - 2', () => {
        * - Spouse's Family Name
        * - Change button
        */
-      await expectTextWithChangeLink(page.locator('#spouse-content #Full'), [
-        declaration.spouse.name.firstNames,
-        declaration.spouse.name.familyName
-      ])
+      await expectRowValueWithChangeButton(
+        page,
+        'spouse.name',
+        declaration.spouse.name.firstname +
+          ' ' +
+          declaration.spouse.name.surname
+      )
 
       /*
        * Expected result: should include
        * - Spouse's age
        * - Change button
        */
-      await expectTextWithChangeLink(page.locator('#spouse-content #Age'), [
-        joinValuesWith([declaration.spouse.age, 'years'])
-      ])
+      await expectRowValueWithChangeButton(
+        page,
+        'spouse.age',
+        declaration.spouse.age.toString()
+      )
 
       /*
        * Expected result: should include
        * - Spouse's Nationality
        * - Change button
        */
-      await expectTextWithChangeLink(
-        page.locator('#spouse-content #Nationality'),
-        [declaration.spouse.nationality]
+      await expectRowValueWithChangeButton(
+        page,
+        'spouse.nationality',
+        declaration.spouse.nationality
       )
-
       /*
        * Expected result: should include
        * - Spouse's Type of Id
        * - Spouse's Id Number
        * - Change button
        */
-      await expectTextWithChangeLink(page.locator('#spouse-content #Type'), [
-        declaration.spouse.identifier.type
-      ])
-      await expectTextWithChangeLink(page.locator('#spouse-content #ID'), [
-        declaration.spouse.identifier.id
-      ])
+      await expectRowValueWithChangeButton(
+        page,
+        'spouse.idType',
+        declaration.spouse.idType
+      )
+      await expectRowValueWithChangeButton(
+        page,
+        'spouse.passport',
+        declaration.spouse.passport
+      )
 
       /*
        * Expected result: should include
        * - Spouse's address
        * - Change button
        */
-      await expectTextWithChangeLink(page.locator('#spouse-content #Usual'), [
-        declaration.spouse.address.country,
-        declaration.spouse.address.district,
-        declaration.spouse.address.province,
-        declaration.spouse.address.town,
-        declaration.spouse.address.residentialArea,
-        declaration.spouse.address.street,
-        declaration.spouse.address.number,
-        declaration.spouse.address.postcodeOrZip
-      ])
+      await expectRowValueWithChangeButton(
+        page,
+        'spouse.address',
+        declaration.spouse.address.country +
+          declaration.spouse.address.province +
+          declaration.spouse.address.district +
+          declaration.spouse.address.town +
+          declaration.spouse.address.residentialArea +
+          declaration.spouse.address.street +
+          declaration.spouse.address.number +
+          declaration.spouse.address.postcodeOrZip
+      )
     })
   })
 })

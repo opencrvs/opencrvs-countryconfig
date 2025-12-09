@@ -1,14 +1,30 @@
 import { expect, test, type Page } from '@playwright/test'
-import { DeathDeclaration } from '../../death/types'
-import { getDeathDeclarationForPrintCertificate } from './certificate-helper'
-import { format } from 'date-fns'
-import { CLIENT_URL } from '../../../constants'
+import { getToken, login } from '../../../helpers'
+import { CREDENTIALS } from '../../../constants'
+import {
+  createDeclaration,
+  Declaration
+} from '../../test-data/death-declaration'
+import {
+  navigateToCertificatePrintAction,
+  selectCertificationType,
+  selectRequesterType
+} from './helpers'
+import { expectInUrl } from '../../../utils'
 
 test.describe.serial('7.0 Validate "Certify record" page', () => {
-  let declaration: DeathDeclaration
+  let eventId: string
   let page: Page
+  let declaration: Declaration
 
   test.beforeAll(async ({ browser }) => {
+    const token = await getToken(
+      CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
+      CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+    )
+    const res = await createDeclaration(token)
+    eventId = res.eventId
+    declaration = res.declaration
     page = await browser.newPage()
   })
 
@@ -16,63 +32,44 @@ test.describe.serial('7.0 Validate "Certify record" page', () => {
     await page.close()
   })
 
+  test('7.0.1 Log in', async () => {
+    await login(page)
+  })
+
+  test('7.0.2 Navigate to certificate print action', async () => {
+    await page.getByRole('button', { name: 'Ready to print' }).click()
+    await navigateToCertificatePrintAction(page, declaration)
+  })
+
   test('7.1 continue with "Print and issue to informant (Spouse)" redirect to Collector details page', async () => {
-    const response = await getDeathDeclarationForPrintCertificate(page)
-    declaration = response.declaration
-    await page
-      .locator('#certificateTemplateId-form-input > span')
-      .first()
-      .click()
-    await page.getByText('Death Certificate', { exact: true }).click()
-    await page.getByLabel('Print and issue to informant (Spouse)').check()
+    await selectCertificationType(page, 'Death Certificate')
+    await selectRequesterType(page, 'Print and issue to Informant (Spouse)')
     await page.getByRole('button', { name: 'Continue' }).click()
-    await expect(
-      page.url().includes(`/print/check/${declaration.id}/death/informant`)
-    ).toBeTruthy()
-
-    await page.getByRole('button', { name: 'Verified' }).click()
-    await expect(
-      page.url().includes(`/print/payment/${declaration.id}/death`)
-    ).toBeTruthy()
-
-    await expect(page.locator('#content-name')).toContainText('Collect payment')
-    await expect(page.locator('#service')).toContainText(
-      'Death registration before 45 days of date of death'
+    await expectInUrl(
+      page,
+      `/print-certificate/${eventId}/pages/collector.identity.verify`
     )
-    await expect(page.locator('#amountDue')).toContainText('$3.00')
-    await expect(page.locator('#Continue')).toBeVisible()
+    await page.getByRole('button', { name: 'Verified' }).click()
+    await expectInUrl(
+      page,
+      `/print-certificate/${eventId}/pages/collector.collect.payment`
+    )
+
+    await expect(page.locator('#content-name')).toContainText('Collect Payment')
+    await expect(
+      page.getByText('Death registration before 45 days of date of death')
+    ).toBeVisible()
+    await expect(page.getByText('$5.00')).toBeVisible()
   })
 
   test('7.2 should navigate to ready to certify page on continue button click', async () => {
-    await page.locator('#Continue').click()
-    await expect(
-      page.url().includes(`/review/${declaration.id}/death`)
-    ).toBeTruthy()
-  })
-
-  test('7.3 should skip payment page if payment is 0', async () => {
-    await page.goto(`${CLIENT_URL}/registration-home/print/1`)
-    const response = await getDeathDeclarationForPrintCertificate(page, {
-      event: { date: format(new Date(), 'yyyy-MM-dd') },
-      isLoggedIn: true
-    })
-    declaration = response.declaration
-    await page
-      .locator('#certificateTemplateId-form-input > span')
-      .first()
-      .click()
-    await page
-      .getByText('Death Certificate Certified Copy', { exact: true })
-      .click()
-    await page.getByLabel('Print and issue to informant (Spouse)').check()
     await page.getByRole('button', { name: 'Continue' }).click()
-    await expect(
-      page.url().includes(`/print/check/${declaration.id}/death/informant`)
-    ).toBeTruthy()
-
-    await page.getByRole('button', { name: 'Verified' }).click()
-    await expect(
-      page.url().includes(`/review/${declaration.id}/death`)
-    ).toBeTruthy()
+    await expectInUrl(
+      page,
+      `/print-certificate/${eventId}/review?templateId=v2.death-certificate`
+    )
   })
+
+  // @TODO: this is not implemented in events v2 yet
+  test.skip('7.3 should skip payment page if payment is 0', async () => {})
 })

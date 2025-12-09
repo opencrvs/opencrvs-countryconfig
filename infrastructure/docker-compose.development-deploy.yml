@@ -24,6 +24,7 @@ services:
       - SMTP_USERNAME=${SMTP_USERNAME}
       - SMTP_PASSWORD=${SMTP_PASSWORD}
       - SMTP_SECURE=${SMTP_SECURE}
+      - V2_EVENTS=true
     deploy:
       replicas: 1
     networks:

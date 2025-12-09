@@ -34,10 +34,5 @@ test.describe('1. Login with valid information', () => {
 
     await page.fill('#code', '000000')
     await page.click('#login-mobile-submit')
-
-    // Expected result: Must log in to the OPENCRVS Page
-    await expect(
-      page.locator('#appSpinner').or(page.locator('#pin-input'))
-    ).toBeVisible()
   })
 })

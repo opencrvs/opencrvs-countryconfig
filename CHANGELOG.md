@@ -1,5 +1,67 @@
 # Changelog
 
+## 1.9.2
+
+### New features
+
+- Certificate templates now support multi-page SVGs using <g data-page="X">...</g>, allowing implementors to configure and render multi-page certificates.
+- Birth certificate PDF export now omits header, footer, and QR code; example SVG updated for security-paper templates.
+
+## 1.9.1
+
+### Breaking changes
+
+- **Remove Unused Scopes**: Removed `RECORD_PRINT_RECORDS_SUPPORTING_DOCUMENTS` and `RECORD_EXPORT_RECORDS` scopes from `REGISTRATION_AGENT`, `LOCAL_REGISTRAR` and `NATIONAL_REGISTRAR`
+
+- **Field Configuration Change**: Updated country configuration to match the new `QUERY_PARAM_READER` structure.
+  Query parameters are now accessed under `data.*` (e.g. `data.code`, `data.state`)
+  instead of at the root.
+
+  This affects redirect callback handling. Update any manual testing URLs
+  or integration environment redirects to use the new structure
+
+### Improvements
+
+- Make encryption step optional [#1123](https://github.com/opencrvs/opencrvs-countryconfig/pull/1123)
+- Added validation for ENCRYPTION_KEY [#10896](https://github.com/opencrvs/opencrvs-core/issues/10896)
+
+## 1.9.0
+
+### New features
+
+- Render number of copies printed count on a certificate template. [#7586](https://github.com/opencrvs/opencrvs-core/issues/7586)
+- **Certificate Template Conditionals**: Added support for conditional filtering of certificate templates based on declaration form data and event metadata using JSON Schema validation. Templates can now be dynamically shown or hidden based on specific criteria such as demographics, registration status, action history, and regional variations. Includes helper functions for improved readability and maintainability. See [Certificate Template Conditionals documentation](docs/CERTIFICATE_TEMPLATE_CONDITIONALS.md) for implementation details. [#7585](https://github.com/opencrvs/opencrvs-core/issues/7585)
+
+### Improvements
+
+- **Upgrade node version to 22**
+
+  This version enforces environment to have Node 22 installed (supported until 30 April 2027) and removes support for Node 18 for better performance and using [new features](https://github.com/nodejs/node/releases/tag/v22.0.0) offered by NodeJS
+
+  - Use nvm to upgrade your local development environment to use node version `22.x.x.`
+  - Add conditions for the certified copy certificate to ensure it's only available to children who are 1 year or older. [#9684](https://github.com/opencrvs/opencrvs-core/issues/9684)
+  - Available disk space in root file system alert adjusted to fire when 20GB are remaining, rather than when diskspace usage is at 70%.
+
+- **Upgraded MinIO** to RELEASE.2025-06-13T11-33-47Z and MinIO Client (mc) to RELEASE.2025-05-21T01-59-54Z and ensured compatibility across both amd64 and arm64 architectures.
+
+- Remove the remnants of OpenHIM from the backup & restore scripts. [#9732](https://github.com/opencrvs/opencrvs-core/issues/9732)
+
+- Store system monitoring data for 1 month [#10515](https://github.com/opencrvs/opencrvs-core/issues/10515)
+
+- Restricted filesystem usage for journal service and file rotation strategy [#10518](https://github.com/opencrvs/opencrvs-core/issues/10518))
+- Tiltfile: Improved Kubernetes support for development environment [#10672](https://github.com/opencrvs/opencrvs-core/issues/10672)
+
+### Bug fixes
+
+- Allow non-interactive upgrades with apt [#10204](https://github.com/opencrvs/opencrvs-core/issues/10204)
+- Don't restart events service after data cleanup [#10704](https://github.com/opencrvs/opencrvs-core/issues/10704)
+
+## 1.8.1
+
+### Bug fixes
+
+- Ensure that place of birth/death only shows active facilities/offices on the form [#9311](https://github.com/opencrvs/opencrvs-core/issues/9311)
+
 ## 1.8.0
 
 ### New features
@@ -19,6 +81,12 @@
 
 - Added `swarm` tag to all tasks within the `swarm.yaml` playbook, previously it was missing. [#9252](https://github.com/opencrvs/opencrvs-core/issues/9252)
 - Restrict supported key exchange, cipher and MAC algorithms for SSH configuration [#7542](https://github.com/opencrvs/opencrvs-core/issues/7542)
+
+## [1.7.4](https://github.com/opencrvs/opencrvs-core/compare/v1.7.3...v1.7.4)
+
+### Bug fixes
+
+- Remove special characters from role ids on generation [#10049](https://github.com/opencrvs/opencrvs-core/issues/10049)
 
 ## 1.7.3
 
@@ -83,7 +151,7 @@ In order to make the upgrade easier, there are a couple of steps that need to be
 ### Breaking changes
 
 - `INFORMANT_SIGNATURE` & `INFORMANT_SIGNATURE_REQUIRED` are now deprecated
-- Existing implementations relying on database-stored SVGs need to be updated to use the new configuration-based approach. Default certificate templates must be created for each event type, following the convention `${event}-certificate` as the certificate template ID.
+- Existing implementations relying on database-stored SVGs need to be updated to use the new configuration-based approach. A migration needs to be run (defined in [migration](https://github.com/opencrvs/opencrvs-core/pull/7813/files#diff-e5472dec87399bb9f73f75ec379ceb6a32ca135bc01dd8d0eb8f7d7aaa0bc0b1)), and default certificate templates must be created for each event type, following the convention `${event}-certificate` as the certificate template ID.
 - **Roles** The previous `roles.csv` file has been deprecated. It will get removed once you run the upgrade command before pulling in the v1.7 changes. The command automatically generates a `roles.ts` file which can be used as a baseline to configure the roles as per your requirements.
 - **Github runners upgraded** to latest Ubuntu LTS release 24.04 [#7045](https://github.com/opencrvs/opencrvs-core/issues/7045) and apply sticky node version from .nvmrc [#423](https://github.com/opencrvs/opencrvs-countryconfig/pull/423)
 
@@ -198,7 +266,7 @@ reviewAction.reject,The label for reject button of review action,Reject
 reviewAction.title,The title for review action,Register member
 userRole.fieldAgent,Name for user role Field Agent,Field Agent
 userRole.healthcareWorker,Name for user role Healthcare Worker,Healthcare Worker
-userRole.localLeader,Name for user role Local Leader,Local Leader
+userRole.communityLeader,Name for user role Community Leader,Community Leader
 userRole.localRegistrar,Name for user role Local Registrar,Local Registrar
 userRole.localSystemAdmin,Name for user role Local System Admin,Local System Admin
 userRole.nationalRegistrar,Name for user role National Registrar,National Registrar
@@ -206,7 +274,7 @@ userRole.nationalSystemAdmin,Name for user role National System Admin,National S
 userRole.performanceManager,Name for user role Performance Manager,Performance Manager
 userRole.policeOfficer,Name for user role Police Officer,Police Officer
 userRole.registrationAgent,Name for user role Registration Agent,Registration Agent
-userRole.socialWorker,Name for user role Social Worker,Social Worker
+userRole.hospitalClerk,Name for user role Hospital Clerk,Hospital Clerk
 validations.isAgeInYearsBetween,The error message that appears when age for the given date is outside the legal age range,Age must be between {min} and {max} years.
 wq.noRecords.draft,No records messages for empty draft tab,No records in my drafts
 ```
@@ -226,9 +294,11 @@ wq.noRecords.draft,No records messages for empty draft tab,No records in my draf
 ## 1.6.2
 
 ### New features
+
 - Added a local virtual machine setup for testing Ansible playbooks locally (on MacOS and Ubuntu ). Check [provision.ipynb](infrastructure/local-development/provision.ipynb) for more details.
 
 ### Bug Fixes
+
 - Fixed `trigger-e2e-environment` workflow failing to run due to a missing env variable & accessing a deprecated property
 
 ## 1.6.1
@@ -541,6 +611,7 @@ In the next OpenCRVS release v1.5.0, there will be two significant changes:
 ### New features
 
 - #### Greater customizability of location data in certificates
+
   The various admin level handlebars e.g. **statePlaceofbirth**,
   **districtPrimaryMother** only contained the name of that location which was
   not able to take advantage of all the information OpenCRVS had available

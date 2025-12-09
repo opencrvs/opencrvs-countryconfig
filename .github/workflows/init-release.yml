@@ -1,0 +1,60 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+#
+# OpenCRVS is also distributed under the terms of the Civil Registration
+# & Healthcare Disclaimer located at http://opencrvs.org/license.
+#
+# Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
+name: Release - Start a new release 
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        type: string
+        required: true
+        description: "Version to release"
+  
+jobs:
+  release_workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Determine the Base Branch
+        id: get_base_branch
+        run: |
+          version="${{ inputs.version }}"
+
+          if [[ ! $version =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Invalid version was provided as input: $version" >&2
+            echo "Please follow semver format for versioning, e/g 1.7.2"
+            exit 1
+          fi
+
+          IFS='.' read -r x y z <<< "$version"
+          if [ "$z" = "0" ]; then
+            base_branch="develop"
+          else
+            previous_version="$((x)).$((y)).$((z-1))"
+            base_branch="release/$previous_version"
+            if ! git ls-remote --exit-code --heads origin $base_branch; then
+              echo "The branch $base_branch does not exist. Please create it before starting a new Hot-fix release." >> GITHUB_STEP_SUMMARY
+              exit 1
+            fi
+          fi
+          echo "base_branch=$base_branch" >> $GITHUB_OUTPUT
+      
+      - name: Create a new release branch
+        run: |
+          git checkout $base_branch
+          version="${{ inputs.version }}"
+          release_branch="release/$version"
+          git checkout -b $release_branch
+          git push origin $release_branch
+
+
+    

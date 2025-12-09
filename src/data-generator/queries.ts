@@ -196,13 +196,11 @@ export const MARK_DEATH_AS_CERTIFIED = print(gql`
   }
 `)
 
-export const MARK_BIRTH_AS_ISSUED = print(
-  gql`
-    mutation markBirthAsIssued($id: ID!, $details: BirthRegistrationInput!) {
-      markBirthAsIssued(id: $id, details: $details)
-    }
-  `
-)
+export const MARK_BIRTH_AS_ISSUED = print(gql`
+  mutation markBirthAsIssued($id: ID!, $details: BirthRegistrationInput!) {
+    markBirthAsIssued(id: $id, details: $details)
+  }
+`)
 
 export const MARK_DEATH_AS_ISSUED = print(gql`
   mutation markDeathAsIssued($id: ID!, $details: DeathRegistrationInput!) {

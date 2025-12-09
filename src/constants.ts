@@ -12,6 +12,7 @@ import { env } from './environment'
 
 export const TEST_SOURCE = `${process.cwd()}/src/tests/`
 export const DEFAULT_TIMEOUT = 600000
+export const SEVEN_DAYS_IN_MILISECOND = 1000 * 60 * 60 * 24 * 7
 
 export const DOMAIN = env.DOMAIN
 export const GATEWAY_URL = env.GATEWAY_URL
@@ -30,9 +31,9 @@ export const CHECK_INVALID_TOKEN = env.CHECK_INVALID_TOKEN
 
 export const PRODUCTION = env.isProd
 export const QA_ENV = env.QA_ENV
-
-// E-Signet
 export const ESIGNET_REDIRECT_URL = env.ESIGNET_REDIRECT_URL
 export const OPENID_PROVIDER_CLIENT_ID = env.OPENID_PROVIDER_CLIENT_ID
 export const OPENID_PROVIDER_CLAIMS = env.OPENID_PROVIDER_CLAIMS
 export const MOSIP_API_USERINFO_URL = env.MOSIP_API_USERINFO_URL
+export const ANALYTICS_DATABASE_URL = env.ANALYTICS_DATABASE_URL
+export const MOSIP_INTEROP_URL = env.MOSIP_INTEROP_URL

@@ -36,3 +36,9 @@ graphql.schema.json
 /blob-report/
 /playwright/.cache/
 notebooks
+
+ctrf/
+
+infrastructure/provision-server/hetzner-cloud-empty-server/.terraform*
+infrastructure/provision-server/hetzner-cloud-empty-server/terraform*
+infrastructure/provision-server/hetzner-cloud-empty-server/.ssh

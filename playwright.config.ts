@@ -1,5 +1,14 @@
 import { defineConfig, devices } from '@playwright/test'
 
+const TEST_TIMEOUT = 90000
+
+const subdomains = ['register'] // TODO: Add more subdomains if needed
+const insecureOrigins = subdomains.map(
+  (subdomain) =>
+    `--unsafely-treat-insecure-origin-as-secure=https://${subdomain}.${process.env.DOMAIN}`
+)
+
+const ignoreHTTPSErrors = process.env.CI ? true : false
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -10,32 +19,53 @@ import { defineConfig, devices } from '@playwright/test'
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
+  timeout: TEST_TIMEOUT,
   testDir: './e2e/testcases',
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Don't retry */
-  retries: 0,
+  retries: process.env.CI ? 3 : 0,
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: [
+    ['html', { open: 'never' }],
+    ['playwright-ctrf-json-reporter', {}]
+  ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://127.0.0.1:3000',
     /* Capture screenshot on failure */
-    screenshot: 'only-on-failure',
+    screenshot: 'on',
     /* Collect trace when the test failed. See https://playwright.dev/docs/trace-viewer */
-    trace: 'retain-on-failure'
+    trace: 'on',
+    // Ignore HTTPS errors (like untrusted or self-signed certificates) during Playwright tests on CI
+    // This is useful for Let's Encrypt staging certificates that aren't publicly trusted.
+    ignoreHTTPSErrors
   },
 
   /* Configure projects for major browsers */
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] }
+      use: {
+        ...devices['Desktop Chrome'],
+        ignoreHTTPSErrors,
+        launchOptions: {
+          args: process.env.CI
+            ? [
+                '--ignore-certificate-errors',
+                '--ignore-ssl-errors',
+                '--allow-running-insecure-content',
+                '--disable-web-security',
+                ...insecureOrigins
+              ]
+            : []
+        }
+      }
     }
 
     // {

@@ -15,5 +15,5 @@ export const createSelectOptions = <
 export const emptyMessage = {
   defaultMessage: '',
   description: 'empty string',
-  id: 'v2.messages.emptyString'
+  id: 'messages.emptyString'
 }

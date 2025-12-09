@@ -2,6 +2,7 @@ import { Locator, Page, expect } from '@playwright/test'
 import {
   AUTH_URL,
   CLIENT_URL,
+  CREDENTIALS,
   GATEWAY_HOST,
   SAFE_INPUT_CHANGE_TIMEOUT_MS,
   SAFE_OUTBOX_TIMEOUT_MS
@@ -9,20 +10,54 @@ import {
 import { format, parseISO } from 'date-fns'
 import { isArray, random } from 'lodash'
 import fetch from 'node-fetch'
+import { isMobile } from './mobile-helpers'
 
-export async function login(page: Page, username: string, password: string) {
-  const token = await getToken(username, password)
-  await page.goto(`${CLIENT_URL}?token=${token}`)
-  await expect(
-    page.locator('#appSpinner').or(page.locator('#pin-input'))
-  ).toBeVisible()
-}
-
-export async function createPIN(page: Page) {
+async function createPIN(page: Page) {
   await page.click('#pin-input')
   for (let i = 1; i <= 8; i++) {
     await page.type('#pin-input', `${i % 2}`)
   }
+}
+
+export async function logout(page: Page) {
+  if (isMobile(page)) {
+    await page.goto(CLIENT_URL)
+    await page.getByRole('button', { name: 'Toggle menu', exact: true }).click()
+    await page.getByRole('button', { name: 'Logout', exact: true }).click()
+    return
+  }
+
+  await page.locator('#ProfileMenu-dropdownMenu').click()
+  await page
+    .locator('#ProfileMenu-dropdownMenu')
+    .getByRole('listitem')
+    .filter({
+      hasText: new RegExp('Logout')
+    })
+    .click()
+  await page.context().clearCookies()
+}
+
+export async function login(
+  page: Page,
+  credentials = CREDENTIALS.LOCAL_REGISTRAR,
+  skipPin?: boolean
+) {
+  const token = await getToken(credentials.USERNAME, credentials.PASSWORD)
+  expect(token).toBeDefined()
+  await page.goto(`${CLIENT_URL}?token=${token}`)
+
+  await expect(
+    page.locator('#appSpinner').or(page.locator('#pin-input'))
+  ).toBeVisible()
+
+  if (!skipPin) {
+    await createPIN(page)
+  }
+
+  await page.goto(CLIENT_URL)
+
+  return token
 }
 
 export async function getToken(username: string, password: string) {
@@ -53,6 +88,7 @@ export async function getToken(username: string, password: string) {
   })
 
   const verifyBody = await verifyResponse.json()
+
   return verifyBody.token
 }
 
@@ -84,12 +120,13 @@ type DeclarationSection =
   | 'witnessOne'
   | 'witnessTwo'
 type CorrectionSection = 'summary'
+type V2ReviewSection = 'review'
 
 export const goToSection = async (
   page: Page,
-  section: DeclarationSection | CorrectionSection
+  section: DeclarationSection | CorrectionSection | V2ReviewSection
 ) => {
-  while (!page.url().includes(section)) {
+  while (!page.url().includes(`/${section}`)) {
     await page.getByRole('button', { name: 'Continue' }).click()
   }
 }
@@ -221,7 +258,7 @@ export const expectAddress = async (
 }
 
 /*
-  The deletion section is formatted like bellow:
+  The deletion section is formatted like below:
   	'-'
     'Farajaland'
     'Central'
@@ -270,6 +307,9 @@ export const formatDateTo_yyyyMMdd = (date: string) =>
 export const formatDateTo_ddMMMMyyyy = (date: string) =>
   format(parseISO(date), 'dd MMMM yyyy')
 
+export const formatDateTo_dMMMMyyyy = (date: string) =>
+  format(parseISO(date), 'd MMMM yyyy')
+
 /*
   Date() object takes 0-indexed month,
   but month coming to the method is 1-indexed
@@ -283,6 +323,20 @@ export const formatDateObjectTo_ddMMMMyyyy = ({
   mm: string
   dd: string
 }) => format(new Date(Number(yyyy), Number(mm) - 1, Number(dd)), 'dd MMMM yyyy')
+
+/*
+  Date() object takes 0-indexed month,
+  but month coming to the method is 1-indexed
+*/
+export const formatDateObjectTo_dMMMMyyyy = ({
+  yyyy,
+  mm,
+  dd
+}: {
+  yyyy: string
+  mm: string
+  dd: string
+}) => format(new Date(Number(yyyy), Number(mm) - 1, Number(dd)), 'd MMMM yyyy')
 
 /*
   Date() object takes 0-indexed month,
@@ -306,24 +360,31 @@ export const joinValuesWith = (
 }
 
 type PersonOrName = {
-  firstNames: string
-  familyName: string
+  firstNames?: string
+  familyName?: string
   [key: string]: any
 }
 export const formatName = (name: PersonOrName) => {
-  return joinValuesWith([name.firstNames, name.familyName])
+  const nameArray = []
+  if (name.firstNames) nameArray.push(name.firstNames)
+  if (name.familyName) nameArray.push(name.familyName)
+  return joinValuesWith(nameArray)
 }
 
 export const drawSignature = async (
   page: Page,
   modalLocator:
+    | 'review____signature_canvas_element'
     | 'brideSignature_modal'
     | 'groomSignature_modal'
     | 'witnessOneSignature_modal'
     | 'witnessTwoSignature_modal'
-    | 'informantSignature_modal' = 'informantSignature_modal'
+    | 'informantSignature_modal' = 'informantSignature_modal',
+  includeCanvas: boolean = true
 ) => {
-  const canvasLocator = `#${modalLocator} canvas`
+  const canvasLocator = includeCanvas
+    ? `#${modalLocator} canvas`
+    : `#${modalLocator}`
 
   const canvas = page.locator(canvasLocator)
   const rect = await canvas.boundingBox()
@@ -380,12 +441,15 @@ export const generateRandomSuffix = () => {
 }
 
 type ActionMenuOptions =
+  | 'Assign'
   | 'Correct record'
   | 'Print certified copy'
   | 'Review declaration'
   | 'Update declaration'
   | 'Review correction request'
-  | 'View record'
+  | 'View'
+  | 'Validate'
+  | 'Review'
 
 export const getAction = (page: Page, option: ActionMenuOptions) => {
   return page
@@ -402,4 +466,104 @@ export const assignRecord = async (page: Page) => {
     await page.getByRole('button', { name: 'Assign', exact: true }).isVisible()
   )
     await page.getByRole('button', { name: 'Assign', exact: true }).click()
+}
+
+/**
+  Opens the record audit view of a record with given trackingId or name
+ */
+export const auditRecord = async ({
+  page,
+  trackingId,
+  name
+}: {
+  page: Page
+  trackingId?: string
+  name: string
+}) => {
+  if (trackingId) {
+    await page
+      .getByRole('textbox', { name: 'Search for a tracking ID' })
+      .fill(trackingId)
+
+    await page.getByRole('button', { name: 'Search' }).click()
+    await page.getByRole('button', { name, exact: true }).click()
+  } else {
+    await page.locator('#searchType').getByText('Tracking ID').click()
+    await page.locator('li:has(svg) >> text=Name').click()
+    await page.getByRole('textbox', { name: 'Search for a name' }).fill(name)
+    await page.getByRole('button', { name: 'Search' }).click()
+    await page.getByRole('button', { name, exact: true }).click()
+  }
+}
+
+const post = async <T = any>({
+  query,
+  variables,
+  headers
+}: {
+  query: string
+  variables: Record<string, any>
+  headers: Record<string, any>
+}) => {
+  const response = await fetch(`${GATEWAY_HOST}/graphql`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      ...headers
+    },
+    body: JSON.stringify({
+      variables,
+      query
+    })
+  })
+
+  if (!response.ok) {
+    throw new Error(`not ok: ${await response.text()}`)
+  }
+
+  return response.json() as Promise<{ data: T }>
+}
+
+type GetUser = {
+  getUser: {
+    primaryOffice: {
+      hierarchy: Array<{
+        id: string
+      }>
+    }
+  }
+}
+
+export const fetchUserLocationHierarchy = async (
+  userId: string,
+  { headers }: { headers: Record<string, any> }
+) => {
+  const res = await post<GetUser>({
+    query: /* GraphQL */ `
+      query fetchUser($userId: String!) {
+        getUser(userId: $userId) {
+          primaryOffice {
+            hierarchy {
+              id
+            }
+          }
+        }
+      }
+    `,
+    variables: { userId },
+    headers
+  })
+  return res.data.getUser.primaryOffice.hierarchy.map(({ id }) => id)
+}
+
+export async function expectRowValueWithChangeButton(
+  page: Page,
+  fieldName: string,
+  assertionText: string
+) {
+  await expect(page.getByTestId(`row-value-${fieldName}`)).toContainText(
+    assertionText
+  )
+
+  await expect(page.getByTestId(`change-button-${fieldName}`)).toBeVisible()
 }
