@@ -221,6 +221,7 @@ export const roles: Role[] = [
       'record.register[event=birth|death|tennis-club-membership]',
       'record.registered.print-certified-copies[event=birth|death|tennis-club-membership]',
       'record.registered.correct[event=birth|death|tennis-club-membership]',
+      'record.custom-action[event=birth,customActionType=ESCALATE]',
       'record.unassign-others[event=birth|death|tennis-club-membership]'
     ]
   },
@@ -323,6 +324,7 @@ export const roles: Role[] = [
       'record.register[event=birth|death|tennis-club-membership]',
       'record.registered.print-certified-copies[event=birth|death|tennis-club-membership]',
       'record.registered.correct[event=birth|death|tennis-club-membership]',
+      'record.custom-action[event=birth, customActionType=REGISTRAR-GENERAL-FEEDBACK]',
       'record.unassign-others[event=birth|death|tennis-club-membership]'
     ]
   },
@@ -336,6 +338,7 @@ export const roles: Role[] = [
     scopes: [
       'record.read[event=birth|death|tennis-club-membership]',
       'record.custom-action[event=birth,customActionType=APPROVE_DECLARATION]',
+      'record.custom-action[event=birth, customActionType=PROVINCIAL-REGISTER-FEEDBACK]',
       'workqueue[id=late-registration-approval-required|recent]',
       'search[event=birth,access=all]',
       'record.unassign-others[event=birth]'
