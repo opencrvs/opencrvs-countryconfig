@@ -1,8 +1,7 @@
 import {
   MOSIP_API_USERINFO_URL,
   OPENID_PROVIDER_CLIENT_ID,
-  ESIGNET_REDIRECT_URL,
-  DOMAIN
+  ESIGNET_REDIRECT_URL
 } from '@countryconfig/constants'
 import {
   FieldConditional,
