@@ -68,6 +68,15 @@ export const birthEvent = defineConfig({
         description: 'Flag label for validated'
       },
       requiresAction: true
+    },
+    {
+      id: 'pending-certified-copy-issuance',
+      label: {
+        id: 'event.birth.flag.pending-certified-copy-issuance',
+        defaultMessage: 'Pending certified copy issuance',
+        description: 'Flag label for pending certified copy issuance'
+      },
+      requiresAction: true
     }
   ],
   summary: {
@@ -348,6 +357,15 @@ export const birthEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.birth.action.collect-certificate.label'
       },
+      flags: [
+        {
+          id: 'pending-certified-copy-issuance',
+          operation: 'add',
+          conditional: field('collector.requesterId').isEqualTo(
+            'PRINT_IN_ADVANCE'
+          )
+        }
+      ],
       printForm: BIRTH_CERTIFICATE_COLLECTOR_FORM
     },
     {
