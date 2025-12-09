@@ -788,5 +788,60 @@ exports[`Workqueue config > should match the snapshot (Workqueue integrity) 1`] 
     },
     "slug": "ready-to-print",
   },
+  {
+    "actions": [
+      {
+        "conditionals": [],
+        "type": "DEFAULT",
+      },
+    ],
+    "columns": [
+      {
+        "label": {
+          "defaultMessage": "Date of Event",
+          "description": "Label for workqueue column: dateOfEvent",
+          "id": "workqueues.dateOfEvent",
+        },
+        "value": {
+          "$event": "dateOfEvent",
+        },
+      },
+      {
+        "label": {
+          "defaultMessage": "Last updated",
+          "description": "This is the label for the workqueue column",
+          "id": "workqueue.default.column.modifiedAt",
+        },
+        "value": {
+          "$event": "updatedAt",
+        },
+      },
+    ],
+    "icon": "FileSearch",
+    "name": {
+      "defaultMessage": "Pending approval",
+      "description": "Title of Pending approval workqueue",
+      "id": "workqueues.requiresApproval.title",
+    },
+    "query": {
+      "clauses": [
+        {
+          "flags": {
+            "anyOf": [
+              "approval-required-for-late-registration",
+            ],
+          },
+          "updatedAtLocation": {
+            "term": {
+              "$userField": "primaryOfficeId",
+            },
+            "type": "exact",
+          },
+        },
+      ],
+      "type": "and",
+    },
+    "slug": "late-registration-approval-required",
+  },
 ]
 `;
