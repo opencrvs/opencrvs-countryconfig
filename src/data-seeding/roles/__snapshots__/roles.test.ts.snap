@@ -121,7 +121,6 @@ exports[`Roles config > should match the snapshot (scopes integrity) 1`] = `
       "record.registered.print-certified-copies[event=birth|death|tennis-club-membership]",
       "record.registered.correct[event=birth|death|tennis-club-membership]",
       "record.unassign-others[event=birth|death|tennis-club-membership]",
-      "record.custom-action[event=birth,customActionType=Approve]",
     ],
   },
   {
@@ -151,9 +150,10 @@ exports[`Roles config > should match the snapshot (scopes integrity) 1`] = `
       "config.update:all",
       "organisation.read-locations:all",
       "user.create:all",
-      "user.create[role=FIELD_AGENT|HOSPITAL_CLERK|COMMUNITY_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR|NATIONAL_REGISTRAR|LOCAL_SYSTEM_ADMIN|NATIONAL_SYSTEM_ADMIN|PERFORMANCE_MANAGER]",
+      "user.create[role=FIELD_AGENT|POLICE_OFFICER|HOSPITAL_CLERK|HEALTHCARE_WORKER|COMMUNITY_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR|NATIONAL_REGISTRAR|LOCAL_SYSTEM_ADMIN|NATIONAL_SYSTEM_ADMIN|PERFORMANCE_MANAGER|PROVINCIAL_REGISTRAR]",
+      "user.edit[role=FIELD_AGENT|POLICE_OFFICER|HOSPITAL_CLERK|HEALTHCARE_WORKER|COMMUNITY_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR|NATIONAL_REGISTRAR|LOCAL_SYSTEM_ADMIN|NATIONAL_SYSTEM_ADMIN|PERFORMANCE_MANAGER|PROVINCIAL_REGISTRAR]",
+      "user.read:all",
       "user.update:all",
-      "user.edit[role=FIELD_AGENT|HOSPITAL_CLERK|COMMUNITY_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR|NATIONAL_REGISTRAR|LOCAL_SYSTEM_ADMIN|NATIONAL_SYSTEM_ADMIN|PERFORMANCE_MANAGER]",
       "user.read:all",
       "performance.read",
       "performance.read-dashboards",
@@ -226,6 +226,20 @@ exports[`Roles config > should match the snapshot (scopes integrity) 1`] = `
       "record.registered.print-certified-copies[event=birth|death|tennis-club-membership]",
       "record.registered.correct[event=birth|death|tennis-club-membership]",
       "record.unassign-others[event=birth|death|tennis-club-membership]",
+    ],
+  },
+  {
+    "id": "PROVINCIAL_REGISTRAR",
+    "label": {
+      "defaultMessage": "Provincial Registrar",
+      "description": "Name for user role Provincial Registrar",
+      "id": "userRole.provincialRegistrar",
+    },
+    "scopes": [
+      "record.read[event=birth|death|tennis-club-membership]",
+      "record.custom-action[event=birth,customActionType=APPROVE_DECLARATION]",
+      "workqueue[id=late-registration-approval-required]",
+      "search[event=birth,access=all]",
     ],
   },
   {

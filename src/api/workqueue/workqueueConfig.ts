@@ -418,5 +418,26 @@ export const Workqueues = defineWorkqueues([
         value: event.field('updatedAt')
       }
     ]
+  },
+  {
+    slug: 'late-registration-approval-required',
+    icon: 'FileSearch',
+    name: {
+      id: 'workqueues.requiresApproval.title',
+      defaultMessage: 'Pending approval',
+      description: 'Title of Pending approval workqueue'
+    },
+    query: {
+      flags: {
+        anyOf: ['approval-required-for-late-registration']
+      },
+      updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+    },
+    actions: [
+      {
+        type: 'DEFAULT',
+        conditionals: []
+      }
+    ]
   }
 ])
