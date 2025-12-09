@@ -64,11 +64,11 @@ test.describe.serial('Duplicate overview', () => {
     await page.getByRole('button', { name: 'Assign record' }).click()
     await page.getByRole('button', { name: 'Assign', exact: true }).click()
 
-    await page.getByRole('button', { name: 'Audit', exact: true }).click()
-
     await expect(
       page.getByText(`Potential duplicate of record ${trackingId}`)
     ).toBeVisible()
+
+    await page.getByRole('button', { name: 'Audit', exact: true }).click()
 
     await page
       .getByRole('button', { name: 'Flagged as potential duplicate' })
