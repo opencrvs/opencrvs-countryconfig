@@ -2,9 +2,9 @@ id,description,en,fr
 action.action,Label for action button,Action,Action
 action.archive,Label for archive record button in dropdown menu,Archive declaration,Déclaration d'archive
 action.assignee,Label for asignee,Assigned to {name } at {officeName},Attribué à {name} chez {officeName}
-action.noActionsAvailable,Message shown on action menu if no actions are available,No actions available,Aucune action disponible
 action.correct,Label for correct record button in dropdown menu,Correct record,Enregistrement correct
 action.issue,Label for reinstate issue button in dropdown menu,Issue certificate,Délivrer un certificat
+action.noActionsAvailable,Message shown on action menu if no actions are available,No actions available,Aucune action disponible
 action.print,Label for reinstate print button in dropdown menu,Print certified copy,Imprimer une copie certifiée
 action.reinstate,Label for reinstate record button in dropdown menu,Reisntate declaration,Déclaration de rétablissement
 action.review.correction,Label for review correction in dropdown menu,Review correction request,Vérifier la demande de correction
@@ -808,6 +808,7 @@ event.birth.action.certificate.form.section.collectPayment.service.label,Title f
 event.birth.action.certificate.form.section.collectPayment.service.label.afterLateRegistrationTarget,Birth registration after 365 days of date of birth,Birth registration after 365 days of date of birth,Enregistrement de naissance après 365 jours de la date de naissance
 event.birth.action.certificate.form.section.collectPayment.service.label.beforeRegistrationTarget,Birth registration before 30 days of date of birth,Birth registration before 30 days of date of birth,Enregistrement de naissance avant 30 jours de la date de naissance
 event.birth.action.certificate.form.section.collectPayment.service.label.inBetweenRegistrationTargets,Birth registration after 30 days but before 365 days of date of birth,Birth registration after 30 days but before 365 days of date of birth,Enregistrement de naissance après 30 jours mais avant 365 jours de la date de naissance
+event.birth.action.certificate.form.section.requester.printInAdvance.label,This is the label for the print-in-advance of issuance field,Print in advance of issuance,Imprimer avant la délivrance
 event.birth.action.certificate.form.section.verifyIdentity.data.label,Label for identity verification data block,Identity details,Détails de l'identité
 event.birth.action.collect-certificate.label,This is shown as the action name anywhere the user can trigger the action from,Print,Imprimer
 event.birth.action.correction.form.section.requester.identity.verify.title,This is the title of the section,Verify their identity,Vérifier l'identité
@@ -861,12 +862,15 @@ event.birth.action.declare.form.section.person.field.passport.label,This is the 
 event.birth.action.declare.label,This is shown as the action name anywhere the user can trigger the action from,Declare,Declare
 event.birth.action.delete.label,Label for delete button in dropdown menu,Delete,Supprimer
 event.birth.action.form.section.collector.other.field.name.label,This is the label for the name field of OTHER collector,Collector's name,Nom du collecteur
+event.birth.action.issued.audit-history-label,The label to show in audit history for the issued action,Issued,Émis
 event.birth.action.mark-as-duplicate.label,Label for review potential duplicate button in dropdown menu,Review,Revoir
 event.birth.action.register.label,Label for review record button in dropdown menu,Register,Enregistrer
 event.birth.action.reject.label,This is the label for the reject action,Reject,Rejeter
 event.birth.action.request-correction.label,This is shown as the action name anywhere the user can trigger the action from,Correct record,Enregistrement correct
 event.birth.action.validate.label,This is shown as the action name anywhere the user can trigger the action from,Validate,Valider
+event.birth.custom.action.approve.field.collector.label,Label for collector field,Collector,le collectionneur
 event.birth.custom.action.approve.field.notes.label,This is the label for the field for a custom action,Comments,Commentaires
+event.birth.flag.pending-certified-copy-issuance,Flag label for pending certified copy issuance,Pending certified copy issuance,En attente de la délivrance d'une copie certifiée conforme
 event.birth.label,This is what this event is referred as in the system,Birth,Naissance
 event.birth.summary.child.dob.empty,Label for date of birth not available,No date of birth,Pas de date de naissance
 event.birth.summary.child.placeOfBirth.empty,Label for place of birth not available,No place of birth,Pas de lieu de naissance
@@ -2291,6 +2295,8 @@ views.qrReader.tutorial.lightBalance,Light balance tutorial,Ensure the QR code i
 workqueues.dateOfEvent,Label for workqueue column: dateOfEvent,Date of Event,Date de l'événement
 workqueues.draft.title,Title of draft workqueue,My drafts,Mes brouillons
 workqueues.outbox.title,Title of outbox workqueue,Outbox,Boîte d'envoi
+workqueues.pendingCertification.emptyMessage,Empty message for pending certification workqueue,No pending certification records,Aucun dossier de certification en attente
+workqueues.pendingCertification.title,Title of pending certification workqueue,Pending Certification,En attente de certification
 workqueues.requiresApproval.title,Title of pending approval workqueue,Pending approval,En attente d'approbation
 wq.noRecords.CREATED,No records messages for empty draft tab,No records in progress,Aucun enregistrement en cours
 wq.noRecords.DECLARED,No records messages for ready for review tab,No records ready for review,Aucun document prêt à être examiné
