@@ -126,8 +126,8 @@ export const roles: Role[] = [
       'record.register[event=birth|death|tennis-club-membership]',
       'record.registered.print-certified-copies[event=birth|death|tennis-club-membership]',
       'record.registered.correct[event=birth|death|tennis-club-membership]',
-      'record.unassign-others[event=birth|death|tennis-club-membership]',
-      'record.custom-action[event=birth,customActionType=ISSUE_CERTIFIED_COPY]'
+      'record.unassign-others[event=birth|death|tennis-club-membership]'
+      // 'record.custom-action[event=birth,customActionType=ISSUE_CERTIFIED_COPY]' @ToDo: add it back after https://github.com/opencrvs/opencrvs-core/issues/11271 is merged
     ]
   },
   {
