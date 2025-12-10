@@ -126,6 +126,32 @@ export const Workqueues = defineWorkqueues([
     }
   },
   {
+    slug: 'pending-certification',
+    icon: 'Printer',
+    name: {
+      id: 'workqueues.pendingCertification.title',
+      defaultMessage: 'Pending Certification',
+      description: 'Title of pending certification workqueue'
+    },
+    query: {
+      flags: {
+        anyOf: ['pending-certified-copy-issuance']
+      },
+      updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+    },
+    actions: [
+      {
+        type: 'DEFAULT',
+        conditionals: []
+      }
+    ],
+    emptyMessage: {
+      id: 'workqueues.pendingCertification.emptyMessage',
+      defaultMessage: 'No pending certification records',
+      description: 'Empty message for pending certification workqueue'
+    }
+  },
+  {
     slug: 'requires-completion',
     icon: 'File',
     name: {
