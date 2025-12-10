@@ -281,7 +281,7 @@ test.describe.serial('Change informant on review', () => {
       await selectAction(page, 'Edit')
       await expect(
         page.getByText(
-          'You are editing a record declared by Felix Katongo (Registration Agent at Ibombo District Office)'
+          'You are editing a record declared by Felix Katongo (Registration Officer at Ibombo District Office)'
         )
       ).toBeVisible()
     })
