@@ -803,6 +803,7 @@ event.action.notAvailableForEvent,Shown when user tries to perform an action tha
 event.action.outbox-retry.label,Label for retry button for outbox,Retry,Réessayer
 event.action.review-correction.label,Label for review correction button in dropdown menu,Review correction request,Revoir la demande de correction
 event.birth.action.approve.confirmationText,This is the confirmation text for the approve action,This birth has been registered late. You are now approving it for further validation and registration.,Cette naissance a été enregistrée en retard. Vous l'approuvez maintenant pour une validation et un enregistrement supplémentaires.
+event.birth.action.approve.label,This is shown as the action name anywhere the user can trigger the action from,Approve declaration,Approuver la déclaration
 event.birth.action.archive.label,Label for archive record button in dropdown menu,Archive,Aarchiver
 event.birth.action.certificate.form.section.collectPayment.data.label,Title for the data section,Payment details,Détails du paiement
 event.birth.action.certificate.form.section.collectPayment.fee.label,Title for the data entry,Fee,Frais
@@ -868,7 +869,7 @@ event.birth.action.register.label,Label for review record button in dropdown men
 event.birth.action.reject.label,This is the label for the reject action,Reject,Rejeter
 event.birth.action.request-correction.label,This is shown as the action name anywhere the user can trigger the action from,Correct record,Enregistrement correct
 event.birth.action.validate.label,This is shown as the action name anywhere the user can trigger the action from,Validate,Valider
-event.birth.custom.action.approve.field.notes.label,This is the label for the field for a custom action,Notes,Remarques
+event.birth.custom.action.approve.field.notes.label,This is the label for the field for a custom action,Comments,Commentaires
 event.birth.label,This is what this event is referred as in the system,Birth,Naissance
 event.birth.summary.child.dob.empty,Label for date of birth not available,No date of birth,Pas de date de naissance
 event.birth.summary.child.placeOfBirth.empty,Label for place of birth not available,No place of birth,Pas de lieu de naissance
@@ -2174,8 +2175,8 @@ user.profile.sectionTitle.audit,Title for audit section,History,Historique
 user.profile.startDate,Title for startDate field,Start date,Date de début
 user.profile.userName,Title for userName field,Username,Nom d'utilisateur
 userRole.administrator,Name for user role Administrator,Administrator,Administrateur
-userRole.communityLeader, Name for user role Community Leader,Community Leader,Leader communautaire
 userRole.communityLeader,Name for user role Community Leader,Community Leader,Leader communautaire
+user.avatar,Aria label for user avatar button,User avatar,Avatar utilisateur
 userRole.fieldAgent,Name for user role Field Agent,Field Agent,Agent de terrain
 userRole.healthcareWorker,Name for user role Healthcare Worker,Healthcare Worker,Personnel de santé
 userRole.hospitalClerk, Name for user role Hospital Clerk, Hospital Clerk,Clerk d'hôpital
@@ -2184,6 +2185,7 @@ userRole.localRegistrar,Name for user role Local Registrar,Local Registrar,Regis
 userRole.nationalAdministrator,Name for user role National Administrator,National Administrator,Administrateur national
 userRole.operationsManager,Name for user role Operations Manager,Operations Manager,Responsable des opérations
 userRole.policeOfficer,Name for user role Police Officer,Police Officer,Officier de police
+userRole.provincialRegistrar,Name for user role Provincial Registrar,Provincial Registrar,Registraire provincial
 userRole.registrarGeneral, Name for user role Registrar General,Registrar General,Registraire général
 userRole.registrationOfficer,Name for user role Registration Officer,Registration Officer,Agent d'enregistrement
 userSetup.complete.instruction,Instruction for the setup complete,Login to your account with your username and newly created password,Connectez-vous maintenant à votre compte avec votre nom d'utilisateur et votre mot de passe nouvellement créé.
@@ -2298,6 +2300,7 @@ views.qrReader.tutorial.lightBalance,Light balance tutorial,Ensure the QR code i
 workqueues.dateOfEvent,Label for workqueue column: dateOfEvent,Date of Event,Date de l'événement
 workqueues.draft.title,Title of draft workqueue,My drafts,Mes brouillons
 workqueues.outbox.title,Title of outbox workqueue,Outbox,Boîte d'envoi
+workqueues.requiresApproval.title,Title of pending approval workqueue,Pending approval,En attente d'approbation
 wq.noRecords.CREATED,No records messages for empty draft tab,No records in progress,Aucun enregistrement en cours
 wq.noRecords.DECLARED,No records messages for ready for review tab,No records ready for review,Aucun document prêt à être examiné
 wq.noRecords.REGISTERED,No records messages for ready to print tab,No records ready to print,Aucun document prêt à être imprimé

@@ -5,8 +5,7 @@ import {
   CREDENTIALS,
   GATEWAY_HOST,
   SAFE_INPUT_CHANGE_TIMEOUT_MS,
-  SAFE_OUTBOX_TIMEOUT_MS,
-  SAFE_WORKQUEUE_TIMEOUT_MS
+  SAFE_OUTBOX_TIMEOUT_MS
 } from './constants'
 import { format, parseISO } from 'date-fns'
 import { isArray, random } from 'lodash'
@@ -591,7 +590,7 @@ export async function switchEventTab(page: Page, tab: 'Audit' | 'Record') {
 /** Assert whether a button on the action menu exists and is enabled/disabled */
 export async function validateActionMenuButton(
   page: Page,
-  action: string,
+  action: 'Declare' | 'Notify' | 'Approve declaration' | 'Register',
   isEnabled = true
 ) {
   await page.getByRole('button', { name: 'Action', exact: true }).click()
