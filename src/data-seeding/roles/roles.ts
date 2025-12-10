@@ -303,21 +303,6 @@ export const roles: Role[] = [
       'record.registered.print-certified-copies[event=birth|death|tennis-club-membership]'
     ]
   },
-  {
-    id: 'PROVINCIAL_REGISTRAR',
-    label: {
-      defaultMessage: 'Provincial Registrar',
-      description: 'Name for user role Provincial Registrar',
-      id: 'userRole.provincialRegistrar'
-    },
-    scopes: [
-      'record.read[event=birth|death|tennis-club-membership]',
-      'record.custom-action[event=birth,customActionType=APPROVE_DECLARATION]',
-      'workqueue[id=late-registration-approval-required|recent]',
-      'search[event=birth,access=all]',
-      'record.unassign-others[event=birth]'
-    ]
-  },
   // Legacy roles from v1.8 for backwards compatibility
   {
     id: 'POLICE_OFFICER',
