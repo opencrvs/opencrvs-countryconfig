@@ -14,8 +14,11 @@ import {
   ConditionalType,
   defineConfig,
   field,
+  FieldType,
   flag,
-  not
+  InherentFlags,
+  not,
+  status
 } from '@opencrvs/toolkit/events'
 import {
   BIRTH_DECLARATION_FORM,
@@ -65,6 +68,15 @@ export const birthEvent = defineConfig({
         id: 'event.birth.flag.validated',
         defaultMessage: 'Validated',
         description: 'Flag label for validated'
+      },
+      requiresAction: true
+    },
+    {
+      id: 'pending-certified-copy-issuance',
+      label: {
+        id: 'event.birth.flag.pending-certified-copy-issuance',
+        defaultMessage: 'Pending certified copy issuance',
+        description: 'Flag label for pending certified copy issuance'
       },
       requiresAction: true
     }
@@ -231,9 +243,10 @@ export const birthEvent = defineConfig({
     },
     {
       type: ActionType.CUSTOM,
-      customActionType: 'Approve',
+      customActionType: 'APPROVE_DECLARATION',
+      icon: 'Stamp',
       label: {
-        defaultMessage: 'Approve',
+        defaultMessage: 'Approve declaration',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.birth.action.approve.label'
@@ -242,21 +255,25 @@ export const birthEvent = defineConfig({
         {
           id: 'notes',
           type: 'TEXTAREA',
-          required: true,
           label: {
-            defaultMessage: 'Notes',
+            defaultMessage: 'Comments',
             description: 'This is the label for the field for a custom action',
             id: 'event.birth.custom.action.approve.field.notes.label'
           }
         }
       ],
       flags: [
+        { id: InherentFlags.REJECTED, operation: 'remove' },
         { id: 'approval-required-for-late-registration', operation: 'remove' }
       ],
       conditionals: [
         {
           type: ConditionalType.SHOW,
           conditional: flag('approval-required-for-late-registration')
+        },
+        {
+          type: ConditionalType.ENABLE,
+          conditional: not(flag(InherentFlags.POTENTIAL_DUPLICATE))
         }
       ],
       auditHistoryLabel: {
@@ -270,6 +287,70 @@ export const birthEvent = defineConfig({
           'This birth has been registered late. You are now approving it for further validation and registration.',
         description: 'This is the confirmation text for the approve action',
         id: 'event.birth.action.approve.confirmationText'
+      }
+    },
+    {
+      type: ActionType.CUSTOM,
+      customActionType: 'ISSUE_CERTIFIED_COPY',
+      icon: 'Handshake',
+      label: {
+        defaultMessage: 'Issue certified copy',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'event.birth.action.issue-certified-copy.label'
+      },
+      form: [
+        {
+          id: 'collector',
+          type: FieldType.SELECT,
+          label: {
+            defaultMessage: 'Collector',
+            description: 'Label for collector field',
+            id: 'event.birth.custom.action.approve.field.collector.label'
+          },
+          required: true,
+          options: [
+            {
+              label: {
+                defaultMessage: 'Mother',
+                id: 'form.field.label.app.whoContDet.mother',
+                description: 'Label for mother'
+              },
+              value: 'MOTHER'
+            },
+            {
+              label: {
+                defaultMessage: 'Father',
+                id: 'form.field.label.informantRelation.father',
+                description: 'Label for father'
+              },
+              value: 'FATHER'
+            },
+            {
+              label: {
+                defaultMessage: 'Someone else',
+                id: 'form.field.label.informantRelation.others',
+                description: 'Label for someone else'
+              },
+              value: 'SOMEONE_ELSE'
+            }
+          ]
+        }
+      ],
+      flags: [{ id: 'pending-certified-copy-issuance', operation: 'remove' }],
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(
+            flag('pending-certified-copy-issuance'),
+            status('REGISTERED')
+          )
+        }
+      ],
+      auditHistoryLabel: {
+        defaultMessage: 'Issued',
+        description: 'The label to show in audit history for the issued action',
+        id: 'event.birth.action.issued.audit-history-label'
       }
     },
     {
@@ -342,6 +423,15 @@ export const birthEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.birth.action.collect-certificate.label'
       },
+      flags: [
+        {
+          id: 'pending-certified-copy-issuance',
+          operation: 'add',
+          conditional: field('collector.requesterId').isEqualTo(
+            'PRINT_IN_ADVANCE'
+          )
+        }
+      ],
       printForm: BIRTH_CERTIFICATE_COLLECTOR_FORM
     },
     {
