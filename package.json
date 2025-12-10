@@ -33,7 +33,8 @@
     "port-forward": "bash infrastructure/port-forward.sh",
     "environment:init": "ts-node infrastructure/environments/setup-environment.ts",
     "environment:upgrade": "yarn environment:init",
-    "sort-translations": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/sort-translations.ts"
+    "sort-translations": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/sort-translations.ts",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@graphql-codegen/add": "^3.1.1",
@@ -152,8 +153,5 @@
   "resolutions": {
     "acorn": "^6.4.1"
   },
-  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
-  "husky": {
-    "hooks": {}
-  }
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

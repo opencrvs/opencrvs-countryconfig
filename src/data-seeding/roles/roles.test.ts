@@ -83,17 +83,25 @@ describe('Roles config', () => {
       'SOCIAL_WORKER'
     ])
 
-    const fullWorkqueueScope =
-      'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates-office|in-review-all|in-external-validation|ready-to-print|ready-to-issue]'
-
     const rolesWithWorkqueue = roles
-      .filter((role) => role.scopes.includes(fullWorkqueueScope))
+      .filter((role) =>
+        role.scopes.some((scope) => scope.startsWith('workqueue'))
+      )
       .map((role) => role.id)
 
     // Update this list if requirements change
     expect(rolesWithWorkqueue.sort()).toEqual([
+      'COMMUNITY_LEADER',
+      'FIELD_AGENT',
+      'HEALTHCARE_WORKER',
+      'HOSPITAL_CLERK',
+      'LOCAL_LEADER',
       'LOCAL_REGISTRAR',
-      'NATIONAL_REGISTRAR'
+      'NATIONAL_REGISTRAR',
+      'POLICE_OFFICER',
+      'PROVINCIAL_REGISTRAR',
+      'REGISTRATION_AGENT',
+      'SOCIAL_WORKER'
     ])
   })
 })
