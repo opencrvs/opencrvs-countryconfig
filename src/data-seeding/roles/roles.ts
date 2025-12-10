@@ -118,7 +118,7 @@ export const roles: Role[] = [
       'search[event=birth,access=all]',
       'search[event=death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates-office|in-review-all|in-external-validation|ready-to-print|ready-to-issue]',
+      'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates-office|in-review-all|in-external-validation|ready-to-print|ready-to-issue|pending-certification]',
       'record.create[event=birth|death|tennis-club-membership]',
       'record.read[event=birth|death|tennis-club-membership]',
       'record.declare[event=birth|death|tennis-club-membership]',
@@ -129,7 +129,8 @@ export const roles: Role[] = [
       'record.register[event=birth|death|tennis-club-membership]',
       'record.registered.print-certified-copies[event=birth|death|tennis-club-membership]',
       'record.registered.correct[event=birth|death|tennis-club-membership]',
-      'record.unassign-others[event=birth|death|tennis-club-membership]'
+      'record.unassign-others[event=birth|death|tennis-club-membership]',
+      'record.custom-action[event=birth,customActionType=ISSUE_CERTIFIED_COPY]'
     ]
   },
   {
@@ -306,6 +307,21 @@ export const roles: Role[] = [
       'record.declared.edit[event=birth|death|tennis-club-membership]',
       'record.notify[event=birth|death|tennis-club-membership]',
       'record.registered.print-certified-copies[event=birth|death|tennis-club-membership]'
+    ]
+  },
+  {
+    id: 'PROVINCIAL_REGISTRAR',
+    label: {
+      defaultMessage: 'Provincial Registrar',
+      description: 'Name for user role Provincial Registrar',
+      id: 'userRole.provincialRegistrar'
+    },
+    scopes: [
+      'record.read[event=birth|death|tennis-club-membership]',
+      'record.custom-action[event=birth,customActionType=APPROVE_DECLARATION]',
+      'workqueue[id=late-registration-approval-required|recent]',
+      'search[event=birth,access=all]',
+      'record.unassign-others[event=birth]'
     ]
   },
   // Legacy roles from v1.8 for backwards compatibility
