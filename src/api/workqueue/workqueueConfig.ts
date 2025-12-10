@@ -179,6 +179,48 @@ export const Workqueues = defineWorkqueues([
     }
   },
   {
+    slug: 'pending-response-registrar-general',
+    icon: 'ChatText',
+    name: {
+      id: 'workqueues.pendingResponse.title',
+      defaultMessage: 'Pending Response',
+      description: 'Title of pending response workqueue'
+    },
+    query: {
+      flags: {
+        anyOf: ['escalated-to-registrar-general']
+      },
+      updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+    },
+    actions: [
+      {
+        type: 'DEFAULT',
+        conditionals: []
+      }
+    ]
+  },
+  {
+    slug: 'pending-response-provincial-registrar',
+    icon: 'ChatText',
+    name: {
+      id: 'workqueues.pendingResponse.title',
+      defaultMessage: 'Pending Response',
+      description: 'Title of pending response workqueue'
+    },
+    query: {
+      flags: {
+        anyOf: ['escalated-to-provincial-registrar']
+      },
+      updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+    },
+    actions: [
+      {
+        type: 'DEFAULT',
+        conditionals: []
+      }
+    ]
+  },
+  {
     slug: 'sent-for-review',
     icon: 'FileSearch',
     name: {

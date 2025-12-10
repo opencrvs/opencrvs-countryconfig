@@ -18,7 +18,8 @@ import {
   flag,
   InherentFlags,
   not,
-  status
+  status,
+  or
 } from '@opencrvs/toolkit/events'
 import {
   BIRTH_DECLARATION_FORM,
@@ -59,6 +60,24 @@ export const birthEvent = defineConfig({
         id: 'event.birth.flag.approval-required-for-late-registration',
         defaultMessage: 'Approval required for late registration',
         description: 'Flag label for approval required for late registration'
+      },
+      requiresAction: true
+    },
+    {
+      id: 'escalated-to-provincial-registrar',
+      label: {
+        id: 'event.birth.flag.escalated-to-provincial-registrar',
+        defaultMessage: 'Escalated to Provincial Registrar',
+        description: 'Flag label for escalated to provincial registrar'
+      },
+      requiresAction: true
+    },
+    {
+      id: 'escalated-to-registrar-general',
+      label: {
+        id: 'event.birth.flag.escalated-to-registrar-general',
+        defaultMessage: 'Escalated to Registrar General',
+        description: 'Flag label for escalated to registrar general'
       },
       requiresAction: true
     },
@@ -351,6 +370,137 @@ export const birthEvent = defineConfig({
         defaultMessage: 'Issued',
         description: 'The label to show in audit history for the issued action',
         id: 'event.birth.action.issued.audit-history-label'
+      }
+    },
+    {
+      type: ActionType.CUSTOM,
+      customActionType: 'ESCALATE',
+      icon: 'FileArrowUp',
+      label: {
+        defaultMessage: 'Escalate',
+        description:
+          'This is shown when the escalate action can be triggered from the action from',
+        id: 'event.birth.action.escalate.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: not(
+            or(
+              flag('escalated-to-provincial-registrar'),
+              flag('escalated-to-registrar-general')
+            )
+          )
+        }
+      ],
+      form: [
+        {
+          id: 'escalate-to',
+          type: FieldType.SELECT,
+          label: {
+            defaultMessage: 'Escalate to',
+            description: 'This is the label for escalate to field',
+            id: 'event.birth.custom.action.escalate.field.escalate-to.label'
+          },
+          options: [
+            {
+              label: {
+                id: 'event.birth.custom.action.escalate.field.escalate-to.option.officer-in-charge.label',
+                defaultMessage: 'My state provincial registrar',
+                description:
+                  'Option label for provincial registrar in escalate to field'
+              },
+              value: 'PROVINCIAL_REGISTRAR'
+            },
+            {
+              label: {
+                id: 'event.birth.custom.action.escalate.field.escalate-to.option.registrar-general.label',
+                defaultMessage: 'Registrar General',
+                description:
+                  'Option label for registrar general in escalate to field'
+              },
+              value: 'REGISTRAR_GENERAL'
+            }
+          ]
+        }
+      ],
+      flags: [
+        {
+          id: 'escalated-to-provincial-registrar',
+          operation: 'add',
+          conditional: field('escalate-to').isEqualTo('PROVINCIAL_REGISTRAR')
+        },
+        {
+          id: 'escalated-to-registrar-general',
+          operation: 'add',
+          conditional: field('escalate-to').isEqualTo('REGISTRAR_GENERAL')
+        }
+      ],
+      auditHistoryLabel: {
+        defaultMessage: 'Escalated',
+        description:
+          'The label to show in audit history for the escalate action',
+        id: 'event.birth.action.escalate.audit-history-label'
+      }
+    },
+    {
+      type: ActionType.CUSTOM,
+      customActionType: 'PROVINCIAL_REGISTER_FEEDBACK',
+      icon: 'ChatText',
+      label: {
+        defaultMessage: 'Provincial Registrar feedback',
+        description:
+          'This is shown when the provincial registrar feedback can be triggered from the action from',
+        id: 'event.birth.action.provincial-registrar-feedback.label'
+      },
+      form: [],
+      flags: [
+        {
+          id: 'escalated-to-provincial-registrar',
+          operation: 'remove'
+        }
+      ],
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: flag('escalated-to-provincial-registrar')
+        }
+      ],
+      auditHistoryLabel: {
+        defaultMessage: 'Escalation feedback',
+        description:
+          'The label to show in audit history for the registrar feedback sent action',
+        id: 'event.birth.action.registrar-feedback.audit-history-label'
+      }
+    },
+    {
+      type: ActionType.CUSTOM,
+      customActionType: 'REGISTRAR_GENERAL_FEEDBACK',
+      icon: 'ChatText',
+      label: {
+        defaultMessage: 'Registrar General feedback',
+        description:
+          'This is shown when the registrar general feedback can be triggered from the action from',
+        id: 'event.birth.action.registrar-general-feedback.label'
+      },
+      form: [],
+      flags: [
+        {
+          id: 'escalated-to-registrar-general',
+          operation: 'remove'
+        }
+      ],
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: flag('escalated-to-registrar-general')
+        }
+      ],
+      auditHistoryLabel: {
+        defaultMessage: 'Escalation feedback',
+        description:
+          'The label to show in audit history for the registrar feedback sent action',
+        id: 'event.birth.action.registrar-feedback.audit-history-label'
       }
     },
     {
