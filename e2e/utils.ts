@@ -43,6 +43,7 @@ export async function selectAction(
     | 'Reject'
     | 'Review correction request'
     | 'Approve declaration'
+    | 'Edit'
 ) {
   if (await page.getByRole('button', { name: 'Assign record' }).isVisible()) {
     await ensureAssigned(page)

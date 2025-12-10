@@ -7,11 +7,17 @@ import {
   goToSection,
   login,
   logout,
-  selectDeclarationAction
+  selectDeclarationAction,
+  switchEventTab,
+  validateActionMenuButton
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
-import { ensureOutboxIsEmpty, selectAction } from '../../../utils'
+import {
+  ensureAssigned,
+  ensureOutboxIsEmpty,
+  selectAction
+} from '../../../utils'
 import { REQUIRED_VALIDATION_ERROR } from '../helpers'
 
 test.describe.serial('Change informant on review', () => {
@@ -257,9 +263,8 @@ test.describe.serial('Change informant on review', () => {
     })
   })
 
-  // @TODO: Skipped for now until 'Edit' action is implemented.
-  test.describe.skip('Declaration Review by Local Registrar', async () => {
-    test('Navigate to the declaration review page', async () => {
+  test.describe('Declaration Review by Local Registrar', async () => {
+    test('Navigate to the declaration Edit-action', async () => {
       await logout(page)
       await login(page, CREDENTIALS.LOCAL_REGISTRAR)
 
@@ -271,7 +276,14 @@ test.describe.serial('Change informant on review', () => {
         })
         .click()
 
-      await selectAction(page, 'Review')
+      await expect(page.getByTestId('status-value')).toHaveText('Declared')
+
+      await selectAction(page, 'Edit')
+      await expect(
+        page.getByText(
+          'You are editing a record declared by Felix Katongo (Registration Agent at Ibombo District Office)'
+        )
+      ).toBeVisible()
     })
 
     test('Change informant to father', async () => {
@@ -296,9 +308,8 @@ test.describe.serial('Change informant on review', () => {
         REQUIRED_VALIDATION_ERROR
       )
 
-      await expect(
-        page.getByRole('button', { name: 'Register' })
-      ).toBeDisabled()
+      await validateActionMenuButton(page, 'Register with edits', false)
+      await validateActionMenuButton(page, 'Declare with edits', false)
     })
 
     test('Fill in father details', async () => {
@@ -323,7 +334,50 @@ test.describe.serial('Change informant on review', () => {
     test('Go back to review, expect to not see any validation errors', async () => {
       await page.getByRole('button', { name: 'Back to review' }).click()
       await expect(page.getByText(REQUIRED_VALIDATION_ERROR)).not.toBeVisible()
-      await expect(page.getByRole('button', { name: 'Register' })).toBeEnabled()
+      await validateActionMenuButton(page, 'Register with edits')
+      await validateActionMenuButton(page, 'Declare with edits')
+    })
+
+    test('Register with edits', async () => {
+      await selectDeclarationAction(page, 'Register with edits', false)
+      await expect(
+        page.getByText(
+          'Are you sure you want to register this event with these edits?'
+        )
+      ).toBeVisible()
+      await page.getByRole('button', { name: 'Confirm' }).click()
+    })
+
+    test('Assert event is registered', async () => {
+      await ensureOutboxIsEmpty(page)
+      await page.getByText('Ready to print').click()
+      await page
+        .getByRole('button', { name: formatName(declaration.child.name) })
+        .click()
+      await ensureAssigned(page)
+      await expect(page.getByTestId('status-value')).toHaveText('Registered')
+    })
+
+    test('Assert record form', async () => {
+      await switchEventTab(page, 'Record')
+      await expect(page.getByTestId('row-value-father.name')).toHaveText(
+        declaration.father.name.firstNames +
+          ' ' +
+          declaration.father.name.familyName
+      )
+    })
+
+    test('Assert audit trail', async () => {
+      await switchEventTab(page, 'Audit')
+      await page.getByRole('button', { name: 'Edited', exact: true }).click()
+
+      // TODO: see edits here!
+
+      await page.locator('#close-btn').click()
+
+      await page
+        .getByRole('button', { name: 'Registered', exact: true })
+        .click()
     })
   })
 })

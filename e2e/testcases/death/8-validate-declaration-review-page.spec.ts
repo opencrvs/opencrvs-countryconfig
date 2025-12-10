@@ -1357,8 +1357,7 @@ test.describe.serial('8. Validate declaration review page', () => {
       await expectRowValue(page, 'spouse.addressSameAs', 'Yes')
     })
 
-    // @TODO: Skipped for now until 'Edit' action is implemented.
-    test.describe.skip('8.3.2 Click any "Change" link', async () => {
+    test.describe('8.3.2 Click any "Change" link', async () => {
       test("8.3.2.1 Change deceased's name", async () => {
         await page.getByTestId('change-button-deceased.name').click()
         await page.getByRole('button', { name: 'Continue' }).click()
