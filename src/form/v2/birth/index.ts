@@ -444,6 +444,66 @@ export const birthEvent = defineConfig({
       }
     },
     {
+      type: ActionType.CUSTOM,
+      customActionType: 'PROVINCIAL_REGISTER_FEEDBACK',
+      icon: 'ChatText',
+      label: {
+        defaultMessage: 'Provincial Registrar feedback',
+        description:
+          'This is shown when the provincial registrar feedback can be triggered from the action from',
+        id: 'event.birth.action.provincial-registrar-feedback.label'
+      },
+      form: [],
+      flags: [
+        {
+          id: 'escalated-to-provincial-registrar',
+          operation: 'remove'
+        }
+      ],
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: flag('escalated-to-provincial-registrar')
+        }
+      ],
+      auditHistoryLabel: {
+        defaultMessage: 'Escalation feedback',
+        description:
+          'The label to show in audit history for the registrar feedback sent action',
+        id: 'event.birth.action.registrar-feedback.audit-history-label'
+      }
+    },
+    {
+      type: ActionType.CUSTOM,
+      customActionType: 'REGISTRAR_GENERAL_FEEDBACK',
+      icon: 'ChatText',
+      label: {
+        defaultMessage: 'Registrar General feedback',
+        description:
+          'This is shown when the registrar general feedback can be triggered from the action from',
+        id: 'event.birth.action.registrar-general-feedback.label'
+      },
+      form: [],
+      flags: [
+        {
+          id: 'escalated-to-registrar-general',
+          operation: 'remove'
+        }
+      ],
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: flag('escalated-to-registrar-general')
+        }
+      ],
+      auditHistoryLabel: {
+        defaultMessage: 'Escalation feedback',
+        description:
+          'The label to show in audit history for the registrar feedback sent action',
+        id: 'event.birth.action.registrar-feedback.audit-history-label'
+      }
+    },
+    {
       type: ActionType.VALIDATE,
       label: {
         defaultMessage: 'Validate',

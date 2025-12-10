@@ -222,8 +222,7 @@ export const roles: Role[] = [
       'record.registered.print-certified-copies[event=birth|death|tennis-club-membership]',
       'record.registered.correct[event=birth|death|tennis-club-membership]',
       'record.unassign-others[event=birth|death|tennis-club-membership]',
-      'record.custom-action[event=birth,customActionType=ESCALATE]',
-      'record.custom-action[event=birth,customActionType=ISSUE_CERTIFIED_COPY]'
+      'record.custom-action[event=birth,customActionType=ESCALATE|ISSUE_CERTIFIED_COPY]'
     ]
   },
   {
@@ -315,7 +314,7 @@ export const roles: Role[] = [
       'search[event=birth,access=all]',
       'search[event=death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates-office|in-review-all|in-external-validation|ready-to-print|ready-to-issue]',
+      'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates-office|in-review-all|in-external-validation|ready-to-print|ready-to-issue|pending-response-registrar-general]',
       'record.create[event=birth|death|tennis-club-membership]',
       'record.read[event=birth|death|tennis-club-membership]',
       'record.declare[event=birth|death|tennis-club-membership]',
@@ -325,7 +324,7 @@ export const roles: Role[] = [
       'record.register[event=birth|death|tennis-club-membership]',
       'record.registered.print-certified-copies[event=birth|death|tennis-club-membership]',
       'record.registered.correct[event=birth|death|tennis-club-membership]',
-      'record.custom-action[event=birth, customActionType=REGISTRAR-GENERAL-FEEDBACK]',
+      'record.custom-action[event=birth,customActionType=REGISTRAR_GENERAL_FEEDBACK]',
       'record.unassign-others[event=birth|death|tennis-club-membership]'
     ]
   },
@@ -338,9 +337,8 @@ export const roles: Role[] = [
     },
     scopes: [
       'record.read[event=birth|death|tennis-club-membership]',
-      'record.custom-action[event=birth,customActionType=APPROVE_DECLARATION]',
-      'record.custom-action[event=birth, customActionType=PROVINCIAL-REGISTER-FEEDBACK]',
-      'workqueue[id=late-registration-approval-required|recent]',
+      'record.custom-action[event=birth,customActionType=APPROVE_DECLARATION|PROVINCIAL_REGISTER_FEEDBACK]',
+      'workqueue[id=late-registration-approval-required|recent|pending-response-provincial-registrar]',
       'search[event=birth,access=all]',
       'record.unassign-others[event=birth]'
     ]
