@@ -1020,6 +1020,12 @@ event.death.action.form.section.brn.label,Field for entering Birth Registration 
 event.death.action.form.section.collector.other.field.name.label,This is the label for the name field of OTHER collector,Collector's name,Nom du collecteur
 event.death.action.form.section.drivingLicenseDetails.label,Field for entering Driving License details,Drivers License,Permis de conduire
 event.death.action.form.section.idNumberOther.label,Field for entering ID Number if Other is selected,ID Number,Numéro d'identité
+workqueues.pendingCertification.title,Title of pending certification workqueue,Pending Certification,En attente de certification
+workqueues.pendingCertification.emptyMessage,Empty message for pending certification workqueue,No pending certification records,Aucun dossier de certification en attente
+event.birth.action.certificate.form.section.requester.printInAdvance.label,This is the label for the print-in-advance of issuance field,Print in advance of issuance,Imprimer avant la délivrance
+event.birth.flag.pending-certified-copy-issuance,Flag label for pending certified copy issuance,Pending certified copy issuance,En attente de la délivrance d'une copie certifiée conforme
+event.birth.custom.action.approve.field.collector.label,Label for collector field,Collector,le collectionneur
+event.birth.action.issued.audit-history-label,The label to show in audit history for the issued action,Issued,Émis
 event.death.action.form.section.idType.alienNumber.label,Option for selecting Alien Number as the ID type,Alien Number,Numéro d'étranger
 event.death.action.form.section.idType.brn.label,Option for selecting Birth Registration Number as the ID type,Birth Registration Number,Numéro d'enregistrement de naissance
 event.death.action.form.section.idType.drivingLicense.label,Option for selecting Driving License as the ID type,Drivers License,Permis de conduire
