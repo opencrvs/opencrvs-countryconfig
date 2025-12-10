@@ -21,7 +21,7 @@ const testCases = [
   {
     credential: CREDENTIALS.REGISTRATION_AGENT,
     action: ActionType.VALIDATE,
-    expectedAuditRole: 'Registration Agent'
+    expectedAuditRole: 'Registration Officer'
   },
   {
     credential: CREDENTIALS.LOCAL_REGISTRAR,
