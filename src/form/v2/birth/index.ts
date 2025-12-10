@@ -15,6 +15,7 @@ import {
   defineConfig,
   field,
   flag,
+  InherentFlags,
   not
 } from '@opencrvs/toolkit/events'
 import {
@@ -231,9 +232,10 @@ export const birthEvent = defineConfig({
     },
     {
       type: ActionType.CUSTOM,
-      customActionType: 'Approve',
+      customActionType: 'APPROVE_DECLARATION',
+      icon: 'Stamp',
       label: {
-        defaultMessage: 'Approve',
+        defaultMessage: 'Approve declaration',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.birth.action.approve.label'
@@ -242,21 +244,25 @@ export const birthEvent = defineConfig({
         {
           id: 'notes',
           type: 'TEXTAREA',
-          required: true,
           label: {
-            defaultMessage: 'Notes',
+            defaultMessage: 'Comments',
             description: 'This is the label for the field for a custom action',
             id: 'event.birth.custom.action.approve.field.notes.label'
           }
         }
       ],
       flags: [
+        { id: InherentFlags.REJECTED, operation: 'remove' },
         { id: 'approval-required-for-late-registration', operation: 'remove' }
       ],
       conditionals: [
         {
           type: ConditionalType.SHOW,
           conditional: flag('approval-required-for-late-registration')
+        },
+        {
+          type: ConditionalType.ENABLE,
+          conditional: not(flag(InherentFlags.POTENTIAL_DUPLICATE))
         }
       ],
       auditHistoryLabel: {

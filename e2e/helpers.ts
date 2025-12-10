@@ -594,7 +594,7 @@ export async function switchEventTab(page: Page, tab: 'Audit' | 'Record') {
 /** Assert whether a button on the action menu exists and is enabled/disabled */
 export async function validateActionMenuButton(
   page: Page,
-  action: string,
+  action: 'Declare' | 'Notify' | 'Approve declaration' | 'Register',
   isEnabled = true
 ) {
   await page.getByRole('button', { name: 'Action', exact: true }).click()

@@ -149,7 +149,7 @@ test.describe.serial('Approval of late birth registration', () => {
       ).toBeVisible()
     })
 
-    test.skip('RA should not have the option to Approve', async () => {
+    test('RA should not have the option to Approve', async () => {
       await page.getByRole('button', { name: 'Action', exact: true }).click()
       await expect(page.getByText('Approve', { exact: true })).not.toBeVisible()
     })
@@ -171,8 +171,23 @@ test.describe.serial('Approval of late birth registration', () => {
       ).toBeVisible()
     })
 
+    test('LR should not have the option to Approve', async () => {
+      await page.getByRole('button', { name: 'Action', exact: true }).click()
+      await expect(
+        page.getByText('Approve declaration', { exact: true })
+      ).not.toBeVisible()
+    })
+  })
+
+  test.describe('Declaration Review by PR(Provincial Registrar)', async () => {
+    test('Navigate to the declaration review page', async () => {
+      await login(page, CREDENTIALS.PROVINCIAL_REGISTRAR)
+      await page.getByText('Pending approval').first().click()
+      await page.getByRole('button', { name: childNameFormatted }).click()
+    })
+
     test('Approve action should be disabled before assignment', async () => {
-      await validateActionMenuButton(page, 'Approve', false)
+      await validateActionMenuButton(page, 'Approve declaration', false)
     })
 
     test('Assign', async () => {
@@ -185,8 +200,8 @@ test.describe.serial('Approval of late birth registration', () => {
       ).toBeVisible()
     })
 
-    test('Approve requires notes before confirming', async () => {
-      await selectAction(page, 'Approve')
+    test('Fill comments field before confirming Approve declaration', async () => {
+      await selectAction(page, 'Approve declaration')
       await expect(
         page.getByText(
           'This birth has been registered late. You are now approving it for further validation and registration.'
@@ -194,9 +209,8 @@ test.describe.serial('Approval of late birth registration', () => {
       ).toBeVisible()
 
       const confirmButton = page.getByRole('button', { name: 'Confirm' })
-      await expect(confirmButton).toBeDisabled()
+      await expect(confirmButton).toBeEnabled()
 
-      // Fill the required notes field
       const notesField = page.locator('#notes')
       await notesField.fill(
         'Approving after verifying all late submission details.'
@@ -212,16 +226,31 @@ test.describe.serial('Approval of late birth registration', () => {
       await page.locator('#searchIconButton').click()
       await page.getByRole('button', { name: childNameFormatted }).click()
 
-      await ensureAssigned(page)
-
       await expect(
         page.getByText('Approval required for late registration')
       ).not.toBeVisible()
+
+      await page.getByRole('button', { name: 'Action', exact: true }).click()
+      await expect(page.getByText('No actions available')).toBeVisible()
+    })
+  })
+
+  test.describe('Audit review by LR', async () => {
+    test('Navigate to the declaration review page', async () => {
+      await login(page, CREDENTIALS.LOCAL_REGISTRAR, true)
+      await page.getByText('Ready for review').click()
+      await page.getByRole('button', { name: childNameFormatted }).click()
     })
 
-    test("Validate that the 'Approve' action is no longer available", async () => {
+    test('Assign', async () => {
+      await ensureAssigned(page)
+    })
+
+    test('LR should not have the option to Approve', async () => {
       await page.getByRole('button', { name: 'Action', exact: true }).click()
-      await expect(page.getByText('Approve', { exact: true })).not.toBeVisible()
+      await expect(
+        page.getByText('Approve declaration', { exact: true })
+      ).not.toBeVisible()
     })
 
     test('Validate that action and form field value appearing in audit trail', async () => {
