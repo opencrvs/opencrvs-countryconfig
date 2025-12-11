@@ -43,6 +43,9 @@ export async function selectAction(
     | 'Reject'
     | 'Review correction request'
     | 'Approve declaration'
+    | 'Escalate'
+    | 'Registrar general feedback'
+    | 'Provincial registrar feedback'
 ) {
   if (await page.getByRole('button', { name: 'Assign record' }).isVisible()) {
     await ensureAssigned(page)
