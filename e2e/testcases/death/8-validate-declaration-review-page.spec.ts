@@ -1358,9 +1358,12 @@ test.describe.serial('8. Validate declaration review page', () => {
     })
 
     test.describe('8.3.2 Click any "Change" link', async () => {
+      test('8.3.2.0 Navigate to Edit-action', async () => {
+        await selectAction(page, 'Edit')
+      })
+
       test("8.3.2.1 Change deceased's name", async () => {
         await page.getByTestId('change-button-deceased.name').click()
-        await page.getByRole('button', { name: 'Continue' }).click()
 
         declaration.deceased.name.firstname = faker.person.firstName('male')
         declaration.deceased.name.surname = faker.person.lastName('male')
@@ -1382,7 +1385,6 @@ test.describe.serial('8. Validate declaration review page', () => {
 
       test("8.3.2.2 Change deceased's gender", async () => {
         await page.getByTestId('change-button-deceased.gender').click()
-        await page.getByRole('button', { name: 'Continue' }).click()
 
         declaration.deceased.gender = 'Female'
 
@@ -1402,7 +1404,6 @@ test.describe.serial('8. Validate declaration review page', () => {
 
       test("8.3.2.3 Change deceased's birthday", async () => {
         await page.getByTestId('change-button-deceased.dob').click()
-        await page.getByRole('button', { name: 'Continue' }).click()
 
         declaration.deceased.dob = getRandomDate(0, 200)
         await page.getByPlaceholder('dd').fill(declaration.deceased.dob.dd)
@@ -1421,7 +1422,6 @@ test.describe.serial('8. Validate declaration review page', () => {
 
       test("8.3.2.4 Change deceased's ID type", async () => {
         await page.getByTestId('change-button-deceased.idType').click()
-        await page.getByRole('button', { name: 'Continue' }).click()
 
         declaration.deceased.idType = 'Passport'
 
@@ -1441,7 +1441,6 @@ test.describe.serial('8. Validate declaration review page', () => {
       })
       test("8.3.2.5 Change deceased's ID", async () => {
         await page.getByTestId('change-button-deceased.passport').click()
-        await page.getByRole('button', { name: 'Continue' }).click()
 
         declaration.deceased.nid = faker.string.numeric(10)
 
@@ -1460,7 +1459,6 @@ test.describe.serial('8. Validate declaration review page', () => {
 
       test("8.3.2.6 Change deceased's address", async () => {
         await page.getByTestId('change-button-deceased.address').click()
-        await page.getByRole('button', { name: 'Continue' }).click()
 
         declaration.deceased.address.province = 'Sulaka'
         declaration.deceased.address.district = 'Afue'
@@ -1487,7 +1485,6 @@ test.describe.serial('8. Validate declaration review page', () => {
 
       test('8.3.2.7 Change informant type', async () => {
         await page.getByTestId('change-button-informant.relation').click()
-        await page.getByRole('button', { name: 'Continue' }).click()
 
         declaration.informant = {
           relation: 'Father',
@@ -1542,7 +1539,6 @@ test.describe.serial('8. Validate declaration review page', () => {
 
       test('8.3.2.8 Change registration email', async () => {
         await page.getByTestId('change-button-informant.email').click()
-        await page.getByRole('button', { name: 'Continue' }).click()
         declaration.informant.email = faker.internet.email()
         await page
           .locator('#informant____email')
@@ -1558,7 +1554,6 @@ test.describe.serial('8. Validate declaration review page', () => {
 
       test("8.3.2.9 Change spouse's name", async () => {
         await page.getByTestId('change-button-spouse.name').click()
-        await page.getByRole('button', { name: 'Continue' }).click()
         declaration.spouse.name.firstname = faker.person.firstName('female')
         declaration.spouse.name.surname = faker.person.lastName('female')
         await page.locator('#firstname').fill(declaration.spouse.name.firstname)
@@ -1575,7 +1570,6 @@ test.describe.serial('8. Validate declaration review page', () => {
       })
       test("8.3.2.10 Change spouse's birthday", async () => {
         await page.getByTestId('change-button-spouse.dob').click()
-        await page.getByRole('button', { name: 'Continue' }).click()
         declaration.spouse.dob = getRandomDate(19, 200)
         await page.getByPlaceholder('dd').fill(declaration.spouse.dob.dd)
         await page.getByPlaceholder('mm').fill(declaration.spouse.dob.mm)
@@ -1591,7 +1585,6 @@ test.describe.serial('8. Validate declaration review page', () => {
       })
       test("8.3.2.11 Change spouse's nationality", async () => {
         await page.getByTestId('change-button-spouse.nationality').click()
-        await page.getByRole('button', { name: 'Continue' }).click()
         declaration.spouse.nationality = 'Holy See'
         await page.locator('#spouse____nationality').click()
         await page
@@ -1609,7 +1602,6 @@ test.describe.serial('8. Validate declaration review page', () => {
       })
       test("8.3.2.12 Change spouse's ID type", async () => {
         await page.getByTestId('change-button-spouse.idType').click()
-        await page.getByRole('button', { name: 'Continue' }).click()
         declaration.spouse.idType = 'Passport'
         await page.locator('#spouse____idType').click()
         await page
@@ -1627,7 +1619,6 @@ test.describe.serial('8. Validate declaration review page', () => {
       })
       test("8.3.2.13 Change spouse's ID", async () => {
         await page.getByTestId('change-button-spouse.passport').click()
-        await page.getByRole('button', { name: 'Continue' }).click()
         declaration.spouse.passport = faker.string.numeric(10)
         await page
           .locator('#spouse____passport')
@@ -1651,9 +1642,8 @@ test.describe.serial('8. Validate declaration review page', () => {
       test.skip('Skipped for now', async () => {})
     })
 
-    test('8.3.6 Register', async () => {
-      await selectAction(page, 'Register')
-      await page.getByRole('button', { name: 'Confirm' }).click()
+    test('8.3.6 Register with edits', async () => {
+      await selectDeclarationAction(page, 'Register with edits')
     })
 
     test('8.3.7 Confirm the declaration to ready for print', async () => {

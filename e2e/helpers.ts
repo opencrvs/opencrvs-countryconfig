@@ -630,6 +630,12 @@ export async function selectDeclarationAction(
   await page.getByText(action, { exact: true }).click()
 
   if (confirm) {
-    await page.getByRole('button', { name: action, exact: true }).click()
+    const confirmBtn = page.getByRole('button', { name: 'Confirm' })
+
+    if ((await confirmBtn.count()) > 0) {
+      await confirmBtn.click()
+    } else {
+      await page.getByRole('button', { name: action, exact: true }).click()
+    }
   }
 }

@@ -270,8 +270,6 @@ test.describe.serial('Add mother details on review', () => {
 
     test('Add mothers details', async () => {
       await page.getByTestId('change-button-mother.detailsNotAvailable').click()
-      await page.getByRole('button', { name: 'Continue' }).click()
-
       await page.getByText("Mother's details are not available").click()
 
       await page.locator('#firstname').fill(declaration.mother.name.firstNames)

@@ -288,7 +288,6 @@ test.describe.serial('Change informant on review', () => {
 
     test('Change informant to father', async () => {
       await page.getByTestId('change-button-informant.relation').click()
-      await page.getByRole('button', { name: 'Continue' }).click()
 
       await page.locator('#informant____relation').click()
       await page.getByText('Father', { exact: true }).click()
@@ -314,7 +313,6 @@ test.describe.serial('Change informant on review', () => {
 
     test('Fill in father details', async () => {
       await page.getByTestId('change-button-father.name').click()
-      await page.getByRole('button', { name: 'Continue' }).click()
 
       await page.locator('#firstname').fill(declaration.father.name.firstNames)
       await page.locator('#surname').fill(declaration.father.name.familyName)
