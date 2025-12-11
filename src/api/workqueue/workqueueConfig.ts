@@ -189,8 +189,7 @@ export const Workqueues = defineWorkqueues([
     query: {
       flags: {
         anyOf: ['escalated-to-registrar-general']
-      },
-      updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+      }
     },
     actions: [
       {
