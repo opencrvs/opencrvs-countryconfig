@@ -306,6 +306,7 @@ export const child = defineFormPage({
       id: 'child.birthLocation.privateHome',
       analytics: true,
       type: FieldType.ADDRESS,
+      required: true,
       secured: true,
       hideLabel: true,
       label: {
@@ -349,6 +350,7 @@ export const child = defineFormPage({
     {
       id: 'child.birthLocation.other',
       type: FieldType.ADDRESS,
+      required: true,
       analytics: true,
 
       secured: true,
