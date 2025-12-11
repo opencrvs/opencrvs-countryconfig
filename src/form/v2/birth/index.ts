@@ -459,7 +459,7 @@ export const birthEvent = defineConfig({
       customActionType: 'PROVINCIAL_REGISTER_FEEDBACK',
       icon: 'ChatText',
       label: {
-        defaultMessage: 'Provincial Registrar feedback',
+        defaultMessage: 'Provincial registrar feedback',
         description:
           'This is shown when the provincial registrar feedback can be triggered from the action from',
         id: 'event.birth.action.provincial-registrar-feedback.label'
@@ -500,7 +500,7 @@ export const birthEvent = defineConfig({
       customActionType: 'REGISTRAR_GENERAL_FEEDBACK',
       icon: 'ChatText',
       label: {
-        defaultMessage: 'Registrar General feedback',
+        defaultMessage: 'Registrar general feedback',
         description:
           'This is shown when the registrar general feedback can be triggered from the action from',
         id: 'event.birth.action.registrar-general-feedback.label'
