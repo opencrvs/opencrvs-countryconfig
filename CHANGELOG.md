@@ -1,5 +1,27 @@
 # Changelog
 
+## 2.0.0
+
+### Breaking changes
+
+- Switch to docker.io/chumaky/postgres_mongo_fdw:17.6_fdw5.5.2 image to support `mongo_fdw`. This is required for the legacy user migrations to work. It will be switched back to the official postgres image in a future release.
+- A new service `legacy-user-migration` which runs the same migration image but with the `migrate-legacy-users` flag and with the following new environment variables:
+  - EVENTS_SUPERUSER_POSTGRES_URL
+  - MONGO_HOST
+  - MONGO_PORT
+  - MONGO_USERNAME
+  - MONGO_PASSWORD
+  - MONGO_REPLICA_SET
+
+The default values for these variables have been added to the `docker-compose.deploy.yml` file. They should work out of the box for most deployments, but please ensure to set them correctly if you have a custom MongoDB setup.
+
+## 1.9.2
+
+### New features
+
+- Certificate templates now support multi-page SVGs using <g data-page="X">...</g>, allowing implementors to configure and render multi-page certificates.
+- Birth certificate PDF export now omits header, footer, and QR code; example SVG updated for security-paper templates.
+
 ## 1.9.1
 
 ### Breaking changes

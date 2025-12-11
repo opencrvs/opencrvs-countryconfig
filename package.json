@@ -1,6 +1,6 @@
 {
   "name": "@opencrvs/countryconfig",
-  "version": "1.9.1",
+  "version": "1.9.2",
   "description": "OpenCRVS country configuration for reference data",
   "os": [
     "darwin",
@@ -26,7 +26,8 @@
     "port-forward": "bash infrastructure/port-forward.sh",
     "environment:init": "ts-node infrastructure/environments/setup-environment.ts",
     "environment:upgrade": "yarn environment:init",
-    "sort-translations": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/sort-translations.ts"
+    "sort-translations": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/sort-translations.ts",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@inquirer/editor": "^1.2.13",
@@ -63,7 +64,7 @@
     "@hapi/boom": "^9.1.1",
     "@hapi/hapi": "^20.0.1",
     "@hapi/inert": "^6.0.3",
-    "@opencrvs/toolkit": "1.9.0-rc.cdc3e01",
+    "@opencrvs/toolkit": "1.9.2-rc.1191623",
     "@types/chalk": "^2.2.0",
     "@types/csv2json": "^1.4.0",
     "@types/fhir": "^0.0.30",
@@ -123,8 +124,5 @@
   },
   "resolutions": {
     "acorn": "^6.4.1"
-  },
-  "husky": {
-    "hooks": {}
   }
 }
