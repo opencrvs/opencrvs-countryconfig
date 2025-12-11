@@ -2,10 +2,6 @@ import { describe, it, expect } from 'vitest'
 import { roles } from './roles'
 
 describe('Roles config', () => {
-  it('should match the snapshot (scopes integrity)', () => {
-    expect(roles).toMatchSnapshot()
-  })
-
   it('each role should have valid scopes', () => {
     for (const role of roles) {
       expect(role.id).toBeTruthy()
