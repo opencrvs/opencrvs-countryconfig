@@ -1,6 +1,12 @@
 /* eslint-disable no-unused-vars */
 import { test, expect, type Page } from '@playwright/test'
-import { formatName, getToken, login, switchEventTab } from '../../helpers'
+import {
+  formatName,
+  getToken,
+  login,
+  searchFromSearchBar,
+  switchEventTab
+} from '../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../constants'
 import { ensureAssigned, ensureOutboxIsEmpty, selectAction } from '../../utils'
@@ -71,7 +77,9 @@ test.describe
     })
 
     test("Event should not have the 'Escalated' -flag", async () => {
-      await expect(page.getByText('Escalated')).not.toBeVisible()
+      await expect(
+        page.getByText('Escalated', { exact: true })
+      ).not.toBeVisible()
     })
 
     test('Escalate to Provincial Registrar', async () => {
@@ -108,7 +116,9 @@ test.describe
     })
 
     test("Event should not have the 'Escalated' -flag", async () => {
-      await expect(page.getByText('Escalated')).not.toBeVisible()
+      await expect(
+        page.getByText('Escalated', { exact: true })
+      ).not.toBeVisible()
     })
 
     test('Escalate to Registrar General', async () => {
@@ -211,10 +221,7 @@ test.describe
     test.describe('Verify audit trail of Registrar General feedback action', () => {
       test('Navigate to the declaration review page', async () => {
         await login(page, CREDENTIALS.LOCAL_REGISTRAR, true)
-        await page.getByText('Ready to print').click()
-        await page
-          .getByRole('button', { name: childNameForRegGeneralFormatted })
-          .click()
+        await searchFromSearchBar(page, childNameForRegGeneralFormatted)
       })
 
       test('Assign', async () => {
@@ -237,9 +244,10 @@ test.describe
         ).toBeVisible()
 
         await expect(page.getByText('Reason', { exact: true })).toBeVisible()
+        const modal = page.getByTestId('event-history-modal')
 
         await expect(
-          page.getByText('Registrar General', { exact: true })
+          modal.getByText('Registrar General', { exact: true })
         ).toBeVisible()
 
         await expect(
@@ -253,7 +261,7 @@ test.describe
       })
 
       test('Validate that action and form field value appearing in audit trail', async () => {
-        await page.locator('#next-page-button').click()
+        await page.locator('#next-page-button').first().click()
         await page
           .getByRole('button', { name: 'Escalation feedback', exact: true })
           .click()
@@ -261,13 +269,16 @@ test.describe
           page.getByText('Approving after verifying record - by RG.')
         ).toBeVisible()
       })
+
+      test('Exit to workqueue', async () => {
+        await page.locator('#close-btn').click()
+        await page.getByTestId('exit-event').click()
+      })
     })
 
     test.describe('Verify audit trail of Provincial Registrar feedback action', () => {
       test('Navigate to the declaration review page', async () => {
-        await page
-          .getByRole('button', { name: childNameForProvincialFormatted })
-          .click()
+        await searchFromSearchBar(page, childNameForProvincialFormatted)
       })
 
       test('Assign', async () => {
@@ -291,8 +302,9 @@ test.describe
 
         await expect(page.getByText('Reason', { exact: true })).toBeVisible()
 
+        const modal = page.getByTestId('event-history-modal')
         await expect(
-          page.getByText('My state provincial registrar', { exact: true })
+          modal.getByText('My state provincial registrar', { exact: true })
         ).toBeVisible()
 
         await expect(
@@ -306,7 +318,7 @@ test.describe
       })
 
       test('Validate that action and form field value appearing in audit trail', async () => {
-        await page.locator('#next-page-button').click()
+        await page.locator('#next-page-button').first().click()
         await page
           .getByRole('button', { name: 'Escalation feedback', exact: true })
           .click()
