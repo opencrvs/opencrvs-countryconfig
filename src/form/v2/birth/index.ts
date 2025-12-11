@@ -397,6 +397,7 @@ export const birthEvent = defineConfig({
         {
           id: 'escalate-to',
           type: FieldType.SELECT,
+          required: true,
           label: {
             defaultMessage: 'Escalate to',
             description: 'This is the label for escalate to field',
@@ -422,6 +423,16 @@ export const birthEvent = defineConfig({
               value: 'REGISTRAR_GENERAL'
             }
           ]
+        },
+        {
+          id: 'reason',
+          type: FieldType.TEXTAREA,
+          required: true,
+          label: {
+            defaultMessage: 'Reason',
+            description: 'This is the label for reason field',
+            id: 'form.field.label.reasonNotApplying'
+          }
         }
       ],
       flags: [
@@ -448,12 +459,23 @@ export const birthEvent = defineConfig({
       customActionType: 'PROVINCIAL_REGISTER_FEEDBACK',
       icon: 'ChatText',
       label: {
-        defaultMessage: 'Provincial Registrar feedback',
+        defaultMessage: 'Provincial registrar feedback',
         description:
           'This is shown when the provincial registrar feedback can be triggered from the action from',
         id: 'event.birth.action.provincial-registrar-feedback.label'
       },
-      form: [],
+      form: [
+        {
+          id: 'notes',
+          type: 'TEXTAREA',
+          required: true,
+          label: {
+            defaultMessage: 'Comments',
+            description: 'This is the label for the field for a custom action',
+            id: 'event.birth.custom.action.approve.field.notes.label'
+          }
+        }
+      ],
       flags: [
         {
           id: 'escalated-to-provincial-registrar',
@@ -478,12 +500,23 @@ export const birthEvent = defineConfig({
       customActionType: 'REGISTRAR_GENERAL_FEEDBACK',
       icon: 'ChatText',
       label: {
-        defaultMessage: 'Registrar General feedback',
+        defaultMessage: 'Registrar general feedback',
         description:
           'This is shown when the registrar general feedback can be triggered from the action from',
         id: 'event.birth.action.registrar-general-feedback.label'
       },
-      form: [],
+      form: [
+        {
+          id: 'notes',
+          type: 'TEXTAREA',
+          required: true,
+          label: {
+            defaultMessage: 'Comments',
+            description: 'This is the label for the field for a custom action',
+            id: 'event.birth.custom.action.approve.field.notes.label'
+          }
+        }
+      ],
       flags: [
         {
           id: 'escalated-to-registrar-general',

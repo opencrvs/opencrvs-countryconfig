@@ -867,7 +867,9 @@ event.birth.action.delete.label,Label for delete button in dropdown menu,Delete,
 event.birth.action.form.section.collector.other.field.name.label,This is the label for the name field of OTHER collector,Collector's name,Nom du collecteur
 event.birth.action.issued.audit-history-label,The label to show in audit history for the issued action,Issued,Émis
 event.birth.action.mark-as-duplicate.label,Label for review potential duplicate button in dropdown menu,Review,Revoir
+event.birth.action.provincial-registrar-feedback.label,This is shown when the provincial registrar feedback can be triggered from the action from,Provincial registrar feedback,Retour du registraire provincial
 event.birth.action.register.label,Label for review record button in dropdown menu,Register,Enregistrer
+event.birth.action.registrar-general-feedback.label,This is shown when the registrar general feedback can be triggered from the action from,Registrar general feedback,Retour du registraire général
 event.birth.action.reject.label,This is the label for the reject action,Reject,Rejeter
 event.birth.action.request-correction.label,This is shown as the action name anywhere the user can trigger the action from,Correct record,Enregistrement correct
 event.birth.action.validate.label,This is shown as the action name anywhere the user can trigger the action from,Validate,Valider
@@ -2306,6 +2308,7 @@ workqueues.outbox.title,Title of outbox workqueue,Outbox,Boîte d'envoi
 workqueues.pendingCertification.emptyMessage,Empty message for pending certification workqueue,No pending certification records,Aucun dossier de certification en attente
 workqueues.pendingCertification.title,Title of pending certification workqueue,Pending Certification,En attente de certification
 workqueues.requiresApproval.title,Title of pending approval workqueue,Pending approval,En attente d'approbation
+workqueues.reviewRequested.title,Title of review requested workqueue,Review requested,Révision demandée
 wq.noRecords.CREATED,No records messages for empty draft tab,No records in progress,Aucun enregistrement en cours
 wq.noRecords.DECLARED,No records messages for ready for review tab,No records ready for review,Aucun document prêt à être examiné
 wq.noRecords.REGISTERED,No records messages for ready to print tab,No records ready to print,Aucun document prêt à être imprimé
