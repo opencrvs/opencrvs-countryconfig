@@ -182,9 +182,9 @@ export const Workqueues = defineWorkqueues([
     slug: 'pending-feedback-registrar-general',
     icon: 'ChatText',
     name: {
-      id: 'workqueues.pendingResponse.title',
-      defaultMessage: 'Pending Response',
-      description: 'Title of pending response workqueue'
+      id: 'workqueues.reviewRequested.title',
+      defaultMessage: 'Review requested',
+      description: 'Title of review requested workqueue'
     },
     query: {
       flags: {
@@ -202,9 +202,9 @@ export const Workqueues = defineWorkqueues([
     slug: 'pending-feedback-provincinal-registrar',
     icon: 'ChatText',
     name: {
-      id: 'workqueues.pendingResponse.title',
-      defaultMessage: 'Pending Response',
-      description: 'Title of pending response workqueue'
+      id: 'workqueues.reviewRequested.title',
+      defaultMessage: 'Review requested',
+      description: 'Title of review requested workqueue'
     },
     query: {
       flags: {
@@ -223,9 +223,9 @@ export const Workqueues = defineWorkqueues([
     slug: 'sent-for-review',
     icon: 'FileSearch',
     name: {
-      id: 'workqueues.sentForReview.title',
-      defaultMessage: 'Sent for review',
-      description: 'Title of sent for review workqueue'
+      id: 'workqueues.reviewRequested.title',
+      defaultMessage: 'Review requested',
+      description: 'Title of review requested workqueue'
     },
     query: {
       status: {
