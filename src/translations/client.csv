@@ -49,6 +49,7 @@ advancedSearch.form.timePeriodLabel,Label for input Time period,Time period,Pér
 advancedSearch.registeredAt,Label for date of registration field,Date of registration,Date d'enregistrement
 advancedSearch.registeredAtLocation,Label for place of registration field,Place of registration,Lieu d'enregistrement
 advancedSearch.registeredAtLocation.helperText,Helper text for place of registration field,"Search for a province, district or registration office","Rechercher une province, un district ou un bureau d'enregistrement"
+advancedSearch.registrationNumber,Label for registration number field,Registration number,Numéro d'enregistrement
 advancedSearch.status,Label for status field,Status of record,Statut de l'enregistrement
 advancedSearch.trackingId,Label for tracking ID field,Tracking ID,ID de suivi
 advancedSearch.updatedAt,Label for date of update field,Time period,Période
@@ -1057,7 +1058,7 @@ event.death.summary.informant.contact.value,This is the contact value of the inf
 event.death.title,This is the title of the summary,{deceased.name.firstname} {deceased.name.surname},{deceased.name.firstname} {deceased.name.surname}
 event.default.action.certificate.template.type.label,Select certificate template,Type,Taper
 event.default.action.certificate.template.type.notFound,Select certificate template options not found,"No template available for this event, contact Admin","Aucun modèle disponible pour cette event, contactez l’admin"
-event.history.role,Label for the role in event history,"{role, select, LOCAL_REGISTRAR {Local Registrar} FIELD_AGENT {Field Agent} POLICE_OFFICER {Police Officer} REGISTRATION_AGENT {Registration Agent} HEALTHCARE_WORKER {Healthcare Worker} HOSPITAL_CLERK {Hospital Clerk} LOCAL_SYSTEM_ADMIN {Administrator} NATIONAL_REGISTRAR {Registrar General} PERFORMANCE_MANAGER {Operations Manager} NATIONAL_SYSTEM_ADMIN {National Administrator} COMMUNITY_LEADER {Community Leader} HEALTH {Health integration} IMPORT {Import integration} NATIONAL_ID {National ID integration} RECORD_SEARCH {Record search integration} WEBHOOK {Webhook} PROVINCIAL_REGISTRAR {Provincial Registrar} other {Unknown}}","{role, select, LOCAL_REGISTRAR {Officier d'état civil local} POLICE_OFFICER {Agent de police} FIELD_AGENT {Agent de terrain} REGISTRATION_AGENT {Agent d'enregistrement} HEALTHCARE_WORKER {Professionnel de santé} PERFORMANCE_MANAGER {Responsable des opérations} LOCAL_SYSTEM_ADMIN {Administrateur} NATIONAL_SYSTEM_ADMIN {Administrateur national} NATIONAL_REGISTRAR {Registraire général} HOSPITAL_CLERK {Employé administratif à l'hôpital} HEALTH {Intégration santé} IMPORT {Intégration d'importation} NATIONAL_ID {Intégration ID nationale} RECORD_SEARCH {Intégration de recherche d'enregistrements} WEBHOOK {Webhook} COMMUNITY_LEADER {Responsable communautaire} PROVINCIAL_REGISTRAR {Registraire provincial} other {Inconnu}}"
+event.history.role,Label for the role in event history,"{role, select, LOCAL_REGISTRAR {Local Registrar} FIELD_AGENT {Field Agent} POLICE_OFFICER {Police Officer} REGISTRATION_AGENT {Registration Officer} HEALTHCARE_WORKER {Healthcare Worker} HOSPITAL_CLERK {Hospital Clerk} LOCAL_SYSTEM_ADMIN {Administrator} NATIONAL_REGISTRAR {Registrar General} PERFORMANCE_MANAGER {Operations Manager} NATIONAL_SYSTEM_ADMIN {National Administrator} COMMUNITY_LEADER {Community Leader} HEALTH {Health integration} IMPORT {Import integration} NATIONAL_ID {National ID integration} RECORD_SEARCH {Record search integration} WEBHOOK {Webhook} PROVINCIAL_REGISTRAR {Provincial Registrar} other {Unknown}}","{role, select, LOCAL_REGISTRAR {Officier d'état civil local} POLICE_OFFICER {Agent de police} FIELD_AGENT {Agent de terrain} REGISTRATION_AGENT {Officer d'enregistrement} HEALTHCARE_WORKER {Professionnel de santé} PERFORMANCE_MANAGER {Responsable des opérations} LOCAL_SYSTEM_ADMIN {Administrateur} NATIONAL_SYSTEM_ADMIN {Administrateur national} NATIONAL_REGISTRAR {Registraire général} HOSPITAL_CLERK {Employé administratif à l'hôpital} HEALTH {Intégration santé} IMPORT {Intégration d'importation} NATIONAL_ID {Intégration ID nationale} RECORD_SEARCH {Intégration de recherche d'enregistrements} WEBHOOK {Webhook} COMMUNITY_LEADER {Responsable communautaire} PROVINCIAL_REGISTRAR {Registraire provincial} other {Inconnu}}"
 event.history.system,Name for system initiated actions in the event history,System,System
 event.history.systemDefaultName,Fallback for system integration name in the event history,System integration,Intégration système
 event.not.downloaded,Shown when user tries to perform an action on event that is not available,Please ensure the event is first assigned and downloaded to the browser.,Veuillez vous assurer que l'événement est d'abord attribué et téléchargé dans le navigateur.
@@ -2122,6 +2123,7 @@ unlockApp.incorrectPin,The message displayed when a user enters an incorrect PIN
 unlockApp.lastTry,The message displayed before the 3rd attempt of an incorrect PIN,Last try,Dernier essai
 unlockApp.locked,The title displayed while creating a PIN,Your account has been locked. Please try again in 1 minute.,Votre compte a été verrouillé. Veuillez réessayer dans 1 minute.
 user.avatar,Aria label for user avatar button,User avatar,Avatar utilisateur
+user.avatar,Aria label for user avatar button,User avatar,Avatar utilisateur
 user.form.buttons.submit,Label for submit button of user creation form,Create user,Créer un utilisateur
 user.form.securityquestion.answer,,Answer,Répondre à
 user.form.securityquestion.description,,"From the drop down lists below, select questions that can be used later to confirm your identity should you forget your password.","Dans les listes déroulantes ci-dessous, sélectionnez des questions qui pourront être utilisées ultérieurement pour confirmer votre identité si vous oubliez votre mot de passe."
@@ -2182,7 +2184,6 @@ user.profile.startDate,Title for startDate field,Start date,Date de début
 user.profile.userName,Title for userName field,Username,Nom d'utilisateur
 userRole.administrator,Name for user role Administrator,Administrator,Administrateur
 userRole.communityLeader,Name for user role Community Leader,Community Leader,Leader communautaire
-user.avatar,Aria label for user avatar button,User avatar,Avatar utilisateur
 userRole.fieldAgent,Name for user role Field Agent,Field Agent,Agent de terrain
 userRole.healthcareWorker,Name for user role Healthcare Worker,Healthcare Worker,Personnel de santé
 userRole.hospitalClerk,Name for user role Hospital Clerk,Hospital Clerk,Commis d'hôpital

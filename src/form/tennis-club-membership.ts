@@ -735,11 +735,7 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
               description: 'Subtitle for the data section',
               id: 'event.tennis-club-membership.action.certificate.form.section.verifyIdentity.data.subtitle'
             },
-            data: [
-              { fieldId: 'applicant.name.firstname' },
-              { fieldId: 'applicant.name.surname' },
-              { fieldId: 'applicant.dob' }
-            ]
+            data: [{ fieldId: 'applicant.name' }, { fieldId: 'applicant.dob' }]
           }
         }
       ],

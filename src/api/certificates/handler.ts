@@ -50,6 +50,24 @@ export interface ICertificateConfigData {
     | undefined
 }
 
+const notoSansFont: Record<string, FontFamilyTypes> = {
+  'Noto Sans': {
+    normal: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+    bold: '/api/countryconfig/fonts/NotoSans-Bold.ttf',
+    italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+    bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
+  }
+}
+
+const libreBaskervilleFont: Record<string, FontFamilyTypes> = {
+  'Libre Baskerville': {
+    normal: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf',
+    bold: '/api/countryconfig/fonts/LibreBaskerville-Bold.ttf',
+    italics: '/api/countryconfig/fonts/LibreBaskerville-Italic.ttf',
+    bolditalics: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf'
+  }
+}
+
 export async function certificateHandler(request: Request, h: ResponseToolkit) {
   if (request.params.id) {
     const filePath = `${__dirname}/source/${request.params.id}`
@@ -71,14 +89,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
         delayed: 15
       },
       svgUrl: '/api/countryconfig/certificates/birth-certificate.svg',
-      fonts: {
-        'Libre Baskerville': {
-          normal: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf',
-          bold: '/api/countryconfig/fonts/LibreBaskerville-Bold.ttf',
-          italics: '/api/countryconfig/fonts/LibreBaskerville-Italic.ttf',
-          bolditalics: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf'
-        }
-      }
+      fonts: libreBaskervilleFont
     },
     {
       id: 'birth-certificate-certified-copy',
@@ -96,14 +107,14 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       },
       svgUrl:
         '/api/countryconfig/certificates/birth-certificate-certified-copy.svg',
-      fonts: {
-        'Noto Sans': {
-          normal: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
-          bold: '/api/countryconfig/fonts/NotoSans-Bold.ttf',
-          italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
-          bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
+      fonts: notoSansFont,
+      conditionals: [
+        {
+          type: 'SHOW',
+          // Show only if original certificate was printed
+          conditional: event.hasAction(ActionType.PRINT_CERTIFICATE).minCount(1)
         }
-      }
+      ]
     },
     {
       id: 'birth-registration-receipt',
@@ -120,14 +131,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
         delayed: 18
       },
       svgUrl: '/api/countryconfig/certificates/birth-registration-receipt.svg',
-      fonts: {
-        'Noto Sans': {
-          normal: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
-          bold: '/api/countryconfig/fonts/NotoSans-Bold.ttf',
-          italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
-          bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
-        }
-      }
+      fonts: notoSansFont
     },
     {
       id: 'death-certificate',
@@ -144,14 +148,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
         delayed: 12
       },
       svgUrl: '/api/countryconfig/certificates/death-certificate.svg',
-      fonts: {
-        'Noto Sans': {
-          normal: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
-          bold: '/api/countryconfig/fonts/NotoSans-Bold.ttf',
-          italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
-          bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
-        }
-      }
+      fonts: notoSansFont
     },
     {
       id: 'death-certificate-certified-copy',
@@ -169,14 +166,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       },
       svgUrl:
         '/api/countryconfig/certificates/death-certificate-certified-copy.svg',
-      fonts: {
-        'Noto Sans': {
-          normal: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
-          bold: '/api/countryconfig/fonts/NotoSans-Bold.ttf',
-          italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
-          bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
-        }
-      },
+      fonts: notoSansFont,
       conditionals: [
         {
           type: 'SHOW',
@@ -200,14 +190,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
         delayed: 13.5
       },
       svgUrl: '/api/countryconfig/certificates/marriage-certificate.svg',
-      fonts: {
-        'Noto Sans': {
-          normal: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
-          bold: '/api/countryconfig/fonts/NotoSans-Bold.ttf',
-          italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
-          bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
-        }
-      }
+      fonts: notoSansFont
     },
     {
       id: 'marriage-certificate-certified-copy',
@@ -225,14 +208,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       },
       svgUrl:
         '/api/countryconfig/certificates/marriage-certificate-certified-copy.svg',
-      fonts: {
-        'Noto Sans': {
-          normal: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
-          bold: '/api/countryconfig/fonts/NotoSans-Bold.ttf',
-          italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
-          bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
-        }
-      }
+      fonts: notoSansFont
     },
     {
       id: 'v2.birth-certificate',
@@ -250,14 +226,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
         delayed: 18
       },
       svgUrl: '/api/countryconfig/certificates/v2.birth-certificate.svg',
-      fonts: {
-        'Libre Baskerville': {
-          normal: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf',
-          bold: '/api/countryconfig/fonts/LibreBaskerville-Bold.ttf',
-          italics: '/api/countryconfig/fonts/LibreBaskerville-Italic.ttf',
-          bolditalics: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf'
-        }
-      },
+      fonts: notoSansFont,
       conditionals: [
         {
           type: 'SHOW',
@@ -282,14 +251,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       },
       svgUrl:
         '/api/countryconfig/certificates/v2.birth-certificate-certified-copy.svg',
-      fonts: {
-        'Libre Baskerville': {
-          normal: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf',
-          bold: '/api/countryconfig/fonts/LibreBaskerville-Bold.ttf',
-          italics: '/api/countryconfig/fonts/LibreBaskerville-Italic.ttf',
-          bolditalics: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf'
-        }
-      },
+      fonts: libreBaskervilleFont,
       conditionals: [
         {
           type: 'SHOW',
@@ -318,14 +280,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       },
       svgUrl:
         '/api/countryconfig/certificates/v2.tennis-club-membership-certificate.svg',
-      fonts: {
-        'Noto Sans': {
-          normal: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
-          bold: '/api/countryconfig/fonts/NotoSans-Bold.ttf',
-          italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
-          bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
-        }
-      },
+      fonts: notoSansFont,
       conditionals: [
         {
           type: 'SHOW',
@@ -351,14 +306,26 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       },
       svgUrl:
         '/api/countryconfig/certificates/v2.tennis-club-membership-certified-certificate.svg',
-      fonts: {
-        'Noto Sans': {
-          normal: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
-          bold: '/api/countryconfig/fonts/NotoSans-Bold.ttf',
-          italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
-          bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
-        }
-      }
+      fonts: notoSansFont
+    },
+    {
+      id: 'v2.tennis-club-membership-certificate-multipage',
+      event: Event.TENNIS_CLUB_MEMBERSHIP,
+      isV2Template: true,
+      label: {
+        id: 'certificates.tennis-club-membership.certificate.multipage',
+        defaultMessage: 'Tennis Club Membership Certificate Multipage',
+        description: 'The label for a tennis club membership certificate'
+      },
+      isDefault: false,
+      fee: {
+        onTime: 7,
+        late: 10.6,
+        delayed: 18
+      },
+      svgUrl:
+        '/api/countryconfig/certificates/v2.tennis-club-membership-certificate-multipage.svg',
+      fonts: libreBaskervilleFont
     },
     {
       id: 'v2.death-certificate',
@@ -376,14 +343,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
         delayed: 18
       },
       svgUrl: '/api/countryconfig/certificates/v2.death-certificate.svg',
-      fonts: {
-        'Libre Baskerville': {
-          normal: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf',
-          bold: '/api/countryconfig/fonts/LibreBaskerville-Bold.ttf',
-          italics: '/api/countryconfig/fonts/LibreBaskerville-Italic.ttf',
-          bolditalics: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf'
-        }
-      }
+      fonts: libreBaskervilleFont
     },
     {
       id: 'v2.death-certified-certificate',
@@ -402,14 +362,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       },
       svgUrl:
         '/api/countryconfig/certificates/v2.death-certificate-certified-copy.svg',
-      fonts: {
-        'Libre Baskerville': {
-          normal: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf',
-          bold: '/api/countryconfig/fonts/LibreBaskerville-Bold.ttf',
-          italics: '/api/countryconfig/fonts/LibreBaskerville-Italic.ttf',
-          bolditalics: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf'
-        }
-      }
+      fonts: libreBaskervilleFont
     }
   ]
   return certificateConfigs

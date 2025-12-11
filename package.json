@@ -1,6 +1,6 @@
 {
   "name": "@opencrvs/countryconfig",
-  "version": "1.9.1",
+  "version": "1.9.2",
   "description": "OpenCRVS country configuration for reference data",
   "os": [
     "darwin",
@@ -33,7 +33,8 @@
     "port-forward": "bash infrastructure/port-forward.sh",
     "environment:init": "ts-node infrastructure/environments/setup-environment.ts",
     "environment:upgrade": "yarn environment:init",
-    "sort-translations": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/sort-translations.ts"
+    "sort-translations": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/sort-translations.ts",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@graphql-codegen/add": "^3.1.1",
@@ -80,7 +81,7 @@
     "@hapi/h2o2": "^9.1.0",
     "@hapi/hapi": "^20.0.1",
     "@hapi/inert": "^6.0.3",
-    "@opencrvs/toolkit": "1.9.0-rc.2069666",
+    "@opencrvs/toolkit": "1.9.0-rc.1191623",
     "@types/chalk": "^2.2.0",
     "@types/code": "^4.0.3",
     "@types/csv2json": "^1.4.0",
@@ -152,8 +153,5 @@
   "resolutions": {
     "acorn": "^6.4.1"
   },
-  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
-  "husky": {
-    "hooks": {}
-  }
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
