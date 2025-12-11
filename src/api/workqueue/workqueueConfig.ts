@@ -179,7 +179,7 @@ export const Workqueues = defineWorkqueues([
     }
   },
   {
-    slug: 'pending-response-registrar-general',
+    slug: 'pending-feedback-registrar-general',
     icon: 'ChatText',
     name: {
       id: 'workqueues.pendingResponse.title',
@@ -199,7 +199,7 @@ export const Workqueues = defineWorkqueues([
     ]
   },
   {
-    slug: 'pending-response-provincial-registrar',
+    slug: 'pending-feedback-provincinal-registrar',
     icon: 'ChatText',
     name: {
       id: 'workqueues.pendingResponse.title',
