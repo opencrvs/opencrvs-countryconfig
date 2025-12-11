@@ -222,7 +222,10 @@ export const Workqueues = defineWorkqueues([
       flags: {
         noneOf: [InherentFlags.REJECTED, 'validated']
       },
-      updatedAtLocation: { type: 'within', location: user('primaryOfficeId') }
+      updatedAtLocation: {
+        type: 'within',
+        location: user('administrativeAreaId')
+      }
     },
     actions: [
       {
