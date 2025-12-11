@@ -13,7 +13,10 @@ import { getSignatureFile, uploadFile } from './utils'
 
 type InformantRelation = 'MOTHER' | 'BROTHER'
 
-function getInformantDetails(informantRelation: InformantRelation) {
+function getInformantDetails(
+  informantRelation: InformantRelation,
+  district?: string
+) {
   if (informantRelation === 'MOTHER') {
     return {
       'informant.relation': informantRelation,
@@ -27,6 +30,11 @@ function getInformantDetails(informantRelation: InformantRelation) {
     'informant.name': {
       firstname: faker.person.firstName(),
       surname: faker.person.lastName()
+    },
+    'informant.address': {
+      country: 'FAR',
+      administrativeArea: district,
+      addressType: AddressType.DOMESTIC
     },
     'informant.dob': '2008-09-12',
     'informant.nationality': 'FAR',
@@ -107,21 +115,7 @@ export async function getDeclaration({
     'mother.address': {
       country: 'FAR',
       addressType: AddressType.DOMESTIC,
-      administrativeArea: district,
-      streetLevelDetails: {
-        town: null,
-        residentialArea: null,
-        street: null,
-        number: null,
-        zipCode: null,
-        state: null,
-        district2: null,
-        cityOrTown: null,
-        addressLine1: null,
-        addressLine2: null,
-        addressLine3: null,
-        postcodeOrZip: null
-      }
+      administrativeArea: district
     },
     'child.name': {
       firstname: faker.person.firstName(),
@@ -132,7 +126,7 @@ export async function getDeclaration({
       .toISOString()
       .split('T')[0], // yesterday
     ...(await getPlaceOfBirth(placeOfBirthType)),
-    ...getInformantDetails(informantRelation)
+    ...getInformantDetails(informantRelation, district)
   }
 
   // 💡 Merge overriden fields

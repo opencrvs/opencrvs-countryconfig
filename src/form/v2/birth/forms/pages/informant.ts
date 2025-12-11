@@ -178,7 +178,8 @@ export const informant = defineFormPage({
             conditional: informantOtherThanParent
           }
         ],
-        validation: [invalidNameValidator('informant.name')]
+        validation: [invalidNameValidator('informant.name')],
+        parent: field('informant.relation')
       },
       {
         valuePath: 'data.name',
@@ -224,7 +225,8 @@ export const informant = defineFormPage({
               informantOtherThanParent
             )
           }
-        ]
+        ],
+        parent: field('informant.relation')
       },
       {
         valuePath: 'data.birthDate',
@@ -333,7 +335,8 @@ export const informant = defineFormPage({
             type: ConditionalType.SHOW,
             conditional: informantOtherThanParent
           }
-        ]
+        ],
+        parent: field('informant.relation')
       },
       {
         valuePath: 'data.idType',
@@ -373,7 +376,8 @@ export const informant = defineFormPage({
               not(field('informant.nid').isEqualTo(field('father.nid')))
             )
           }
-        ]
+        ],
+        parent: field('informant.relation')
       },
       {
         valuePath: 'data.nid',
@@ -469,6 +473,7 @@ export const informant = defineFormPage({
     {
       id: 'informant.address',
       type: FieldType.ADDRESS,
+      required: true,
       hideLabel: true,
       label: {
         defaultMessage: 'Usual place of residence',

@@ -122,7 +122,12 @@ export async function getDeclaration({
     'informant.nationality': 'FAR',
     'informant.idType': 'NATIONAL_ID',
     'informant.phoneNo': generateCustomPhoneNumber(),
-    'informant.nid': faker.string.numeric(10)
+    'informant.nid': faker.string.numeric(10),
+    'informant.address': {
+      country: 'FAR',
+      administrativeArea: district,
+      addressType: AddressType.DOMESTIC
+    }
   }
   // 💡 Merge overriden fields
   return {
