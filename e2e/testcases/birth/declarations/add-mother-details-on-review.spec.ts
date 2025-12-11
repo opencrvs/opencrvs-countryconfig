@@ -339,7 +339,23 @@ test.describe.serial('Add mother details on review', () => {
       await switchEventTab(page, 'Audit')
       await page.getByRole('button', { name: 'Edited', exact: true }).click()
 
-      // TODO: see edits here!
+      await expect(
+        page.getByText(
+          "Mother's name" + '-' + formatName(declaration.mother.name)
+        )
+      ).toBeVisible()
+
+      await expect(
+        page.getByText(
+          'Age of mother' + '-' + declaration.mother.age.toString()
+        )
+      ).toBeVisible()
+
+      await expect(
+        page.getByText('Nationality' + '-' + 'Farajaland')
+      ).toBeVisible()
+
+      await expect(page.getByText('Type of ID' + '-' + 'None')).toBeVisible()
 
       await page.locator('#close-btn').click()
 

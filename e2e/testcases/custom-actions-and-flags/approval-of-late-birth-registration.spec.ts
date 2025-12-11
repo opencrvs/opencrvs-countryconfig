@@ -2,6 +2,7 @@ import { test, expect, type Page } from '@playwright/test'
 import {
   continueForm,
   drawSignature,
+  formatDateTo_dMMMMyyyy,
   formatName,
   goToSection,
   login,
@@ -825,11 +826,31 @@ test.describe
     test('Go to record', async () => {
       await page.getByText('Sent for review').click()
       await page.getByRole('button', { name: childNameFormatted }).click()
+      await ensureAssigned(page)
     })
 
     test("Event should have the 'Approval required for late registration' -flag", async () => {
       await expect(
         page.getByText('Approval required for late registration')
+      ).toBeVisible()
+    })
+
+    test('Assert audit trail', async () => {
+      await switchEventTab(page, 'Audit')
+
+      await page.getByRole('button', { name: 'Edited', exact: true }).click()
+      await expect(
+        page.getByText(
+          'Date of birth' +
+            formatDateTo_dMMMMyyyy(format(recentDate, 'yyyy-MM-dd')) +
+            formatDateTo_dMMMMyyyy(format(lateRegDate, 'yyyy-MM-dd'))
+        )
+      ).toBeVisible()
+
+      await expect(
+        page.getByText(
+          'Reason for delayed registration-Late registration reason'
+        )
       ).toBeVisible()
     })
   })
