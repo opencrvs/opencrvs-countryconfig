@@ -818,6 +818,10 @@ test.describe
       await page.getByRole('button', { name: 'Back to review' }).click()
     })
 
+    test('Register with edits should be unavailable', async () => {
+      await validateActionMenuButton(page, 'Register with edits', false)
+    })
+
     test('Declare with edits', async () => {
       await selectDeclarationAction(page, 'Declare with edits')
       await ensureOutboxIsEmpty(page)
