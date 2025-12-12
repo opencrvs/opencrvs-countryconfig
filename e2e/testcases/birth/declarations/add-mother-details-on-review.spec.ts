@@ -287,8 +287,6 @@ test.describe.serial('Add mother details on review', () => {
     test('Go back to review, expect to not see any validation errors', async () => {
       await page.getByRole('button', { name: 'Back to review' }).click()
       await expect(page.getByText(REQUIRED_VALIDATION_ERROR)).not.toBeVisible()
-      await validateActionMenuButton(page, 'Declare with edits')
-      await validateActionMenuButton(page, 'Register with edits')
     })
 
     test('Actions should be enabled with edits made', async () => {
