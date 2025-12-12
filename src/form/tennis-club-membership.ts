@@ -23,7 +23,8 @@ import {
   user,
   or,
   defineConditional,
-  never
+  never,
+  not
 } from '@opencrvs/toolkit/events'
 import { Event } from './types/types'
 import { MAX_NAME_LENGTH } from './v2/birth/validators'
@@ -74,7 +75,17 @@ const TENNIS_CLUB_DECLARATION_REVIEW = {
           description: "Print button's label",
           id: 'event.tennis-club-membership.action.declare.form.review.print.button.label'
         }
-      }
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(
+            user.hasRole('LOCAL_REGISTRAR'),
+            not(event.hasAction(ActionType.DECLARE)),
+            not(event.hasAction(ActionType.NOTIFY))
+          )
+        }
+      ]
     }
   ]
 }
