@@ -25,7 +25,7 @@ test.describe
       CREDENTIALS.REGISTRATION_AGENT.USERNAME,
       CREDENTIALS.REGISTRATION_AGENT.PASSWORD
     )
-    const res = await createDeclaration(token, undefined, ActionType.VALIDATE)
+    const res = await createDeclaration(token, undefined, ActionType.DECLARE)
     declaration = res.declaration
     eventId = res.eventId
 
@@ -101,13 +101,17 @@ test.describe
     )
   })
 
-  test('4.4 Click Review -action', async () => {
+  test('4.4 Click Edit -action', async () => {
     await ensureAssigned(page)
-    await selectAction(page, 'Review')
+    await selectAction(page, 'Edit')
   })
 
-  test('4.5 Complete validate action', async () => {
-    await selectDeclarationAction(page, 'Validate')
+  test('4.5 Complete declare with edits action', async () => {
+    await page.getByTestId('change-button-child.weightAtBirth').click()
+    await page.getByTestId('number__child____weightAtBirth').fill('2.6')
+    await page.getByRole('button', { name: 'Back to review' }).click()
+
+    await selectDeclarationAction(page, 'Declare with edits')
 
     // Should redirect back to requires update workqueue
     await expect(page.locator('#content-name')).toHaveText('Requires updates')

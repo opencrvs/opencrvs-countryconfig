@@ -1173,8 +1173,8 @@ test.describe.serial('8. Validate declaration review page', () => {
       test.skip('Skipped for now', async () => {})
     })
 
-    test('8.2.6 Validate', async () => {
-      await selectDeclarationAction(page, 'Validate')
+    test('8.2.6 Declare and validate', async () => {
+      await selectDeclarationAction(page, 'Declare')
       await ensureOutboxIsEmpty(page)
     })
 
