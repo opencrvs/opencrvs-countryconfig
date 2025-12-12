@@ -296,6 +296,8 @@ test.describe.serial('Add mother details on review', () => {
       await validateActionMenuButton(page, 'Register with edits')
     })
 
+    const comment = 'Mamas info added yo'
+
     test('Register with edits', async () => {
       await selectDeclarationAction(page, 'Register with edits', false)
       await expect(
@@ -303,6 +305,8 @@ test.describe.serial('Add mother details on review', () => {
           'Are you sure you want to register this event with these edits?'
         )
       ).toBeVisible()
+
+      await page.getByTestId('edit-comment').fill(comment)
 
       await page.getByRole('button', { name: 'Confirm' }).click()
     })
@@ -338,6 +342,8 @@ test.describe.serial('Add mother details on review', () => {
     test('Assert audit trail', async () => {
       await switchEventTab(page, 'Audit')
       await page.getByRole('button', { name: 'Edited', exact: true }).click()
+
+      await expect(page.getByText('Comments: ' + comment)).toBeVisible()
 
       await expect(
         page.getByText(
