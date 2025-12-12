@@ -367,7 +367,7 @@ export const eventDetails = defineFormPage({
     },
     {
       id: 'eventDetails.deathLocationId',
-      type: FieldType.HIDDEN,
+      type: FieldType.ALPHA_HIDDEN,
       required: false,
       label: {
         defaultMessage: 'Health Institution',

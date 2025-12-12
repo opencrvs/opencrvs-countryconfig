@@ -393,7 +393,7 @@ export const child = defineFormPage({
     },
     {
       id: 'child.birthLocationId',
-      type: FieldType.HIDDEN,
+      type: FieldType.ALPHA_HIDDEN,
       required: false,
       label: {
         defaultMessage: 'Health Institution',
