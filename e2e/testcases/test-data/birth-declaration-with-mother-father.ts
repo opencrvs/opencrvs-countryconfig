@@ -116,21 +116,7 @@ export async function getDeclaration({
     'mother.address': {
       country: 'FAR',
       administrativeArea: district,
-      addressType: AddressType.DOMESTIC,
-      streetLevelDetails: {
-        town: null,
-        residentialArea: null,
-        street: null,
-        number: null,
-        zipCode: null,
-        state: null,
-        district2: null,
-        cityOrTown: null,
-        addressLine1: null,
-        addressLine2: null,
-        addressLine3: null,
-        postcodeOrZip: null
-      }
+      addressType: AddressType.DOMESTIC
     },
     'child.name': {
       firstname: faker.person.firstName(),
@@ -169,9 +155,9 @@ export async function getDeclaration({
             district,
             urbanOrRural: 'URBAN' as const
           }
-        }),
-        ...partialDeclaration
-      })
+        })
+      }),
+    ...partialDeclaration
   }
 }
 

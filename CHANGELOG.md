@@ -15,6 +15,13 @@
 
 The default values for these variables have been added to the `docker-compose.deploy.yml` file. They should work out of the box for most deployments, but please ensure to set them correctly if you have a custom MongoDB setup.
 
+## 1.9.2
+
+### New features
+
+- Certificate templates now support multi-page SVGs using <g data-page="X">...</g>, allowing implementors to configure and render multi-page certificates.
+- Birth certificate PDF export now omits header, footer, and QR code; example SVG updated for security-paper templates.
+
 ## 1.9.1
 
 ### Breaking changes
