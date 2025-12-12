@@ -223,9 +223,9 @@ export const Workqueues = defineWorkqueues([
     slug: 'sent-for-review',
     icon: 'FileSearch',
     name: {
-      id: 'workqueues.reviewRequested.title',
-      defaultMessage: 'Review requested',
-      description: 'Title of review requested workqueue'
+      id: 'workqueues.sentForReview.title',
+      defaultMessage: 'Sent for review',
+      description: 'Title of sent for review workqueue'
     },
     query: {
       status: {
