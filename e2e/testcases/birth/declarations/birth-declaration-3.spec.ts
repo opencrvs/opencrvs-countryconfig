@@ -711,8 +711,8 @@ test.describe.serial('3. Birth declaration case - 3', () => {
       await expect(page.getByRole('dialog')).not.toBeVisible()
     })
 
-    test('3.1.9 Validate', async () => {
-      await selectDeclarationAction(page, 'Validate')
+    test('3.1.9 Declare', async () => {
+      await selectDeclarationAction(page, 'Declare')
       await ensureOutboxIsEmpty(page)
 
       await page.getByText('Sent for approval').click()

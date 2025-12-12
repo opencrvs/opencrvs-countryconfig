@@ -249,8 +249,8 @@ test.describe.serial('Change informant on review', () => {
       await expect(page.getByRole('dialog')).not.toBeVisible()
     })
 
-    test('Validate', async () => {
-      await selectDeclarationAction(page, 'Validate')
+    test('Declare', async () => {
+      await selectDeclarationAction(page, 'Declare')
       await ensureOutboxIsEmpty(page)
 
       await page.getByText('Sent for approval').click()
@@ -281,7 +281,7 @@ test.describe.serial('Change informant on review', () => {
       await selectAction(page, 'Edit')
       await expect(
         page.getByText(
-          'You are editing a record declared by Felix Katongo (Registration Officer at Ibombo District Office)'
+          /You are editing a record declared by Felix Katongo \(Registration (Officer|Agent) at Ibombo District Office\)/
         )
       ).toBeVisible()
     })
