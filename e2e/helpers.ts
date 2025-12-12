@@ -535,9 +535,7 @@ const post = async <T = any>({
 type GetUser = {
   getUser: {
     primaryOffice: {
-      hierarchy: Array<{
-        id: string
-      }>
+      id: string
     }
   }
 }
@@ -546,14 +544,17 @@ export const fetchUserLocationHierarchy = async (
   userId: string,
   { headers }: { headers: Record<string, any> }
 ) => {
+  if (!headers.Authorization) {
+    throw new Error('Authorization token not found')
+  }
+  const client = createClient(GATEWAY_HOST + '/events', headers.Authorization)
+
   const res = await post<GetUser>({
     query: /* GraphQL */ `
       query fetchUser($userId: String!) {
         getUser(userId: $userId) {
           primaryOffice {
-            hierarchy {
-              id
-            }
+            id
           }
         }
       }
@@ -561,7 +562,9 @@ export const fetchUserLocationHierarchy = async (
     variables: { userId },
     headers
   })
-  return res.data.getUser.primaryOffice.hierarchy.map(({ id }) => id)
+  return await client.locations.getLocationHierarchy.query({
+    locationId: res.data.getUser.primaryOffice.id
+  })
 }
 
 export async function expectRowValue(
