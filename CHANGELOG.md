@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.9.3
+
+### New features
+
+- Introduced page-level `requireCompletionToContinue` in birth and death event config, to enforce full completion before moving to the next page, and updated navigation logic accordingly.
+
 ## 1.9.2
 
 ### New features
@@ -80,7 +86,6 @@
 ### Bug fixes
 
 - Remove special characters from role ids on generation [#10049](https://github.com/opencrvs/opencrvs-core/issues/10049)
-
 
 ## 1.7.3
 
