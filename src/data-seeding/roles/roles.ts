@@ -246,7 +246,7 @@ export const roles: Role[] = [
     scopes: [
       'record.read[event=birth|death|tennis-club-membership]',
       'record.custom-action[event=birth,customActionType=APPROVE_DECLARATION|PROVINCIAL_REGISTER_FEEDBACK]',
-      'workqueue[id=late-registration-approval-required]',
+      'workqueue[id=late-registration-approval-required|recent|pending-feedback-provincinal-registrar]',
       'search[event=birth,access=all]'
     ]
   },
@@ -268,7 +268,7 @@ export const roles: Role[] = [
       'search[event=birth,access=all]',
       'search[event=death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|pending-feedback-provincinal-registrar|requires-updates-self|sent-for-review]',
+      'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]',
       'record.create[event=birth|death|tennis-club-membership]',
       'record.read[event=birth|death|tennis-club-membership]',
       'record.declare[event=birth|death|tennis-club-membership]',
