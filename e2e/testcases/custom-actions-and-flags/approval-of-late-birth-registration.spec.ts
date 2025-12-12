@@ -784,9 +784,9 @@ test.describe
     })
   })
 
-  test.describe('Declaration Review by Registration Agent', async () => {
+  test.describe('Declaration Review by Local Registrar', async () => {
     test('Navigate to the declaration review page', async () => {
-      await login(page, CREDENTIALS.REGISTRATION_AGENT)
+      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
       await page.getByText('Ready for review').click()
       await page.getByRole('button', { name: childNameFormatted }).click()
     })
