@@ -96,11 +96,8 @@ test.describe('Action menu options', () => {
         'Register',
         'Archive',
         'Reject',
-<<<<<<< HEAD
-        'Edit'
-=======
+        'Edit',
         'Escalate'
->>>>>>> origin/develop
       ])
     })
   })
