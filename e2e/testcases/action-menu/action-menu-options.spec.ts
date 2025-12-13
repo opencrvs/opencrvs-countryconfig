@@ -69,7 +69,8 @@ test.describe('Action menu options', () => {
         'Register',
         'Archive',
         'Reject',
-        'Edit'
+        'Edit',
+        'Escalate'
       ])
     })
   })
@@ -95,7 +96,11 @@ test.describe('Action menu options', () => {
         'Register',
         'Archive',
         'Reject',
+<<<<<<< HEAD
         'Edit'
+=======
+        'Escalate'
+>>>>>>> origin/develop
       ])
     })
   })
@@ -116,7 +121,12 @@ test.describe('Action menu options', () => {
       await login(page, CREDENTIALS.LOCAL_REGISTRAR)
       await page.getByRole('button', { name: 'Ready to print' }).click()
       const options = await getActionMenuOptions(page, declaration)
-      expect(options).toStrictEqual(['Assign', 'Print', 'Correct record'])
+      expect(options).toStrictEqual([
+        'Assign',
+        'Print',
+        'Correct record',
+        'Escalate'
+      ])
     })
   })
 })

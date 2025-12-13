@@ -129,8 +129,8 @@ export const roles: Role[] = [
       'record.register[event=birth|death|tennis-club-membership]',
       'record.registered.print-certified-copies[event=birth|death|tennis-club-membership]',
       'record.registered.correct[event=birth|death|tennis-club-membership]',
-      'record.unassign-others[event=birth|death|tennis-club-membership]'
-      // 'record.custom-action[event=birth,customActionType=ISSUE_CERTIFIED_COPY]' @ToDo: add it back after https://github.com/opencrvs/opencrvs-core/issues/11271 is merged
+      'record.unassign-others[event=birth|death|tennis-club-membership]',
+      'record.custom-action[event=birth,customActionType=ESCALATE|ISSUE_CERTIFIED_COPY]'
     ]
   },
   {
@@ -225,7 +225,7 @@ export const roles: Role[] = [
       'search[event=birth,access=all]',
       'search[event=death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates-office|in-review-all|in-external-validation|ready-to-print|ready-to-issue]',
+      'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates-office|in-review-all|in-external-validation|ready-to-print|ready-to-issue|pending-feedback-registrar-general]',
       'record.create[event=birth|death|tennis-club-membership]',
       'record.read[event=birth|death|tennis-club-membership]',
       'record.declare[event=birth|death|tennis-club-membership]',
@@ -236,6 +236,7 @@ export const roles: Role[] = [
       'record.register[event=birth|death|tennis-club-membership]',
       'record.registered.print-certified-copies[event=birth|death|tennis-club-membership]',
       'record.registered.correct[event=birth|death|tennis-club-membership]',
+      'record.custom-action[event=birth,customActionType=REGISTRAR_GENERAL_FEEDBACK]',
       'record.unassign-others[event=birth|death|tennis-club-membership]'
     ]
   },
@@ -248,8 +249,8 @@ export const roles: Role[] = [
     },
     scopes: [
       'record.read[event=birth|death|tennis-club-membership]',
-      'record.custom-action[event=birth,customActionType=APPROVE_DECLARATION]',
-      'workqueue[id=late-registration-approval-required]',
+      'record.custom-action[event=birth,customActionType=APPROVE_DECLARATION|PROVINCIAL_REGISTER_FEEDBACK]',
+      'workqueue[id=late-registration-approval-required|recent|pending-feedback-provincinal-registrar]',
       'search[event=birth,access=all]'
     ]
   },
