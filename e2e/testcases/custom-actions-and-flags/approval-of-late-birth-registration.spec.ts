@@ -657,11 +657,10 @@ test.describe
     test('Declare with edits', async () => {
       await selectDeclarationAction(page, 'Declare with edits')
       await ensureOutboxIsEmpty(page)
-      await page.getByText('Sent for review').click()
     })
 
     test('Go to record', async () => {
-      await page.getByText('Sent for review').click()
+      await page.getByText('Sent for approval').click()
       await page.getByRole('button', { name: childNameFormatted }).click()
     })
 
