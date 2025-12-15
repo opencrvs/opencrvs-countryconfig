@@ -70,6 +70,7 @@ test.describe('Action menu options', () => {
         'Archive',
         'Reject',
         'Edit',
+        'Validate declaration',
         'Escalate'
       ])
     })
