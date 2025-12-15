@@ -77,17 +77,17 @@ test.describe
     await expectInUrl(page, `events/${eventId}?workqueue=in-review`)
   })
 
-  test('5.4 Click validate action', async () => {
+  test('5.4 Click "Validate declaration"-action', async () => {
     await ensureAssigned(page)
     await selectAction(page, 'Validate declaration')
 
     await expect(
-      page.getByRole('heading', { name: 'Validate', exact: true })
+      page.getByRole('heading', { name: 'Validate declaration', exact: true })
     ).toBeVisible()
 
     await expect(
       page.getByText(
-        'The informant will receive an email with a registration number that they can use to collect the certificate.'
+        'Approving this declaration confirms it as legally accepted and eligible for registration.'
       )
     ).toBeVisible()
   })
