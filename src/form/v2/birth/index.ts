@@ -280,6 +280,13 @@ export const birthEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.birth.custom.action.validate-declaration.label'
       },
+      supportingCopy: {
+        defaultMessage:
+          'Approving this declaration confirms it as legally accepted and eligible for registration.',
+        description:
+          'This is the supporting copy for the Validate declaration -action',
+        id: 'event.birth.custom.action.validate-declaration.supportingCopy'
+      },
       conditionals: [
         {
           type: ConditionalType.SHOW,
