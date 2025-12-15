@@ -138,7 +138,7 @@ test.describe.serial('Correct record - 2', () => {
     firstNames: faker.person.firstName(),
     familyName: faker.person.lastName(),
     brn: faker.string.numeric(10),
-    age: faker.number.int({ min: 1, max: 100 }).toString(),
+    age: faker.number.int({ min: 18, max: 100 }).toString(),
     email: faker.internet.email()
   }
 
