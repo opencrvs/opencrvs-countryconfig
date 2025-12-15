@@ -179,6 +179,47 @@ export const Workqueues = defineWorkqueues([
     }
   },
   {
+    slug: 'pending-feedback-registrar-general',
+    icon: 'ChatText',
+    name: {
+      id: 'workqueues.reviewRequested.title',
+      defaultMessage: 'Review requested',
+      description: 'Title of review requested workqueue'
+    },
+    query: {
+      flags: {
+        anyOf: ['escalated-to-registrar-general']
+      }
+    },
+    actions: [
+      {
+        type: 'DEFAULT',
+        conditionals: []
+      }
+    ]
+  },
+  {
+    slug: 'pending-feedback-provincinal-registrar',
+    icon: 'ChatText',
+    name: {
+      id: 'workqueues.reviewRequested.title',
+      defaultMessage: 'Review requested',
+      description: 'Title of review requested workqueue'
+    },
+    query: {
+      flags: {
+        anyOf: ['escalated-to-provincial-registrar']
+      },
+      updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+    },
+    actions: [
+      {
+        type: 'DEFAULT',
+        conditionals: []
+      }
+    ]
+  },
+  {
     slug: 'sent-for-review',
     icon: 'FileSearch',
     name: {
