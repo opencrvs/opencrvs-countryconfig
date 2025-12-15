@@ -164,6 +164,17 @@ export const deathEvent = defineConfig({
       }
     ]
   },
+  flags: [
+    {
+      id: 'validated',
+      label: {
+        id: 'event.birth.flag.validated',
+        defaultMessage: 'Validated',
+        description: 'Flag label for validated'
+      },
+      requiresAction: true
+    }
+  ],
   actions: [
     {
       type: ActionType.READ,
