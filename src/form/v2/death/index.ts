@@ -14,7 +14,9 @@ import {
   defineConfig,
   field,
   not,
-  flag
+  flag,
+  or,
+  user
 } from '@opencrvs/toolkit/events'
 import {
   DEATH_DECLARATION_REVIEW,
@@ -205,7 +207,17 @@ export const deathEvent = defineConfig({
           id: 'event.death.action.detect-duplicate.label'
         },
         query: dedupConfig
-      }
+      },
+      flags: [
+        {
+          id: 'validated',
+          operation: 'add',
+          conditional: or(
+            user.hasRole('REGISTRATION_AGENT'),
+            user.hasRole('LOCAL_REGISTRAR')
+          )
+        }
+      ]
     },
     {
       type: ActionType.VALIDATE,
