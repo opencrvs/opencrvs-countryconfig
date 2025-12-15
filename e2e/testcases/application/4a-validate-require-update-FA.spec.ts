@@ -98,9 +98,15 @@ test.describe
 
     const row = getRowByTitle(page, formatV2ChildName(declaration))
 
-    await row.getByRole('button', { name: 'Review' }).click()
+    await row.getByRole('button', { name: 'Edit' }).click()
 
-    await selectDeclarationAction(page, 'Declare')
+    await page.getByTestId('change-button-child.name').click()
+    await page
+      .getByTestId('text__surname')
+      .fill(faker.person.lastName('female'))
+    await page.getByRole('button', { name: 'Back to review' }).click()
+
+    await selectDeclarationAction(page, 'Declare with edits')
 
     // Should redirect back to requires update workqueue
     await expect(page.locator('#content-name')).toHaveText('Requires updates')

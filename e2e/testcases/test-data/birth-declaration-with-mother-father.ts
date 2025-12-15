@@ -214,25 +214,6 @@ export async function createDeclaration(
     }
   }
 
-  const validateRes = await client.event.actions.validate.request.mutate({
-    eventId: eventId,
-    transactionId: uuidv4(),
-    declaration,
-    annotation,
-    keepAssignment: true
-  })
-
-  if (action === ActionType.VALIDATE) {
-    const validateAction = validateRes.actions.find(
-      (action: ActionDocument) => action.type === 'VALIDATE'
-    )
-
-    return {
-      eventId,
-      declaration: validateAction?.declaration as Declaration
-    }
-  }
-
   const registerRes = await client.event.actions.register.request.mutate({
     eventId: eventId,
     transactionId: uuidv4(),

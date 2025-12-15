@@ -527,8 +527,8 @@ test.describe.serial('5. Death declaration case - 5', () => {
         .click()
     })
 
-    test('5.1.8 Validate', async () => {
-      await selectDeclarationAction(page, 'Validate')
+    test('5.1.8 Declare and validate', async () => {
+      await selectDeclarationAction(page, 'Declare')
       await ensureOutboxIsEmpty(page)
       await expect(page.getByText('Farajaland CRS')).toBeVisible()
 

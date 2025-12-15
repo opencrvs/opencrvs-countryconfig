@@ -217,14 +217,16 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         })
         .click()
 
+      await expect(page.getByText('Rejected')).toBeVisible()
+
       await ensureAssigned(page)
-      await selectAction(page, 'Review')
       await page.getByRole('button', { name: 'Action' }).click()
-      await expect(page.getByText('Reject')).not.toBeVisible()
+      await expect(page.getByText('Reject', { exact: true })).not.toBeVisible()
+      await expect(page.getByText('Review', { exact: true })).not.toBeVisible()
+      await page.getByRole('button', { name: 'Action' }).click()
     })
 
     test('3.2.4 Unassign', async () => {
-      await page.goBack()
       await selectAction(page, 'Unassign')
       await page.getByRole('button', { name: 'Unassign', exact: true }).click()
       await expect(page.getByText('Not assigned')).toBeVisible()
@@ -245,11 +247,11 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         ]
       })
     })
-    test('3.3.2 Go to review', async () => {
+    test('3.3.2 Go to edit', async () => {
       await assignFromWorkqueue(page, childName)
 
       await getRowByTitle(page, childName)
-        .getByRole('button', { name: 'Review' })
+        .getByRole('button', { name: 'Edit' })
         .click()
     })
 
@@ -258,8 +260,6 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         .getByTestId('accordion-Accordion_informant')
         .getByRole('button', { name: 'Change all' })
         .click()
-
-      await page.getByRole('button', { name: 'Continue' }).click()
 
       await page.locator('#informant____relation').click()
       await page
@@ -336,12 +336,19 @@ test.describe.serial('3. Workqueue flow - 3', () => {
       await page.locator('#father____addressSameAs_YES').click()
     })
 
-    test('3.3.6 Declare', async () => {
+    test('3.3.6 Fill up informant comment & signature', async () => {
       await continueForm(page, 'Back to review')
-      await expect(page.getByRole('dialog')).not.toBeVisible()
+      await page.locator('#review____comment').fill(faker.lorem.sentence())
+      await page.getByRole('button', { name: 'Sign', exact: true }).click()
+      await drawSignature(page, 'review____signature_canvas_element', false)
+      await page
+        .locator('#review____signature_modal')
+        .getByRole('button', { name: 'Apply' })
+        .click()
+    })
 
-      await selectDeclarationAction(page, 'Declare')
-
+    test('3.3.6 Declare with edits', async () => {
+      await selectDeclarationAction(page, 'Declare with edits')
       await ensureOutboxIsEmpty(page)
     })
 
@@ -453,7 +460,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
       })
     })
   })
-  test.describe('3.6 Re-validate by RA', async () => {
+  test.describe('3.6 Re-declare with edits by RA', async () => {
     test('3.6.1 Login with RA', async () => {
       await login(page, CREDENTIALS.REGISTRATION_AGENT, true)
 
@@ -473,16 +480,29 @@ test.describe.serial('3. Workqueue flow - 3', () => {
       })
     })
 
-    test('3.6.2 Re-validate', async () => {
+    test('3.6.2 Go to edit', async () => {
       await page.getByText('Requires updates').click()
-
       await assignFromWorkqueue(page, childName)
       await getRowByTitle(page, childName)
-        .getByRole('button', { name: 'Review' })
+        .getByRole('button', { name: 'Edit' })
+        .click()
+    })
+
+    test('3.6.3 Change informant email', async () => {
+      await page
+        .getByTestId('accordion-Accordion_informant')
+        .getByRole('button', { name: 'Change all' })
         .click()
 
-      await selectAction(page, 'Validate')
-      await page.getByRole('button', { name: 'Validate' }).click()
+      await page.locator('#informant____email').fill(faker.internet.email())
+
+      await page
+        .getByRole('button', { name: 'Back to review', exact: true })
+        .click()
+    })
+
+    test('3.6.4 Re-declare with edits', async () => {
+      await selectDeclarationAction(page, 'Declare with edits')
 
       await assertRecordInWorkqueue({
         page,

@@ -31,6 +31,7 @@ export const roles: Role[] = [
       'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]',
       `record.create[event=birth|death|tennis-club-membership]`,
       'record.declare[event=birth|death|tennis-club-membership]',
+      'record.declared.edit[event=birth|death|tennis-club-membership]',
       'record.notify[event=birth|death|tennis-club-membership]'
     ]
   },
@@ -70,6 +71,7 @@ export const roles: Role[] = [
       'record.create[event=birth|death|tennis-club-membership]',
       'record.read[event=birth|death|tennis-club-membership]',
       'record.declare[event=birth|death|tennis-club-membership]',
+      'record.declared.edit[event=birth|death|tennis-club-membership]',
       'record.declared.validate[event=birth|death|tennis-club-membership]',
       'record.declared.reject[event=birth|death|tennis-club-membership]',
       'record.declared.archive[event=birth|death|tennis-club-membership]',
@@ -120,6 +122,7 @@ export const roles: Role[] = [
       'record.create[event=birth|death|tennis-club-membership]',
       'record.read[event=birth|death|tennis-club-membership]',
       'record.declare[event=birth|death|tennis-club-membership]',
+      'record.declared.edit[event=birth|death|tennis-club-membership]',
       'record.declared.reject[event=birth|death|tennis-club-membership]',
       'record.declared.archive[event=birth|death|tennis-club-membership]',
       'record.declared.review-duplicates[event=birth|death|tennis-club-membership]',
@@ -226,6 +229,7 @@ export const roles: Role[] = [
       'record.create[event=birth|death|tennis-club-membership]',
       'record.read[event=birth|death|tennis-club-membership]',
       'record.declare[event=birth|death|tennis-club-membership]',
+      'record.declared.edit[event=birth|death|tennis-club-membership]',
       'record.declared.reject[event=birth|death|tennis-club-membership]',
       'record.declared.archive[event=birth|death|tennis-club-membership]',
       'record.declared.review-duplicates[event=birth|death|tennis-club-membership]',
@@ -272,7 +276,8 @@ export const roles: Role[] = [
       'record.create[event=birth|death|tennis-club-membership]',
       'record.read[event=birth|death|tennis-club-membership]',
       'record.declare[event=birth|death|tennis-club-membership]',
-      'record.notify[event=birth|death|tennis-club-membership]'
+      'record.notify[event=birth|death|tennis-club-membership]',
+      'record.declared.edit[event=birth|death|tennis-club-membership]'
     ]
   },
   {
@@ -300,6 +305,7 @@ export const roles: Role[] = [
       'record.create[event=birth|death|tennis-club-membership]',
       'record.read[event=birth|death|tennis-club-membership]',
       'record.declare[event=birth|death|tennis-club-membership]',
+      'record.declared.edit[event=birth|death|tennis-club-membership]',
       'record.notify[event=birth|death|tennis-club-membership]',
       'record.registered.print-certified-copies[event=birth|death|tennis-club-membership]'
     ]
@@ -327,6 +333,7 @@ export const roles: Role[] = [
       'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]',
       `record.create[event=birth|death|tennis-club-membership]`,
       'record.declare[event=birth|death|tennis-club-membership]',
+      'record.declared.edit[event=birth|death|tennis-club-membership]',
       'record.notify[event=birth|death|tennis-club-membership]'
     ]
   },
@@ -352,6 +359,7 @@ export const roles: Role[] = [
       'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]',
       `record.create[event=birth|death|tennis-club-membership]`,
       'record.declare[event=birth|death|tennis-club-membership]',
+      'record.declared.edit[event=birth|death|tennis-club-membership]',
       'record.notify[event=birth|death|tennis-club-membership]'
     ]
   },
@@ -377,6 +385,7 @@ export const roles: Role[] = [
       'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]',
       `record.create[event=birth|death|tennis-club-membership]`,
       'record.declare[event=birth|death|tennis-club-membership]',
+      'record.declared.edit[event=birth|death|tennis-club-membership]',
       'record.notify[event=birth|death|tennis-club-membership]'
     ]
   },
@@ -402,6 +411,7 @@ export const roles: Role[] = [
       'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]',
       `record.create[event=birth|death|tennis-club-membership]`,
       'record.declare[event=birth|death|tennis-club-membership]',
+      'record.declared.edit[event=birth|death|tennis-club-membership]',
       'record.notify[event=birth|death|tennis-club-membership]'
     ]
   }
