@@ -79,7 +79,7 @@ test.describe
 
   test('5.4 Click validate action', async () => {
     await ensureAssigned(page)
-    await selectAction(page, 'Validate')
+    await selectAction(page, 'Validate declaration')
 
     await expect(
       page.getByRole('heading', { name: 'Validate', exact: true })

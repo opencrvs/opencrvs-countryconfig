@@ -32,7 +32,7 @@ export async function selectAction(
   action:
     | 'Print'
     | 'Declare'
-    | 'Validate'
+    | 'Validate declaration'
     | 'Review'
     | 'Register'
     | 'Assign'

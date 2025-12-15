@@ -393,7 +393,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         })
         .click()
 
-      await selectAction(page, 'Validate')
+      await selectAction(page, 'Validate declaration')
       await page.getByRole('button', { name: 'Confirm' }).click()
 
       await assertRecordInWorkqueue({

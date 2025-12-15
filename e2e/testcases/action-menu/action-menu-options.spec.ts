@@ -46,17 +46,17 @@ test.describe('Action menu options', () => {
       const options = await getActionMenuOptions(page, declaration)
       expect(options).toStrictEqual([
         'Assign',
-        'Validate',
         'Archive',
         'Reject',
-        'Edit'
+        'Edit',
+        'Validate declaration'
       ])
       expect(options).toStrictEqual([
         'Assign',
-        'Validate',
         'Archive',
         'Reject',
-        'Edit'
+        'Edit',
+        'Validate declaration'
       ])
     })
 
