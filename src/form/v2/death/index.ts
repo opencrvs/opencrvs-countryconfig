@@ -14,7 +14,9 @@ import {
   defineConfig,
   field,
   not,
-  flag
+  flag,
+  or,
+  user
 } from '@opencrvs/toolkit/events'
 import {
   DEATH_DECLARATION_REVIEW,
@@ -36,6 +38,7 @@ export const deathEvent = defineConfig({
     id: 'event.death.label'
   },
   dateOfEvent: field('eventDetails.date'),
+  placeOfEvent: field('eventDetails.deathLocationId'),
   title: {
     defaultMessage: '{deceased.name.firstname} {deceased.name.surname}',
     description: 'This is the title of the summary',
@@ -204,7 +207,17 @@ export const deathEvent = defineConfig({
           id: 'event.death.action.detect-duplicate.label'
         },
         query: dedupConfig
-      }
+      },
+      flags: [
+        {
+          id: 'validated',
+          operation: 'add',
+          conditional: or(
+            user.hasRole('REGISTRATION_AGENT'),
+            user.hasRole('LOCAL_REGISTRAR')
+          )
+        }
+      ]
     },
     {
       type: ActionType.VALIDATE,

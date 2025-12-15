@@ -19,7 +19,8 @@ import {
   InherentFlags,
   not,
   status,
-  or
+  or,
+  user
 } from '@opencrvs/toolkit/events'
 import {
   BIRTH_DECLARATION_FORM,
@@ -42,6 +43,7 @@ export const birthEvent = defineConfig({
     id: 'event.birth.label'
   },
   dateOfEvent: field('child.dob'),
+  placeOfEvent: field('child.birthLocationId'),
   title: {
     defaultMessage: '{child.name.firstname} {child.name.surname}',
     description: 'This is the title of the summary',
@@ -256,6 +258,14 @@ export const birthEvent = defineConfig({
                 .inPast()
             ),
             field('child.dob').isBefore().now()
+          )
+        },
+        {
+          id: 'validated',
+          operation: 'add',
+          conditional: or(
+            user.hasRole('REGISTRATION_AGENT'),
+            user.hasRole('LOCAL_REGISTRAR')
           )
         }
       ]
