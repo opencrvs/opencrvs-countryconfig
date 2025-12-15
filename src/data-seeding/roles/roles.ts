@@ -72,12 +72,12 @@ export const roles: Role[] = [
       'record.read[event=birth|death|tennis-club-membership]',
       'record.declare[event=birth|death|tennis-club-membership]',
       'record.declared.edit[event=birth|death|tennis-club-membership]',
-      'record.declared.validate[event=birth|death|tennis-club-membership]',
       'record.declared.reject[event=birth|death|tennis-club-membership]',
       'record.declared.archive[event=birth|death|tennis-club-membership]',
       'record.declared.review-duplicates[event=birth|death|tennis-club-membership]',
       'record.registered.print-certified-copies[event=birth|death|tennis-club-membership]',
-      'record.registered.request-correction[event=birth|death|tennis-club-membership]'
+      'record.registered.request-correction[event=birth|death|tennis-club-membership]',
+      'record.custom-action[event=birth|death,customActionType=VALIDATE_DECLARATION]'
     ]
   },
   {
