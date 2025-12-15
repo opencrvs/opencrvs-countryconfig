@@ -29,7 +29,7 @@ export const Workqueues = defineWorkqueues([
     query: {},
     actions: [
       {
-        type: 'VALIDATE',
+        type: 'DECLARE',
         conditionals: []
       }
     ]
