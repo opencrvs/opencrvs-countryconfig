@@ -14,7 +14,12 @@ import {
   defineConfig,
   field,
   or,
-  user
+  user,
+  and,
+  status,
+  not,
+  flag,
+  InherentFlags
 } from '@opencrvs/toolkit/events'
 import {
   DEATH_DECLARATION_REVIEW,
@@ -215,6 +220,46 @@ export const deathEvent = defineConfig({
           )
         }
       ]
+    },
+    {
+      type: ActionType.CUSTOM,
+      customActionType: 'VALIDATE_DECLARATION',
+      icon: 'Stamp',
+      label: {
+        defaultMessage: 'Validate declaration',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'event.birth.custom.action.validate-declaration.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(status('DECLARED'), not(flag('validated')))
+        },
+        {
+          type: ConditionalType.ENABLE,
+          conditional: not(flag(InherentFlags.POTENTIAL_DUPLICATE))
+        }
+      ],
+      flags: [{ id: 'validated', operation: 'add' }],
+      form: [
+        {
+          id: 'comments',
+          type: 'TEXTAREA',
+          label: {
+            defaultMessage: 'Comments',
+            description:
+              'This is the label for the comments field for the validate declaration action',
+            id: 'event.birth.custom.action.validate-declaration.field.comments.label'
+          }
+        }
+      ],
+      auditHistoryLabel: {
+        defaultMessage: 'Validated',
+        description:
+          'The label to show in audit history for the validate action',
+        id: 'event.birth.custom.action.validate-declaration.audit-history-label'
+      }
     },
     {
       type: ActionType.REJECT,
