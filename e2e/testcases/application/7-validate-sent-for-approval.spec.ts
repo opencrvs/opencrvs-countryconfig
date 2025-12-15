@@ -18,7 +18,7 @@ test.describe.serial('7 Validate Sent for approval tab', () => {
       CREDENTIALS.REGISTRATION_AGENT.USERNAME,
       CREDENTIALS.REGISTRATION_AGENT.PASSWORD
     )
-    const res = await createDeclaration(token, undefined, ActionType.VALIDATE)
+    const res = await createDeclaration(token, undefined, ActionType.DECLARE)
     declaration = res.declaration
     eventId = res.eventId
 

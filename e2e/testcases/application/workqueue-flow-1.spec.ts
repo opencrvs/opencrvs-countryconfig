@@ -20,7 +20,6 @@ import { assertRecordInWorkqueue, fillDate } from '../birth/helpers'
 import { getRowByTitle } from '../print-certificate/birth/helpers'
 
 // FA Notifies => RA Validates => LR Registers => LR Prints
-
 test.describe.serial('1. Workqueue flow - 1', () => {
   let page: Page
   const declaration = {
@@ -148,7 +147,7 @@ test.describe.serial('1. Workqueue flow - 1', () => {
     })
   })
 
-  test.describe('1.2 Validate by RA', async () => {
+  test.describe('1.2 Declare and validate by RA', async () => {
     test('1.2.1 Verify workqueue', async () => {
       await login(page, CREDENTIALS.REGISTRATION_AGENT)
 
@@ -262,8 +261,8 @@ test.describe.serial('1. Workqueue flow - 1', () => {
       await page.getByRole('button', { name: 'Back to review' }).click()
     })
 
-    test('1.2.6 Validate', async () => {
-      await selectDeclarationAction(page, 'Validate')
+    test('1.2.6 Declare', async () => {
+      await selectDeclarationAction(page, 'Declare')
 
       await ensureOutboxIsEmpty(page)
 

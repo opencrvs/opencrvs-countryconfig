@@ -43,6 +43,7 @@ export async function selectAction(
     | 'Reject'
     | 'Review correction request'
     | 'Approve declaration'
+    | 'Edit'
     | 'Escalate'
     | 'Registrar general feedback'
     | 'Provincial registrar feedback'

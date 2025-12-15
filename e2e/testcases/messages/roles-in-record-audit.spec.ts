@@ -20,7 +20,7 @@ const testCases = [
   },
   {
     credential: CREDENTIALS.REGISTRATION_AGENT,
-    action: ActionType.VALIDATE,
+    action: ActionType.DECLARE,
     expectedAuditRole: 'Registration Officer'
   },
   {

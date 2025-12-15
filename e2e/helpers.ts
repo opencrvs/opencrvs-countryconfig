@@ -598,7 +598,13 @@ export async function switchEventTab(page: Page, tab: 'Audit' | 'Record') {
 /** Assert whether a button on the action menu exists and is enabled/disabled */
 export async function validateActionMenuButton(
   page: Page,
-  action: 'Declare' | 'Notify' | 'Approve declaration' | 'Register',
+  action:
+    | 'Declare'
+    | 'Notify'
+    | 'Approve declaration'
+    | 'Register'
+    | 'Declare with edits'
+    | 'Register with edits',
   isEnabled = true
 ) {
   await page.getByRole('button', { name: 'Action', exact: true }).click()
@@ -623,14 +629,22 @@ export async function selectDeclarationAction(
     | 'Register'
     | 'Reject'
     | 'Delete declaration'
-    | 'Save & Exit',
+    | 'Save & Exit'
+    | 'Declare with edits'
+    | 'Register with edits',
   confirm = true
 ) {
   await page.getByRole('button', { name: 'Action', exact: true }).click()
   await page.getByText(action, { exact: true }).click()
 
   if (confirm) {
-    await page.getByRole('button', { name: action, exact: true }).click()
+    const confirmBtn = page.getByRole('button', { name: 'Confirm' })
+
+    if ((await confirmBtn.count()) > 0) {
+      await confirmBtn.click()
+    } else {
+      await page.getByRole('button', { name: action, exact: true }).click()
+    }
   }
 }
 

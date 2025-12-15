@@ -6,11 +6,17 @@ import {
   getRandomDate,
   goToSection,
   login,
-  logout
+  logout,
+  switchEventTab,
+  validateActionMenuButton
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
-import { ensureOutboxIsEmpty, selectAction } from '../../../utils'
+import {
+  ensureAssigned,
+  ensureOutboxIsEmpty,
+  selectAction
+} from '../../../utils'
 import { REQUIRED_VALIDATION_ERROR } from '../helpers'
 import { selectDeclarationAction } from '../../../helpers'
 
@@ -234,9 +240,8 @@ test.describe.serial('Add mother details on review', () => {
     })
   })
 
-  // @TODO: Skipped for now until 'Edit' action is implemented.
-  test.describe.skip('Declaration Review by Local Registrar', async () => {
-    test('Navigate to the declaration review page', async () => {
+  test.describe('Declaration Review by Local Registrar', async () => {
+    test('Navigate to the declaration Edit-action', async () => {
       await logout(page)
       await login(page, CREDENTIALS.LOCAL_REGISTRAR)
 
@@ -248,13 +253,23 @@ test.describe.serial('Add mother details on review', () => {
         })
         .click()
 
-      await selectAction(page, 'Review')
+      await expect(page.getByTestId('status-value')).toHaveText('Declared')
+
+      await selectAction(page, 'Edit')
+      await expect(
+        page.getByText(
+          'You are editing a record declared by Kalusha Bwalya (Hospital Clerk at Ibombo District Office)'
+        )
+      ).toBeVisible()
+    })
+
+    test('Actions should be disabled with no edits made', async () => {
+      await validateActionMenuButton(page, 'Declare with edits', false)
+      await validateActionMenuButton(page, 'Register with edits', false)
     })
 
     test('Add mothers details', async () => {
       await page.getByTestId('change-button-mother.detailsNotAvailable').click()
-      await page.getByRole('button', { name: 'Continue' }).click()
-
       await page.getByText("Mother's details are not available").click()
 
       await page.locator('#firstname').fill(declaration.mother.name.firstNames)
@@ -272,7 +287,87 @@ test.describe.serial('Add mother details on review', () => {
     test('Go back to review, expect to not see any validation errors', async () => {
       await page.getByRole('button', { name: 'Back to review' }).click()
       await expect(page.getByText(REQUIRED_VALIDATION_ERROR)).not.toBeVisible()
-      await expect(page.getByRole('button', { name: 'Register' })).toBeEnabled()
+    })
+
+    test('Actions should be enabled with edits made', async () => {
+      await validateActionMenuButton(page, 'Declare with edits')
+      await validateActionMenuButton(page, 'Register with edits')
+    })
+
+    const comment = 'Mamas info added yo'
+
+    test('Register with edits', async () => {
+      await selectDeclarationAction(page, 'Register with edits', false)
+      await expect(
+        page.getByText(
+          'Are you sure you want to register this event with these edits?'
+        )
+      ).toBeVisible()
+
+      await page.getByTestId('edit-comment').fill(comment)
+
+      await page.getByRole('button', { name: 'Confirm' }).click()
+    })
+
+    test('Assert event is registered', async () => {
+      await ensureOutboxIsEmpty(page)
+      await page.getByText('Ready to print').click()
+      await page
+        .getByRole('button', { name: formatName(declaration.child.name) })
+        .click()
+
+      await ensureAssigned(page)
+
+      await expect(page.getByTestId('status-value')).toHaveText('Registered')
+    })
+
+    test('Assert record form', async () => {
+      await switchEventTab(page, 'Record')
+
+      await expect(page.getByTestId('row-value-mother.name')).toHaveText(
+        declaration.mother.name.firstNames +
+          ' ' +
+          declaration.mother.name.familyName
+      )
+      await expect(page.getByTestId('row-value-mother.age')).toHaveText(
+        declaration.mother.age.toString()
+      )
+      await expect(page.getByTestId('row-value-mother.idType')).toHaveText(
+        'None'
+      )
+    })
+
+    test('Assert audit trail', async () => {
+      await switchEventTab(page, 'Audit')
+      await page.getByRole('button', { name: 'Edited', exact: true }).click()
+
+      await expect(page.getByText('Comments: ' + comment)).toBeVisible()
+
+      await expect(
+        page.getByText(
+          "Mother's name" + '-' + formatName(declaration.mother.name)
+        )
+      ).toBeVisible()
+
+      await expect(
+        page.getByText(
+          'Age of mother' + '-' + declaration.mother.age.toString()
+        )
+      ).toBeVisible()
+
+      await expect(
+        page.getByText('Nationality' + '-' + 'Farajaland')
+      ).toBeVisible()
+
+      await expect(page.getByText('Type of ID' + '-' + 'None')).toBeVisible()
+
+      await page.locator('#close-btn').click()
+
+      await page
+        .getByRole('button', { name: 'Registered', exact: true })
+        .click()
+
+      await page.locator('#close-btn').click()
     })
   })
 })
