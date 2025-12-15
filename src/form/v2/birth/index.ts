@@ -43,6 +43,7 @@ export const birthEvent = defineConfig({
     id: 'event.birth.label'
   },
   dateOfEvent: field('child.dob'),
+  placeOfEvent: field('child.birthLocationId'),
   title: {
     defaultMessage: '{child.name.firstname} {child.name.surname}',
     description: 'This is the title of the summary',
