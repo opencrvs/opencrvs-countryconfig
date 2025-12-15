@@ -165,6 +165,7 @@ export async function ensureLoginPageReady(page: Page) {
    */
   await page.waitForSelector('#Box img', { state: 'attached' })
   await page.waitForFunction(() => {
+    // eslint-disable-next-line no-undef
     const img = document.querySelector<HTMLImageElement>('#Box img')!
     return img && img.src && img.src.trim() !== ''
   })
@@ -631,4 +632,13 @@ export async function selectDeclarationAction(
   if (confirm) {
     await page.getByRole('button', { name: action, exact: true }).click()
   }
+}
+
+export async function searchFromSearchBar(page: Page, searchText: string) {
+  const searchResultRegex = /Search result for “([^”]+)”/
+  await page.locator('#searchText').fill(searchText)
+  await page.locator('#searchIconButton').click()
+  const searchResult = await page.locator('#content-name').textContent()
+  expect(searchResult).toMatch(searchResultRegex)
+  await page.getByText(searchText, { exact: true }).click()
 }
