@@ -210,7 +210,7 @@ export const Workqueues = defineWorkqueues([
       flags: {
         anyOf: ['escalated-to-provincial-registrar']
       },
-      updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+      updatedAtLocation: { type: 'within', location: user('primaryOfficeId') }
     },
     actions: [
       {
