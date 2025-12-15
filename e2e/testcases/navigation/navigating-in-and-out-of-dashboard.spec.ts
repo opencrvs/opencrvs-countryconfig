@@ -14,7 +14,7 @@ test.describe.serial('Navigating in and out of dashboard', () => {
       CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
       CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
     )
-    const res = await createDeclaration(token, undefined, ActionType.VALIDATE)
+    const res = await createDeclaration(token, undefined, ActionType.DECLARE)
     declaration = res.declaration
     page = await browser.newPage()
   })
