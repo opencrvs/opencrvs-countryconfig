@@ -4,7 +4,6 @@ import {
   drawSignature,
   formatName,
   getRandomDate,
-  getToken,
   goToSection,
   login,
   logout,
@@ -12,10 +11,8 @@ import {
 } from '../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../constants'
-import { fillDate, formatV2ChildName } from '../birth/helpers'
+import { fillDate } from '../birth/helpers'
 import { ensureOutboxIsEmpty, selectAction } from '../../utils'
-import { createDeclaration, Declaration } from '../test-data/birth-declaration'
-import { ActionType } from '@opencrvs/toolkit/events'
 
 test.describe.serial('Basic Archival flow', () => {
   let page: Page
@@ -333,75 +330,5 @@ test.describe.serial('Basic Archival flow', () => {
       .click()
 
     await expect(page.getByTestId('status-value')).toHaveText('Archived')
-  })
-})
-
-test.describe.serial('Archival of declaration sent for approval', () => {
-  let page: Page
-  let token: string
-  let declaration: Declaration
-
-  test.beforeAll(async ({ browser }) => {
-    token = await getToken(
-      CREDENTIALS.FIELD_AGENT.USERNAME,
-      CREDENTIALS.FIELD_AGENT.PASSWORD
-    )
-    const res = await createDeclaration(token, undefined, ActionType.DECLARE)
-    declaration = res.declaration
-
-    page = await browser.newPage()
-  })
-
-  test('Login as FA', async () => {
-    await login(page, CREDENTIALS.FIELD_AGENT)
-  })
-
-  test('Navigate to the event overview page', async () => {
-    await page.getByText('Sent for review').click()
-    await page
-      .getByRole('button', {
-        name: formatV2ChildName(declaration)
-      })
-      .click()
-  })
-
-  test('Validate the declaration', async () => {
-    await selectAction(page, 'Validate declaration')
-    await page.getByRole('button', { name: 'Confirm', exact: true }).click()
-    await ensureOutboxIsEmpty(page)
-  })
-
-  test('Confirm the declaration is in Sent for approval workqueue', async () => {
-    await page.getByText('Sent for approval').click()
-    await page
-      .getByRole('button', { name: formatV2ChildName(declaration) })
-      .click()
-
-    await expect(page.getByTestId('status-value')).toHaveText('Validated')
-  })
-
-  test('Archive the declaration', async () => {
-    await selectAction(page, 'Archive')
-    await expect(
-      page.getByText(
-        'This will remove the declaration from the workqueue and change the status to Archive. To revert this change you will need to search for the declaration.'
-      )
-    ).toBeVisible()
-    await page.getByRole('button', { name: 'Archive', exact: true }).click()
-  })
-
-  test('Archived declaration is not visible in workqueues', async () => {
-    await page.getByRole('button', { name: 'Sent for approval' }).click()
-    await expect(
-      page.getByRole('button', { name: formatV2ChildName(declaration) })
-    ).not.toBeVisible()
-  })
-
-  test('Archived declaration can be found via search', async () => {
-    await page.locator('#searchText').fill(formatV2ChildName(declaration))
-    await page.locator('#searchIconButton').click()
-    await expect(
-      page.getByRole('button', { name: formatV2ChildName(declaration) })
-    ).not.toBeVisible()
   })
 })

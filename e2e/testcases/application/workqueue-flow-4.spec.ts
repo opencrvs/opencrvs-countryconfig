@@ -295,7 +295,7 @@ test.describe.serial('4. Workqueue flow - 4', () => {
   })
 
   test('4.4 FA can not see the validated record', async () => {
-    await login(page, CREDENTIALS.FIELD_AGENT)
+    await login(page, CREDENTIALS.FIELD_AGENT, true)
 
     await assertRecordInWorkqueue({
       page,
@@ -311,7 +311,7 @@ test.describe.serial('4. Workqueue flow - 4', () => {
 
   test.describe('4.5 Register by LR', async () => {
     test('4.5.1 Validate workqueue', async () => {
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await login(page, CREDENTIALS.LOCAL_REGISTRAR, true)
 
       await assertRecordInWorkqueue({
         page,
@@ -359,7 +359,7 @@ test.describe.serial('4. Workqueue flow - 4', () => {
   })
 
   test('4.6 FA can not see the registered record', async () => {
-    await login(page, CREDENTIALS.FIELD_AGENT)
+    await login(page, CREDENTIALS.FIELD_AGENT, true)
 
     await assertRecordInWorkqueue({
       page,
@@ -374,7 +374,7 @@ test.describe.serial('4. Workqueue flow - 4', () => {
   })
 
   test('4.7 Workqueue for RA', async () => {
-    await login(page, CREDENTIALS.REGISTRATION_AGENT)
+    await login(page, CREDENTIALS.REGISTRATION_AGENT, true)
 
     await assertRecordInWorkqueue({
       page,
