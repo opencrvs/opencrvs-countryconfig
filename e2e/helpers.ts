@@ -45,7 +45,7 @@ export async function logout(page: Page) {
 export async function login(
   page: Page,
   credentials = CREDENTIALS.LOCAL_REGISTRAR,
-  skipPin?: boolean
+  skipPin = true
 ) {
   const token = await getToken(credentials.USERNAME, credentials.PASSWORD)
   expect(token).toBeDefined()

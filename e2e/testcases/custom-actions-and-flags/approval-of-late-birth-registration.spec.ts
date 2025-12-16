@@ -238,7 +238,7 @@ test.describe.serial('Approval of late birth registration', () => {
 
   test.describe('Audit review by LR', async () => {
     test('Navigate to the declaration review page', async () => {
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR, true)
+      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
       await page.getByText('Ready for review').click()
       await page.getByRole('button', { name: childNameFormatted }).click()
     })

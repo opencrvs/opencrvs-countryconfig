@@ -77,7 +77,7 @@ test.describe.serial('1: Validate my draft tab', () => {
   })
 
   test('1.6 Record does not appear in draft after notifying ', async () => {
-    await login(page, CREDENTIALS.FIELD_AGENT, true)
+    await login(page, CREDENTIALS.FIELD_AGENT)
     await page.getByRole('button', { name: 'My drafts' }).click()
 
     await getRowByTitle(page, formatName(name))

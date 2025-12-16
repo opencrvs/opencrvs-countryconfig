@@ -50,7 +50,7 @@ test.describe('Save and delete drafts', () => {
 
     test('Login as local registrar', async () => {
       await logout(page)
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR, true)
+      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
     })
 
     test('Delete saved draft', async () => {

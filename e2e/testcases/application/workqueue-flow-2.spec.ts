@@ -282,7 +282,7 @@ test.describe.serial('2. Workqueue flow - 2', () => {
   })
 
   test('2.3 FA can not see the registered record', async () => {
-    await login(page, CREDENTIALS.FIELD_AGENT, true)
+    await login(page, CREDENTIALS.FIELD_AGENT)
 
     await assertRecordInWorkqueue({
       page,

@@ -220,7 +220,7 @@ test.describe
   test.describe('Audit review by LR', async () => {
     test.describe('Verify audit trail of Registrar General feedback action', () => {
       test('Navigate to the declaration review page', async () => {
-        await login(page, CREDENTIALS.LOCAL_REGISTRAR, true)
+        await login(page, CREDENTIALS.LOCAL_REGISTRAR)
         await searchFromSearchBar(page, childNameForRegGeneralFormatted)
       })
 

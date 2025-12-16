@@ -284,7 +284,7 @@ test.describe.serial('1. Workqueue flow - 1', () => {
   })
 
   test('1.3 FA can not see the validated record', async () => {
-    await login(page, CREDENTIALS.FIELD_AGENT, true)
+    await login(page, CREDENTIALS.FIELD_AGENT)
 
     await assertRecordInWorkqueue({
       page,
@@ -403,7 +403,7 @@ test.describe.serial('1. Workqueue flow - 1', () => {
   })
 
   test('1.6 FA can not see the registered record', async () => {
-    await login(page, CREDENTIALS.FIELD_AGENT, true)
+    await login(page, CREDENTIALS.FIELD_AGENT)
 
     await assertRecordInWorkqueue({
       page,
@@ -418,7 +418,7 @@ test.describe.serial('1. Workqueue flow - 1', () => {
   })
 
   test("1.7 RA can't see the record", async () => {
-    await login(page, CREDENTIALS.REGISTRATION_AGENT, true)
+    await login(page, CREDENTIALS.REGISTRATION_AGENT)
 
     await assertRecordInWorkqueue({
       page,
