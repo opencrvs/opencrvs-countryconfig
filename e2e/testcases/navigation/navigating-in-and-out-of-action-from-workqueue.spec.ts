@@ -22,7 +22,7 @@ test.describe.skip('Navigating in and out of action', () => {
       CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
       CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
     )
-    const res = await createDeclaration(token, undefined, ActionType.VALIDATE)
+    const res = await createDeclaration(token, undefined, ActionType.DECLARE)
     declaration = res.declaration
     eventId = res.eventId
     page = await browser.newPage()

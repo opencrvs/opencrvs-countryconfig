@@ -231,7 +231,8 @@ test.describe('Form state', () => {
     })
   })
 
-  test.describe('Declaration form is populated after refresh', async () => {
+  test.describe
+    .serial('Declaration form is populated after refresh', async () => {
     let page: Page
 
     test.beforeAll(async ({ browser }) => {
