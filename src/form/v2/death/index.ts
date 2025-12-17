@@ -225,12 +225,24 @@ export const deathEvent = defineConfig({
         defaultMessage: 'Validate',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
+<<<<<<< Updated upstream
         id: 'event.death.action.validate.label'
+=======
+        id: 'event.death.custom.action.validate-declaration.label'
+      },
+      supportingCopy: {
+        defaultMessage:
+          'Approving this declaration confirms it as legally accepted and eligible for registration.',
+        description:
+          'This is the supporting copy for the Validate declaration -action',
+        id: 'event.death.custom.action.validate-declaration.supportingCopy'
+>>>>>>> Stashed changes
       },
       conditionals: [
         { type: ConditionalType.SHOW, conditional: not(flag('validated')) }
       ],
       flags: [{ id: 'validated', operation: 'add' }],
+<<<<<<< Updated upstream
       deduplication: {
         id: 'death-deduplication',
         label: {
@@ -240,6 +252,25 @@ export const deathEvent = defineConfig({
           id: 'event.death.action.detect-duplicate.label'
         },
         query: dedupConfig
+=======
+      form: [
+        {
+          id: 'comments',
+          type: 'TEXTAREA',
+          label: {
+            defaultMessage: 'Comments',
+            description:
+              'This is the label for the comments field for the validate declaration action',
+            id: 'event.death.custom.action.validate-declaration.field.comments.label'
+          }
+        }
+      ],
+      auditHistoryLabel: {
+        defaultMessage: 'Validated',
+        description:
+          'The label to show in audit history for the validate action',
+        id: 'event.death.custom.action.validate-declaration.audit-history-label'
+>>>>>>> Stashed changes
       }
     },
     {
