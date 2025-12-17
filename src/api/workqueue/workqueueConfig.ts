@@ -126,6 +126,32 @@ export const Workqueues = defineWorkqueues([
     }
   },
   {
+    slug: 'pending-certification',
+    icon: 'Printer',
+    name: {
+      id: 'workqueues.pendingCertification.title',
+      defaultMessage: 'Pending Certification',
+      description: 'Title of pending certification workqueue'
+    },
+    query: {
+      flags: {
+        anyOf: ['pending-certified-copy-issuance']
+      },
+      updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+    },
+    actions: [
+      {
+        type: 'DEFAULT',
+        conditionals: []
+      }
+    ],
+    emptyMessage: {
+      id: 'workqueues.pendingCertification.emptyMessage',
+      defaultMessage: 'No pending certification records',
+      description: 'Empty message for pending certification workqueue'
+    }
+  },
+  {
     slug: 'requires-completion',
     icon: 'File',
     name: {
@@ -153,6 +179,47 @@ export const Workqueues = defineWorkqueues([
     }
   },
   {
+    slug: 'pending-feedback-registrar-general',
+    icon: 'ChatText',
+    name: {
+      id: 'workqueues.reviewRequested.title',
+      defaultMessage: 'Review requested',
+      description: 'Title of review requested workqueue'
+    },
+    query: {
+      flags: {
+        anyOf: ['escalated-to-registrar-general']
+      }
+    },
+    actions: [
+      {
+        type: 'DEFAULT',
+        conditionals: []
+      }
+    ]
+  },
+  {
+    slug: 'pending-feedback-provincinal-registrar',
+    icon: 'ChatText',
+    name: {
+      id: 'workqueues.reviewRequested.title',
+      defaultMessage: 'Review requested',
+      description: 'Title of review requested workqueue'
+    },
+    query: {
+      flags: {
+        anyOf: ['escalated-to-provincial-registrar']
+      },
+      updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+    },
+    actions: [
+      {
+        type: 'DEFAULT',
+        conditionals: []
+      }
+    ]
+  },
+  {
     slug: 'sent-for-review',
     icon: 'FileSearch',
     name: {
@@ -166,7 +233,7 @@ export const Workqueues = defineWorkqueues([
         terms: ['DECLARED', 'NOTIFIED']
       },
       flags: {
-        noneOf: [InherentFlags.REJECTED]
+        noneOf: [InherentFlags.REJECTED, 'validated']
       },
       createdBy: { type: 'exact', term: user('id') }
     },
@@ -194,7 +261,7 @@ export const Workqueues = defineWorkqueues([
     query: {
       status: { type: 'exact', term: EventStatus.enum.DECLARED },
       flags: {
-        noneOf: [InherentFlags.REJECTED]
+        noneOf: [InherentFlags.REJECTED, 'validated']
       },
       updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
     },
@@ -230,7 +297,7 @@ export const Workqueues = defineWorkqueues([
         {
           status: {
             type: 'anyOf',
-            terms: ['DECLARED', 'VALIDATED']
+            terms: ['DECLARED']
           },
           flags: {
             noneOf: [InherentFlags.REJECTED]
@@ -341,15 +408,10 @@ export const Workqueues = defineWorkqueues([
       clauses: [
         {
           updatedBy: { type: 'exact', term: user('id') },
-          status: { type: 'exact', term: 'VALIDATED' },
-          flags: {
-            noneOf: [InherentFlags.REJECTED]
-          }
+          flags: { noneOf: [InherentFlags.REJECTED] }
         },
         {
-          flags: {
-            anyOf: [InherentFlags.CORRECTION_REQUESTED]
-          },
+          flags: { anyOf: [InherentFlags.CORRECTION_REQUESTED, 'validated'] },
           updatedBy: { type: 'exact', term: user('id') }
         }
       ]
@@ -421,6 +483,27 @@ export const Workqueues = defineWorkqueues([
           id: 'workqueue.ready-to-print.column.registered'
         },
         value: event.field('updatedAt')
+      }
+    ]
+  },
+  {
+    slug: 'late-registration-approval-required',
+    icon: 'FileSearch',
+    name: {
+      id: 'workqueues.requiresApproval.title',
+      defaultMessage: 'Pending approval',
+      description: 'Title of Pending approval workqueue'
+    },
+    query: {
+      flags: {
+        anyOf: ['approval-required-for-late-registration']
+      },
+      updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+    },
+    actions: [
+      {
+        type: 'DEFAULT',
+        conditionals: []
       }
     ]
   }

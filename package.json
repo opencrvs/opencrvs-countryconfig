@@ -10,14 +10,8 @@
     "node": "22.x.x"
   },
   "license": "MPL-2.0",
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn precommit"
-    }
-  },
   "scripts": {
     "dev": "yarn start",
-    "precommit": "lint-staged",
     "test": "vitest",
     "test:compilation": "tsc --noEmit",
     "lint": "eslint -c .eslintrc.js",
@@ -32,7 +26,8 @@
     "port-forward": "bash infrastructure/port-forward.sh",
     "environment:init": "ts-node infrastructure/environments/setup-environment.ts",
     "environment:upgrade": "yarn environment:init",
-    "sort-translations": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/sort-translations.ts"
+    "sort-translations": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/sort-translations.ts",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@inquirer/editor": "^1.2.13",
@@ -50,7 +45,7 @@
     "eslint": "^8.43.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
-    "husky": "1.0.0-rc.13",
+    "husky": "^9.1.7",
     "inquirer": "^9.2.12",
     "js-yaml": "^4.1.0",
     "kleur": "^4.1.5",
@@ -114,7 +109,7 @@
     "tsconfig-paths": "^3.8.0",
     "typescript": "^5.1.6",
     "uuid": "^11.1.0",
-    "zod": "^3.24.1"
+    "zod": "^4.1.12"
   },
   "lint-staged": {
     "src/**/*.{ts,graphql}": [
