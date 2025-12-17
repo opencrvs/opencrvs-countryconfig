@@ -29,7 +29,7 @@ export const Workqueues = defineWorkqueues([
     query: {},
     actions: [
       {
-        type: 'VALIDATE',
+        type: 'DECLARE',
         conditionals: []
       }
     ]
@@ -177,6 +177,47 @@ export const Workqueues = defineWorkqueues([
       defaultMessage: 'No notifications',
       description: 'Empty message for notifications workqueue'
     }
+  },
+  {
+    slug: 'pending-feedback-registrar-general',
+    icon: 'ChatText',
+    name: {
+      id: 'workqueues.reviewRequested.title',
+      defaultMessage: 'Review requested',
+      description: 'Title of review requested workqueue'
+    },
+    query: {
+      flags: {
+        anyOf: ['escalated-to-registrar-general']
+      }
+    },
+    actions: [
+      {
+        type: 'DEFAULT',
+        conditionals: []
+      }
+    ]
+  },
+  {
+    slug: 'pending-feedback-provincinal-registrar',
+    icon: 'ChatText',
+    name: {
+      id: 'workqueues.reviewRequested.title',
+      defaultMessage: 'Review requested',
+      description: 'Title of review requested workqueue'
+    },
+    query: {
+      flags: {
+        anyOf: ['escalated-to-provincial-registrar']
+      },
+      updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+    },
+    actions: [
+      {
+        type: 'DEFAULT',
+        conditionals: []
+      }
+    ]
   },
   {
     slug: 'sent-for-review',
@@ -363,17 +404,12 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of sent for approval workqueue'
     },
     query: {
-      type: 'or',
-      clauses: [
-        {
-          updatedBy: { type: 'exact', term: user('id') },
-          flags: { noneOf: [InherentFlags.REJECTED] }
-        },
-        {
-          flags: { anyOf: [InherentFlags.CORRECTION_REQUESTED, 'validated'] },
-          updatedBy: { type: 'exact', term: user('id') }
-        }
-      ]
+      status: { type: 'anyOf', terms: ['DECLARED', 'NOTIFIED', 'REGISTERED'] },
+      updatedBy: { type: 'exact', term: user('id') },
+      flags: {
+        noneOf: [InherentFlags.REJECTED],
+        anyOf: [InherentFlags.CORRECTION_REQUESTED, 'validated']
+      }
     },
     actions: [],
     columns: [
