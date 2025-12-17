@@ -313,7 +313,7 @@ export const birthEvent = defineConfig({
       },
       supportingCopy: {
         defaultMessage:
-          'This birth has been registered late. You are now approving it for further validation and registration.',
+          'Approving this declaration confirms it as legally accepted and eligible for registration.',
         description: 'This is the confirmation text for the approve action',
         id: 'event.birth.action.approve.confirmationText'
       }
@@ -327,6 +327,13 @@ export const birthEvent = defineConfig({
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.birth.action.issue-certified-copy.label'
+      },
+      supportingCopy: {
+        defaultMessage:
+          'Issuing a certified copy confirms that an official document is being released.',
+        description:
+          'This is the confirmation text for the issue certified copy action',
+        id: 'event.birth.action.issue-certified-copy.supportingCopy'
       },
       form: [
         {
@@ -391,6 +398,12 @@ export const birthEvent = defineConfig({
         description:
           'This is shown when the escalate action can be triggered from the action from',
         id: 'event.birth.action.escalate.label'
+      },
+      supportingCopy: {
+        defaultMessage:
+          'Escalating this declaration will forward it to the chosen authority for further review and decision.',
+        description: 'This is the confirmation text for the escalate action',
+        id: 'event.birth.action.escalate.supportingCopy'
       },
       conditionals: [
         {
@@ -468,6 +481,13 @@ export const birthEvent = defineConfig({
       type: ActionType.CUSTOM,
       customActionType: 'PROVINCIAL_REGISTER_FEEDBACK',
       icon: 'ChatText',
+      supportingCopy: {
+        defaultMessage:
+          'Your feedback will be recorded and shared with relevant officers to guide further action on this declaration.',
+        description:
+          'This is the confirmation text for the provincial registrar feedback action',
+        id: 'event.birth.action.provincial-registrar-feedback.supportingCopy'
+      },
       label: {
         defaultMessage: 'Provincial registrar feedback',
         description:
@@ -514,6 +534,13 @@ export const birthEvent = defineConfig({
         description:
           'This is shown when the registrar general feedback can be triggered from the action from',
         id: 'event.birth.action.registrar-general-feedback.label'
+      },
+      supportingCopy: {
+        defaultMessage:
+          'Your feedback will be officially recorded and may influence the final decision on the declaration.',
+        description:
+          'This is the confirmation text for the registrar general feedback action',
+        id: 'event.birth.action.registrar-general-feedback.supportingCopy'
       },
       form: [
         {
