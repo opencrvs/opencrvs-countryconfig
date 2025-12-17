@@ -59,7 +59,6 @@ import {
   ActionType,
   EventDocument
 } from '@opencrvs/toolkit/events'
-import { Event } from './form/types/types'
 import { onRegisterHandler } from './api/registration'
 import { workqueueconfigHandler } from './api/workqueue/handler'
 import getUserNotificationRoutes from './config/routes/userNotificationRoutes'
@@ -557,7 +556,7 @@ async function createServer() {
 
   server.route({
     method: 'POST',
-    path: `/trigger/events/${Event.TENNIS_CLUB_MEMBERSHIP}/actions/${ActionType.REGISTER}`,
+    path: `/trigger/events/tennis-club-membership/actions/${ActionType.REGISTER}`,
     handler: onRegisterHandler,
     options: {
       tags: ['api', 'events'],
@@ -567,7 +566,7 @@ async function createServer() {
 
   server.route({
     method: 'POST',
-    path: `/trigger/events/${Event.Birth}/actions/${ActionType.REGISTER}`,
+    path: `/trigger/events/birth/actions/${ActionType.REGISTER}`,
     handler: onRegisterHandler,
     options: {
       tags: ['api', 'events'],
@@ -577,7 +576,7 @@ async function createServer() {
 
   server.route({
     method: 'POST',
-    path: `/trigger/events/${Event.Death}/actions/${ActionType.REGISTER}`,
+    path: `/trigger/events/death/actions/${ActionType.REGISTER}`,
     handler: onRegisterHandler,
     options: {
       tags: ['api', 'events'],

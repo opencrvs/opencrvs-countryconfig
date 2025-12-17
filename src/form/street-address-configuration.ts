@@ -9,7 +9,6 @@ import {
   defineFormConditional,
   errorMessages
 } from '@opencrvs/toolkit/events'
-import { type } from 'os'
 
 function isInternationalAddress() {
   return and(

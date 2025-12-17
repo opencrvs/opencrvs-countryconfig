@@ -9,7 +9,10 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { Event } from '@countryconfig/form/types/types'
+import { BIRTH_EVENT } from '@countryconfig/form/birth'
+import { DEATH_EVENT } from '@countryconfig/form/death'
+import { MARRIAGE_EVENT } from '@countryconfig/form/marriage'
+import { TENNIS_CLUB_MEMBERSHIP_EVENT } from '@countryconfig/form/tennis-club-membership'
 import { Request, ResponseToolkit } from '@hapi/hapi'
 import { ActionType, event, not } from '@opencrvs/toolkit/events'
 
@@ -24,7 +27,11 @@ type JSONSchema = Record<string, any>
 
 interface ICertificateConfigData {
   id: string
-  event: Event
+  event:
+    | typeof BIRTH_EVENT
+    | typeof DEATH_EVENT
+    | typeof MARRIAGE_EVENT
+    | typeof TENNIS_CLUB_MEMBERSHIP_EVENT
   // This is a temporary field to indicate that the certificate is a v2 template.
   // As the templates are assigned to event types per id, we would not be able to define separate templates for v1 and v2 'birth' or 'death' events without this.
   // After v1 is phased out, this field can be removed.
@@ -76,7 +83,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
   const certificateConfigs: ICertificateConfigData[] = [
     {
       id: 'birth-certificate',
-      event: Event.Birth,
+      event: BIRTH_EVENT,
       label: {
         id: 'certificates.birth.certificate',
         defaultMessage: 'Birth Certificate',
@@ -93,7 +100,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
     },
     {
       id: 'birth-certificate-certified-copy',
-      event: Event.Birth,
+      event: BIRTH_EVENT,
       label: {
         id: 'certificates.birth.certificate.copy',
         defaultMessage: 'Birth Certificate certified copy',
@@ -118,7 +125,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
     },
     {
       id: 'birth-registration-receipt',
-      event: Event.Birth,
+      event: BIRTH_EVENT,
       label: {
         id: 'certificates.birth.registration.receipt',
         defaultMessage: 'Birth Registration Receipt',
@@ -135,7 +142,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
     },
     {
       id: 'death-certificate',
-      event: Event.Death,
+      event: 'death',
       label: {
         id: 'certificates.death.certificate',
         defaultMessage: 'Death Certificate',
@@ -152,7 +159,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
     },
     {
       id: 'death-certificate-certified-copy',
-      event: Event.Death,
+      event: 'death',
       label: {
         id: 'certificates.death.certificate.copy',
         defaultMessage: 'Death Certificate certified copy',
@@ -177,7 +184,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
     },
     {
       id: 'marriage-certificate',
-      event: Event.Marriage,
+      event: MARRIAGE_EVENT,
       label: {
         id: 'certificates.marriage.certificate',
         defaultMessage: 'Marriage Certificate',
@@ -194,7 +201,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
     },
     {
       id: 'marriage-certificate-certified-copy',
-      event: Event.Marriage,
+      event: MARRIAGE_EVENT,
       label: {
         id: 'certificates.marriage.certificate.copy',
         defaultMessage: 'Marriage Certificate certified copy',
@@ -212,7 +219,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
     },
     {
       id: 'v2.birth-certificate',
-      event: Event.Birth,
+      event: BIRTH_EVENT,
       isV2Template: true,
       label: {
         id: 'certificates.birth.certificate',
@@ -236,7 +243,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
     },
     {
       id: 'v2.birth-certified-certificate',
-      event: Event.Birth,
+      event: BIRTH_EVENT,
       isV2Template: true,
       label: {
         id: 'certificates.birth.certificate.copy',
@@ -265,7 +272,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
     },
     {
       id: 'v2.tennis-club-membership-certificate',
-      event: Event.TENNIS_CLUB_MEMBERSHIP,
+      event: 'tennis-club-membership',
       isV2Template: true,
       label: {
         id: 'certificates.tennis-club-membership.certificate.copy',
@@ -291,7 +298,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
     },
     {
       id: 'v2.tennis-club-membership-certified-certificate',
-      event: Event.TENNIS_CLUB_MEMBERSHIP,
+      event: 'tennis-club-membership',
       isV2Template: true,
       label: {
         id: 'certificates.tennis-club-membership.certificate.certified-copy',
@@ -310,7 +317,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
     },
     {
       id: 'v2.tennis-club-membership-certificate-multipage',
-      event: Event.TENNIS_CLUB_MEMBERSHIP,
+      event: 'tennis-club-membership',
       isV2Template: true,
       label: {
         id: 'certificates.tennis-club-membership.certificate.multipage',
@@ -329,7 +336,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
     },
     {
       id: 'v2.death-certificate',
-      event: Event.Death,
+      event: 'death',
       isV2Template: true,
       label: {
         id: 'certificates.death.certificate',
@@ -347,7 +354,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
     },
     {
       id: 'v2.death-certified-certificate',
-      event: Event.Death,
+      event: 'death',
       isV2Template: true,
       label: {
         id: 'certificates.death.certificate.copy',

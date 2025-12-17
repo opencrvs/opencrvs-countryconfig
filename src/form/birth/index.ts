@@ -8,448 +8,636 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
-
-import { Event, ISerializedForm } from '../types/types'
-import { formMessageDescriptors } from '../common/messages'
-import { informantType } from './required-fields'
+import { applicationConfig } from '@countryconfig/api/application/application-config'
 import {
-  getBirthDate,
-  getGender,
-  getFamilyNameField,
-  getFirstNameField,
-  getNationality,
-  otherInformantType,
-  getDetailsExist,
-  // getMiddleNameField,
-  getReasonNotExisting
-} from '../common/common-required-fields'
+  ActionType,
+  and,
+  ConditionalType,
+  defineConfig,
+  field,
+  FieldType,
+  flag,
+  InherentFlags,
+  not,
+  or,
+  status,
+  user
+} from '@opencrvs/toolkit/events'
+import { advancedSearchBirth } from './advancedSearch'
+import { dedupConfig } from './dedupConfig'
+import { CORRECTION_FORM } from './forms/correctionForm'
 import {
-  exactDateOfBirthUnknown,
-  getAgeOfIndividualInYears,
-  getMaritalStatus,
-  registrationEmail,
-  registrationPhone,
-  getEducation,
-  getOccupation,
-  divider
-} from '../common/common-optional-fields'
-import {
-  attendantAtBirth,
-  birthType,
-  multipleBirth,
-  weightAtBirth
-} from './optional-fields'
-import {
-  childNameInEnglish,
-  fatherNameInEnglish,
-  informantNameInEnglish,
-  motherNameInEnglish
-} from '../common/preview-groups'
-import {
-  isValidChildBirthDate,
-  hideIfInformantMotherOrFather,
-  mothersDetailsExistConditionals,
-  mothersBirthDateConditionals,
-  parentsBirthDateValidators,
-  detailsExist,
-  motherFirstNameConditionals,
-  motherFamilyNameConditionals,
-  fathersDetailsExistConditionals,
-  fathersBirthDateConditionals,
-  fatherFirstNameConditionals,
-  fatherFamilyNameConditionals,
-  informantNotMotherOrFather,
-  detailsExistConditional,
-  ageOfIndividualValidators,
-  ageOfParentsConditionals
-} from '../common/default-validation-conditionals'
-import {
-  informantFirstNameConditionals,
-  informantFamilyNameConditionals,
-  informantBirthDateConditionals,
-  exactDateOfBirthUnknownConditional
-} from '../common/default-validation-conditionals'
-import {
-  documentsSection,
-  registrationSection,
-  previewSection,
-  reviewSection
-} from './required-sections'
-import { certificateHandlebars } from './certificate-handlebars'
-import { getSectionMapping } from '@countryconfig/utils/mapping/section/birth/mapping-utils'
-import { getCommonSectionMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
-import { getReasonForLateRegistration } from '../custom-fields'
-import { getIDNumberFields, getIDType } from '../custom-fields'
-// import { createCustomFieldExample } from '../custom-fields'
+  BIRTH_DECLARATION_FORM,
+  BIRTH_DECLARATION_REVIEW
+} from './forms/declaration'
+import { PlaceOfBirth } from './forms/pages/child'
+import { BIRTH_CERTIFICATE_COLLECTOR_FORM } from './forms/printForm'
 
-// ======================= FORM CONFIGURATION =======================
+export const BIRTH_EVENT = 'birth'
 
-// A REGISTRATION FORM IS MADE UP OF PAGES OR "SECTIONS"
-
-// A "SECTION" CAN BE SPLIT OVER MULTIPLE SUB-PAGES USING "GROUPS"
-
-// GROUPS CONTAIN A FIELDS ARRAY AND EACH FIELD IS RENDERED BY A FORM FIELD FUNCTION
-
-// MOVE FORM FIELD FUNCTIONS UP AND DOWN TO CHANGE THE VERTICAL ORDER OF FIELDS
-
-// IN EACH GROUP, REQUIRED FIELDS MUST BE INCLUDED AS-IS FOR OPENCRVS TO FUNCTION
-
-// OPTIONAL FIELDS CAN BE COMMENTED OUT OR REMOVED IF NOT REQUIRED
-
-// DUPLICATE & FOLLOW THE INSTRUCTIONS IN THE createCustomFieldExample FUNCTION WHEN REQUIRED FOR ADDING NEW CUSTOM FIELDS
-
-export const birthForm: ISerializedForm = {
-  sections: [
-    registrationSection, // REQUIRED HIDDEN SECTION CONTAINING IDENTIFIERS
+export const birthEvent = defineConfig({
+  id: BIRTH_EVENT,
+  declaration: BIRTH_DECLARATION_FORM,
+  label: {
+    defaultMessage: 'Birth',
+    description: 'This is what this event is referred as in the system',
+    id: 'event.birth.label'
+  },
+  dateOfEvent: field('child.dob'),
+  placeOfEvent: field('child.birthLocationId'),
+  title: {
+    defaultMessage: '{child.name.firstname} {child.name.surname}',
+    description: 'This is the title of the summary',
+    id: 'event.birth.title'
+  },
+  fallbackTitle: {
+    id: 'event.tennis-club-membership.fallbackTitle',
+    defaultMessage: 'No name provided',
+    description:
+      'This is a fallback title if actual title resolves to empty string'
+  },
+  flags: [
     {
-      id: 'information',
-      viewType: 'form',
-      name: {
-        defaultMessage: 'Information',
-        description: 'Form section name for Information',
-        id: 'form.section.information.name'
+      id: 'approval-required-for-late-registration',
+      label: {
+        id: 'event.birth.flag.approval-required-for-late-registration',
+        defaultMessage: 'Approval required for late registration',
+        description: 'Flag label for approval required for late registration'
       },
-      groups: [
+      requiresAction: true
+    },
+    {
+      id: 'escalated-to-provincial-registrar',
+      label: {
+        id: 'event.birth.flag.escalated-to-provincial-registrar',
+        defaultMessage: 'Escalated to Provincial Registrar',
+        description: 'Flag label for escalated to provincial registrar'
+      },
+      requiresAction: true
+    },
+    {
+      id: 'escalated-to-registrar-general',
+      label: {
+        id: 'event.birth.flag.escalated-to-registrar-general',
+        defaultMessage: 'Escalated to Registrar General',
+        description: 'Flag label for escalated to registrar general'
+      },
+      requiresAction: true
+    },
+    {
+      id: 'validated',
+      label: {
+        id: 'event.birth.flag.validated',
+        defaultMessage: 'Validated',
+        description: 'Flag label for validated'
+      },
+      requiresAction: true
+    },
+    {
+      id: 'pending-certified-copy-issuance',
+      label: {
+        id: 'event.birth.flag.pending-certified-copy-issuance',
+        defaultMessage: 'Pending certified copy issuance',
+        description: 'Flag label for pending certified copy issuance'
+      },
+      requiresAction: true
+    }
+  ],
+  summary: {
+    fields: [
+      {
+        fieldId: 'child.dob',
+        emptyValueMessage: {
+          defaultMessage: 'No date of birth',
+          description: 'This is shown when there is no child information',
+          id: 'event.birth.summary.child.dob.empty'
+        }
+      },
+      // Render the 'fallback value' when selection has not been made.
+      // This hides the default values of the field when no selection has been made. (e.g. when address is prefilled with user's details, we don't want to show the address before selecting the option)
+      {
+        fieldId: 'child.placeOfBirth',
+        emptyValueMessage: {
+          defaultMessage: 'No place of birth',
+          description: 'This is shown when there is no child information',
+          id: 'event.birth.summary.child.placeOfBirth.empty'
+        },
+        label: {
+          defaultMessage: 'Place of birth',
+          description: 'Label for place of birth',
+          id: 'event.birth.summary.child.placeOfBirth.label'
+        },
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: field('child.placeOfBirth').isFalsy()
+          }
+        ]
+      },
+      {
+        fieldId: 'child.birthLocation',
+        emptyValueMessage: {
+          defaultMessage: 'No place of birth',
+          description: 'This is shown when there is no child information',
+          id: 'event.birth.summary.child.placeOfBirth.empty'
+        },
+        label: {
+          defaultMessage: 'Place of birth',
+          description: 'Label for place of birth',
+          id: 'event.birth.summary.child.placeOfBirth.label'
+        },
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: field('child.placeOfBirth').isEqualTo(
+              PlaceOfBirth.HEALTH_FACILITY
+            )
+          }
+        ]
+      },
+      {
+        fieldId: 'child.birthLocation.privateHome',
+        emptyValueMessage: {
+          defaultMessage: 'No place of birth',
+          description: 'This is shown when there is no child information',
+          id: 'event.birth.summary.child.placeOfBirth.empty'
+        },
+        label: {
+          defaultMessage: 'Place of birth',
+          description: 'Label for place of birth',
+          id: 'event.birth.summary.child.placeOfBirth.label'
+        },
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: field('child.placeOfBirth').isEqualTo(
+              PlaceOfBirth.PRIVATE_HOME
+            )
+          }
+        ]
+      },
+      {
+        fieldId: 'child.birthLocation.other',
+        emptyValueMessage: {
+          defaultMessage: 'No place of birth',
+          description: 'This is shown when there is no child information',
+          id: 'event.birth.summary.child.placeOfBirth.empty'
+        },
+        label: {
+          defaultMessage: 'Place of birth',
+          description: 'Label for place of birth',
+          id: 'event.birth.summary.child.placeOfBirth.label'
+        },
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: field('child.placeOfBirth').isEqualTo(
+              PlaceOfBirth.OTHER
+            )
+          }
+        ]
+      },
+      {
+        id: 'informant.contact',
+        emptyValueMessage: {
+          defaultMessage: 'No contact details provided',
+          description: 'This is shown when there is no informant information',
+          id: 'event.birth.summary.informant.contact.empty'
+        },
+        label: {
+          defaultMessage: 'Contact',
+          description: 'This is the label for the informant information',
+          id: 'event.birth.summary.informant.contact.label'
+        },
+        value: {
+          defaultMessage: '{informant.phoneNo} {informant.email}',
+          description: 'This is the contact value of the informant',
+          id: 'event.birth.summary.informant.contact.value'
+        }
+      }
+    ]
+  },
+  actions: [
+    {
+      type: ActionType.READ,
+      label: {
+        defaultMessage: 'Read',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'event.birth.action.Read.label'
+      },
+      review: BIRTH_DECLARATION_REVIEW
+    },
+    {
+      type: ActionType.DECLARE,
+      label: {
+        defaultMessage: 'Declare',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'event.birth.action.declare.label'
+      },
+      review: BIRTH_DECLARATION_REVIEW,
+      deduplication: {
+        id: 'birth-deduplication',
+        label: {
+          defaultMessage: 'Detect duplicate',
+          description:
+            'This is shown as the action name anywhere the user can trigger the action from',
+          id: 'event.birth.action.detect-duplicate.label'
+        },
+        query: dedupConfig
+      },
+      flags: [
         {
-          id: 'information-group',
-          title: {
-            defaultMessage:
-              'Introduce the birth registration process to the informant',
-            description: 'Event information title for the birth',
-            id: 'register.eventInfo.birth.title'
+          id: 'approval-required-for-late-registration',
+          operation: 'add',
+          conditional: and(
+            not(
+              field('child.dob')
+                .isAfter()
+                .days(applicationConfig.BIRTH.LATE_REGISTRATION_TARGET)
+                .inPast()
+            ),
+            field('child.dob').isBefore().now()
+          )
+        },
+        {
+          id: 'validated',
+          operation: 'add',
+          conditional: or(
+            user.hasRole('REGISTRATION_AGENT'),
+            user.hasRole('LOCAL_REGISTRAR')
+          )
+        }
+      ]
+    },
+    {
+      type: ActionType.CUSTOM,
+      customActionType: 'APPROVE_DECLARATION',
+      icon: 'Stamp',
+      label: {
+        defaultMessage: 'Approve declaration',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'event.birth.action.approve.label'
+      },
+      form: [
+        {
+          id: 'notes',
+          type: 'TEXTAREA',
+          label: {
+            defaultMessage: 'Comments',
+            description: 'This is the label for the field for a custom action',
+            id: 'event.birth.custom.action.approve.field.notes.label'
+          }
+        }
+      ],
+      flags: [
+        { id: InherentFlags.REJECTED, operation: 'remove' },
+        { id: 'approval-required-for-late-registration', operation: 'remove' }
+      ],
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: flag('approval-required-for-late-registration')
+        },
+        {
+          type: ConditionalType.ENABLE,
+          conditional: not(flag(InherentFlags.POTENTIAL_DUPLICATE))
+        }
+      ],
+      auditHistoryLabel: {
+        defaultMessage: 'Approved',
+        description:
+          'The label to show in audit history for the approve action',
+        id: 'event.birth.action.approve.audit-history-label'
+      },
+      supportingCopy: {
+        defaultMessage:
+          'This birth has been registered late. You are now approving it for further validation and registration.',
+        description: 'This is the confirmation text for the approve action',
+        id: 'event.birth.action.approve.confirmationText'
+      }
+    },
+    {
+      type: ActionType.CUSTOM,
+      customActionType: 'ISSUE_CERTIFIED_COPY',
+      icon: 'Handshake',
+      label: {
+        defaultMessage: 'Issue certified copy',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'event.birth.action.issue-certified-copy.label'
+      },
+      form: [
+        {
+          id: 'collector',
+          type: FieldType.SELECT,
+          label: {
+            defaultMessage: 'Collector',
+            description: 'Label for collector field',
+            id: 'event.birth.custom.action.approve.field.collector.label'
           },
-          conditionals: [
+          required: true,
+          options: [
             {
-              action: 'hide',
-              expression: 'window.config.HIDE_BIRTH_EVENT_REGISTER_INFORMATION'
-            }
-          ],
-          fields: [
-            {
-              name: 'list',
-              type: 'BULLET_LIST',
-              items: [
-                {
-                  defaultMessage:
-                    'I am going to help you make a declaration of birth.',
-                  description: 'Form information for birth',
-                  id: 'form.section.information.birth.bullet1'
-                },
-                {
-                  defaultMessage:
-                    'As the legal Informant it is important that all the information provided by you is accurate.',
-                  description: 'Form information for birth',
-                  id: 'form.section.information.birth.bullet2'
-                },
-                {
-                  defaultMessage:
-                    'Once the declaration is processed you will receive an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.',
-                  description: 'Form information for birth',
-                  id: 'form.section.information.birth.bullet3'
-                },
-                {
-                  defaultMessage:
-                    'Make sure you collect the certificate. A birth certificate is critical for this child, especially to make their life easy later on. It will help to access health services, school examinations and government benefits.',
-                  description: 'Form information for birth',
-                  id: 'form.section.information.birth.bullet4'
-                }
-              ],
-              // this is to set the title of the page
               label: {
-                id: 'register.eventInfo.birth.title'
+                defaultMessage: 'Mother',
+                id: 'form.field.label.app.whoContDet.mother',
+                description: 'Label for mother'
               },
-              initialValue: '',
-              validator: []
+              value: 'MOTHER'
+            },
+            {
+              label: {
+                defaultMessage: 'Father',
+                id: 'form.field.label.informantRelation.father',
+                description: 'Label for father'
+              },
+              value: 'FATHER'
+            },
+            {
+              label: {
+                defaultMessage: 'Someone else',
+                id: 'form.field.label.informantRelation.others',
+                description: 'Label for someone else'
+              },
+              value: 'SOMEONE_ELSE'
             }
           ]
         }
-      ]
-    },
-    {
-      id: 'child',
-      viewType: 'form',
-      name: formMessageDescriptors.childTab,
-      title: formMessageDescriptors.childTitle,
-      mapping: getSectionMapping('child'), // These mappings support configurable identifiers in the event-registration API
-      groups: [
+      ],
+      flags: [{ id: 'pending-certified-copy-issuance', operation: 'remove' }],
+      conditionals: [
         {
-          id: 'child-view-group',
-          fields: [
-            // COMMENT IN AND DUPLICATE AS REQUIRED IN ORDER TO CREATE A CUSTOM FIELD: createCustomFieldExample(),
-            // createCustomFieldExample(),
-            getFirstNameField(
-              'childNameInEnglish',
-              [],
-              certificateHandlebars.childFirstName
-            ), // Required field.  Names in Latin characters must be provided for international passport
-            /*getMiddleNameField(
-              'childNameInEnglish',
-              [],
-              certificateHandlebars.childMiddleName
-            ),*/
-            getFamilyNameField(
-              'childNameInEnglish',
-              [],
-              certificateHandlebars.childFamilyName
-            ), // Required field.  Names in Latin characters must be provided for international passport
-            getGender(certificateHandlebars.childGender), // Required field.
-            getBirthDate(
-              'childBirthDate',
-              [],
-              isValidChildBirthDate,
-              certificateHandlebars.eventDate
-            ), // Required field.
-            getReasonForLateRegistration('birth'),
-            // PLACE OF BIRTH FIELDS WILL RENDER HERE
-            divider('place-of-birth-seperator'),
-            attendantAtBirth,
-            birthType,
-            weightAtBirth
-          ],
-          previewGroups: [childNameInEnglish] // Preview groups are used to structure data nicely in Review Page UI
-        }
-      ]
-    },
-    {
-      id: 'informant',
-      viewType: 'form',
-      name: {
-        defaultMessage: 'Informant',
-        description: 'Form section name for Informant',
-        id: 'form.section.informant.name'
-      },
-      title: formMessageDescriptors.birthInformantTitle,
-      groups: [
-        {
-          id: 'informant-view-group',
-          fields: [
-            informantType, // Required field.
-            otherInformantType(Event.Birth), // Required field.
-            getFirstNameField(
-              'informantNameInEnglish',
-              informantFirstNameConditionals.concat(
-                hideIfInformantMotherOrFather
-              ),
-              certificateHandlebars.informantFirstName
-            ), // Required field.
-            getFamilyNameField(
-              'informantNameInEnglish',
-              informantFamilyNameConditionals.concat(
-                hideIfInformantMotherOrFather
-              ),
-              certificateHandlebars.informantFamilyName
-            ), // Required field.
-            getBirthDate(
-              'informantBirthDate',
-              informantBirthDateConditionals.concat(
-                hideIfInformantMotherOrFather
-              ),
-              [
-                {
-                  operation: 'dateFormatIsCorrect',
-                  parameters: []
-                },
-                {
-                  operation: 'dateInPast',
-                  parameters: []
-                },
-                {
-                  operation: 'isAgeInYearsBetween',
-                  parameters: [16, 100]
-                }
-              ],
-              certificateHandlebars.informantBirthDate
-            ), // Required field.
-            exactDateOfBirthUnknown(hideIfInformantMotherOrFather),
-            getAgeOfIndividualInYears(
-              formMessageDescriptors.ageOfInformant,
-              exactDateOfBirthUnknownConditional.concat(
-                hideIfInformantMotherOrFather
-              ),
-              ageOfIndividualValidators,
-              certificateHandlebars.ageOfInformantInYears
-            ),
-            getNationality(
-              certificateHandlebars.informantNationality,
-              hideIfInformantMotherOrFather
-            ), // Required field.
-            getIDType(
-              'birth',
-              'informant',
-              hideIfInformantMotherOrFather,
-              true
-            ),
-            ...getIDNumberFields(
-              'informant',
-              hideIfInformantMotherOrFather,
-              true
-            ),
-            // ADDRESS FIELDS WILL RENDER HERE
-            divider('informant-address-seperator', [
-              {
-                action: 'hide',
-                expression: informantNotMotherOrFather
-              }
-            ]),
-            registrationPhone, // If you wish to enable automated SMS notifications to informants, include this
-            registrationEmail // If you wish to enable automated Email notifications to informants, include this
-          ],
-          previewGroups: [informantNameInEnglish]
+          type: ConditionalType.SHOW,
+          conditional: and(
+            flag('pending-certified-copy-issuance'),
+            status('REGISTERED')
+          )
         }
       ],
-      mapping: getCommonSectionMapping('informant')
+      auditHistoryLabel: {
+        defaultMessage: 'Issued',
+        description: 'The label to show in audit history for the issued action',
+        id: 'event.birth.action.issued.audit-history-label'
+      }
     },
     {
-      id: 'mother',
-      viewType: 'form',
-      name: formMessageDescriptors.motherName,
-      title: formMessageDescriptors.motherTitle,
-      groups: [
+      type: ActionType.CUSTOM,
+      customActionType: 'ESCALATE',
+      icon: 'FileArrowUp',
+      label: {
+        defaultMessage: 'Escalate',
+        description:
+          'This is shown when the escalate action can be triggered from the action from',
+        id: 'event.birth.action.escalate.label'
+      },
+      conditionals: [
         {
-          id: 'mother-view-group',
-          fields: [
-            getDetailsExist(
-              formMessageDescriptors.mothersDetailsExist,
-              mothersDetailsExistConditionals
-            ), // Strongly recommend is required if you want to register abandoned / orphaned children!
-            divider(
-              'mother-details-seperator',
-              mothersDetailsExistConditionals
-            ),
-            getReasonNotExisting(certificateHandlebars.motherReasonNotApplying), // Strongly recommend is required if you want to register abandoned / orphaned children!
-            getFirstNameField(
-              'motherNameInEnglish',
-              motherFirstNameConditionals,
-              certificateHandlebars.motherFirstName
-            ), // Required field.
-            getFamilyNameField(
-              'motherNameInEnglish',
-              motherFamilyNameConditionals,
-              certificateHandlebars.motherFamilyName
-            ), // Required field.
-            getBirthDate(
-              'motherBirthDate',
-              mothersBirthDateConditionals,
-              parentsBirthDateValidators,
-              certificateHandlebars.motherBirthDate
-            ), // Required field.
-            exactDateOfBirthUnknown(detailsExistConditional),
-            getAgeOfIndividualInYears(
-              formMessageDescriptors.ageOfMother,
-              exactDateOfBirthUnknownConditional.concat(
-                detailsExistConditional
-              ),
-              ageOfParentsConditionals,
-              certificateHandlebars.ageOfMotherInYears
-            ),
-            getNationality(
-              certificateHandlebars.motherNationality,
-              detailsExist
-            ), // Required field.
-            getIDType('birth', 'mother', detailsExist, true),
-            ...getIDNumberFields('mother', detailsExist, true),
-            // ADDRESS FIELDS WILL RENDER HERE
-            divider('mother-address-seperator', detailsExist),
-            getMaritalStatus(certificateHandlebars.motherMaritalStatus, [
-              {
-                action: 'hide',
-                expression: '!values.detailsExist'
-              }
-            ]),
-            getEducation(certificateHandlebars.motherEducationalAttainment),
-            getOccupation(certificateHandlebars.motherOccupation, [
-              {
-                action: 'hide',
-                expression: '!values.detailsExist'
-              }
-            ]),
-            multipleBirth
-          ],
-          previewGroups: [motherNameInEnglish]
+          type: ConditionalType.SHOW,
+          conditional: not(
+            or(
+              flag('escalated-to-provincial-registrar'),
+              flag('escalated-to-registrar-general')
+            )
+          )
         }
       ],
-      mapping: getSectionMapping('mother')
+      form: [
+        {
+          id: 'escalate-to',
+          type: FieldType.SELECT,
+          required: true,
+          label: {
+            defaultMessage: 'Escalate to',
+            description: 'This is the label for escalate to field',
+            id: 'event.birth.custom.action.escalate.field.escalate-to.label'
+          },
+          options: [
+            {
+              label: {
+                id: 'event.birth.custom.action.escalate.field.escalate-to.option.officer-in-charge.label',
+                defaultMessage: 'My state provincial registrar',
+                description:
+                  'Option label for provincial registrar in escalate to field'
+              },
+              value: 'PROVINCIAL_REGISTRAR'
+            },
+            {
+              label: {
+                id: 'event.birth.custom.action.escalate.field.escalate-to.option.registrar-general.label',
+                defaultMessage: 'Registrar General',
+                description:
+                  'Option label for registrar general in escalate to field'
+              },
+              value: 'REGISTRAR_GENERAL'
+            }
+          ]
+        },
+        {
+          id: 'reason',
+          type: FieldType.TEXTAREA,
+          required: true,
+          label: {
+            defaultMessage: 'Reason',
+            description: 'This is the label for reason field',
+            id: 'form.field.label.reasonNotApplying'
+          }
+        }
+      ],
+      flags: [
+        {
+          id: 'escalated-to-provincial-registrar',
+          operation: 'add',
+          conditional: field('escalate-to').isEqualTo('PROVINCIAL_REGISTRAR')
+        },
+        {
+          id: 'escalated-to-registrar-general',
+          operation: 'add',
+          conditional: field('escalate-to').isEqualTo('REGISTRAR_GENERAL')
+        }
+      ],
+      auditHistoryLabel: {
+        defaultMessage: 'Escalated',
+        description:
+          'The label to show in audit history for the escalate action',
+        id: 'event.birth.action.escalate.audit-history-label'
+      }
     },
     {
-      id: 'father',
-      viewType: 'form',
-      name: {
-        defaultMessage: 'Father',
-        description: 'Form section name for Father',
-        id: 'form.section.father.name'
+      type: ActionType.CUSTOM,
+      customActionType: 'PROVINCIAL_REGISTER_FEEDBACK',
+      icon: 'ChatText',
+      label: {
+        defaultMessage: 'Provincial registrar feedback',
+        description:
+          'This is shown when the provincial registrar feedback can be triggered from the action from',
+        id: 'event.birth.action.provincial-registrar-feedback.label'
       },
-      title: {
-        defaultMessage: "Father's details",
-        description: 'Form section title for Father',
-        id: 'form.section.father.title'
-      },
-      groups: [
+      form: [
         {
-          id: 'father-view-group',
-          fields: [
-            getDetailsExist(
-              formMessageDescriptors.fathersDetailsExist,
-              fathersDetailsExistConditionals
-            ), // Strongly recommend is required if you want to register abandoned / orphaned children!
-            divider(
-              'father-details-seperator',
-              fathersDetailsExistConditionals
-            ),
-            getReasonNotExisting('fatherReasonNotApplying'), // Strongly recommend is required if you want to register abandoned / orphaned children!
-            getFirstNameField(
-              'fatherNameInEnglish',
-              fatherFirstNameConditionals,
-              certificateHandlebars.fatherFirstName
-            ), // Required field.
-            getFamilyNameField(
-              'fatherNameInEnglish',
-              fatherFamilyNameConditionals,
-              certificateHandlebars.fatherFamilyName
-            ), // Required field.
-            getBirthDate(
-              'fatherBirthDate',
-              fathersBirthDateConditionals,
-              parentsBirthDateValidators,
-              certificateHandlebars.fatherBirthDate
-            ), // Required field.
-            exactDateOfBirthUnknown(detailsExistConditional),
-            getAgeOfIndividualInYears(
-              formMessageDescriptors.ageOfFather,
-              exactDateOfBirthUnknownConditional.concat(
-                detailsExistConditional
-              ),
-              ageOfParentsConditionals,
-              certificateHandlebars.ageOfFatherInYears
-            ),
-            getNationality(
-              certificateHandlebars.fatherNationality,
-              detailsExist
-            ), // Required field.
-            getIDType('birth', 'father', detailsExist, true),
-            ...getIDNumberFields('father', detailsExist, true),
-            // ADDRESS FIELDS WILL RENDER HERE
-            divider('father-address-seperator', detailsExist),
-            getMaritalStatus(certificateHandlebars.fatherMaritalStatus, [
-              {
-                action: 'hide',
-                expression: '!values.detailsExist'
-              }
-            ]),
-            getEducation(certificateHandlebars.fatherEducationalAttainment),
-            getOccupation(certificateHandlebars.fatherOccupation, [
-              {
-                action: 'hide',
-                expression: '!values.detailsExist'
-              }
-            ])
-          ],
-          previewGroups: [fatherNameInEnglish]
+          id: 'notes',
+          type: 'TEXTAREA',
+          required: true,
+          label: {
+            defaultMessage: 'Comments',
+            description: 'This is the label for the field for a custom action',
+            id: 'event.birth.custom.action.approve.field.notes.label'
+          }
         }
       ],
-      mapping: getSectionMapping('father')
+      flags: [
+        {
+          id: 'escalated-to-provincial-registrar',
+          operation: 'remove'
+        }
+      ],
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: flag('escalated-to-provincial-registrar')
+        }
+      ],
+      auditHistoryLabel: {
+        defaultMessage: 'Escalation feedback',
+        description:
+          'The label to show in audit history for the registrar feedback sent action',
+        id: 'event.birth.action.registrar-feedback.audit-history-label'
+      }
     },
-    documentsSection, // REQUIRED SECTION FOR DOCUMENT ATTACHMENTS
-    previewSection, // REQUIRED SECTION TO PREVIEW DECLARATION BEFORE SUBMIT
-    reviewSection // REQUIRED SECTION TO REVIEW SUBMITTED DECLARATION
-  ]
-}
+    {
+      type: ActionType.CUSTOM,
+      customActionType: 'REGISTRAR_GENERAL_FEEDBACK',
+      icon: 'ChatText',
+      label: {
+        defaultMessage: 'Registrar general feedback',
+        description:
+          'This is shown when the registrar general feedback can be triggered from the action from',
+        id: 'event.birth.action.registrar-general-feedback.label'
+      },
+      form: [
+        {
+          id: 'notes',
+          type: 'TEXTAREA',
+          required: true,
+          label: {
+            defaultMessage: 'Comments',
+            description: 'This is the label for the field for a custom action',
+            id: 'event.birth.custom.action.approve.field.notes.label'
+          }
+        }
+      ],
+      flags: [
+        {
+          id: 'escalated-to-registrar-general',
+          operation: 'remove'
+        }
+      ],
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: flag('escalated-to-registrar-general')
+        }
+      ],
+      auditHistoryLabel: {
+        defaultMessage: 'Escalation feedback',
+        description:
+          'The label to show in audit history for the registrar feedback sent action',
+        id: 'event.birth.action.registrar-feedback.audit-history-label'
+      }
+    },
+    {
+      type: ActionType.VALIDATE,
+      label: {
+        defaultMessage: 'Validate',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'event.birth.action.validate.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.ENABLE,
+          conditional: not(flag('approval-required-for-late-registration'))
+        },
+        { type: ConditionalType.SHOW, conditional: not(flag('validated')) }
+      ],
+      flags: [{ id: 'validated', operation: 'add' }],
+      deduplication: {
+        id: 'birth-deduplication',
+        label: {
+          defaultMessage: 'Detect duplicate',
+          description:
+            'This is shown as the action name anywhere the user can trigger the action from',
+          id: 'event.birth.action.detect-duplicate.label'
+        },
+        query: dedupConfig
+      }
+    },
+    {
+      type: ActionType.REJECT,
+      label: {
+        defaultMessage: 'Reject',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'event.birth.action.reject.label'
+      },
+      flags: [{ id: 'validated', operation: 'remove' }]
+    },
+    {
+      type: ActionType.REGISTER,
+      label: {
+        defaultMessage: 'Register',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'event.birth.action.register.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.ENABLE,
+          conditional: not(flag('approval-required-for-late-registration'))
+        }
+      ],
+      deduplication: {
+        id: 'birth-deduplication',
+        label: {
+          defaultMessage: 'Detect duplicate',
+          description:
+            'This is shown as the action name anywhere the user can trigger the action from',
+          id: 'event.birth.action.detect-duplicate.label'
+        },
+        query: dedupConfig
+      }
+    },
+    {
+      type: ActionType.PRINT_CERTIFICATE,
+      label: {
+        defaultMessage: 'Print certificate',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'event.birth.action.collect-certificate.label'
+      },
+      flags: [
+        {
+          id: 'pending-certified-copy-issuance',
+          operation: 'add',
+          conditional: field('collector.requesterId').isEqualTo(
+            'PRINT_IN_ADVANCE'
+          )
+        }
+      ],
+      printForm: BIRTH_CERTIFICATE_COLLECTOR_FORM
+    },
+    {
+      type: ActionType.REQUEST_CORRECTION,
+      label: {
+        id: 'event.birth.action.declare.form.review.title',
+        defaultMessage:
+          '{child.name.firstname, select, __EMPTY__ {Birth declaration} other {{child.name.surname, select, __EMPTY__ {Birth declaration for {child.name.firstname}} other {Birth declaration for {child.name.firstname} {child.name.surname}}}}}',
+        description: 'Title of the form to show in review page'
+      },
+      correctionForm: CORRECTION_FORM
+    }
+  ],
+  advancedSearch: advancedSearchBirth
+})

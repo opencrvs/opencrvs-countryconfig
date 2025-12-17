@@ -21,11 +21,10 @@ import { applicationConfig } from '../application/application-config'
 import { COUNTRY_LOGO_URL } from './constant'
 import { GATEWAY_URL } from '@countryconfig/constants'
 import { createClient } from '@opencrvs/toolkit/api'
-import { Event } from '@countryconfig/form/types/types'
-import { InformantType as BirthInformantType } from '@countryconfig/form/v2/birth/forms/pages/informant'
 import { InformantTemplateType } from './sms-service'
 import { generateFailureLog, NotificationParams, notify } from './handler'
-import { InformantType as DeathInformantType } from '@countryconfig/form/v2/death/forms/pages/informant'
+import { InformantType as BirthInformantType } from '@countryconfig/form/birth/forms/pages/informant'
+import { InformantType as DeathInformantType } from '@countryconfig/form/death/forms/pages/informant'
 
 const resolveName = (name: FieldUpdateValue) => {
   const nameObj = {
@@ -58,7 +57,7 @@ async function getLocations(token: string) {
 }
 
 function getInformant(eventType: string, declaration: Record<string, any>) {
-  if (eventType === Event.Birth) {
+  if (eventType === 'birth') {
     return declaration['informant.relation'] === BirthInformantType.MOTHER
       ? declaration['mother.name']
       : declaration['informant.relation'] === BirthInformantType.FATHER
@@ -66,7 +65,7 @@ function getInformant(eventType: string, declaration: Record<string, any>) {
         : declaration['informant.name']
   }
 
-  if (eventType === Event.Death) {
+  if (eventType === 'death') {
     return declaration['informant.relation'] === DeathInformantType.SPOUSE
       ? declaration['spouse.name']
       : declaration['informant.name']
@@ -103,7 +102,7 @@ async function getNotificationParams(
   const variables = {
     informantName: fullName,
     name: resolveName(
-      event.type === Event.Birth
+      event.type === 'birth'
         ? declaration['child.name']
         : declaration['deceased.name']
     ).fullName,
@@ -130,7 +129,7 @@ async function getNotificationParams(
   if (pendingAction.type === ActionType.NOTIFY) {
     return {
       event:
-        event.type === Event.Birth
+        event.type === 'birth'
           ? InformantTemplateType.birthInProgressNotification
           : InformantTemplateType.deathInProgressNotification,
       ...params
@@ -140,7 +139,7 @@ async function getNotificationParams(
   if (pendingAction.type === ActionType.DECLARE) {
     return {
       event:
-        event.type === Event.Birth
+        event.type === 'birth'
           ? InformantTemplateType.birthDeclarationNotification
           : InformantTemplateType.deathDeclarationNotification,
       ...params
@@ -154,7 +153,7 @@ async function getNotificationParams(
         contact: { mobile, email },
         name,
         event:
-          event.type === Event.Birth
+          event.type === 'birth'
             ? InformantTemplateType.birthRegistrationNotification
             : InformantTemplateType.deathRegistrationNotification,
         reason: 'registration number being missing'
@@ -165,7 +164,7 @@ async function getNotificationParams(
 
     return {
       event:
-        event.type === Event.Birth
+        event.type === 'birth'
           ? InformantTemplateType.birthRegistrationNotification
           : InformantTemplateType.deathRegistrationNotification,
       ...params,
@@ -176,7 +175,7 @@ async function getNotificationParams(
   if (pendingAction.type === ActionType.REJECT) {
     return {
       event:
-        event.type === Event.Birth
+        event.type === 'birth'
           ? InformantTemplateType.birthRejectionNotification
           : InformantTemplateType.deathRejectionNotification,
       ...params
