@@ -175,12 +175,12 @@ export const roles: Role[] = [
       'record.read[event=birth|death|tennis-club-membership]',
       'record.declare[event=birth|death|tennis-club-membership]',
       'record.declared.edit[event=birth|death|tennis-club-membership]',
-      'record.declared.validate[event=birth|death|tennis-club-membership]',
       'record.declared.reject[event=birth|death|tennis-club-membership]',
       'record.declared.archive[event=birth|death|tennis-club-membership]',
       'record.declared.review-duplicates[event=birth|death|tennis-club-membership]',
       'record.registered.print-certified-copies[event=birth|death|tennis-club-membership]',
-      'record.registered.request-correction[event=birth|death|tennis-club-membership]'
+      'record.registered.request-correction[event=birth|death|tennis-club-membership]',
+      'record.custom-action[event=birth|death,customActionType=VALIDATE_DECLARATION]'
     ]
   },
   {
@@ -229,7 +229,8 @@ export const roles: Role[] = [
       'record.registered.print-certified-copies[event=birth|death|tennis-club-membership]',
       'record.registered.correct[event=birth|death|tennis-club-membership]',
       'record.unassign-others[event=birth|death|tennis-club-membership]',
-      'record.custom-action[event=birth,customActionType=ESCALATE|ISSUE_CERTIFIED_COPY]'
+      'record.custom-action[event=birth,customActionType=ESCALATE|ISSUE_CERTIFIED_COPY|VALIDATE_DECLARATION]',
+      'record.custom-action[event=death,customActionType=VALIDATE_DECLARATION]'
     ]
   },
   {

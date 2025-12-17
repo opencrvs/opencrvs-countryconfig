@@ -13,10 +13,13 @@ import {
   ConditionalType,
   defineConfig,
   field,
+  or,
+  user,
+  and,
+  status,
   not,
   flag,
-  or,
-  user
+  InherentFlags
 } from '@opencrvs/toolkit/events'
 import {
   DEATH_DECLARATION_REVIEW,
@@ -50,17 +53,6 @@ export const deathEvent = defineConfig({
     description:
       'This is a fallback title if actual title resolves to empty string'
   },
-  flags: [
-    {
-      id: 'validated',
-      label: {
-        id: 'event.death.flag.validated',
-        defaultMessage: 'Validated',
-        description: 'Flag label for validated'
-      },
-      requiresAction: true
-    }
-  ],
   summary: {
     fields: [
       {
@@ -178,6 +170,17 @@ export const deathEvent = defineConfig({
       }
     ]
   },
+  flags: [
+    {
+      id: 'validated',
+      label: {
+        id: 'event.birth.flag.validated',
+        defaultMessage: 'Validated',
+        description: 'Flag label for validated'
+      },
+      requiresAction: true
+    }
+  ],
   actions: [
     {
       type: ActionType.READ,
@@ -220,26 +223,43 @@ export const deathEvent = defineConfig({
       ]
     },
     {
-      type: ActionType.VALIDATE,
+      type: ActionType.CUSTOM,
+      customActionType: 'VALIDATE_DECLARATION',
+      icon: 'Stamp',
       label: {
-        defaultMessage: 'Validate',
+        defaultMessage: 'Validate declaration',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'event.death.action.validate.label'
+        id: 'event.birth.custom.action.validate-declaration.label'
       },
       conditionals: [
-        { type: ConditionalType.SHOW, conditional: not(flag('validated')) }
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(status('DECLARED'), not(flag('validated')))
+        },
+        {
+          type: ConditionalType.ENABLE,
+          conditional: not(flag(InherentFlags.POTENTIAL_DUPLICATE))
+        }
       ],
       flags: [{ id: 'validated', operation: 'add' }],
-      deduplication: {
-        id: 'death-deduplication',
-        label: {
-          defaultMessage: 'Detect duplicate',
-          description:
-            'This is shown as the action name anywhere the user can trigger the action from',
-          id: 'event.death.action.detect-duplicate.label'
-        },
-        query: dedupConfig
+      form: [
+        {
+          id: 'comments',
+          type: 'TEXTAREA',
+          label: {
+            defaultMessage: 'Comments',
+            description:
+              'This is the label for the comments field for the validate declaration action',
+            id: 'event.birth.custom.action.validate-declaration.field.comments.label'
+          }
+        }
+      ],
+      auditHistoryLabel: {
+        defaultMessage: 'Validated',
+        description:
+          'The label to show in audit history for the validate action',
+        id: 'event.birth.custom.action.validate-declaration.audit-history-label'
       }
     },
     {
@@ -249,8 +269,7 @@ export const deathEvent = defineConfig({
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.death.action.reject.label'
-      },
-      flags: [{ id: 'validated', operation: 'remove' }]
+      }
     },
     {
       type: ActionType.REGISTER,
