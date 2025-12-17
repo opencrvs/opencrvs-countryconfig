@@ -18,8 +18,8 @@ import {
   flag,
   InherentFlags,
   not,
-  status,
   or,
+  status,
   user
 } from '@opencrvs/toolkit/events'
 import {
@@ -269,6 +269,53 @@ export const birthEvent = defineConfig({
           )
         }
       ]
+    },
+    {
+      type: ActionType.CUSTOM,
+      customActionType: 'VALIDATE_DECLARATION',
+      icon: 'Stamp',
+      label: {
+        defaultMessage: 'Validate declaration',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'event.birth.custom.action.validate-declaration.label'
+      },
+      supportingCopy: {
+        defaultMessage:
+          'Approving this declaration confirms it as legally accepted and eligible for registration.',
+        description:
+          'This is the supporting copy for the Validate declaration -action',
+        id: 'event.birth.custom.action.validate-declaration.supportingCopy'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(status('DECLARED'), not(flag('validated')))
+        },
+        {
+          type: ConditionalType.ENABLE,
+          conditional: not(flag(InherentFlags.POTENTIAL_DUPLICATE))
+        }
+      ],
+      flags: [{ id: 'validated', operation: 'add' }],
+      form: [
+        {
+          id: 'comments',
+          type: 'TEXTAREA',
+          label: {
+            defaultMessage: 'Comments',
+            description:
+              'This is the label for the comments field for the validate declaration action',
+            id: 'event.birth.custom.action.validate-declaration.field.comments.label'
+          }
+        }
+      ],
+      auditHistoryLabel: {
+        defaultMessage: 'Validated',
+        description:
+          'The label to show in audit history for the validate action',
+        id: 'event.birth.custom.action.validate-declaration.audit-history-label'
+      }
     },
     {
       type: ActionType.CUSTOM,
@@ -574,33 +621,6 @@ export const birthEvent = defineConfig({
       }
     },
     {
-      type: ActionType.VALIDATE,
-      label: {
-        defaultMessage: 'Validate',
-        description:
-          'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'event.birth.action.validate.label'
-      },
-      conditionals: [
-        {
-          type: ConditionalType.ENABLE,
-          conditional: not(flag('approval-required-for-late-registration'))
-        },
-        { type: ConditionalType.SHOW, conditional: not(flag('validated')) }
-      ],
-      flags: [{ id: 'validated', operation: 'add' }],
-      deduplication: {
-        id: 'birth-deduplication',
-        label: {
-          defaultMessage: 'Detect duplicate',
-          description:
-            'This is shown as the action name anywhere the user can trigger the action from',
-          id: 'event.birth.action.detect-duplicate.label'
-        },
-        query: dedupConfig
-      }
-    },
-    {
       type: ActionType.REJECT,
       label: {
         defaultMessage: 'Reject',
@@ -618,6 +638,7 @@ export const birthEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.birth.action.register.label'
       },
+      flags: [{ id: 'validated', operation: 'remove' }],
       conditionals: [
         {
           type: ConditionalType.ENABLE,
