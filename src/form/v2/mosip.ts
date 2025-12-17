@@ -13,7 +13,8 @@ import {
   not,
   never,
   or,
-  FieldReference
+  FieldReference,
+  window
 } from '@opencrvs/toolkit/events'
 
 const upsertConditional = (
@@ -164,7 +165,7 @@ export const getMOSIPIntegrationFields = (
         },
         body: {
           clientId: OPENID_PROVIDER_CLIENT_ID,
-          redirectUri: '/' // noop
+          redirectUri: window().location.get('href')
         },
         params: {
           code: field(`${page}.query-params`).get('code'),
