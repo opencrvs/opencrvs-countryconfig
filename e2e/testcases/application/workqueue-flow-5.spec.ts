@@ -23,10 +23,9 @@ import {
 } from '../birth/helpers'
 import { getRowByTitle } from '../print-certificate/birth/helpers'
 
-// FA Notifies => RA Rejects => FA Declares with edits => RA validates => LR rejects
+// FA Notifies => RA Rejects => FA Re-notifies with edits => RA declares and validates => LR rejects
 // => RA validates again => LR registers
-
-test.describe.serial('3. Workqueue flow - 3', () => {
+test.describe.serial('5. Workqueue flow - 5', () => {
   let page: Page
   const declaration = {
     child: {
@@ -90,7 +89,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
     await page.close()
   })
 
-  test.describe('3.1 Notify by FA', async () => {
+  test.describe('Notify by FA', async () => {
     test.beforeAll(async () => {
       await login(page, CREDENTIALS.FIELD_AGENT)
       await page.click('#header-new-event')
@@ -99,7 +98,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
       await page.getByRole('button', { name: 'Continue' }).click()
     })
 
-    test('3.1.1 Fill child details', async () => {
+    test('Fill child details', async () => {
       await page.locator('#firstname').fill(declaration.child.name.firstNames)
       await page.locator('#surname').fill(declaration.child.name.familyName)
       await page.locator('#child____gender').click()
@@ -121,11 +120,11 @@ test.describe.serial('3. Workqueue flow - 3', () => {
       await page.getByText(declaration.birthLocation.facility).click()
     })
 
-    test('3.1.2 Go to review', async () => {
+    test('Go to review', async () => {
       await goToSection(page, 'review')
     })
 
-    test('3.1.3 Fill up informant comment & signature', async () => {
+    test('Fill up informant comment & signature', async () => {
       await page.locator('#review____comment').fill(faker.lorem.sentence())
       await page.getByRole('button', { name: 'Sign', exact: true }).click()
       await drawSignature(page, 'review____signature_canvas_element', false)
@@ -137,47 +136,18 @@ test.describe.serial('3. Workqueue flow - 3', () => {
       await expect(page.getByRole('dialog')).not.toBeVisible()
     })
 
-    test('3.1.4 Notify', async () => {
+    test('Notify', async () => {
       await selectDeclarationAction(page, 'Notify')
-
       await ensureOutboxIsEmpty(page)
-    })
-
-    test('3.1.5 Verify workqueue', async () => {
-      await assertRecordInWorkqueue({
-        page,
-        name: childName,
-        workqueues: [
-          { title: 'Assigned to you', exists: false },
-          { title: 'Recent', exists: true },
-          { title: 'Sent for review', exists: true },
-          { title: 'Requires updates', exists: false }
-        ]
-      })
     })
   })
 
-  test.describe('3.2 Reject by RA', async () => {
-    test('3.2.1 Verify workqueue', async () => {
+  test.describe('Reject by RA', async () => {
+    test('Login', async () => {
       await login(page, CREDENTIALS.REGISTRATION_AGENT)
-
-      await assertRecordInWorkqueue({
-        page,
-        name: childName,
-        workqueues: [
-          { title: 'Assigned to you', exists: false },
-          { title: 'Recent', exists: false },
-          { title: 'Notifications', exists: true },
-          { title: 'Ready for review', exists: false },
-          { title: 'Requires updates', exists: false },
-          { title: 'Sent for approval', exists: false },
-          { title: 'In external validation', exists: false },
-          { title: 'Ready to print', exists: false }
-        ]
-      })
     })
 
-    test('3.2.2 Review', async () => {
+    test('Review & Reject', async () => {
       await page.getByText('Notifications').click()
       await page
         .getByRole('button', {
@@ -186,30 +156,12 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         .click()
 
       await selectAction(page, 'Review')
-
       await selectDeclarationAction(page, 'Reject', false)
-
       await page.getByTestId('reject-reason').fill(faker.lorem.sentence())
-
       await page.getByRole('button', { name: 'Send For Update' }).click()
-
-      await assertRecordInWorkqueue({
-        page,
-        name: childName,
-        workqueues: [
-          { title: 'Assigned to you', exists: false },
-          { title: 'Recent', exists: true },
-          { title: 'Notifications', exists: false },
-          { title: 'Ready for review', exists: false },
-          { title: 'Sent for approval', exists: false },
-          { title: 'Requires updates', exists: true },
-          { title: 'In external validation', exists: false },
-          { title: 'Ready to print', exists: false }
-        ]
-      })
     })
 
-    test('3.2.3 Ensure rejection is no longer available', async () => {
+    test('Ensure rejection is no longer available', async () => {
       await page.getByRole('button', { name: 'Requires updates' }).click()
       await page
         .getByRole('button', {
@@ -226,15 +178,15 @@ test.describe.serial('3. Workqueue flow - 3', () => {
       await page.getByRole('button', { name: 'Action' }).click()
     })
 
-    test('3.2.4 Unassign', async () => {
+    test('Unassign', async () => {
       await selectAction(page, 'Unassign')
       await page.getByRole('button', { name: 'Unassign', exact: true }).click()
       await expect(page.getByText('Not assigned')).toBeVisible()
     })
   })
 
-  test.describe('3.3 Declare by FA', async () => {
-    test('3.3.1 Login', async () => {
+  test.describe('Re-notify by FA', async () => {
+    test('Login', async () => {
       await login(page, CREDENTIALS.FIELD_AGENT, true)
       await assertRecordInWorkqueue({
         page,
@@ -247,7 +199,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         ]
       })
     })
-    test('3.3.2 Go to edit', async () => {
+    test('Go to edit', async () => {
       await assignFromWorkqueue(page, childName)
 
       await getRowByTitle(page, childName)
@@ -255,7 +207,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         .click()
     })
 
-    test('3.3.3 Fill informant details', async () => {
+    test('Fill informant details', async () => {
       await page
         .getByTestId('accordion-Accordion_informant')
         .getByRole('button', { name: 'Change all' })
@@ -270,10 +222,68 @@ test.describe.serial('3. Workqueue flow - 3', () => {
 
       await page.locator('#informant____email').fill(declaration.informantEmail)
 
-      await continueForm(page)
+      await page
+        .getByRole('button', { name: 'Back to review', exact: true })
+        .click()
     })
 
-    test("3.3.4 Fill mother's details", async () => {
+    test('Notify with edits', async () => {
+      await selectDeclarationAction(page, 'Notify with edits')
+      await ensureOutboxIsEmpty(page)
+    })
+
+    test('Verify workqueue', async () => {
+      await assertRecordInWorkqueue({
+        page,
+        name: childName,
+        workqueues: [
+          { title: 'Assigned to you', exists: false },
+          { title: 'Recent', exists: true },
+          { title: 'Sent for review', exists: true },
+          { title: 'Requires updates', exists: false }
+        ]
+      })
+    })
+  })
+
+  test.describe('Declare and validate by RA', async () => {
+    test('Verify workqueue', async () => {
+      await login(page, CREDENTIALS.REGISTRATION_AGENT, true)
+
+      await assertRecordInWorkqueue({
+        page,
+        name: childName,
+        workqueues: [
+          { title: 'Assigned to you', exists: false },
+          { title: 'Recent', exists: false },
+          { title: 'Notifications', exists: true },
+          { title: 'Ready for review', exists: false },
+          { title: 'Requires updates', exists: false },
+          { title: 'In external validation', exists: false },
+          { title: 'Ready to print', exists: false }
+        ]
+      })
+    })
+
+    test('Go to Review', async () => {
+      await page.getByText('Notifications').click()
+      await page
+        .getByRole('button', {
+          name: childName
+        })
+        .click()
+
+      await selectAction(page, 'Review')
+    })
+
+    test('Fill missing details', async () => {
+      await page
+        .getByTestId('accordion-Accordion_mother')
+        .getByRole('button', { name: 'Change all' })
+        .click()
+
+      await page.getByRole('button', { name: 'Continue' }).click()
+
       await page.locator('#firstname').fill(declaration.mother.name.firstNames)
       await page.locator('#surname').fill(declaration.mother.name.familyName)
 
@@ -311,9 +321,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         .click()
 
       await continueForm(page)
-    })
 
-    test("3.3.5 Fill father's details", async () => {
       await page.locator('#firstname').fill(declaration.father.name.firstNames)
       await page.locator('#surname').fill(declaration.father.name.familyName)
 
@@ -336,7 +344,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
       await page.locator('#father____addressSameAs_YES').click()
     })
 
-    test('3.3.6 Fill up informant comment & signature', async () => {
+    test('Fill up informant comment & signature', async () => {
       await continueForm(page, 'Back to review')
       await page.locator('#review____comment').fill(faker.lorem.sentence())
       await page.getByRole('button', { name: 'Sign', exact: true }).click()
@@ -347,74 +355,13 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         .click()
     })
 
-    test('3.3.6 Declare with edits', async () => {
-      await selectDeclarationAction(page, 'Declare with edits')
-      await ensureOutboxIsEmpty(page)
-    })
-
-    test('3.3.7 Verify workqueue', async () => {
-      await assertRecordInWorkqueue({
-        page,
-        name: childName,
-        workqueues: [
-          { title: 'Assigned to you', exists: false },
-          { title: 'Recent', exists: true },
-          { title: 'Sent for review', exists: true },
-          { title: 'Requires updates', exists: false }
-        ]
-      })
+    test('Declare', async () => {
+      await selectDeclarationAction(page, 'Declare')
     })
   })
 
-  test.describe('3.4 Validate by RA', async () => {
-    test('3.4.1 Verify workqueue', async () => {
-      await login(page, CREDENTIALS.REGISTRATION_AGENT, true)
-
-      await assertRecordInWorkqueue({
-        page,
-        name: childName,
-        workqueues: [
-          { title: 'Assigned to you', exists: false },
-          { title: 'Recent', exists: false },
-          { title: 'Notifications', exists: false },
-          { title: 'Ready for review', exists: true },
-          { title: 'Requires updates', exists: false },
-          { title: 'In external validation', exists: false },
-          { title: 'Ready to print', exists: false }
-        ]
-      })
-    })
-
-    test('3.4.2 Validate', async () => {
-      await page.getByText('Ready for review').click()
-      await page
-        .getByRole('button', {
-          name: childName
-        })
-        .click()
-
-      await selectAction(page, 'Validate declaration')
-      await page.getByRole('button', { name: 'Confirm' }).click()
-
-      await assertRecordInWorkqueue({
-        page,
-        name: childName,
-        workqueues: [
-          { title: 'Assigned to you', exists: false },
-          { title: 'Recent', exists: true },
-          { title: 'Notifications', exists: false },
-          { title: 'Ready for review', exists: false },
-          // { title: 'Sent for approval', exists: true }, @ToDo: Investigate why this fails
-          { title: 'Requires updates', exists: false },
-          { title: 'In external validation', exists: false },
-          { title: 'Ready to print', exists: false }
-        ]
-      })
-    })
-  })
-
-  test.describe('3.5 Reject by LR', async () => {
-    test('3.5.1 Login with LR', async () => {
+  test.describe('Reject by LR', async () => {
+    test('Login with LR', async () => {
       await login(page, CREDENTIALS.LOCAL_REGISTRAR)
 
       await assertRecordInWorkqueue({
@@ -431,7 +378,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         ]
       })
     })
-    test('3.5.2 Reject', async () => {
+    test('Reject', async () => {
       await page.getByText('Ready for review').click()
 
       await assignFromWorkqueue(page, childName)
@@ -460,8 +407,8 @@ test.describe.serial('3. Workqueue flow - 3', () => {
       })
     })
   })
-  test.describe('3.6 Re-declare with edits by RA', async () => {
-    test('3.6.1 Login with RA', async () => {
+  test.describe('Re-declare with edits by RA', async () => {
+    test('Login with RA', async () => {
       await login(page, CREDENTIALS.REGISTRATION_AGENT, true)
 
       await assertRecordInWorkqueue({
@@ -480,7 +427,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
       })
     })
 
-    test('3.6.2 Go to edit', async () => {
+    test('Go to edit', async () => {
       await page.getByText('Requires updates').click()
       await assignFromWorkqueue(page, childName)
       await getRowByTitle(page, childName)
@@ -488,7 +435,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         .click()
     })
 
-    test('3.6.3 Change informant email', async () => {
+    test('Change informant email', async () => {
       await page
         .getByTestId('accordion-Accordion_informant')
         .getByRole('button', { name: 'Change all' })
@@ -501,7 +448,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         .click()
     })
 
-    test('3.6.4 Re-declare with edits', async () => {
+    test('Re-declare with edits', async () => {
       await selectDeclarationAction(page, 'Declare with edits')
 
       await assertRecordInWorkqueue({
@@ -520,8 +467,8 @@ test.describe.serial('3. Workqueue flow - 3', () => {
       })
     })
   })
-  test.describe('3.7 Register by LR', async () => {
-    test('3.7.1 Login with LR', async () => {
+  test.describe('Register by LR', async () => {
+    test('Login with LR', async () => {
       await login(page, CREDENTIALS.LOCAL_REGISTRAR, true)
 
       await assertRecordInWorkqueue({
@@ -538,7 +485,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         ]
       })
     })
-    test('3.7.2 Register', async () => {
+    test('Register', async () => {
       await page.getByText('Ready for review').click()
 
       await assignFromWorkqueue(page, childName)
