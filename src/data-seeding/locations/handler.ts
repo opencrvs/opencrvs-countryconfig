@@ -10,7 +10,6 @@
  */
 import {
   readCSVToJSON,
-  extractStatisticsMap,
   getStatistics,
   LocationStatistic
 } from '@countryconfig/utils'
@@ -62,6 +61,15 @@ const JURISDICTION_TYPE = [
   'LOCATION_LEVEL_4',
   'LOCATION_LEVEL_5'
 ] as const
+
+const extractStatisticsMap = (statistics: LocationStatistic[]) => {
+  const statisticsMap: Map<string, LocationStatistic> = new Map()
+  for (const stat of statistics) {
+    statisticsMap.set(stat.id, stat)
+  }
+  return statisticsMap
+}
+
 
 export async function locationsHandler(_: Request, h: ResponseToolkit) {
   const [humdataLocations, healthFacilities, crvsFacilities, statistics] =

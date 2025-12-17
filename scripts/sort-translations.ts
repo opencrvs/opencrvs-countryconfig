@@ -9,11 +9,12 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 import { sortBy } from 'lodash'
-import { CSVRow } from './api/content/service'
-import { readCSVToJSON, writeJSONToCSV } from './utils'
+import { CSVRow } from '../src/api/content/service'
+import { readCSVToJSON, writeJSONToCSV } from '../src/utils'
 
 async function sortMessages(path: string) {
   const translations = await readCSVToJSON<CSVRow[]>(path)
+
   const columns = Object.keys(translations[0])
 
   for (const translation of translations) {
@@ -21,6 +22,11 @@ async function sortMessages(path: string) {
     const keys = Object.keys(translation)
     if (keys.length !== columns.length) {
       console.log(translation)
+      console.log({
+        expected: keys.length,
+        received: columns.length
+      });
+
 
       throw new Error(
         `The file ${path} contains a row with different columns on row ${rowIndex + 1}`

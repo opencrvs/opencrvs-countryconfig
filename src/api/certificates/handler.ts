@@ -22,7 +22,7 @@ type FontFamilyTypes = {
 
 type JSONSchema = Record<string, any>
 
-export interface ICertificateConfigData {
+interface ICertificateConfigData {
   id: string
   event: Event
   // This is a temporary field to indicate that the certificate is a v2 template.
