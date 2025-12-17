@@ -11,7 +11,6 @@
 import * as Hapi from '@hapi/hapi'
 import * as fs from 'fs'
 import { join } from 'path'
-import { defaultQueries } from './queries'
 
 export async function mapGeojsonHandler(
   request: Hapi.Request,
@@ -22,9 +21,3 @@ export async function mapGeojsonHandler(
   return h.response(fileContents).type('text/plain')
 }
 
-export async function dashboardQueriesHandler(
-  _: Hapi.Request,
-  h: Hapi.ResponseToolkit
-) {
-  return h.response(defaultQueries())
-}

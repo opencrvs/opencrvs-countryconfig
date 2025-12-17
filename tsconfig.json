@@ -21,7 +21,7 @@
     "strictNullChecks": true,
     "types": ["fhir", "geojson"]
   },
-  "include": ["src/**/*.ts", "infrastructure/environments/**/*.ts", "typings"],
+  "include": ["src/**/*.ts", "infrastructure/environments/**/*.ts", "typings", "scripts/sort-translations.ts"],
   "exclude": [
     "node_modules",
     "cypress",

@@ -9,8 +9,8 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 import { tennisClubMembershipEvent } from '@countryconfig/form/tennis-club-membership'
-import { birthEvent } from '@countryconfig/form/v2/birth'
-import { deathEvent } from '@countryconfig/form/v2/death'
+import { birthEvent } from '@countryconfig/form/birth'
+import { deathEvent } from '@countryconfig/form/death'
 import * as Hapi from '@hapi/hapi'
 import { sendInformantNotification } from '../notification/informantNotification'
 import { ActionConfirmationRequest } from '../registration'

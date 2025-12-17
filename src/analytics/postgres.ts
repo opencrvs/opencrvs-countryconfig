@@ -26,7 +26,7 @@ types.setTypeParser(types.builtins.TIMESTAMPTZ, (str) =>
 let db: Kysely<any> | undefined
 let pool: Pool | undefined
 
-export const getPool = (connectionString = ANALYTICS_DATABASE_URL) => {
+const getPool = (connectionString = ANALYTICS_DATABASE_URL) => {
   if (!pool) {
     pool = new Pool({ connectionString })
   }

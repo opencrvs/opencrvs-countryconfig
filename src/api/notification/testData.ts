@@ -8,7 +8,8 @@ import {
   CreatedAction,
   EventDocument
 } from '@opencrvs/toolkit/events'
-import { Event } from '@countryconfig/form/types/types'
+import { DEATH_EVENT } from '@countryconfig/form/death'
+import { BIRTH_EVENT } from '@countryconfig/form/birth'
 
 const recipient: Recipient = {
   name: {
@@ -404,7 +405,7 @@ const DeathDeclarationAction = {
 
 const birthNotificationEvent: EventDocument = {
   id: '43b8c015-2caf-469a-8900-a2209128ad44' as unknown as UUID,
-  type: 'birth',
+  type: BIRTH_EVENT,
   createdAt: '2025-08-20T03:24:04.815Z',
   updatedAt: '2025-08-20T03:24:04.815Z',
   actions: [CreateAction, AssignAction, RequestBirthNotificationAction],
@@ -413,7 +414,7 @@ const birthNotificationEvent: EventDocument = {
 
 const birthDeclarationEvent: EventDocument = {
   id: '43b8c015-2caf-469a-8900-a2209128ad44' as unknown as UUID,
-  type: 'birth',
+  type: BIRTH_EVENT,
   createdAt: '2025-08-20T03:24:04.815Z',
   updatedAt: '2025-08-20T03:24:04.815Z',
   actions: [CreateAction, AssignAction, RequestBirthDeclarationAction],
@@ -422,7 +423,7 @@ const birthDeclarationEvent: EventDocument = {
 
 const birthRegistrationEvent: EventDocument = {
   id: '43b8c015-2caf-469a-8900-a2209128ad44' as unknown as UUID,
-  type: 'birth',
+  type: BIRTH_EVENT,
   createdAt: '2025-08-20T03:24:04.815Z',
   updatedAt: '2025-08-20T03:24:04.815Z',
   actions: [
@@ -436,7 +437,7 @@ const birthRegistrationEvent: EventDocument = {
 
 const birthRejectionEvent: EventDocument = {
   id: '43b8c015-2caf-469a-8900-a2209128ad44' as unknown as UUID,
-  type: 'birth',
+  type: BIRTH_EVENT,
   createdAt: '2025-08-20T03:24:04.815Z',
   updatedAt: '2025-08-20T03:24:04.815Z',
   actions: [
@@ -450,7 +451,7 @@ const birthRejectionEvent: EventDocument = {
 
 const deathNotificationEvent: EventDocument = {
   id: '43b8c015-2caf-469a-8900-a2209128ad44' as unknown as UUID,
-  type: Event.Death,
+  type: DEATH_EVENT,
   createdAt: '2025-08-20T03:24:04.815Z',
   updatedAt: '2025-08-20T03:24:04.815Z',
   actions: [CreateAction, AssignAction, RequestDeathNotificationAction],
@@ -459,7 +460,7 @@ const deathNotificationEvent: EventDocument = {
 
 const deathDeclarationEvent: EventDocument = {
   id: '43b8c015-2caf-469a-8900-a2209128ad44' as unknown as UUID,
-  type: Event.Death,
+  type: DEATH_EVENT,
   createdAt: '2025-08-20T03:24:04.815Z',
   updatedAt: '2025-08-20T03:24:04.815Z',
   actions: [CreateAction, AssignAction, RequestDeathDeclarationAction],
@@ -468,7 +469,7 @@ const deathDeclarationEvent: EventDocument = {
 
 const deathRegistrationEvent: EventDocument = {
   id: '43b8c015-2caf-469a-8900-a2209128ad44' as unknown as UUID,
-  type: Event.Death,
+  type: DEATH_EVENT,
   createdAt: '2025-08-20T03:24:04.815Z',
   updatedAt: '2025-08-20T03:24:04.815Z',
   actions: [
@@ -482,7 +483,7 @@ const deathRegistrationEvent: EventDocument = {
 
 const deathRejectionEvent: EventDocument = {
   id: '43b8c015-2caf-469a-8900-a2209128ad44' as unknown as UUID,
-  type: Event.Death,
+  type: DEATH_EVENT,
   createdAt: '2025-08-20T03:24:04.815Z',
   updatedAt: '2025-08-20T03:24:04.815Z',
   actions: [
@@ -500,42 +501,42 @@ export const informantNotificationTestData: {
   eventDocument: EventDocument
 }[] = [
   {
-    eventType: Event.Birth,
+    eventType: BIRTH_EVENT,
     actionType: ActionType.NOTIFY,
     eventDocument: birthNotificationEvent
   },
   {
-    eventType: Event.Birth,
+    eventType: BIRTH_EVENT,
     actionType: ActionType.DECLARE,
     eventDocument: birthDeclarationEvent
   },
   {
-    eventType: Event.Birth,
+    eventType: BIRTH_EVENT,
     actionType: ActionType.REGISTER,
     eventDocument: birthRegistrationEvent
   },
   {
-    eventType: Event.Birth,
+    eventType: BIRTH_EVENT,
     actionType: ActionType.REJECT,
     eventDocument: birthRejectionEvent
   },
   {
-    eventType: Event.Death,
+    eventType: DEATH_EVENT,
     actionType: ActionType.NOTIFY,
     eventDocument: deathNotificationEvent
   },
   {
-    eventType: Event.Death,
+    eventType: DEATH_EVENT,
     actionType: ActionType.DECLARE,
     eventDocument: deathDeclarationEvent
   },
   {
-    eventType: Event.Death,
+    eventType: DEATH_EVENT,
     actionType: ActionType.REGISTER,
     eventDocument: deathRegistrationEvent
   },
   {
-    eventType: Event.Death,
+    eventType: DEATH_EVENT,
     actionType: ActionType.REJECT,
     eventDocument: deathRejectionEvent
   }

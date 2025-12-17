@@ -26,7 +26,7 @@
     "port-forward": "bash infrastructure/port-forward.sh",
     "environment:init": "ts-node infrastructure/environments/setup-environment.ts",
     "environment:upgrade": "yarn environment:init",
-    "sort-translations": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/sort-translations.ts",
+    "sort-translations": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register scripts/sort-translations.ts",
     "prepare": "husky"
   },
   "devDependencies": {

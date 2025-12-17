@@ -10,10 +10,9 @@
  */
 
 import { applicationConfig } from '@countryconfig/api/application/application-config'
-import { tennisClubMembershipEvent } from '@countryconfig/form/tennis-club-membership'
-import { Event } from '@countryconfig/form/types/types'
-import { birthEvent } from '@countryconfig/form/v2/birth'
-import { deathEvent } from '@countryconfig/form/v2/death'
+import { TENNIS_CLUB_MEMBERSHIP_EVENT, tennisClubMembershipEvent } from '@countryconfig/form/tennis-club-membership'
+import { BIRTH_EVENT, birthEvent } from '@countryconfig/form/birth'
+import { DEATH_EVENT, deathEvent } from '@countryconfig/form/death'
 import { logger } from '@countryconfig/logger'
 import {
   ActionConfig,
@@ -39,15 +38,15 @@ import { COUNTRY_NAMES_BY_CODE } from './countries'
  * You can control which events you want to track in analytics by adding them here.
  */
 function findEventConfig(eventType: string) {
-  if (eventType === Event.Birth) {
+  if (eventType === BIRTH_EVENT) {
     return birthEvent
   }
 
-  if (eventType === Event.TENNIS_CLUB_MEMBERSHIP) {
+  if (eventType === TENNIS_CLUB_MEMBERSHIP_EVENT) {
     return tennisClubMembershipEvent
   }
 
-  if (eventType === Event.Death) {
+  if (eventType === DEATH_EVENT) {
     return deathEvent
   }
 
@@ -129,7 +128,7 @@ function precalculateAdditionalAnalytics(
    * Example: precalculate age from action creation date and child's date of birth
    */
 
-  if (eventConfig.id === Event.Birth) {
+  if (eventConfig.id === 'birth') {
     const createdAt = new Date(action.createdAt)
     const childDoB = declaration['child.dob']
     if (!childDoB) return action
