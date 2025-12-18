@@ -223,6 +223,16 @@ export const deathEvent = defineConfig({
       ]
     },
     {
+      type: ActionType.EDIT,
+      label: {
+        defaultMessage: 'Edit',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'actions.edit'
+      },
+      flags: [{ id: 'validated', operation: 'remove' }]
+    },
+    {
       type: ActionType.CUSTOM,
       customActionType: 'VALIDATE_DECLARATION',
       icon: 'Stamp',
