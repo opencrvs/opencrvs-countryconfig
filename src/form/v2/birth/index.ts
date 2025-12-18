@@ -642,7 +642,11 @@ export const birthEvent = defineConfig({
       conditionals: [
         {
           type: ConditionalType.ENABLE,
-          conditional: not(flag('approval-required-for-late-registration'))
+          conditional: and(
+            not(flag('approval-required-for-late-registration')),
+            not(flag('escalated-to-provincial-registrar')),
+            not(flag('escalated-to-registrar-general'))
+          )
         }
       ],
       deduplication: {
