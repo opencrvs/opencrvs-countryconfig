@@ -30,221 +30,11 @@ const rolesWithDecodedScopes: RoleWithDecodedScopes[] = [
       { type: SCOPES.SEARCH_BIRTH },
       { type: SCOPES.SEARCH_DEATH },
       { type: SCOPES.SEARCH_MARRIAGE },
-      {
-        type: 'record.search',
-        options: { event: 'birth', access: 'all' }
-      },
-      {
-        type: 'record.search',
-        options: { event: 'death', access: 'administrativeArea' }
-      },
-      {
-        type: 'record.search',
-        options: { event: 'tennis-club-membership', access: 'all' }
-      },
-      {
-        type: 'workqueue',
-        options: {
-          id: [
-            'assigned-to-you',
-            'recent',
-            'requires-updates-self',
-            'sent-for-review'
-          ]
-        }
-      },
-      {
-        type: 'record.create',
-        options: { event: ['birth', 'death', 'tennis-club-membership'] }
-      },
-      {
-        type: 'record.declare',
-        options: { event: ['birth', 'death', 'tennis-club-membership'] }
-      },
-      {
-        type: 'record.edit',
-        options: { event: ['birth', 'death', 'tennis-club-membership'] }
-      },
-      {
-        type: 'record.notify',
-        options: { event: ['birth', 'death', 'tennis-club-membership'] }
-      }
-    ]
-  },
-  {
-    id: 'POLICE_OFFICER',
-    label: {
-      defaultMessage: 'Police Officer',
-      description: 'Name for user role Police Officer',
-      id: 'userRole.policeOfficer'
-    },
-    scopes: [
-      { type: SCOPES.RECORD_DECLARE_BIRTH },
-      { type: SCOPES.RECORD_DECLARE_DEATH },
-      { type: SCOPES.RECORD_DECLARE_MARRIAGE },
-      { type: SCOPES.RECORD_SUBMIT_INCOMPLETE },
-      { type: SCOPES.RECORD_SUBMIT_FOR_REVIEW },
-      { type: SCOPES.SEARCH_BIRTH },
-      { type: SCOPES.SEARCH_DEATH },
-      { type: SCOPES.SEARCH_MARRIAGE },
-      {
-        type: 'record.search',
-        options: { event: 'birth', access: 'all' }
-      },
-      {
-        type: 'record.search',
-        options: { event: 'death', access: 'all' }
-      },
-      {
-        type: 'record.search',
-        options: { event: 'tennis-club-membership', access: 'all' }
-      },
-      {
-        type: 'record.create',
-        options: { event: ['birth', 'death', 'tennis-club-membership'] }
-      },
-      {
-        type: 'record.declare',
-        options: { event: ['birth', 'death', 'tennis-club-membership'] }
-      },
-      {
-        type: 'record.edit',
-        options: { event: ['birth', 'death', 'tennis-club-membership'] }
-      },
-      {
-        type: 'record.notify',
-        options: { event: ['birth', 'death', 'tennis-club-membership'] }
-      }
-    ]
-  },
-  {
-    id: 'HOSPITAL_CLERK',
-    label: {
-      defaultMessage: 'Hospital Clerk',
-      description: 'Name for user role Hospital Clerk',
-      id: 'userRole.hospitalClerk'
-    },
-    scopes: [
-      { type: SCOPES.RECORD_DECLARE_BIRTH },
-      { type: SCOPES.RECORD_DECLARE_DEATH },
-      { type: SCOPES.RECORD_DECLARE_MARRIAGE },
-      { type: SCOPES.RECORD_SUBMIT_INCOMPLETE },
-      { type: SCOPES.RECORD_SUBMIT_FOR_REVIEW },
-      { type: SCOPES.SEARCH_BIRTH },
-      { type: SCOPES.SEARCH_DEATH },
-      { type: SCOPES.SEARCH_MARRIAGE },
-      {
-        type: 'record.search',
-        options: { event: 'birth', access: 'all' }
-      },
-      {
-        type: 'record.search',
-        options: { event: 'death', access: 'all' }
-      },
-      {
-        type: 'record.search',
-        options: { event: 'tennis-club-membership', access: 'all' }
-      },
-      {
-        type: 'workqueue',
-        options: {
-          id: [
-            'assigned-to-you',
-            'recent',
-            'requires-updates-self',
-            'sent-for-review'
-          ]
-        }
-      },
-      {
-        type: 'record.create',
-        options: { event: ['birth', 'death', 'tennis-club-membership'] }
-      },
-      {
-        type: 'record.declare',
-        options: { event: ['birth', 'death', 'tennis-club-membership'] }
-      },
-      {
-        type: 'record.edit',
-        options: { event: ['birth', 'death', 'tennis-club-membership'] }
-      },
-      {
-        type: 'record.notify',
-        options: { event: ['birth', 'death', 'tennis-club-membership'] }
-      }
-    ]
-  },
-  {
-    id: 'HEALTHCARE_WORKER',
-    label: {
-      defaultMessage: 'Healthcare Worker',
-      description: 'Name for user role Healthcare Worker',
-      id: 'userRole.healthcareWorker'
-    },
-    scopes: [
-      { type: SCOPES.RECORD_DECLARE_BIRTH },
-      { type: SCOPES.RECORD_DECLARE_DEATH },
-      { type: SCOPES.RECORD_DECLARE_MARRIAGE },
-      { type: SCOPES.RECORD_SUBMIT_INCOMPLETE },
-      { type: SCOPES.RECORD_SUBMIT_FOR_REVIEW },
-      { type: SCOPES.SEARCH_BIRTH },
-      { type: SCOPES.SEARCH_DEATH },
-      { type: SCOPES.SEARCH_MARRIAGE },
-      {
-        type: 'record.search',
-        options: { event: 'birth', access: 'all' }
-      },
-      {
-        type: 'record.search',
-        options: { event: 'death', access: 'all' }
-      },
-      {
-        type: 'record.search',
-        options: { event: 'tennis-club-membership', access: 'all' }
-      },
-      {
-        type: 'record.create',
-        options: { event: ['birth', 'death', 'tennis-club-membership'] }
-      },
-      {
-        type: 'record.declare',
-        options: { event: ['birth', 'death', 'tennis-club-membership'] }
-      },
-      {
-        type: 'record.edit',
-        options: { event: ['birth', 'death', 'tennis-club-membership'] }
-      },
-      {
-        type: 'record.notify',
-        options: { event: ['birth', 'death', 'tennis-club-membership'] }
-      }
-    ]
-  },
-  {
-    id: 'COMMUNITY_LEADER',
-    label: {
-      defaultMessage: 'Community Leader',
-      description: 'Name for user role Community Leader',
-      id: 'userRole.communityLeader'
-    },
-    scopes: [
-      { type: SCOPES.RECORD_DECLARE_BIRTH },
-      { type: SCOPES.RECORD_DECLARE_DEATH },
-      { type: SCOPES.RECORD_DECLARE_MARRIAGE },
-      { type: SCOPES.RECORD_SUBMIT_INCOMPLETE },
-      { type: SCOPES.RECORD_SUBMIT_FOR_REVIEW },
-      { type: SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES },
-      { type: SCOPES.SEARCH_BIRTH },
-      { type: SCOPES.SEARCH_DEATH },
-      { type: SCOPES.SEARCH_MARRIAGE },
       { type: SCOPES.USER_READ_ONLY_MY_AUDIT },
+      { type: 'record.search', options: { event: 'birth', access: 'all' } },
       {
         type: 'record.search',
-        options: { event: 'birth', access: 'all' }
-      },
-      {
-        type: 'record.search',
-        options: { event: 'death', access: 'all' }
+        options: { event: 'death', access: 'my-jurisdiction' }
       },
       {
         type: 'record.search',
@@ -253,15 +43,16 @@ const rolesWithDecodedScopes: RoleWithDecodedScopes[] = [
       {
         type: 'workqueue',
         options: {
-          id: ['assigned-to-you', 'recent', 'sent-for-review', 'ready-to-print']
+          id: [
+            'assigned-to-you',
+            'recent',
+            'requires-updates-self',
+            'sent-for-review'
+          ]
         }
       },
       {
         type: 'record.create',
-        options: { event: ['birth', 'death', 'tennis-club-membership'] }
-      },
-      {
-        type: 'record.read',
         options: { event: ['birth', 'death', 'tennis-club-membership'] }
       },
       {
@@ -274,10 +65,6 @@ const rolesWithDecodedScopes: RoleWithDecodedScopes[] = [
       },
       {
         type: 'record.notify',
-        options: { event: ['birth', 'death', 'tennis-club-membership'] }
-      },
-      {
-        type: 'record.print-certified-copies',
         options: { event: ['birth', 'death', 'tennis-club-membership'] }
       }
     ]
@@ -285,23 +72,23 @@ const rolesWithDecodedScopes: RoleWithDecodedScopes[] = [
   {
     id: 'REGISTRATION_AGENT',
     label: {
-      defaultMessage: 'Registration Agent',
-      description: 'Name for user role Registration Agent',
-      id: 'userRole.registrationAgent'
+      defaultMessage: 'Registration Officer',
+      description: 'Name for user role Registration Officer',
+      id: 'userRole.registrationOfficer'
     },
     scopes: [
       { type: SCOPES.RECORD_READ },
       { type: SCOPES.RECORD_DECLARE_BIRTH },
       { type: SCOPES.RECORD_DECLARE_DEATH },
       { type: SCOPES.RECORD_DECLARE_MARRIAGE },
-      { type: SCOPES.RECORD_DECLARATION_EDIT },
       { type: SCOPES.RECORD_SUBMIT_FOR_APPROVAL },
       { type: SCOPES.RECORD_SUBMIT_FOR_UPDATES },
+      { type: SCOPES.RECORD_DECLARATION_EDIT },
       { type: SCOPES.RECORD_REVIEW_DUPLICATES },
       { type: SCOPES.RECORD_DECLARATION_ARCHIVE },
       { type: SCOPES.RECORD_DECLARATION_REINSTATE },
-      { type: SCOPES.RECORD_REGISTRATION_REQUEST_CORRECTION },
       { type: SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES },
+      { type: SCOPES.RECORD_REGISTRATION_REQUEST_CORRECTION },
       { type: SCOPES.PERFORMANCE_READ },
       { type: SCOPES.PERFORMANCE_READ_DASHBOARDS },
       { type: SCOPES.ORGANISATION_READ_LOCATIONS_MY_OFFICE },
@@ -309,14 +96,9 @@ const rolesWithDecodedScopes: RoleWithDecodedScopes[] = [
       { type: SCOPES.SEARCH_BIRTH },
       { type: SCOPES.SEARCH_DEATH },
       { type: SCOPES.SEARCH_MARRIAGE },
-      {
-        type: 'record.search',
-        options: { event: 'birth', access: 'all' }
-      },
-      {
-        type: 'record.search',
-        options: { event: 'death', access: 'all' }
-      },
+      { type: SCOPES.ORGANISATION_READ_LOCATIONS_MY_JURISDICTION },
+      { type: 'record.search', options: { event: 'birth', access: 'all' } },
+      { type: 'record.search', options: { event: 'death', access: 'all' } },
       {
         type: 'record.search',
         options: { event: 'tennis-club-membership', access: 'all' }
@@ -394,33 +176,30 @@ const rolesWithDecodedScopes: RoleWithDecodedScopes[] = [
       { type: SCOPES.RECORD_DECLARE_BIRTH },
       { type: SCOPES.RECORD_DECLARE_DEATH },
       { type: SCOPES.RECORD_DECLARE_MARRIAGE },
-      { type: SCOPES.RECORD_DECLARATION_EDIT },
       { type: SCOPES.RECORD_SUBMIT_FOR_UPDATES },
-      { type: SCOPES.RECORD_REVIEW_DUPLICATES },
+      { type: SCOPES.RECORD_UNASSIGN_OTHERS },
+      { type: SCOPES.RECORD_DECLARATION_EDIT },
       { type: SCOPES.RECORD_DECLARATION_ARCHIVE },
       { type: SCOPES.RECORD_DECLARATION_REINSTATE },
+      { type: SCOPES.RECORD_REVIEW_DUPLICATES },
       { type: SCOPES.RECORD_REGISTER },
-      { type: SCOPES.RECORD_REGISTRATION_CORRECT },
-      { type: SCOPES.RECORD_UNASSIGN_OTHERS },
       { type: SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES },
+      { type: SCOPES.PROFILE_ELECTRONIC_SIGNATURE },
+      { type: SCOPES.RECORD_REGISTRATION_CORRECT },
       { type: SCOPES.RECORD_CONFIRM_REGISTRATION },
       { type: SCOPES.RECORD_REJECT_REGISTRATION },
       { type: SCOPES.PERFORMANCE_READ },
       { type: SCOPES.PERFORMANCE_READ_DASHBOARDS },
-      { type: SCOPES.PROFILE_ELECTRONIC_SIGNATURE },
       { type: SCOPES.USER_READ_ONLY_MY_AUDIT },
       { type: SCOPES.ORGANISATION_READ_LOCATIONS_MY_OFFICE },
+      { type: SCOPES.PERFORMANCE_EXPORT_VITAL_STATISTICS },
       { type: SCOPES.SEARCH_BIRTH },
       { type: SCOPES.SEARCH_DEATH },
       { type: SCOPES.SEARCH_MARRIAGE },
-      {
-        type: 'record.search',
-        options: { event: 'birth', access: 'all' }
-      },
-      {
-        type: 'record.search',
-        options: { event: 'death', access: 'all' }
-      },
+      { type: SCOPES.ORGANISATION_READ_LOCATIONS_MY_JURISDICTION },
+      { type: SCOPES.USER_READ_MY_OFFICE },
+      { type: 'record.search', options: { event: 'birth', access: 'all' } },
+      { type: 'record.search', options: { event: 'death', access: 'all' } },
       {
         type: 'record.search',
         options: { event: 'tennis-club-membership', access: 'all' }
@@ -437,7 +216,8 @@ const rolesWithDecodedScopes: RoleWithDecodedScopes[] = [
             'in-external-validation',
             'ready-to-print',
             'ready-to-issue',
-            'pending-certification'
+            'pending-certification',
+            'escalated'
           ]
         }
       },
@@ -454,11 +234,11 @@ const rolesWithDecodedScopes: RoleWithDecodedScopes[] = [
         options: { event: ['birth', 'death', 'tennis-club-membership'] }
       },
       {
-        type: 'record.reject',
+        type: 'record.edit',
         options: { event: ['birth', 'death', 'tennis-club-membership'] }
       },
       {
-        type: 'record.edit',
+        type: 'record.reject',
         options: { event: ['birth', 'death', 'tennis-club-membership'] }
       },
       {
@@ -508,65 +288,52 @@ const rolesWithDecodedScopes: RoleWithDecodedScopes[] = [
   {
     id: 'LOCAL_SYSTEM_ADMIN',
     label: {
-      defaultMessage: 'Local System Admin',
-      description: 'Name for user role Local System Admin',
-      id: 'userRole.localSystemAdmin'
+      defaultMessage: 'Administrator',
+      description: 'Name for user role Administrator',
+      id: 'userRole.administrator'
     },
     scopes: [
-      { type: SCOPES.USER_READ_MY_OFFICE },
-      { type: SCOPES.USER_CREATE_MY_JURISDICTION },
-      { type: SCOPES.USER_UPDATE_MY_JURISDICTION },
       { type: SCOPES.ORGANISATION_READ_LOCATIONS_MY_JURISDICTION },
-      { type: SCOPES.PERFORMANCE_READ },
-      { type: SCOPES.PERFORMANCE_READ_DASHBOARDS },
-      { type: SCOPES.PERFORMANCE_EXPORT_VITAL_STATISTICS },
+      { type: SCOPES.USER_CREATE_MY_JURISDICTION },
       {
         type: 'user.create',
         options: {
           role: [
             'FIELD_AGENT',
-            'POLICE_OFFICER',
             'HOSPITAL_CLERK',
-            'HEALTHCARE_WORKER',
             'COMMUNITY_LEADER',
             'REGISTRATION_AGENT',
             'LOCAL_REGISTRAR'
           ]
         }
       },
+      { type: SCOPES.USER_UPDATE_MY_JURISDICTION },
       {
         type: 'user.edit',
         options: {
           role: [
             'FIELD_AGENT',
-            'POLICE_OFFICER',
             'HOSPITAL_CLERK',
-            'HEALTHCARE_WORKER',
             'COMMUNITY_LEADER',
             'REGISTRATION_AGENT',
             'LOCAL_REGISTRAR'
           ]
         }
-      }
+      },
+      { type: SCOPES.USER_READ_MY_JURISDICTION }
     ]
   },
   {
     id: 'NATIONAL_SYSTEM_ADMIN',
     label: {
-      defaultMessage: 'National System Admin',
-      description: 'Name for user role National System Admin',
-      id: 'userRole.nationalSystemAdmin'
+      defaultMessage: 'National Administrator',
+      description: 'Name for user role National Administrator',
+      id: 'userRole.nationalAdministrator'
     },
     scopes: [
-      { type: SCOPES.USER_CREATE },
-      { type: SCOPES.USER_READ },
-      { type: SCOPES.USER_UPDATE },
-      { type: SCOPES.ORGANISATION_READ_LOCATIONS },
-      { type: SCOPES.PERFORMANCE_READ },
-      { type: SCOPES.PERFORMANCE_READ_DASHBOARDS },
-      { type: SCOPES.PERFORMANCE_EXPORT_VITAL_STATISTICS },
-      { type: SCOPES.RECORD_REINDEX },
       { type: SCOPES.CONFIG_UPDATE_ALL },
+      { type: SCOPES.ORGANISATION_READ_LOCATIONS },
+      { type: SCOPES.USER_CREATE },
       {
         type: 'user.create',
         options: {
@@ -604,15 +371,21 @@ const rolesWithDecodedScopes: RoleWithDecodedScopes[] = [
             'PROVINCIAL_REGISTRAR'
           ]
         }
-      }
+      },
+      { type: SCOPES.USER_READ },
+      { type: SCOPES.USER_UPDATE },
+      { type: SCOPES.PERFORMANCE_READ },
+      { type: SCOPES.PERFORMANCE_READ_DASHBOARDS },
+      { type: SCOPES.PERFORMANCE_EXPORT_VITAL_STATISTICS },
+      { type: SCOPES.RECORD_REINDEX }
     ]
   },
   {
     id: 'PERFORMANCE_MANAGER',
     label: {
-      defaultMessage: 'Performance Manager',
-      description: 'Name for user role Performance Manager',
-      id: 'userRole.performanceManager'
+      defaultMessage: 'Operations Manager',
+      description: 'Name for user role Operations Manager',
+      id: 'userRole.operationsManager'
     },
     scopes: [
       { type: SCOPES.PERFORMANCE_READ },
@@ -624,9 +397,9 @@ const rolesWithDecodedScopes: RoleWithDecodedScopes[] = [
   {
     id: 'NATIONAL_REGISTRAR',
     label: {
-      defaultMessage: 'National Registrar',
-      description: 'Name for user role National Registrar',
-      id: 'userRole.nationalRegistrar'
+      defaultMessage: 'Registrar General',
+      description: 'Name for user role Registrar General',
+      id: 'userRole.registrarGeneral'
     },
     scopes: [
       { type: SCOPES.RECORD_READ },
@@ -634,33 +407,29 @@ const rolesWithDecodedScopes: RoleWithDecodedScopes[] = [
       { type: SCOPES.RECORD_DECLARE_DEATH },
       { type: SCOPES.RECORD_DECLARE_MARRIAGE },
       { type: SCOPES.RECORD_SUBMIT_FOR_UPDATES },
-      { type: SCOPES.RECORD_REVIEW_DUPLICATES },
+      { type: SCOPES.RECORD_UNASSIGN_OTHERS },
+      { type: SCOPES.RECORD_DECLARATION_EDIT },
       { type: SCOPES.RECORD_DECLARATION_ARCHIVE },
       { type: SCOPES.RECORD_DECLARATION_REINSTATE },
+      { type: SCOPES.RECORD_REVIEW_DUPLICATES },
       { type: SCOPES.RECORD_REGISTER },
-      { type: SCOPES.RECORD_REGISTRATION_CORRECT },
-      { type: SCOPES.RECORD_UNASSIGN_OTHERS },
       { type: SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES },
+      { type: SCOPES.PROFILE_ELECTRONIC_SIGNATURE },
+      { type: SCOPES.RECORD_REGISTRATION_CORRECT },
       { type: SCOPES.RECORD_CONFIRM_REGISTRATION },
       { type: SCOPES.RECORD_REJECT_REGISTRATION },
       { type: SCOPES.PERFORMANCE_READ },
       { type: SCOPES.PERFORMANCE_READ_DASHBOARDS },
       { type: SCOPES.PERFORMANCE_EXPORT_VITAL_STATISTICS },
       { type: SCOPES.USER_READ_ONLY_MY_AUDIT },
-      { type: SCOPES.PROFILE_ELECTRONIC_SIGNATURE },
       { type: SCOPES.ORGANISATION_READ_LOCATIONS_MY_OFFICE },
       { type: SCOPES.USER_READ_MY_OFFICE },
       { type: SCOPES.SEARCH_BIRTH },
       { type: SCOPES.SEARCH_DEATH },
       { type: SCOPES.SEARCH_MARRIAGE },
-      {
-        type: 'record.search',
-        options: { event: 'birth', access: 'all' }
-      },
-      {
-        type: 'record.search',
-        options: { event: 'death', access: 'all' }
-      },
+      { type: SCOPES.ORGANISATION_READ_LOCATIONS_MY_JURISDICTION },
+      { type: 'record.search', options: { event: 'birth', access: 'all' } },
+      { type: 'record.search', options: { event: 'death', access: 'all' } },
       {
         type: 'record.search',
         options: { event: 'tennis-club-membership', access: 'all' }
@@ -766,11 +535,321 @@ const rolesWithDecodedScopes: RoleWithDecodedScopes[] = [
           ]
         }
       },
+      { type: 'record.search', options: { event: 'birth', access: 'all' } }
+    ]
+  },
+  {
+    id: 'HOSPITAL_CLERK',
+    label: {
+      defaultMessage: 'Hospital Clerk',
+      description: 'Name for user role Hospital Clerk',
+      id: 'userRole.hospitalClerk'
+    },
+    scopes: [
+      { type: SCOPES.RECORD_DECLARE_BIRTH },
+      { type: SCOPES.RECORD_DECLARE_DEATH },
+      { type: SCOPES.RECORD_SUBMIT_INCOMPLETE },
+      { type: SCOPES.RECORD_SUBMIT_FOR_REVIEW },
+      { type: SCOPES.SEARCH_BIRTH },
+      { type: SCOPES.SEARCH_DEATH },
+      { type: SCOPES.USER_READ_ONLY_MY_AUDIT },
+      { type: 'record.search', options: { event: 'birth', access: 'all' } },
+      { type: 'record.search', options: { event: 'death', access: 'all' } },
       {
         type: 'record.search',
-        options: { event: 'birth', access: 'all' }
+        options: { event: 'tennis-club-membership', access: 'all' }
       },
-      { type: 'record.unassign-others', options: { event: ['birth'] } }
+      {
+        type: 'workqueue',
+        options: {
+          id: [
+            'assigned-to-you',
+            'recent',
+            'requires-updates-self',
+            'sent-for-review'
+          ]
+        }
+      },
+      {
+        type: 'record.create',
+        options: { event: ['birth', 'death', 'tennis-club-membership'] }
+      },
+      {
+        type: 'record.read',
+        options: { event: ['birth', 'death', 'tennis-club-membership'] }
+      },
+      {
+        type: 'record.declare',
+        options: { event: ['birth', 'death', 'tennis-club-membership'] }
+      },
+      {
+        type: 'record.notify',
+        options: { event: ['birth', 'death', 'tennis-club-membership'] }
+      },
+      {
+        type: 'record.edit',
+        options: { event: ['birth', 'death', 'tennis-club-membership'] }
+      }
+    ]
+  },
+  {
+    id: 'COMMUNITY_LEADER',
+    label: {
+      defaultMessage: 'Community Leader',
+      description: 'Name for user role Community Leader',
+      id: 'userRole.communityLeader'
+    },
+    scopes: [
+      { type: SCOPES.RECORD_DECLARE_BIRTH },
+      { type: SCOPES.RECORD_DECLARE_DEATH },
+      { type: SCOPES.RECORD_DECLARE_MARRIAGE },
+      { type: SCOPES.RECORD_SUBMIT_INCOMPLETE },
+      { type: SCOPES.RECORD_SUBMIT_FOR_REVIEW },
+      { type: SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES },
+      { type: SCOPES.SEARCH_BIRTH },
+      { type: SCOPES.SEARCH_DEATH },
+      { type: SCOPES.SEARCH_MARRIAGE },
+      { type: SCOPES.USER_READ_ONLY_MY_AUDIT },
+      { type: 'record.search', options: { event: 'birth', access: 'all' } },
+      { type: 'record.search', options: { event: 'death', access: 'all' } },
+      {
+        type: 'record.search',
+        options: { event: 'tennis-club-membership', access: 'all' }
+      },
+      {
+        type: 'workqueue',
+        options: {
+          id: ['assigned-to-you', 'recent', 'sent-for-review', 'ready-to-print']
+        }
+      },
+      {
+        type: 'record.create',
+        options: { event: ['birth', 'death', 'tennis-club-membership'] }
+      },
+      {
+        type: 'record.read',
+        options: { event: ['birth', 'death', 'tennis-club-membership'] }
+      },
+      {
+        type: 'record.declare',
+        options: { event: ['birth', 'death', 'tennis-club-membership'] }
+      },
+      {
+        type: 'record.edit',
+        options: { event: ['birth', 'death', 'tennis-club-membership'] }
+      },
+      {
+        type: 'record.notify',
+        options: { event: ['birth', 'death', 'tennis-club-membership'] }
+      },
+      {
+        type: 'record.print-certified-copies',
+        options: { event: ['birth', 'death', 'tennis-club-membership'] }
+      }
+    ]
+  },
+  {
+    id: 'POLICE_OFFICER',
+    label: {
+      defaultMessage: 'Police Officer',
+      description: 'Name for user role Police Officer',
+      id: 'userRole.policeOfficer'
+    },
+    scopes: [
+      { type: SCOPES.RECORD_DECLARE_BIRTH },
+      { type: SCOPES.RECORD_DECLARE_DEATH },
+      { type: SCOPES.RECORD_DECLARE_MARRIAGE },
+      { type: SCOPES.RECORD_SUBMIT_INCOMPLETE },
+      { type: SCOPES.RECORD_SUBMIT_FOR_REVIEW },
+      { type: SCOPES.SEARCH_BIRTH },
+      { type: SCOPES.SEARCH_DEATH },
+      { type: SCOPES.SEARCH_MARRIAGE },
+      { type: 'record.search', options: { event: 'birth', access: 'all' } },
+      { type: 'record.search', options: { event: 'death', access: 'all' } },
+      {
+        type: 'record.search',
+        options: { event: 'tennis-club-membership', access: 'all' }
+      },
+      {
+        type: 'workqueue',
+        options: {
+          id: [
+            'assigned-to-you',
+            'recent',
+            'requires-updates-self',
+            'sent-for-review'
+          ]
+        }
+      },
+      {
+        type: 'record.create',
+        options: { event: ['birth', 'death', 'tennis-club-membership'] }
+      },
+      {
+        type: 'record.declare',
+        options: { event: ['birth', 'death', 'tennis-club-membership'] }
+      },
+      {
+        type: 'record.edit',
+        options: { event: ['birth', 'death', 'tennis-club-membership'] }
+      },
+      {
+        type: 'record.notify',
+        options: { event: ['birth', 'death', 'tennis-club-membership'] }
+      }
+    ]
+  },
+  {
+    id: 'SOCIAL_WORKER',
+    label: {
+      defaultMessage: 'Social Worker',
+      description: 'Name for user role Social Worker',
+      id: 'userRole.socialWorker'
+    },
+    scopes: [
+      { type: SCOPES.RECORD_DECLARE_BIRTH },
+      { type: SCOPES.RECORD_DECLARE_DEATH },
+      { type: SCOPES.RECORD_DECLARE_MARRIAGE },
+      { type: SCOPES.RECORD_SUBMIT_INCOMPLETE },
+      { type: SCOPES.RECORD_SUBMIT_FOR_REVIEW },
+      { type: SCOPES.SEARCH_BIRTH },
+      { type: SCOPES.SEARCH_DEATH },
+      { type: SCOPES.SEARCH_MARRIAGE },
+      { type: 'record.search', options: { event: 'birth', access: 'all' } },
+      { type: 'record.search', options: { event: 'death', access: 'all' } },
+      {
+        type: 'record.search',
+        options: { event: 'tennis-club-membership', access: 'all' }
+      },
+      {
+        type: 'workqueue',
+        options: {
+          id: [
+            'assigned-to-you',
+            'recent',
+            'requires-updates-self',
+            'sent-for-review'
+          ]
+        }
+      },
+      {
+        type: 'record.create',
+        options: { event: ['birth', 'death', 'tennis-club-membership'] }
+      },
+      {
+        type: 'record.declare',
+        options: { event: ['birth', 'death', 'tennis-club-membership'] }
+      },
+      {
+        type: 'record.edit',
+        options: { event: ['birth', 'death', 'tennis-club-membership'] }
+      },
+      {
+        type: 'record.notify',
+        options: { event: ['birth', 'death', 'tennis-club-membership'] }
+      }
+    ]
+  },
+  {
+    id: 'HEALTHCARE_WORKER',
+    label: {
+      defaultMessage: 'Healthcare Worker',
+      description: 'Name for user role Healthcare Worker',
+      id: 'userRole.healthcareWorker'
+    },
+    scopes: [
+      { type: SCOPES.RECORD_DECLARE_BIRTH },
+      { type: SCOPES.RECORD_DECLARE_DEATH },
+      { type: SCOPES.RECORD_DECLARE_MARRIAGE },
+      { type: SCOPES.RECORD_SUBMIT_INCOMPLETE },
+      { type: SCOPES.RECORD_SUBMIT_FOR_REVIEW },
+      { type: SCOPES.SEARCH_BIRTH },
+      { type: SCOPES.SEARCH_DEATH },
+      { type: SCOPES.SEARCH_MARRIAGE },
+      { type: 'record.search', options: { event: 'birth', access: 'all' } },
+      { type: 'record.search', options: { event: 'death', access: 'all' } },
+      {
+        type: 'record.search',
+        options: { event: 'tennis-club-membership', access: 'all' }
+      },
+      {
+        type: 'workqueue',
+        options: {
+          id: [
+            'assigned-to-you',
+            'recent',
+            'requires-updates-self',
+            'sent-for-review'
+          ]
+        }
+      },
+      {
+        type: 'record.create',
+        options: { event: ['birth', 'death', 'tennis-club-membership'] }
+      },
+      {
+        type: 'record.declare',
+        options: { event: ['birth', 'death', 'tennis-club-membership'] }
+      },
+      {
+        type: 'record.edit',
+        options: { event: ['birth', 'death', 'tennis-club-membership'] }
+      },
+      {
+        type: 'record.notify',
+        options: { event: ['birth', 'death', 'tennis-club-membership'] }
+      }
+    ]
+  },
+  {
+    id: 'LOCAL_LEADER',
+    label: {
+      defaultMessage: 'Local Leader',
+      description: 'Name for user role Local Leader',
+      id: 'userRole.LocalLeader'
+    },
+    scopes: [
+      { type: SCOPES.RECORD_DECLARE_BIRTH },
+      { type: SCOPES.RECORD_DECLARE_DEATH },
+      { type: SCOPES.RECORD_DECLARE_MARRIAGE },
+      { type: SCOPES.RECORD_SUBMIT_INCOMPLETE },
+      { type: SCOPES.RECORD_SUBMIT_FOR_REVIEW },
+      { type: SCOPES.SEARCH_BIRTH },
+      { type: SCOPES.SEARCH_DEATH },
+      { type: SCOPES.SEARCH_MARRIAGE },
+      { type: 'record.search', options: { event: 'birth', access: 'all' } },
+      { type: 'record.search', options: { event: 'death', access: 'all' } },
+      {
+        type: 'record.search',
+        options: { event: 'tennis-club-membership', access: 'all' }
+      },
+      {
+        type: 'workqueue',
+        options: {
+          id: [
+            'assigned-to-you',
+            'recent',
+            'requires-updates-self',
+            'sent-for-review'
+          ]
+        }
+      },
+      {
+        type: 'record.create',
+        options: { event: ['birth', 'death', 'tennis-club-membership'] }
+      },
+      {
+        type: 'record.declare',
+        options: { event: ['birth', 'death', 'tennis-club-membership'] }
+      },
+      {
+        type: 'record.edit',
+        options: { event: ['birth', 'death', 'tennis-club-membership'] }
+      },
+      {
+        type: 'record.notify',
+        options: { event: ['birth', 'death', 'tennis-club-membership'] }
+      }
     ]
   }
 ]
