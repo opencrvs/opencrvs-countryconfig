@@ -2327,6 +2327,7 @@ workqueues.pendingCertification.emptyMessage,Empty message for pending certifica
 workqueues.pendingCertification.title,Title of pending certification workqueue,Pending Certification,En attente de certification
 workqueues.requiresApproval.title,Title of pending approval workqueue,Pending approval,En attente d'approbation
 workqueues.reviewRequested.title,Title of review requested workqueue,Review requested,Révision demandée
+workqueues.escalated.title,Title of escalated workqueue,Escalated,Transmis
 wq.noRecords.CREATED,No records messages for empty draft tab,No records in progress,Aucun enregistrement en cours
 wq.noRecords.DECLARED,No records messages for ready for review tab,No records ready for review,Aucun document prêt à être examiné
 wq.noRecords.REGISTERED,No records messages for ready to print tab,No records ready to print,Aucun document prêt à être imprimé
