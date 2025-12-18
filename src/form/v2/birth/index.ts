@@ -271,6 +271,21 @@ export const birthEvent = defineConfig({
       ]
     },
     {
+      type: ActionType.EDIT,
+      label: {
+        defaultMessage: 'Edit',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'actions.edit'
+      },
+      flags: [
+        { id: 'validated', operation: 'remove' },
+        { id: 'approval-required-for-late-registration', operation: 'remove' },
+        { id: 'escalated-to-provincial-registrar', operation: 'remove' },
+        { id: 'escalated-to-registrar-general', operation: 'remove' }
+      ]
+    },
+    {
       type: ActionType.CUSTOM,
       customActionType: 'VALIDATE_DECLARATION',
       icon: 'Stamp',
