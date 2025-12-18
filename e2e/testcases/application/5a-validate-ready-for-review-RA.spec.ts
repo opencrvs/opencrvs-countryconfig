@@ -82,7 +82,7 @@ test.describe
     await selectAction(page, 'Validate declaration')
 
     await expect(
-      page.getByRole('heading', { name: 'Validate declaration', exact: true })
+      page.getByRole('heading', { name: 'Validate declaration?', exact: true })
     ).toBeVisible()
 
     await expect(
