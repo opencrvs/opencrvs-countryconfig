@@ -31,14 +31,9 @@ const rolesWithDecodedScopes: RoleWithDecodedScopes[] = [
       { type: SCOPES.SEARCH_DEATH },
       { type: SCOPES.SEARCH_MARRIAGE },
       { type: SCOPES.USER_READ_ONLY_MY_AUDIT },
-      { type: 'record.search', options: { event: 'birth', access: 'all' } },
       {
         type: 'record.search',
-        options: { event: 'death', access: 'my-jurisdiction' }
-      },
-      {
-        type: 'record.search',
-        options: { event: 'tennis-club-membership', access: 'all' }
+        options: { event: ['birth', 'death', 'tennis-club-membership'] }
       },
       {
         type: 'workqueue',
@@ -97,11 +92,12 @@ const rolesWithDecodedScopes: RoleWithDecodedScopes[] = [
       { type: SCOPES.SEARCH_DEATH },
       { type: SCOPES.SEARCH_MARRIAGE },
       { type: SCOPES.ORGANISATION_READ_LOCATIONS_MY_JURISDICTION },
-      { type: 'record.search', options: { event: 'birth', access: 'all' } },
-      { type: 'record.search', options: { event: 'death', access: 'all' } },
       {
         type: 'record.search',
-        options: { event: 'tennis-club-membership', access: 'all' }
+        options: {
+          event: ['birth', 'death', 'tennis-club-membership'],
+          declaredIn: 'administrativeArea'
+        }
       },
       {
         type: 'workqueue',
@@ -198,11 +194,12 @@ const rolesWithDecodedScopes: RoleWithDecodedScopes[] = [
       { type: SCOPES.SEARCH_MARRIAGE },
       { type: SCOPES.ORGANISATION_READ_LOCATIONS_MY_JURISDICTION },
       { type: SCOPES.USER_READ_MY_OFFICE },
-      { type: 'record.search', options: { event: 'birth', access: 'all' } },
-      { type: 'record.search', options: { event: 'death', access: 'all' } },
       {
         type: 'record.search',
-        options: { event: 'tennis-club-membership', access: 'all' }
+        options: {
+          event: ['birth', 'death', 'tennis-club-membership'],
+          declaredIn: 'administrativeArea'
+        }
       },
       {
         type: 'workqueue',
@@ -428,11 +425,12 @@ const rolesWithDecodedScopes: RoleWithDecodedScopes[] = [
       { type: SCOPES.SEARCH_DEATH },
       { type: SCOPES.SEARCH_MARRIAGE },
       { type: SCOPES.ORGANISATION_READ_LOCATIONS_MY_JURISDICTION },
-      { type: 'record.search', options: { event: 'birth', access: 'all' } },
-      { type: 'record.search', options: { event: 'death', access: 'all' } },
       {
         type: 'record.search',
-        options: { event: 'tennis-club-membership', access: 'all' }
+        options: {
+          event: ['birth', 'death', 'tennis-club-membership'],
+          eventLocation: 'all'
+        }
       },
       {
         type: 'workqueue',
@@ -535,7 +533,13 @@ const rolesWithDecodedScopes: RoleWithDecodedScopes[] = [
           ]
         }
       },
-      { type: 'record.search', options: { event: 'birth', access: 'all' } }
+      {
+        type: 'record.search',
+        options: {
+          event: ['birth', 'death', 'tennis-club-membership'],
+          declaredIn: 'administrativeArea'
+        }
+      }
     ]
   },
   {
@@ -553,11 +557,12 @@ const rolesWithDecodedScopes: RoleWithDecodedScopes[] = [
       { type: SCOPES.SEARCH_BIRTH },
       { type: SCOPES.SEARCH_DEATH },
       { type: SCOPES.USER_READ_ONLY_MY_AUDIT },
-      { type: 'record.search', options: { event: 'birth', access: 'all' } },
-      { type: 'record.search', options: { event: 'death', access: 'all' } },
       {
         type: 'record.search',
-        options: { event: 'tennis-club-membership', access: 'all' }
+        options: {
+          event: ['birth', 'death', 'tennis-club-membership'],
+          declaredIn: 'location'
+        }
       },
       {
         type: 'workqueue',
@@ -610,11 +615,12 @@ const rolesWithDecodedScopes: RoleWithDecodedScopes[] = [
       { type: SCOPES.SEARCH_DEATH },
       { type: SCOPES.SEARCH_MARRIAGE },
       { type: SCOPES.USER_READ_ONLY_MY_AUDIT },
-      { type: 'record.search', options: { event: 'birth', access: 'all' } },
-      { type: 'record.search', options: { event: 'death', access: 'all' } },
       {
         type: 'record.search',
-        options: { event: 'tennis-club-membership', access: 'all' }
+        options: {
+          event: ['birth', 'death', 'tennis-club-membership'],
+          declaredBy: 'user'
+        }
       },
       {
         type: 'workqueue',
@@ -664,11 +670,12 @@ const rolesWithDecodedScopes: RoleWithDecodedScopes[] = [
       { type: SCOPES.SEARCH_BIRTH },
       { type: SCOPES.SEARCH_DEATH },
       { type: SCOPES.SEARCH_MARRIAGE },
-      { type: 'record.search', options: { event: 'birth', access: 'all' } },
-      { type: 'record.search', options: { event: 'death', access: 'all' } },
       {
         type: 'record.search',
-        options: { event: 'tennis-club-membership', access: 'all' }
+        options: {
+          event: ['birth', 'death', 'tennis-club-membership'],
+          declaredIn: 'location'
+        }
       },
       {
         type: 'workqueue',
@@ -715,11 +722,11 @@ const rolesWithDecodedScopes: RoleWithDecodedScopes[] = [
       { type: SCOPES.SEARCH_BIRTH },
       { type: SCOPES.SEARCH_DEATH },
       { type: SCOPES.SEARCH_MARRIAGE },
-      { type: 'record.search', options: { event: 'birth', access: 'all' } },
-      { type: 'record.search', options: { event: 'death', access: 'all' } },
       {
         type: 'record.search',
-        options: { event: 'tennis-club-membership', access: 'all' }
+        options: {
+          event: ['birth', 'death', 'tennis-club-membership']
+        }
       },
       {
         type: 'workqueue',
@@ -766,11 +773,11 @@ const rolesWithDecodedScopes: RoleWithDecodedScopes[] = [
       { type: SCOPES.SEARCH_BIRTH },
       { type: SCOPES.SEARCH_DEATH },
       { type: SCOPES.SEARCH_MARRIAGE },
-      { type: 'record.search', options: { event: 'birth', access: 'all' } },
-      { type: 'record.search', options: { event: 'death', access: 'all' } },
       {
         type: 'record.search',
-        options: { event: 'tennis-club-membership', access: 'all' }
+        options: {
+          event: ['birth', 'death', 'tennis-club-membership']
+        }
       },
       {
         type: 'workqueue',
@@ -817,11 +824,11 @@ const rolesWithDecodedScopes: RoleWithDecodedScopes[] = [
       { type: SCOPES.SEARCH_BIRTH },
       { type: SCOPES.SEARCH_DEATH },
       { type: SCOPES.SEARCH_MARRIAGE },
-      { type: 'record.search', options: { event: 'birth', access: 'all' } },
-      { type: 'record.search', options: { event: 'death', access: 'all' } },
       {
         type: 'record.search',
-        options: { event: 'tennis-club-membership', access: 'all' }
+        options: {
+          event: ['birth', 'death', 'tennis-club-membership']
+        }
       },
       {
         type: 'workqueue',
