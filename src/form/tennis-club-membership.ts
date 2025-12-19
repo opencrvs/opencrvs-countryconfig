@@ -28,6 +28,7 @@ import {
 } from '@opencrvs/toolkit/events'
 import { Event } from './types/types'
 import { MAX_NAME_LENGTH } from './v2/birth/validators'
+import { getMOSIPIntegrationFields } from './v2/mosip'
 
 const TENNIS_CLUB_DECLARATION_REVIEW = {
   title: {
@@ -544,6 +545,14 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
             },
             {
               label: {
+                id: 'event.tennis-club-membership.action.form.section.idType.eSignet.label',
+                defaultMessage: 'e-Signet',
+                description: 'Option for selecting e-Signet as the ID type'
+              },
+              value: 'E_SIGNET'
+            },
+            {
+              label: {
                 id: 'event.tennis-club-membership.action.form.section.idType.other.label',
                 defaultMessage: 'Other',
                 description: 'Option for selecting Other as the ID type'
@@ -655,7 +664,19 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
             }
           ]
         },
+        ...getMOSIPIntegrationFields('collector.OTHER', {
+          existingConditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: field('collector.OTHER.idType').isEqualTo('E_SIGNET')
+            }
+          ]
+        }),
         {
+          parent: [
+            field(`collector.OTHER.verify-nid-http-fetch`),
+            field(`collector.OTHER.id-reader`)
+          ],
           id: 'collector.OTHER.firstName',
           type: 'TEXT',
           required: true,
@@ -668,10 +689,26 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
             {
               type: ConditionalType.SHOW,
               conditional: field('collector.requesterId').inArray(['OTHER'])
+            },
+            {
+              type: ConditionalType.ENABLE,
+              conditional: not(
+                field('collector.OTHER.idType').isEqualTo('E_SIGNET')
+              )
             }
+          ],
+          value: [
+            field(`collector.OTHER.verify-nid-http-fetch`).get(
+              'data.name.firstname'
+            ),
+            field(`collector.OTHER.id-reader`).get('data.name.firstname')
           ]
         },
         {
+          parent: [
+            field(`collector.OTHER.verify-nid-http-fetch`),
+            field(`collector.OTHER.id-reader`)
+          ],
           id: 'collector.OTHER.lastName',
           type: 'TEXT',
           required: true,
@@ -684,7 +721,19 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
             {
               type: ConditionalType.SHOW,
               conditional: field('collector.requesterId').inArray(['OTHER'])
+            },
+            {
+              type: ConditionalType.ENABLE,
+              conditional: not(
+                field('collector.OTHER.idType').isEqualTo('E_SIGNET')
+              )
             }
+          ],
+          value: [
+            field(`collector.OTHER.verify-nid-http-fetch`).get(
+              'data.name.surname'
+            ),
+            field(`collector.OTHER.id-reader`).get('data.name.surname')
           ]
         },
         {
