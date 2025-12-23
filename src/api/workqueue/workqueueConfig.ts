@@ -29,7 +29,7 @@ export const Workqueues = defineWorkqueues([
     query: {},
     actions: [
       {
-        type: 'VALIDATE',
+        type: 'DECLARE',
         conditionals: []
       }
     ]
@@ -126,6 +126,32 @@ export const Workqueues = defineWorkqueues([
     }
   },
   {
+    slug: 'pending-certification',
+    icon: 'Printer',
+    name: {
+      id: 'workqueues.pendingCertification.title',
+      defaultMessage: 'Pending Certification',
+      description: 'Title of pending certification workqueue'
+    },
+    query: {
+      flags: {
+        anyOf: ['pending-certified-copy-issuance']
+      },
+      updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+    },
+    actions: [
+      {
+        type: 'DEFAULT',
+        conditionals: []
+      }
+    ],
+    emptyMessage: {
+      id: 'workqueues.pendingCertification.emptyMessage',
+      defaultMessage: 'No pending certification records',
+      description: 'Empty message for pending certification workqueue'
+    }
+  },
+  {
     slug: 'requires-completion',
     icon: 'File',
     name: {
@@ -151,6 +177,65 @@ export const Workqueues = defineWorkqueues([
       defaultMessage: 'No notifications',
       description: 'Empty message for notifications workqueue'
     }
+  },
+  {
+    slug: 'escalated',
+    icon: 'FileArrowUp',
+    name: {
+      id: 'workqueues.escalated.title',
+      defaultMessage: 'Escalated',
+      description: 'Title of escalated workqueue'
+    },
+    query: {
+      flags: {
+        anyOf: [
+          'escalated-to-registrar-general',
+          'escalated-to-provincial-registrar'
+        ]
+      }
+    },
+    actions: []
+  },
+  {
+    slug: 'pending-feedback-registrar-general',
+    icon: 'ChatText',
+    name: {
+      id: 'workqueues.reviewRequested.title',
+      defaultMessage: 'Review requested',
+      description: 'Title of review requested workqueue'
+    },
+    query: {
+      flags: {
+        anyOf: ['escalated-to-registrar-general']
+      }
+    },
+    actions: [
+      {
+        type: 'DEFAULT',
+        conditionals: []
+      }
+    ]
+  },
+  {
+    slug: 'pending-feedback-provincinal-registrar',
+    icon: 'ChatText',
+    name: {
+      id: 'workqueues.reviewRequested.title',
+      defaultMessage: 'Review requested',
+      description: 'Title of review requested workqueue'
+    },
+    query: {
+      flags: {
+        anyOf: ['escalated-to-provincial-registrar']
+      },
+      updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+    },
+    actions: [
+      {
+        type: 'DEFAULT',
+        conditionals: []
+      }
+    ]
   },
   {
     slug: 'sent-for-review',
@@ -337,17 +422,12 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of sent for approval workqueue'
     },
     query: {
-      type: 'or',
-      clauses: [
-        {
-          updatedBy: { type: 'exact', term: user('id') },
-          flags: { noneOf: [InherentFlags.REJECTED] }
-        },
-        {
-          flags: { anyOf: [InherentFlags.CORRECTION_REQUESTED, 'validated'] },
-          updatedBy: { type: 'exact', term: user('id') }
-        }
-      ]
+      status: { type: 'anyOf', terms: ['DECLARED', 'NOTIFIED', 'REGISTERED'] },
+      updatedBy: { type: 'exact', term: user('id') },
+      flags: {
+        noneOf: [InherentFlags.REJECTED],
+        anyOf: [InherentFlags.CORRECTION_REQUESTED, 'validated']
+      }
     },
     actions: [],
     columns: [
@@ -416,6 +496,27 @@ export const Workqueues = defineWorkqueues([
           id: 'workqueue.ready-to-print.column.registered'
         },
         value: event.field('updatedAt')
+      }
+    ]
+  },
+  {
+    slug: 'late-registration-approval-required',
+    icon: 'FileSearch',
+    name: {
+      id: 'workqueues.requiresApproval.title',
+      defaultMessage: 'Pending approval',
+      description: 'Title of Pending approval workqueue'
+    },
+    query: {
+      flags: {
+        anyOf: ['approval-required-for-late-registration']
+      },
+      updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+    },
+    actions: [
+      {
+        type: 'DEFAULT',
+        conditionals: []
       }
     ]
   }
