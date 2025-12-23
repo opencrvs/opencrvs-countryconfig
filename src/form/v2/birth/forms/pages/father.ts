@@ -385,6 +385,7 @@ export const father = defineFormPage({
     {
       id: 'father.address',
       type: FieldType.ADDRESS,
+      required: true,
       hideLabel: true,
       secured: true,
       label: {

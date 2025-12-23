@@ -150,6 +150,19 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
           }
         },
         {
+          id: 'applicant.tob',
+          type: FieldType.TIME,
+          required: false,
+          configuration: {
+            use12HourFormat: true
+          },
+          label: {
+            defaultMessage: "Applicant's time of birth",
+            description: 'This is the label for the time of birth field',
+            id: 'event.tennis-club-membership.action.declare.form.section.who.field.tob.label'
+          }
+        },
+        {
           id: 'applicant.image',
           type: 'FILE',
           required: false,
@@ -722,11 +735,7 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
               description: 'Subtitle for the data section',
               id: 'event.tennis-club-membership.action.certificate.form.section.verifyIdentity.data.subtitle'
             },
-            data: [
-              { fieldId: 'applicant.name.firstname' },
-              { fieldId: 'applicant.name.surname' },
-              { fieldId: 'applicant.dob' }
-            ]
+            data: [{ fieldId: 'applicant.name' }, { fieldId: 'applicant.dob' }]
           }
         }
       ],
