@@ -1,6 +1,6 @@
 {
   "name": "@opencrvs/countryconfig",
-  "version": "1.9.2",
+  "version": "1.9.4",
   "description": "OpenCRVS country configuration for reference data",
   "os": [
     "darwin",
@@ -81,7 +81,8 @@
     "@hapi/h2o2": "^9.1.0",
     "@hapi/hapi": "^20.0.1",
     "@hapi/inert": "^6.0.3",
-    "@opencrvs/toolkit": "1.9.2-rc.b5a5f6b",
+    "@opencrvs/mosip": "1.9.0",
+    "@opencrvs/toolkit": "1.9.4",
     "@types/chalk": "^2.2.0",
     "@types/code": "^4.0.3",
     "@types/csv2json": "^1.4.0",
