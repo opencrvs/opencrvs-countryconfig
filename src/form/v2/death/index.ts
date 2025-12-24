@@ -177,7 +177,7 @@ export const deathEvent = defineConfig({
         defaultMessage: 'Validated',
         description: 'Flag label for validated'
       },
-      requiresAction: true
+      isInternal: false
     }
   ],
   actions: [

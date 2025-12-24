@@ -62,7 +62,7 @@ export const birthEvent = defineConfig({
         defaultMessage: 'Approval required for late registration',
         description: 'Flag label for approval required for late registration'
       },
-      requiresAction: true
+      isInternal: false
     },
     {
       id: 'escalated-to-provincial-registrar',
@@ -71,7 +71,7 @@ export const birthEvent = defineConfig({
         defaultMessage: 'Escalated to Provincial Registrar',
         description: 'Flag label for escalated to provincial registrar'
       },
-      requiresAction: true
+      isInternal: false
     },
     {
       id: 'escalated-to-registrar-general',
@@ -80,7 +80,7 @@ export const birthEvent = defineConfig({
         defaultMessage: 'Escalated to Registrar General',
         description: 'Flag label for escalated to registrar general'
       },
-      requiresAction: true
+      isInternal: false
     },
     {
       id: 'validated',
@@ -89,7 +89,7 @@ export const birthEvent = defineConfig({
         defaultMessage: 'Validated',
         description: 'Flag label for validated'
       },
-      requiresAction: true
+      isInternal: false
     },
     {
       id: 'pending-certified-copy-issuance',
@@ -98,7 +98,11 @@ export const birthEvent = defineConfig({
         defaultMessage: 'Pending certified copy issuance',
         description: 'Flag label for pending certified copy issuance'
       },
-      requiresAction: true
+      isInternal: false
+    },
+    {
+      id: 'late-registration-approved',
+      isInternal: true
     }
   ],
   summary: {
@@ -266,6 +270,10 @@ export const birthEvent = defineConfig({
             user.hasRole('REGISTRATION_AGENT'),
             user.hasRole('LOCAL_REGISTRAR')
           )
+        },
+        {
+          id: 'late-registration-approved',
+          operation: 'remove'
         }
       ]
     },
@@ -354,7 +362,8 @@ export const birthEvent = defineConfig({
       ],
       flags: [
         { id: InherentFlags.REJECTED, operation: 'remove' },
-        { id: 'approval-required-for-late-registration', operation: 'remove' }
+        { id: 'approval-required-for-late-registration', operation: 'remove' },
+        { id: 'late-registration-approved', operation: 'add' }
       ],
       conditionals: [
         {
@@ -656,10 +665,13 @@ export const birthEvent = defineConfig({
       conditionals: [
         {
           type: ConditionalType.ENABLE,
-          conditional: and(
-            not(flag('approval-required-for-late-registration')),
-            not(flag('escalated-to-provincial-registrar')),
-            not(flag('escalated-to-registrar-general'))
+          conditional: or(
+            and(
+              not(flag('approval-required-for-late-registration')),
+              not(flag('escalated-to-provincial-registrar')),
+              not(flag('escalated-to-registrar-general'))
+            ),
+            flag('late-registration-approved')
           )
         }
       ],
