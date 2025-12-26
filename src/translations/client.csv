@@ -2312,6 +2312,8 @@ views.qrReader.scannerDialogSupportingCopy,Supporting copy for the scanner dialo
 views.qrReader.tutorial.cameraCleanliness,Camera cleanliness tutorial,Ensure your camera is clean and functional.,Assurez-vous que votre appareil photo est propre et fonctionnel.
 views.qrReader.tutorial.distance,Distance tutorial,Hold the device steadily 6-12 inches away from the QR code.,Tenez l'appareil régulièrement à 6 à 12 pouces du code QR.
 views.qrReader.tutorial.lightBalance,Light balance tutorial,Ensure the QR code is well-lit and not damaged or blurry.,Assurez-vous que le code QR est bien éclairé et non endommagé ou flou.
+workqueue.late-registration-approval.column.approval-requested,This is the label for the pending approval workqueue column,Approval requested,Approbation demandée
+workqueue.ready-to-print.column.registered,This is the label for the workqueue column,Registered,Enregistré
 workqueues.dateOfEvent,Label for workqueue column: dateOfEvent,Date of Event,Date de l'événement
 workqueues.draft.title,Title of draft workqueue,My drafts,Mes brouillons
 workqueues.escalated.title,Title of escalated workqueue,Escalated,Transmis

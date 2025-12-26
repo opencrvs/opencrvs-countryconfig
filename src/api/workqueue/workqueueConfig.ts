@@ -501,12 +501,24 @@ export const Workqueues = defineWorkqueues([
   },
   {
     slug: 'late-registration-approval-required',
-    icon: 'FileSearch',
+    icon: 'Stamp',
     name: {
       id: 'workqueues.requiresApproval.title',
       defaultMessage: 'Pending approval',
       description: 'Title of Pending approval workqueue'
     },
+    columns: [
+      DATE_OF_EVENT_COLUMN,
+      {
+        label: {
+          defaultMessage: 'Approval requested',
+          description:
+            'This is the label for the pending approval workqueue column',
+          id: 'workqueue.late-registration-approval.column.approval-requested'
+        },
+        value: event.field('updatedAt')
+      }
+    ],
     query: {
       flags: {
         anyOf: ['approval-required-for-late-registration']
