@@ -200,15 +200,26 @@ export const Workqueues = defineWorkqueues([
     slug: 'pending-feedback-registrar-general',
     icon: 'ChatText',
     name: {
-      id: 'workqueues.reviewRequested.title',
-      defaultMessage: 'Review requested',
-      description: 'Title of review requested workqueue'
+      id: 'workqueues.pendingFeedback.title',
+      defaultMessage: 'Pending feedback',
+      description: 'Title of pending feedback workqueue'
     },
     query: {
       flags: {
         anyOf: ['escalated-to-registrar-general']
       }
     },
+    columns: [
+      DATE_OF_EVENT_COLUMN,
+      {
+        label: {
+          id: 'workqueues.reviewRequested.title',
+          defaultMessage: 'Review requested',
+          description: 'Title of review requested workqueue'
+        },
+        value: event.field('updatedAt')
+      }
+    ],
     actions: [
       {
         type: 'DEFAULT',
@@ -220,9 +231,9 @@ export const Workqueues = defineWorkqueues([
     slug: 'pending-feedback-provincinal-registrar',
     icon: 'ChatText',
     name: {
-      id: 'workqueues.reviewRequested.title',
-      defaultMessage: 'Review requested',
-      description: 'Title of review requested workqueue'
+      id: 'workqueues.pendingFeedback.title',
+      defaultMessage: 'Pending feedback',
+      description: 'Title of pending feedback workqueue'
     },
     query: {
       flags: {
@@ -230,6 +241,17 @@ export const Workqueues = defineWorkqueues([
       },
       updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
     },
+    columns: [
+      DATE_OF_EVENT_COLUMN,
+      {
+        label: {
+          id: 'workqueues.reviewRequested.title',
+          defaultMessage: 'Review requested',
+          description: 'Title of review requested workqueue'
+        },
+        value: event.field('updatedAt')
+      }
+    ],
     actions: [
       {
         type: 'DEFAULT',
@@ -501,12 +523,24 @@ export const Workqueues = defineWorkqueues([
   },
   {
     slug: 'late-registration-approval-required',
-    icon: 'FileSearch',
+    icon: 'Stamp',
     name: {
       id: 'workqueues.requiresApproval.title',
       defaultMessage: 'Pending approval',
       description: 'Title of Pending approval workqueue'
     },
+    columns: [
+      DATE_OF_EVENT_COLUMN,
+      {
+        label: {
+          defaultMessage: 'Approval requested',
+          description:
+            'This is the label for the pending approval workqueue column',
+          id: 'workqueue.late-registration-approval.column.approval-requested'
+        },
+        value: event.field('updatedAt')
+      }
+    ],
     query: {
       flags: {
         anyOf: ['approval-required-for-late-registration']
