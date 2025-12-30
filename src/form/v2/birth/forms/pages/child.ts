@@ -198,6 +198,12 @@ export const child = defineFormPage({
       type: FieldType.NAME,
       required: true,
       configuration: farajalandNameConfig,
+      // defaultValue: user('name'),
+      // {
+      //   // firstname:
+      //   // surname: '$user.name',
+      //   // middlename: '$user.name'
+      // },
       hideLabel: true,
       label: {
         defaultMessage: "Child's name",
@@ -352,7 +358,6 @@ export const child = defineFormPage({
       type: FieldType.ADDRESS,
       required: true,
       analytics: true,
-
       secured: true,
       hideLabel: true,
       label: {

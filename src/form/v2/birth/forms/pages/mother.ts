@@ -89,6 +89,7 @@ export const mother = defineFormPage({
       id: 'mother.reason',
       type: FieldType.TEXT,
       required: true,
+      defaultValue: user('device'),
       label: {
         defaultMessage: 'Reason',
         description: 'This is the label for the field',
