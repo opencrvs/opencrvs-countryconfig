@@ -184,6 +184,9 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
           type: 'FILE',
           required: false,
           uncorrectable: true,
+          configuration: {
+            maxImageSize: { targetSize: { height: 600, width: 600 } }
+          },
           label: {
             defaultMessage: "Applicant's profile picture",
             description: 'This is the label for the field',
