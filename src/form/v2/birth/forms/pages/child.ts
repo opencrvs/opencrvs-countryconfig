@@ -408,27 +408,6 @@ export const child = defineFormPage({
       }
     },
     {
-      id: 'child.birthLocationId',
-      type: FieldType.ALPHA_HIDDEN,
-      required: false,
-      label: {
-        defaultMessage: 'Health Institution',
-        description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.child.field.birthLocation.label'
-      },
-      parent: [
-        field('child.placeOfBirth'),
-        field('child.birthLocation'),
-        field('child.birthLocation.privateHome'),
-        field('child.birthLocation.other')
-      ],
-      value: [
-        field('child.birthLocation'),
-        field('child.birthLocation.privateHome').get('administrativeArea'),
-        field('child.birthLocation.other').get('administrativeArea')
-      ]
-    },
-    {
       id: 'child.divider2',
       type: FieldType.DIVIDER,
       label: emptyMessage

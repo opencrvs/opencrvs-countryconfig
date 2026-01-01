@@ -631,6 +631,7 @@ export async function selectDeclarationAction(
     | 'Delete declaration'
     | 'Save & Exit'
     | 'Declare with edits'
+    | 'Notify with edits'
     | 'Register with edits',
   confirm = true
 ) {

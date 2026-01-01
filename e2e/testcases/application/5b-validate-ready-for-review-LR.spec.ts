@@ -82,7 +82,7 @@ test.describe
     await ensureAssigned(page)
     await selectAction(page, 'Register')
     await expect(
-      page.getByRole('heading', { name: 'Register', exact: true })
+      page.getByRole('heading', { name: 'Register?', exact: true })
     ).toBeVisible()
   })
 

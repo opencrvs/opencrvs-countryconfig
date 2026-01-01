@@ -13,10 +13,13 @@ import {
   ConditionalType,
   defineConfig,
   field,
+  or,
+  user,
+  and,
+  status,
   not,
   flag,
-  or,
-  user
+  InherentFlags
 } from '@opencrvs/toolkit/events'
 import {
   DEATH_DECLARATION_REVIEW,
@@ -38,7 +41,6 @@ export const deathEvent = defineConfig({
     id: 'event.death.label'
   },
   dateOfEvent: field('eventDetails.date'),
-  placeOfEvent: field('eventDetails.deathLocationId'),
   title: {
     defaultMessage: '{deceased.name.firstname} {deceased.name.surname}',
     description: 'This is the title of the summary',
@@ -50,17 +52,6 @@ export const deathEvent = defineConfig({
     description:
       'This is a fallback title if actual title resolves to empty string'
   },
-  flags: [
-    {
-      id: 'validated',
-      label: {
-        id: 'event.death.flag.validated',
-        defaultMessage: 'Validated',
-        description: 'Flag label for validated'
-      },
-      requiresAction: true
-    }
-  ],
   summary: {
     fields: [
       {
@@ -178,6 +169,17 @@ export const deathEvent = defineConfig({
       }
     ]
   },
+  flags: [
+    {
+      id: 'validated',
+      label: {
+        id: 'event.birth.flag.validated',
+        defaultMessage: 'Validated',
+        description: 'Flag label for validated'
+      },
+      requiresAction: true
+    }
+  ],
   actions: [
     {
       type: ActionType.READ,
@@ -220,26 +222,60 @@ export const deathEvent = defineConfig({
       ]
     },
     {
-      type: ActionType.VALIDATE,
+      type: ActionType.EDIT,
       label: {
-        defaultMessage: 'Validate',
+        defaultMessage: 'Edit',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'event.death.action.validate.label'
+        id: 'actions.edit'
+      },
+      flags: [{ id: 'validated', operation: 'remove' }]
+    },
+    {
+      type: ActionType.CUSTOM,
+      customActionType: 'VALIDATE_DECLARATION',
+      icon: 'Stamp',
+      label: {
+        defaultMessage: 'Validate declaration',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'event.death.custom.action.validate-declaration.label'
+      },
+      supportingCopy: {
+        defaultMessage:
+          'Approving this declaration confirms it as legally accepted and eligible for registration.',
+        description:
+          'This is the supporting copy for the Validate declaration -action',
+        id: 'event.death.custom.action.validate-declaration.supportingCopy'
       },
       conditionals: [
-        { type: ConditionalType.SHOW, conditional: not(flag('validated')) }
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(status('DECLARED'), not(flag('validated')))
+        },
+        {
+          type: ConditionalType.ENABLE,
+          conditional: not(flag(InherentFlags.POTENTIAL_DUPLICATE))
+        }
       ],
       flags: [{ id: 'validated', operation: 'add' }],
-      deduplication: {
-        id: 'death-deduplication',
-        label: {
-          defaultMessage: 'Detect duplicate',
-          description:
-            'This is shown as the action name anywhere the user can trigger the action from',
-          id: 'event.death.action.detect-duplicate.label'
-        },
-        query: dedupConfig
+      form: [
+        {
+          id: 'comments',
+          type: 'TEXTAREA',
+          label: {
+            defaultMessage: 'Comments',
+            description:
+              'This is the label for the comments field for the validate declaration action',
+            id: 'event.death.custom.action.validate-declaration.field.comments.label'
+          }
+        }
+      ],
+      auditHistoryLabel: {
+        defaultMessage: 'Validated',
+        description:
+          'The label to show in audit history for the validate action',
+        id: 'event.death.custom.action.validate-declaration.audit-history-label'
       }
     },
     {
@@ -249,8 +285,7 @@ export const deathEvent = defineConfig({
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.death.action.reject.label'
-      },
-      flags: [{ id: 'validated', operation: 'remove' }]
+      }
     },
     {
       type: ActionType.REGISTER,
