@@ -29,7 +29,7 @@ export const Workqueues = defineWorkqueues([
     query: {},
     actions: [
       {
-        type: 'VALIDATE',
+        type: 'DECLARE',
         conditionals: []
       }
     ]
@@ -177,6 +177,24 @@ export const Workqueues = defineWorkqueues([
       defaultMessage: 'No notifications',
       description: 'Empty message for notifications workqueue'
     }
+  },
+  {
+    slug: 'escalated',
+    icon: 'FileArrowUp',
+    name: {
+      id: 'workqueues.escalated.title',
+      defaultMessage: 'Escalated',
+      description: 'Title of escalated workqueue'
+    },
+    query: {
+      flags: {
+        anyOf: [
+          'escalated-to-registrar-general',
+          'escalated-to-provincial-registrar'
+        ]
+      }
+    },
+    actions: []
   },
   {
     slug: 'pending-feedback-registrar-general',
@@ -413,17 +431,12 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of sent for approval workqueue'
     },
     query: {
-      type: 'or',
-      clauses: [
-        {
-          updatedBy: { type: 'exact', term: user('id') },
-          flags: { noneOf: [InherentFlags.REJECTED] }
-        },
-        {
-          flags: { anyOf: [InherentFlags.CORRECTION_REQUESTED, 'validated'] },
-          updatedBy: { type: 'exact', term: user('id') }
-        }
-      ]
+      status: { type: 'anyOf', terms: ['DECLARED', 'NOTIFIED', 'REGISTERED'] },
+      updatedBy: { type: 'exact', term: user('id') },
+      flags: {
+        noneOf: [InherentFlags.REJECTED],
+        anyOf: [InherentFlags.CORRECTION_REQUESTED, 'validated']
+      }
     },
     actions: [],
     columns: [

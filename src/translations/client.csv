@@ -876,6 +876,10 @@ event.birth.action.request-correction.label,This is shown as the action name any
 event.birth.action.validate.label,This is shown as the action name anywhere the user can trigger the action from,Validate,Valider
 event.birth.custom.action.approve.field.collector.label,Label for collector field,Collector,le collectionneur
 event.birth.custom.action.approve.field.notes.label,This is the label for the field for a custom action,Comments,Commentaires
+event.birth.custom.action.validate-declaration.audit-history-label,The label to show in audit history for the validate action,Validated,Validé
+event.birth.custom.action.validate-declaration.field.comments.label,This is the label for the comments field for the validate declaration action,Comments,Commentaires
+event.birth.custom.action.validate-declaration.label,This is shown as the action name anywhere the user can trigger the action from,Validate declaration,Valider la déclaration
+event.birth.custom.action.validate-declaration.supportingCopy,This is the supporting copy for the Validate declaration -action,Approving this declaration confirms it as legally accepted and eligible for registration.,L'approbation de cette déclaration confirme qu'elle est légalement acceptée et éligible à l'enregistrement.
 event.birth.flag.pending-certified-copy-issuance,Flag label for pending certified copy issuance,Pending certified copy issuance,En attente de la délivrance d'une copie certifiée conforme
 event.birth.label,This is what this event is referred as in the system,Birth,Naissance
 event.birth.summary.child.dob.empty,Label for date of birth not available,No date of birth,Pas de date de naissance
@@ -2310,6 +2314,7 @@ views.qrReader.tutorial.distance,Distance tutorial,Hold the device steadily 6-12
 views.qrReader.tutorial.lightBalance,Light balance tutorial,Ensure the QR code is well-lit and not damaged or blurry.,Assurez-vous que le code QR est bien éclairé et non endommagé ou flou.
 workqueues.dateOfEvent,Label for workqueue column: dateOfEvent,Date of Event,Date de l'événement
 workqueues.draft.title,Title of draft workqueue,My drafts,Mes brouillons
+workqueues.escalated.title,Title of escalated workqueue,Escalated,Transmis
 workqueues.outbox.title,Title of outbox workqueue,Outbox,Boîte d'envoi
 workqueues.pendingCertification.emptyMessage,Empty message for pending certification workqueue,No pending certification records,Aucun dossier de certification en attente
 workqueues.pendingCertification.title,Title of pending certification workqueue,Pending Certification,En attente de certification

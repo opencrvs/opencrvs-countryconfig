@@ -18,8 +18,8 @@ import {
   flag,
   InherentFlags,
   not,
-  status,
   or,
+  status,
   user
 } from '@opencrvs/toolkit/events'
 import {
@@ -43,7 +43,6 @@ export const birthEvent = defineConfig({
     id: 'event.birth.label'
   },
   dateOfEvent: field('child.dob'),
-  placeOfEvent: field('child.birthLocationId'),
   title: {
     defaultMessage: '{child.name.firstname} {child.name.surname}',
     description: 'This is the title of the summary',
@@ -271,6 +270,68 @@ export const birthEvent = defineConfig({
       ]
     },
     {
+      type: ActionType.EDIT,
+      label: {
+        defaultMessage: 'Edit',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'actions.edit'
+      },
+      flags: [
+        { id: 'validated', operation: 'remove' },
+        { id: 'approval-required-for-late-registration', operation: 'remove' },
+        { id: 'escalated-to-provincial-registrar', operation: 'remove' },
+        { id: 'escalated-to-registrar-general', operation: 'remove' }
+      ]
+    },
+    {
+      type: ActionType.CUSTOM,
+      customActionType: 'VALIDATE_DECLARATION',
+      icon: 'Stamp',
+      label: {
+        defaultMessage: 'Validate declaration',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'event.birth.custom.action.validate-declaration.label'
+      },
+      supportingCopy: {
+        defaultMessage:
+          'Approving this declaration confirms it as legally accepted and eligible for registration.',
+        description:
+          'This is the supporting copy for the Validate declaration -action',
+        id: 'event.birth.custom.action.validate-declaration.supportingCopy'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(status('DECLARED'), not(flag('validated')))
+        },
+        {
+          type: ConditionalType.ENABLE,
+          conditional: not(flag(InherentFlags.POTENTIAL_DUPLICATE))
+        }
+      ],
+      flags: [{ id: 'validated', operation: 'add' }],
+      form: [
+        {
+          id: 'comments',
+          type: 'TEXTAREA',
+          label: {
+            defaultMessage: 'Comments',
+            description:
+              'This is the label for the comments field for the validate declaration action',
+            id: 'event.birth.custom.action.validate-declaration.field.comments.label'
+          }
+        }
+      ],
+      auditHistoryLabel: {
+        defaultMessage: 'Validated',
+        description:
+          'The label to show in audit history for the validate action',
+        id: 'event.birth.custom.action.validate-declaration.audit-history-label'
+      }
+    },
+    {
       type: ActionType.CUSTOM,
       customActionType: 'APPROVE_DECLARATION',
       icon: 'Stamp',
@@ -313,7 +374,7 @@ export const birthEvent = defineConfig({
       },
       supportingCopy: {
         defaultMessage:
-          'This birth has been registered late. You are now approving it for further validation and registration.',
+          'Approving this declaration confirms it as legally accepted and eligible for registration.',
         description: 'This is the confirmation text for the approve action',
         id: 'event.birth.action.approve.confirmationText'
       }
@@ -327,6 +388,13 @@ export const birthEvent = defineConfig({
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.birth.action.issue-certified-copy.label'
+      },
+      supportingCopy: {
+        defaultMessage:
+          'Issuing a certified copy confirms that an official document is being released.',
+        description:
+          'This is the confirmation text for the issue certified copy action',
+        id: 'event.birth.action.issue-certified-copy.supportingCopy'
       },
       form: [
         {
@@ -391,6 +459,12 @@ export const birthEvent = defineConfig({
         description:
           'This is shown when the escalate action can be triggered from the action from',
         id: 'event.birth.action.escalate.label'
+      },
+      supportingCopy: {
+        defaultMessage:
+          'Escalating this declaration will forward it to the chosen authority for further review and decision.',
+        description: 'This is the confirmation text for the escalate action',
+        id: 'event.birth.action.escalate.supportingCopy'
       },
       conditionals: [
         {
@@ -468,6 +542,13 @@ export const birthEvent = defineConfig({
       type: ActionType.CUSTOM,
       customActionType: 'PROVINCIAL_REGISTER_FEEDBACK',
       icon: 'ChatText',
+      supportingCopy: {
+        defaultMessage:
+          'Your feedback will be recorded and shared with relevant officers to guide further action on this declaration.',
+        description:
+          'This is the confirmation text for the provincial registrar feedback action',
+        id: 'event.birth.action.provincial-registrar-feedback.supportingCopy'
+      },
       label: {
         defaultMessage: 'Provincial registrar feedback',
         description:
@@ -515,6 +596,13 @@ export const birthEvent = defineConfig({
           'This is shown when the registrar general feedback can be triggered from the action from',
         id: 'event.birth.action.registrar-general-feedback.label'
       },
+      supportingCopy: {
+        defaultMessage:
+          'Your feedback will be officially recorded and may influence the final decision on the declaration.',
+        description:
+          'This is the confirmation text for the registrar general feedback action',
+        id: 'event.birth.action.registrar-general-feedback.supportingCopy'
+      },
       form: [
         {
           id: 'notes',
@@ -547,33 +635,6 @@ export const birthEvent = defineConfig({
       }
     },
     {
-      type: ActionType.VALIDATE,
-      label: {
-        defaultMessage: 'Validate',
-        description:
-          'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'event.birth.action.validate.label'
-      },
-      conditionals: [
-        {
-          type: ConditionalType.ENABLE,
-          conditional: not(flag('approval-required-for-late-registration'))
-        },
-        { type: ConditionalType.SHOW, conditional: not(flag('validated')) }
-      ],
-      flags: [{ id: 'validated', operation: 'add' }],
-      deduplication: {
-        id: 'birth-deduplication',
-        label: {
-          defaultMessage: 'Detect duplicate',
-          description:
-            'This is shown as the action name anywhere the user can trigger the action from',
-          id: 'event.birth.action.detect-duplicate.label'
-        },
-        query: dedupConfig
-      }
-    },
-    {
       type: ActionType.REJECT,
       label: {
         defaultMessage: 'Reject',
@@ -591,10 +652,15 @@ export const birthEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.birth.action.register.label'
       },
+      flags: [{ id: 'validated', operation: 'remove' }],
       conditionals: [
         {
           type: ConditionalType.ENABLE,
-          conditional: not(flag('approval-required-for-late-registration'))
+          conditional: and(
+            not(flag('approval-required-for-late-registration')),
+            not(flag('escalated-to-provincial-registrar')),
+            not(flag('escalated-to-registrar-general'))
+          )
         }
       ],
       deduplication: {
