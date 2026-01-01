@@ -194,6 +194,35 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
           }
         },
         {
+          id: 'applicant.idImage',
+          type: 'FILE_WITH_OPTIONS',
+          required: false,
+          uncorrectable: true,
+          options: [
+            {
+              label: {
+                id: 'event.tennis-club-membership.action.declare.form.section.who.field.idImage.option.front.label',
+                defaultMessage: 'Upload front side of ID',
+                description: 'Option to upload front side of ID'
+              },
+              value: 'ID_FRONT'
+            },
+            {
+              label: {
+                id: 'event.tennis-club-membership.action.declare.form.section.who.field.idImage.option.back.label',
+                defaultMessage: 'Upload back side of ID',
+                description: 'Option to upload back side of ID'
+              },
+              value: 'ID_BACK'
+            }
+          ],
+          label: {
+            defaultMessage: "Image of Applicant's ID",
+            description: 'This is the label for the field',
+            id: 'event.tennis-club-membership.action.declare.form.section.who.field.idImage.label'
+          }
+        },
+        {
           id: 'applicant.image.label',
           type: 'TEXT',
           required: false,
