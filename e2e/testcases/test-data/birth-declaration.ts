@@ -44,10 +44,11 @@ function getInformantDetails(
 }
 
 export async function getPlaceOfBirth(
-  type: 'PRIVATE_HOME' | 'HEALTH_FACILITY'
+  type: 'PRIVATE_HOME' | 'HEALTH_FACILITY',
+  token: string
 ) {
   if (type === 'HEALTH_FACILITY') {
-    const locations = await getAllLocations('HEALTH_FACILITY')
+    const locations = await getAllLocations('HEALTH_FACILITY', token)
     const locationId = getLocationIdByName(
       locations,
       'Ibombo Rural Health Centre'
@@ -60,7 +61,7 @@ export async function getPlaceOfBirth(
   }
 
   if (type === 'PRIVATE_HOME') {
-    const locations = await getAllLocations('ADMIN_STRUCTURE')
+    const locations = await getAllLocations('ADMIN_STRUCTURE', token)
     const province = getLocationIdByName(locations, 'Central')
     const district = getLocationIdByName(locations, 'Ibombo')
 
@@ -84,13 +85,15 @@ export async function getPlaceOfBirth(
 export async function getDeclaration({
   informantRelation = 'MOTHER',
   partialDeclaration = {},
-  placeOfBirthType = 'PRIVATE_HOME'
+  placeOfBirthType = 'PRIVATE_HOME',
+  token
 }: {
   informantRelation?: InformantRelation
   partialDeclaration?: Record<string, any>
   placeOfBirthType?: 'PRIVATE_HOME' | 'HEALTH_FACILITY'
+  token: string
 }) {
-  const locations = await getAllLocations('ADMIN_STRUCTURE')
+  const locations = await getAllLocations('ADMIN_STRUCTURE', token)
   const province = getLocationIdByName(locations, 'Central')
   const district = getLocationIdByName(locations, 'Ibombo')
 
@@ -125,7 +128,7 @@ export async function getDeclaration({
     'child.dob': new Date(Date.now() - 60 * 60 * 24 * 1000)
       .toISOString()
       .split('T')[0], // yesterday
-    ...(await getPlaceOfBirth(placeOfBirthType)),
+    ...(await getPlaceOfBirth(placeOfBirthType, token)),
     ...getInformantDetails(informantRelation, district)
   }
 
@@ -154,7 +157,8 @@ export async function createDeclaration(
   const declaration =
     dec ??
     (await getDeclaration({
-      placeOfBirthType
+      placeOfBirthType,
+      token
     }))
 
   const client = createClient(GATEWAY_HOST + '/events', `Bearer ${token}`)

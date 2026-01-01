@@ -19,7 +19,7 @@ test.describe.serial('Advanced Search - Mobile', () => {
       CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
     )
 
-    const locations = await getAllLocations('ADMIN_STRUCTURE')
+    const locations = await getAllLocations('ADMIN_STRUCTURE', token)
     province = getLocationIdByName(locations, 'Central')!
     district = getLocationIdByName(locations, 'Ibombo')!
 

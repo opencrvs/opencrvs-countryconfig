@@ -42,7 +42,7 @@ test.describe.serial('Correct record - Change ages', () => {
       CREDENTIALS.NATIONAL_REGISTRAR.PASSWORD
     )
 
-    const locations = await getAllLocations('ADMIN_STRUCTURE')
+    const locations = await getAllLocations('ADMIN_STRUCTURE', token)
     const province = getLocationIdByName(locations, 'Central')
     const district = getLocationIdByName(locations, 'Ibombo')
 
@@ -81,7 +81,7 @@ test.describe.serial('Correct record - Change ages', () => {
         age: Number.parseInt(motherAgeBefore),
         asOfDateRef: 'child.dob'
       },
-      ...(await getPlaceOfBirth('PRIVATE_HOME')),
+      ...(await getPlaceOfBirth('PRIVATE_HOME', token)),
       'mother.name': {
         firstname: faker.person.firstName(),
         surname: faker.person.lastName()
