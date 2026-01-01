@@ -105,6 +105,11 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
           },
           hideLabel: true,
           required: true,
+          defaultValue: {
+            firstname: user('firstname'),
+            middlename: user('middlename'),
+            surname: user('surname')
+          },
           validation: [
             {
               validator: field('applicant.name').object({
