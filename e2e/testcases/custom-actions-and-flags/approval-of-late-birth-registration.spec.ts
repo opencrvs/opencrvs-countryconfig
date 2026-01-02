@@ -13,13 +13,13 @@ import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../constants'
 import { ensureAssigned, ensureOutboxIsEmpty, selectAction } from '../../utils'
 import { selectDeclarationAction } from '../../helpers'
-import { format, subYears, subMonths, subDays } from 'date-fns'
+import { format, subDays } from 'date-fns'
 
 const recentDate = subDays(new Date(), 2)
 const recentMonth = format(recentDate, 'MM')
 const recentYear = format(recentDate, 'yyyy')
 
-const lateRegDate = subMonths(subYears(recentDate, 1), 6)
+const lateRegDate = subDays(recentDate, 500)
 const day = format(recentDate, 'dd')
 const lateRegMonth = format(lateRegDate, 'MM')
 const lateRegYear = format(lateRegDate, 'yyyy')
