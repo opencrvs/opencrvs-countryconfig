@@ -119,6 +119,13 @@
         </text>
         <image x="312" y="300" height="50" width="100" xlink:href="{{ $lookup $declaration "applicant.idImage.ID_FRONT" }}" />
         <image x="422" y="300" height="50" width="100" xlink:href="{{ $lookup $declaration "applicant.idImage.ID_BACK" }}" />
+        {{else}} {{#if ($actions "PRINT_CERTIFICATE") }}
+        <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+        font-size="8" font-weight="bold" letter-spacing="0em">
+          <tspan x="90" y="327.208">Collector's signed affidavit</tspan>
+        </text>
+        <image x="312" y="300" height="50" width="100" xlink:href="{{ $lookup ($action "PRINT_CERTIFICATE") "annotation.collector.OTHER.signedAffidavit" }}" />
+        {{/if}}
         {{/if}}
         {{/if}}
         <mask id="mask2_5_2" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="312" y="278"
