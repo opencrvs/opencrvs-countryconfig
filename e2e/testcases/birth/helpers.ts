@@ -6,7 +6,7 @@ import { ensureOutboxIsEmpty } from '../../utils'
 import { getRowByTitle } from '../print-certificate/birth/helpers'
 import { SAFE_OUTBOX_TIMEOUT_MS } from '../../constants'
 import { GATEWAY_HOST } from '../../constants'
-import fetch from 'node-fetch'
+import { createClient } from '@opencrvs/toolkit/api'
 
 export const REQUIRED_VALIDATION_ERROR = 'Required'
 export const NAME_VALIDATION_ERROR =
@@ -113,13 +113,14 @@ export const assignFromWorkqueue = async (page: Page, name: string) => {
 }
 
 export async function getAllLocations(
-  type: 'ADMIN_STRUCTURE' | 'HEALTH_FACILITY' | 'CRVS_OFFICE'
+  type: 'ADMIN_STRUCTURE' | 'HEALTH_FACILITY' | 'CRVS_OFFICE',
+  token: string
 ) {
-  const locations = (await fetch(
-    `${GATEWAY_HOST}/location?type=${type}&_count=0`
-  ).then((res) => res.json())) as fhir.Bundle
-
-  return locations.entry!.map((entry) => entry.resource as fhir.Location)
+  const client = createClient(GATEWAY_HOST + '/events', `Bearer ${token}`)
+  const locations = await client.locations.list.query({
+    locationType: type
+  })
+  return locations
 }
 
 export function getLocationIdByName(locations: fhir.Location[], name: string) {
