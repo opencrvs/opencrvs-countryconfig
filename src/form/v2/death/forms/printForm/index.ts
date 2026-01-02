@@ -34,7 +34,6 @@ export const DEATH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
     {
       id: 'collector',
       type: PageTypes.enum.FORM,
-      requireCompletionToContinue: true,
       title: {
         id: 'event.death.action.certificate.form.section.who.title',
         defaultMessage: 'Certify record',
@@ -45,7 +44,6 @@ export const DEATH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
     {
       id: 'collector.identity.verify',
       type: PageTypes.enum.VERIFICATION,
-      requireCompletionToContinue: true,
       title: {
         id: 'event.death.action.print.verifyIdentity',
         defaultMessage: 'Verify their identity',
@@ -94,7 +92,6 @@ export const DEATH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
     {
       id: 'collector.collect.payment',
       type: PageTypes.enum.FORM,
-      requireCompletionToContinue: true,
       title: {
         id: 'event.birth.action.print.collectPayment',
         defaultMessage: 'Collect Payment',

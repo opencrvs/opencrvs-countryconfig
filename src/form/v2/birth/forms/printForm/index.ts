@@ -33,7 +33,6 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
     {
       id: 'collector',
       type: PageTypes.enum.FORM,
-      requireCompletionToContinue: true,
       title: {
         id: 'event.birth.action.certificate.form.section.who.title',
         defaultMessage: 'Certify record',
@@ -44,7 +43,6 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
     {
       id: 'collector.identity.verify',
       type: PageTypes.enum.VERIFICATION,
-      requireCompletionToContinue: true,
       title: {
         id: 'event.birth.action.print.verifyIdentity',
         defaultMessage: 'Verify their identity',
@@ -90,7 +88,6 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
     {
       id: 'collector.collect.payment',
       type: PageTypes.enum.FORM,
-      requireCompletionToContinue: true,
       title: {
         id: 'event.birth.action.print.collectPayment',
         defaultMessage: 'Collect Payment',
