@@ -330,6 +330,11 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
           type: FieldType.NAME,
           required: true,
           parent: field('recommender.search'),
+          defaultValue: {
+            firstname: user('firstname'),
+            middlename: user('middlename'),
+            surname: user('surname')
+          },
           value: field('recommender.search').getByPath([
             'data',
             'firstResult',
@@ -372,6 +377,7 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
         {
           id: 'recommender2.id',
           type: 'TEXT',
+          defaultValue: user('fullHonorificName'),
           conditionals: [
             {
               type: ConditionalType.SHOW,
@@ -387,6 +393,7 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
         {
           id: 'recommender3.id',
           type: 'TEXT',
+          defaultValue: user('device'),
           conditionals: [
             {
               type: ConditionalType.SHOW,
@@ -402,6 +409,7 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
         {
           id: 'recommender4.id',
           type: 'TEXT',
+          defaultValue: user('role'),
           conditionals: [
             {
               type: ConditionalType.SHOW,
