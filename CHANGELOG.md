@@ -15,12 +15,6 @@
 
 The default values for these variables have been added to the `docker-compose.deploy.yml` file. They should work out of the box for most deployments, but please ensure to set them correctly if you have a custom MongoDB setup.
 
-## 1.9.3
-
-### New features
-
-- Introduced page-level `requireCompletionToContinue` in birth and death event config, to enforce full completion before moving to the next page, and updated navigation logic accordingly.
-
 ## 1.9.2
 
 ### New features
