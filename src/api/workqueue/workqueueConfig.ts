@@ -179,6 +179,24 @@ export const Workqueues = defineWorkqueues([
     }
   },
   {
+    slug: 'escalated',
+    icon: 'FileArrowUp',
+    name: {
+      id: 'workqueues.escalated.title',
+      defaultMessage: 'Escalated',
+      description: 'Title of escalated workqueue'
+    },
+    query: {
+      flags: {
+        anyOf: [
+          'escalated-to-registrar-general',
+          'escalated-to-provincial-registrar'
+        ]
+      }
+    },
+    actions: []
+  },
+  {
     slug: 'pending-feedback-registrar-general',
     icon: 'ChatText',
     name: {

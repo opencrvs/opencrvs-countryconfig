@@ -41,7 +41,6 @@ export const deathEvent = defineConfig({
     id: 'event.death.label'
   },
   dateOfEvent: field('eventDetails.date'),
-  placeOfEvent: field('eventDetails.deathLocationId'),
   title: {
     defaultMessage: '{deceased.name.firstname} {deceased.name.surname}',
     description: 'This is the title of the summary',
@@ -223,6 +222,16 @@ export const deathEvent = defineConfig({
       ]
     },
     {
+      type: ActionType.EDIT,
+      label: {
+        defaultMessage: 'Edit',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'actions.edit'
+      },
+      flags: [{ id: 'validated', operation: 'remove' }]
+    },
+    {
       type: ActionType.CUSTOM,
       customActionType: 'VALIDATE_DECLARATION',
       icon: 'Stamp',
@@ -230,7 +239,14 @@ export const deathEvent = defineConfig({
         defaultMessage: 'Validate declaration',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'event.birth.custom.action.validate-declaration.label'
+        id: 'event.death.custom.action.validate-declaration.label'
+      },
+      supportingCopy: {
+        defaultMessage:
+          'Approving this declaration confirms it as legally accepted and eligible for registration.',
+        description:
+          'This is the supporting copy for the Validate declaration -action',
+        id: 'event.death.custom.action.validate-declaration.supportingCopy'
       },
       conditionals: [
         {
@@ -251,7 +267,7 @@ export const deathEvent = defineConfig({
             defaultMessage: 'Comments',
             description:
               'This is the label for the comments field for the validate declaration action',
-            id: 'event.birth.custom.action.validate-declaration.field.comments.label'
+            id: 'event.death.custom.action.validate-declaration.field.comments.label'
           }
         }
       ],
@@ -259,7 +275,7 @@ export const deathEvent = defineConfig({
         defaultMessage: 'Validated',
         description:
           'The label to show in audit history for the validate action',
-        id: 'event.birth.custom.action.validate-declaration.audit-history-label'
+        id: 'event.death.custom.action.validate-declaration.audit-history-label'
       }
     },
     {
