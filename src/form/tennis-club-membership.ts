@@ -355,6 +355,55 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
           }
         },
         {
+          id: 'recommender.device',
+          type: 'TEXT',
+          required: true,
+          defaultValue: user('device'),
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: field('recommender.none').isFalsy()
+            }
+          ],
+          label: {
+            defaultMessage: "Recommender's device",
+            description: 'This is the label for the field',
+            id: 'event.tennis-club-membership.action.declare.form.section.recommender.device'
+          }
+        },
+        {
+          id: 'recommender.fullHonorificName',
+          type: 'TEXT',
+          defaultValue: user('fullHonorificName'),
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: field('recommender.none').isFalsy()
+            }
+          ],
+          label: {
+            defaultMessage: 'Recommender full honorific name',
+            description: 'This is the label for the field',
+            id: 'event.tennis-club-membership.action.declare.form.section.recommender2.fullHonorificName'
+          }
+        },
+        {
+          id: 'recommender.role',
+          type: 'TEXT',
+          defaultValue: user('role'),
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: field('recommender.none').isFalsy()
+            }
+          ],
+          label: {
+            defaultMessage: 'Recommender role',
+            description: 'This is the label for the field',
+            id: 'event.tennis-club-membership.action.declare.form.section.recommender.role'
+          }
+        },
+        {
           id: 'recommender.id',
           type: 'TEXT',
           required: true,
@@ -377,7 +426,6 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
         {
           id: 'recommender2.id',
           type: 'TEXT',
-          defaultValue: user('fullHonorificName'),
           conditionals: [
             {
               type: ConditionalType.SHOW,
@@ -393,7 +441,6 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
         {
           id: 'recommender3.id',
           type: 'TEXT',
-          defaultValue: user('device'),
           conditionals: [
             {
               type: ConditionalType.SHOW,
@@ -409,7 +456,6 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
         {
           id: 'recommender4.id',
           type: 'TEXT',
-          defaultValue: user('role'),
           conditionals: [
             {
               type: ConditionalType.SHOW,
