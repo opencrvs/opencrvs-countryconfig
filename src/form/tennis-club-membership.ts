@@ -105,6 +105,11 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
           },
           hideLabel: true,
           required: true,
+          defaultValue: {
+            firstname: user('firstname'),
+            middlename: user('middlename'),
+            surname: user('surname')
+          },
           validation: [
             {
               validator: field('applicant.name').object({
@@ -325,6 +330,11 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
           type: FieldType.NAME,
           required: true,
           parent: field('recommender.search'),
+          defaultValue: {
+            firstname: user('firstname'),
+            middlename: user('middlename'),
+            surname: user('surname')
+          },
           value: field('recommender.search').getByPath([
             'data',
             'firstResult',
@@ -342,6 +352,55 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
             defaultMessage: "Recommender's name",
             description: 'This is the label for the field',
             id: 'event.tennis-club-membership.action.declare.form.section.recommender.field.firstname.label'
+          }
+        },
+        {
+          id: 'recommender.device',
+          type: 'TEXT',
+          required: true,
+          defaultValue: user('device'),
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: field('recommender.none').isFalsy()
+            }
+          ],
+          label: {
+            defaultMessage: "Recommender's device",
+            description: 'This is the label for the field',
+            id: 'event.tennis-club-membership.action.declare.form.section.recommender.device'
+          }
+        },
+        {
+          id: 'recommender.fullHonorificName',
+          type: 'TEXT',
+          defaultValue: user('fullHonorificName'),
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: field('recommender.none').isFalsy()
+            }
+          ],
+          label: {
+            defaultMessage: 'Recommender full honorific name',
+            description: 'This is the label for the field',
+            id: 'event.tennis-club-membership.action.declare.form.section.recommender2.fullHonorificName'
+          }
+        },
+        {
+          id: 'recommender.role',
+          type: 'TEXT',
+          defaultValue: user('role'),
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: field('recommender.none').isFalsy()
+            }
+          ],
+          label: {
+            defaultMessage: 'Recommender role',
+            description: 'This is the label for the field',
+            id: 'event.tennis-club-membership.action.declare.form.section.recommender.role'
           }
         },
         {

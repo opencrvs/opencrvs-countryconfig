@@ -60,7 +60,6 @@ import {
   getCustomEventsHandler,
   onAnyActionHandler
 } from '@countryconfig/api/custom-event/handler'
-import { readFileSync } from 'fs'
 import {
   ActionDocument,
   ActionStatus,
