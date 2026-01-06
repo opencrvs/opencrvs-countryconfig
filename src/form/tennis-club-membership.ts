@@ -369,7 +369,6 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
         {
           id: 'recommender.device',
           type: 'TEXT',
-          required: true,
           defaultValue: user('device'),
           conditionals: [
             {
