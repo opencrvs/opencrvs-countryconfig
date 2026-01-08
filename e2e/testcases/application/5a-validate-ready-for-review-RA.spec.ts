@@ -87,7 +87,7 @@ test.describe
 
     await expect(
       page.getByText(
-        'Approving this declaration confirms it as legally accepted and eligible for registration.'
+        'Validating this declaration confirms it meets all requirements and is eligible for registration.'
       )
     ).toBeVisible()
   })

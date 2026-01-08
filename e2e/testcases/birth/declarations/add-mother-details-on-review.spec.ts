@@ -300,7 +300,7 @@ test.describe.serial('Add mother details on review', () => {
       await selectDeclarationAction(page, 'Register with edits', false)
       await expect(
         page.getByText(
-          'Are you sure you want to register this event with these edits?'
+          'You are about to register this event with your edits. Registering this event will create an official civil registration record.'
         )
       ).toBeVisible()
 
