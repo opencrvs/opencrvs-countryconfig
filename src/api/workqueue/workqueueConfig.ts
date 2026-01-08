@@ -137,7 +137,7 @@ export const Workqueues = defineWorkqueues([
       flags: {
         anyOf: ['pending-certified-copy-issuance']
       },
-      updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+      updatedAtLocation: { type: 'within', location: user('primaryOfficeId') }
     },
     actions: [
       {
@@ -164,7 +164,7 @@ export const Workqueues = defineWorkqueues([
         anyOf: [InherentFlags.INCOMPLETE],
         noneOf: [InherentFlags.REJECTED]
       },
-      updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+      updatedAtLocation: { type: 'within', location: user('primaryOfficeId') }
     },
     actions: [
       {
@@ -239,7 +239,7 @@ export const Workqueues = defineWorkqueues([
       flags: {
         anyOf: ['escalated-to-provincial-registrar']
       },
-      updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+      updatedAtLocation: { type: 'within', location: user('primaryOfficeId') }
     },
     columns: [
       DATE_OF_EVENT_COLUMN,
@@ -303,7 +303,10 @@ export const Workqueues = defineWorkqueues([
       flags: {
         noneOf: [InherentFlags.REJECTED, 'validated']
       },
-      updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+      updatedAtLocation: {
+        type: 'within',
+        location: user('administrativeAreaId')
+      }
     },
     actions: [
       {
@@ -342,13 +345,19 @@ export const Workqueues = defineWorkqueues([
           flags: {
             noneOf: [InherentFlags.REJECTED]
           },
-          updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+          updatedAtLocation: {
+            type: 'within',
+            location: user('primaryOfficeId')
+          }
         },
         {
           flags: {
             anyOf: [InherentFlags.CORRECTION_REQUESTED]
           },
-          updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+          updatedAtLocation: {
+            type: 'within',
+            location: user('primaryOfficeId')
+          }
         }
       ]
     },
@@ -415,7 +424,7 @@ export const Workqueues = defineWorkqueues([
       flags: {
         anyOf: [InherentFlags.REJECTED]
       },
-      updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+      updatedAtLocation: { type: 'within', location: user('primaryOfficeId') }
     },
     actions: [
       {
@@ -478,7 +487,7 @@ export const Workqueues = defineWorkqueues([
           `${ActionType.REGISTER}:${ActionStatus.Requested}`.toLowerCase()
         ]
       },
-      updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+      updatedAtLocation: { type: 'within', location: user('primaryOfficeId') }
     },
     actions: [
       {
@@ -501,7 +510,7 @@ export const Workqueues = defineWorkqueues([
         anyOf: [InherentFlags.PENDING_CERTIFICATION]
       },
       status: { type: 'exact', term: 'REGISTERED' },
-      updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+      updatedAtLocation: { type: 'within', location: user('primaryOfficeId') }
     },
     actions: [
       {
@@ -545,7 +554,7 @@ export const Workqueues = defineWorkqueues([
       flags: {
         anyOf: ['approval-required-for-late-registration']
       },
-      updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+      updatedAtLocation: { type: 'within', location: user('primaryOfficeId') }
     },
     actions: [
       {
