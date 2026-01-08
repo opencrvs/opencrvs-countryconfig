@@ -36,9 +36,12 @@ function getInformantDetails(informantRelation: InformantRelation) {
   }
 }
 
-async function getPlaceOfBirth(type: 'PRIVATE_HOME' | 'HEALTH_FACILITY') {
+async function getPlaceOfBirth(
+  type: 'PRIVATE_HOME' | 'HEALTH_FACILITY',
+  token: string
+) {
   if (type === 'HEALTH_FACILITY') {
-    const locations = await getAllLocations('HEALTH_FACILITY')
+    const locations = await getAllLocations('HEALTH_FACILITY', token)
     const locationId = getLocationIdByName(
       locations,
       'Ibombo Rural Health Centre'
@@ -51,7 +54,7 @@ async function getPlaceOfBirth(type: 'PRIVATE_HOME' | 'HEALTH_FACILITY') {
   }
 
   if (type === 'PRIVATE_HOME') {
-    const locations = await getAllLocations('ADMIN_STRUCTURE')
+    const locations = await getAllLocations('ADMIN_STRUCTURE', token)
     const district = getLocationIdByName(locations, 'Ibombo')
 
     if (!district) {
@@ -75,13 +78,15 @@ async function getPlaceOfBirth(type: 'PRIVATE_HOME' | 'HEALTH_FACILITY') {
 export async function getDeclaration({
   informantRelation = 'MOTHER',
   partialDeclaration = {},
-  placeOfBirthType = 'PRIVATE_HOME'
+  placeOfBirthType = 'PRIVATE_HOME',
+  token
 }: {
   informantRelation?: InformantRelation
   partialDeclaration?: any
   placeOfBirthType?: 'PRIVATE_HOME' | 'HEALTH_FACILITY'
+  token: string
 }) {
-  const locations = await getAllLocations('ADMIN_STRUCTURE')
+  const locations = await getAllLocations('ADMIN_STRUCTURE', token)
   const province = getLocationIdByName(locations, 'Central')
   const district = getLocationIdByName(locations, 'Ibombo')
 
@@ -121,7 +126,7 @@ export async function getDeclaration({
     'child.dob': new Date(Date.now() - 60 * 60 * 24 * 1000)
       .toISOString()
       .split('T')[0], // yesterday
-    ...(await getPlaceOfBirth(placeOfBirthType)),
+    ...(await getPlaceOfBirth(placeOfBirthType, token)),
     ...getInformantDetails(informantRelation)
   }
 
@@ -173,7 +178,8 @@ export async function createDeclaration(
 ): Promise<CreateDeclarationResponse> {
   const declaration = await getDeclaration({
     partialDeclaration: dec,
-    placeOfBirthType
+    placeOfBirthType,
+    token
   })
 
   const client = createClient(GATEWAY_HOST + '/events', `Bearer ${token}`)

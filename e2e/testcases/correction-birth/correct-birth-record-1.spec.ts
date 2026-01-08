@@ -2,7 +2,7 @@ import { expect, test, type Page } from '@playwright/test'
 import {
   formatDateTo_dMMMMyyyy,
   formatName,
-  getLocationNameFromFhirId,
+  getLocationNameFromId,
   getToken,
   goBackToReview,
   login,
@@ -28,6 +28,7 @@ test.describe('1. Correct record - 1', () => {
   let declaration: Declaration
   let trackingId: string | undefined
   let eventId: string
+  let token: string
 
   const updatedChildDetails = {
     firstNames: faker.person.firstName('male'),
@@ -44,7 +45,7 @@ test.describe('1. Correct record - 1', () => {
   }
 
   test.beforeAll(async () => {
-    const token = await getToken(
+    token = await getToken(
       CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
       CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
     )
@@ -100,8 +101,10 @@ test.describe('1. Correct record - 1', () => {
         throw new Error('Birth location ID is undefined')
       }
 
-      const childBirthLocationName =
-        await getLocationNameFromFhirId(birthLocationId)
+      const childBirthLocationName = await getLocationNameFromId(
+        birthLocationId,
+        token
+      )
       await expect(
         page.getByText(`Place of birth${childBirthLocationName}`)
       ).toBeVisible()
@@ -412,8 +415,9 @@ test.describe('1. Correct record - 1', () => {
 
         await expectInUrl(page, `/events/request-correction/${eventId}/review`)
 
-        childBirthLocationName = await getLocationNameFromFhirId(
-          declaration['child.birthLocation']!
+        childBirthLocationName = await getLocationNameFromId(
+          declaration['child.birthLocation']!,
+          token
         )
         expect(childBirthLocationName).toBeDefined()
 
@@ -618,7 +622,7 @@ test.describe('1. Correct record - 1', () => {
         await expect(
           page.locator('#listTable-corrections-table-child')
         ).toContainText(
-          `Location of birth${await getLocationNameFromFhirId(declaration['child.birthLocation']!)}`
+          `Location of birth${await getLocationNameFromId(declaration['child.birthLocation']!, token)}`
         )
 
         await expect(

@@ -13,14 +13,15 @@ import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../constants'
 import { ensureAssigned, ensureOutboxIsEmpty, selectAction } from '../../utils'
 import { selectDeclarationAction } from '../../helpers'
-import { format, subYears, subMonths, subDays } from 'date-fns'
+import { format, subDays } from 'date-fns'
 
 const recentDate = subDays(new Date(), 2)
+const recentDay = format(recentDate, 'dd')
 const recentMonth = format(recentDate, 'MM')
 const recentYear = format(recentDate, 'yyyy')
 
-const lateRegDate = subMonths(subYears(recentDate, 1), 6)
-const day = format(recentDate, 'dd')
+const lateRegDate = subDays(recentDate, 500)
+const lateRegDay = format(lateRegDate, 'dd')
 const lateRegMonth = format(lateRegDate, 'MM')
 const lateRegYear = format(lateRegDate, 'yyyy')
 
@@ -57,7 +58,7 @@ test.describe.serial('Approval of late birth registration', () => {
       await page.locator('#child____gender').click()
       await page.getByText('Female', { exact: true }).click()
 
-      await page.getByPlaceholder('dd').fill(day)
+      await page.getByPlaceholder('dd').fill(lateRegDay)
       await page.getByPlaceholder('mm').fill(lateRegMonth)
       await page.getByPlaceholder('yyyy').fill(lateRegYear)
       await page.locator('#child____reason').fill('Late registration reason')
@@ -296,7 +297,7 @@ test.describe('Birth with non-late registration will not have flag or Approve-ac
       await page.locator('#child____gender').click()
       await page.getByText('Female', { exact: true }).click()
 
-      await page.getByPlaceholder('dd').fill(day)
+      await page.getByPlaceholder('dd').fill(recentDay)
       await page.getByPlaceholder('mm').fill(recentMonth)
       await page.getByPlaceholder('yyyy').fill(recentYear)
 
@@ -416,7 +417,7 @@ test.describe
       await page.locator('#child____gender').click()
       await page.getByText('Female', { exact: true }).click()
 
-      await page.getByPlaceholder('dd').fill(day)
+      await page.getByPlaceholder('dd').fill(lateRegDay)
       await page.getByPlaceholder('mm').fill(lateRegMonth)
       await page.getByPlaceholder('yyyy').fill(lateRegYear)
       await page.locator('#child____reason').fill('Late registration reason')
@@ -496,7 +497,7 @@ test.describe
       await page.getByTestId('change-button-child.dob').click()
       await page.getByRole('button', { name: 'Continue' }).click()
 
-      await page.getByPlaceholder('dd').fill(day)
+      await page.getByPlaceholder('dd').fill(recentDay)
       await page.getByPlaceholder('mm').fill(recentMonth)
       await page.getByPlaceholder('yyyy').fill(recentYear)
 
@@ -543,7 +544,7 @@ test.describe
       await page.locator('#child____gender').click()
       await page.getByText('Female', { exact: true }).click()
 
-      await page.getByPlaceholder('dd').fill(day)
+      await page.getByPlaceholder('dd').fill(lateRegDay)
       await page.getByPlaceholder('mm').fill(lateRegMonth)
       await page.getByPlaceholder('yyyy').fill(lateRegYear)
       await page.locator('#child____reason').fill('Late registration reason')
@@ -645,7 +646,7 @@ test.describe
     test('Change child dob to recent date', async () => {
       await page.getByTestId('change-button-child.dob').click()
 
-      await page.getByPlaceholder('dd').fill(day)
+      await page.getByPlaceholder('dd').fill(recentDay)
       await page.getByPlaceholder('mm').fill(recentMonth)
       await page.getByPlaceholder('yyyy').fill(recentYear)
     })
@@ -706,7 +707,7 @@ test.describe
       await page.locator('#child____gender').click()
       await page.getByText('Female', { exact: true }).click()
 
-      await page.getByPlaceholder('dd').fill(day)
+      await page.getByPlaceholder('dd').fill(recentDay)
       await page.getByPlaceholder('mm').fill(recentMonth)
       await page.getByPlaceholder('yyyy').fill(recentYear)
 
@@ -807,7 +808,7 @@ test.describe
     test('Change child dob to over a year ago date', async () => {
       await page.getByTestId('change-button-child.dob').click()
 
-      await page.getByPlaceholder('dd').fill(day)
+      await page.getByPlaceholder('dd').fill(lateRegDay)
       await page.getByPlaceholder('mm').fill(lateRegMonth)
       await page.getByPlaceholder('yyyy').fill(lateRegYear)
       await page.locator('#child____reason').fill('Late registration reason')
