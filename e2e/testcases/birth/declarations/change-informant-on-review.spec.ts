@@ -340,7 +340,7 @@ test.describe.serial('Change informant on review', () => {
       await selectDeclarationAction(page, 'Register with edits', false)
       await expect(
         page.getByText(
-          'You are about to register this event with your edits. Registering this event will create an official civil registration record.'
+          'You are about to register this birth event with your edits. Registering this event will create an official civil registration record.'
         )
       ).toBeVisible()
       await page.getByRole('button', { name: 'Confirm' }).click()
