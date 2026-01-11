@@ -295,6 +295,7 @@ export const deathEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.death.action.register.label'
       },
+      flags: [{ id: 'validated', operation: 'remove' }],
       deduplication: {
         id: 'death-deduplication',
         label: {
