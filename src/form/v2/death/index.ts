@@ -297,6 +297,12 @@ export const deathEvent = defineConfig({
         id: 'event.death.action.register.label'
       },
       flags: [{ id: 'validated', operation: 'remove' }],
+      conditionals: [
+        {
+          type: ConditionalType.ENABLE,
+          conditional: flag('validated')
+        }
+      ],
       deduplication: {
         id: 'death-deduplication',
         label: {
