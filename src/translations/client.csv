@@ -27,6 +27,7 @@ advancedSearch.form.fatherDetails,The title of Father details accordion,Father d
 advancedSearch.form.informantDetails,The title informant details form,Informant details,information de l'informateur
 advancedSearch.form.motherDetails,The title of Mother details accordion,Mother details,Information de la mère
 advancedSearch.form.placeOfRegistration,Label for input Place of registration,Place of registration,Lieu d'enregistrement
+advancedSearch.registrationNumber,Label for registration number field,Registration number,Numéro d'enregistrement
 advancedSearch.form.placeOfRegistrationHelperText,Helper text for input Place of registration,"Search for a province, district or registration office","Rechercher une province, un district ou un bureau d'enregistrement"
 advancedSearch.form.recordStatusAchived,Option for form field: status of record,Archived,Archivé
 advancedSearch.form.recordStatusAny,Option for form field: status of record,Any status,Tout statut
