@@ -146,7 +146,7 @@ test.describe
   test.describe('Verify Escalated Status by Registrar General', () => {
     test('Verify Registrar General Escalated Status', async () => {
       await login(page, CREDENTIALS.NATIONAL_REGISTRAR)
-      await page.getByText('Review requested').click()
+      await page.getByText('Pending feedback').click()
       await page
         .getByRole('button', { name: childNameForRegGeneralFormatted })
         .click()
@@ -183,7 +183,7 @@ test.describe
   test.describe('Verify Escalated Status by Provincial Registrar', () => {
     test('Verify Provincial Registrar Escalated Status', async () => {
       await login(page, CREDENTIALS.PROVINCIAL_REGISTRAR)
-      await page.getByText('Review requested').click()
+      await page.getByText('Pending feedback').click()
       await page
         .getByRole('button', { name: childNameForProvincialFormatted })
         .click()
