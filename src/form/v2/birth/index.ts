@@ -216,6 +216,24 @@ export const birthEvent = defineConfig({
       }
     ]
   },
+  actionOrder: [
+    ActionType.ASSIGN,
+    ActionType.REGISTER,
+    ActionType.DECLARE,
+    ActionType.EDIT,
+    'VALIDATE_DECLARATION',
+    'APPROVE_DECLARATION',
+    ActionType.REJECT,
+    ActionType.ARCHIVE,
+    ActionType.DELETE,
+    'ESCALATE',
+    'PROVINCIAL_REGISTER_FEEDBACK',
+    'REGISTRAR_GENERAL_FEEDBACK',
+    ActionType.MARK_AS_DUPLICATE,
+    ActionType.PRINT_CERTIFICATE,
+    ActionType.REQUEST_CORRECTION,
+    ActionType.UNASSIGN
+  ],
   actions: [
     {
       type: ActionType.READ,
