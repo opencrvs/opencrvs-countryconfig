@@ -43,6 +43,7 @@ export const birthEvent = defineConfig({
     id: 'event.birth.label'
   },
   dateOfEvent: field('child.dob'),
+  placeOfEvent: field('child.birthLocationId'),
   title: {
     defaultMessage: '{child.name.firstname} {child.name.surname}',
     description: 'This is the title of the summary',
@@ -296,7 +297,7 @@ export const birthEvent = defineConfig({
       },
       supportingCopy: {
         defaultMessage:
-          'Approving this declaration confirms it as legally accepted and eligible for registration.',
+          'Validating this declaration confirms it meets all requirements and is eligible for registration.',
         description:
           'This is the supporting copy for the Validate declaration -action',
         id: 'event.birth.custom.action.validate-declaration.supportingCopy'
