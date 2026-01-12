@@ -41,6 +41,7 @@ export const deathEvent = defineConfig({
     id: 'event.death.label'
   },
   dateOfEvent: field('eventDetails.date'),
+  placeOfEvent: field('eventDetails.deathLocationId'),
   title: {
     defaultMessage: '{deceased.name.firstname} {deceased.name.surname}',
     description: 'This is the title of the summary',
@@ -295,6 +296,7 @@ export const deathEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.death.action.register.label'
       },
+      flags: [{ id: 'validated', operation: 'remove' }],
       deduplication: {
         id: 'death-deduplication',
         label: {
