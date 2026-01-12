@@ -4,7 +4,6 @@ import { login, getToken } from '../../helpers'
 import { CREDENTIALS } from '../../constants'
 import { createDeclaration, Declaration } from '../test-data/birth-declaration'
 import { ActionType } from '@opencrvs/toolkit/events'
-import { selectAction } from '../../utils'
 
 async function getActionMenuOptions(page: Page, declaration: Declaration) {
   const childName = `${declaration['child.name'].firstname} ${declaration['child.name'].surname}`
@@ -46,17 +45,10 @@ test.describe('Action menu options', () => {
       const options = await getActionMenuOptions(page, declaration)
       expect(options).toStrictEqual([
         'Assign',
-        'Archive',
-        'Reject',
         'Edit',
-        'Validate declaration'
-      ])
-      expect(options).toStrictEqual([
-        'Assign',
-        'Archive',
+        'Validate declaration',
         'Reject',
-        'Edit',
-        'Validate declaration'
+        'Archive'
       ])
     })
 
@@ -67,16 +59,16 @@ test.describe('Action menu options', () => {
       expect(options).toStrictEqual([
         'Assign',
         'Register',
-        'Archive',
-        'Reject',
         'Edit',
         'Validate declaration',
+        'Reject',
+        'Archive',
         'Escalate'
       ])
     })
   })
 
-  test.describe('Declared and validated', async () => {
+  test.describe('Event status: DECLARED and flag: validated', async () => {
     let declaration: Declaration
 
     test.beforeAll(async () => {
@@ -95,9 +87,9 @@ test.describe('Action menu options', () => {
       expect(options).toStrictEqual([
         'Assign',
         'Register',
-        'Archive',
-        'Reject',
         'Edit',
+        'Reject',
+        'Archive',
         'Escalate'
       ])
     })
@@ -121,9 +113,9 @@ test.describe('Action menu options', () => {
       const options = await getActionMenuOptions(page, declaration)
       expect(options).toStrictEqual([
         'Assign',
+        'Escalate',
         'Print',
-        'Correct record',
-        'Escalate'
+        'Correct record'
       ])
     })
   })
