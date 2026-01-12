@@ -70,13 +70,12 @@ test.describe('Action menu options', () => {
         'Archive',
         'Reject',
         'Edit',
-        'Validate declaration',
         'Escalate'
       ])
     })
   })
 
-  test.describe('Declared and validated', async () => {
+  test.describe('Event status: DECLARED and flag: validated', async () => {
     let declaration: Declaration
 
     test.beforeAll(async () => {
