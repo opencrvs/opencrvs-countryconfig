@@ -12,12 +12,9 @@ action.review.declaration,Label for review declaration button in dropdown menu,"
 action.update,Label for reinstate update button in dropdown menu,Update declaration,Mettre à jour la déclaration
 action.view,Label for view button in dropdown menu,View {recordOrDeclaration},"voir {recordOrDeclaration, select, record{enregistrer} other{déclaration}}"
 action.view.record,Label for view record,View,Afficher
-actionModal.PrimaryAction,The label for primary action button of action modal,"{action, select, declare{Declare} other{{action}}}","{action, select, declare{Declare} other{{action}}}"
 actionModal.cancel,The label for cancel button of action modal,Cancel,Annuler
 actionModal.confirm,The label for confirm button of action modal,Confirm,Confirmer
 actionModal.description,The description for action modal,The informant will be notified of this decision and a record of this decision will be recorded,L'informateur sera informé de cette décision et celle-ci sera consignée dans un dossier.
-actionModal.description.incomplete,Description shown in the action modal when a declaration is incomplete,This incomplete declaration will be submitted for review.,Cette déclaration incomplète sera soumise à l'examen.
-actionModal.title,The title for action modal,"{action, select, declare{Declare} other{{action}}} the member?","{action, select, declare{Declare} other{{action}}} the member?"
 actions.edit,Edit action label,Edit,Modifier
 actions.notify,Notify action label,Notify,Notifier
 advancedSearch.accordion.hide,Label for hide button when accordion is closed,Hide,Cacher
@@ -192,7 +189,6 @@ certificates.death.certificate.copy,Death Certificate Certified Copy,Death Certi
 certificates.marriage.certificate,Marriage Certificate,Marriage Certificate,Acte de mariage
 certificates.marriage.certificate.copy,Marriage Certificate Certified Copy,Marriage Certificate Certified Copy,Copie certifiée conforme de l'acte de mariage
 changeEmail.validation.msg,Phone number validation message,Must be a valid email address,Doit être une adresse e-mail valide
-changeModal.cancel,The label for cancel button of change modal,Cancel,Annuler
 changeModal.continue,The label for continue button of change modal,Continue,Continuer
 changeModal.description,The description for change modal,A record will be created of any changes you make,Un enregistrement sera créé pour toute modification que vous apporterez
 changeModal.title,The title for change modal,Edit declaration?,Modifier la déclaration ?
@@ -865,6 +861,9 @@ event.birth.action.declare.form.section.person.field.occupation.label,This is th
 event.birth.action.declare.form.section.person.field.passport.label,This is the label for the field,ID Number,Numéro d'identification
 event.birth.action.declare.label,This is shown as the action name anywhere the user can trigger the action from,Declare,Declare
 event.birth.action.delete.label,Label for delete button in dropdown menu,Delete,Supprimer
+event.birth.action.edit.declare.copy,Description for `Declare with edits` in edit action menu,You are about to redeclare this birth event with your edits. This will permanently update the declaration.,Vous êtes sur le point de redéclarer cet événement avec vos modifications. Cela mettra à jour définitivement la déclaration.
+event.birth.action.edit.notify.copy,Description for `Notify with edits` in edit action menu,Are you sure you want to notify this event with these edits?,Êtes-vous sûr de vouloir notifier cet événement avec ces modifications ?
+event.birth.action.edit.register.copy,Description for `Register with edits` in edit action menu,You are about to register this birth event with your edits. Registering this event will create an official civil registration record.,Vous êtes sur le point d'enregistrer cet événement avec vos modifications. L'enregistrement de cet événement créera un dossier d'état civil officiel.
 event.birth.action.form.section.collector.other.field.name.label,This is the label for the name field of OTHER collector,Collector's name,Nom du collecteur
 event.birth.action.issued.audit-history-label,The label to show in audit history for the issued action,Issued,Émis
 event.birth.action.mark-as-duplicate.label,Label for review potential duplicate button in dropdown menu,Review,Revoir
@@ -1026,6 +1025,9 @@ event.death.action.declare.form.section.spouse.field.nid.label,This is the label
 event.death.action.declare.form.section.spouse.field.passport.label,This is the label for the field,ID Number,Numéro d'identité
 event.death.action.declare.form.section.spouse.field.reason.label,This is the label for the field,Reason,Raison
 event.death.action.declare.label,This is shown as the action name anywhere the user can trigger the action from,Declare,Déclarer
+event.death.action.edit.declare.copy,Description for `Declare with edits` in edit action menu,You are about to redeclare this death event with your edits. This will permanently update the declaration.,Vous êtes sur le point de redéclarer cet événement avec vos modifications. Cela mettra à jour définitivement la déclaration.
+event.death.action.edit.notify.copy,Description for `Notify with edits` in edit action menu,Are you sure you want to notify this event with these edits?,Êtes-vous sûr de vouloir notifier cet événement avec ces modifications ?
+event.death.action.edit.register.copy,Description for `Register with edits` in edit action menu,You are about to register this death event with your edits. Registering this event will create an official civil registration record.,Vous êtes sur le point d'enregistrer cet événement avec vos modifications. L'enregistrement de cet événement créera un dossier d'état civil officiel.
 event.death.action.form.section.alienNumberDetails.label,Field for entering Alien Number details,Alien Number,Numéro d'étranger
 event.death.action.form.section.brn.label,Field for entering Birth Registration Number,Birth Registration Number,Numéro d'enregistrement de naissance
 event.death.action.form.section.collector.other.field.name.label,This is the label for the name field of OTHER collector,Collector's name,Nom du collecteur
@@ -1066,12 +1068,6 @@ event.edit.comment.label,The label for the comment,Comments,Commentaires
 event.edit.declareWithEdits.label,Label for `Declare with edits` in edit action menu,Declare with edits,Déclarer avec modifications
 event.edit.notifyWithEdits.label,Label for `Notify with edits` in edit action menu,Notify with edits,Notifier avec modifications
 event.edit.registerWithEdits.label,Label for `Register with edits` in edit action menu,Register with edits,Enregistrer avec modifications
-event.birth.action.edit.notify.copy,Description for `Notify with edits` in edit action menu,Are you sure you want to notify this event with these edits?,Êtes-vous sûr de vouloir notifier cet événement avec ces modifications ?
-event.birth.action.edit.declare.copy,Description for `Declare with edits` in edit action menu,You are about to redeclare this birth event with your edits. This will permanently update the declaration.,Vous êtes sur le point de redéclarer cet événement avec vos modifications. Cela mettra à jour définitivement la déclaration.
-event.birth.action.edit.register.copy,Description for `Register with edits` in edit action menu,You are about to register this birth event with your edits. Registering this event will create an official civil registration record.,Vous êtes sur le point d'enregistrer cet événement avec vos modifications. L'enregistrement de cet événement créera un dossier d'état civil officiel.
-event.death.action.edit.declare.copy,Description for `Declare with edits` in edit action menu,You are about to redeclare this death event with your edits. This will permanently update the declaration.,Vous êtes sur le point de redéclarer cet événement avec vos modifications. Cela mettra à jour définitivement la déclaration.
-event.death.action.edit.notify.copy,Description for `Notify with edits` in edit action menu,Are you sure you want to notify this event with these edits?,Êtes-vous sûr de vouloir notifier cet événement avec ces modifications ?
-event.death.action.edit.register.copy,Description for `Register with edits` in edit action menu,You are about to register this death event with your edits. Registering this event will create an official civil registration record.,Vous êtes sur le point d'enregistrer cet événement avec vos modifications. L'enregistrement de cet événement créera un dossier d'état civil officiel.
 event.history.role,Label for the role in event history,"{role, select, LOCAL_REGISTRAR {Local Registrar} FIELD_AGENT {Field Agent} POLICE_OFFICER {Police Officer} REGISTRATION_AGENT {Registration Agent} HEALTHCARE_WORKER {Healthcare Worker} HOSPITAL_CLERK {Hospital Clerk} LOCAL_SYSTEM_ADMIN {Administrator} NATIONAL_REGISTRAR {Registrar General} PERFORMANCE_MANAGER {Operations Manager} NATIONAL_SYSTEM_ADMIN {National Administrator} COMMUNITY_LEADER {Community Leader} HEALTH {Health integration} IMPORT {Import integration} NATIONAL_ID {National ID integration} RECORD_SEARCH {Record search integration} WEBHOOK {Webhook} PROVINCIAL_REGISTRAR {Provincial Registrar} other {Unknown}}","{role, select, LOCAL_REGISTRAR {Officier d'état civil local} POLICE_OFFICER {Agent de police} FIELD_AGENT {Agent de terrain} REGISTRATION_AGENT {Agent d'enregistrement} HEALTHCARE_WORKER {Professionnel de santé} PERFORMANCE_MANAGER {Responsable des opérations} LOCAL_SYSTEM_ADMIN {Administrateur} NATIONAL_SYSTEM_ADMIN {Administrateur national} NATIONAL_REGISTRAR {Registraire général} HOSPITAL_CLERK {Employé administratif à l'hôpital} HEALTH {Intégration santé} IMPORT {Intégration d'importation} NATIONAL_ID {Intégration ID nationale} RECORD_SEARCH {Intégration de recherche d'enregistrements} WEBHOOK {Webhook} COMMUNITY_LEADER {Responsable communautaire} PROVINCIAL_REGISTRAR {Registraire provincial} other {Inconnu}}"
 event.history.system,Name for system initiated actions in the event history,System,System
 event.history.systemDefaultName,Fallback for system integration name in the event history,System integration,Intégration système
@@ -1923,7 +1919,6 @@ register.selectVitalEvent.registerNewEventHeader,The section heading on the page
 register.selectVitalEvent.registerNewEventHeading,The section heading on the page,Event type,Quel type d'événement voulez-vous déclarer ?
 register.selectVitalEvent.registerNewEventTitle,The title that appears on the select vital event page,New declaration,Nouvelle déclaration
 rejectModal.archive,The label for archive button of reject modal,Archive,Archiver
-rejectModal.cancel,The label for cancel button of reject modal,Cancel,Annuler
 rejectModal.description,The description for reject modal,Please describe the updates required to this record for follow up action.,Veuillez décrire les mises à jour nécessaires à cet enregistrement pour le suivi de l'action.
 rejectModal.markAsDuplicate,The label for mark as duplicate checkbox of reject modal,Mark as a duplicate,Marquer comme duplicata
 rejectModal.sendForUpdate,The label for send For Update button of reject modal,Send For Update,Envoyer pour mise à jour
@@ -1941,19 +1936,9 @@ review.actions.title.declarationStatus,Title for review action component,"Declar
 review.actions.title.registerActionTitle,,Register event,Enregistrer l'événement
 review.birthRegistration.queryError,The error message shown when a query fails,An error occurred while fetching birth registration,Une erreur s'est produite lors de la récupération de l'enregistrement de la naissance
 review.button.approve,Label for Send For Approval button,Send for approval,Envoyer pour approbation
-review.declare.confirm,The label for review action button when declaring,Send for review,Envoyer pour révision
-review.declare.confirmModal.cancel,The label for modal cancel button when declaring,Cancel,Annuler
-review.declare.confirmModal.confirm,The label for modal confirm button when declaring,Confirm,Confirmer
-review.declare.confirmModal.description,The description for review action modal when declaring,This declaration will be sent for review,Cette déclaration sera envoyée pour révision.
 review.declare.confirmModal.title,The title for review action modal when declaring,Declare event?,Déclarer l'événement?
-review.declare.description.complete,The description for declare action when form is complete,The informant will receive an email with a registration number that they can use to collect the certificate,L'informateur recevra un e-mail avec un numéro d'enregistrement qu'il pourra utiliser pour récupérer le certificat.
 review.declare.description.incomplete,The description for declare action when form is complete,The informant will receive an email with a tracking ID that they can use to provide the additional mandatory information required for registration,Cette déclaration sera envoyée au greffier pour être complétée. Veuillez informer l'informateur qu'il devra se présenter au bureau avec les informations manquantes et les documents justificatifs.
-review.declare.incomplete.confirmModal.cancel,The label for modal cancel button when declaring,Cancel,Annuler
-review.declare.incomplete.confirmModal.confirm,The label for modal confirm button when declaring,Confirm,Confirmer
-review.declare.incomplete.confirmModal.description,The description for review action modal when declaring incomplete,This incomplete declaration will be sent for review.,Cette déclaration sera envoyée au greffier pour être complétée. Veuillez informer l'informateur qu'il devra se présenter au bureau avec les informations manquantes et les documents justificatifs.
 review.declare.incomplete.confirmModal.title,The title for review action modal when declaring,Notify event?,Notifier l'événement?
-review.declare.title.complete,The title shown when reviewing an incomplete record to declare,Declaration complete,Déclaration complète
-review.declare.title.incomplete,The title shown when reviewing an incomplete record to declare,Declaration incomplete,Déclaration incomplète
 review.documentViewer.title,,Supporting documents,Documents d'appui
 review.documents.editDocuments,Edit documents text,Upload,Ajouter une pièce jointe
 review.documents.zeroDocumentsText,Zero documents text,"No supporting documents for {section, select, child {child} mother {mother} father {father} deceased {deceased} informant {informant} other {Parent}}","Aucune pièce justificative pour  {section, select, child {child} mother {mother} father {father} deceased {deceased} informant {informant} other {Parent}}"
@@ -1979,14 +1964,8 @@ review.inputs.witnessTwoSignature,Label for informants signature input,Signature
 review.modal.desc.submitConfirmation,Submit description text on modal,"{completeDeclaration, select, true {This declaration will be sent for review.} other {This incomplete declaration will be sent for review.}}","{completeDeclaration, select, true {Cette déclaration sera envoyée au greffier pour qu'il l'examine.} other {Cette déclaration sera envoyée au greffier pour être complétée. Veuillez informer l'informateur qu'il devra se présenter au bureau avec les informations manquantes et les documents justificatifs.}}"
 review.modal.title.registerConfirmation,Title for register confirmation modal,Register event?,Enregistrer l'événement?
 review.modal.title.submitConfirmation,Submit title text on modal,"{completeDeclaration, select, true {Send for review?} other {Send for review?}}","{completeDeclaration, select, true {Envoyer la déclaration pour examen?} other {Envoyer une déclaration incomplète?}}"
-review.register.confirm,The label for register button of review action,Register,Enregistrer
-review.register.confirmModal.cancel,The label for modal cancel button when registering,Cancel,Annuler
-review.register.confirmModal.confirm,The label for modal confirm button when registering,Register,Enregistrer
-review.register.confirmModal.description,The description for review action modal when registering,‎,
 review.register.confirmModal.title,The title for review action modal when registering,Register the {event}?,Enregistrer cet {event}?
 review.register.description.complete,The description for registration action when form is complete,"By clicking 'Confirm', you confirm that the information entered is correct and the event can be registered.","En cliquant sur enregistrer, vous confirmez que les informations saisies sont correctes et que l'événement peut être enregistré."
-review.register.reject,The label for reject button of review action,Reject,Rejeter
-review.register.title,The title shown when reviewing a record to register,Register event,Enregistrer l'événement
 review.rej.form.reasons.missSupDoc,Label for rejection option missing supporting doc,Missing supporting documents,Documents justificatifs manquants
 review.rejection.form,Rejection form name,Rejection form,Formulaire de rejet
 review.rejection.form.commentLabel,,Comments,Commentaires ou instructions à l'intention de l'agent de santé pour rectifier la déclaration
@@ -2003,16 +1982,6 @@ review.signature.delete,Label for button that deletes signature,Delete,Supprimer
 review.signature.description,Label awknowledging the correctness of the declaration,"I, the undersigned, hereby declare that the particulars in this form are true and correct to the best of my knowledge.","Je soussigné(e) déclare par la présente que les informations contenues dans ce formulaire sont, à ma connaissance, vraies et correctes."
 review.signature.input.description,Description awknowledging the correctness of the declaration,"By signing this document with an electronic signature, I agree that such signature will be valid as handwritten signatures to the extent allowed by the laws of Farajaland.","En signant ce document avec une signature électronique, j'accepte que cette signature soit valable comme les signatures manuscrites dans la mesure où les lois du Farajaland le permettent."
 review.signature.open,Label for button that opens the signature input,Sign,Signer
-review.validate.confirm,The label for review action button when validating,Send for approval,Envoyer pour approbation
-review.validate.confirmModal.cancel,The label for modal cancel button when validating,Cancel,Annuler
-review.validate.confirmModal.confirm,The label for modal confirm button when validating,Confirm,Confirmer
-review.validate.confirmModal.description,The description for review action modal when validating,This declaration will be sent for approval prior to registration.,Cette déclaration sera envoyée pour approbation avant l'enregistrement.
-review.validate.confirmModal.title,The title for review action modal when validating,Send for approval?,Envoyer pour approbation ?
-review.validate.description.complete,The description for validate action when form is complete,The informant will receive an email with a registration number that they can use to collect the certificate.,L'informateur recevra un e-mail avec un numéro d'enregistrement qu'il pourra utiliser pour récupérer le certificat.
-review.validate.description.incomplete,The description for validate action when form is complete,Please add mandatory information before sending for approval,Veuillez ajouter les informations obligatoires avant d'envoyer pour approbation.
-review.validate.reject,The label for reject button of review action,Reject,Rejeter
-review.validate.title,The title shown when reviewing a record to validate,Send for approval,Envoyer pour approbation
-reviewAction.register.description.incomplete,The description for registration action when form is incomplete,Please add mandatory information before registering,Veuillez ajouter les informations obligatoires avant d'enregistrer.
 saveAndExit.desc.saveDeclarationConfirm,Description for save declaration confirmation modal,All inputted data will be kept secure for future editing. Are you ready to save any changes to this declaration form?,Toutes les données saisies seront conservées en toute sécurité pour de futures modifications. Êtes-vous prêt à enregistrer les modifications apportées à ce formulaire de déclaration?
 saveAndExit.title.saveDeclarationConfirm,Title for save declaration confirmation modal,Save & exit?,Enregistrer et quitter?
 search.advancedSearch.result.title,Advanced search result title,Search results ({count}),résultat de la recherche pour ({count})
