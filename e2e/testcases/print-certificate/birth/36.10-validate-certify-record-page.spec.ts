@@ -23,7 +23,6 @@ test.describe.serial('10.0 Validate "Review" page', () => {
     )
     const res = await createDeclaration(token)
     declaration = res.declaration
-    eventId = res.eventId
     page = await browser.newPage()
   })
 
