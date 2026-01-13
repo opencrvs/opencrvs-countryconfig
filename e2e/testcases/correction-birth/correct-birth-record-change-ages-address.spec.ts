@@ -38,8 +38,8 @@ test.describe.serial('Correct record - Change ages', () => {
 
   test('Shortcut declaration', async () => {
     let token = await getToken(
-      CREDENTIALS.NATIONAL_REGISTRAR.USERNAME,
-      CREDENTIALS.NATIONAL_REGISTRAR.PASSWORD
+      CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
+      CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
     )
 
     const locations = await getAllLocations('ADMIN_STRUCTURE', token)
