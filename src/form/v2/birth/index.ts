@@ -701,6 +701,12 @@ export const birthEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.birth.action.reject.label'
       },
+      supportingCopy: {
+        id: 'rejectModal.description',
+        defaultMessage:
+          'Rejecting this declaration will return it to the submitter for updates. Please ensure a valid reason for rejection has been recorded.',
+        description: 'The description for reject modal'
+      },
       flags: [{ id: 'validated', operation: 'remove' }]
     },
     {
