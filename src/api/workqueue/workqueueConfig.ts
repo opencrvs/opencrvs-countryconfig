@@ -170,7 +170,12 @@ export const Workqueues = defineWorkqueues([
       defaultMessage: 'Pending registration',
       description: 'Title of pending registration workqueue'
     },
-    query: { flags: { anyOf: ['validated'] } },
+    query: {
+      flags: {
+        anyOf: ['validated'],
+        noneOf: ['approval-required-for-late-registration']
+      }
+    },
     actions: []
   },
   {

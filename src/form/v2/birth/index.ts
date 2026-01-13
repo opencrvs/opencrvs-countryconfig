@@ -388,7 +388,10 @@ export const birthEvent = defineConfig({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: flag('approval-required-for-late-registration')
+          conditional: and(
+            flag('approval-required-for-late-registration'),
+            flag('validated')
+          )
         },
         {
           type: ConditionalType.ENABLE,
