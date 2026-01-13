@@ -47,6 +47,7 @@ advancedSearch.form.timePeriodLabel,Label for input Time period,Time period,Pér
 advancedSearch.registeredAt,Label for date of registration field,Date of registration,Date d'enregistrement
 advancedSearch.registeredAtLocation,Label for place of registration field,Place of registration,Lieu d'enregistrement
 advancedSearch.registeredAtLocation.helperText,Helper text for place of registration field,"Search for a province, district or registration office","Rechercher une province, un district ou un bureau d'enregistrement"
+advancedSearch.registrationNumber,Label for registration number field,Registration number,Numéro d'enregistrement
 advancedSearch.status,Label for status field,Status of record,Statut de l'enregistrement
 advancedSearch.trackingId,Label for tracking ID field,Tracking ID,ID de suivi
 advancedSearch.updatedAt,Label for date of update field,Time period,Période

@@ -22,6 +22,7 @@ import {
   event,
   user,
   or,
+  not,
   defineConditional,
   never
 } from '@opencrvs/toolkit/events'
@@ -132,6 +133,72 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
             },
             maxLength: MAX_NAME_LENGTH
           }
+        },
+        {
+          id: 'applicant.registrationDuration',
+          analytics: true,
+          type: FieldType.NUMBER_WITH_UNIT,
+          label: {
+            defaultMessage: 'Registration duration',
+            description: 'This is the label for the field',
+            id: 'event.tennis-club.registrationDuration.label'
+          },
+          placeholder: {
+            defaultMessage: 'Time Unit',
+            description: 'This is the placeholder for the field',
+            id: 'event.tennis-club.registrationDuration.placeholder'
+          },
+          options: [
+            {
+              value: 'Days',
+              label: {
+                id: 'unit.days',
+                defaultMessage: 'Days',
+                description: 'Days'
+              }
+            },
+            {
+              value: 'Hours',
+              label: {
+                id: 'unit.hours',
+                defaultMessage: 'Hours',
+                description: 'Hours'
+              }
+            },
+            {
+              value: 'Minutes',
+              label: {
+                id: 'unit.minutes',
+                defaultMessage: 'Minutes',
+                description: 'Minutes'
+              }
+            }
+          ],
+          configuration: {
+            min: 0,
+            numberFieldPlaceholder: {
+              defaultMessage: 'Interval',
+              description: 'This is the placeholder for the field',
+              id: 'event.birth.action.declare.form.section.child.field.birthDuration.placeholder'
+            }
+          },
+          validation: [
+            {
+              message: {
+                defaultMessage: 'Number and unit required for registration',
+                description: 'This is the error message for invalid duration',
+                id: 'event.birth.action.declare.form.section.child.field.birthDuration.error'
+              },
+              validator: and(
+                field('applicant.registrationDuration')
+                  .get('numericValue')
+                  .isGreaterThan(0),
+                not(
+                  field('applicant.registrationDuration').get('unit').isFalsy()
+                )
+              )
+            }
+          ]
         },
         {
           id: 'applicant.dob',
