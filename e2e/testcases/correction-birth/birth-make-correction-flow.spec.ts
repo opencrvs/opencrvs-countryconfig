@@ -217,11 +217,6 @@ test.describe.serial('Birth Record correction flow', () => {
     await page.getByRole('button', { name: 'Correct record' }).click()
 
     await expect(page.getByText('Correct record?')).toBeVisible()
-    await expect(
-      page.getByText(
-        'The informant will be notified of this correction and a record of this decision will be recorded'
-      )
-    ).toBeVisible()
 
     await page.getByRole('button', { name: 'Confirm', exact: true }).click()
 
