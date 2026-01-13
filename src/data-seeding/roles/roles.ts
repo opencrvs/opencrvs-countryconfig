@@ -7,7 +7,7 @@ type Role = {
   scopes: Scope[]
 }
 
-export const roles: Role[] = [
+const originalRoles: Role[] = [
   {
     id: 'FIELD_AGENT',
     label: {
@@ -327,3 +327,57 @@ export const roles: Role[] = [
     ]
   }
 ]
+
+function appendTestRoles(roleString: string): string {
+  const roleMatch = roleString.match(/\[role=([^\]]+)\]/)
+
+  if (!roleMatch) {
+    throw new Error(
+      `Invalid format. Expected: user.create[role=ROLE1|ROLE2|...], found ${roleString}`
+    )
+  }
+
+  const rolesPart = roleMatch[1]
+  const roles = rolesPart
+    .split('|')
+    .map((r) => r.trim())
+    .filter((r) => r)
+
+  const testRoles = roles.map((role) => `${role}_TEST`)
+
+  const allRoles = [...roles, ...testRoles]
+
+  const prefix = roleString.substring(0, roleString.indexOf('[role=') + 6)
+  const suffix = roleString.substring(roleString.indexOf(']'))
+  const updatedString = `${prefix}${allRoles.join('|')}${suffix}`
+
+  return updatedString
+}
+
+const productionRoles = originalRoles.map((role) => ({
+  ...role,
+  scopes: role.scopes
+    .filter(
+      (scope) => scope !== 'search[event=tennis-club-membership,access=all]'
+    )
+    .map((scope) => {
+      if (scope.startsWith('user.create[') || scope.startsWith('user.edit[')) {
+        return appendTestRoles(scope)
+      }
+      return scope.replace('|tennis-club-membership', '')
+    })
+}))
+
+const testRoles = originalRoles
+  .filter((role) => role.id !== 'NATIONAL_SYSTEM_ADMIN')
+  .map((role) => ({
+    ...role,
+    id: `${role.id}_TEST`,
+    label: {
+      id: `${role.label.id}.test`,
+      defaultMessage: `${role.label.defaultMessage} (Test)`,
+      description: role.label.description
+    }
+  }))
+
+export const roles = [...productionRoles, ...testRoles]
