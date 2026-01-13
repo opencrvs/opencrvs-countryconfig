@@ -228,8 +228,8 @@ const productionRoles: Role[] = [
       SCOPES.USER_READ_MY_OFFICE,
       SCOPES.USER_CREATE_MY_JURISDICTION,
       SCOPES.USER_UPDATE_MY_JURISDICTION,
-      'user.create[role=FIELD_AGENT|POLICE_OFFICER|HOSPITAL_CLERK|HEALTHCARE_WORKER|COMMUNITY_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR]',
-      'user.edit[role=FIELD_AGENT|POLICE_OFFICER|HOSPITAL_CLERK|HEALTHCARE_WORKER|COMMUNITY_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR]',
+      'user.create[role=FIELD_AGENT|POLICE_OFFICER|HOSPITAL_CLERK|HEALTHCARE_WORKER|COMMUNITY_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR|FIELD_AGENT_TEST|POLICE_OFFICER_TEST|HOSPITAL_CLERK_TEST|HEALTHCARE_WORKER_TEST|COMMUNITY_LEADER_TEST|REGISTRATION_AGENT_TEST|LOCAL_REGISTRAR_TEST]',
+      'user.edit[role=FIELD_AGENT|POLICE_OFFICER|HOSPITAL_CLERK|HEALTHCARE_WORKER|COMMUNITY_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR|FIELD_AGENT_TEST|POLICE_OFFICER_TEST|HOSPITAL_CLERK_TEST|HEALTHCARE_WORKER_TEST|COMMUNITY_LEADER_TEST|REGISTRATION_AGENT_TEST|LOCAL_REGISTRAR_TEST]',
       SCOPES.ORGANISATION_READ_LOCATIONS_MY_JURISDICTION,
       SCOPES.PERFORMANCE_READ,
       SCOPES.PERFORMANCE_READ_DASHBOARDS,
@@ -245,8 +245,8 @@ const productionRoles: Role[] = [
     },
     scopes: [
       SCOPES.USER_CREATE,
-      'user.create[role=FIELD_AGENT|POLICE_OFFICER|HOSPITAL_CLERK|HEALTHCARE_WORKER|COMMUNITY_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR|NATIONAL_REGISTRAR|LOCAL_SYSTEM_ADMIN|NATIONAL_SYSTEM_ADMIN|PERFORMANCE_MANAGER]',
-      'user.edit[role=FIELD_AGENT|POLICE_OFFICER|HOSPITAL_CLERK|HEALTHCARE_WORKER|COMMUNITY_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR|NATIONAL_REGISTRAR|LOCAL_SYSTEM_ADMIN|NATIONAL_SYSTEM_ADMIN|PERFORMANCE_MANAGER]',
+      'user.create[role=FIELD_AGENT|POLICE_OFFICER|HOSPITAL_CLERK|HEALTHCARE_WORKER|COMMUNITY_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR|NATIONAL_REGISTRAR|LOCAL_SYSTEM_ADMIN|NATIONAL_SYSTEM_ADMIN|PERFORMANCE_MANAGER|FIELD_AGENT_TEST|POLICE_OFFICER_TEST|HOSPITAL_CLERK_TEST|HEALTHCARE_WORKER_TEST|COMMUNITY_LEADER_TEST|REGISTRATION_AGENT_TEST|LOCAL_REGISTRAR_TEST|NATIONAL_REGISTRAR_TEST|LOCAL_SYSTEM_ADMIN_TEST|NATIONAL_SYSTEM_ADMIN_TEST|PERFORMANCE_MANAGER_TEST]',
+      'user.edit[role=FIELD_AGENT|POLICE_OFFICER|HOSPITAL_CLERK|HEALTHCARE_WORKER|COMMUNITY_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR|NATIONAL_REGISTRAR|LOCAL_SYSTEM_ADMIN|NATIONAL_SYSTEM_ADMIN|PERFORMANCE_MANAGER|FIELD_AGENT_TEST|POLICE_OFFICER_TEST|HOSPITAL_CLERK_TEST|HEALTHCARE_WORKER_TEST|COMMUNITY_LEADER_TEST|REGISTRATION_AGENT_TEST|LOCAL_REGISTRAR_TEST|NATIONAL_REGISTRAR_TEST|LOCAL_SYSTEM_ADMIN_TEST|NATIONAL_SYSTEM_ADMIN_TEST|PERFORMANCE_MANAGER_TEST]',
       SCOPES.USER_READ,
       SCOPES.USER_UPDATE,
       SCOPES.ORGANISATION_READ_LOCATIONS,
@@ -327,7 +327,7 @@ const testRoles: Role[] = [
     label: {
       defaultMessage: 'Field Agent (Test)',
       description: 'Name for user role Field Agent',
-      id: 'userRole.fieldAgent'
+      id: 'userRole.fieldAgent.test'
     },
     scopes: [
       SCOPES.RECORD_DECLARE_BIRTH,
@@ -352,7 +352,7 @@ const testRoles: Role[] = [
     label: {
       defaultMessage: 'Police Officer (Test)',
       description: 'Name for user role Police Officer',
-      id: 'userRole.policeOfficer'
+      id: 'userRole.policeOfficer.test'
     },
     scopes: [
       SCOPES.RECORD_DECLARE_BIRTH,
@@ -376,7 +376,7 @@ const testRoles: Role[] = [
     label: {
       defaultMessage: 'Hospital Clerk (Test)',
       description: 'Name for user role Hospital Clerk',
-      id: 'userRole.hospitalClerk'
+      id: 'userRole.hospitalClerk.test'
     },
     scopes: [
       SCOPES.RECORD_DECLARE_BIRTH,
@@ -401,7 +401,7 @@ const testRoles: Role[] = [
     label: {
       defaultMessage: 'Healthcare Worker (Test)',
       description: 'Name for user role Healthcare Worker',
-      id: 'userRole.healthcareWorker'
+      id: 'userRole.healthcareWorker.test'
     },
     scopes: [
       SCOPES.RECORD_DECLARE_BIRTH,
@@ -425,7 +425,7 @@ const testRoles: Role[] = [
     label: {
       defaultMessage: 'Community Leader (Test)',
       description: 'Name for user role Community Leader',
-      id: 'userRole.communityLeader'
+      id: 'userRole.communityLeader.test'
     },
     scopes: [
       SCOPES.RECORD_DECLARE_BIRTH,
@@ -450,11 +450,11 @@ const testRoles: Role[] = [
     ]
   },
   {
-    id: 'REGISTRATION_AGENT_TEST (Test)',
+    id: 'REGISTRATION_AGENT_TEST',
     label: {
-      defaultMessage: 'Registration Agent',
+      defaultMessage: 'Registration Agent (Test)',
       description: 'Name for user role Registration Agent',
-      id: 'userRole.registrationAgent'
+      id: 'userRole.registrationAgent.test'
     },
     scopes: [
       SCOPES.RECORD_READ,
@@ -492,11 +492,11 @@ const testRoles: Role[] = [
     ]
   },
   {
-    id: 'LOCAL_REGISTRAR_TEST (Test)',
+    id: 'LOCAL_REGISTRAR_TEST',
     label: {
-      defaultMessage: 'Local Registrar',
+      defaultMessage: 'Local Registrar (Test)',
       description: 'Name for user role Local Registrar',
-      id: 'userRole.localRegistrar'
+      id: 'userRole.localRegistrar.test'
     },
     scopes: [
       SCOPES.RECORD_READ,
@@ -539,18 +539,18 @@ const testRoles: Role[] = [
     ]
   },
   {
-    id: 'LOCAL_SYSTEM_ADMIN_TEST (Test)',
+    id: 'LOCAL_SYSTEM_ADMIN_TEST',
     label: {
-      defaultMessage: 'Local System Admin',
+      defaultMessage: 'Local System Admin (Test)',
       description: 'Name for user role Local System Admin',
-      id: 'userRole.localSystemAdmin'
+      id: 'userRole.localSystemAdmin.test'
     },
     scopes: [
       SCOPES.USER_READ_MY_OFFICE,
       SCOPES.USER_CREATE_MY_JURISDICTION,
       SCOPES.USER_UPDATE_MY_JURISDICTION,
-      'user.create[role=FIELD_AGENT|POLICE_OFFICER|HOSPITAL_CLERK|HEALTHCARE_WORKER|COMMUNITY_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR]',
-      'user.edit[role=FIELD_AGENT|POLICE_OFFICER|HOSPITAL_CLERK|HEALTHCARE_WORKER|COMMUNITY_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR]',
+      'user.create[role=FIELD_AGENT|POLICE_OFFICER|HOSPITAL_CLERK|HEALTHCARE_WORKER|COMMUNITY_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR|FIELD_AGENT_TEST|POLICE_OFFICER_TEST|HOSPITAL_CLERK_TEST|HEALTHCARE_WORKER_TEST|COMMUNITY_LEADER_TEST|REGISTRATION_AGENT_TEST|LOCAL_REGISTRAR_TEST]',
+      'user.edit[role=FIELD_AGENT|POLICE_OFFICER|HOSPITAL_CLERK|HEALTHCARE_WORKER|COMMUNITY_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR|FIELD_AGENT_TEST|POLICE_OFFICER_TEST|HOSPITAL_CLERK_TEST|HEALTHCARE_WORKER_TEST|COMMUNITY_LEADER_TEST|REGISTRATION_AGENT_TEST|LOCAL_REGISTRAR_TEST]',
       SCOPES.ORGANISATION_READ_LOCATIONS_MY_JURISDICTION,
       SCOPES.PERFORMANCE_READ,
       SCOPES.PERFORMANCE_READ_DASHBOARDS,
@@ -558,32 +558,11 @@ const testRoles: Role[] = [
     ]
   },
   {
-    id: 'NATIONAL_SYSTEM_ADMIN_TEST (Test)',
+    id: 'PERFORMANCE_MANAGER_TEST',
     label: {
-      defaultMessage: 'National System Admin',
-      description: 'Name for user role National System Admin',
-      id: 'userRole.nationalSystemAdmin'
-    },
-    scopes: [
-      SCOPES.USER_CREATE,
-      'user.create[role=FIELD_AGENT|POLICE_OFFICER|HOSPITAL_CLERK|HEALTHCARE_WORKER|COMMUNITY_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR|NATIONAL_REGISTRAR|LOCAL_SYSTEM_ADMIN|NATIONAL_SYSTEM_ADMIN|PERFORMANCE_MANAGER]',
-      'user.edit[role=FIELD_AGENT|POLICE_OFFICER|HOSPITAL_CLERK|HEALTHCARE_WORKER|COMMUNITY_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR|NATIONAL_REGISTRAR|LOCAL_SYSTEM_ADMIN|NATIONAL_SYSTEM_ADMIN|PERFORMANCE_MANAGER]',
-      SCOPES.USER_READ,
-      SCOPES.USER_UPDATE,
-      SCOPES.ORGANISATION_READ_LOCATIONS,
-      SCOPES.PERFORMANCE_READ,
-      SCOPES.PERFORMANCE_READ_DASHBOARDS,
-      SCOPES.PERFORMANCE_EXPORT_VITAL_STATISTICS,
-      SCOPES.RECORD_REINDEX,
-      SCOPES.CONFIG_UPDATE_ALL
-    ]
-  },
-  {
-    id: 'PERFORMANCE_MANAGER_TEST (Test)',
-    label: {
-      defaultMessage: 'Performance Manager',
+      defaultMessage: 'Performance Manager (Test)',
       description: 'Name for user role Performance Manager',
-      id: 'userRole.performanceManager'
+      id: 'userRole.performanceManager.test'
     },
     scopes: [
       SCOPES.PERFORMANCE_READ,
@@ -593,11 +572,11 @@ const testRoles: Role[] = [
     ]
   },
   {
-    id: 'NATIONAL_REGISTRAR_TEST (Test)',
+    id: 'NATIONAL_REGISTRAR_TEST',
     label: {
-      defaultMessage: 'National Registrar',
+      defaultMessage: 'National Registrar (Test)',
       description: 'Name for user role National Registrar',
-      id: 'userRole.nationalRegistrar'
+      id: 'userRole.nationalRegistrar.test'
     },
     scopes: [
       SCOPES.RECORD_READ,
