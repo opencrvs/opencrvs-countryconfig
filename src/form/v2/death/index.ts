@@ -323,6 +323,12 @@ export const deathEvent = defineConfig({
           "By clicking 'Confirm', you confirm that the information entered is correct and the event can be registered."
       },
       flags: [{ id: 'validated', operation: 'remove' }],
+      conditionals: [
+        {
+          type: ConditionalType.ENABLE,
+          conditional: flag('validated')
+        }
+      ],
       deduplication: {
         id: 'death-deduplication',
         label: {
