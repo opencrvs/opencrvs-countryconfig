@@ -24,8 +24,7 @@ import {
   or,
   not,
   defineConditional,
-  never,
-  not
+  never
 } from '@opencrvs/toolkit/events'
 import { Event } from './types/types'
 import { MAX_NAME_LENGTH } from './v2/birth/validators'
