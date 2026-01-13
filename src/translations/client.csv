@@ -1945,13 +1945,13 @@ review.declare.confirm,The label for review action button when declaring,Send fo
 review.declare.confirmModal.cancel,The label for modal cancel button when declaring,Cancel,Annuler
 review.declare.confirmModal.confirm,The label for modal confirm button when declaring,Confirm,Confirmer
 review.declare.confirmModal.description,The description for review action modal when declaring,This declaration will be sent for review,Cette déclaration sera envoyée pour révision.
-review.declare.confirmModal.title,The title for review action modal when declaring,Declare the {birth}?,Déclarer le/la {event} ?
+review.declare.confirmModal.title,The title for review action modal when declaring,Declare event?,Déclarer l'événement?
 review.declare.description.complete,The description for declare action when form is complete,The informant will receive an email with a registration number that they can use to collect the certificate,L'informateur recevra un e-mail avec un numéro d'enregistrement qu'il pourra utiliser pour récupérer le certificat.
 review.declare.description.incomplete,The description for declare action when form is complete,The informant will receive an email with a tracking ID that they can use to provide the additional mandatory information required for registration,Cette déclaration sera envoyée au greffier pour être complétée. Veuillez informer l'informateur qu'il devra se présenter au bureau avec les informations manquantes et les documents justificatifs.
 review.declare.incomplete.confirmModal.cancel,The label for modal cancel button when declaring,Cancel,Annuler
 review.declare.incomplete.confirmModal.confirm,The label for modal confirm button when declaring,Confirm,Confirmer
 review.declare.incomplete.confirmModal.description,The description for review action modal when declaring incomplete,This incomplete declaration will be sent for review.,Cette déclaration sera envoyée au greffier pour être complétée. Veuillez informer l'informateur qu'il devra se présenter au bureau avec les informations manquantes et les documents justificatifs.
-review.declare.incomplete.confirmModal.title,The title for review action modal when declaring,Notify the {event}?,Notifier le/la {event} ?
+review.declare.incomplete.confirmModal.title,The title for review action modal when declaring,Notify event?,Notifier l'événement?
 review.declare.title.complete,The title shown when reviewing an incomplete record to declare,Declaration complete,Déclaration complète
 review.declare.title.incomplete,The title shown when reviewing an incomplete record to declare,Declaration incomplete,Déclaration incomplète
 review.documentViewer.title,,Supporting documents,Documents d'appui
@@ -1977,7 +1977,7 @@ review.inputs.terms,Label for signature terms,"We, the undersigned declare under
 review.inputs.witnessOneSignature,Label for informants signature input,Signature of Witness 1,Signature du témoin 1
 review.inputs.witnessTwoSignature,Label for informants signature input,Signature of Witness 2,Signature du témoin 2
 review.modal.desc.submitConfirmation,Submit description text on modal,"{completeDeclaration, select, true {This declaration will be sent for review.} other {This incomplete declaration will be sent for review.}}","{completeDeclaration, select, true {Cette déclaration sera envoyée au greffier pour qu'il l'examine.} other {Cette déclaration sera envoyée au greffier pour être complétée. Veuillez informer l'informateur qu'il devra se présenter au bureau avec les informations manquantes et les documents justificatifs.}}"
-review.modal.title.registerConfirmation,Title for register confirmation modal,Register the {event}?,Enregistrer cet {event}?
+review.modal.title.registerConfirmation,Title for register confirmation modal,Register event?,Enregistrer l'événement?
 review.modal.title.submitConfirmation,Submit title text on modal,"{completeDeclaration, select, true {Send for review?} other {Send for review?}}","{completeDeclaration, select, true {Envoyer la déclaration pour examen?} other {Envoyer une déclaration incomplète?}}"
 review.register.confirm,The label for register button of review action,Register,Enregistrer
 review.register.confirmModal.cancel,The label for modal cancel button when registering,Cancel,Annuler

@@ -290,17 +290,20 @@ export const birthEvent = defineConfig({
       dialogCopy: {
         notify: {
           id: 'event.birth.action.declare.notify.copy',
-          defaultMessage: 'Are you sure you want to notify this event?',
+          defaultMessage:
+            'You are about to formally notify the relevant Registration Office that a new birth event has occurred. Please confirm that the information provided is accurate before proceeding.',
           description: 'Confirmation text for the notify action'
         },
         declare: {
           id: 'event.birth.action.declare.declare.copy',
-          defaultMessage: 'Are you sure you want to declare this event?',
+          defaultMessage:
+            'You are about to formally declare this birth event. Once declared, the record will enter the verification and approval process.',
           description: 'Confirmation text for the declare action'
         },
         register: {
           id: 'event.birth.action.declare.register.copy',
-          defaultMessage: 'Are you sure you want to register this event?',
+          defaultMessage:
+            'Registering this birth event will create an official civil registration record. Please ensure all details are correct before proceeding.',
           description: 'Confirmation text for the register action'
         }
       }
