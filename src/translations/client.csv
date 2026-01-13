@@ -14,7 +14,7 @@ action.view,Label for view button in dropdown menu,View {recordOrDeclaration},"v
 action.view.record,Label for view record,View,Afficher
 actionModal.cancel,The label for cancel button of action modal,Cancel,Annuler
 actionModal.confirm,The label for confirm button of action modal,Confirm,Confirmer
-actionModal.description,The description for action modal,The informant will be notified of this decision and a record of this decision will be recorded,L'informateur sera informé de cette décision et celle-ci sera consignée dans un dossier.
+actionModal.description,The description for action modal,The informant will be notified of this decision and a record of this decision will be recorded.,L'informateur sera informé de cette décision et celle-ci sera consignée dans un dossier.
 actions.edit,Edit action label,Edit,Modifier
 actions.notify,Notify action label,Notify,Notifier
 advancedSearch.accordion.hide,Label for hide button when accordion is closed,Hide,Cacher
@@ -430,12 +430,13 @@ correction.certificate.corrector.idCheck,The title for id check component,Verify
 correction.certificate.corrector.idCheckVerify,The label for id check component action when verify details,Verified,Vérifié
 correction.certificate.corrector.idCheckWithoutVerify,The label for id check component action when does not verify details,Identity does not match,L'identité ne correspond pas
 correction.certificate.corrector.otherIdCheck,The title for other id check component,Check proof of ID,Avez-vous vérifié leur preuve d'identification ?
-correction.correctRecordDialog.description,The description for the dialog when record correction sent by a registrar,The informant will be notified of this correction and a record of this decision will be recorded,L'informateur sera informé de cette correction et une trace de cette décision sera enregistrée.
+correction.correctRecordDialog.description,The description for the dialog when record correction sent by a registrar,Approving this correction will permanently update the official record.,L'approbation de cette correction mettra définitivement à jour le registre officiel.
 correction.correctRecordDialog.title,The title for the dialog when record correction sent by a registrar,Correct record?,enregistrement correct?
 correction.correctionForApprovalDialog.actions.cancel,The cancel button for the dialog when record correction sent by registration agent for approval,Cancel,Annuler
 correction.correctionForApprovalDialog.actions.send,The send button for the dialog when record correction sent by registration agent for approval,Confirm,Confirmer
-correction.correctionForApprovalDialog.description,The description for the dialog when record correction sent by registration agent for approval,The Registrar will be notified of this correction request and a record of this request will be recorded,Le greffier sera informé de cette demande de correction et un enregistrement de cette demande sera effectué
-correction.correctionForApprovalDialog.title,The title for the dialog when record correction sent by registration agent for approval,Send record correction for approval?,Envoyer la correction de l'enregistrement pour approbation?
+correction.correctionForApprovalDialog.description,The description for the dialog when record correction sent by registration agent for approval,This will initiate a formal correction request for the selected record. Supporting documentation may be required.,Cela initiera une demande officielle de correction pour l'enregistrement sélectionné. Des documents justificatifs peuvent être exigés.
+correction.correctionForApprovalDialog.title,The title for the dialog when record correction sent by registration agent for approval,Request record correction?,Demander une correction de l'enregistrement ?
+correction.correctionReject.description,The description for reject correction modal,Rejecting this correction request will leave the original record unchanged. A reason for rejection should be provided.,Le rejet de cette demande de correction laissera le registre officiel inchangé. Un motif de rejet doit être fourni.
 correction.correctionReject.reason,Correction request rejection reason,Reason for rejection,Motif du rejet
 correction.correctionRequest,Correction request text,Correction request,Demande de correction
 correction.corrector.anotherAgent,Label for another registration or field agent option in certificate correction form,Another registration agent or field agent,Un autre agent d'enregistrement ou un agent de terrain
@@ -1763,8 +1764,8 @@ print.certificate.printReceipt,The label for print receipt button,Print receipt,
 print.certificate.queryError,The error message shown when a query fails,An error occurred while quering for birth registration data,Une erreur s'est produite lors de la recherche de données d'enregistrement des naissances.
 print.certificate.review.description,Certificate review description,Please confirm that the informant has reviewed that the information on the certificate is correct and that it is ready to print.,Veuillez confirmer que l'informateur a vérifié que les informations figurant sur le certificat sont correctes et que celui-ci est prêt à être imprimé.
 print.certificate.review.modal.body.print,Print certificate modal body text,A Pdf of the certificate will open in a new tab for printing. The record will move to the ready-to-issue queue.,Un Pdf du certificat s'ouvrira dans un nouvel onglet que vous pourrez imprimer. Cet enregistrement sera ensuite déplacé vers votre file d'attente de travail prêt à émettre
-print.certificate.review.modal.body.printAndIssue,Print certificate modal body text,A Pdf of the certificate will open in a new tab for printing and issuing.,Un Pdf du certificat s'ouvrira dans un nouvel onglet que vous pourrez imprimer et émettre.
-print.certificate.review.printAndIssueModalTitle,Print and issue certificate modal title text,Print and issue certificate?,Imprimer et émettre le certificat ?
+print.certificate.review.modal.body.printAndIssue,Print certificate modal body text,This will generate a certified copy of the record for printing.,Ceci générera une copie certifiée du dossier à imprimer.
+print.certificate.review.printAndIssueModalTitle,Print and issue certificate modal title text,Print certified copy?,Imprimer une copie certifiée ?
 print.certificate.review.printModalTitle,Print certificate modal title text,Print certificate?,Imprimer le certificat ?
 print.certificate.review.title,Certificate review title,Ready to certify?,Prêt à certifier ?
 print.certificate.section.title,The title of print certificate action,Certify record,Certifier l'enregistrement
@@ -1781,7 +1782,7 @@ printAction.title,The title for print action,Print certificate,Imprimer le certi
 record-corrected.summary.section.title,Corrections section title,Correction(s),Correction(s)
 record.certificate.collectedInAdvance,Table column header showing collector info in record audit,Printed in advance by,Imprimé à l'avance par
 record.certificate.collector,Table column header showing collector info in record audit,Printed on collection,Contrôle d'identité
-recordAudit.archive.confirmation.body,Confirmation body for archiving a declaration,This will remove the declaration from the workqueue and change the status to Archive. To revert this change you will need to search for the declaration.,"Cela supprimera la déclaration de la file d'attente et changera son statut en Archivé. Pour annuler ce changement, vous devrez rechercher la déclaration."
+recordAudit.archive.confirmation.body,Confirmation body for archiving a declaration,Archiving will remove this declaration from active processing while retaining it for record purposes. Archived declarations cannot be modified unless reinstated.,L'archivage retirera cette déclaration du traitement actif tout en la conservant à des fins d'enregistrement. Les déclarations archivées ne peuvent pas être modifiées sauf si elles sont réintégrées.
 recordAudit.archive.confirmation.title,Confirmation title for archiving a declaration,Archive declaration?,Archiver la déclaration ?
 recordAudit.archive.status,Archived status,Archived,Archivé
 recordAudit.contact,Contact for record audit,Contact,Contact
@@ -1931,7 +1932,7 @@ register.selectVitalEvent.registerNewEventHeader,The section heading on the page
 register.selectVitalEvent.registerNewEventHeading,The section heading on the page,Event type,Quel type d'événement voulez-vous déclarer ?
 register.selectVitalEvent.registerNewEventTitle,The title that appears on the select vital event page,New declaration,Nouvelle déclaration
 rejectModal.archive,The label for archive button of reject modal,Archive,Archiver
-rejectModal.description,The description for reject modal,Please describe the updates required to this record for follow up action.,Veuillez décrire les mises à jour nécessaires à cet enregistrement pour le suivi de l'action.
+rejectModal.description,The description for reject modal,Rejecting this declaration will return it to the submitter for updates. Please ensure a valid reason for rejection has been recorded.,Le rejet de cette déclaration la renverra au déclarant pour mise à jour. Veuillez vous assurer qu'une raison valable pour le rejet a été enregistrée.
 rejectModal.markAsDuplicate,The label for mark as duplicate checkbox of reject modal,Mark as a duplicate,Marquer comme duplicata
 rejectModal.sendForUpdate,The label for send For Update button of reject modal,Send For Update,Envoyer pour mise à jour
 rejectModal.title,The title for reject modal,Reason for rejection?,Quelle mise à jour la déclaration nécessite-t-elle ?

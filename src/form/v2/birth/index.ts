@@ -780,7 +780,7 @@ export const birthEvent = defineConfig({
       supportingCopy: {
         id: 'recordAudit.archive.confirmation.body',
         defaultMessage:
-          'This will remove the declaration from the workqueue and change the status to Archive. To revert this change you will need to search for the declaration.',
+          'Archiving will remove this declaration from active processing while retaining it for record purposes. Archived declarations cannot be modified unless reinstated.',
         description: 'Confirmation body for archiving a declaration'
       }
     }
