@@ -306,6 +306,12 @@ export const deathEvent = defineConfig({
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.death.action.reject.label'
+      },
+      supportingCopy: {
+        id: 'rejectModal.description',
+        defaultMessage:
+          'Rejecting this declaration will return it to the submitter for updates. Please ensure a valid reason for rejection has been recorded.',
+        description: 'The description for reject modal'
       }
     },
     {
