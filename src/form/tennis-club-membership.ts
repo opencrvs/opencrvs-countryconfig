@@ -24,7 +24,8 @@ import {
   or,
   not,
   defineConditional,
-  never
+  never,
+  now
 } from '@opencrvs/toolkit/events'
 import { Event } from './types/types'
 import { MAX_NAME_LENGTH } from './v2/birth/validators'
@@ -216,6 +217,7 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
           type: FieldType.DATE,
           required: true,
           analytics: true,
+          defaultValue: now(),
           validation: [
             {
               message: {
@@ -236,6 +238,7 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
           id: 'applicant.tob',
           type: FieldType.TIME,
           required: false,
+          defaultValue: now(),
           configuration: {
             use12HourFormat: true
           },
