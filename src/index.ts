@@ -61,7 +61,6 @@ import {
   onBirthActionHandler,
   onDeathActionHandler
 } from '@countryconfig/api/custom-event/handler'
-import { readFileSync } from 'fs'
 import {
   ActionDocument,
   ActionStatus,
