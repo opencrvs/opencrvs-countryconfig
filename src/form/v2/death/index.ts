@@ -241,7 +241,7 @@ export const deathEvent = defineConfig({
         declare: {
           id: 'event.death.action.edit.declare.copy',
           defaultMessage:
-            'Are you sure you want to edit this declaration? By confirming you are redeclaring this event and override past changes...',
+            'Are you sure you want to edit this declaration? By confirming you are redeclaring this event and override past changes.',
           description: 'Confirmation text for the declare with edits action'
         },
         register: {
