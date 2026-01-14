@@ -227,6 +227,7 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
           id: 'applicant.tob',
           type: FieldType.TIME,
           required: false,
+          defaultValue: now(),
           configuration: {
             use12HourFormat: true
           },
