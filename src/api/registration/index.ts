@@ -153,8 +153,15 @@ export async function onMosipBirthRegisterHandler(
 ) {
   const token = request.auth.artifacts.token as string
   const event = request.payload
+  const eventId = event.id
+  const action = getPendingAction(event.actions)
 
-  const registrationNumber = generateRegistrationNumber()
+  setTimeout(() => {
+    rejectRequestedRegistration(token, eventId, action.id)
+  }, 10000)
+  return h.response().code(202)
+
+  /*const registrationNumber = generateRegistrationNumber()
 
   const shouldForwardToMosip = true // This should be determined by your custom logic, e.g., based on verification status
 
@@ -207,7 +214,7 @@ export async function onMosipBirthRegisterHandler(
         reason: 'Unexpected error in OpenCRVS-MOSIP interoperability layer'
       })
       .code(400)
-  }
+  }*/
 }
 
 export async function onMosipDeathRegisterHandler(
