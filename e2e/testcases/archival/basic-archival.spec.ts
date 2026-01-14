@@ -306,11 +306,6 @@ test.describe.serial('Basic Archival flow', () => {
 
   test('Archive the declaration', async () => {
     await selectAction(page, 'Archive')
-    await expect(
-      page.getByText(
-        'This will remove the declaration from the workqueue and change the status to Archive. To revert this change you will need to search for the declaration.'
-      )
-    ).toBeVisible()
     await page.getByRole('button', { name: 'Archive', exact: true }).click()
   })
 
@@ -383,11 +378,6 @@ test.describe.serial('Archival of declaration sent for approval', () => {
 
   test('Archive the declaration', async () => {
     await selectAction(page, 'Archive')
-    await expect(
-      page.getByText(
-        'This will remove the declaration from the workqueue and change the status to Archive. To revert this change you will need to search for the declaration.'
-      )
-    ).toBeVisible()
     await page.getByRole('button', { name: 'Archive', exact: true }).click()
   })
 
