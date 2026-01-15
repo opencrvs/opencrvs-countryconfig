@@ -214,6 +214,7 @@ config.emailAllUsers.title,Title for email all users,Email all users,Envoyer un 
 config.userRoles.language,Language name,"{language, select, en {English} fr {French} other {{language}}}","{language, select, en {Anglais} fr {Français} other {{language}}}"
 configuration.dateFormat,Default format for date values,d MMMM y,d MMMM y
 configuration.timeFormat,Default time format for timestamps,"MMMM dd, yyyy · hh.mm a","MMMM dd, yyyy · hh.mm a"
+configuration.timeField.outputFormat,Default output format for time fields,"hh:mm a","hh:mm a"
 conflicts.modal.assign.description,Description for modal when assign,Please note you will have sole access to this record. Please make any updates promptly otherwise unassign the record.,"Veuillez noter que vous aurez un accès exclusif à cet enregistrement. Veuillez effectuer rapidement les mises à jour éventuelles, sinon vous désassignez l'enregistrement."
 conflicts.modal.assign.title,Title for modal when assign,Assign record?,Attribuer un enregistrement ?
 conflicts.modal.assigned.description,Description for modal when record already assigned,{name} at {officeName} has sole editable access to this record,{name} à {officeName} a un accès unique et modifiable à cet enregistrement.
