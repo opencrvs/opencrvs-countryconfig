@@ -305,7 +305,7 @@ test.describe.serial('Birth correction flow', () => {
       await page.getByRole('button', { name: 'Approve', exact: true }).click()
       await page.getByRole('button', { name: 'Confirm', exact: true }).click()
 
-      await expectInUrl(page, `/workqueue/in-review-all`)
+      await expectInUrl(page, `/workqueue/pending-certification`)
       await ensureOutboxIsEmpty(page)
       await page.getByRole('button', { name: 'Ready to print' }).click()
       await page

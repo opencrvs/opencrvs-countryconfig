@@ -63,7 +63,8 @@ test.describe('Side navigation menu', () => {
       await page.getByRole('button', { name: item }).click()
       await expect(page.locator('Farajaland CRS')).toBeHidden()
 
-      await page.getByRole('button').click()
+      // Only one button available (X)
+      await page.locator('#page-title').getByRole('button').click()
     }
   })
 
@@ -116,53 +117,60 @@ test.describe('Side navigation menu', () => {
       await expect(page.locator('Farajaland CRS')).toBeHidden()
 
       // Only one button available (X)
-      await page.getByRole('button').click()
+      await page.locator('#page-title').getByRole('button').click()
     }
   })
 
-  test('Check National System Admin navigation items', async () => {
+  test('1.3. Check National System Admin navigation items', async () => {
     await login(page, CREDENTIALS.NATIONAL_SYSTEM_ADMIN, false)
 
-    const expectedItemsWithFrame = ['Organisation', 'Team']
+    const nationalSystemAdminNavItemsWithFrame = ['Organisation', 'Team']
 
-    const expectedItemsWithoutFrame = [
+    const nationalSystemAdminNavItemsWithoutFrame = [
       'Registrations Dashboard',
       'Completeness Dashboard',
       'Registry'
     ]
 
     // Should not have any workqueues, check that none of the workqueues are present
-    const exampleWorkqueues = [
+    const registrationAgentWorkqueues = [
       'Outbox',
       'My drafts',
       'Assigned to you',
       'Recent',
-      'Notifications'
+      'Notifications',
+      'Pending validation',
+      'Pending updates',
+      'Pending approval',
+      'Escalated',
+      'In external validation',
+      'Pending certification',
+      'Pending issuance'
     ]
 
-    const expectedNestedItemsWithFrame = [
+    const nationalSystemAdminNestedNavItemsWithFrame = [
       ['Communications', 'Email all users'],
       ['Configuration', 'Integrations']
     ]
 
-    for (const item of expectedItemsWithFrame) {
+    for (const item of nationalSystemAdminNavItemsWithFrame) {
       await page.getByRole('button', { name: item }).click()
 
-      for (const item of exampleWorkqueues) {
+      for (const item of registrationAgentWorkqueues) {
         await expect(page.locator(item)).toBeHidden()
       }
 
-      for (const items of expectedNestedItemsWithFrame) {
+      for (const items of nationalSystemAdminNestedNavItemsWithFrame) {
         page.getByRole('button', { name: items[0] })
         await expect(page.locator(items[1])).toBeHidden()
       }
 
-      for (const item of expectedItemsWithoutFrame) {
+      for (const item of nationalSystemAdminNavItemsWithoutFrame) {
         page.getByRole('button', { name: item })
       }
     }
 
-    for (const items of expectedItemsWithFrame) {
+    for (const items of nationalSystemAdminNestedNavItemsWithFrame) {
       await expect(page.locator(items[1])).toBeHidden()
 
       await page.getByRole('button', { name: items[0] }).click()
@@ -170,12 +178,12 @@ test.describe('Side navigation menu', () => {
       await page.getByRole('button', { name: items[1] }).click()
     }
 
-    for (const item of expectedItemsWithoutFrame) {
+    for (const item of nationalSystemAdminNavItemsWithoutFrame) {
       await page.getByRole('button', { name: item }).click()
       await expect(page.locator('Farajaland CRS')).toBeHidden()
 
       // Only one button available (X)
-      await page.getByRole('button').click()
+      await page.locator('#page-title').getByRole('button').click()
     }
   })
 })
