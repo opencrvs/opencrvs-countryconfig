@@ -67,7 +67,7 @@ export const roles: Role[] = [
       'search[event=birth,access=all]',
       'search[event=death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|requires-completion|in-review|in-external-validation|escalated|pending-validation|pending-updates|pending-approval|pending-certification|pending-issuance]',
+      'workqueue[id=assigned-to-you|recent|requires-completion|in-review|in-external-validation|escalated|pending-validation|pending-updates|pending-approval|pending-certification|pending-issuance|correction-requested]',
       'record.create[event=birth|death|tennis-club-membership]',
       'record.read[event=birth|death|tennis-club-membership]',
       'record.declare[event=birth|death|tennis-club-membership]',
@@ -118,7 +118,7 @@ export const roles: Role[] = [
       'search[event=birth,access=all]',
       'search[event=death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|requires-completion|in-external-validation|escalated|potential-duplicate|pending-updates|pending-registration|pending-approval|pending-certification|pending-issuance]',
+      'workqueue[id=assigned-to-you|recent|requires-completion|in-external-validation|escalated|potential-duplicate|pending-updates|pending-registration|pending-approval|pending-certification|pending-issuance|correction-requested]',
       'record.create[event=birth|death|tennis-club-membership]',
       'record.read[event=birth|death|tennis-club-membership]',
       'record.declare[event=birth|death|tennis-club-membership]',
@@ -250,7 +250,7 @@ export const roles: Role[] = [
     scopes: [
       'record.read[event=birth|death|tennis-club-membership]',
       'record.custom-action[event=birth,customActionType=APPROVE_DECLARATION|PROVINCIAL_REGISTER_FEEDBACK]',
-      'workqueue[id=late-registration-approval-required|recent|pending-feedback-provincinal-registrar|pending-approval]',
+      'workqueue[id=late-registration-approval-required|recent|pending-feedback-provincinal-registrar|pending-approval|correction-requested]',
       'search[event=birth,access=all]'
     ]
   },
