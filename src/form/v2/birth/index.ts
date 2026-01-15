@@ -296,7 +296,27 @@ export const birthEvent = defineConfig({
             user.hasRole('LOCAL_REGISTRAR')
           )
         }
-      ]
+      ],
+      dialogCopy: {
+        notify: {
+          id: 'event.birth.action.declare.notify.copy',
+          defaultMessage:
+            'You are about to formally notify the relevant Registration Office that a new birth event has occurred. Please confirm that the information provided is accurate before proceeding.',
+          description: 'Confirmation text for the notify action'
+        },
+        declare: {
+          id: 'event.birth.action.declare.declare.copy',
+          defaultMessage:
+            'You are about to formally declare this birth event. Once declared, the record will enter the verification and approval process.',
+          description: 'Confirmation text for the declare action'
+        },
+        register: {
+          id: 'event.birth.action.declare.register.copy',
+          defaultMessage:
+            'Registering this birth event will create an official civil registration record. Please ensure all details are correct before proceeding.',
+          description: 'Confirmation text for the register action'
+        }
+      }
     },
     {
       type: ActionType.EDIT,
@@ -311,7 +331,27 @@ export const birthEvent = defineConfig({
         { id: 'approval-required-for-late-registration', operation: 'remove' },
         { id: 'escalated-to-provincial-registrar', operation: 'remove' },
         { id: 'escalated-to-registrar-general', operation: 'remove' }
-      ]
+      ],
+      dialogCopy: {
+        notify: {
+          id: 'event.birth.action.edit.notify.copy',
+          defaultMessage:
+            'Are you sure you want to notify this event with these edits?',
+          description: 'Confirmation text for the notify with edits action'
+        },
+        declare: {
+          id: 'event.birth.action.edit.declare.copy',
+          defaultMessage:
+            'Are you sure you want to edit this declaration? By confirming you are redeclaring this event and override past changes.',
+          description: 'Confirmation text for the declare with edits action'
+        },
+        register: {
+          id: 'event.birth.action.edit.register.copy',
+          defaultMessage:
+            'You are about to register this birth event with your edits. Registering this event will create an official civil registration record.',
+          description: 'Confirmation text for the register with edits action'
+        }
+      }
     },
     {
       type: ActionType.CUSTOM,
@@ -676,6 +716,12 @@ export const birthEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.birth.action.reject.label'
       },
+      supportingCopy: {
+        id: 'rejectModal.description',
+        defaultMessage:
+          'Rejecting this declaration will return it to the submitter for updates. Please ensure a valid reason for rejection has been recorded.',
+        description: 'The description for reject modal'
+      },
       flags: [{ id: 'validated', operation: 'remove' }]
     },
     {
@@ -686,6 +732,12 @@ export const birthEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.birth.action.register.label'
       },
+      supportingCopy: {
+        id: 'review.register.description.complete',
+        description: 'Confirmation text for the register action',
+        defaultMessage:
+          "By clicking 'Confirm', you confirm that the information entered is correct and the event can be registered."
+      },
       flags: [
         { id: 'validated', operation: 'remove' },
         { id: 'pending-first-certificate-issuance', operation: 'add' }
@@ -694,6 +746,7 @@ export const birthEvent = defineConfig({
         {
           type: ConditionalType.ENABLE,
           conditional: and(
+            flag('validated'),
             not(flag('approval-required-for-late-registration')),
             not(flag('escalated-to-provincial-registrar')),
             not(flag('escalated-to-registrar-general'))
@@ -739,6 +792,21 @@ export const birthEvent = defineConfig({
         description: 'Title of the form to show in review page'
       },
       correctionForm: CORRECTION_FORM
+    },
+    {
+      type: ActionType.ARCHIVE,
+      label: {
+        defaultMessage: 'Archive',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'event.birth.action.archive.label'
+      },
+      supportingCopy: {
+        id: 'recordAudit.archive.confirmation.body',
+        defaultMessage:
+          'Archiving will remove this declaration from active processing while retaining it for record purposes. Archived declarations cannot be modified unless reinstated.',
+        description: 'Confirmation body for archiving a declaration'
+      }
     }
   ],
   advancedSearch: advancedSearchBirth
