@@ -1141,13 +1141,9 @@ test.describe.serial('8. Validate declaration review page', () => {
       await page.getByRole('button', { name: 'Confirm' }).click()
     })
 
-    test('8.3.8 Confirm the declaration to ready for print', async () => {
+    test('8.3.8 Confirm the declaration is in "Pending certification" -workqueue', async () => {
       await ensureOutboxIsEmpty(page)
-      await page.getByText('Ready to print').click()
-
-      /*
-       * @TODO: When workflows are implemented on V2, this should navigate to correct workflow first.
-       */
+      await page.getByText('Pending certification').click()
       await expect(
         page.getByRole('button', {
           name: formatName(declaration.child.name)
