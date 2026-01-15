@@ -88,7 +88,18 @@ export const Workqueues = defineWorkqueues([
         ]
       }
     },
-    actions: [{ type: 'DEFAULT', conditionals: [] }]
+    actions: [{ type: 'DEFAULT', conditionals: [] }],
+    columns: [
+      DATE_OF_EVENT_COLUMN,
+      {
+        label: {
+          defaultMessage: 'Validation requested',
+          description: 'This is the label for the validation requested column',
+          id: 'workqueue.pending-validation.updatedAtColumn'
+        },
+        value: event.field('updatedAt')
+      }
+    ]
   },
 
   {
@@ -100,7 +111,7 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of potential duplicate workqueue'
     },
     query: { flags: { anyOf: [InherentFlags.POTENTIAL_DUPLICATE] } },
-    actions: []
+    actions: [{ type: 'DEFAULT', conditionals: [] }]
   },
   {
     slug: 'pending-updates',
@@ -110,8 +121,22 @@ export const Workqueues = defineWorkqueues([
       defaultMessage: 'Pending updates',
       description: 'Title of pending updates workqueue'
     },
-    query: { flags: { anyOf: [InherentFlags.REJECTED] } },
-    actions: []
+    query: {
+      createdBy: { type: 'exact', term: user('id') },
+      flags: { anyOf: [InherentFlags.REJECTED] }
+    },
+    actions: [{ type: 'DEFAULT', conditionals: [] }],
+    columns: [
+      DATE_OF_EVENT_COLUMN,
+      {
+        label: {
+          defaultMessage: 'Update requested',
+          description: 'This is the label for the update requested column',
+          id: 'workqueue.pending-updates.updatedAtColumn'
+        },
+        value: event.field('updatedAt')
+      }
+    ]
   },
   {
     slug: 'pending-approval',
@@ -153,7 +178,19 @@ export const Workqueues = defineWorkqueues([
         noneOf: ['approval-required-for-late-registration']
       }
     },
-    actions: []
+    actions: [],
+    columns: [
+      DATE_OF_EVENT_COLUMN,
+      {
+        label: {
+          defaultMessage: 'Registration requested',
+          description:
+            'This is the label for the registration requested column',
+          id: 'workqueue.pending-registration.updatedAtColumn'
+        },
+        value: event.field('updatedAt')
+      }
+    ]
   },
   {
     slug: 'registration-registrar-general',
@@ -164,7 +201,19 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of pending registration workqueue'
     },
     query: { status: { type: 'exact', term: EventStatus.enum.DECLARED } },
-    actions: []
+    actions: [],
+    columns: [
+      DATE_OF_EVENT_COLUMN,
+      {
+        label: {
+          defaultMessage: 'Registration requested',
+          description:
+            'This is the label for the registration requested column',
+          id: 'workqueue.pending-registration.updatedAtColumn'
+        },
+        value: event.field('updatedAt')
+      }
+    ]
   },
   {
     slug: 'escalated',
@@ -275,7 +324,18 @@ export const Workqueues = defineWorkqueues([
       id: 'workqueues.pendingCertification.emptyMessage',
       defaultMessage: 'No pending certification records',
       description: 'Empty message for pending certification workqueue'
-    }
+    },
+    columns: [
+      DATE_OF_EVENT_COLUMN,
+      {
+        label: {
+          defaultMessage: 'Registered',
+          description: 'This is the label for the registered column',
+          id: 'workqueue.pending-certification.updatedAtColumn'
+        },
+        value: event.field('updatedAt')
+      }
+    ]
   },
   {
     slug: 'pending-issuance',

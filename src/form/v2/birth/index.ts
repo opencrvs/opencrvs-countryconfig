@@ -513,7 +513,7 @@ export const birthEvent = defineConfig({
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            flag('pending-first-certificate-issuance'),
+            flag('certified-copy-printed-in-advance-of-issuance'),
             status('REGISTERED')
           )
         }
@@ -779,7 +779,8 @@ export const birthEvent = defineConfig({
           conditional: field('collector.requesterId').isEqualTo(
             'PRINT_IN_ADVANCE'
           )
-        }
+        },
+        { id: 'pending-first-certificate-issuance', operation: 'remove' }
       ],
       printForm: BIRTH_CERTIFICATE_COLLECTOR_FORM
     },
