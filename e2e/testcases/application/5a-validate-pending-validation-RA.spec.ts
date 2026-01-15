@@ -39,7 +39,7 @@ test.describe
     await login(page, CREDENTIALS.REGISTRATION_AGENT)
   })
 
-  test('5.1 Go to Ready for review tab', async () => {
+  test('5.1 Go to "Pending validation"-workqueue', async () => {
     await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue.
     await page.getByText('Pending validation').click()
     await expect(

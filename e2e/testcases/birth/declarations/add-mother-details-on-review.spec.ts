@@ -230,7 +230,7 @@ test.describe.serial('Add mother details on review', () => {
 
       await ensureOutboxIsEmpty(page)
 
-      await page.getByText('Sent for review').click()
+      await page.getByText('Recent').click()
 
       await expect(
         page.getByRole('button', {
@@ -243,9 +243,9 @@ test.describe.serial('Add mother details on review', () => {
   test.describe('Declaration Review by Local Registrar', async () => {
     test('Navigate to the declaration Edit-action', async () => {
       await logout(page)
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await login(page, CREDENTIALS.REGISTRATION_AGENT)
 
-      await page.getByText('Ready for review').click()
+      await page.getByText('Pending validation').click()
 
       await page
         .getByRole('button', {

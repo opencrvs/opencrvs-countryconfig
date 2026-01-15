@@ -480,7 +480,7 @@ test.describe.serial('1. Birth declaration case - 1', () => {
 
       await ensureOutboxIsEmpty(page)
 
-      await page.getByText('Sent for review').click()
+      await page.getByText('Recent').click()
       await expect(
         page.getByRole('button', {
           name: formatName(declaration.child.name)
@@ -489,10 +489,10 @@ test.describe.serial('1. Birth declaration case - 1', () => {
     })
   })
 
-  test.describe('1.2 Declaration Review by RA', async () => {
+  test.describe('1.2 Declaration Review by RO', async () => {
     test('1.2.1 Navigate to the declaration review page', async () => {
       await login(page, CREDENTIALS.REGISTRATION_AGENT)
-      await page.getByText('Ready for review').click()
+      await page.getByText('Pending validation').click()
       await page
         .getByRole('button', {
           name: formatName(declaration.child.name)

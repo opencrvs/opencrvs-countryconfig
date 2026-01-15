@@ -909,11 +909,6 @@ test.describe.serial(' Correct record - 3', () => {
       .click()
     await page.getByRole('button', { name: 'Confirm' }).click()
 
-    /*
-     * Expected result: should
-     * - be navigated to sent for approval tab
-     * - include the declaration in this tab
-     */
     expect(page.url().includes(`events/${eventId}`)).toBeTruthy()
 
     await page.getByTestId('exit-event').click()
@@ -932,7 +927,7 @@ test.describe.serial(' Correct record - 3', () => {
       }
     )
 
-    await page.getByRole('button', { name: 'Sent for approval' }).click()
+    await page.getByRole('button', { name: 'Recent' }).click()
     await expect(
       page.getByText(`${formatV2ChildName(declaration)}`).first()
     ).toBeVisible()

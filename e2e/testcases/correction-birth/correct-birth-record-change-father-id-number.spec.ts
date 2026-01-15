@@ -208,8 +208,8 @@ test.describe.serial("Correct record - Change father's ID number", () => {
     await login(page, CREDENTIALS.LOCAL_REGISTRAR)
   })
 
-  test('Find the event in the "Ready for review" workflow', async () => {
-    await page.getByRole('button', { name: 'Ready for review' }).click()
+  test('Find the event in the "Pending corrections" workqueue', async () => {
+    await page.getByRole('button', { name: 'Pending corrections' }).click()
 
     await page
       .getByRole('button', { name: formatV2ChildName(declaration) })

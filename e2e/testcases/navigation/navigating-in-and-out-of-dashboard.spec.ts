@@ -27,8 +27,8 @@ test.describe.serial('Navigating in and out of dashboard', () => {
     await login(page)
   })
 
-  test('Navigate to the "Ready for review" -workqueue', async () => {
-    await page.getByRole('button', { name: 'Ready for review' }).click()
+  test('Navigate to the "Pending registration" -workqueue', async () => {
+    await page.getByRole('button', { name: 'Pending registration' }).click()
   })
 
   test("Enter the 'Registration Dashboard' - from workqueue", async () => {
@@ -38,8 +38,8 @@ test.describe.serial('Navigating in and out of dashboard', () => {
 
     await page.locator('#page-title button').click()
 
-    await page.waitForURL(`**/workqueue/in-review-all`)
-    await expectInUrl(page, '/workqueue/in-review-all')
+    await page.waitForURL(`**/workqueue/pending-registration`)
+    await expectInUrl(page, '/workqueue/pending-registration')
   })
 
   test.describe

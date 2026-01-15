@@ -148,7 +148,7 @@ test.describe.serial('Correct record - 2', () => {
 
       await expectInUrl(
         page,
-        `/events/request-correction/${eventId}/pages/informant?from=review&workqueue=ready-to-print#informant____relation`
+        `/events/request-correction/${eventId}/pages/informant?from=review&workqueue=pending-certification#informant____relation`
       )
 
       await page.locator('#informant____relation').click()
@@ -186,7 +186,7 @@ test.describe.serial('Correct record - 2', () => {
 
       await expectInUrl(
         page,
-        `/events/request-correction/${eventId}/pages/child?from=review&workqueue=ready-to-print#child____placeOfBirth`
+        `/events/request-correction/${eventId}/pages/child?from=review&workqueue=pending-certification#child____placeOfBirth`
       )
 
       await page.locator('#child____placeOfBirth').click()
@@ -242,7 +242,7 @@ test.describe.serial('Correct record - 2', () => {
       .click()
     await page.getByRole('button', { name: 'Confirm' }).click()
 
-    await expectInUrl(page, `/workqueue/ready-to-print`)
+    await expectInUrl(page, `/workqueue/pending-certification`)
   })
 
   test.describe('2.8 Correction Review', async () => {

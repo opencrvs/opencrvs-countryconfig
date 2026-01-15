@@ -132,14 +132,14 @@ test.describe.serial('Approval of late birth registration', () => {
     test('Declare', async () => {
       await selectDeclarationAction(page, 'Declare')
       await ensureOutboxIsEmpty(page)
-      await page.getByText('Sent for review').click()
+      await page.getByText('Recent').click()
     })
   })
 
   test.describe('Declaration Review by RA', async () => {
     test('Navigate to the declaration review page', async () => {
       await login(page, CREDENTIALS.REGISTRATION_AGENT)
-      await page.getByText('Ready for review').click()
+      await page.getByText('Pending approval').click()
       await page.getByRole('button', { name: childNameFormatted }).click()
 
       await ensureAssigned(page)
@@ -157,10 +157,10 @@ test.describe.serial('Approval of late birth registration', () => {
     })
   })
 
-  test.describe('Declaration Review by LR', async () => {
+  test.describe('Declaration Review by Registrar', async () => {
     test('Navigate to the declaration review page', async () => {
       await login(page, CREDENTIALS.LOCAL_REGISTRAR)
-      await page.getByText('Ready for review').click()
+      await page.getByText('Pending registration').click()
       await page.getByRole('button', { name: childNameFormatted }).click()
     })
 
@@ -237,10 +237,10 @@ test.describe.serial('Approval of late birth registration', () => {
     })
   })
 
-  test.describe('Audit review by LR', async () => {
+  test.describe('Audit review by Registrar', async () => {
     test('Navigate to the declaration review page', async () => {
       await login(page, CREDENTIALS.LOCAL_REGISTRAR, true)
-      await page.getByText('Ready for review').click()
+      await page.getByText('TODO CIHAN').click()
       await page.getByRole('button', { name: childNameFormatted }).click()
     })
 
@@ -373,7 +373,7 @@ test.describe('Birth with non-late registration will not have flag or Approve-ac
     })
 
     test('Navigate to the record', async () => {
-      await page.getByText('Sent for review').click()
+      await page.getByText('Recent').click()
       await page.getByRole('button', { name: childNameFormatted }).click()
     })
 
@@ -618,14 +618,14 @@ test.describe
     test('Declare', async () => {
       await selectDeclarationAction(page, 'Declare')
       await ensureOutboxIsEmpty(page)
-      await page.getByText('Sent for review').click()
+      await page.getByText('Recent').click()
     })
   })
 
   test.describe('Declaration Review by Registration Agent', async () => {
     test('Navigate to the declaration review page', async () => {
       await login(page, CREDENTIALS.REGISTRATION_AGENT)
-      await page.getByText('Ready for review').click()
+      await page.getByText('Pending approval').click()
       await page.getByRole('button', { name: childNameFormatted }).click()
     })
 
@@ -661,7 +661,7 @@ test.describe
     })
 
     test('Go to record', async () => {
-      await page.getByText('Sent for approval').click()
+      await page.getByText('Recent').click()
       await page.getByRole('button', { name: childNameFormatted }).click()
     })
 
@@ -780,14 +780,14 @@ test.describe
     test('Declare', async () => {
       await selectDeclarationAction(page, 'Declare')
       await ensureOutboxIsEmpty(page)
-      await page.getByText('Sent for review').click()
+      await page.getByText('Recent').click()
     })
   })
 
   test.describe('Declaration Review by Local Registrar', async () => {
     test('Navigate to the declaration review page', async () => {
       await login(page, CREDENTIALS.LOCAL_REGISTRAR)
-      await page.getByText('Ready for review').click()
+      await page.getByText('TODO CIHAN').click()
       await page.getByRole('button', { name: childNameFormatted }).click()
     })
 
@@ -828,7 +828,7 @@ test.describe
     })
 
     test('Go to record', async () => {
-      await page.getByText('Sent for review').click()
+      await page.getByText('Recent').click()
       await page.getByRole('button', { name: childNameFormatted }).click()
       await ensureAssigned(page)
     })

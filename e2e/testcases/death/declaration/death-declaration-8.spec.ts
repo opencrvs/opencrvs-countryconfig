@@ -270,11 +270,8 @@ test.describe.serial('8. Death declaration case - 8', () => {
        */
       expect(page.url().includes('assigned-to-you')).toBeTruthy()
 
-      await page.getByText('Sent for review').click()
+      await page.getByText('Recent').click()
 
-      /*
-       * Expected result: The declaration should be in sent for review
-       */
       await expect(
         page.getByRole('button', {
           name:

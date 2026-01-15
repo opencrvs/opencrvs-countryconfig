@@ -186,7 +186,7 @@ test.describe('10. Correct record', () => {
          */
         await expectInUrl(
           page,
-          `/events/request-correction/${eventId}/pages/child?from=review&workqueue=ready-to-print#child____name`
+          `/events/request-correction/${eventId}/pages/child?from=review&workqueue=pending-certification#child____name`
         )
 
         await page
@@ -233,7 +233,7 @@ test.describe('10. Correct record', () => {
 
         await expectInUrl(
           page,
-          `/events/request-correction/${eventId}/pages/child?from=review&workqueue=ready-to-print#child____gender`
+          `/events/request-correction/${eventId}/pages/child?from=review&workqueue=pending-certification#child____gender`
         )
 
         await page.getByTestId('select__child____gender').locator('svg').click()
@@ -271,7 +271,7 @@ test.describe('10. Correct record', () => {
          */
         await expectInUrl(
           page,
-          `/events/request-correction/${eventId}/pages/child?from=review&workqueue=ready-to-print#child____dob`
+          `/events/request-correction/${eventId}/pages/child?from=review&workqueue=pending-certification#child____dob`
         )
 
         const birthDay = updatedChildDetails.birthDate.split('-')
@@ -312,7 +312,7 @@ test.describe('10. Correct record', () => {
          */
         await expectInUrl(
           page,
-          `/events/request-correction/${eventId}/pages/child?from=review&workqueue=ready-to-print#child____placeOfBirth`
+          `/events/request-correction/${eventId}/pages/child?from=review&workqueue=pending-certification#child____placeOfBirth`
         )
 
         await page
@@ -362,7 +362,7 @@ test.describe('10. Correct record', () => {
 
         await expectInUrl(
           page,
-          `/events/request-correction/${eventId}/pages/child?from=review&workqueue=ready-to-print#child____attendantAtBirth`
+          `/events/request-correction/${eventId}/pages/child?from=review&workqueue=pending-certification#child____attendantAtBirth`
         )
 
         await page.getByTestId('select__child____attendantAtBirth').click()
@@ -403,7 +403,7 @@ test.describe('10. Correct record', () => {
 
         await expectInUrl(
           page,
-          `/events/request-correction/${eventId}/pages/child?from=review&workqueue=ready-to-print#child____birthType`
+          `/events/request-correction/${eventId}/pages/child?from=review&workqueue=pending-certification#child____birthType`
         )
 
         await page.getByTestId('select__child____birthType').click()
@@ -464,7 +464,7 @@ test.describe('10. Correct record', () => {
 
         await expectInUrl(
           page,
-          `/events/request-correction/${eventId}/pages/child?from=review&workqueue=ready-to-print#child____weightAtBirth`
+          `/events/request-correction/${eventId}/pages/child?from=review&workqueue=pending-certification#child____weightAtBirth`
         )
 
         await page
@@ -571,13 +571,8 @@ test.describe('10. Correct record', () => {
         /*
          * Expected result: should be navigated to event overview
          */
-        await expectInUrl(page, `/workqueue/ready-to-print`)
+        await expectInUrl(page, `/workqueue/pending-certification`)
 
-        /*
-         * Expected result: should
-         * - be navigated to Sent for approval workqueue
-         * - include the declaration in this tab
-         */
         await page.getByTestId('navigation_workqueue_sent-for-approval').click()
 
         await expect(

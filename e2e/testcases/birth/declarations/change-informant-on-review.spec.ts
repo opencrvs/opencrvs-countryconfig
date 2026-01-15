@@ -253,7 +253,7 @@ test.describe.serial('Change informant on review', () => {
       await selectDeclarationAction(page, 'Declare')
       await ensureOutboxIsEmpty(page)
 
-      await page.getByText('Sent for approval').click()
+      await page.getByText('Recent').click()
 
       await expect(
         page.getByRole('button', {
@@ -268,7 +268,7 @@ test.describe.serial('Change informant on review', () => {
       await logout(page)
       await login(page, CREDENTIALS.LOCAL_REGISTRAR)
 
-      await page.getByText('Ready for review').click()
+      await page.getByText('Pending validation').click()
 
       await page
         .getByRole('button', {

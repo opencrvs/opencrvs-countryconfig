@@ -684,10 +684,10 @@ test.describe.serial('2. Death declaration case - 2', () => {
        */
       expect(page.url().includes('assigned-to-you')).toBeTruthy()
 
-      await page.getByText('Sent for review').click()
+      await page.getByText('Recent').click()
 
       /*
-       * Expected result: The declaration should be in sent for review
+       * Expected result: The declaration should be in recent
        */
       await expect(
         page.getByRole('button', {
@@ -704,7 +704,7 @@ test.describe.serial('2. Death declaration case - 2', () => {
       await login(page, CREDENTIALS.REGISTRATION_AGENT)
 
       await ensureOutboxIsEmpty(page)
-      await page.getByText('Ready for review').click()
+      await page.getByText('Pending validation').click()
 
       await page
         .getByRole('button', {

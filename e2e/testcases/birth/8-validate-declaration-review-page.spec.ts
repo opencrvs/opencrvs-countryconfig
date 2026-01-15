@@ -865,23 +865,13 @@ test.describe.serial('8. Validate declaration review page', () => {
       await selectDeclarationAction(page, 'Declare', true)
       await ensureOutboxIsEmpty(page)
     })
-
-    test('8.1.8 Confirm the declaration to send for review', async () => {
-      await page.getByText('Sent for review').click()
-
-      await expect(
-        page.getByRole('button', {
-          name: formatName(declaration.child.name)
-        })
-      ).toBeVisible()
-    })
   })
 
   test.describe('8.2 Registration agent actions', async () => {
     test('8.2.1 Navigate to the declaration preview page', async () => {
       await login(page, CREDENTIALS.REGISTRATION_AGENT)
 
-      await page.getByText('Ready for review').click()
+      await page.getByText('Pending validation').click()
 
       await page
         .getByRole('button', {
@@ -894,9 +884,9 @@ test.describe.serial('8. Validate declaration review page', () => {
       await page.getByRole('button', { name: 'Confirm' }).click()
     })
 
-    test('8.2.3 Confirm the declaration is in Sent for approval workqueue', async () => {
+    test('8.2.3 Confirm the declaration is in Recent-workqueue', async () => {
       await ensureOutboxIsEmpty(page)
-      await page.getByText('Sent for approval').click()
+      await page.getByText('Recent').click()
 
       await expect(
         page.getByRole('button', {
@@ -910,7 +900,7 @@ test.describe.serial('8. Validate declaration review page', () => {
     test('8.3.1 Navigate to the declaration preview page', async () => {
       await login(page, CREDENTIALS.LOCAL_REGISTRAR)
 
-      await page.getByText('Ready for review').click()
+      await page.getByText('Pending registration').click()
 
       await page
         .getByRole('button', {

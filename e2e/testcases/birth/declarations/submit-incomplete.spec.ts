@@ -57,7 +57,7 @@ test.describe.serial('Submit and verify incomplete birth declaration', () => {
 
     test('Verify summary page', async () => {
       await ensureOutboxIsEmpty(page)
-      await page.getByText('Sent for review').click()
+      await page.getByText('Recent').click()
 
       await page
         .getByRole('button', {

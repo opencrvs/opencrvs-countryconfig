@@ -95,7 +95,6 @@ test.describe('Save and delete drafts', () => {
       await page.getByRole('button', { name: 'Confirm', exact: true }).click()
 
       await ensureOutboxIsEmpty(page)
-      await page.getByText('Ready for review').click()
       await page.getByRole('button', { name: 'Assigned to you' }).click()
 
       await expect(

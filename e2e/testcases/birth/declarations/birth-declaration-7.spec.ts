@@ -233,7 +233,7 @@ test.describe.serial('7. Birth declaration case - 7', () => {
 
       await ensureOutboxIsEmpty(page)
 
-      await page.getByText('Sent for review').click()
+      await page.getByText('Recent').click()
 
       await expect(
         page.getByRole('button', {

@@ -180,7 +180,7 @@ test.describe.serial('10. Birth declaration case - 10', () => {
       await selectDeclarationAction(page, 'Notify')
 
       await ensureOutboxIsEmpty(page)
-      await page.getByText('Sent for review').click()
+      await page.getByText('Recent').click()
 
       await expect(
         page.getByRole('button', {

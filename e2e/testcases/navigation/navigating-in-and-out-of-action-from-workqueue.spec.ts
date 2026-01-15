@@ -11,8 +11,6 @@ import {
 import { expectInUrl, selectAction } from '../../utils'
 import { ActionType } from '@opencrvs/toolkit/events'
 
-// @TODO: This test has been flaky, disable it until it's fixed properly.
-// test.describe.skip.serial('Navigating in and out of action', () => {
 test.describe.skip('Navigating in and out of action', () => {
   let page: Page
   let declaration: Declaration
@@ -36,8 +34,8 @@ test.describe.skip('Navigating in and out of action', () => {
     await login(page)
   })
 
-  test('Navigate to the "Ready for review" -workqueue', async () => {
-    await page.getByRole('button', { name: 'Ready for review' }).click()
+  test('Navigate to the "Pending registration" -workqueue', async () => {
+    await page.getByRole('button', { name: 'Pending registration' }).click()
   })
 
   test("Enter the 'Review' -action from workqueue", async () => {
@@ -63,19 +61,21 @@ test.describe.skip('Navigating in and out of action', () => {
     await selectAction(page, 'Register')
     await page.getByRole('button', { name: 'Confirm' }).click()
 
-    // Should redirect back to Ready for review workqueue
-    await page.waitForURL(`**/workqueue/in-review-all`)
-    await expectInUrl(page, '/workqueue/in-review-all')
+    await page.waitForURL(`**/workqueue/pending-registration`)
+    await expectInUrl(page, '/workqueue/pending-registration')
   })
 
   test('Browser back button should take user back to the event overview page "Record" -tab', async () => {
     await page.goBack()
-    await expectInUrl(page, `/events/${eventId}/record?workqueue=in-review-all`)
+    await expectInUrl(
+      page,
+      `/events/${eventId}/record?workqueue=pending-registration`
+    )
   })
 
-  test('Navigate to the "Ready to print" -workqueue', async () => {
+  test('Navigate to the "Pending certification" -workqueue', async () => {
     await page.getByTestId('exit-event').click()
-    await page.getByRole('button', { name: 'Ready to print' }).click()
+    await page.getByRole('button', { name: 'Pending certification' }).click()
   })
 
   test("Enter the 'Print' -action from workqueue", async () => {
@@ -110,7 +110,7 @@ test.describe.skip('Navigating in and out of action', () => {
     await page.waitForURL(/\/review/)
     await expectInUrl(
       page,
-      `/events/print-certificate/${eventId}/review?templateId=v2.birth-certificate&workqueue=ready-to-print`
+      `/events/print-certificate/${eventId}/review?templateId=v2.birth-certificate&workqueue=pending-certification`
     )
   })
 
@@ -118,8 +118,8 @@ test.describe.skip('Navigating in and out of action', () => {
     await page.getByRole('button', { name: 'Yes, print certificate' }).click()
     await page.getByRole('button', { name: 'Print', exact: true }).click()
 
-    await page.waitForURL(`**/workqueue/ready-to-print`)
-    await expectInUrl(page, '/workqueue/ready-to-print')
+    await page.waitForURL(`**/workqueue/pending-certification`)
+    await expectInUrl(page, '/workqueue/pending-certification')
   })
 
   test('Browser back button should take user to the "In review all" workqueue instead of action flow', async () => {
@@ -130,7 +130,7 @@ test.describe.skip('Navigating in and out of action', () => {
 
   test('Browser forward button should take user back to the workqueue', async () => {
     await page.goForward()
-    await page.waitForURL(`**/workqueue/ready-to-print`)
-    await expectInUrl(page, `/workqueue/ready-to-print`)
+    await page.waitForURL(`**/workqueue/pending-certification`)
+    await expectInUrl(page, `/workqueue/pending-certification`)
   })
 })

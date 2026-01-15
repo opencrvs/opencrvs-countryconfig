@@ -56,7 +56,7 @@ test.describe.serial('Duplicate overview', () => {
 
   test("Navigate to potential duplicate's overview", async () => {
     await login(page, CREDENTIALS.LOCAL_REGISTRAR)
-    await page.getByRole('button', { name: 'Ready for review' }).click()
+    await page.getByRole('button', { name: 'Potential duplicate' }).click()
     await page.getByRole('button', { name }).click()
   })
 

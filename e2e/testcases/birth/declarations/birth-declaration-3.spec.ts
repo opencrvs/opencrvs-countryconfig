@@ -715,7 +715,7 @@ test.describe.serial('3. Birth declaration case - 3', () => {
       await selectDeclarationAction(page, 'Declare')
       await ensureOutboxIsEmpty(page)
 
-      await page.getByText('Sent for approval').click()
+      await page.getByText('Recent').click()
 
       await expect(
         page.getByRole('button', {
@@ -729,7 +729,7 @@ test.describe.serial('3. Birth declaration case - 3', () => {
     test('3.2.1 Navigate to the declaration "Record" -tab', async () => {
       await logout(page)
       await login(page, CREDENTIALS.LOCAL_REGISTRAR)
-      await page.getByText('Ready for review').click()
+      await page.getByText('Pending registration').click()
 
       await page
         .getByRole('button', {

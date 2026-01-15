@@ -44,7 +44,7 @@ test.describe.serial('Birth correction flow - Mobile', () => {
   })
 
   test('Navigate to the correction form', async () => {
-    await navigateToWorkqueue(page, 'Ready to print')
+    await navigateToWorkqueue(page, 'Pending certification')
     await page
       .getByRole('button', { name: formatV2ChildName(declaration) })
       .click()
@@ -134,7 +134,7 @@ test.describe.serial('Birth correction flow - Mobile', () => {
 
     await expect(page.getByText('Request record correction?')).toBeVisible()
     await page.getByRole('button', { name: 'Confirm', exact: true }).click()
-    await expectInUrl(page, `/workqueue/ready-to-print`)
+    await expectInUrl(page, `/workqueue/pending-certification`)
     await ensureOutboxIsEmpty(page)
   })
 
@@ -147,8 +147,8 @@ test.describe.serial('Birth correction flow - Mobile', () => {
       await login(page, CREDENTIALS.LOCAL_REGISTRAR)
     })
 
-    test("Find the event in the 'Ready for review' workflow", async () => {
-      await navigateToWorkqueue(page, 'Ready for review')
+    test("Find the event in the 'Pending registration' workflow", async () => {
+      await navigateToWorkqueue(page, 'Pending registration')
 
       await page
         .getByRole('button', { name: formatV2ChildName(declaration) })
@@ -210,7 +210,7 @@ test.describe.serial('Birth correction flow - Mobile', () => {
 
       await expectInUrl(page, `/workqueue/in-review-all`)
       await ensureOutboxIsEmpty(page)
-      await navigateToWorkqueue(page, 'Ready to print')
+      await navigateToWorkqueue(page, 'Pending certification')
       await page
         .getByRole('button', {
           name: formatV2ChildName({

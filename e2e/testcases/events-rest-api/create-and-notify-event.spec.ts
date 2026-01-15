@@ -892,7 +892,7 @@ test.describe('Events REST API', () => {
 
       await printAndExpectPopup(page)
 
-      await expectInUrl(page, `/workqueue/ready-to-print`)
+      await expectInUrl(page, `/workqueue/pending-certification`)
     })
   })
 

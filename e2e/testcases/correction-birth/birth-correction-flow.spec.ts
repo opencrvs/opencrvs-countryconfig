@@ -230,12 +230,12 @@ test.describe.serial('Birth correction flow', () => {
     await expect(page.getByText('Request record correction?')).toBeVisible()
 
     await page.getByRole('button', { name: 'Confirm', exact: true }).click()
-    await expectInUrl(page, `/workqueue/ready-to-print`)
+    await expectInUrl(page, `/workqueue/pending-certification`)
     await ensureOutboxIsEmpty(page)
   })
 
-  test("Event appears in 'Sent for approval' workqueue", async () => {
-    await page.getByTestId('navigation_workqueue_sent-for-approval').click()
+  test("Event appears in 'Recent' workqueue", async () => {
+    await page.getByText('Recent').click()
 
     await expect(
       page.getByRole('button', { name: formatV2ChildName(declaration) })
@@ -248,8 +248,8 @@ test.describe.serial('Birth correction flow', () => {
       await login(page, CREDENTIALS.LOCAL_REGISTRAR)
     })
 
-    test("Find the event in the 'Ready for review' workflow", async () => {
-      await page.getByRole('button', { name: 'Ready for review' }).click()
+    test("Find the event in the 'Pending corrections' workflow", async () => {
+      await page.getByRole('button', { name: 'Pending corrections' }).click()
 
       await page
         .getByRole('button', { name: formatV2ChildName(declaration) })
