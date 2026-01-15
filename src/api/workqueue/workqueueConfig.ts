@@ -26,15 +26,8 @@ export const Workqueues = defineWorkqueues([
       defaultMessage: 'Assigned to you',
       description: 'Title of assigned to you workqueue'
     },
-    query: {
-      assignedTo: { type: 'exact', term: user('id') }
-    },
-    actions: [
-      {
-        type: 'DEFAULT',
-        conditionals: []
-      }
-    ]
+    query: { assignedTo: { type: 'exact', term: user('id') } },
+    actions: [{ type: 'DEFAULT', conditionals: [] }]
   },
   {
     slug: 'recent',
@@ -46,17 +39,9 @@ export const Workqueues = defineWorkqueues([
     },
     query: {
       updatedBy: { type: 'exact', term: user('id') },
-      updatedAt: {
-        type: 'timePeriod',
-        term: 'last7Days'
-      }
+      updatedAt: { type: 'timePeriod', term: 'last7Days' }
     },
-    actions: [
-      {
-        type: 'DEFAULT',
-        conditionals: []
-      }
-    ],
+    actions: [{ type: 'DEFAULT', conditionals: [] }],
     emptyMessage: {
       id: 'workqueues.recent.emptyMessage',
       defaultMessage: 'No recent records',
@@ -78,12 +63,7 @@ export const Workqueues = defineWorkqueues([
       },
       updatedAtLocation: { type: 'within', location: user('primaryOfficeId') }
     },
-    actions: [
-      {
-        type: 'DEFAULT',
-        conditionals: []
-      }
-    ],
+    actions: [{ type: 'DEFAULT', conditionals: [] }],
     emptyMessage: {
       id: 'workqueues.notifications.emptyMessage',
       defaultMessage: 'No notifications',
@@ -100,7 +80,13 @@ export const Workqueues = defineWorkqueues([
     },
     query: {
       status: { type: 'exact', term: EventStatus.enum.DECLARED },
-      flags: { noneOf: ['validated', InherentFlags.REJECTED] }
+      flags: {
+        noneOf: [
+          InherentFlags.REJECTED,
+          'validated',
+          'approval-required-for-late-registration'
+        ]
+      }
     },
     actions: [{ type: 'DEFAULT', conditionals: [] }]
   },
@@ -113,9 +99,7 @@ export const Workqueues = defineWorkqueues([
       defaultMessage: 'Potential duplicate',
       description: 'Title of potential duplicate workqueue'
     },
-    query: {
-      flags: { anyOf: [InherentFlags.POTENTIAL_DUPLICATE] }
-    },
+    query: { flags: { anyOf: [InherentFlags.POTENTIAL_DUPLICATE] } },
     actions: []
   },
   {
@@ -150,17 +134,10 @@ export const Workqueues = defineWorkqueues([
       }
     ],
     query: {
-      flags: {
-        anyOf: ['approval-required-for-late-registration']
-      },
+      flags: { anyOf: ['approval-required-for-late-registration'] },
       updatedAtLocation: { type: 'within', location: user('primaryOfficeId') }
     },
-    actions: [
-      {
-        type: 'DEFAULT',
-        conditionals: []
-      }
-    ]
+    actions: [{ type: 'DEFAULT', conditionals: [] }]
   },
   {
     slug: 'pending-registration',
@@ -190,6 +167,24 @@ export const Workqueues = defineWorkqueues([
     actions: []
   },
   {
+    slug: 'escalated',
+    icon: 'FileArrowUp',
+    name: {
+      id: 'workqueues.escalated.title',
+      defaultMessage: 'Escalated',
+      description: 'Title of escalated workqueue'
+    },
+    query: {
+      flags: {
+        anyOf: [
+          'escalated-to-registrar-general',
+          'escalated-to-provincial-registrar'
+        ]
+      }
+    },
+    actions: []
+  },
+  {
     slug: 'pending-feedback-registrar-general',
     icon: 'ChatText',
     name: {
@@ -213,30 +208,7 @@ export const Workqueues = defineWorkqueues([
         value: event.field('updatedAt')
       }
     ],
-    actions: [
-      {
-        type: 'DEFAULT',
-        conditionals: []
-      }
-    ]
-  },
-  {
-    slug: 'escalated',
-    icon: 'FileArrowUp',
-    name: {
-      id: 'workqueues.escalated.title',
-      defaultMessage: 'Escalated',
-      description: 'Title of escalated workqueue'
-    },
-    query: {
-      flags: {
-        anyOf: [
-          'escalated-to-registrar-general',
-          'escalated-to-provincial-registrar'
-        ]
-      }
-    },
-    actions: []
+    actions: [{ type: 'DEFAULT', conditionals: [] }]
   },
   {
     slug: 'pending-feedback-provincinal-registrar',
@@ -263,12 +235,7 @@ export const Workqueues = defineWorkqueues([
         value: event.field('updatedAt')
       }
     ],
-    actions: [
-      {
-        type: 'DEFAULT',
-        conditionals: []
-      }
-    ]
+    actions: [{ type: 'DEFAULT', conditionals: [] }]
   },
   {
     slug: 'in-external-validation',
@@ -286,12 +253,7 @@ export const Workqueues = defineWorkqueues([
       },
       updatedAtLocation: { type: 'within', location: user('primaryOfficeId') }
     },
-    actions: [
-      {
-        type: 'DEFAULT',
-        conditionals: []
-      }
-    ]
+    actions: [{ type: 'DEFAULT', conditionals: [] }]
   },
   {
     slug: 'pending-certification',
@@ -302,7 +264,10 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of pending certification workqueue'
     },
     query: {
-      flags: { anyOf: ['pending-first-certificate-issuance'] },
+      flags: {
+        anyOf: ['pending-first-certificate-issuance'],
+        noneOf: ['revoked']
+      },
       updatedAtLocation: { type: 'within', location: user('primaryOfficeId') }
     },
     actions: [{ type: 'DEFAULT', conditionals: [] }],
@@ -321,7 +286,10 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of pending issuance workqueue'
     },
     query: {
-      flags: { anyOf: ['certified-copy-printed-in-advance-of-issuance'] },
+      flags: {
+        anyOf: ['certified-copy-printed-in-advance-of-issuance'],
+        noneOf: ['revoked']
+      },
       updatedAtLocation: { type: 'within', location: user('primaryOfficeId') }
     },
     actions: [{ type: 'DEFAULT', conditionals: [] }],
@@ -339,7 +307,12 @@ export const Workqueues = defineWorkqueues([
       defaultMessage: 'Pending corrections',
       description: 'Title of correction requested workqueue'
     },
-    query: { flags: { anyOf: [InherentFlags.CORRECTION_REQUESTED] } },
+    query: {
+      flags: {
+        anyOf: [InherentFlags.CORRECTION_REQUESTED],
+        noneOf: ['revoked']
+      }
+    },
     actions: [{ type: 'DEFAULT', conditionals: [] }]
   }
 ])
