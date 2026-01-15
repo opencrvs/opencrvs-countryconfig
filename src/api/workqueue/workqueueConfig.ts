@@ -121,10 +121,7 @@ export const Workqueues = defineWorkqueues([
       defaultMessage: 'Pending updates',
       description: 'Title of pending updates workqueue'
     },
-    query: {
-      createdBy: { type: 'exact', term: user('id') },
-      flags: { anyOf: [InherentFlags.REJECTED] }
-    },
+    query: { flags: { anyOf: [InherentFlags.REJECTED] } },
     actions: [{ type: 'DEFAULT', conditionals: [] }],
     columns: [
       DATE_OF_EVENT_COLUMN,
@@ -178,7 +175,7 @@ export const Workqueues = defineWorkqueues([
         noneOf: ['approval-required-for-late-registration']
       }
     },
-    actions: [],
+    actions: [{ type: 'DEFAULT', conditionals: [] }],
     columns: [
       DATE_OF_EVENT_COLUMN,
       {
@@ -201,7 +198,7 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of pending registration workqueue'
     },
     query: { status: { type: 'exact', term: EventStatus.enum.DECLARED } },
-    actions: [],
+    actions: [{ type: 'DEFAULT', conditionals: [] }],
     columns: [
       DATE_OF_EVENT_COLUMN,
       {
@@ -231,7 +228,7 @@ export const Workqueues = defineWorkqueues([
         ]
       }
     },
-    actions: []
+    actions: [{ type: 'DEFAULT', conditionals: [] }]
   },
   {
     slug: 'pending-feedback-registrar-general',
