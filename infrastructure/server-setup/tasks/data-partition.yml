@@ -1,25 +1,25 @@
 - name: 'Precheck if encrypted file system exists so we dont try to bootstrap'
   stat:
-    path: /cryptfs_file_sparse.img
+    path: "{{ data_file_path }}"
     get_checksum: False
   register: encryptedFileSystemPreCheck
   when: disk_encryption_key is defined
 
 - name: 'Bootstrap encrypted data folder'
-  script: ../cryptfs/bootstrap.sh -s {{ encrypted_disk_size }} -p {{ disk_encryption_key }}
+  script: ../cryptfs/bootstrap.sh -s {{ encrypted_disk_size }} -p {{ disk_encryption_key }} -f {{ data_file_path }}
   when:
     - disk_encryption_key is defined
     - not encryptedFileSystemPreCheck.stat.exists
 
 - name: Wait for encrypted file system
   ansible.builtin.wait_for:
-    path: /cryptfs_file_sparse.img
+    path: "{{ data_file_path }}"
     state: present
   when: disk_encryption_key is defined
 
 - name: 'Register encrypted file system'
   stat:
-    path: /cryptfs_file_sparse.img
+    path: "{{ data_file_path }}"
     get_checksum: False
   register: encryptedFileSystemPostCheck
   when: disk_encryption_key is defined
@@ -32,7 +32,7 @@
   when: disk_encryption_key is defined
 
 - name: 'Mount encrypted data folder'
-  script: ../cryptfs/mount.sh -p {{ disk_encryption_key }}
+  script: ../cryptfs/mount.sh -p {{ disk_encryption_key }} -f {{ data_file_path }}
   when:
     - disk_encryption_key is defined
     - encryptedFileSystemPostCheck.stat.exists

@@ -10,7 +10,7 @@
 
       [Service]
       Type=oneshot
-      ExecStart={{ mount_script_path }} -p {{ key_file_path }}
+      ExecStart={{ mount_script_path }} -p {{ key_file_path }} -f {{ data_file_path }}
       RemainAfterExit=yes
       StandardOutput=journal
       StandardError=journal
