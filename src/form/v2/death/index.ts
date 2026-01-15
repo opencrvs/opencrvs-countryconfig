@@ -230,7 +230,27 @@ export const deathEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'actions.edit'
       },
-      flags: [{ id: 'validated', operation: 'remove' }]
+      flags: [{ id: 'validated', operation: 'remove' }],
+      dialogCopy: {
+        notify: {
+          id: 'event.death.action.edit.notify.copy',
+          defaultMessage:
+            'Are you sure you want to notify this event with these edits?',
+          description: 'Confirmation text for the notify with edits action'
+        },
+        declare: {
+          id: 'event.death.action.edit.declare.copy',
+          defaultMessage:
+            'Are you sure you want to edit this declaration? By confirming you are redeclaring this event and override past changes.',
+          description: 'Confirmation text for the declare with edits action'
+        },
+        register: {
+          id: 'event.death.action.edit.register.copy',
+          defaultMessage:
+            'You are about to register this death event with your edits. Registering this event will create an official civil registration record.',
+          description: 'Confirmation text for the register with edits action'
+        }
+      }
     },
     {
       type: ActionType.CUSTOM,
@@ -286,6 +306,12 @@ export const deathEvent = defineConfig({
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.death.action.reject.label'
+      },
+      supportingCopy: {
+        id: 'rejectModal.description',
+        defaultMessage:
+          'Rejecting this declaration will return it to the submitter for updates. Please ensure a valid reason for rejection has been recorded.',
+        description: 'The description for reject modal'
       }
     },
     {
@@ -296,7 +322,19 @@ export const deathEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.death.action.register.label'
       },
+      supportingCopy: {
+        id: 'review.register.description.complete',
+        description: 'Confirmation text for the register action',
+        defaultMessage:
+          "By clicking 'Confirm', you confirm that the information entered is correct and the event can be registered."
+      },
       flags: [{ id: 'validated', operation: 'remove' }],
+      conditionals: [
+        {
+          type: ConditionalType.ENABLE,
+          conditional: flag('validated')
+        }
+      ],
       deduplication: {
         id: 'death-deduplication',
         label: {
@@ -327,6 +365,21 @@ export const deathEvent = defineConfig({
         id: 'event.death.action.request-correction.label'
       },
       correctionForm: DEATH_CORRECTION_FORM
+    },
+    {
+      type: ActionType.ARCHIVE,
+      label: {
+        defaultMessage: 'Archive',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'event.death.action.archive.label'
+      },
+      supportingCopy: {
+        id: 'recordAudit.archive.confirmation.body',
+        defaultMessage:
+          'This will remove the declaration from the workqueue and change the status to Archive. To revert this change you will need to search for the declaration.',
+        description: 'Confirmation body for archiving a declaration'
+      }
     }
   ],
   advancedSearch: advancedSearchDeath
