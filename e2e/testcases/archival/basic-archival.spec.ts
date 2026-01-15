@@ -265,7 +265,7 @@ test.describe.serial('Basic Archival flow', () => {
   })
 
   test('Archival is not available for FA', async () => {
-    await page.getByText('Sent for review').click()
+    await page.getByText('Recent').click()
     await page
       .getByRole('button', {
         name: formatName(declaration.child.name)
@@ -290,7 +290,7 @@ test.describe.serial('Basic Archival flow', () => {
   })
 
   test('Navigate to the event overview page', async () => {
-    await page.getByText('Ready for review').click()
+    await page.getByText('Pending validation').click()
 
     // Expect not to see a quick action for Archival
     await expect(
@@ -310,7 +310,7 @@ test.describe.serial('Basic Archival flow', () => {
   })
 
   test('Archived declaration is not visible in workqueues', async () => {
-    await page.getByRole('button', { name: 'Ready for review' }).click()
+    await page.getByRole('button', { name: 'Pending validation' }).click()
     await expect(
       page.getByRole('button', {
         name: formatName(declaration.child.name)
@@ -331,7 +331,7 @@ test.describe.serial('Basic Archival flow', () => {
   })
 })
 
-test.describe.serial('Archival of declaration sent for approval', () => {
+test.describe.serial('Archival of declaration pending validation', () => {
   let page: Page
   let token: string
   let declaration: Declaration
@@ -347,12 +347,12 @@ test.describe.serial('Archival of declaration sent for approval', () => {
     page = await browser.newPage()
   })
 
-  test('Login as RA', async () => {
+  test('Login as RO', async () => {
     await login(page, CREDENTIALS.REGISTRATION_AGENT)
   })
 
   test('Navigate to the event overview page', async () => {
-    await page.getByText('Ready for review').click()
+    await page.getByText('Pending validation').click()
     await page
       .getByRole('button', {
         name: formatV2ChildName(declaration)
@@ -366,8 +366,10 @@ test.describe.serial('Archival of declaration sent for approval', () => {
     await ensureOutboxIsEmpty(page)
   })
 
-  test('Confirm the declaration is in Sent for approval workqueue', async () => {
-    await page.getByText('Sent for approval').click()
+  test('Confirm the declaration is in "Pending registration" -workqueue', async () => {
+    await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+
+    await page.getByText('Pending registration').click()
     await page
       .getByRole('button', { name: formatV2ChildName(declaration) })
       .click()
@@ -382,7 +384,7 @@ test.describe.serial('Archival of declaration sent for approval', () => {
   })
 
   test('Archived declaration is not visible in workqueues', async () => {
-    await page.getByRole('button', { name: 'Sent for approval' }).click()
+    await page.getByRole('button', { name: 'Pending registration' }).click()
     await expect(
       page.getByRole('button', { name: formatV2ChildName(declaration) })
     ).not.toBeVisible()

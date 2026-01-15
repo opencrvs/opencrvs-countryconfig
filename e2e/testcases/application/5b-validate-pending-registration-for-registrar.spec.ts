@@ -5,13 +5,7 @@ import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../constants'
 import { createDeclaration, Declaration } from '../test-data/birth-declaration'
 import { ActionType } from '@opencrvs/toolkit/events'
 import { formatV2ChildName } from '../birth/helpers'
-import {
-  ensureAssigned,
-  ensureInExternalValidationIsEmpty,
-  ensureOutboxIsEmpty,
-  expectInUrl,
-  selectAction
-} from '../../utils'
+import { ensureAssigned, expectInUrl } from '../../utils'
 import { getRowByTitle } from '../print-certificate/birth/helpers'
 
 test.describe
@@ -78,8 +72,8 @@ test.describe
     await expectInUrl(page, `events/${eventId}?workqueue=pending-registration`)
   })
 
-  test('5.5 Register action should be unavailable for declared but unvalidated record', async () => {
+  test('5.5 Register action should be available for declared and validated record', async () => {
     await ensureAssigned(page)
-    await validateActionMenuButton(page, 'Register', false)
+    await validateActionMenuButton(page, 'Register', true)
   })
 })
