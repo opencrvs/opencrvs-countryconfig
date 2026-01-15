@@ -156,6 +156,7 @@ export const Workqueues = defineWorkqueues([
       }
     ],
     query: {
+      status: { type: 'exact', term: EventStatus.enum.DECLARED },
       flags: { anyOf: ['approval-required-for-late-registration'] },
       updatedAtLocation: { type: 'within', location: user('primaryOfficeId') }
     },
@@ -170,6 +171,7 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of pending registration workqueue'
     },
     query: {
+      status: { type: 'exact', term: EventStatus.enum.DECLARED },
       flags: {
         anyOf: ['validated'],
         noneOf: ['approval-required-for-late-registration']
