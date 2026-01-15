@@ -8,8 +8,7 @@ import {
 } from '../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../constants'
-
-import { ensureOutboxIsEmpty, selectAction } from '../../utils'
+import { ensureOutboxIsEmpty } from '../../utils'
 
 test.describe.serial('1. User conditional form flow', () => {
   let page: Page
@@ -99,36 +98,13 @@ test.describe.serial('1. User conditional form flow', () => {
       await selectDeclarationAction(page, 'Declare')
 
       await ensureOutboxIsEmpty(page)
-
-      await page.getByText('Sent for review').click()
-      await expect(
-        page.getByRole('button', {
-          name: formatName(declaration.applicant.name)
-        })
-      ).toBeVisible()
-    })
-
-    test('1.1.6 Navigate to the declaration "Record" tab', async () => {
-      await page
-        .getByRole('button', {
-          name: formatName(declaration.applicant.name)
-        })
-        .click()
-
-      await page.getByRole('button', { name: 'Record', exact: true }).click()
-
-      await expect(
-        page.getByText(
-          'Field shown when field agent is submitting application.'
-        )
-      ).toBeVisible()
     })
   })
 
-  test.describe('1.2 Declaration Review by RA', async () => {
-    test('1.2.1 Navigate to the declaration "Record" tab', async () => {
+  test.describe('1.2 Declaration Review by Registration Officer', async () => {
+    test('1.2.1 Navigate to the declaration "Pending validation"-tab', async () => {
       await login(page, CREDENTIALS.REGISTRATION_AGENT)
-      await page.getByText('Ready for review').click()
+      await page.getByText('Pending validation').click()
       await page
         .getByRole('button', {
           name: formatName(declaration.applicant.name)

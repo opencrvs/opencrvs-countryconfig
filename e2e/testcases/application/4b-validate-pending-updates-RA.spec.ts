@@ -1,6 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 
-import { login, getToken } from '../../helpers'
+import { login, getToken, selectDeclarationAction } from '../../helpers'
 import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../constants'
 import { createDeclaration, Declaration } from '../test-data/birth-declaration'
 import { ActionType } from '@opencrvs/toolkit/events'
@@ -12,17 +12,18 @@ import {
   selectAction
 } from '../../utils'
 import { getRowByTitle } from '../print-certificate/birth/helpers'
+import { faker } from '@faker-js/faker'
 
 test.describe
-  .serial('5(a) Validate Ready for review tab for registration agent', () => {
+  .serial('4(b) Validate "Pending updates"-workqueue for registration agent', () => {
   let page: Page
   let declaration: Declaration
   let eventId: string
 
   test.beforeAll(async ({ browser }) => {
     const token = await getToken(
-      CREDENTIALS.FIELD_AGENT.USERNAME,
-      CREDENTIALS.FIELD_AGENT.PASSWORD
+      CREDENTIALS.REGISTRATION_AGENT.USERNAME,
+      CREDENTIALS.REGISTRATION_AGENT.PASSWORD
     )
     const res = await createDeclaration(token, undefined, ActionType.DECLARE)
     declaration = res.declaration
@@ -35,33 +36,52 @@ test.describe
     await page.close()
   })
 
-  test('5.0 Login', async () => {
-    await login(page, CREDENTIALS.REGISTRATION_AGENT)
+  test('4.0.1 Login', async () => {
+    await login(page, CREDENTIALS.LOCAL_REGISTRAR)
   })
 
-  test('5.1 Go to Ready for review tab', async () => {
+  test('4.0.2 Navigate to record audit', async () => {
+    await page.getByText('Pending registration').click()
+
+    await page
+      .getByRole('button', { name: formatV2ChildName(declaration) })
+      .click()
+  })
+
+  test('4.0.3 Reject a declaration', async () => {
+    await ensureAssigned(page)
+    await selectAction(page, 'Reject')
+
+    await page.getByTestId('reject-reason').fill(faker.lorem.sentence())
+
+    await page.getByRole('button', { name: 'Send For Update' }).click()
+  })
+
+  test('4.1 Go to "Pending updates"-workqueue', async () => {
+    await login(page, CREDENTIALS.REGISTRATION_AGENT)
     await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue.
-    await page.getByText('Ready for review').click()
+    await page.getByText('Pending updates').click()
     await expect(
       page.getByRole('button', { name: formatV2ChildName(declaration) })
     ).toBeVisible()
     await expect(page.getByTestId('search-result')).toContainText(
-      'Ready for review'
+      'Pending updates'
     )
   })
 
-  test('5.2 validate the list', async () => {
+  test('4.2 validate the list', async () => {
     const header = page.locator('div[class^="TableHeader"]')
     const columns = await header.locator(':scope > div').allInnerTexts()
     expect(columns).toStrictEqual([
       'Title',
       'Event',
       'Date of Event',
-      'Sent for review',
+      'Update requested',
       ''
     ])
 
     const row = getRowByTitle(page, formatV2ChildName(declaration))
+
     const cells = row.locator(':scope > div')
 
     expect(cells.nth(0)).toHaveText(formatV2ChildName(declaration))
@@ -69,44 +89,34 @@ test.describe
     expect(cells.nth(2)).toHaveText(declaration['child.dob'].split('T')[0])
   })
 
-  test('5.3 Click a name', async () => {
+  test('4.3 Click a name', async () => {
     await page
       .getByRole('button', { name: formatV2ChildName(declaration) })
       .click()
 
-    await expectInUrl(page, `events/${eventId}?workqueue=in-review`)
+    // User should navigate to record audit page
+    await expectInUrl(page, `events/${eventId}?workqueue=pending-updates`)
   })
 
-  test('5.4 Click "Validate declaration"-action', async () => {
+  test('4.4 Click Edit -action', async () => {
     await ensureAssigned(page)
-    await selectAction(page, 'Validate declaration')
-
-    await expect(
-      page.getByRole('heading', { name: 'Validate declaration?', exact: true })
-    ).toBeVisible()
-
-    await expect(
-      page.getByText(
-        'Validating this declaration confirms it meets all requirements and is eligible for registration.'
-      )
-    ).toBeVisible()
+    await selectAction(page, 'Edit')
   })
 
-  test('5.5 Complete validate action', async () => {
-    await page.getByRole('button', { name: 'Confirm' }).click()
+  test('4.5 Complete declare with edits action', async () => {
+    await page.getByTestId('change-button-child.weightAtBirth').click()
+    await page.getByTestId('number__child____weightAtBirth').fill('2.6')
+    await page.getByRole('button', { name: 'Back to review' }).click()
 
-    // Should redirect back to Ready for review workqueue
-    await expect(page.locator('#content-name')).toHaveText('Ready for review')
+    await selectDeclarationAction(page, 'Declare with edits')
+
+    // Should redirect back to "Pending updates"-workqueue
+    await expect(page.locator('#content-name')).toHaveText('Pending updates')
 
     await ensureOutboxIsEmpty(page)
 
     await expect(
       page.getByRole('button', { name: formatV2ChildName(declaration) })
     ).not.toBeVisible()
-
-    await page.getByText('Sent for approval').click()
-    await expect(
-      page.getByRole('button', { name: formatV2ChildName(declaration) })
-    ).toBeVisible()
   })
 })

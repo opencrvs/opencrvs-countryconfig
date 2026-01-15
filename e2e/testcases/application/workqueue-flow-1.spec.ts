@@ -19,7 +19,7 @@ import {
 import { assertRecordInWorkqueue, fillDate } from '../birth/helpers'
 import { getRowByTitle } from '../print-certificate/birth/helpers'
 
-// FA Notifies => RA Validates => LR Registers => LR Prints
+// FA Notifies => RO Validates => Registrar Registers => Registrar Prints
 test.describe.serial('1. Workqueue flow - 1', () => {
   let page: Page
   const declaration = {
@@ -139,15 +139,13 @@ test.describe.serial('1. Workqueue flow - 1', () => {
         name: formatName(declaration.child.name),
         workqueues: [
           { title: 'Assigned to you', exists: false },
-          { title: 'Recent', exists: true },
-          { title: 'Sent for review', exists: true },
-          { title: 'Requires updates', exists: false }
+          { title: 'Recent', exists: true }
         ]
       })
     })
   })
 
-  test.describe('1.2 Declare and validate by RA', async () => {
+  test.describe('1.2 Declare and validate by Registration Officer', async () => {
     test('1.2.1 Verify workqueue', async () => {
       await login(page, CREDENTIALS.REGISTRATION_AGENT)
 
@@ -158,11 +156,13 @@ test.describe.serial('1. Workqueue flow - 1', () => {
           { title: 'Assigned to you', exists: false },
           { title: 'Recent', exists: false },
           { title: 'Notifications', exists: true },
-          { title: 'Ready for review', exists: false },
-          { title: 'Requires updates', exists: false },
-          { title: 'Sent for approval', exists: false },
+          { title: 'Pending validation', exists: false },
+          { title: 'Pending updates', exists: false },
+          { title: 'Pending approval', exists: false },
+          { title: 'Escalated', exists: false },
           { title: 'In external validation', exists: false },
-          { title: 'Ready to print', exists: false }
+          { title: 'Pending certification', exists: false },
+          { title: 'Pending issuance', exists: false }
         ]
       })
     })
@@ -273,11 +273,13 @@ test.describe.serial('1. Workqueue flow - 1', () => {
           { title: 'Assigned to you', exists: false },
           { title: 'Recent', exists: true },
           { title: 'Notifications', exists: false },
-          { title: 'Ready for review', exists: false },
-          { title: 'Requires updates', exists: false },
-          { title: 'Sent for approval', exists: true },
+          { title: 'Pending validation', exists: false },
+          { title: 'Pending updates', exists: false },
+          { title: 'Pending approval', exists: false },
+          { title: 'Escalated', exists: false },
           { title: 'In external validation', exists: false },
-          { title: 'Ready to print', exists: false }
+          { title: 'Pending certification', exists: false },
+          { title: 'Pending issuance', exists: false }
         ]
       })
     })
@@ -292,13 +294,12 @@ test.describe.serial('1. Workqueue flow - 1', () => {
       workqueues: [
         { title: 'Assigned to you', exists: false },
         { title: 'Recent', exists: false },
-        { title: 'Sent for review', exists: false }, // only DECLARED and NOTIFIED records should be visible
-        { title: 'Requires updates', exists: false }
+        { title: 'Pending updates', exists: false }
       ]
     })
   })
 
-  test.describe('1.4 Register by LR', async () => {
+  test.describe('1.4 Register by Registrar', async () => {
     test('1.4.1 Validate workqueue', async () => {
       await login(page, CREDENTIALS.LOCAL_REGISTRAR)
 
@@ -306,19 +307,25 @@ test.describe.serial('1. Workqueue flow - 1', () => {
         page,
         name: formatName(declaration.child.name),
         workqueues: [
+          { title: 'Outbox', exists: false },
+          { title: 'My drafts', exists: false },
           { title: 'Assigned to you', exists: false },
           { title: 'Recent', exists: false },
           { title: 'Notifications', exists: false },
-          { title: 'Ready for review', exists: true },
-          { title: 'Requires updates', exists: false },
+          { title: 'Potential duplicate', exists: false },
+          { title: 'Pending updates', exists: false },
+          { title: 'Pending approval', exists: false },
+          { title: 'Pending registration', exists: true },
+          { title: 'Escalated', exists: false },
           { title: 'In external validation', exists: false },
-          { title: 'Ready to print', exists: false }
+          { title: 'Pending certification', exists: false },
+          { title: 'Pending issuance', exists: false }
         ]
       })
     })
 
     test('1.4.2 Register', async () => {
-      await page.getByText('Ready for review').click()
+      await page.getByText('Pending registration').click()
       await page
         .getByRole('button', {
           name: formatName(declaration.child.name)
@@ -335,22 +342,28 @@ test.describe.serial('1. Workqueue flow - 1', () => {
         page,
         name: formatName(declaration.child.name),
         workqueues: [
+          { title: 'Outbox', exists: false },
+          { title: 'My drafts', exists: false },
           { title: 'Assigned to you', exists: false },
           { title: 'Recent', exists: true },
           { title: 'Notifications', exists: false },
-          { title: 'Ready for review', exists: false },
-          { title: 'Requires updates', exists: false },
+          { title: 'Potential duplicate', exists: false },
+          { title: 'Pending updates', exists: false },
+          { title: 'Pending approval', exists: false },
+          { title: 'Pending registration', exists: false },
+          { title: 'Escalated', exists: false },
           { title: 'In external validation', exists: false },
-          { title: 'Ready to print', exists: true }
+          { title: 'Pending certification', exists: true },
+          { title: 'Pending issuance', exists: false }
         ]
       })
     })
   })
 
-  test('1.5 Print by LR', async () => {
+  test('1.5 Print by Registrar', async () => {
     await page
       .getByRole('button', {
-        name: 'Ready to print'
+        name: 'Pending certification'
       })
       .click()
 
@@ -391,13 +404,19 @@ test.describe.serial('1. Workqueue flow - 1', () => {
       page,
       name: formatName(declaration.child.name),
       workqueues: [
+        { title: 'Outbox', exists: false },
+        { title: 'My drafts', exists: false },
         { title: 'Assigned to you', exists: false },
         { title: 'Recent', exists: true },
         { title: 'Notifications', exists: false },
-        { title: 'Ready for review', exists: false },
-        { title: 'Requires updates', exists: false },
+        { title: 'Potential duplicate', exists: false },
+        { title: 'Pending updates', exists: false },
+        { title: 'Pending approval', exists: false },
+        { title: 'Pending registration', exists: false },
+        { title: 'Escalated', exists: false },
         { title: 'In external validation', exists: false },
-        { title: 'Ready to print', exists: false }
+        { title: 'Pending certification', exists: false },
+        { title: 'Pending issuance', exists: false }
       ]
     })
   })
@@ -411,13 +430,12 @@ test.describe.serial('1. Workqueue flow - 1', () => {
       workqueues: [
         { title: 'Assigned to you', exists: false },
         { title: 'Recent', exists: false },
-        { title: 'Sent for review', exists: false }, // only DECLARED and NOTIFIED records should be visible
-        { title: 'Requires updates', exists: false }
+        { title: 'Pending updates', exists: false }
       ]
     })
   })
 
-  test("1.7 RA can't see the record", async () => {
+  test("1.7 Registration Officer can't see the record", async () => {
     await login(page, CREDENTIALS.REGISTRATION_AGENT, true)
 
     await assertRecordInWorkqueue({
@@ -427,11 +445,13 @@ test.describe.serial('1. Workqueue flow - 1', () => {
         { title: 'Assigned to you', exists: false },
         { title: 'Recent', exists: false },
         { title: 'Notifications', exists: false },
-        { title: 'Ready for review', exists: false },
-        { title: 'Requires updates', exists: false },
-        { title: 'Sent for approval', exists: false },
+        { title: 'Pending validation', exists: false },
+        { title: 'Pending updates', exists: false },
+        { title: 'Pending approval', exists: false },
+        { title: 'Escalated', exists: false },
         { title: 'In external validation', exists: false },
-        { title: 'Ready to print', exists: false }
+        { title: 'Pending certification', exists: false },
+        { title: 'Pending issuance', exists: false }
       ]
     })
   })

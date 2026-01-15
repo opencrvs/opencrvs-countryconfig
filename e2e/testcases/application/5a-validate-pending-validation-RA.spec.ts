@@ -7,7 +7,6 @@ import { ActionType } from '@opencrvs/toolkit/events'
 import { formatV2ChildName } from '../birth/helpers'
 import {
   ensureAssigned,
-  ensureInExternalValidationIsEmpty,
   ensureOutboxIsEmpty,
   expectInUrl,
   selectAction
@@ -15,7 +14,7 @@ import {
 import { getRowByTitle } from '../print-certificate/birth/helpers'
 
 test.describe
-  .serial('5(b) Validate Ready for review tab for local registrar', () => {
+  .serial('5(a) Validate "Pending validation"-workqueue for registration agent', () => {
   let page: Page
   let declaration: Declaration
   let eventId: string
@@ -37,17 +36,17 @@ test.describe
   })
 
   test('5.0 Login', async () => {
-    await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+    await login(page, CREDENTIALS.REGISTRATION_AGENT)
   })
 
   test('5.1 Go to Ready for review tab', async () => {
     await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue.
-    await page.getByText('Ready for review').click()
+    await page.getByText('Pending validation').click()
     await expect(
       page.getByRole('button', { name: formatV2ChildName(declaration) })
     ).toBeVisible()
     await expect(page.getByTestId('search-result')).toContainText(
-      'Ready for review'
+      'Pending validation'
     )
   })
 
@@ -58,7 +57,7 @@ test.describe
       'Title',
       'Event',
       'Date of Event',
-      'Sent for review',
+      'Validation requested',
       ''
     ])
 
@@ -70,39 +69,39 @@ test.describe
     expect(cells.nth(2)).toHaveText(declaration['child.dob'].split('T')[0])
   })
 
-  test('5.4 Click a name', async () => {
+  test('5.3 Click a name', async () => {
     await page
       .getByRole('button', { name: formatV2ChildName(declaration) })
       .click()
 
-    await expectInUrl(page, `events/${eventId}?workqueue=in-review`)
+    await expectInUrl(page, `events/${eventId}?workqueue=pending-validation`)
   })
 
-  test('5.5 Click register action', async () => {
+  test('5.4 Click "Validate declaration"-action', async () => {
     await ensureAssigned(page)
-    await selectAction(page, 'Register')
+    await selectAction(page, 'Validate declaration')
+
     await expect(
-      page.getByRole('heading', { name: 'Register?', exact: true })
+      page.getByRole('heading', { name: 'Validate declaration?', exact: true })
+    ).toBeVisible()
+
+    await expect(
+      page.getByText(
+        'Validating this declaration confirms it meets all requirements and is eligible for registration.'
+      )
     ).toBeVisible()
   })
 
-  test('5.5 Complete Registration', async () => {
+  test('5.5 Complete validate action', async () => {
     await page.getByRole('button', { name: 'Confirm' }).click()
 
-    // Should redirect back to Ready for review workqueue
-    await expect(page.locator('#content-name')).toHaveText('Ready for review')
+    // Should redirect back to "Pending validation"-workqueue
+    await expect(page.locator('#content-name')).toHaveText('Pending validation')
 
     await ensureOutboxIsEmpty(page)
-    await ensureInExternalValidationIsEmpty(page)
-    await expectInUrl(page, 'workqueue/in-review-all')
 
     await expect(
       page.getByRole('button', { name: formatV2ChildName(declaration) })
     ).not.toBeVisible()
-
-    await page.getByText('Ready to print').click()
-    await expect(
-      page.getByRole('button', { name: formatV2ChildName(declaration) })
-    ).toBeVisible()
   })
 })
