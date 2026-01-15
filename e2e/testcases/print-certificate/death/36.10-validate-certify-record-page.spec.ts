@@ -52,10 +52,10 @@ test.describe.serial('10.0 Validate "Review" page', () => {
     await page.getByRole('button', { name: 'Yes, print certificate' }).click()
     await expect(page.locator('#confirm-print-modal')).toBeVisible()
     await expect(page.locator('#confirm-print-modal')).toContainText(
-      'Print and issue certificate?'
+      'Print certified copy?'
     )
     await expect(page.locator('#confirm-print-modal')).toContainText(
-      'A Pdf of the certificate will open in a new tab for printing and issuing.'
+      'This will generate a certified copy of the record for printing.'
     )
   })
 

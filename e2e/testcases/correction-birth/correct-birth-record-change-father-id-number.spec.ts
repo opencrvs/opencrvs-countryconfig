@@ -34,8 +34,8 @@ test.describe.serial("Correct record - Change father's ID number", () => {
 
   test('Shortcut declaration', async () => {
     let token = await getToken(
-      CREDENTIALS.NATIONAL_REGISTRAR.USERNAME,
-      CREDENTIALS.NATIONAL_REGISTRAR.PASSWORD
+      CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
+      CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
     )
     const res = await createDeclarationV2(
       token,

@@ -15,7 +15,6 @@ import { expectInUrl } from '../../../utils'
 test.describe.serial('10.0 Validate "Review" page', () => {
   let declaration: Declaration
   let page: Page
-  let eventId: string
 
   test.beforeAll(async ({ browser }) => {
     const token = await getToken(
@@ -24,7 +23,6 @@ test.describe.serial('10.0 Validate "Review" page', () => {
     )
     const res = await createDeclaration(token)
     declaration = res.declaration
-    eventId = res.eventId
     page = await browser.newPage()
   })
 
@@ -51,10 +49,10 @@ test.describe.serial('10.0 Validate "Review" page', () => {
     await page.getByRole('button', { name: 'Yes, print certificate' }).click()
     await expect(page.locator('#confirm-print-modal')).toBeVisible()
     await expect(page.locator('#confirm-print-modal')).toContainText(
-      'Print and issue certificate?'
+      'Print certified copy?'
     )
     await expect(page.locator('#confirm-print-modal')).toContainText(
-      'A Pdf of the certificate will open in a new tab for printing and issuing.'
+      'This will generate a certified copy of the record for printing.'
     )
   })
 

@@ -1,6 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 
-import { login, getToken } from '../../helpers'
+import { login, getToken, validateActionMenuButton } from '../../helpers'
 import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../constants'
 import { createDeclaration, Declaration } from '../test-data/birth-declaration'
 import { ActionType } from '@opencrvs/toolkit/events'
@@ -78,33 +78,8 @@ test.describe
     await expectInUrl(page, `events/${eventId}?workqueue=pending-registration`)
   })
 
-  test('5.5 Click register action', async () => {
+  test('5.5 Register action should be unavailable for declared but unvalidated record', async () => {
     await ensureAssigned(page)
-    await selectAction(page, 'Register')
-    await expect(
-      page.getByRole('heading', { name: 'Register?', exact: true })
-    ).toBeVisible()
-  })
-
-  test('5.5 Complete Registration', async () => {
-    await page.getByRole('button', { name: 'Confirm' }).click()
-
-    // Should redirect back to "Pending registration"-workqueue
-    await expect(page.locator('#content-name')).toHaveText(
-      'Pending registration'
-    )
-
-    await ensureOutboxIsEmpty(page)
-    await ensureInExternalValidationIsEmpty(page)
-    await expectInUrl(page, 'workqueue/pending-registration')
-
-    await expect(
-      page.getByRole('button', { name: formatV2ChildName(declaration) })
-    ).not.toBeVisible()
-
-    await page.getByText('Pending certification').click()
-    await expect(
-      page.getByRole('button', { name: formatV2ChildName(declaration) })
-    ).toBeVisible()
+    await validateActionMenuButton(page, 'Register', false)
   })
 })
