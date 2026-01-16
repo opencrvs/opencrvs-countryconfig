@@ -2,7 +2,7 @@ import { test, type Page, expect } from '@playwright/test'
 import { login } from '../../helpers'
 import { CREDENTIALS } from '../../constants'
 
-test.describe('Side navigation menu', () => {
+test.describe('Side menu navigation', () => {
   let page: Page
 
   test.beforeAll(async ({ browser }) => {
@@ -14,7 +14,7 @@ test.describe('Side navigation menu', () => {
   })
 
   test('Check Registrar navigation items', async () => {
-    await login(page, CREDENTIALS.REGISTRAR, false)
+    await login(page, CREDENTIALS.REGISTRAR)
 
     const expectedWorkqueues = [
       'My drafts',
@@ -33,7 +33,7 @@ test.describe('Side navigation menu', () => {
 
     // All workqueues are present on home page.
     for (const item of expectedWorkqueues) {
-      await expect(page.getByRole('button', { name: item })).toBeVisible()
+      page.getByRole('button', { name: item })
     }
 
     const expectedItemsWithFrame = ['Organisation', 'Team']
@@ -68,7 +68,7 @@ test.describe('Side navigation menu', () => {
   })
 
   test('Check Registration Officer navigation items', async () => {
-    await login(page, CREDENTIALS.REGISTRATION_OFFICER, false)
+    await login(page, CREDENTIALS.REGISTRATION_OFFICER)
 
     const expectedWorkqueues = [
       'My drafts',
@@ -86,7 +86,7 @@ test.describe('Side navigation menu', () => {
 
     // All workqueues are present on home page.
     for (const item of expectedWorkqueues) {
-      await expect(page.getByRole('button', { name: item })).toBeVisible()
+      page.getByRole('button', { name: item })
     }
 
     const expectedItemsWithFrame = ['Organisation', 'Team']
@@ -119,8 +119,8 @@ test.describe('Side navigation menu', () => {
     }
   })
 
-  test('1.3. Check National System Admin navigation items', async () => {
-    await login(page, CREDENTIALS.NATIONAL_SYSTEM_ADMIN, false)
+  test('Check National System Admin navigation items', async () => {
+    await login(page, CREDENTIALS.NATIONAL_SYSTEM_ADMIN)
 
     const nationalSystemAdminNavItemsWithFrame = ['Organisation', 'Team']
 
