@@ -1,15 +1,20 @@
-- name: Update apt repository
+- name: Update and upgrade system packages
   apt:
     update_cache: yes
-    force_apt_get: yes
+    upgrade: dist
+    autoremove: yes
+  register: upgrade_result
+  retries: 5
+  delay: 10
 
-- name: Manage apt updates, upgrades, and package installation
-  shell: |
-    while fuser /var/lib/dpkg/lock >/dev/null 2>&1; do sleep 5; done
-    apt-get update && apt-get dist-upgrade -y
-    apt-get install -y unattended-upgrades
-    apt-get autoremove -y
-    apt-get autoclean -y
+- name: Install unattended-upgrades
+  apt:
+    name: unattended-upgrades
+    state: present
+
+- name: Autoclean apt cache
+  apt:
+    autoclean: yes
 
 - name: Configure Unattended Upgrades
   ansible.builtin.copy:

@@ -26,8 +26,6 @@ import { InformantType as BirthInformantType } from '@countryconfig/form/v2/birt
 import { InformantTemplateType } from './sms-service'
 import { generateFailureLog, NotificationParams, notify } from './handler'
 import { InformantType as DeathInformantType } from '@countryconfig/form/v2/death/forms/pages/informant'
-import { birthEvent } from '@countryconfig/form/v2/birth'
-import { deathEvent } from '@countryconfig/form/v2/death'
 
 const resolveName = (name: FieldUpdateValue) => {
   const nameObj = {
@@ -56,7 +54,7 @@ const resolveName = (name: FieldUpdateValue) => {
 async function getLocations(token: string) {
   const url = new URL('events', GATEWAY_URL).toString()
   const client = createClient(url, `Bearer ${token}`)
-  return client.locations.get.query()
+  return client.locations.list.query()
 }
 
 function getInformant(eventType: string, declaration: Record<string, any>) {
@@ -77,18 +75,6 @@ function getInformant(eventType: string, declaration: Record<string, any>) {
   throw new Error('Invalid event type')
 }
 
-function getEventConfig(eventType: string) {
-  if (eventType === Event.Birth) {
-    return birthEvent
-  }
-
-  if (eventType === Event.Death) {
-    return deathEvent
-  }
-
-  throw new Error('Invalid event type')
-}
-
 async function getNotificationParams(
   event: EventDocument,
   token: string,
@@ -98,7 +84,7 @@ async function getNotificationParams(
   const locations = await getLocations(token)
 
   const declaration = deepMerge(
-    aggregateActionDeclarations(event, getEventConfig(event.type)),
+    aggregateActionDeclarations(event),
     pendingAction.declaration
   )
 
@@ -197,7 +183,7 @@ async function getNotificationParams(
     }
   }
 
-  throw new Error('Invalid event type')
+  throw new Error(`Invalid action type "${pendingAction.type}"`)
 }
 
 export async function sendInformantNotification({

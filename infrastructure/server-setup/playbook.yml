@@ -31,6 +31,8 @@
         apply:
           tags:
             - updates
+      tags:
+        - updates
 
     - include_tasks:
         file: tasks/users.yml
@@ -39,6 +41,14 @@
             - users
       tags:
         - users
+
+    - include_tasks:
+        file: tasks/journald.yml
+        apply:
+          tags:
+            - journald
+      tags:
+        - journald
 
     - include_tasks:
         file: tasks/security-hardening.yml
@@ -77,14 +87,6 @@
             - docker
       tags:
         - docker
-    
-    - include_tasks:
-        file: tasks/override-docker-startup.yml
-        apply:
-          tags: 
-            - docker
-      tags: 
-        - docker
 
     - include_tasks:
         file: tasks/deployment-user.yml
@@ -111,6 +113,16 @@
             - data-partition
       tags:
         - data-partition
+
+    - include_tasks:
+        file: tasks/validate-data-partition.yml
+        apply:
+          tags:
+            - data-partition
+            - decrypt-on-boot
+      tags:
+        - data-partition
+        - decrypt-on-boot
 
     - include_tasks:
         file: tasks/swap.yml
@@ -161,6 +173,13 @@
   become_method: sudo
   tasks:
     - include_tasks:
+        file: tasks/override-docker-startup.yml
+        apply:
+          tags:
+            - docker
+      tags:
+        - docker
+    - include_tasks:
         file: tasks/elasticsearch.yml
         apply:
           tags:
@@ -175,5 +194,19 @@
             - traefik
       tags:
         - traefik
+
+# Ensure incorrectly created override of docker daemon (1.9 beta) is removed on workers
+- hosts: docker-workers
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Remove docker service override directory
+      file:
+        path: /etc/systemd/system/docker.service.d
+        state: absent
+
+    - name: Reload systemd daemon to apply changes
+      systemd:
+        daemon_reload: yes
 
 - import_playbook: backups.yml

@@ -1,5 +1,44 @@
 # Changelog
 
+## 2.0.0
+
+### Breaking changes
+
+- Switch to docker.io/chumaky/postgres_mongo_fdw:17.6_fdw5.5.2 image to support `mongo_fdw`. This is required for the legacy user migrations to work. It will be switched back to the official postgres image in a future release.
+- A new service `legacy-user-migration` which runs the same migration image but with the `migrate-legacy-users` flag and with the following new environment variables:
+  - EVENTS_SUPERUSER_POSTGRES_URL
+  - MONGO_HOST
+  - MONGO_PORT
+  - MONGO_USERNAME
+  - MONGO_PASSWORD
+  - MONGO_REPLICA_SET
+
+The default values for these variables have been added to the `docker-compose.deploy.yml` file. They should work out of the box for most deployments, but please ensure to set them correctly if you have a custom MongoDB setup.
+
+## 1.9.3
+
+### New features
+
+- Introduced page-level `requireCompletionToContinue` in birth and death event config, to enforce full completion before moving to the next page, and updated navigation logic accordingly.
+
+## 1.9.2
+
+### New features
+
+- Certificate templates now support multi-page SVGs using <g data-page="X">...</g>, allowing implementors to configure and render multi-page certificates.
+- Birth certificate PDF export now omits header, footer, and QR code; example SVG updated for security-paper templates.
+
+## 1.9.1
+
+### Breaking changes
+
+- **Remove Unused Scopes**: Removed `RECORD_PRINT_RECORDS_SUPPORTING_DOCUMENTS` and `RECORD_EXPORT_RECORDS` scopes from `REGISTRATION_AGENT`, `LOCAL_REGISTRAR` and `NATIONAL_REGISTRAR`
+
+### Improvements
+
+- Make encryption step optional [#1123](https://github.com/opencrvs/opencrvs-countryconfig/pull/1123)
+- Added validation for ENCRYPTION_KEY [#10896](https://github.com/opencrvs/opencrvs-core/issues/10896)
+
 ## 1.9.0
 
 ### New features
@@ -15,17 +54,27 @@
 
   - Use nvm to upgrade your local development environment to use node version `22.x.x.`
   - Add conditions for the certified copy certificate to ensure it's only available to children who are 1 year or older. [#9684](https://github.com/opencrvs/opencrvs-core/issues/9684)
+  - Available disk space in root file system alert adjusted to fire when 20GB are remaining, rather than when diskspace usage is at 70%.
 
 - **Upgraded MinIO** to RELEASE.2025-06-13T11-33-47Z and MinIO Client (mc) to RELEASE.2025-05-21T01-59-54Z and ensured compatibility across both amd64 and arm64 architectures.
 
-- Remove the remnants of OpenHIM from the backup & restore scripts. [#9732](https://github.com/opencrvs/opencrvs-core/issues/9732) 
+- Remove the remnants of OpenHIM from the backup & restore scripts. [#9732](https://github.com/opencrvs/opencrvs-core/issues/9732)
+
+- Store system monitoring data for 1 month [#10515](https://github.com/opencrvs/opencrvs-core/issues/10515)
+
+- Restricted filesystem usage for journal service and file rotation strategy [#10518](https://github.com/opencrvs/opencrvs-core/issues/10518))
+- Tiltfile: Improved Kubernetes support for development environment [#10672](https://github.com/opencrvs/opencrvs-core/issues/10672)
+
+### Bug fixes
+
+- Allow non-interactive upgrades with apt [#10204](https://github.com/opencrvs/opencrvs-core/issues/10204)
+- Don't restart events service after data cleanup [#10704](https://github.com/opencrvs/opencrvs-core/issues/10704)
 
 ## 1.8.1
 
 ### Bug fixes
 
 - Ensure that place of birth/death only shows active facilities/offices on the form [#9311](https://github.com/opencrvs/opencrvs-core/issues/9311)
-
 
 ## 1.8.0
 
@@ -61,7 +110,7 @@ No changes
 
 ### Bug fixes
 
-- A configuration example of how to use middle names in a supported way has been added, inspired by [#9369]((https://github.com/opencrvs/opencrvs-core/issues/9369))
+- A configuration example of how to use middle names in a supported way has been added, inspired by [#9369](<(https://github.com/opencrvs/opencrvs-core/issues/9369)>)
 - InfluxDB `max-values-per-tag` is now set to unlimited to temporarily fix the following error when clearing data from a deployed environment
 
 ```
@@ -231,7 +280,7 @@ reviewAction.reject,The label for reject button of review action,Reject
 reviewAction.title,The title for review action,Register member
 userRole.fieldAgent,Name for user role Field Agent,Field Agent
 userRole.healthcareWorker,Name for user role Healthcare Worker,Healthcare Worker
-userRole.localLeader,Name for user role Local Leader,Local Leader
+userRole.communityLeader,Name for user role Community Leader,Community Leader
 userRole.localRegistrar,Name for user role Local Registrar,Local Registrar
 userRole.localSystemAdmin,Name for user role Local System Admin,Local System Admin
 userRole.nationalRegistrar,Name for user role National Registrar,National Registrar
@@ -239,7 +288,7 @@ userRole.nationalSystemAdmin,Name for user role National System Admin,National S
 userRole.performanceManager,Name for user role Performance Manager,Performance Manager
 userRole.policeOfficer,Name for user role Police Officer,Police Officer
 userRole.registrationAgent,Name for user role Registration Agent,Registration Agent
-userRole.socialWorker,Name for user role Social Worker,Social Worker
+userRole.hospitalClerk,Name for user role Hospital Clerk,Hospital Clerk
 validations.isAgeInYearsBetween,The error message that appears when age for the given date is outside the legal age range,Age must be between {min} and {max} years.
 wq.noRecords.draft,No records messages for empty draft tab,No records in my drafts
 ```

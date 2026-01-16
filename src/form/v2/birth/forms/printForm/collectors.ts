@@ -64,17 +64,36 @@ const fatherMotherBothDoesNotExist = (informantType: InformantTypeKey) => {
   }
 }
 
+const printInAdvanceOption = {
+  label: {
+    id: 'event.birth.action.certificate.form.section.requester.printInAdvance.label',
+    defaultMessage: 'Print in advance of issuance',
+    description: 'This is the label for the print-in-advance of issuance field'
+  },
+  value: 'PRINT_IN_ADVANCE'
+}
+
 const getFieldConfigForInformant = (informantType: InformantTypeKey) => {
   return [
     {
       ...commonConfigs,
       conditionals: [onlyMotherExist(informantType)],
-      options: [getInformantOption(informantType), motherOption, otherOption]
+      options: [
+        getInformantOption(informantType),
+        motherOption,
+        otherOption,
+        printInAdvanceOption
+      ]
     },
     {
       ...commonConfigs,
       conditionals: [onlyFatherExist(informantType)],
-      options: [getInformantOption(informantType), fatherOption, otherOption]
+      options: [
+        getInformantOption(informantType),
+        fatherOption,
+        otherOption,
+        printInAdvanceOption
+      ]
     },
     {
       ...commonConfigs,
@@ -83,13 +102,18 @@ const getFieldConfigForInformant = (informantType: InformantTypeKey) => {
         getInformantOption(informantType),
         fatherOption,
         motherOption,
-        otherOption
+        otherOption,
+        printInAdvanceOption
       ]
     },
     {
       ...commonConfigs,
       conditionals: [fatherMotherBothDoesNotExist(informantType)],
-      options: [getInformantOption(informantType), otherOption]
+      options: [
+        getInformantOption(informantType),
+        otherOption,
+        printInAdvanceOption
+      ]
     }
   ]
 }
@@ -112,7 +136,7 @@ const getInformantOption = (informantType: InformantTypeKey) => {
 
 const fatherOption = {
   label: {
-    id: 'v2.event.birth.action.certificate.form.section.requester.father.label',
+    id: 'event.birth.action.certificate.form.section.requester.father.label',
     defaultMessage: 'Print and issue to Father',
     description: 'This is the label for the field'
   },
@@ -121,7 +145,7 @@ const fatherOption = {
 
 const motherOption = {
   label: {
-    id: 'v2.event.birth.action.certificate.form.section.requester.mother.label',
+    id: 'event.birth.action.certificate.form.section.requester.mother.label',
     defaultMessage: 'Print and issue to Mother',
     description: 'This is the label for the field'
   },
@@ -130,7 +154,7 @@ const motherOption = {
 
 const otherOption = {
   label: {
-    id: 'v2.event.birth.action.certificate.form.section.requester.other.label',
+    id: 'event.birth.action.certificate.form.section.requester.other.label',
     defaultMessage: 'Print and issue to someone else',
     description: 'This is the label for the field'
   },
@@ -140,7 +164,7 @@ const otherOption = {
 const requesterLabel = {
   defaultMessage: 'Requester',
   description: 'This is the label for the field',
-  id: 'v2.event.birth.action.certificate.form.section.requester.label'
+  id: 'event.birth.action.certificate.form.section.requester.label'
 }
 
 const commonConfigs = {
@@ -154,7 +178,11 @@ export const printCertificateCollectors: FieldConfig[] = [
   {
     ...commonConfigs,
     conditionals: [onlyMotherExist(InformantType.MOTHER)],
-    options: [getInformantOption(InformantType.MOTHER), otherOption]
+    options: [
+      getInformantOption(InformantType.MOTHER),
+      otherOption,
+      printInAdvanceOption
+    ]
   },
   {
     ...commonConfigs,
@@ -162,13 +190,18 @@ export const printCertificateCollectors: FieldConfig[] = [
     options: [
       getInformantOption(InformantType.MOTHER),
       fatherOption,
-      otherOption
+      otherOption,
+      printInAdvanceOption
     ]
   },
   {
     ...commonConfigs,
     conditionals: [onlyFatherExist(InformantType.FATHER)],
-    options: [getInformantOption(InformantType.FATHER), otherOption]
+    options: [
+      getInformantOption(InformantType.FATHER),
+      otherOption,
+      printInAdvanceOption
+    ]
   },
   {
     ...commonConfigs,
@@ -176,7 +209,8 @@ export const printCertificateCollectors: FieldConfig[] = [
     options: [
       getInformantOption(InformantType.FATHER),
       motherOption,
-      otherOption
+      otherOption,
+      printInAdvanceOption
     ]
   },
   ...getFieldConfigForInformant(InformantType.OTHER),

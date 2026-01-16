@@ -39,7 +39,7 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
     label: {
       defaultMessage: '',
       description: 'Title for the data section',
-      id: 'v2.event.death.action.certificate.form.section.verifyIdentity.data.label'
+      id: 'event.death.action.certificate.form.section.verifyIdentity.data.label'
     },
     configuration: {
       data: [
@@ -49,6 +49,7 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
         { fieldId: 'spouse.brn' },
         { fieldId: 'spouse.name' },
         { fieldId: 'spouse.dob' },
+        { fieldId: 'spouse.age' },
         { fieldId: 'spouse.nationality' }
       ]
     }
@@ -68,7 +69,7 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
     label: {
       defaultMessage: '',
       description: 'Title for the data section',
-      id: 'v2.event.death.action.certificate.form.section.verifyIdentity.data.label'
+      id: 'event.death.action.certificate.form.section.verifyIdentity.data.label'
     },
     configuration: {
       data: [
@@ -79,6 +80,7 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
         { fieldId: 'informant.brn' },
         { fieldId: 'informant.name' },
         { fieldId: 'informant.dob' },
+        { fieldId: 'informant.age' },
         { fieldId: 'informant.nationality' }
       ]
     }

@@ -19,9 +19,9 @@ import { eventDetails } from './pages/eventDetails'
 
 export const DEATH_DECLARATION_REVIEW = {
   title: {
-    id: 'v2.event.death.action.declare.form.review.title',
+    id: 'event.death.action.declare.form.review.title',
     defaultMessage:
-      '{deceased.name.firstname, select, __EMPTY__ {Death declaration} other {{deceased.name.surname, select, __EMPTY__ {Death declaration} other {Death declaration for {deceased.name.firstname} {deceased.name.surname}}}}}',
+      '{deceased.name.firstname, select, __EMPTY__ {Death declaration} other {{deceased.name.surname, select, __EMPTY__ {Death declaration for {deceased.name.firstname}} other {Death declaration for {deceased.name.firstname} {deceased.name.surname}}}}}',
     description: 'Title of the form to show in review page'
   },
   fields: [
@@ -30,7 +30,7 @@ export const DEATH_DECLARATION_REVIEW = {
       type: FieldType.TEXTAREA,
       label: {
         defaultMessage: 'Comment',
-        id: 'v2.event.death.action.declare.form.review.comment.label',
+        id: 'event.death.action.declare.form.review.comment.label',
         description: 'Label for the comment field in the review section'
       },
       required: true
@@ -41,11 +41,11 @@ export const DEATH_DECLARATION_REVIEW = {
       required: true,
       label: {
         defaultMessage: 'Signature of informant',
-        id: 'v2.event.death.action.declare.form.review.signature.label',
+        id: 'event.death.action.declare.form.review.signature.label',
         description: 'Label for the signature field in the review section'
       },
       signaturePromptLabel: {
-        id: 'v2.signature.upload.modal.title',
+        id: 'signature.upload.modal.title',
         defaultMessage: 'Draw signature',
         description: 'Title for the modal to draw signature'
       }
@@ -56,7 +56,7 @@ export const DEATH_DECLARATION_REVIEW = {
 export const DEATH_DECLARATION_FORM = defineDeclarationForm({
   label: {
     defaultMessage: 'Death declaration form',
-    id: 'v2.event.death.action.declare.form.label',
+    id: 'event.death.action.declare.form.label',
     description: 'This is what this form is referred as in the system'
   },
 

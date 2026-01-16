@@ -11,7 +11,7 @@ services:
   # Note: these published port will override UFW rules as Docker manages it's own iptables
   # Only publish the exact ports that are required for OpenCRVS to work
   traefik:
-    image: 'traefik:v2.10'
+    image: 'traefik:v2.11'
     ports:
       - target: 80
         published: 80
@@ -67,8 +67,8 @@ services:
     configs:
       - source: filebeat.{{ts}}
         target: /usr/share/filebeat/filebeat.yml
-      - source: beat-rollover-policy.{{ts}}
-        target: /usr/share/filebeat/rollover-policy.json
+      - source: filebeat-rollover-policy.{{ts}}
+        target: /usr/share/filebeat/filebeat-rollover-policy.json
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /var/lib/docker/containers/:/var/lib/docker/containers/:ro
@@ -115,7 +115,7 @@ services:
     configs:
       - source: metricbeat-conf.{{ts}}
         target: /usr/share/metricbeat/metricbeat.yml
-      - source: beat-rollover-policy.{{ts}}
+      - source: metricbeat-rollover-policy.{{ts}}
         target: /usr/share/metricbeat/rollover-policy.json
     logging:
       driver: gelf
@@ -253,11 +253,13 @@ services:
         tag: 'mongo-on-update'
   # Configure redis
   redis:
-    environment:
-      - REDIS_PASSWORD=false
-      - REDIS_ACLFILE=/run/secrets/redis-acl.{{ts}}
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
     secrets:
-      - redis-acl.{{ts}}
+      - source: redis-acl.{{ts}}
+        target: /usr/local/etc/redis/users.acl
+    configs:
+      - source: redis-conf.{{ts}}
+        target: /usr/local/etc/redis/redis.conf
     networks:
       - overlay_net
     deploy:
@@ -537,7 +539,7 @@ services:
     deploy:
       labels:
         - 'traefik.enable=true'
-        - 'traefik.http.routers.countryconfig.rule=Host(`countryconfig.{{hostname}}`) && !Path(`/email`) && !Path(`/notification`) && !Path(`/dashboards/queries.json`)'
+        - 'traefik.http.routers.countryconfig.rule=Host(`countryconfig.{{hostname}}`) && !Path(`/reindex`) && !Path(`/email`) && !Path(`/notification`) && !Path(`/dashboards/queries.json`)'
         - 'traefik.http.services.countryconfig.loadbalancer.server.port=3040'
         - 'traefik.http.routers.countryconfig.tls=true'
         - 'traefik.http.routers.countryconfig.tls.certresolver=certResolver'
@@ -555,6 +557,8 @@ services:
         - 'traefik.http.middlewares.block-internal-routes.ipwhitelist.sourcerange=255.255.255.255'
         - 'traefik.http.routers.block-email.rule=Host(`countryconfig.{{hostname}}`) && Path(`/email`)'
         - 'traefik.http.routers.block-email.middlewares=block-internal-routes'
+        - 'traefik.http.routers.block-reindex.rule=Host(`countryconfig.{{hostname}}`) && Path(`/reindex`)'
+        - 'traefik.http.routers.block-reindex.middlewares=block-internal-routes'
         - 'traefik.http.routers.block-notification.rule=Host(`countryconfig.{{hostname}}`) && Path(`/notification`)'
         - 'traefik.http.routers.block-notification.middlewares=block-internal-routes'
         - 'traefik.http.routers.block-dashboard-queries.rule=Host(`countryconfig.{{hostname}}`) && Path(`/dashboards/queries.json`)'
@@ -586,6 +590,7 @@ services:
       - INFOBIP_API_KEY=${INFOBIP_API_KEY:-}
       - INFOBIP_SENDER_ID=${INFOBIP_SENDER_ID:-}
       - DOMAIN={{hostname}}
+      - ANALYTICS_DATABASE_URL=postgres://events_analytics:${ANALYTICS_POSTGRES_PASSWORD}@postgres/events
     networks:
       - overlay_net
     logging:
@@ -687,6 +692,7 @@ services:
       - jwt-public-key.{{ts}}
     environment:
       - NODE_ENV=production
+      - APN_SERVICE_URL=http://apm-server:8200
       - EVENTS_MONGO_URL=mongodb://events:${EVENTS_MONGODB_PASSWORD}@mongo1/events?replicaSet=rs0
       - USER_MGNT_MONGO_URL=mongodb://user-mgnt:${USER_MGNT_MONGODB_PASSWORD}@mongo1/user-mgnt?replicaSet=rs0
       - ES_URL=http://search-user:${ROTATING_SEARCH_ELASTIC_PASSWORD}@elasticsearch:9200
@@ -907,6 +913,7 @@ services:
       options:
         gelf-address: 'udp://127.0.0.1:12201'
         tag: 'config'
+
   migration:
     environment:
       - USER_MGNT_MONGO_URL=mongodb://user-mgnt:${USER_MGNT_MONGODB_PASSWORD}@mongo1/user-mgnt?replicaSet=rs0
@@ -936,6 +943,49 @@ services:
       options:
         gelf-address: 'udp://127.0.0.1:12201'
         tag: 'migration'
+
+  legacy-user-migration:
+    image: ghcr.io/opencrvs/ocrvs-migration:${VERSION}
+    command: ["/bin/sh", "-c", "/app/wait && yarn start:prod --migrate-legacy-users"]
+    environment:
+      - USER_MGNT_MONGO_URL=mongodb://user-mgnt:${USER_MGNT_MONGODB_PASSWORD}@mongo1/user-mgnt?replicaSet=rs0
+      - DASHBOARD_MONGO_URL=mongodb://performance:${PERFORMANCE_MONGODB_PASSWORD}@mongo1/performance?replicaSet=rs0
+      - APPLICATION_CONFIG_MONGO_URL=mongodb://config:${CONFIG_MONGODB_PASSWORD}@mongo1/application-config?replicaSet=rs0
+      - HEARTH_MONGO_URL=mongodb://hearth:${HEARTH_MONGODB_PASSWORD}@mongo1/hearth-dev?replicaSet=rs0
+      - EVENTS_MONGO_URL=mongodb://events:${EVENTS_MONGODB_PASSWORD}@mongo1/events?replicaSet=rs0
+      - OPENHIM_MONGO_URL=mongodb://openhim:${OPENHIM_MONGODB_PASSWORD}@mongo1/openhim-dev?replicaSet=rs0
+      - EVENTS_POSTGRES_URL=postgres://events_migrator:${EVENTS_MIGRATOR_POSTGRES_PASSWORD}@postgres/events
+      - EVENTS_SUPERUSER_POSTGRES_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres/events
+      - SEARCH_URL=http://search:9090/
+      - ES_HOST=search-user:${ROTATING_SEARCH_ELASTIC_PASSWORD}@elasticsearch:9200
+      - INFLUX_HOST=influxdb
+      - INFLUX_PORT=8086
+      - INFLUX_DB=ocrvs
+      - WAIT_HOSTS=mongo1:27017,influxdb:8086,minio:9000,elasticsearch:9200
+      - MINIO_ACCESS_KEY=${MINIO_ROOT_USER}
+      - MINIO_SECRET_KEY=${MINIO_ROOT_PASSWORD}
+      - MINIO_HOST=minio
+      - MINIO_PORT=9000
+      - MINIO_BUCKET=ocrvs
+      - SUPER_USER_PASSWORD=${SUPER_USER_PASSWORD}
+      - MONGO_HOST=mongo1
+      - MONGO_PORT=27017
+      - MONGO_USERNAME=${MONGODB_ADMIN_USER}
+      - MONGO_PASSWORD=${MONGODB_ADMIN_PASSWORD}
+      - MONGO_REPLICA_SET=rs0
+    deploy:
+      labels:
+        - 'traefik.enable=false'
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    networks:
+      - overlay_net
+    logging:
+      driver: gelf
+      options:
+        gelf-address: 'udp://127.0.0.1:12201'
+        tag: 'legacy-user-migration'
   # Configure other dependencies with deployment specifc details
   hearth:
     environment:
@@ -961,7 +1011,7 @@ services:
         tag: 'hearth'
 
   postgres:
-    image: postgres:17.6
+    image: docker.io/chumaky/postgres_mongo_fdw:17.6_fdw5.5.2
     networks:
       - overlay_net
     restart: unless-stopped
@@ -980,10 +1030,12 @@ services:
 
   postgres-on-update:
     image: postgres:17.6
-    command: bash /on-deploy.sh
+    command: ["bash", "-c", "bash /on-deploy.sh && bash /setup-analytics.sh"]
     configs:
       - source: postgres-on-deploy.{{ts}}
         target: /on-deploy.sh
+      - source: postgres-analytics-on-deploy.{{ts}}
+        target: /setup-analytics.sh
     deploy:
       labels:
         - traefik.enable=false
@@ -995,8 +1047,11 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_HOST=postgres
       - POSTGRES_PORT=5432
+      - ANALYTICS_POSTGRES_USER=events_analytics
+      - ANALYTICS_POSTGRES_PASSWORD=${ANALYTICS_POSTGRES_PASSWORD}
       - EVENTS_APP_POSTGRES_PASSWORD=${EVENTS_APP_POSTGRES_PASSWORD}
       - EVENTS_MIGRATOR_POSTGRES_PASSWORD=${EVENTS_MIGRATOR_POSTGRES_PASSWORD}
+      - KEEP_ALIVE_SECONDS=10
     networks:
       - overlay_net
 
@@ -1036,18 +1091,26 @@ services:
         tag: 'webhooks'
 
   dashboards:
+    image: metabase/metabase:v0.56.4
     volumes:
       # Exceed Docker config file 500 kb file limit, thus a volume mount
       - /opt/opencrvs/infrastructure/metabase/metabase.init.db.sql:/metabase.init.db.sql
+      - /opt/opencrvs/infrastructure/metabase/run.sh:/run.sh
+      - /opt/opencrvs/infrastructure/metabase/initialize-database.sh:/initialize-database.sh
+      - /opt/opencrvs/infrastructure/metabase/update-database.sh:/update-database.sh
+      - /opt/opencrvs/infrastructure/metabase/environment-configuration.sql:/environment-configuration.sql
+    entrypoint: ["/bin/sh", "/run.sh"]
     networks:
       - overlay_net
     environment:
-      # Note that only mongo1 is used here on purpose for all environments
-      # https://discourse.metabase.com/t/solved-add-mongodb-replicaset-database/7404/2
-      - OPENCRVS_METABASE_DB_HOST=mongo1
-      - OPENCRVS_METABASE_DB_USER=performance
-      - OPENCRVS_METABASE_DB_PASS=${PERFORMANCE_MONGODB_PASSWORD}
-      - OPENCRVS_METABASE_DB_AUTH_DB=performance
+      # Database credentials for PostgreSQL connection
+      - METABASE_DATABASE_SSL=${METABASE_DATABASE_SSL:-false}
+      - METABASE_DATABASE_HOST=${METABASE_DATABASE_HOST:-postgres}
+      - METABASE_DATABASE_PORT=${METABASE_DATABASE_PORT:-5432}
+      - METABASE_DATABASE_NAME=${METABASE_DATABASE_NAME:-events}
+      - METABASE_DATABASE_USER=${METABASE_DATABASE_USER:-events_analytics}
+      - METABASE_DATABASE_PASSWORD=${ANALYTICS_POSTGRES_PASSWORD}
+
       - OPENCRVS_METABASE_SITE_NAME=OpenCRVS Dashboards
       - OPENCRVS_METABASE_SITE_URL=http://metabase.{{hostname}}
       - OPENCRVS_METABASE_MAP_NAME=Farajaland
@@ -1056,6 +1119,11 @@ services:
       - OPENCRVS_METABASE_MAP_REGION_NAME=State
       - OPENCRVS_METABASE_ADMIN_EMAIL=${OPENCRVS_METABASE_ADMIN_EMAIL}
       - OPENCRVS_METABASE_ADMIN_PASSWORD=${OPENCRVS_METABASE_ADMIN_PASSWORD}
+      - METABASE_JAR=/app/metabase.jar
+      - MB_DB_INIT_SQL_FILE=/metabase.init.db.sql
+      - MB_DB_FILE=/data/metabase/metabase.mv.db
+      - OPENCRVS_ENVIRONMENT_CONFIGURATION_SQL_FILE=/environment-configuration.sql
+
     deploy:
       labels:
         - 'traefik.enable=true'
@@ -1088,15 +1156,19 @@ configs:
   hearth-queryparam-extensions-conf.{{ts}}:
     file: /opt/opencrvs/infrastructure/hearth-queryparam-extensions.json
   metricbeat-conf.{{ts}}:
-    file: /opt/opencrvs/infrastructure/monitoring/beats/metricbeat.yml
+    file: /opt/opencrvs/infrastructure/monitoring/metricbeat/metricbeat.yml
   filebeat.{{ts}}:
     file: /opt/opencrvs/infrastructure/monitoring/filebeat/filebeat.yml
   mongo-on-deploy.{{ts}}:
     file: /opt/opencrvs/infrastructure/mongodb/on-deploy.sh
   postgres-on-deploy.{{ts}}:
     file: /opt/opencrvs/infrastructure/postgres/on-deploy.sh
-  beat-rollover-policy.{{ts}}:
-    file: /opt/opencrvs/infrastructure/monitoring/beats/rollover-policy.json
+  postgres-analytics-on-deploy.{{ts}}:
+    file: /opt/opencrvs/infrastructure/postgres/setup-analytics.sh
+  filebeat-rollover-policy.{{ts}}:
+    file: /opt/opencrvs/infrastructure/monitoring/filebeat/filebeat-rollover-policy.json
+  metricbeat-rollover-policy.{{ts}}:
+    file: /opt/opencrvs/infrastructure/monitoring/metricbeat/metricbeat-rollover-policy.json
   kibana.{{ts}}:
     file: /opt/opencrvs/infrastructure/monitoring/kibana/kibana.yml
   apm.{{ts}}:
@@ -1111,6 +1183,8 @@ configs:
     file: /opt/opencrvs/infrastructure/elasticsearch/jvm.options
   minio-mc-config.{{ts}}:
     file: /opt/opencrvs/infrastructure/mc-config/config.json
+  redis-conf.{{ts}}:
+    file: /opt/opencrvs/infrastructure/redis/redis.conf
 networks:
   overlay_net:
     driver: overlay

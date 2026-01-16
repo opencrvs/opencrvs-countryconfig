@@ -19,7 +19,7 @@ import { documents } from './pages/documents'
 
 export const BIRTH_DECLARATION_REVIEW = {
   title: {
-    id: 'v2.event.birth.action.declare.form.review.title',
+    id: 'event.birth.action.declare.form.review.title',
     defaultMessage:
       '{child.name.firstname, select, __EMPTY__ {Birth declaration} other {{child.name.surname, select, __EMPTY__ {Birth declaration for {child.name.firstname}} other {Birth declaration for {child.name.firstname} {child.name.surname}}}}}',
     description: 'Title of the form to show in review page'
@@ -30,7 +30,7 @@ export const BIRTH_DECLARATION_REVIEW = {
       type: FieldType.TEXTAREA,
       label: {
         defaultMessage: 'Comment',
-        id: 'v2.event.birth.action.declare.form.review.comment.label',
+        id: 'event.birth.action.declare.form.review.comment.label',
         description: 'Label for the comment field in the review section'
       },
       required: true
@@ -41,11 +41,11 @@ export const BIRTH_DECLARATION_REVIEW = {
       required: true,
       label: {
         defaultMessage: 'Signature of informant',
-        id: 'v2.event.birth.action.declare.form.review.signature.label',
+        id: 'event.birth.action.declare.form.review.signature.label',
         description: 'Label for the signature field in the review section'
       },
       signaturePromptLabel: {
-        id: 'v2.signature.upload.modal.title',
+        id: 'signature.upload.modal.title',
         defaultMessage: 'Draw signature',
         description: 'Title for the modal to draw signature'
       }
@@ -56,7 +56,7 @@ export const BIRTH_DECLARATION_REVIEW = {
 export const BIRTH_DECLARATION_FORM = defineDeclarationForm({
   label: {
     defaultMessage: 'Birth decalration form',
-    id: 'v2.event.birth.action.declare.form.label',
+    id: 'event.birth.action.declare.form.label',
     description: 'This is what this form is referred as in the system'
   },
 

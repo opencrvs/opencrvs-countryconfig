@@ -24,7 +24,10 @@ import {
 
 import { createSelectOptions, emptyMessage } from '@countryconfig/form/v2/utils'
 import { applicationConfig } from '@countryconfig/api/application/application-config'
-import { defaultStreetAddressConfiguration } from '@countryconfig/form/street-address-configuration'
+import {
+  defaultStreetAddressConfiguration,
+  getNestedFieldValidators
+} from '@countryconfig/form/street-address-configuration'
 
 export const MannerDeathType = {
   MANNER_NATURAL: 'MANNER_NATURAL',
@@ -114,18 +117,18 @@ const placeOfDeathMessageDescriptors = {
   HEALTH_FACILITY: {
     defaultMessage: 'Health Institution',
     description: 'Select item for Health Institution',
-    id: 'v2.form.field.label.healthInstitution'
+    id: 'form.field.label.healthInstitution'
   },
   DECEASED_USUAL_RESIDENCE: {
     defaultMessage: "Deceased's usual place of residence",
     description:
       'Option for place of occurrence of death same as deceased primary address',
-    id: 'v2.form.field.label.placeOfDeathSameAsPrimary'
+    id: 'form.field.label.placeOfDeathSameAsPrimary'
   },
   OTHER: {
     defaultMessage: 'Other',
     description: 'Select item for Other location',
-    id: 'v2.form.field.label.otherInstitution'
+    id: 'form.field.label.otherInstitution'
   }
 } satisfies Record<keyof typeof PlaceOfDeath, TranslationConfig>
 
@@ -140,27 +143,41 @@ export const eventDetails = defineFormPage({
   title: {
     defaultMessage: 'Event details',
     description: 'Form section title for event details',
-    id: 'v2.form.death.eventDetails.title'
+    id: 'form.death.eventDetails.title'
   },
   fields: [
     {
       id: 'eventDetails.date',
       type: FieldType.DATE,
       required: true,
+      secured: true,
       validation: [
         {
           message: {
             defaultMessage: 'Must be a valid date',
             description: 'This is the error message for invalid date',
-            id: 'v2.event.death.action.declare.form.section.event.field.date.error'
+            id: 'event.death.action.declare.form.section.event.field.date.error'
           },
           validator: field('eventDetails.date').isBefore().now()
+        },
+        {
+          message: {
+            defaultMessage:
+              "Date of death must be after the deceased's birth date",
+            description:
+              'This is the error message for date of death before date of birth',
+            id: 'event.death.action.declare.form.section.event.field.date.error.beforeBirth'
+          },
+          validator: or(
+            field('eventDetails.date').isAfter().date(field('deceased.dob')),
+            field('deceased.dobUnknown').isEqualTo(true)
+          )
         }
       ],
       label: {
         defaultMessage: 'Date of death',
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.event.field.date.label'
+        id: 'event.death.action.declare.form.section.event.field.date.label'
       }
     },
     {
@@ -168,9 +185,9 @@ export const eventDetails = defineFormPage({
       type: FieldType.TEXT,
       required: true,
       label: {
-        defaultMessage: 'Reason',
+        defaultMessage: 'Reason for late registration',
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.event.field.reason.label'
+        id: 'event.death.action.declare.form.section.event.field.reason.label'
       },
       conditionals: [
         {
@@ -194,7 +211,7 @@ export const eventDetails = defineFormPage({
       label: {
         defaultMessage: 'Manner of death',
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.event.field.manner.label'
+        id: 'event.death.action.declare.form.section.event.field.manner.label'
       },
       options: mannerDeathTypeOptions
     },
@@ -204,7 +221,7 @@ export const eventDetails = defineFormPage({
       label: {
         defaultMessage: 'Cause of death has been established',
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.event.field.causeOfDeath.label'
+        id: 'event.death.action.declare.form.section.event.field.causeOfDeath.label'
       }
     },
     {
@@ -214,7 +231,7 @@ export const eventDetails = defineFormPage({
       label: {
         defaultMessage: 'Source of cause of death',
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.event.field.sourceCauseDeath.label'
+        id: 'event.death.action.declare.form.section.event.field.sourceCauseDeath.label'
       },
       options: sourceCauseDeathOptions,
       conditionals: [
@@ -234,7 +251,7 @@ export const eventDetails = defineFormPage({
         defaultMessage: 'Description',
         description:
           'Description of cause of death by lay person or verbal autopsy',
-        id: 'v2.event.death.action.declare.form.section.event.field.description.label'
+        id: 'event.death.action.declare.form.section.event.field.description.label'
       },
       conditionals: [
         {
@@ -254,7 +271,7 @@ export const eventDetails = defineFormPage({
       ]
     },
     {
-      id: 'eventDetails.divider_1',
+      id: 'eventDetails.divider1',
       type: FieldType.DIVIDER,
       label: emptyMessage
     },
@@ -264,12 +281,12 @@ export const eventDetails = defineFormPage({
       label: {
         defaultMessage: 'Place of death',
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.event.field.addressHelper.label'
+        id: 'event.death.action.declare.form.section.event.field.addressHelper.label'
       },
       configuration: { styles: { fontVariant: 'h3' } }
     },
     {
-      id: 'eventDetails.divider_2',
+      id: 'eventDetails.divider2',
       type: FieldType.DIVIDER,
       label: emptyMessage
     },
@@ -277,10 +294,11 @@ export const eventDetails = defineFormPage({
       id: 'eventDetails.placeOfDeath',
       type: FieldType.SELECT,
       required: true,
+      secured: true,
       label: {
         defaultMessage: 'Place of death',
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.deceased.field.placeOfDeath.label'
+        id: 'event.death.action.declare.form.section.deceased.field.placeOfDeath.label'
       },
       options: placeOfDeathOptions
     },
@@ -288,10 +306,11 @@ export const eventDetails = defineFormPage({
       id: 'eventDetails.deathLocation',
       type: FieldType.FACILITY,
       required: true,
+      secured: true,
       label: {
         defaultMessage: 'Health Institution',
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.deceased.field.deathLocation.label'
+        id: 'event.death.action.declare.form.section.deceased.field.deathLocation.label'
       },
       conditionals: [
         {
@@ -305,11 +324,13 @@ export const eventDetails = defineFormPage({
     {
       id: 'eventDetails.deathLocationOther',
       type: FieldType.ADDRESS,
+      required: true,
       hideLabel: true,
+      secured: true,
       label: {
         defaultMessage: 'Death location address',
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.deceased.field.deathLocationOther.label'
+        id: 'event.death.action.declare.form.section.deceased.field.deathLocationOther.label'
       },
       conditionals: [
         {
@@ -324,12 +345,16 @@ export const eventDetails = defineFormPage({
           message: {
             defaultMessage: 'Invalid input',
             description: 'Error message when generic field is invalid',
-            id: 'v2.error.invalidInput'
+            id: 'error.invalidInput'
           },
           validator: field(
             'eventDetails.deathLocationOther'
           ).isValidAdministrativeLeafLevel()
-        }
+        },
+        ...getNestedFieldValidators(
+          'eventDetails.deathLocationOther',
+          defaultStreetAddressConfiguration
+        )
       ],
       defaultValue: {
         country: 'FAR',
@@ -339,6 +364,27 @@ export const eventDetails = defineFormPage({
       configuration: {
         streetAddressForm: defaultStreetAddressConfiguration
       }
+    },
+    {
+      id: 'eventDetails.deathLocationId',
+      type: FieldType.ALPHA_HIDDEN,
+      required: false,
+      label: {
+        defaultMessage: 'Health Institution',
+        description: 'This is the label for the field',
+        id: 'event.birth.action.declare.form.section.child.field.birthLocation.label'
+      },
+      parent: [
+        field('eventDetails.placeOfDeath'),
+        field('eventDetails.deathLocation'),
+        field('eventDetails.deathLocationOther'),
+        field('deceased.address')
+      ],
+      value: [
+        field('eventDetails.deathLocation'),
+        field('eventDetails.deathLocationOther').get('administrativeArea'),
+        field('deceased.address').get('administrativeArea')
+      ]
     }
   ]
 })

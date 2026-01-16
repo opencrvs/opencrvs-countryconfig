@@ -139,7 +139,26 @@ elasticsearch_host() {
 
 echo "delete any previously created snapshot if any.  This may error on a fresh install with a repository_missing_exception error.  Just ignore it."
 docker run --rm --network=$NETWORK appropriate/curl curl -X DELETE "http://$(elasticsearch_host)/_snapshot/ocrvs"
-docker run --rm --network=$NETWORK appropriate/curl curl -X DELETE "http://$(elasticsearch_host)/*" -v
+
+# Delete all data from elasticsearch
+#-----------------------------------
+approved_words=${ES_INDEX_PREFIXES:-"events_ ocrvs-"}
+indices=$(docker run --rm --network=$NETWORK appropriate/curl curl -sS -XGET "http://$(elasticsearch_host)/_cat/indices?h=index")
+echo "--------------------------"
+echo "🧹 cleanup for indices: $approved_words from $indices"
+echo "--------------------------"
+for index in ${indices[@]}; do
+  for approved in $approved_words; do
+    echo "Checking index $index against approved pattern $approved..."
+    case "$index" in
+    "$approved"*)
+        echo "Delete index $index..."
+        docker run --rm --network=$NETWORK appropriate/curl curl -sS -XDELETE "http://$(elasticsearch_host)/$index"
+        break
+        ;;
+    esac
+  done
+done
 
 echo "Waiting for elasticsearch to restart so that the restore script can find the updated volume."
 docker service update --force --update-parallelism 1 --update-delay 30s opencrvs_elasticsearch
@@ -189,11 +208,17 @@ db.getSiblingDB('webhooks').dropDatabase();"
 # ------ POSTGRESQL -------
 ##
 
-docker run --rm \
-  -e PGPASSWORD=$POSTGRES_PASSWORD \
-  --network=$NETWORK \
-  postgres:17.6 \
-  bash -c "psql -h postgres -U $POSTGRES_USER -c 'DROP DATABASE IF EXISTS events;'"
+# Check if PostgreSQL backup exists before dropping database
+if [ -f "$ROOT_PATH/backups/postgres/events-${LABEL}.dump" ]; then
+  echo "PostgreSQL backup found. Dropping existing events database..."
+  docker run --rm \
+    -e PGPASSWORD=$POSTGRES_PASSWORD \
+    --network=$NETWORK \
+    postgres:17.6 \
+    bash -c "psql -h postgres -U $POSTGRES_USER -c 'DROP DATABASE IF EXISTS events WITH (FORCE);'"
+else
+  echo "PostgreSQL backup not found for label ${LABEL}. Skipping PostgreSQL database drop..."
+fi
 
 #####
 #
@@ -220,13 +245,22 @@ docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWO
 # ------ POSTGRESQL -------
 ##
 
-echo "Restoring PostgreSQL 'events' database"
-docker run --rm \
-  -e PGPASSWORD=$POSTGRES_PASSWORD \
-  -v $ROOT_PATH/backups/postgres:/backups \
-  --network=$NETWORK \
-  postgres:17.6 \
-  bash -c "createdb -h postgres -U $POSTGRES_USER events && pg_restore -h postgres -U $POSTGRES_USER -d events /backups/events-${LABEL}.dump"
+# Check if PostgreSQL backup exists before restoring
+if [ -f "$ROOT_PATH/backups/postgres/events-${LABEL}.dump" ]; then
+  echo "PostgreSQL backup found. Restoring PostgreSQL 'events' database..."
+  docker run --rm \
+    -e PGPASSWORD=$POSTGRES_PASSWORD \
+    -v $ROOT_PATH/backups/postgres:/backups \
+    --network=$NETWORK \
+    postgres:17.6 \
+    bash -c "createdb -h postgres -U $POSTGRES_USER events && \
+             psql -h postgres -U $POSTGRES_USER -d events -c 'CREATE SCHEMA app AUTHORIZATION events_migrator; GRANT USAGE ON SCHEMA app TO events_app;' && \
+             pg_restore -h postgres -U $POSTGRES_USER -d events --schema=app /backups/events-${LABEL}.dump"
+  echo "Update credentials in Postgres on restore"
+  docker service update --force opencrvs_postgres-on-update
+else
+  echo "PostgreSQL backup not found for label ${LABEL}. Skipping PostgreSQL database restore..."
+fi
 
 ##
 # ------ ELASTICSEARCH -----
@@ -239,7 +273,8 @@ sleep 10
 
 # Restore all data from a backup into search
 #-------------------------------------------
-docker run --rm --network=$NETWORK appropriate/curl curl -X POST -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs/snapshot_$LABEL/_restore?pretty" -d '{ "indices": "ocrvs" }'
+json_payload="{\"indices\": \"ocrvs-*,events_*\", \"include_global_state\": false}"
+docker run --rm --network=$NETWORK appropriate/curl curl -X POST -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs/snapshot_$LABEL/_restore?pretty" -d "$json_payload"
 sleep 10
 echo "Waiting 1 minute to rotate elasticsearch passwords"
 echo
@@ -279,3 +314,15 @@ tar -xzvf $ROOT_PATH/backups/vsexport/ocrvs-$LABEL.tar.gz -C $ROOT_PATH/vsexport
 if [ "$IS_LOCAL" = false ]; then
   docker service update --force --update-parallelism 1 opencrvs_migration
 fi
+
+##
+# ------ REINDEX -----
+##
+docker run --rm \
+  -v /opt/opencrvs/infrastructure/deployment:/workspace \
+  -w /workspace \
+  --network $NETWORK \
+  -e 'AUTH_URL=http://auth:4040/' \
+  -e 'EVENTS_URL=http://gateway:7070/events' \
+  alpine \
+  sh -c 'apk add --no-cache curl jq && sh reindex.sh'

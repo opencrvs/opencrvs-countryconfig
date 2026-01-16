@@ -10,9 +10,17 @@
  */
 import {
   ActionType,
+  and,
   ConditionalType,
   defineConfig,
-  field
+  field,
+  FieldType,
+  flag,
+  InherentFlags,
+  not,
+  or,
+  status,
+  user
 } from '@opencrvs/toolkit/events'
 import {
   BIRTH_DECLARATION_FORM,
@@ -24,6 +32,7 @@ import { BIRTH_CERTIFICATE_COLLECTOR_FORM } from './forms/printForm'
 import { PlaceOfBirth } from './forms/pages/child'
 import { CORRECTION_FORM } from './forms/correctionForm'
 import { dedupConfig } from './dedupConfig'
+import { applicationConfig } from '@countryconfig/api/application/application-config'
 
 export const birthEvent = defineConfig({
   id: Event.Birth,
@@ -31,20 +40,68 @@ export const birthEvent = defineConfig({
   label: {
     defaultMessage: 'Birth',
     description: 'This is what this event is referred as in the system',
-    id: 'v2.event.birth.label'
+    id: 'event.birth.label'
   },
   dateOfEvent: field('child.dob'),
+  placeOfEvent: field('child.birthLocationId'),
   title: {
     defaultMessage: '{child.name.firstname} {child.name.surname}',
     description: 'This is the title of the summary',
-    id: 'v2.event.birth.title'
+    id: 'event.birth.title'
   },
   fallbackTitle: {
-    id: 'v2.event.tennis-club-membership.fallbackTitle',
+    id: 'event.tennis-club-membership.fallbackTitle',
     defaultMessage: 'No name provided',
     description:
       'This is a fallback title if actual title resolves to empty string'
   },
+  flags: [
+    {
+      id: 'approval-required-for-late-registration',
+      label: {
+        id: 'event.birth.flag.approval-required-for-late-registration',
+        defaultMessage: 'Approval required for late registration',
+        description: 'Flag label for approval required for late registration'
+      },
+      requiresAction: true
+    },
+    {
+      id: 'escalated-to-provincial-registrar',
+      label: {
+        id: 'event.birth.flag.escalated-to-provincial-registrar',
+        defaultMessage: 'Escalated to Provincial Registrar',
+        description: 'Flag label for escalated to provincial registrar'
+      },
+      requiresAction: true
+    },
+    {
+      id: 'escalated-to-registrar-general',
+      label: {
+        id: 'event.birth.flag.escalated-to-registrar-general',
+        defaultMessage: 'Escalated to Registrar General',
+        description: 'Flag label for escalated to registrar general'
+      },
+      requiresAction: true
+    },
+    {
+      id: 'validated',
+      label: {
+        id: 'event.birth.flag.validated',
+        defaultMessage: 'Validated',
+        description: 'Flag label for validated'
+      },
+      requiresAction: true
+    },
+    {
+      id: 'pending-certified-copy-issuance',
+      label: {
+        id: 'event.birth.flag.pending-certified-copy-issuance',
+        defaultMessage: 'Pending certified copy issuance',
+        description: 'Flag label for pending certified copy issuance'
+      },
+      requiresAction: true
+    }
+  ],
   summary: {
     fields: [
       {
@@ -52,7 +109,7 @@ export const birthEvent = defineConfig({
         emptyValueMessage: {
           defaultMessage: 'No date of birth',
           description: 'This is shown when there is no child information',
-          id: 'v2.event.birth.summary.child.dob.empty'
+          id: 'event.birth.summary.child.dob.empty'
         }
       },
       // Render the 'fallback value' when selection has not been made.
@@ -62,12 +119,12 @@ export const birthEvent = defineConfig({
         emptyValueMessage: {
           defaultMessage: 'No place of birth',
           description: 'This is shown when there is no child information',
-          id: 'v2.event.birth.summary.child.placeOfBirth.empty'
+          id: 'event.birth.summary.child.placeOfBirth.empty'
         },
         label: {
           defaultMessage: 'Place of birth',
           description: 'Label for place of birth',
-          id: 'v2.event.birth.summary.child.placeOfBirth.label'
+          id: 'event.birth.summary.child.placeOfBirth.label'
         },
         conditionals: [
           {
@@ -81,12 +138,12 @@ export const birthEvent = defineConfig({
         emptyValueMessage: {
           defaultMessage: 'No place of birth',
           description: 'This is shown when there is no child information',
-          id: 'v2.event.birth.summary.child.placeOfBirth.empty'
+          id: 'event.birth.summary.child.placeOfBirth.empty'
         },
         label: {
           defaultMessage: 'Place of birth',
           description: 'Label for place of birth',
-          id: 'v2.event.birth.summary.child.placeOfBirth.label'
+          id: 'event.birth.summary.child.placeOfBirth.label'
         },
         conditionals: [
           {
@@ -98,16 +155,16 @@ export const birthEvent = defineConfig({
         ]
       },
       {
-        fieldId: 'child.address.privateHome',
+        fieldId: 'child.birthLocation.privateHome',
         emptyValueMessage: {
           defaultMessage: 'No place of birth',
           description: 'This is shown when there is no child information',
-          id: 'v2.event.birth.summary.child.placeOfBirth.empty'
+          id: 'event.birth.summary.child.placeOfBirth.empty'
         },
         label: {
           defaultMessage: 'Place of birth',
           description: 'Label for place of birth',
-          id: 'v2.event.birth.summary.child.placeOfBirth.label'
+          id: 'event.birth.summary.child.placeOfBirth.label'
         },
         conditionals: [
           {
@@ -119,16 +176,16 @@ export const birthEvent = defineConfig({
         ]
       },
       {
-        fieldId: 'child.address.other',
+        fieldId: 'child.birthLocation.other',
         emptyValueMessage: {
           defaultMessage: 'No place of birth',
           description: 'This is shown when there is no child information',
-          id: 'v2.event.birth.summary.child.placeOfBirth.empty'
+          id: 'event.birth.summary.child.placeOfBirth.empty'
         },
         label: {
           defaultMessage: 'Place of birth',
           description: 'Label for place of birth',
-          id: 'v2.event.birth.summary.child.placeOfBirth.label'
+          id: 'event.birth.summary.child.placeOfBirth.label'
         },
         conditionals: [
           {
@@ -144,21 +201,39 @@ export const birthEvent = defineConfig({
         emptyValueMessage: {
           defaultMessage: 'No contact details provided',
           description: 'This is shown when there is no informant information',
-          id: 'v2.event.birth.summary.informant.contact.empty'
+          id: 'event.birth.summary.informant.contact.empty'
         },
         label: {
           defaultMessage: 'Contact',
           description: 'This is the label for the informant information',
-          id: 'v2.event.birth.summary.informant.contact.label'
+          id: 'event.birth.summary.informant.contact.label'
         },
         value: {
           defaultMessage: '{informant.phoneNo} {informant.email}',
           description: 'This is the contact value of the informant',
-          id: 'v2.event.birth.summary.informant.contact.value'
+          id: 'event.birth.summary.informant.contact.value'
         }
       }
     ]
   },
+  actionOrder: [
+    ActionType.ASSIGN,
+    ActionType.REGISTER,
+    ActionType.DECLARE,
+    ActionType.EDIT,
+    'VALIDATE_DECLARATION',
+    'APPROVE_DECLARATION',
+    ActionType.REJECT,
+    ActionType.ARCHIVE,
+    ActionType.DELETE,
+    'ESCALATE',
+    'PROVINCIAL_REGISTER_FEEDBACK',
+    'REGISTRAR_GENERAL_FEEDBACK',
+    ActionType.MARK_AS_DUPLICATE,
+    ActionType.PRINT_CERTIFICATE,
+    ActionType.REQUEST_CORRECTION,
+    ActionType.UNASSIGN
+  ],
   actions: [
     {
       type: ActionType.READ,
@@ -166,7 +241,7 @@ export const birthEvent = defineConfig({
         defaultMessage: 'Read',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'v2.event.birth.action.Read.label'
+        id: 'event.birth.action.Read.label'
       },
       review: BIRTH_DECLARATION_REVIEW
     },
@@ -176,7 +251,7 @@ export const birthEvent = defineConfig({
         defaultMessage: 'Declare',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'v2.event.birth.action.declare.label'
+        id: 'event.birth.action.declare.label'
       },
       review: BIRTH_DECLARATION_REVIEW,
       deduplication: {
@@ -185,30 +260,454 @@ export const birthEvent = defineConfig({
           defaultMessage: 'Detect duplicate',
           description:
             'This is shown as the action name anywhere the user can trigger the action from',
-          id: 'v2.event.birth.action.detect-duplicate.label'
+          id: 'event.birth.action.detect-duplicate.label'
         },
         query: dedupConfig
+      },
+      flags: [
+        {
+          id: 'approval-required-for-late-registration',
+          operation: 'add',
+          conditional: and(
+            not(
+              field('child.dob')
+                .isAfter()
+                .days(applicationConfig.BIRTH.LATE_REGISTRATION_TARGET)
+                .inPast()
+            ),
+            field('child.dob').isBefore().now()
+          )
+        },
+        {
+          id: 'validated',
+          operation: 'add',
+          conditional: or(
+            user.hasRole('REGISTRATION_AGENT'),
+            user.hasRole('LOCAL_REGISTRAR')
+          )
+        }
+      ],
+      dialogCopy: {
+        notify: {
+          id: 'event.birth.action.declare.notify.copy',
+          defaultMessage:
+            'You are about to formally notify the relevant Registration Office that a new birth event has occurred. Please confirm that the information provided is accurate before proceeding.',
+          description: 'Confirmation text for the notify action'
+        },
+        declare: {
+          id: 'event.birth.action.declare.declare.copy',
+          defaultMessage:
+            'You are about to formally declare this birth event. Once declared, the record will enter the verification and approval process.',
+          description: 'Confirmation text for the declare action'
+        },
+        register: {
+          id: 'event.birth.action.declare.register.copy',
+          defaultMessage:
+            'Registering this birth event will create an official civil registration record. Please ensure all details are correct before proceeding.',
+          description: 'Confirmation text for the register action'
+        }
       }
     },
     {
-      type: ActionType.VALIDATE,
+      type: ActionType.EDIT,
       label: {
-        defaultMessage: 'Validate',
+        defaultMessage: 'Edit',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'v2.event.birth.action.validate.label'
+        id: 'actions.edit'
       },
-      review: BIRTH_DECLARATION_REVIEW,
-      deduplication: {
-        id: 'birth-deduplication',
-        label: {
-          defaultMessage: 'Detect duplicate',
-          description:
-            'This is shown as the action name anywhere the user can trigger the action from',
-          id: 'v2.event.birth.action.detect-duplicate.label'
+      flags: [
+        { id: 'validated', operation: 'remove' },
+        { id: 'approval-required-for-late-registration', operation: 'remove' },
+        { id: 'escalated-to-provincial-registrar', operation: 'remove' },
+        { id: 'escalated-to-registrar-general', operation: 'remove' }
+      ],
+      dialogCopy: {
+        notify: {
+          id: 'event.birth.action.edit.notify.copy',
+          defaultMessage:
+            'Are you sure you want to notify this event with these edits?',
+          description: 'Confirmation text for the notify with edits action'
         },
-        query: dedupConfig
+        declare: {
+          id: 'event.birth.action.edit.declare.copy',
+          defaultMessage:
+            'Are you sure you want to edit this declaration? By confirming you are redeclaring this event and override past changes.',
+          description: 'Confirmation text for the declare with edits action'
+        },
+        register: {
+          id: 'event.birth.action.edit.register.copy',
+          defaultMessage:
+            'You are about to register this birth event with your edits. Registering this event will create an official civil registration record.',
+          description: 'Confirmation text for the register with edits action'
+        }
       }
+    },
+    {
+      type: ActionType.CUSTOM,
+      customActionType: 'VALIDATE_DECLARATION',
+      icon: 'Stamp',
+      label: {
+        defaultMessage: 'Validate declaration',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'event.birth.custom.action.validate-declaration.label'
+      },
+      supportingCopy: {
+        defaultMessage:
+          'Validating this declaration confirms it meets all requirements and is eligible for registration.',
+        description:
+          'This is the supporting copy for the Validate declaration -action',
+        id: 'event.birth.custom.action.validate-declaration.supportingCopy'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(status('DECLARED'), not(flag('validated')))
+        },
+        {
+          type: ConditionalType.ENABLE,
+          conditional: not(flag(InherentFlags.POTENTIAL_DUPLICATE))
+        }
+      ],
+      flags: [{ id: 'validated', operation: 'add' }],
+      form: [
+        {
+          id: 'comments',
+          type: 'TEXTAREA',
+          label: {
+            defaultMessage: 'Comments',
+            description:
+              'This is the label for the comments field for the validate declaration action',
+            id: 'event.birth.custom.action.validate-declaration.field.comments.label'
+          }
+        }
+      ],
+      auditHistoryLabel: {
+        defaultMessage: 'Validated',
+        description:
+          'The label to show in audit history for the validate action',
+        id: 'event.birth.custom.action.validate-declaration.audit-history-label'
+      }
+    },
+    {
+      type: ActionType.CUSTOM,
+      customActionType: 'APPROVE_DECLARATION',
+      icon: 'Stamp',
+      label: {
+        defaultMessage: 'Approve declaration',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'event.birth.action.approve.label'
+      },
+      form: [
+        {
+          id: 'notes',
+          type: 'TEXTAREA',
+          label: {
+            defaultMessage: 'Comments',
+            description: 'This is the label for the field for a custom action',
+            id: 'event.birth.custom.action.approve.field.notes.label'
+          }
+        }
+      ],
+      flags: [
+        { id: InherentFlags.REJECTED, operation: 'remove' },
+        { id: 'approval-required-for-late-registration', operation: 'remove' }
+      ],
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: flag('approval-required-for-late-registration')
+        },
+        {
+          type: ConditionalType.ENABLE,
+          conditional: not(flag(InherentFlags.POTENTIAL_DUPLICATE))
+        }
+      ],
+      auditHistoryLabel: {
+        defaultMessage: 'Approved',
+        description:
+          'The label to show in audit history for the approve action',
+        id: 'event.birth.action.approve.audit-history-label'
+      },
+      supportingCopy: {
+        defaultMessage:
+          'Approving this declaration confirms it as legally accepted and eligible for registration.',
+        description: 'This is the confirmation text for the approve action',
+        id: 'event.birth.action.approve.confirmationText'
+      }
+    },
+    {
+      type: ActionType.CUSTOM,
+      customActionType: 'ISSUE_CERTIFIED_COPY',
+      icon: 'Handshake',
+      label: {
+        defaultMessage: 'Issue certified copy',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'event.birth.action.issue-certified-copy.label'
+      },
+      supportingCopy: {
+        defaultMessage:
+          'Issuing a certified copy confirms that an official document is being released.',
+        description:
+          'This is the confirmation text for the issue certified copy action',
+        id: 'event.birth.action.issue-certified-copy.supportingCopy'
+      },
+      form: [
+        {
+          id: 'collector',
+          type: FieldType.SELECT,
+          label: {
+            defaultMessage: 'Collector',
+            description: 'Label for collector field',
+            id: 'event.birth.custom.action.approve.field.collector.label'
+          },
+          required: true,
+          options: [
+            {
+              label: {
+                defaultMessage: 'Mother',
+                id: 'form.field.label.app.whoContDet.mother',
+                description: 'Label for mother'
+              },
+              value: 'MOTHER'
+            },
+            {
+              label: {
+                defaultMessage: 'Father',
+                id: 'form.field.label.informantRelation.father',
+                description: 'Label for father'
+              },
+              value: 'FATHER'
+            },
+            {
+              label: {
+                defaultMessage: 'Someone else',
+                id: 'form.field.label.informantRelation.others',
+                description: 'Label for someone else'
+              },
+              value: 'SOMEONE_ELSE'
+            }
+          ]
+        }
+      ],
+      flags: [{ id: 'pending-certified-copy-issuance', operation: 'remove' }],
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(
+            flag('pending-certified-copy-issuance'),
+            status('REGISTERED')
+          )
+        }
+      ],
+      auditHistoryLabel: {
+        defaultMessage: 'Issued',
+        description: 'The label to show in audit history for the issued action',
+        id: 'event.birth.action.issued.audit-history-label'
+      }
+    },
+    {
+      type: ActionType.CUSTOM,
+      customActionType: 'ESCALATE',
+      icon: 'FileArrowUp',
+      label: {
+        defaultMessage: 'Escalate',
+        description:
+          'This is shown when the escalate action can be triggered from the action from',
+        id: 'event.birth.action.escalate.label'
+      },
+      supportingCopy: {
+        defaultMessage:
+          'Escalating this declaration will forward it to the chosen authority for further review and decision.',
+        description: 'This is the confirmation text for the escalate action',
+        id: 'event.birth.action.escalate.supportingCopy'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: not(
+            or(
+              flag('escalated-to-provincial-registrar'),
+              flag('escalated-to-registrar-general')
+            )
+          )
+        }
+      ],
+      form: [
+        {
+          id: 'escalate-to',
+          type: FieldType.SELECT,
+          required: true,
+          label: {
+            defaultMessage: 'Escalate to',
+            description: 'This is the label for escalate to field',
+            id: 'event.birth.custom.action.escalate.field.escalate-to.label'
+          },
+          options: [
+            {
+              label: {
+                id: 'event.birth.custom.action.escalate.field.escalate-to.option.officer-in-charge.label',
+                defaultMessage: 'My state provincial registrar',
+                description:
+                  'Option label for provincial registrar in escalate to field'
+              },
+              value: 'PROVINCIAL_REGISTRAR'
+            },
+            {
+              label: {
+                id: 'event.birth.custom.action.escalate.field.escalate-to.option.registrar-general.label',
+                defaultMessage: 'Registrar General',
+                description:
+                  'Option label for registrar general in escalate to field'
+              },
+              value: 'REGISTRAR_GENERAL'
+            }
+          ]
+        },
+        {
+          id: 'reason',
+          type: FieldType.TEXTAREA,
+          required: true,
+          label: {
+            defaultMessage: 'Reason',
+            description: 'This is the label for reason field',
+            id: 'form.field.label.reasonNotApplying'
+          }
+        }
+      ],
+      flags: [
+        {
+          id: 'escalated-to-provincial-registrar',
+          operation: 'add',
+          conditional: field('escalate-to').isEqualTo('PROVINCIAL_REGISTRAR')
+        },
+        {
+          id: 'escalated-to-registrar-general',
+          operation: 'add',
+          conditional: field('escalate-to').isEqualTo('REGISTRAR_GENERAL')
+        }
+      ],
+      auditHistoryLabel: {
+        defaultMessage: 'Escalated',
+        description:
+          'The label to show in audit history for the escalate action',
+        id: 'event.birth.action.escalate.audit-history-label'
+      }
+    },
+    {
+      type: ActionType.CUSTOM,
+      customActionType: 'PROVINCIAL_REGISTER_FEEDBACK',
+      icon: 'ChatText',
+      supportingCopy: {
+        defaultMessage:
+          'Your feedback will be recorded and shared with relevant officers to guide further action on this declaration.',
+        description:
+          'This is the confirmation text for the provincial registrar feedback action',
+        id: 'event.birth.action.provincial-registrar-feedback.supportingCopy'
+      },
+      label: {
+        defaultMessage: 'Provincial registrar feedback',
+        description:
+          'This is shown when the provincial registrar feedback can be triggered from the action from',
+        id: 'event.birth.action.provincial-registrar-feedback.label'
+      },
+      form: [
+        {
+          id: 'notes',
+          type: 'TEXTAREA',
+          required: true,
+          label: {
+            defaultMessage: 'Comments',
+            description: 'This is the label for the field for a custom action',
+            id: 'event.birth.custom.action.approve.field.notes.label'
+          }
+        }
+      ],
+      flags: [
+        {
+          id: 'escalated-to-provincial-registrar',
+          operation: 'remove'
+        }
+      ],
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: flag('escalated-to-provincial-registrar')
+        }
+      ],
+      auditHistoryLabel: {
+        defaultMessage: 'Escalation feedback',
+        description:
+          'The label to show in audit history for the registrar feedback sent action',
+        id: 'event.birth.action.registrar-feedback.audit-history-label'
+      }
+    },
+    {
+      type: ActionType.CUSTOM,
+      customActionType: 'REGISTRAR_GENERAL_FEEDBACK',
+      icon: 'ChatText',
+      label: {
+        defaultMessage: 'Registrar general feedback',
+        description:
+          'This is shown when the registrar general feedback can be triggered from the action from',
+        id: 'event.birth.action.registrar-general-feedback.label'
+      },
+      supportingCopy: {
+        defaultMessage:
+          'Your feedback will be officially recorded and may influence the final decision on the declaration.',
+        description:
+          'This is the confirmation text for the registrar general feedback action',
+        id: 'event.birth.action.registrar-general-feedback.supportingCopy'
+      },
+      form: [
+        {
+          id: 'notes',
+          type: 'TEXTAREA',
+          required: true,
+          label: {
+            defaultMessage: 'Comments',
+            description: 'This is the label for the field for a custom action',
+            id: 'event.birth.custom.action.approve.field.notes.label'
+          }
+        }
+      ],
+      flags: [
+        {
+          id: 'escalated-to-registrar-general',
+          operation: 'remove'
+        }
+      ],
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: flag('escalated-to-registrar-general')
+        }
+      ],
+      auditHistoryLabel: {
+        defaultMessage: 'Escalation feedback',
+        description:
+          'The label to show in audit history for the registrar feedback sent action',
+        id: 'event.birth.action.registrar-feedback.audit-history-label'
+      }
+    },
+    {
+      type: ActionType.REJECT,
+      label: {
+        defaultMessage: 'Reject',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'event.birth.action.reject.label'
+      },
+      supportingCopy: {
+        id: 'rejectModal.description',
+        defaultMessage:
+          'Rejecting this declaration will return it to the submitter for updates. Please ensure a valid reason for rejection has been recorded.',
+        description: 'The description for reject modal'
+      },
+      flags: [{ id: 'validated', operation: 'remove' }]
     },
     {
       type: ActionType.REGISTER,
@@ -216,16 +715,33 @@ export const birthEvent = defineConfig({
         defaultMessage: 'Register',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'v2.event.birth.action.register.label'
+        id: 'event.birth.action.register.label'
       },
-      review: BIRTH_DECLARATION_REVIEW,
+      supportingCopy: {
+        id: 'review.register.description.complete',
+        description: 'Confirmation text for the register action',
+        defaultMessage:
+          "By clicking 'Confirm', you confirm that the information entered is correct and the event can be registered."
+      },
+      flags: [{ id: 'validated', operation: 'remove' }],
+      conditionals: [
+        {
+          type: ConditionalType.ENABLE,
+          conditional: and(
+            flag('validated'),
+            not(flag('approval-required-for-late-registration')),
+            not(flag('escalated-to-provincial-registrar')),
+            not(flag('escalated-to-registrar-general'))
+          )
+        }
+      ],
       deduplication: {
         id: 'birth-deduplication',
         label: {
           defaultMessage: 'Detect duplicate',
           description:
             'This is shown as the action name anywhere the user can trigger the action from',
-          id: 'v2.event.birth.action.detect-duplicate.label'
+          id: 'event.birth.action.detect-duplicate.label'
         },
         query: dedupConfig
       }
@@ -236,19 +752,43 @@ export const birthEvent = defineConfig({
         defaultMessage: 'Print certificate',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'v2.event.birth.action.collect-certificate.label'
+        id: 'event.birth.action.collect-certificate.label'
       },
+      flags: [
+        {
+          id: 'pending-certified-copy-issuance',
+          operation: 'add',
+          conditional: field('collector.requesterId').isEqualTo(
+            'PRINT_IN_ADVANCE'
+          )
+        }
+      ],
       printForm: BIRTH_CERTIFICATE_COLLECTOR_FORM
     },
     {
       type: ActionType.REQUEST_CORRECTION,
       label: {
-        id: 'v2.event.birth.action.declare.form.review.title',
+        id: 'event.birth.action.declare.form.review.title',
         defaultMessage:
           '{child.name.firstname, select, __EMPTY__ {Birth declaration} other {{child.name.surname, select, __EMPTY__ {Birth declaration for {child.name.firstname}} other {Birth declaration for {child.name.firstname} {child.name.surname}}}}}',
         description: 'Title of the form to show in review page'
       },
       correctionForm: CORRECTION_FORM
+    },
+    {
+      type: ActionType.ARCHIVE,
+      label: {
+        defaultMessage: 'Archive',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'event.birth.action.archive.label'
+      },
+      supportingCopy: {
+        id: 'recordAudit.archive.confirmation.body',
+        defaultMessage:
+          'Archiving will remove this declaration from active processing while retaining it for record purposes. Archived declarations cannot be modified unless reinstated.',
+        description: 'Confirmation body for archiving a declaration'
+      }
     }
   ],
   advancedSearch: advancedSearchBirth

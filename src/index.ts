@@ -11,25 +11,25 @@
 require('app-module-path').addPath(require('path').join(__dirname))
 require('dotenv').config()
 
+import StreamArray from 'stream-json/streamers/StreamArray'
 import path from 'path'
-import Handlebars from 'handlebars'
 import * as Hapi from '@hapi/hapi'
 import * as Pino from 'hapi-pino'
 import * as JWT from 'hapi-auth-jwt2'
 import * as inert from '@hapi/inert'
 import * as Sentry from 'hapi-sentry'
+import fetch from 'node-fetch'
 import {
   CLIENT_APP_URL,
   DOMAIN,
   LOGIN_URL,
-  SENTRY_DSN
-} from '@countryconfig/constants'
-import {
+  SENTRY_DSN,
   COUNTRY_CONFIG_HOST,
   COUNTRY_CONFIG_PORT,
   CHECK_INVALID_TOKEN,
   AUTH_URL,
-  DEFAULT_TIMEOUT
+  DEFAULT_TIMEOUT,
+  GATEWAY_URL
 } from '@countryconfig/constants'
 import {
   contentHandler,
@@ -58,14 +58,29 @@ import { fontsHandler } from './api/fonts/handler'
 import { recordNotificationHandler } from './api/record-notification/handler'
 import {
   getCustomEventsHandler,
-  onAnyActionHandler
+  onAnyActionHandler,
+  onCustomActionHandler
 } from '@countryconfig/api/custom-event/handler'
-import { readFileSync } from 'fs'
-import { ActionType } from '@opencrvs/toolkit/events'
+import {
+  ActionDocument,
+  ActionStatus,
+  ActionType,
+  EventDocument
+} from '@opencrvs/toolkit/events'
 import { Event } from './form/types/types'
 import { onRegisterHandler } from './api/registration'
 import { workqueueconfigHandler } from './api/workqueue/handler'
 import getUserNotificationRoutes from './config/routes/userNotificationRoutes'
+import {
+  importEvent,
+  importEvents,
+  importLocations,
+  syncLocationLevels,
+  syncLocationStatistics
+} from './analytics/analytics'
+import { getClient } from './analytics/postgres'
+import { env } from './environment'
+import { createClient } from '@opencrvs/toolkit/api'
 
 export interface ITokenPayload {
   sub: string
@@ -77,7 +92,7 @@ export interface ITokenPayload {
 export default function getPlugins() {
   const plugins: any[] = [inert, JWT]
 
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV !== 'test') {
     plugins.push({
       plugin: Pino,
       options: {
@@ -267,6 +282,7 @@ export async function createServer() {
   server.route({
     method: 'GET',
     path: '/ping',
+    // eslint-disable-next-line no-unused-vars
     handler: (request: any, h: any) => {
       // Perform any health checks and return true or false for success prop
       return {
@@ -300,11 +316,7 @@ export async function createServer() {
           ? '/client-config.prod.js'
           : '/client-config.js'
 
-      const template = Handlebars.compile(
-        readFileSync(join(__dirname, file), 'utf8')
-      )
-      const result = template({ V2_EVENTS: process.env.V2_EVENTS || false })
-      return h.response(result).type('application/javascript')
+      return h.file(join(__dirname, file))
     },
     options: {
       auth: false,
@@ -551,6 +563,74 @@ export async function createServer() {
   })
 
   server.route({
+    method: 'POST',
+    path: '/reindex',
+    options: {
+      /*
+       * In deployed environments, the reindex path is blocked by Traefik.
+       * See docker-compose.deploy.yml for more details.
+       */
+      auth: false,
+      payload: {
+        output: 'stream',
+        parse: false
+      }
+    },
+    handler: async (req, h) => {
+      if (!env.ANALYTICS_DATABASE_URL) {
+        // kill client upload immediately
+        if (!req.raw.req.destroyed) {
+          req.raw.req.destroy()
+        }
+
+        logger.warn(
+          'Skipping reindex, no ANALYTICS_DATABASE_URL environment variable set.'
+        )
+        return h.response().code(200)
+      }
+
+      const stream = req.raw.req.pipe(StreamArray.withParser())
+      const BATCH_SIZE = 1000
+      const queue: EventDocument[] = []
+      const client = getClient()
+
+      try {
+        await client.transaction().execute(async (trx) => {
+          for await (const { value } of stream) {
+            queue.push(value)
+
+            if (queue.length >= BATCH_SIZE) {
+              const batch = queue.splice(0, queue.length)
+              await importEvents(batch, trx)
+            }
+          }
+
+          if (queue.length > 0) {
+            await importEvents(queue, trx)
+          }
+
+          // Import locations
+          const url = new URL('events', GATEWAY_URL).toString()
+          const client = createClient(url, req.headers.authorization)
+          const locations = await client.locations.list.query()
+          await importLocations(locations)
+        })
+
+        logger.info('Reindexed all events into analytics.')
+
+        return h.response().code(200)
+      } catch (e) {
+        // stop consuming the stream if something failed on import
+        if (!stream.destroyed) stream.destroy(e)
+
+        logger.error(e)
+
+        return h.response({ error: 'Unexpected error' }).code(500)
+      }
+    }
+  })
+
+  server.route({
     method: 'GET',
     path: '/events',
     handler: getCustomEventsHandler,
@@ -558,6 +638,16 @@ export async function createServer() {
       auth: false,
       tags: ['api', 'events'],
       description: 'Serves custom events'
+    }
+  })
+
+  server.route({
+    method: 'POST',
+    path: `/trigger/events/{event}/actions/${ActionType.CUSTOM}`,
+    handler: onCustomActionHandler,
+    options: {
+      tags: ['api', 'events'],
+      description: 'Receives notifications on event custom action'
     }
   })
 
@@ -611,6 +701,53 @@ export async function createServer() {
     }
   })
 
+  server.ext('onPostHandler', async (request, h) => {
+    const response = request.response as Hapi.ResponseObject
+    const parsedPath = /^\/trigger\/events\/[^/]+\/actions\/([^/]+)$/.exec(
+      request.route.path
+    )
+
+    const actionType = parsedPath?.[1] as ActionType | null
+    const wasRequestForActionConfirmation =
+      actionType && request.method === 'post'
+    const wasActionAcceptedImmediately = response.statusCode === 200
+
+    if (wasRequestForActionConfirmation && wasActionAcceptedImmediately) {
+      const event = request.payload as EventDocument
+
+      const eventWithOptimisticallyApprovedLastAction = {
+        ...event,
+        actions: event.actions.map((action, index) =>
+          index === event.actions.length - 1
+            ? {
+                ...action,
+                status: ActionStatus.Accepted,
+                ...(actionType === ActionType.REGISTER
+                  ? {
+                      registrationNumber: (
+                        response.source as { registrationNumber: string }
+                      ).registrationNumber
+                    }
+                  : {})
+              }
+            : action
+        ) as ActionDocument[]
+      }
+
+      const client = getClient()
+      try {
+        await client.transaction().execute(async (trx) => {
+          await importEvent(eventWithOptimisticallyApprovedLastAction, trx)
+        })
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error)
+        throw error
+      }
+    }
+    return h.continue
+  })
+
   async function stop() {
     await server.stop()
     server.log('info', 'server stopped')
@@ -618,9 +755,11 @@ export async function createServer() {
 
   async function start() {
     await server.start()
-    server.log(
-      'info',
-      `server started on ${COUNTRY_CONFIG_HOST}:${COUNTRY_CONFIG_PORT}`
+    await syncLocationLevels()
+    await syncLocationStatistics()
+
+    logger.info(
+      `Server successfully started on ${COUNTRY_CONFIG_HOST}:${COUNTRY_CONFIG_PORT}`
     )
   }
 

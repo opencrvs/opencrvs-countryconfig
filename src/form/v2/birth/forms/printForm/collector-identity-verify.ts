@@ -37,9 +37,9 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
       }
     ],
     label: {
-      defaultMessage: '',
+      defaultMessage: 'Identity details',
       description: 'Title for the data section',
-      id: 'v2.event.birth.action.certificate.form.section.verifyIdentity.data.label'
+      id: 'event.birth.action.certificate.form.section.verifyIdentity.data.label'
     },
     configuration: {
       data: [
@@ -70,9 +70,9 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
       }
     ],
     label: {
-      defaultMessage: '',
+      defaultMessage: 'Identity details',
       description: 'Title for the data section',
-      id: 'v2.event.birth.action.certificate.form.section.verifyIdentity.data.label'
+      id: 'event.birth.action.certificate.form.section.verifyIdentity.data.label'
     },
     configuration: {
       data: [
@@ -101,9 +101,9 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
       }
     ],
     label: {
-      defaultMessage: '',
+      defaultMessage: 'Identity details',
       description: 'Title for the data section',
-      id: 'v2.event.birth.action.certificate.form.section.verifyIdentity.data.label'
+      id: 'event.birth.action.certificate.form.section.verifyIdentity.data.label'
     },
     configuration: {
       data: [

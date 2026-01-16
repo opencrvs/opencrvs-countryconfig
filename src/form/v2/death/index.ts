@@ -12,7 +12,14 @@ import {
   ActionType,
   ConditionalType,
   defineConfig,
-  field
+  field,
+  or,
+  user,
+  and,
+  status,
+  not,
+  flag,
+  InherentFlags
 } from '@opencrvs/toolkit/events'
 import {
   DEATH_DECLARATION_REVIEW,
@@ -31,16 +38,17 @@ export const deathEvent = defineConfig({
   label: {
     defaultMessage: 'Death',
     description: 'This is what this event is referred as in the system',
-    id: 'v2.event.death.label'
+    id: 'event.death.label'
   },
   dateOfEvent: field('eventDetails.date'),
+  placeOfEvent: field('eventDetails.deathLocationId'),
   title: {
     defaultMessage: '{deceased.name.firstname} {deceased.name.surname}',
     description: 'This is the title of the summary',
-    id: 'v2.event.death.title'
+    id: 'event.death.title'
   },
   fallbackTitle: {
-    id: 'v2.event.tennis-club-membership.fallbackTitle',
+    id: 'event.tennis-club-membership.fallbackTitle',
     defaultMessage: 'No name provided',
     description:
       'This is a fallback title if actual title resolves to empty string'
@@ -53,7 +61,7 @@ export const deathEvent = defineConfig({
           defaultMessage: 'No date of death',
           description:
             'This is shown when there is no date of death information',
-          id: 'v2.event.death.summary.eventDetails.date.empty'
+          id: 'event.death.summary.eventDetails.date.empty'
         }
       },
       {
@@ -62,12 +70,12 @@ export const deathEvent = defineConfig({
           defaultMessage: 'No place of death',
           description:
             'This is shown when there is no place of death information',
-          id: 'v2.event.death.summary.eventDetails.placeOfDeath.empty'
+          id: 'event.death.summary.eventDetails.placeOfDeath.empty'
         },
         label: {
           defaultMessage: 'Place of death',
           description: 'Label for place of death',
-          id: 'v2.event.death.summary.eventDetails.placeOfDeath.label'
+          id: 'event.death.summary.eventDetails.placeOfDeath.label'
         },
         conditionals: [
           {
@@ -82,12 +90,12 @@ export const deathEvent = defineConfig({
           defaultMessage: 'No place of death',
           description:
             'This is shown when there is no death location information',
-          id: 'v2.event.death.summary.eventDetails.deathLocation.empty'
+          id: 'event.death.summary.eventDetails.deathLocation.empty'
         },
         label: {
           defaultMessage: 'Place of death',
           description: 'Label for place of death',
-          id: 'v2.event.death.summary.eventDetails.deathLocation.label'
+          id: 'event.death.summary.eventDetails.deathLocation.label'
         },
         conditionals: [
           {
@@ -104,12 +112,12 @@ export const deathEvent = defineConfig({
           defaultMessage: 'No place of death',
           description:
             'This is shown when there is no death location information',
-          id: 'v2.event.death.summary.eventDetails.placeOfDeath.empty'
+          id: 'event.death.summary.eventDetails.placeOfDeath.empty'
         },
         label: {
           defaultMessage: 'Place of death',
           description: 'Label for place of death',
-          id: 'v2.event.death.summary.eventDetails.placeOfDeath.label'
+          id: 'event.death.summary.eventDetails.placeOfDeath.label'
         },
         conditionals: [
           {
@@ -121,17 +129,17 @@ export const deathEvent = defineConfig({
         ]
       },
       {
-        fieldId: 'deceased.address',
+        fieldId: 'eventDetails.deathLocationOther',
         emptyValueMessage: {
           defaultMessage: 'No place of death',
           description:
             'This is shown when there is no death location information',
-          id: 'v2.event.death.summary.eventDetails.placeOfDeath.empty'
+          id: 'event.death.summary.eventDetails.placeOfDeath.empty'
         },
         label: {
           defaultMessage: 'Place of death',
           description: 'Label for place of death',
-          id: 'v2.event.death.summary.eventDetails.placeOfDeath.label'
+          id: 'event.death.summary.eventDetails.placeOfDeath.label'
         },
         conditionals: [
           {
@@ -147,21 +155,32 @@ export const deathEvent = defineConfig({
         emptyValueMessage: {
           defaultMessage: 'No contact details provided',
           description: 'This is shown when there is no informant information',
-          id: 'v2.event.death.summary.informant.contact.empty'
+          id: 'event.death.summary.informant.contact.empty'
         },
         label: {
           defaultMessage: 'Contact',
           description: 'This is the label for the informant information',
-          id: 'v2.event.death.summary.informant.contact.label'
+          id: 'event.death.summary.informant.contact.label'
         },
         value: {
           defaultMessage: '{informant.phoneNo} {informant.email}',
           description: 'This is the contact value of the informant',
-          id: 'v2.event.death.summary.informant.contact.value'
+          id: 'event.death.summary.informant.contact.value'
         }
       }
     ]
   },
+  flags: [
+    {
+      id: 'validated',
+      label: {
+        id: 'event.birth.flag.validated',
+        defaultMessage: 'Validated',
+        description: 'Flag label for validated'
+      },
+      requiresAction: true
+    }
+  ],
   actions: [
     {
       type: ActionType.READ,
@@ -169,7 +188,7 @@ export const deathEvent = defineConfig({
         defaultMessage: 'Read',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'v2.event.death.action.Read.label'
+        id: 'event.death.action.Read.label'
       },
       review: DEATH_DECLARATION_REVIEW
     },
@@ -179,7 +198,7 @@ export const deathEvent = defineConfig({
         defaultMessage: 'Declare',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'v2.event.death.action.declare.label'
+        id: 'event.death.action.declare.label'
       },
       review: DEATH_DECLARATION_REVIEW,
       deduplication: {
@@ -188,29 +207,111 @@ export const deathEvent = defineConfig({
           defaultMessage: 'Detect duplicate',
           description:
             'This is shown as the action name anywhere the user can trigger the action from',
-          id: 'v2.event.death.action.detect-duplicate.label'
+          id: 'event.death.action.detect-duplicate.label'
         },
         query: dedupConfig
+      },
+      flags: [
+        {
+          id: 'validated',
+          operation: 'add',
+          conditional: or(
+            user.hasRole('REGISTRATION_AGENT'),
+            user.hasRole('LOCAL_REGISTRAR')
+          )
+        }
+      ]
+    },
+    {
+      type: ActionType.EDIT,
+      label: {
+        defaultMessage: 'Edit',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'actions.edit'
+      },
+      flags: [{ id: 'validated', operation: 'remove' }],
+      dialogCopy: {
+        notify: {
+          id: 'event.death.action.edit.notify.copy',
+          defaultMessage:
+            'Are you sure you want to notify this event with these edits?',
+          description: 'Confirmation text for the notify with edits action'
+        },
+        declare: {
+          id: 'event.death.action.edit.declare.copy',
+          defaultMessage:
+            'Are you sure you want to edit this declaration? By confirming you are redeclaring this event and override past changes.',
+          description: 'Confirmation text for the declare with edits action'
+        },
+        register: {
+          id: 'event.death.action.edit.register.copy',
+          defaultMessage:
+            'You are about to register this death event with your edits. Registering this event will create an official civil registration record.',
+          description: 'Confirmation text for the register with edits action'
+        }
       }
     },
     {
-      type: ActionType.VALIDATE,
+      type: ActionType.CUSTOM,
+      customActionType: 'VALIDATE_DECLARATION',
+      icon: 'Stamp',
       label: {
-        defaultMessage: 'Validate',
+        defaultMessage: 'Validate declaration',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'v2.event.death.action.validate.label'
+        id: 'event.death.custom.action.validate-declaration.label'
       },
-      review: DEATH_DECLARATION_REVIEW,
-      deduplication: {
-        id: 'death-deduplication',
-        label: {
-          defaultMessage: 'Detect duplicate',
-          description:
-            'This is shown as the action name anywhere the user can trigger the action from',
-          id: 'v2.event.death.action.detect-duplicate.label'
+      supportingCopy: {
+        defaultMessage:
+          'Approving this declaration confirms it as legally accepted and eligible for registration.',
+        description:
+          'This is the supporting copy for the Validate declaration -action',
+        id: 'event.death.custom.action.validate-declaration.supportingCopy'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(status('DECLARED'), not(flag('validated')))
         },
-        query: dedupConfig
+        {
+          type: ConditionalType.ENABLE,
+          conditional: not(flag(InherentFlags.POTENTIAL_DUPLICATE))
+        }
+      ],
+      flags: [{ id: 'validated', operation: 'add' }],
+      form: [
+        {
+          id: 'comments',
+          type: 'TEXTAREA',
+          label: {
+            defaultMessage: 'Comments',
+            description:
+              'This is the label for the comments field for the validate declaration action',
+            id: 'event.death.custom.action.validate-declaration.field.comments.label'
+          }
+        }
+      ],
+      auditHistoryLabel: {
+        defaultMessage: 'Validated',
+        description:
+          'The label to show in audit history for the validate action',
+        id: 'event.death.custom.action.validate-declaration.audit-history-label'
+      }
+    },
+    {
+      type: ActionType.REJECT,
+      label: {
+        defaultMessage: 'Reject',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'event.death.action.reject.label'
+      },
+      supportingCopy: {
+        id: 'rejectModal.description',
+        defaultMessage:
+          'Rejecting this declaration will return it to the submitter for updates. Please ensure a valid reason for rejection has been recorded.',
+        description: 'The description for reject modal'
       }
     },
     {
@@ -219,16 +320,28 @@ export const deathEvent = defineConfig({
         defaultMessage: 'Register',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'v2.event.death.action.register.label'
+        id: 'event.death.action.register.label'
       },
-      review: DEATH_DECLARATION_REVIEW,
+      supportingCopy: {
+        id: 'review.register.description.complete',
+        description: 'Confirmation text for the register action',
+        defaultMessage:
+          "By clicking 'Confirm', you confirm that the information entered is correct and the event can be registered."
+      },
+      flags: [{ id: 'validated', operation: 'remove' }],
+      conditionals: [
+        {
+          type: ConditionalType.ENABLE,
+          conditional: flag('validated')
+        }
+      ],
       deduplication: {
         id: 'death-deduplication',
         label: {
           defaultMessage: 'Detect duplicate',
           description:
             'This is shown as the action name anywhere the user can trigger the action from',
-          id: 'v2.event.death.action.detect-duplicate.label'
+          id: 'event.death.action.detect-duplicate.label'
         },
         query: dedupConfig
       }
@@ -239,7 +352,7 @@ export const deathEvent = defineConfig({
         defaultMessage: 'Print certificate',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'v2.event.death.action.collect-certificate.label'
+        id: 'event.death.action.collect-certificate.label'
       },
       printForm: DEATH_CERTIFICATE_COLLECTOR_FORM
     },
@@ -249,9 +362,24 @@ export const deathEvent = defineConfig({
         defaultMessage: 'Correct record',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'v2.event.death.action.request-correction.label'
+        id: 'event.death.action.request-correction.label'
       },
       correctionForm: DEATH_CORRECTION_FORM
+    },
+    {
+      type: ActionType.ARCHIVE,
+      label: {
+        defaultMessage: 'Archive',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'event.death.action.archive.label'
+      },
+      supportingCopy: {
+        id: 'recordAudit.archive.confirmation.body',
+        defaultMessage:
+          'This will remove the declaration from the workqueue and change the status to Archive. To revert this change you will need to search for the declaration.',
+        description: 'Confirmation body for archiving a declaration'
+      }
     }
   ],
   advancedSearch: advancedSearchDeath

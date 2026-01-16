@@ -386,7 +386,7 @@ const countryQuestions = [
   }
 ]
 
-const infrastructureQuestions = [
+const diskQuestions = [
   {
     name: 'diskSpace',
     type: 'text' as const,
@@ -397,8 +397,10 @@ const infrastructureQuestions = [
     validate: notEmpty,
     valueLabel: 'DISK_SPACE',
     initial: process.env.DISK_SPACE || '200g',
-    scope: 'ENVIRONMENT' as const
+    scope: 'ENVIRONMENT' as const,
   },
+]
+const infrastructureQuestions = [
   {
     name: 'domain',
     type: 'text' as const,
@@ -702,6 +704,20 @@ const derivedVariables = [
     scope: 'ENVIRONMENT'
   },
   {
+    name: 'POSTGRES_USER',
+    valueLabel: 'POSTGRES_USER',
+    valueType: 'SECRET',
+    type: 'disabled',
+    scope: 'ENVIRONMENT'
+  },
+  {
+    name: 'POSTGRES_PASSWORD',
+    valueLabel: 'POSTGRES_PASSWORD',
+    valueType: 'SECRET',
+    type: 'disabled',
+    scope: 'ENVIRONMENT'
+  },
+  {
     name: 'SUPER_USER_PASSWORD',
     valueLabel: 'SUPER_USER_PASSWORD',
     valueType: 'SECRET',
@@ -766,6 +782,7 @@ ALL_QUESTIONS.push(
   ...dockerhubQuestions,
   ...sshQuestions,
   ...sshKeyQuestions,
+  ...diskQuestions,
   ...infrastructureQuestions,
   ...countryQuestions,
   ...databaseAndMonitoringQuestions,
@@ -873,7 +890,7 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
     ...existingRepositoryVariable,
     ...existingEnvironmentSecrets
   ]
-
+  let enableEncryption = true
   if (
     existingEnvironmentVariables.length > 0 ||
     existingEnvironmentSecrets.length > 0
@@ -953,7 +970,32 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
       )
     }
   } else {
-    log('\n', kleur.bold().underline('Server setup'))
+    log('\n', kleur.bold().underline('Server setup'), '\n')
+    const encryption_key_defined = findExistingValue(
+            'ENCRYPTION_KEY',
+            'SECRET',
+            'ENVIRONMENT',
+            existingValues
+    )
+
+    if (!encryption_key_defined) {
+        const answers_enable_encryption = await prompts(
+          [
+            {
+              name: 'enableEncryption',
+              type: 'confirm' as const,
+              message: 'Do you want to enable disk encryption?',
+              scope: 'ENVIRONMENT' as const,
+              initial: Boolean(process.env.ENABLE_ENCRYPTION)
+            }
+          ].map(questionToPrompt)
+        )
+        enableEncryption = answers_enable_encryption.enableEncryption
+    }
+    if (enableEncryption) {
+      console.log('\n', kleur.bold().green('✔'), kleur.bold().yellow(' Disk encryption is enabled'))
+      await promptAndStoreAnswer(environment, diskQuestions, existingValues)
+    }
     const { domain } = await promptAndStoreAnswer(
       environment,
       infrastructureQuestions,
@@ -1087,6 +1129,26 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
     }
   ]
 
+  if (enableEncryption){
+    derivedUpdates.push({
+      name: 'ENCRYPTION_KEY',
+      type: 'SECRET' as const,
+      didExist: findExistingValue(
+        'ENCRYPTION_KEY',
+        'SECRET',
+        'ENVIRONMENT',
+        existingValues
+      ),
+      value: findExistingOrDefine(
+        'ENCRYPTION_KEY',
+        'SECRET',
+        'ENVIRONMENT',
+        generateLongPassword()
+      ),
+      scope: 'ENVIRONMENT' as const
+    })
+  }
+
   if (['production', 'staging'].includes(environment)) {
     derivedUpdates.push({
       name: 'BACKUP_ENCRYPTION_PASSPHRASE',
@@ -1211,6 +1273,40 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
       scope: 'ENVIRONMENT' as const
     },
     {
+      name: 'POSTGRES_USER',
+      type: 'SECRET' as const,
+      didExist: findExistingValue(
+        'POSTGRES_USER',
+        'SECRET',
+        'ENVIRONMENT',
+        existingValues
+      ),
+      value: findExistingOrDefine(
+        'POSTGRES_USER',
+        'SECRET',
+        'ENVIRONMENT',
+        generateLongPassword()
+      ),
+      scope: 'ENVIRONMENT' as const
+    },
+    {
+      name: 'POSTGRES_PASSWORD',
+      type: 'SECRET' as const,
+      didExist: findExistingValue(
+        'POSTGRES_PASSWORD',
+        'SECRET',
+        'ENVIRONMENT',
+        existingValues
+      ),
+      value: findExistingOrDefine(
+        'POSTGRES_PASSWORD',
+        'SECRET',
+        'ENVIRONMENT',
+        generateLongPassword()
+      ),
+      scope: 'ENVIRONMENT' as const
+    },
+    {
       name: 'SUPER_USER_PASSWORD',
       type: 'SECRET' as const,
       didExist: findExistingValue(
@@ -1221,23 +1317,6 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
       ),
       value: findExistingOrDefine(
         'SUPER_USER_PASSWORD',
-        'SECRET',
-        'ENVIRONMENT',
-        generateLongPassword()
-      ),
-      scope: 'ENVIRONMENT' as const
-    },
-    {
-      name: 'ENCRYPTION_KEY',
-      type: 'SECRET' as const,
-      didExist: findExistingValue(
-        'ENCRYPTION_KEY',
-        'SECRET',
-        'ENVIRONMENT',
-        existingValues
-      ),
-      value: findExistingOrDefine(
-        'ENCRYPTION_KEY',
         'SECRET',
         'ENVIRONMENT',
         generateLongPassword()

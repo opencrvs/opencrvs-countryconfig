@@ -4,8 +4,12 @@ import {
   not,
   field,
   AddressType,
-  FieldType
+  FieldType,
+  FieldConfig,
+  defineFormConditional,
+  errorMessages
 } from '@opencrvs/toolkit/events'
+import { type } from 'os'
 
 function isInternationalAddress() {
   return and(
@@ -21,13 +25,62 @@ function isDomesticAddress() {
   )
 }
 
+export function getNestedFieldValidators(
+  fieldId: string,
+  fields: FieldConfig[]
+) {
+  return fields
+    .filter((x) => x.required)
+    .map((field) => ({
+      message:
+        typeof field.required === 'object'
+          ? field.required.message
+          : errorMessages.requiredField,
+
+      validator: defineFormConditional({
+        type: 'object',
+        properties: {
+          [fieldId]: {
+            type: 'object',
+            properties: {
+              addressType: {
+                type: 'string',
+                enum: ['INTERNATIONAL', 'DOMESTIC']
+              },
+              streetLevelDetails: {
+                type: 'object',
+                properties: {
+                  [field.id]: { minLength: 1 }
+                }
+              }
+            },
+            if: {
+              properties: {
+                addressType: { const: 'INTERNATIONAL' }
+              }
+            },
+            then: {
+              required: ['streetLevelDetails'],
+              properties: {
+                streetLevelDetails: {
+                  required: [field.id]
+                }
+              }
+            }
+          }
+        },
+        required: [fieldId]
+      })
+    }))
+}
+
 export const defaultStreetAddressConfiguration = [
   {
     id: 'town',
     required: false,
     parent: field('country'),
     label: {
-      id: 'v2.field.address.town.label',
+      id: 'field.address.town.label',
       defaultMessage: 'Town',
       description: 'This is the label for the field'
     },
@@ -47,7 +100,7 @@ export const defaultStreetAddressConfiguration = [
     required: false,
     parent: field('country'),
     label: {
-      id: 'v2.field.address.residentialArea.label',
+      id: 'field.address.residentialArea.label',
       defaultMessage: 'Residential Area',
       description: 'This is the label for the field'
     },
@@ -67,7 +120,7 @@ export const defaultStreetAddressConfiguration = [
     required: false,
     parent: field('country'),
     label: {
-      id: 'v2.field.address.street.label',
+      id: 'field.address.street.label',
       defaultMessage: 'Street',
       description: 'This is the label for the field'
     },
@@ -87,7 +140,7 @@ export const defaultStreetAddressConfiguration = [
     required: false,
     parent: field('country'),
     label: {
-      id: 'v2.field.address.number.label',
+      id: 'field.address.number.label',
       defaultMessage: 'Number',
       description: 'This is the label for the field'
     },
@@ -107,7 +160,7 @@ export const defaultStreetAddressConfiguration = [
     required: false,
     parent: field('country'),
     label: {
-      id: 'v2.field.address.postcodeOrZip.label',
+      id: 'field.address.postcodeOrZip.label',
       defaultMessage: 'Postcode / Zip',
       description: 'This is the label for the field'
     },
@@ -131,9 +184,15 @@ export const defaultStreetAddressConfiguration = [
       }
     ],
     parent: field('country'),
-    required: true,
+    required: {
+      message: {
+        id: 'field.address.state.label.required',
+        description: 'State required message',
+        defaultMessage: 'State is required'
+      }
+    },
     label: {
-      id: 'v2.field.address.state.label',
+      id: 'field.address.state.label',
       defaultMessage: 'State',
       description: 'This is the label for the field'
     },
@@ -148,9 +207,15 @@ export const defaultStreetAddressConfiguration = [
         conditional: isInternationalAddress()
       }
     ],
-    required: true,
+    required: {
+      message: {
+        id: 'field.address.district2.label.required',
+        description: 'District2 required message',
+        defaultMessage: 'District is required'
+      }
+    },
     label: {
-      id: 'v2.field.address.district2.label',
+      id: 'field.address.district2.label',
       defaultMessage: 'District',
       description: 'This is the label for the field'
     },
@@ -167,7 +232,7 @@ export const defaultStreetAddressConfiguration = [
     ],
     required: false,
     label: {
-      id: 'v2.field.address.cityOrTown.label',
+      id: 'field.address.cityOrTown.label',
       defaultMessage: 'City / Town',
       description: 'This is the label for the field'
     },
@@ -184,7 +249,7 @@ export const defaultStreetAddressConfiguration = [
     ],
     required: false,
     label: {
-      id: 'v2.field.address.addressLine1.label',
+      id: 'field.address.addressLine1.label',
       defaultMessage: 'Address Line 1',
       description: 'This is the label for the field'
     },
@@ -201,7 +266,7 @@ export const defaultStreetAddressConfiguration = [
     ],
     required: false,
     label: {
-      id: 'v2.field.address.addressLine2.label',
+      id: 'field.address.addressLine2.label',
       defaultMessage: 'Address Line 2',
       description: 'This is the label for the field'
     },
@@ -218,7 +283,7 @@ export const defaultStreetAddressConfiguration = [
     ],
     required: false,
     label: {
-      id: 'v2.field.address.addressLine3.label',
+      id: 'field.address.addressLine3.label',
       defaultMessage: 'Address Line 3',
       description: 'This is the label for the field'
     },
@@ -235,7 +300,7 @@ export const defaultStreetAddressConfiguration = [
     ],
     required: false,
     label: {
-      id: 'v2.field.address.postcodeOrZip.label',
+      id: 'field.address.postcodeOrZip.label',
       defaultMessage: 'Postcode / Zip',
       description: 'This is the label for the field'
     },

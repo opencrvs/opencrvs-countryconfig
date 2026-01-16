@@ -169,6 +169,7 @@ export async function notify({
       console.log(
         `Sending email to ${email} with subject: ${subject}, body: ${JSON.stringify(emailBody)}`
       )
+      return
     }
 
     await sendEmail({
@@ -283,6 +284,8 @@ function convertPayloadToVariable({
       }
 
     case TriggerEvent.TWO_FA:
+    case TriggerEvent.CHANGE_EMAIL_ADDRESS:
+    case TriggerEvent.CHANGE_PHONE_NUMBER:
       return {
         firstname,
         code: payload.code

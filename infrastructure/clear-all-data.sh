@@ -127,8 +127,10 @@ docker run --rm --network=$NETWORK --entrypoint=/bin/sh minio/mc:RELEASE.2025-05
 #-------------------------------
 
 POSTGRES_DB="events"
+ANALYTICS_POSTGRES_DB="analytics"
 EVENTS_MIGRATOR_ROLE="events_migrator"
 EVENTS_APP_ROLE="events_app"
+ANALYTICS_POSTGRES_ROLE=${ANALYTICS_POSTGRES_USER:-"events_analytics"}
 
 echo "🔁 Dropping database '${POSTGRES_DB}' and roles..."
 
@@ -138,16 +140,16 @@ docker run --rm --network=$NETWORK  \
   -e POSTGRES_DB="${POSTGRES_DB}" \
   -e EVENTS_MIGRATOR_ROLE="${EVENTS_MIGRATOR_ROLE}" \
   -e EVENTS_APP_ROLE="${EVENTS_APP_ROLE}" \
+  -e ANALYTICS_POSTGRES_ROLE="${ANALYTICS_POSTGRES_ROLE}" \
+  -e ANALYTICS_POSTGRES_DB="${ANALYTICS_POSTGRES_DB}" \
   postgres:17.6 bash -c '
 psql -h postgres -U "$POSTGRES_USER" -d postgres -v ON_ERROR_STOP=1 <<EOF
-SELECT pg_terminate_backend(pid)
-FROM pg_stat_activity
-WHERE datname = '\''"$POSTGRES_DB"'\'' AND pid <> pg_backend_pid();
-
-DROP DATABASE IF EXISTS "$POSTGRES_DB";
+DROP DATABASE IF EXISTS "$POSTGRES_DB" WITH (FORCE);
+DROP DATABASE IF EXISTS "$ANALYTICS_POSTGRES_DB" WITH (FORCE);
 
 DROP ROLE IF EXISTS "$EVENTS_MIGRATOR_ROLE";
 DROP ROLE IF EXISTS "$EVENTS_APP_ROLE";
+DROP ROLE IF EXISTS "$ANALYTICS_POSTGRES_ROLE";
 EOF
 '
 echo "✅ Database and roles dropped."
@@ -155,12 +157,4 @@ echo "🚀 Reinitializing Postgres with on-deploy.sh..."
 
 docker service update --force opencrvs_postgres-on-update
 
-# Restart the metabase service
-#-----------------------------
-docker service scale opencrvs_dashboards=0
-docker service scale opencrvs_dashboards=1
-
-# Restart events service
-#-----------------------------
-docker service scale opencrvs_events=0
-docker service scale opencrvs_events=1
+echo "✅ All data cleared."

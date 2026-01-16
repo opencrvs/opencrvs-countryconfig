@@ -176,6 +176,13 @@ elasticsearch_host() {
   fi
 }
 
+get_target_indices() {
+  docker run --rm --network=$NETWORK appropriate/curl curl -s "http://$(elasticsearch_host)/_cat/indices?h=index" \
+    | grep -E '^(ocrvs-|events_)' \
+    | paste -sd, - \
+    | sed 's/\,$//'
+}
+
 # Today's date is used for filenames if LABEL is not provided
 #-----------------------------------
 BACKUP_DATE=$(date +%Y-%m-%d)
@@ -208,24 +215,26 @@ docker run --rm \
   postgres:17 \
   bash -c "pg_dump -h postgres -U $POSTGRES_USER -d events -F c -f /backups/events-${LABEL:-$BACKUP_DATE}.dump"
 
-# Backup PostgreSQL
-# -----------------
-
-echo "Backing up PostgreSQL 'events' database"
-docker run --rm \
-  -e PGPASSWORD=$POSTGRES_PASSWORD \
-  -v $ROOT_PATH/backups/postgres:/backups \
-  --network=$NETWORK \
-  postgres:17 \
-  bash -c "pg_dump -h postgres -U $POSTGRES_USER -d events -F c -f /backups/events-${LABEL:-$BACKUP_DATE}.dump"
-
 #-------------------------------------------------------------------------------------
 
 echo ""
 echo "Delete all currently existing snapshots"
 echo ""
-docker run --rm --network=$NETWORK appropriate/curl curl -sS -X DELETE -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs"
+# Get list of snapshots as a simple array
+snapshots=$(docker run --rm --network="$NETWORK" appropriate/curl \
+  -s "http://$(elasticsearch_host)/_snapshot/ocrvs/_all" | jq -r '.snapshots[].snapshot' || true)
+echo "Found snapshots:"
+echo "$snapshots" | sed 's/^/ - /'
 
+for snap in $snapshots; do
+  echo "Deleting snapshot: $snap"
+  docker run --rm --network="$NETWORK" appropriate/curl \
+    -s -X DELETE -H "Content-Type: application/json;charset=UTF-8" \
+    "http://$(elasticsearch_host)/_snapshot/ocrvs/${snap}?wait_for_completion=true&pretty"
+done
+docker run --rm --network=$NETWORK appropriate/curl curl -sS -X DELETE -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs"
+echo "Waiting for snapshots to be removed"
+sleep 30
 #-------------------------------------------------------------------------------------
 echo ""
 echo "Register backup folder as an Elasticsearch repository for backing up the search data"
@@ -249,8 +258,12 @@ echo "Backup Elasticsearch as a set of snapshot files into an elasticsearch sub 
 echo ""
 
 create_elasticsearch_backup() {
+  indices=$(get_target_indices)
+  echo "List indices for backup: $indices"
   OUTPUT=""
-  OUTPUT=$(docker run --rm --network=$NETWORK appropriate/curl curl -sS -X PUT -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs/snapshot_${LABEL:-$BACKUP_DATE}?wait_for_completion=true&pretty" -d '{ "indices": "ocrvs" }' 2>/dev/null)
+  json_payload="{\"indices\": \"${indices}\"}"
+  OUTPUT=$(docker run --rm --network=$NETWORK appropriate/curl curl -sS -X PUT -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs/snapshot_${LABEL:-$BACKUP_DATE}?wait_for_completion=true&pretty" -d "$json_payload" 2>/dev/null) || true
+
   if echo $OUTPUT | jq -e '.snapshot.state == "SUCCESS"' > /dev/null; then
     echo "Snapshot state is SUCCESS"
   else
@@ -330,4 +343,3 @@ fi
 rm /tmp/${LABEL:-$BACKUP_DATE}.tar.gz.enc
 rm /tmp/${LABEL:-$BACKUP_DATE}.tar.gz
 rm -r $BACKUP_RAW_FILES_DIR
-

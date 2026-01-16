@@ -17,7 +17,7 @@ export const deathIntroduction = defineFormPage({
   title: {
     defaultMessage: 'Introduce the death registration process to the informant',
     description: 'Event information title for the death',
-    id: 'v2.register.eventInfo.death.title'
+    id: 'register.eventInfo.death.title'
   },
   fields: [
     {
@@ -25,7 +25,7 @@ export const deathIntroduction = defineFormPage({
       id: 'form.section.information.death.bulletList',
       label: {
         defaultMessage: 'Death Information',
-        id: 'v2.form.section.information.death.bulletList.label',
+        id: 'form.section.information.death.bulletList.label',
         description: 'Label for the death information bullet list'
       },
       hideLabel: true,
@@ -33,25 +33,25 @@ export const deathIntroduction = defineFormPage({
         {
           defaultMessage: 'I am going to help you make a declaration of death.',
           description: 'Form information for death',
-          id: 'v2.form.section.information.death.bullet1'
+          id: 'form.section.information.death.bullet1'
         },
         {
           defaultMessage:
             'As the legal Informant it is important that all the information provided by you is accurate.',
           description: 'Form information for death',
-          id: 'v2.form.section.information.death.bullet2'
+          id: 'form.section.information.death.bullet2'
         },
         {
           defaultMessage:
             'Once the declaration is processed you will receive an email to tell you when to visit the office to collect the certificate - Take your ID with you.',
           description: 'Form information for death',
-          id: 'v2.form.section.information.death.bullet3'
+          id: 'form.section.information.death.bullet3'
         },
         {
           defaultMessage:
             'Make sure you collect the certificate. A death certificate is critical to support with inheritance claims and to resolve the affairs of the deceased e.g. closing bank accounts and setting loans.',
           description: 'Form information for death',
-          id: 'v2.form.section.information.death.bullet4'
+          id: 'form.section.information.death.bullet4'
         }
       ],
       configuration: {
