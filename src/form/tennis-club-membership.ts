@@ -117,6 +117,11 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
           },
           hideLabel: true,
           required: true,
+          defaultValue: {
+            firstname: user('firstname'),
+            middlename: user('middlename'),
+            surname: user('surname')
+          },
           validation: [
             {
               validator: field('applicant.name').object({
@@ -179,10 +184,42 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
           type: 'FILE',
           required: false,
           uncorrectable: true,
+          configuration: {
+            maxImageSize: { targetSize: { height: 600, width: 600 } }
+          },
           label: {
             defaultMessage: "Applicant's profile picture",
             description: 'This is the label for the field',
             id: 'event.tennis-club-membership.action.declare.form.section.who.field.image.label'
+          }
+        },
+        {
+          id: 'applicant.idImage',
+          type: 'FILE_WITH_OPTIONS',
+          required: false,
+          uncorrectable: true,
+          options: [
+            {
+              label: {
+                id: 'event.tennis-club-membership.action.declare.form.section.who.field.idImage.option.front.label',
+                defaultMessage: 'Upload front side of ID',
+                description: 'Option to upload front side of ID'
+              },
+              value: 'ID_FRONT'
+            },
+            {
+              label: {
+                id: 'event.tennis-club-membership.action.declare.form.section.who.field.idImage.option.back.label',
+                defaultMessage: 'Upload back side of ID',
+                description: 'Option to upload back side of ID'
+              },
+              value: 'ID_BACK'
+            }
+          ],
+          label: {
+            defaultMessage: "Image of Applicant's ID",
+            description: 'This is the label for the field',
+            id: 'event.tennis-club-membership.action.declare.form.section.who.field.idImage.label'
           }
         },
         {
@@ -337,6 +374,11 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
           type: FieldType.NAME,
           required: true,
           parent: field('recommender.search'),
+          defaultValue: {
+            firstname: user('firstname'),
+            middlename: user('middlename'),
+            surname: user('surname')
+          },
           value: field('recommender.search').getByPath([
             'data',
             'firstResult',
@@ -354,6 +396,54 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
             defaultMessage: "Recommender's name",
             description: 'This is the label for the field',
             id: 'event.tennis-club-membership.action.declare.form.section.recommender.field.firstname.label'
+          }
+        },
+        {
+          id: 'recommender.device',
+          type: 'TEXT',
+          defaultValue: user('device'),
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: field('recommender.none').isFalsy()
+            }
+          ],
+          label: {
+            defaultMessage: "Recommender's device",
+            description: 'This is the label for the field',
+            id: 'event.tennis-club-membership.action.declare.form.section.recommender.device'
+          }
+        },
+        {
+          id: 'recommender.fullHonorificName',
+          type: 'TEXT',
+          defaultValue: user('fullHonorificName'),
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: field('recommender.none').isFalsy()
+            }
+          ],
+          label: {
+            defaultMessage: 'Recommender full honorific name',
+            description: 'This is the label for the field',
+            id: 'event.tennis-club-membership.action.declare.form.section.recommender2.fullHonorificName'
+          }
+        },
+        {
+          id: 'recommender.role',
+          type: 'TEXT',
+          defaultValue: user('role'),
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: field('recommender.none').isFalsy()
+            }
+          ],
+          label: {
+            defaultMessage: 'Recommender role',
+            description: 'This is the label for the field',
+            id: 'event.tennis-club-membership.action.declare.form.section.recommender.role'
           }
         },
         {
