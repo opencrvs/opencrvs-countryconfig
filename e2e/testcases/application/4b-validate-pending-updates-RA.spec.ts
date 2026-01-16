@@ -22,8 +22,8 @@ test.describe
 
   test.beforeAll(async ({ browser }) => {
     const token = await getToken(
-      CREDENTIALS.REGISTRATION_AGENT.USERNAME,
-      CREDENTIALS.REGISTRATION_AGENT.PASSWORD
+      CREDENTIALS.REGISTRATION_OFFICER.USERNAME,
+      CREDENTIALS.REGISTRATION_OFFICER.PASSWORD
     )
     const res = await createDeclaration(token, undefined, ActionType.DECLARE)
     declaration = res.declaration
@@ -37,7 +37,7 @@ test.describe
   })
 
   test('4.0.1 Login', async () => {
-    await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+    await login(page, CREDENTIALS.REGISTRAR)
   })
 
   test('4.0.2 Navigate to record audit', async () => {
@@ -58,7 +58,7 @@ test.describe
   })
 
   test('4.1 Go to "Pending updates"-workqueue', async () => {
-    await login(page, CREDENTIALS.REGISTRATION_AGENT)
+    await login(page, CREDENTIALS.REGISTRATION_OFFICER)
     await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue.
     await page.getByText('Pending updates').click()
     await expect(

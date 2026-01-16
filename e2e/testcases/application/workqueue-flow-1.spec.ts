@@ -147,7 +147,7 @@ test.describe.serial('1. Workqueue flow - 1', () => {
 
   test.describe('1.2 Declare and validate by Registration Officer', async () => {
     test('1.2.1 Verify workqueue', async () => {
-      await login(page, CREDENTIALS.REGISTRATION_AGENT)
+      await login(page, CREDENTIALS.REGISTRATION_OFFICER)
 
       await assertRecordInWorkqueue({
         page,
@@ -301,7 +301,7 @@ test.describe.serial('1. Workqueue flow - 1', () => {
 
   test.describe('1.4 Register by Registrar', async () => {
     test('1.4.1 Validate workqueue', async () => {
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await login(page, CREDENTIALS.REGISTRAR)
 
       await assertRecordInWorkqueue({
         page,
@@ -436,7 +436,7 @@ test.describe.serial('1. Workqueue flow - 1', () => {
   })
 
   test("1.7 Registration Officer can't see the record", async () => {
-    await login(page, CREDENTIALS.REGISTRATION_AGENT, true)
+    await login(page, CREDENTIALS.REGISTRATION_OFFICER, true)
 
     await assertRecordInWorkqueue({
       page,

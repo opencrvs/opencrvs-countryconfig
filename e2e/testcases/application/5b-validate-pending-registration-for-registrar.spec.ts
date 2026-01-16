@@ -16,8 +16,8 @@ test.describe
 
   test.beforeAll(async ({ browser }) => {
     const token = await getToken(
-      CREDENTIALS.REGISTRATION_AGENT.USERNAME,
-      CREDENTIALS.REGISTRATION_AGENT.PASSWORD
+      CREDENTIALS.REGISTRATION_OFFICER.USERNAME,
+      CREDENTIALS.REGISTRATION_OFFICER.PASSWORD
     )
     const res = await createDeclaration(token, undefined, ActionType.DECLARE)
     declaration = res.declaration
@@ -31,7 +31,7 @@ test.describe
   })
 
   test('5.0 Login', async () => {
-    await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+    await login(page, CREDENTIALS.REGISTRAR)
   })
 
   test('5.1 Go to "Pending registration"-workqueue', async () => {

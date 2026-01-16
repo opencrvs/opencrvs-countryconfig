@@ -111,7 +111,7 @@ test.describe.serial('4. Death declaration case - 4', () => {
 
   test.describe('4.1 Declaration started by RO', async () => {
     test.beforeAll(async () => {
-      await login(page, CREDENTIALS.REGISTRATION_AGENT)
+      await login(page, CREDENTIALS.REGISTRATION_OFFICER)
 
       await page.click('#header-new-event')
       await page.getByLabel('Death').click()
@@ -717,7 +717,7 @@ test.describe.serial('4. Death declaration case - 4', () => {
   })
   test.describe('4.2 Declaration Review by Registrar', async () => {
     test('4.2.1 Navigate to the declaration "Record" -tab', async () => {
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await login(page, CREDENTIALS.REGISTRAR)
 
       await ensureOutboxIsEmpty(page)
       await page.getByText('Pending registration').click()

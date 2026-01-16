@@ -41,8 +41,8 @@ test.describe.serial('Correct record - 2', () => {
 
   test.beforeAll(async ({ browser }) => {
     const token = await getToken(
-      CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
-      CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+      CREDENTIALS.REGISTRAR.USERNAME,
+      CREDENTIALS.REGISTRAR.PASSWORD
     )
 
     // Create declaration with father details available
@@ -59,7 +59,7 @@ test.describe.serial('Correct record - 2', () => {
   })
 
   test('2.1 Certificate preview', async () => {
-    await login(page, CREDENTIALS.REGISTRATION_AGENT)
+    await login(page, CREDENTIALS.REGISTRATION_OFFICER)
     await page.getByRole('button', { name: 'Pending certification' }).click()
     await navigateToCertificatePrintAction(page, declaration)
     await selectCertificationType(page, 'Birth Certificate')
@@ -249,7 +249,7 @@ test.describe.serial('Correct record - 2', () => {
     test.beforeAll(async ({ browser }) => {
       await page.close()
       page = await browser.newPage()
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await login(page, CREDENTIALS.REGISTRAR)
     })
 
     test('2.8.1 Record audit by Registrar', async () => {

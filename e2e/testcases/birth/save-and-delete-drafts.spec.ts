@@ -15,7 +15,7 @@ test.describe('Save and delete drafts', () => {
     let page: Page
     test.beforeAll(async ({ browser }) => {
       page = await browser.newPage()
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await login(page, CREDENTIALS.REGISTRAR)
       await openBirthDeclaration(page)
     })
 
@@ -50,7 +50,7 @@ test.describe('Save and delete drafts', () => {
 
     test('Login as Registrar', async () => {
       await logout(page)
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR, true)
+      await login(page, CREDENTIALS.REGISTRAR, true)
     })
 
     test('Delete saved draft', async () => {
@@ -78,7 +78,7 @@ test.describe('Save and delete drafts', () => {
     let page: Page
     test.beforeAll(async ({ browser }) => {
       page = await browser.newPage()
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await login(page, CREDENTIALS.REGISTRAR)
       await openBirthDeclaration(page)
     })
     test('Exit without saving', async () => {

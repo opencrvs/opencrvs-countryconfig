@@ -34,8 +34,8 @@ test.describe.serial('Escalation of birth registration by Registrar', () => {
   test.beforeAll(async ({ browser }) => {
     page = await browser.newPage()
     const token = await getToken(
-      CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
-      CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+      CREDENTIALS.REGISTRAR.USERNAME,
+      CREDENTIALS.REGISTRAR.PASSWORD
     )
     recordForRegistrarGenearal = await createDeclaration(
       token,
@@ -59,7 +59,7 @@ test.describe.serial('Escalation of birth registration by Registrar', () => {
       'REGISTER',
       'HEALTH_FACILITY'
     )
-    await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+    await login(page, CREDENTIALS.REGISTRAR)
   })
 
   test.afterAll(async () => {
@@ -219,7 +219,7 @@ test.describe.serial('Escalation of birth registration by Registrar', () => {
   test.describe('Audit review by LR', async () => {
     test.describe('Verify audit trail of Registrar General feedback action', () => {
       test('Navigate to the declaration review page', async () => {
-        await login(page, CREDENTIALS.LOCAL_REGISTRAR, true)
+        await login(page, CREDENTIALS.REGISTRAR, true)
         await searchFromSearchBar(page, childNameForRegGeneralFormatted)
       })
 

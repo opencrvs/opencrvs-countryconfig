@@ -14,7 +14,7 @@ test.describe('Side navigation menu', () => {
   })
 
   test('Check Registrar navigation items', async () => {
-    await login(page, CREDENTIALS.LOCAL_REGISTRAR, false)
+    await login(page, CREDENTIALS.REGISTRAR, false)
 
     const expectedWorkqueues = [
       'My drafts',
@@ -68,7 +68,7 @@ test.describe('Side navigation menu', () => {
   })
 
   test('Check Registration Officer navigation items', async () => {
-    await login(page, CREDENTIALS.REGISTRATION_AGENT, false)
+    await login(page, CREDENTIALS.REGISTRATION_OFFICER, false)
 
     const expectedWorkqueues = [
       'My drafts',

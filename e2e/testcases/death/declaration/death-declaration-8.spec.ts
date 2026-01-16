@@ -285,7 +285,7 @@ test.describe.serial('8. Death declaration case - 8', () => {
 
   test.describe('8.2 Declaration Review by RO', async () => {
     test('8.2.1 Navigate to the declaration review page', async () => {
-      await login(page, CREDENTIALS.REGISTRATION_AGENT)
+      await login(page, CREDENTIALS.REGISTRATION_OFFICER)
 
       await ensureOutboxIsEmpty(page)
       await page.getByText('Notifications').click()

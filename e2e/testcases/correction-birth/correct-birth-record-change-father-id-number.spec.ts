@@ -34,8 +34,8 @@ test.describe.serial("Correct record - Change father's ID number", () => {
 
   test('Shortcut declaration', async () => {
     let token = await getToken(
-      CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
-      CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+      CREDENTIALS.REGISTRAR.USERNAME,
+      CREDENTIALS.REGISTRAR.PASSWORD
     )
     const res = await createDeclarationV2(
       token,
@@ -92,7 +92,7 @@ test.describe.serial("Correct record - Change father's ID number", () => {
   })
 
   test('Login as Registration Agent', async () => {
-    await login(page, CREDENTIALS.REGISTRATION_AGENT)
+    await login(page, CREDENTIALS.REGISTRATION_OFFICER)
   })
 
   test('Ready to correct record > record audit', async () => {
@@ -205,7 +205,7 @@ test.describe.serial("Correct record - Change father's ID number", () => {
   })
 
   test('Login as Registrar', async () => {
-    await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+    await login(page, CREDENTIALS.REGISTRAR)
   })
 
   test('Find the event in the "Pending corrections" workqueue', async () => {

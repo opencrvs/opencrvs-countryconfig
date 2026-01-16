@@ -471,7 +471,7 @@ test.describe.serial('1. Death declaration case - 1', () => {
   })
   test.describe('1.2 Declaration Review by RO', async () => {
     test('1.2.1 Navigate to the declaration "Record" -tab', async () => {
-      await login(page, CREDENTIALS.REGISTRATION_AGENT)
+      await login(page, CREDENTIALS.REGISTRATION_OFFICER)
 
       await ensureOutboxIsEmpty(page)
       await page.getByText('Pending validation').click()

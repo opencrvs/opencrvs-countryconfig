@@ -41,8 +41,8 @@ test.describe('10. Correct record', () => {
 
   test.beforeAll(async () => {
     token = await getToken(
-      CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
-      CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+      CREDENTIALS.REGISTRAR.USERNAME,
+      CREDENTIALS.REGISTRAR.PASSWORD
     )
     const res = await createDeclaration(
       token,
@@ -61,7 +61,7 @@ test.describe('10. Correct record', () => {
 
     test.beforeAll(async ({ browser }) => {
       page = await browser.newPage()
-      await login(page, CREDENTIALS.REGISTRATION_AGENT)
+      await login(page, CREDENTIALS.REGISTRATION_OFFICER)
     })
 
     test.afterAll(async () => {
@@ -582,7 +582,7 @@ test.describe('10. Correct record', () => {
       test.beforeAll(async ({ browser }) => {
         await page.close()
         page = await browser.newPage()
-        await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+        await login(page, CREDENTIALS.REGISTRAR)
       })
 
       test('10.1.6.1 Record audit by Registrar', async () => {

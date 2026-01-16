@@ -103,7 +103,7 @@ test.describe.serial('1. User conditional form flow', () => {
 
   test.describe('1.2 Declaration Review by Registration Officer', async () => {
     test('1.2.1 Navigate to the declaration "Pending validation"-tab', async () => {
-      await login(page, CREDENTIALS.REGISTRATION_AGENT)
+      await login(page, CREDENTIALS.REGISTRATION_OFFICER)
       await page.getByText('Pending validation').click()
       await page
         .getByRole('button', {

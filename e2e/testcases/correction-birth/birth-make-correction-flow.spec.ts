@@ -16,8 +16,8 @@ test.describe.serial('Birth Record correction flow', () => {
 
   test.beforeAll(async ({ browser }) => {
     const token = await getToken(
-      CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
-      CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+      CREDENTIALS.REGISTRAR.USERNAME,
+      CREDENTIALS.REGISTRAR.PASSWORD
     )
     const res = await createDeclaration(
       token,
@@ -29,7 +29,7 @@ test.describe.serial('Birth Record correction flow', () => {
     eventId = res.eventId
 
     page = await browser.newPage()
-    await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+    await login(page, CREDENTIALS.REGISTRAR)
   })
 
   test('Navigate to the correction form', async () => {

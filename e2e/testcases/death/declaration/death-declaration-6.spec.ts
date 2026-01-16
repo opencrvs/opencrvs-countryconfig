@@ -102,7 +102,7 @@ test.describe.serial('6. Death declaration case - 6', () => {
 
   test.describe('6.1 Declaration started by Registrar', async () => {
     test.beforeAll(async () => {
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await login(page, CREDENTIALS.REGISTRAR)
 
       await page.click('#header-new-event')
       await page.getByLabel('Death').click()
@@ -555,7 +555,7 @@ test.describe.serial('6. Death declaration case - 6', () => {
   })
   test.describe('6.2 Declaration Review by Registration Agent', async () => {
     test('6.2.1 Navigate to the declaration "Record" -tab', async () => {
-      await login(page, CREDENTIALS.REGISTRATION_AGENT)
+      await login(page, CREDENTIALS.REGISTRATION_OFFICER)
 
       await ensureOutboxIsEmpty(page)
       await page.getByText('Pending certification').click()

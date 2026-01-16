@@ -32,7 +32,7 @@ test.describe
   })
 
   test('4.0.1 Login', async () => {
-    await login(page, CREDENTIALS.REGISTRATION_AGENT)
+    await login(page, CREDENTIALS.REGISTRATION_OFFICER)
   })
 
   test('4.0.2 Navigate to record audit', async () => {

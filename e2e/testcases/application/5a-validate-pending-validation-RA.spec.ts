@@ -36,7 +36,7 @@ test.describe
   })
 
   test('5.0 Login', async () => {
-    await login(page, CREDENTIALS.REGISTRATION_AGENT)
+    await login(page, CREDENTIALS.REGISTRATION_OFFICER)
   })
 
   test('5.1 Go to "Pending validation"-workqueue', async () => {

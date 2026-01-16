@@ -74,8 +74,8 @@ test.describe.serial('Correct record - change informant type', () => {
 
   test('Shortcut declaration', async () => {
     let token = await getToken(
-      CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
-      CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+      CREDENTIALS.REGISTRAR.USERNAME,
+      CREDENTIALS.REGISTRAR.PASSWORD
     )
     const res = await createDeclarationV2(
       token,
@@ -116,7 +116,7 @@ test.describe.serial('Correct record - change informant type', () => {
   })
 
   test('Ready to correct record > record audit', async () => {
-    await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+    await login(page, CREDENTIALS.REGISTRAR)
 
     await auditRecord({
       page,

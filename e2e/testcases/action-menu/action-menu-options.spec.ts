@@ -40,7 +40,7 @@ test.describe('Action menu options', () => {
     })
 
     test('Registration Agent', async () => {
-      await login(page, CREDENTIALS.REGISTRATION_AGENT)
+      await login(page, CREDENTIALS.REGISTRATION_OFFICER)
       const options = await getActionMenuOptions(page, declaration)
       expect(options).toStrictEqual([
         'Assign',
@@ -52,7 +52,7 @@ test.describe('Action menu options', () => {
     })
 
     test('Registrar', async () => {
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await login(page, CREDENTIALS.REGISTRAR)
       const options = await getActionMenuOptions(page, declaration)
       expect(options).toStrictEqual([
         'Assign',
@@ -70,15 +70,15 @@ test.describe('Action menu options', () => {
 
     test.beforeAll(async () => {
       const token = await getToken(
-        CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
-        CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+        CREDENTIALS.REGISTRAR.USERNAME,
+        CREDENTIALS.REGISTRAR.PASSWORD
       )
       const res = await createDeclaration(token, undefined, ActionType.DECLARE)
       declaration = res.declaration
     })
 
     test('Registrar', async () => {
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await login(page, CREDENTIALS.REGISTRAR)
       const options = await getActionMenuOptions(page, declaration)
       expect(options).toStrictEqual([
         'Assign',
@@ -96,15 +96,15 @@ test.describe('Action menu options', () => {
 
     test.beforeAll(async () => {
       const token = await getToken(
-        CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
-        CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+        CREDENTIALS.REGISTRAR.USERNAME,
+        CREDENTIALS.REGISTRAR.PASSWORD
       )
       const res = await createDeclaration(token, undefined)
       declaration = res.declaration
     })
 
     test('Registrar', async () => {
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await login(page, CREDENTIALS.REGISTRAR)
       const options = await getActionMenuOptions(page, declaration)
       expect(options).toStrictEqual([
         'Assign',

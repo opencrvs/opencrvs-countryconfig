@@ -246,7 +246,7 @@ test.describe.serial('7. Birth declaration case - 7', () => {
   test.describe('7.2 Declaration Review by RO', async () => {
     test('7.2.1 Navigate to the declaration "Record" -tab', async () => {
       await logout(page)
-      await login(page, CREDENTIALS.REGISTRATION_AGENT)
+      await login(page, CREDENTIALS.REGISTRATION_OFFICER)
 
       await page.getByText('Notifications').click()
 

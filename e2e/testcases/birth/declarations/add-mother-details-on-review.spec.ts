@@ -102,7 +102,7 @@ test.describe.serial('Add mother details on review', () => {
 
   test.describe('Declaration started by RO', async () => {
     test('Login as RO', async () => {
-      await login(page, CREDENTIALS.REGISTRATION_AGENT)
+      await login(page, CREDENTIALS.REGISTRATION_OFFICER)
     })
 
     test('Initiate birth declaration', async () => {
@@ -243,7 +243,7 @@ test.describe.serial('Add mother details on review', () => {
   test.describe('Declaration Review by Registrar', async () => {
     test('Navigate to the declaration Edit-action', async () => {
       await logout(page)
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await login(page, CREDENTIALS.REGISTRAR)
 
       await page.getByText('Pending registration').click()
 

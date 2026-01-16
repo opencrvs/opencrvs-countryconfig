@@ -59,7 +59,7 @@ test.describe.serial('1: Validate my draft tab', () => {
   })
 
   test('1.4 Record does not appear in draft for other user: RO', async () => {
-    await login(page, CREDENTIALS.REGISTRATION_AGENT)
+    await login(page, CREDENTIALS.REGISTRATION_OFFICER)
     await page.getByRole('button', { name: 'My drafts' }).click()
 
     await expect(page.getByTestId('search-result')).not.toContainText(
@@ -68,7 +68,7 @@ test.describe.serial('1: Validate my draft tab', () => {
   })
 
   test('1.5 Record does not appear in draft for other user: LR ', async () => {
-    await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+    await login(page, CREDENTIALS.REGISTRAR)
     await page.getByRole('button', { name: 'My drafts' }).click()
 
     await expect(page.getByTestId('search-result')).not.toContainText(

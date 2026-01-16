@@ -100,7 +100,7 @@ test.describe.serial('5. Birth declaration case - 5', () => {
 
   test.describe('5.1 Declaration started by Registrar', async () => {
     test.beforeAll(async () => {
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await login(page, CREDENTIALS.REGISTRAR)
       await page.click('#header-new-event')
       await page.getByLabel('Birth').click()
       await page.getByRole('button', { name: 'Continue' }).click()

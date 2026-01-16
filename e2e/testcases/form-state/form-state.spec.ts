@@ -165,8 +165,8 @@ test.describe('Form state', () => {
 
     test('Create a declaration', async () => {
       const token = await getToken(
-        CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
-        CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+        CREDENTIALS.REGISTRAR.USERNAME,
+        CREDENTIALS.REGISTRAR.PASSWORD
       )
       declaration = (await createDeclaration(token)).declaration
       await page.reload()

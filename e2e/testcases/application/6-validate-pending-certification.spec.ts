@@ -13,8 +13,8 @@ test.describe.serial('6 Validate "Pending certification"-workqueue', () => {
 
   test.beforeAll(async ({ browser }) => {
     const token = await getToken(
-      CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
-      CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+      CREDENTIALS.REGISTRAR.USERNAME,
+      CREDENTIALS.REGISTRAR.PASSWORD
     )
     const res = await createDeclaration(token)
     declaration = res.declaration
@@ -28,7 +28,7 @@ test.describe.serial('6 Validate "Pending certification"-workqueue', () => {
   })
 
   test('6.0 Login', async () => {
-    await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+    await login(page, CREDENTIALS.REGISTRAR)
   })
 
   test('6.1 Go to "Pending certification"-workqueue', async () => {

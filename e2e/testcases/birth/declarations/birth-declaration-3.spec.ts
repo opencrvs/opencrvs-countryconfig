@@ -126,7 +126,7 @@ test.describe.serial('3. Birth declaration case - 3', () => {
 
   test.describe('3.1 Declaration started by RO', async () => {
     test.beforeAll(async () => {
-      await login(page, CREDENTIALS.REGISTRATION_AGENT)
+      await login(page, CREDENTIALS.REGISTRATION_OFFICER)
       await page.click('#header-new-event')
       await page.getByLabel('Birth').click()
       await page.getByRole('button', { name: 'Continue' }).click()
@@ -728,7 +728,7 @@ test.describe.serial('3. Birth declaration case - 3', () => {
   test.describe('3.2 Declaration Review by Registrar', async () => {
     test('3.2.1 Navigate to the declaration "Record" -tab', async () => {
       await logout(page)
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await login(page, CREDENTIALS.REGISTRAR)
       await page.getByText('Pending registration').click()
 
       await page

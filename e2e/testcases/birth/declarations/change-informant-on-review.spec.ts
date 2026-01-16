@@ -103,7 +103,7 @@ test.describe.serial('Change informant on review', () => {
 
   test.describe('Declaration started by RO', async () => {
     test.beforeAll(async () => {
-      await login(page, CREDENTIALS.REGISTRATION_AGENT)
+      await login(page, CREDENTIALS.REGISTRATION_OFFICER)
       await page.click('#header-new-event')
       await page.getByLabel('Birth').click()
       await page.getByRole('button', { name: 'Continue' }).click()
@@ -266,7 +266,7 @@ test.describe.serial('Change informant on review', () => {
   test.describe('Declaration Review by Registrar', async () => {
     test('Navigate to the declaration Edit-action', async () => {
       await logout(page)
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await login(page, CREDENTIALS.REGISTRAR)
 
       await page.getByText('Pending registration').click()
 

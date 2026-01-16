@@ -144,7 +144,7 @@ test.describe.serial('5. Workqueue flow - 5', () => {
 
   test.describe('Reject by RO', async () => {
     test('Login', async () => {
-      await login(page, CREDENTIALS.REGISTRATION_AGENT)
+      await login(page, CREDENTIALS.REGISTRATION_OFFICER)
     })
 
     test('Review & Reject', async () => {
@@ -246,7 +246,7 @@ test.describe.serial('5. Workqueue flow - 5', () => {
 
   test.describe('Declare and validate by RO', async () => {
     test('Verify workqueue', async () => {
-      await login(page, CREDENTIALS.REGISTRATION_AGENT, true)
+      await login(page, CREDENTIALS.REGISTRATION_OFFICER, true)
 
       await assertRecordInWorkqueue({
         page,
@@ -363,7 +363,7 @@ test.describe.serial('5. Workqueue flow - 5', () => {
 
   test.describe('Reject by Registrar', async () => {
     test('Login with Registrar', async () => {
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await login(page, CREDENTIALS.REGISTRAR)
 
       await assertRecordInWorkqueue({
         page,
@@ -422,7 +422,7 @@ test.describe.serial('5. Workqueue flow - 5', () => {
   })
   test.describe('Re-declare with edits by RO', async () => {
     test('Login with RO', async () => {
-      await login(page, CREDENTIALS.REGISTRATION_AGENT, true)
+      await login(page, CREDENTIALS.REGISTRATION_OFFICER, true)
 
       await assertRecordInWorkqueue({
         page,
@@ -487,7 +487,7 @@ test.describe.serial('5. Workqueue flow - 5', () => {
 
   test.describe('Register by Registrar', async () => {
     test('Login with Registrar', async () => {
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR, true)
+      await login(page, CREDENTIALS.REGISTRAR, true)
 
       await assertRecordInWorkqueue({
         page,

@@ -16,8 +16,8 @@ test.describe
   test.beforeAll(async ({ browser }) => {
     page = await browser.newPage()
     const token = await getToken(
-      CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
-      CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+      CREDENTIALS.REGISTRAR.USERNAME,
+      CREDENTIALS.REGISTRAR.PASSWORD
     )
 
     record = await createDeclaration(
@@ -143,8 +143,8 @@ test.describe
   test.beforeAll(async ({ browser }) => {
     page = await browser.newPage()
     const token = await getToken(
-      CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
-      CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+      CREDENTIALS.REGISTRAR.USERNAME,
+      CREDENTIALS.REGISTRAR.PASSWORD
     )
 
     const locations = await getAllLocations('ADMIN_STRUCTURE', token)

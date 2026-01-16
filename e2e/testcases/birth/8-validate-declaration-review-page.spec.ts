@@ -869,7 +869,7 @@ test.describe.serial('8. Validate declaration review page', () => {
 
   test.describe('8.2 Registration agent actions', async () => {
     test('8.2.1 Navigate to the declaration preview page', async () => {
-      await login(page, CREDENTIALS.REGISTRATION_AGENT)
+      await login(page, CREDENTIALS.REGISTRATION_OFFICER)
 
       await page.getByText('Pending validation').click()
 
@@ -898,7 +898,7 @@ test.describe.serial('8. Validate declaration review page', () => {
 
   test.describe('8.3 Registrar actions', async () => {
     test('8.3.1 Navigate to the declaration preview page', async () => {
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await login(page, CREDENTIALS.REGISTRAR)
 
       await page.getByText('Pending registration').click()
 

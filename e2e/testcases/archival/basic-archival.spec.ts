@@ -286,7 +286,7 @@ test.describe.serial('Basic Archival flow', () => {
   })
 
   test('Login as RO', async () => {
-    await login(page, CREDENTIALS.REGISTRATION_AGENT)
+    await login(page, CREDENTIALS.REGISTRATION_OFFICER)
   })
 
   test('Navigate to the event overview page', async () => {
@@ -348,7 +348,7 @@ test.describe.serial('Archival of declaration pending validation', () => {
   })
 
   test('Login as RO', async () => {
-    await login(page, CREDENTIALS.REGISTRATION_AGENT)
+    await login(page, CREDENTIALS.REGISTRATION_OFFICER)
   })
 
   test('Navigate to the event overview page', async () => {
@@ -367,7 +367,7 @@ test.describe.serial('Archival of declaration pending validation', () => {
   })
 
   test('Confirm the declaration is in "Pending registration" -workqueue', async () => {
-    await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+    await login(page, CREDENTIALS.REGISTRAR)
 
     await page.getByText('Pending registration').click()
     await page

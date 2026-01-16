@@ -138,7 +138,7 @@ test.describe.serial('Approval of late birth registration', () => {
 
   test.describe('Declaration Review by RO', async () => {
     test('Navigate to the declaration review page', async () => {
-      await login(page, CREDENTIALS.REGISTRATION_AGENT)
+      await login(page, CREDENTIALS.REGISTRATION_OFFICER)
       await page.getByText('Pending approval').click()
       await page.getByRole('button', { name: childNameFormatted }).click()
 
@@ -159,7 +159,7 @@ test.describe.serial('Approval of late birth registration', () => {
 
   test.describe('Declaration Review by Registrar', async () => {
     test('Navigate to the declaration review page', async () => {
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await login(page, CREDENTIALS.REGISTRAR)
       await page.getByText('Pending approval').click()
       await page.getByRole('button', { name: childNameFormatted }).click()
     })
@@ -239,7 +239,7 @@ test.describe.serial('Approval of late birth registration', () => {
 
   test.describe('Audit review by Registrar', async () => {
     test('Navigate to the declaration review page', async () => {
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR, true)
+      await login(page, CREDENTIALS.REGISTRAR, true)
       await page.getByText('Pending registration').click()
       await page.getByRole('button', { name: childNameFormatted }).click()
     })
@@ -404,7 +404,7 @@ test.describe
 
   test.describe('Declaration started by Registrar', async () => {
     test.beforeAll(async () => {
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await login(page, CREDENTIALS.REGISTRAR)
       await page.click('#header-new-event')
       await page.getByLabel('Birth').click()
       await page.getByRole('button', { name: 'Continue' }).click()
@@ -624,7 +624,7 @@ test.describe
 
   test.describe('Declaration Review by Registration Agent', async () => {
     test('Navigate to the declaration review page', async () => {
-      await login(page, CREDENTIALS.REGISTRATION_AGENT)
+      await login(page, CREDENTIALS.REGISTRATION_OFFICER)
       await page.getByText('Pending approval').click()
       await page.getByRole('button', { name: childNameFormatted }).click()
     })
@@ -694,7 +694,7 @@ test.describe
 
   test.describe('Declaration started by RO', async () => {
     test.beforeAll(async () => {
-      await login(page, CREDENTIALS.REGISTRATION_AGENT)
+      await login(page, CREDENTIALS.REGISTRATION_OFFICER)
       await page.click('#header-new-event')
       await page.getByLabel('Birth').click()
       await page.getByRole('button', { name: 'Continue' }).click()
@@ -786,7 +786,7 @@ test.describe
 
   test.describe('Declaration Review by Registrar', async () => {
     test('Navigate to the declaration review page', async () => {
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await login(page, CREDENTIALS.REGISTRAR)
       await page.getByText('Pending registration').click()
       await page.getByRole('button', { name: childNameFormatted }).click()
     })
