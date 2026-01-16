@@ -14,7 +14,7 @@ import {
 import { getRowByTitle } from '../print-certificate/birth/helpers'
 
 test.describe
-  .serial('5(a) Validate "Pending validation"-workqueue for registration agent', () => {
+  .serial('5(a) Validate "Pending validation"-workqueue for RO', () => {
   let page: Page
   let declaration: Declaration
   let eventId: string

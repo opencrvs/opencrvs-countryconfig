@@ -867,7 +867,7 @@ test.describe.serial('8. Validate declaration review page', () => {
     })
   })
 
-  test.describe('8.2 Registration agent actions', async () => {
+  test.describe('8.2 Registration Officer actions', async () => {
     test('8.2.1 Navigate to the declaration preview page', async () => {
       await login(page, CREDENTIALS.REGISTRATION_OFFICER)
 

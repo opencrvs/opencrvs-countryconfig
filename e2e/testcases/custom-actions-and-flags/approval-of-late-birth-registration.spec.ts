@@ -622,7 +622,7 @@ test.describe
     })
   })
 
-  test.describe('Declaration Review by Registration Agent', async () => {
+  test.describe('Declaration Review by RO', async () => {
     test('Navigate to the declaration review page', async () => {
       await login(page, CREDENTIALS.REGISTRATION_OFFICER)
       await page.getByText('Pending approval').click()

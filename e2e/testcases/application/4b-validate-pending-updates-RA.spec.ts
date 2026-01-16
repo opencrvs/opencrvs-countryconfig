@@ -14,8 +14,7 @@ import {
 import { getRowByTitle } from '../print-certificate/birth/helpers'
 import { faker } from '@faker-js/faker'
 
-test.describe
-  .serial('4(b) Validate "Pending updates"-workqueue for registration agent', () => {
+test.describe.serial('4(b) Validate "Pending updates"-workqueue for RO', () => {
   let page: Page
   let declaration: Declaration
   let eventId: string

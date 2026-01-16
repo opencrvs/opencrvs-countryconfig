@@ -86,8 +86,8 @@ test.describe.serial('Request and accept correction (offline)', () => {
     declaration = res.declaration
   })
 
-  test.describe('Request correction as Registration Agent', () => {
-    test('Login as Registration Agent', async () => {
+  test.describe('Request correction as RO', () => {
+    test('Login as RO', async () => {
       await login(page, CREDENTIALS.REGISTRATION_OFFICER)
     })
 

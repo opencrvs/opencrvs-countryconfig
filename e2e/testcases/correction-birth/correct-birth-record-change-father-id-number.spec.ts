@@ -91,7 +91,7 @@ test.describe.serial("Correct record - Change father's ID number", () => {
     declaration = res.declaration
   })
 
-  test('Login as Registration Agent', async () => {
+  test('Login as RO', async () => {
     await login(page, CREDENTIALS.REGISTRATION_OFFICER)
   })
 

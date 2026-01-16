@@ -114,7 +114,7 @@ test.describe.serial('Correct record - Change ages', () => {
     declaration = res.declaration
   })
 
-  test('Login as Registration Agent', async () => {
+  test('Login as Registration Officer', async () => {
     await login(page, CREDENTIALS.REGISTRATION_OFFICER)
   })
 

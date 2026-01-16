@@ -39,7 +39,7 @@ test.describe('Action menu options', () => {
       declaration = res.declaration
     })
 
-    test('Registration Agent', async () => {
+    test('Registration Officer', async () => {
       await login(page, CREDENTIALS.REGISTRATION_OFFICER)
       const options = await getActionMenuOptions(page, declaration)
       expect(options).toStrictEqual([

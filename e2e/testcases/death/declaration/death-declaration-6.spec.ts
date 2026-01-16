@@ -553,7 +553,7 @@ test.describe.serial('6. Death declaration case - 6', () => {
       ).toBeVisible()
     })
   })
-  test.describe('6.2 Declaration Review by Registration Agent', async () => {
+  test.describe('6.2 Declaration Review by RO', async () => {
     test('6.2.1 Navigate to the declaration "Record" -tab', async () => {
       await login(page, CREDENTIALS.REGISTRATION_OFFICER)
 
