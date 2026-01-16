@@ -33,7 +33,7 @@ test.describe('Side navigation menu', () => {
 
     // All workqueues are present on home page.
     for (const item of expectedWorkqueues) {
-      await expect(await page.getByRole('button', { name: item })).toBeVisible()
+      await expect(page.getByRole('button', { name: item })).toBeVisible()
     }
 
     const expectedItemsWithFrame = ['Organisation', 'Team']
@@ -86,7 +86,7 @@ test.describe('Side navigation menu', () => {
 
     // All workqueues are present on home page.
     for (const item of expectedWorkqueues) {
-      await expect(await page.getByRole('button', { name: item })).toBeVisible()
+      await expect(page.getByRole('button', { name: item })).toBeVisible()
     }
 
     const expectedItemsWithFrame = ['Organisation', 'Team']
@@ -155,7 +155,7 @@ test.describe('Side navigation menu', () => {
       await page.getByRole('button', { name: item }).click()
 
       for (const item of registrationAgentWorkqueues) {
-        await expect(page.locator(item)).toBeHidden()
+        await expect(page.getByRole('button', { name: item })).not.toBeVisible()
       }
 
       for (const items of nationalSystemAdminNestedNavItemsWithFrame) {

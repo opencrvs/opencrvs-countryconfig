@@ -6,6 +6,7 @@ import {
   formatName,
   goToSection,
   login,
+  searchFromSearchBar,
   switchEventTab,
   validateActionMenuButton
 } from '../../helpers'
@@ -224,9 +225,7 @@ test.describe.serial('Approval of late birth registration', () => {
 
     test("Validate that the 'Approval required for late registration' -flag is removed after approval", async () => {
       await ensureOutboxIsEmpty(page)
-      await page.locator('#searchText').fill(childNameFormatted)
-      await page.locator('#searchIconButton').click()
-      await page.getByRole('button', { name: childNameFormatted }).click()
+      await searchFromSearchBar(page, childNameFormatted)
 
       await expect(
         page.getByText('Approval required for late registration')
@@ -240,8 +239,7 @@ test.describe.serial('Approval of late birth registration', () => {
   test.describe('Audit review by Registrar', async () => {
     test('Navigate to the declaration review page', async () => {
       await login(page, CREDENTIALS.REGISTRAR, true)
-      await page.getByText('Pending registration').click()
-      await page.getByRole('button', { name: childNameFormatted }).click()
+      await searchFromSearchBar(page, childNameFormatted)
     })
 
     test('Assign', async () => {
