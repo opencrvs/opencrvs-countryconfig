@@ -285,7 +285,7 @@ test.describe.serial('Basic Archival flow', () => {
     await logout(page)
   })
 
-  test('Login as RA', async () => {
+  test('Login as RO', async () => {
     await login(page, CREDENTIALS.REGISTRATION_AGENT)
   })
 

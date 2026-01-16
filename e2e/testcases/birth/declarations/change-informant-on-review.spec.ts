@@ -101,7 +101,7 @@ test.describe.serial('Change informant on review', () => {
     await page.close()
   })
 
-  test.describe('Declaration started by RA', async () => {
+  test.describe('Declaration started by RO', async () => {
     test.beforeAll(async () => {
       await login(page, CREDENTIALS.REGISTRATION_AGENT)
       await page.click('#header-new-event')
@@ -263,12 +263,12 @@ test.describe.serial('Change informant on review', () => {
     })
   })
 
-  test.describe('Declaration Review by Local Registrar', async () => {
+  test.describe('Declaration Review by Registrar', async () => {
     test('Navigate to the declaration Edit-action', async () => {
       await logout(page)
       await login(page, CREDENTIALS.LOCAL_REGISTRAR)
 
-      await page.getByText('Pending validation').click()
+      await page.getByText('Pending registration').click()
 
       await page
         .getByRole('button', {
@@ -348,7 +348,7 @@ test.describe.serial('Change informant on review', () => {
 
     test('Assert event is registered', async () => {
       await ensureOutboxIsEmpty(page)
-      await page.getByText('Ready to print').click()
+      await page.getByText('Pending certification').click()
       await page
         .getByRole('button', { name: formatName(declaration.child.name) })
         .click()

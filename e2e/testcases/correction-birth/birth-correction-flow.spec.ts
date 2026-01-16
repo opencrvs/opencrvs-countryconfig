@@ -39,7 +39,7 @@ test.describe.serial('Birth correction flow', () => {
   })
 
   test('Navigate to the correction form', async () => {
-    await page.getByRole('button', { name: 'Ready to print' }).click()
+    await page.getByRole('button', { name: 'Pending certification' }).click()
     await page
       .getByRole('button', { name: formatV2ChildName(declaration) })
       .click()
@@ -243,7 +243,7 @@ test.describe.serial('Birth correction flow', () => {
   })
 
   test.describe('Approve correction request', () => {
-    test('Login as Local Registrar', async () => {
+    test('Login as Registrar', async () => {
       await logout(page)
       await login(page, CREDENTIALS.LOCAL_REGISTRAR)
     })
@@ -305,9 +305,9 @@ test.describe.serial('Birth correction flow', () => {
       await page.getByRole('button', { name: 'Approve', exact: true }).click()
       await page.getByRole('button', { name: 'Confirm', exact: true }).click()
 
-      await expectInUrl(page, `/workqueue/pending-certification`)
+      await expectInUrl(page, `/workqueue/correction-requested`)
       await ensureOutboxIsEmpty(page)
-      await page.getByRole('button', { name: 'Ready to print' }).click()
+      await page.getByRole('button', { name: 'Pending certification' }).click()
       await page
         .getByRole('button', {
           name: formatV2ChildName({

@@ -291,7 +291,7 @@ test.describe.serial('Correct record - Change ages', () => {
     await logout(page)
   })
 
-  test('Login as Local Registrar', async () => {
+  test('Login as Registrar', async () => {
     await login(page, CREDENTIALS.LOCAL_REGISTRAR)
   })
 

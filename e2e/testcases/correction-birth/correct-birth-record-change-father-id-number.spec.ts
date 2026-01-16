@@ -204,7 +204,7 @@ test.describe.serial("Correct record - Change father's ID number", () => {
     await logout(page)
   })
 
-  test('Login as Local Registrar', async () => {
+  test('Login as Registrar', async () => {
     await login(page, CREDENTIALS.LOCAL_REGISTRAR)
   })
 

@@ -120,7 +120,7 @@ test.describe.serial('4. Birth declaration case - 4', () => {
     await page.close()
   })
 
-  test.describe('4.1 Declaration started by RA', async () => {
+  test.describe('4.1 Declaration started by RO', async () => {
     test.beforeAll(async () => {
       await login(page, CREDENTIALS.REGISTRATION_AGENT)
       await page.click('#header-new-event')
@@ -639,7 +639,7 @@ test.describe.serial('4. Birth declaration case - 4', () => {
     })
   })
 
-  test.describe('4.2 Declaration Review by Local Registrar', async () => {
+  test.describe('4.2 Declaration Review by Registrar', async () => {
     test('4.2.1 Navigate to the declaration "Record" -tab', async () => {
       await logout(page)
       await login(page, CREDENTIALS.LOCAL_REGISTRAR)

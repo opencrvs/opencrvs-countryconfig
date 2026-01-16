@@ -109,7 +109,7 @@ test.describe.serial('4. Death declaration case - 4', () => {
     await page.close()
   })
 
-  test.describe('4.1 Declaration started by RA', async () => {
+  test.describe('4.1 Declaration started by RO', async () => {
     test.beforeAll(async () => {
       await login(page, CREDENTIALS.REGISTRATION_AGENT)
 
@@ -1019,7 +1019,7 @@ test.describe.serial('4. Death declaration case - 4', () => {
 
       await ensureOutboxIsEmpty(page)
 
-      await page.getByText('Ready to print').click()
+      await page.getByText('Pending certification').click()
       await expect(
         page.getByRole('button', {
           name:

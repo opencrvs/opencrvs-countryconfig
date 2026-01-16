@@ -100,7 +100,7 @@ test.describe.serial('6. Death declaration case - 6', () => {
     await page.close()
   })
 
-  test.describe('6.1 Declaration started by Local Registrar', async () => {
+  test.describe('6.1 Declaration started by Registrar', async () => {
     test.beforeAll(async () => {
       await login(page, CREDENTIALS.LOCAL_REGISTRAR)
 
@@ -558,7 +558,7 @@ test.describe.serial('6. Death declaration case - 6', () => {
       await login(page, CREDENTIALS.REGISTRATION_AGENT)
 
       await ensureOutboxIsEmpty(page)
-      await page.getByText('Ready to print').click()
+      await page.getByText('Pending certification').click()
 
       await page
         .getByRole('button', {

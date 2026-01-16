@@ -65,7 +65,7 @@ test.describe('Action menu options', () => {
       declaration = res.declaration
     })
 
-    test('Local Registrar', async () => {
+    test('Registrar', async () => {
       await login(page, CREDENTIALS.LOCAL_REGISTRAR)
       await page.getByRole('button', { name: 'Pending registration' }).click()
       const options = await getActionMenuOptions(page, declaration)
@@ -92,7 +92,7 @@ test.describe('Action menu options', () => {
       declaration = res.declaration
     })
 
-    test('Local Registrar', async () => {
+    test('Registrar', async () => {
       await login(page, CREDENTIALS.LOCAL_REGISTRAR)
       await page.getByRole('button', { name: 'Pending certification' }).click()
       const options = await getActionMenuOptions(page, declaration)

@@ -420,8 +420,8 @@ test.describe.serial('5. Workqueue flow - 5', () => {
       })
     })
   })
-  test.describe('Re-declare with edits by RA', async () => {
-    test('Login with RA', async () => {
+  test.describe('Re-declare with edits by RO', async () => {
+    test('Login with RO', async () => {
       await login(page, CREDENTIALS.REGISTRATION_AGENT, true)
 
       await assertRecordInWorkqueue({

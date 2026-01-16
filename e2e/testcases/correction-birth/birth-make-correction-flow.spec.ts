@@ -33,7 +33,7 @@ test.describe.serial('Birth Record correction flow', () => {
   })
 
   test('Navigate to the correction form', async () => {
-    await page.getByRole('button', { name: 'Ready to print' }).click()
+    await page.getByRole('button', { name: 'Pending certification' }).click()
     await page
       .getByRole('button', { name: formatV2ChildName(declaration) })
       .click()

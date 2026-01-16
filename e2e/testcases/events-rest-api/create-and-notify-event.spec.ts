@@ -737,7 +737,7 @@ test.describe('Events REST API', () => {
   })
 
   test.describe
-    .serial('Local Registrar can register and print an event notified via integration', async () => {
+    .serial('Registrar can register and print an event notified via integration', async () => {
     const childName = {
       firstname: faker.person.firstName(),
       surname: faker.person.lastName()
@@ -864,8 +864,8 @@ test.describe('Events REST API', () => {
       await selectDeclarationAction(page, 'Register')
     })
 
-    test("Navigate to event via 'Ready to print' -workqueue", async () => {
-      await page.getByRole('button', { name: 'Ready to print' }).click()
+    test("Navigate to event via 'Pending certification' -workqueue", async () => {
+      await page.getByRole('button', { name: 'Pending certification' }).click()
       await page
         .getByText(await formatV2ChildName({ 'child.name': newChildName }))
         .click()
@@ -897,7 +897,7 @@ test.describe('Events REST API', () => {
   })
 
   test.describe
-    .serial('Local Registrar can reject an event notified via integration', async () => {
+    .serial('Registrar can reject an event notified via integration', async () => {
     const childName = {
       firstname: faker.person.firstName(),
       surname: faker.person.lastName()

@@ -48,7 +48,7 @@ test.describe('Save and delete drafts', () => {
       ).not.toBeVisible()
     })
 
-    test('Login as local registrar', async () => {
+    test('Login as Registrar', async () => {
       await logout(page)
       await login(page, CREDENTIALS.LOCAL_REGISTRAR, true)
     })

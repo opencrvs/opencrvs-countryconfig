@@ -181,8 +181,8 @@ test.describe.serial('Request and accept correction (offline)', () => {
     })
   })
 
-  test.describe('Accept correction as Local Registrar (offline)', () => {
-    test('Login as Local Registrar', async () => {
+  test.describe('Accept correction as Registrar (offline)', () => {
+    test('Login as Registrar', async () => {
       await login(page, CREDENTIALS.LOCAL_REGISTRAR)
     })
 

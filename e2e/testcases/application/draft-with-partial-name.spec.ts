@@ -71,7 +71,7 @@ test.describe.serial('Validate draft with partial name', () => {
     )
   })
 
-  test('Records do not appear in draft for other user: RA ', async () => {
+  test('Records do not appear in draft for other user: RO', async () => {
     await login(page, CREDENTIALS.REGISTRATION_AGENT)
     await page.getByRole('button', { name: 'My drafts' }).click()
 

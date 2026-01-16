@@ -34,8 +34,8 @@ test.describe.serial('Navigating in and out of action', () => {
     await login(page)
   })
 
-  test('Navigate to ready to print', async () => {
-    await page.getByRole('button', { name: 'Ready to print' }).click()
+  test('Navigate to "Pending certification" -workqueue', async () => {
+    await page.getByRole('button', { name: 'Pending certification' }).click()
   })
 
   test('Navigate successfully through the print certificate action flow', async () => {
@@ -81,7 +81,9 @@ test.describe.serial('Navigating in and out of action', () => {
 
   test('Browser back button should take user to the front page instead of action flow', async () => {
     await page.goBack()
-    await expect(page.locator('#content-name')).toContainText('Ready to print')
+    await expect(page.locator('#content-name')).toContainText(
+      'Pending certification'
+    )
   })
 
   test('Browser forward button should take user back to the event overview page', async () => {

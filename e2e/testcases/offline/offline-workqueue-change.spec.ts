@@ -10,6 +10,8 @@ test('Can Change Workqueue offline', async ({ page }) => {
   })
   await expect(page.locator('#content-name')).toHaveText('Assigned to you')
   await mockNetworkConditions(page, 'offline')
-  await page.getByRole('button', { name: 'Ready to print' }).click()
-  await expect(page.locator('#content-name')).toHaveText('Ready to print')
+  await page.getByRole('button', { name: 'Pending certification' }).click()
+  await expect(page.locator('#content-name')).toHaveText(
+    'Pending certification'
+  )
 })

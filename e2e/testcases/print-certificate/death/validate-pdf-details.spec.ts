@@ -38,7 +38,7 @@ test.describe.serial("Validate 'Death Certificate' PDF details", () => {
   })
 
   test('Go to review', async () => {
-    await page.getByRole('button', { name: 'Ready to print' }).click()
+    await page.getByRole('button', { name: 'Pending certification' }).click()
     await navigateToCertificatePrintAction(page, declaration)
     await selectCertificationType(page, 'Death Certificate')
     await selectRequesterType(page, 'Print and issue to Informant (Spouse)')
@@ -91,7 +91,7 @@ test.describe
   })
 
   test('Go to review', async () => {
-    await page.getByRole('button', { name: 'Ready to print' }).click()
+    await page.getByRole('button', { name: 'Pending certification' }).click()
     await navigateToCertificatePrintAction(page, declaration)
     await selectCertificationType(page, 'Death Certificate Certified Copy')
     await selectRequesterType(page, 'Print and issue to Informant (Spouse)')

@@ -12,8 +12,7 @@ import { CREDENTIALS } from '../../constants'
 import { ensureAssigned, ensureOutboxIsEmpty, selectAction } from '../../utils'
 import { createDeclaration } from '../test-data/birth-declaration-with-father-brother'
 
-test.describe
-  .serial('Escalation of birth registration by local registrar', () => {
+test.describe.serial('Escalation of birth registration by Registrar', () => {
   let page: Page
   let recordForRegistrarGenearal: Awaited<ReturnType<typeof createDeclaration>>
   let recordForProvincialRegistrar: Awaited<
@@ -69,7 +68,7 @@ test.describe
 
   test.describe('Escalate to Provincial Registrar', async () => {
     test('Registrar assigns birth registration', async () => {
-      await page.getByText('Ready to print').click()
+      await page.getByText('Pending certification').click()
       await page
         .getByRole('button', { name: childNameForProvincialFormatted })
         .click()

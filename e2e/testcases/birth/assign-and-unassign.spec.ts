@@ -29,7 +29,7 @@ test.describe.serial('Assign & Unassign', () => {
 
   test('Click on "Assign" from action menu', async () => {
     await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue.
-    await page.getByText('Ready to print').click()
+    await page.getByText('Pending certification').click()
 
     const childName = `${declaration['child.name'].firstname} ${declaration['child.name'].surname}`
     await page.getByRole('button', { name: childName }).click()

@@ -896,7 +896,7 @@ test.describe.serial('8. Validate declaration review page', () => {
     })
   })
 
-  test.describe('8.3 Local registrar actions', async () => {
+  test.describe('8.3 Registrar actions', async () => {
     test('8.3.1 Navigate to the declaration preview page', async () => {
       await login(page, CREDENTIALS.LOCAL_REGISTRAR)
 

@@ -136,7 +136,7 @@ test.describe.serial('Approval of late birth registration', () => {
     })
   })
 
-  test.describe('Declaration Review by RA', async () => {
+  test.describe('Declaration Review by RO', async () => {
     test('Navigate to the declaration review page', async () => {
       await login(page, CREDENTIALS.REGISTRATION_AGENT)
       await page.getByText('Pending approval').click()
@@ -151,7 +151,7 @@ test.describe.serial('Approval of late birth registration', () => {
       ).toBeVisible()
     })
 
-    test('RA should not have the option to Approve', async () => {
+    test('RO should not have the option to Approve', async () => {
       await page.getByRole('button', { name: 'Action', exact: true }).click()
       await expect(page.getByText('Approve', { exact: true })).not.toBeVisible()
     })
@@ -160,7 +160,7 @@ test.describe.serial('Approval of late birth registration', () => {
   test.describe('Declaration Review by Registrar', async () => {
     test('Navigate to the declaration review page', async () => {
       await login(page, CREDENTIALS.LOCAL_REGISTRAR)
-      await page.getByText('Pending registration').click()
+      await page.getByText('Pending approval').click()
       await page.getByRole('button', { name: childNameFormatted }).click()
     })
 
@@ -240,7 +240,7 @@ test.describe.serial('Approval of late birth registration', () => {
   test.describe('Audit review by Registrar', async () => {
     test('Navigate to the declaration review page', async () => {
       await login(page, CREDENTIALS.LOCAL_REGISTRAR, true)
-      await page.getByText('TODO CIHAN').click()
+      await page.getByText('Pending registration').click()
       await page.getByRole('button', { name: childNameFormatted }).click()
     })
 
@@ -402,7 +402,7 @@ test.describe
     await page.close()
   })
 
-  test.describe('Declaration started by Local Registrar', async () => {
+  test.describe('Declaration started by Registrar', async () => {
     test.beforeAll(async () => {
       await login(page, CREDENTIALS.LOCAL_REGISTRAR)
       await page.click('#header-new-event')
@@ -692,9 +692,9 @@ test.describe
     await page.close()
   })
 
-  test.describe('Declaration started by FA', async () => {
+  test.describe('Declaration started by RO', async () => {
     test.beforeAll(async () => {
-      await login(page, CREDENTIALS.FIELD_AGENT)
+      await login(page, CREDENTIALS.REGISTRATION_AGENT)
       await page.click('#header-new-event')
       await page.getByLabel('Birth').click()
       await page.getByRole('button', { name: 'Continue' }).click()
@@ -784,10 +784,10 @@ test.describe
     })
   })
 
-  test.describe('Declaration Review by Local Registrar', async () => {
+  test.describe('Declaration Review by Registrar', async () => {
     test('Navigate to the declaration review page', async () => {
       await login(page, CREDENTIALS.LOCAL_REGISTRAR)
-      await page.getByText('TODO CIHAN').click()
+      await page.getByText('Pending registration').click()
       await page.getByRole('button', { name: childNameFormatted }).click()
     })
 

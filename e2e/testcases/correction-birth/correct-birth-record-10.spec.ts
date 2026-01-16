@@ -79,7 +79,7 @@ test.describe('10. Correct record', () => {
     const reason = faker.lorem.sentence(8)
 
     test('10.0.0 Navigate to record correction', async () => {
-      await page.getByRole('button', { name: 'Ready to print' }).click()
+      await page.getByRole('button', { name: 'Pending certification' }).click()
       await page
         .getByRole('button', { name: formatV2ChildName(declaration) })
         .click()
@@ -568,12 +568,9 @@ test.describe('10. Correct record', () => {
           .click()
         await page.getByRole('button', { name: 'Confirm' }).click()
 
-        /*
-         * Expected result: should be navigated to event overview
-         */
         await expectInUrl(page, `/workqueue/pending-certification`)
 
-        await page.getByTestId('navigation_workqueue_sent-for-approval').click()
+        await page.getByRole('button', { name: 'Pending corrections' }).click()
 
         await expect(
           page.getByRole('button', { name: formatV2ChildName(declaration) })
@@ -588,7 +585,7 @@ test.describe('10. Correct record', () => {
         await login(page, CREDENTIALS.LOCAL_REGISTRAR)
       })
 
-      test('10.1.6.1 Record audit by local registrar', async () => {
+      test('10.1.6.1 Record audit by Registrar', async () => {
         if (!trackingId) {
           throw new Error('Tracking ID is required')
         }

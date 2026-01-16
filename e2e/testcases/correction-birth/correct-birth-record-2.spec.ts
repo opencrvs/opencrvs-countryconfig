@@ -60,7 +60,7 @@ test.describe.serial('Correct record - 2', () => {
 
   test('2.1 Certificate preview', async () => {
     await login(page, CREDENTIALS.REGISTRATION_AGENT)
-    await page.getByRole('button', { name: 'Ready to print' }).click()
+    await page.getByRole('button', { name: 'Pending certification' }).click()
     await navigateToCertificatePrintAction(page, declaration)
     await selectCertificationType(page, 'Birth Certificate')
     await selectRequesterType(page, 'Print and issue to Informant (Mother)')
@@ -252,7 +252,7 @@ test.describe.serial('Correct record - 2', () => {
       await login(page, CREDENTIALS.LOCAL_REGISTRAR)
     })
 
-    test('2.8.1 Record audit by local registrar', async () => {
+    test('2.8.1 Record audit by Registrar', async () => {
       if (!trackingId) {
         throw new Error('Tracking ID is required')
       }

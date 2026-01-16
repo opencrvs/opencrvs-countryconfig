@@ -21,6 +21,7 @@ type Workqueue =
   | 'In external validation'
   | 'Pending certification'
   | 'Pending issuance'
+  | 'Pending corrections'
 
 export async function navigateToWorkqueue(page: Page, workqueue: Workqueue) {
   if (isMobile(page)) {

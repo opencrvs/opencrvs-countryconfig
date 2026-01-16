@@ -63,7 +63,7 @@ test.describe('1. Correct record - 1', () => {
   test.describe('1.1 Validate verbiage', async () => {
     test.beforeEach(async ({ page }) => {
       await login(page, CREDENTIALS.REGISTRATION_AGENT)
-      await page.getByRole('button', { name: 'Ready to print' }).click()
+      await page.getByRole('button', { name: 'Pending certification' }).click()
       await page
         .getByRole('button', { name: formatV2ChildName(declaration) })
         .click()
@@ -196,7 +196,7 @@ test.describe('1. Correct record - 1', () => {
     })
 
     test('1.2.0 Navigate to record correction', async () => {
-      await page.getByRole('button', { name: 'Ready to print' }).click()
+      await page.getByRole('button', { name: 'Pending certification' }).click()
       await page
         .getByRole('button', { name: formatV2ChildName(declaration) })
         .click()
@@ -671,7 +671,7 @@ test.describe('1. Correct record - 1', () => {
         await login(page, CREDENTIALS.LOCAL_REGISTRAR)
       })
 
-      test('1.2.6.1 Record audit by local registrar', async () => {
+      test('1.2.6.1 Record audit by Registrar', async () => {
         if (!trackingId) {
           throw new Error('Tracking ID is required')
         }

@@ -43,7 +43,7 @@ test.describe.serial('Validate collect payment page', () => {
   })
 
   test('5.0.2 Navigate to certificate print action', async () => {
-    await page.getByRole('button', { name: 'Ready to print' }).click()
+    await page.getByRole('button', { name: 'Pending certification' }).click()
     await navigateToCertificatePrintAction(page, declaration)
   })
 

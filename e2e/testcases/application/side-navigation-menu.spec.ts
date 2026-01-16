@@ -17,7 +17,6 @@ test.describe('Side navigation menu', () => {
     await login(page, CREDENTIALS.LOCAL_REGISTRAR, false)
 
     const expectedWorkqueues = [
-      'Outbox',
       'My drafts',
       'Assigned to you',
       'Recent',
@@ -72,7 +71,6 @@ test.describe('Side navigation menu', () => {
     await login(page, CREDENTIALS.REGISTRATION_AGENT, false)
 
     const expectedWorkqueues = [
-      'Outbox',
       'My drafts',
       'Assigned to you',
       'Recent',

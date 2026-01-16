@@ -190,7 +190,7 @@ test.describe.serial('10. Birth declaration case - 10', () => {
     })
   })
 
-  test.describe('10.2 Declaration Review by RA', async () => {
+  test.describe('10.2 Declaration Review by RO', async () => {
     test("10.2.1 Navigate to the declaration 'Record' tab", async () => {
       await login(page, CREDENTIALS.REGISTRATION_AGENT)
 
