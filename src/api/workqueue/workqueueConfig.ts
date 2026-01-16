@@ -313,7 +313,10 @@ export const Workqueues = defineWorkqueues([
     },
     query: {
       flags: {
-        anyOf: ['pending-first-certificate-issuance'],
+        anyOf: [
+          'pending-first-certificate-issuance',
+          InherentFlags.PENDING_CERTIFICATION
+        ],
         noneOf: ['revoked']
       },
       updatedAtLocation: { type: 'within', location: user('primaryOfficeId') }
