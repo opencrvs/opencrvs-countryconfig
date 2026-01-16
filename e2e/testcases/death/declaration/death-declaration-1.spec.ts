@@ -474,7 +474,7 @@ test.describe.serial('1. Death declaration case - 1', () => {
       await login(page, CREDENTIALS.REGISTRATION_AGENT)
 
       await ensureOutboxIsEmpty(page)
-      await page.getByText('Pending registration').click()
+      await page.getByText('Pending validation').click()
 
       await page
         .getByRole('button', {
