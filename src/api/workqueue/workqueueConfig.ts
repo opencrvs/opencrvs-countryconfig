@@ -192,7 +192,7 @@ export const Workqueues = defineWorkqueues([
   },
   {
     slug: 'pending-registration',
-    icon: 'Pencil',
+    icon: 'PenNib',
     name: {
       id: 'workqueues.pendingRegistration.title',
       defaultMessage: 'Pending registration',
@@ -222,7 +222,7 @@ export const Workqueues = defineWorkqueues([
   },
   {
     slug: 'registration-registrar-general',
-    icon: 'Pencil',
+    icon: 'PenNib',
     name: {
       id: 'workqueues.pendingRegistration.title',
       defaultMessage: 'Pending registration',
@@ -384,7 +384,7 @@ export const Workqueues = defineWorkqueues([
   },
   {
     slug: 'correction-requested',
-    icon: 'File',
+    icon: 'FileText',
     name: {
       id: 'workqueues.correctionRequested.title',
       defaultMessage: 'Pending corrections',
