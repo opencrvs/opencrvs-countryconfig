@@ -58,9 +58,9 @@ test.describe('Action menu options', () => {
         'Assign',
         'Register',
         'Edit',
+        'Escalate',
         'Reject',
-        'Archive',
-        'Escalate'
+        'Archive'
       ])
     })
   })
@@ -84,9 +84,9 @@ test.describe('Action menu options', () => {
         'Assign',
         'Register',
         'Edit',
+        'Escalate',
         'Reject',
-        'Archive',
-        'Escalate'
+        'Archive'
       ])
     })
   })
