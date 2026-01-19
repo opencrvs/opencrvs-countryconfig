@@ -741,7 +741,16 @@ export const birthEvent = defineConfig({
           'The label to show in audit history for the revoke registration action',
         id: 'event.birth.action.revoke-registration.audit-history-label'
       },
-      flags: [{ id: 'revoked', operation: 'add' }],
+      flags: [
+        { id: 'revoked', operation: 'add' },
+        { id: 'pending-first-certificate-issuance', operation: 'remove' },
+        { id: 'escalated-to-registrar-general', operation: 'remove' },
+        { id: 'escalated-to-provincial-registrar', operation: 'remove' },
+        {
+          id: 'certified-copy-printed-in-advance-of-issuance',
+          operation: 'remove'
+        }
+      ],
       conditionals: [
         {
           type: ConditionalType.SHOW,
