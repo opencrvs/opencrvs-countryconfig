@@ -310,5 +310,42 @@ export const roles: Role[] = [
       'record.notify[event=birth|death|tennis-club-membership]',
       'record.registered.print-certified-copies[event=birth|death|tennis-club-membership]'
     ]
+  },
+  // Legacy roles from v1.8 for backwards compatibility
+  {
+    id: 'POLICE_OFFICER',
+    label: {
+      defaultMessage: 'Police Officer',
+      description: 'Name for user role Police Officer',
+      id: 'userRole.policeOfficer'
+    },
+    scopes: []
+  },
+  {
+    id: 'SOCIAL_WORKER',
+    label: {
+      defaultMessage: 'Social Worker',
+      description: 'Name for user role Social Worker',
+      id: 'userRole.socialWorker'
+    },
+    scopes: []
+  },
+  {
+    id: 'HEALTHCARE_WORKER',
+    label: {
+      defaultMessage: 'Healthcare Worker',
+      description: 'Name for user role Healthcare Worker',
+      id: 'userRole.healthcareWorker'
+    },
+    scopes: []
+  },
+  {
+    id: 'LOCAL_LEADER',
+    label: {
+      defaultMessage: 'Local Leader',
+      description: 'Name for user role Local Leader',
+      id: 'userRole.LocalLeader'
+    },
+    scopes: []
   }
 ]
