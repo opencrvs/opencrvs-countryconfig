@@ -181,6 +181,20 @@ export const deathEvent = defineConfig({
       requiresAction: true
     }
   ],
+  actionOrder: [
+    ActionType.ASSIGN,
+    ActionType.REGISTER,
+    ActionType.DECLARE,
+    ActionType.EDIT,
+    'VALIDATE_DECLARATION',
+    ActionType.MARK_AS_DUPLICATE,
+    ActionType.REJECT,
+    ActionType.ARCHIVE,
+    ActionType.DELETE,
+    ActionType.PRINT_CERTIFICATE,
+    ActionType.REQUEST_CORRECTION,
+    ActionType.UNASSIGN
+  ],
   actions: [
     {
       type: ActionType.READ,
