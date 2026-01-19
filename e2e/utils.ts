@@ -51,6 +51,7 @@ export async function selectAction(
     | 'Edit'
     | 'Escalate'
     | 'Registrar general feedback'
+    | 'Provincial registrar feedback'
     | 'Revoke registration'
     | 'Reinstate registration'
 ) {
