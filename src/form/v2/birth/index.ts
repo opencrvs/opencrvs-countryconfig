@@ -93,11 +93,21 @@ export const birthEvent = defineConfig({
       requiresAction: true
     },
     {
-      id: 'pending-certified-copy-issuance',
+      id: 'pending-first-certificate-issuance',
       label: {
-        id: 'event.birth.flag.pending-certified-copy-issuance',
-        defaultMessage: 'Pending certified copy issuance',
-        description: 'Flag label for pending certified copy issuance'
+        id: 'event.birth.flag.pending-first-certificate-issuance',
+        defaultMessage: 'Pending first certificate issuance',
+        description: 'Flag label for first certificate issuance'
+      },
+      requiresAction: true
+    },
+    {
+      id: 'certified-copy-printed-in-advance-of-issuance',
+      label: {
+        id: 'event.birth.flag.certified-copy-printed-in-advance-of-issuance',
+        defaultMessage: 'Certified copy printed in advance of issuance',
+        description:
+          'Flag label for certified copy printed in advance of issuance'
       },
       requiresAction: true
     }
@@ -223,14 +233,15 @@ export const birthEvent = defineConfig({
     ActionType.EDIT,
     'VALIDATE_DECLARATION',
     'APPROVE_DECLARATION',
-    ActionType.REJECT,
-    ActionType.ARCHIVE,
-    ActionType.DELETE,
+    ActionType.MARK_AS_DUPLICATE,
     'ESCALATE',
     'PROVINCIAL_REGISTER_FEEDBACK',
     'REGISTRAR_GENERAL_FEEDBACK',
-    ActionType.MARK_AS_DUPLICATE,
+    ActionType.REJECT,
+    ActionType.ARCHIVE,
+    ActionType.DELETE,
     ActionType.PRINT_CERTIFICATE,
+    'ISSUE_CERTIFIED_COPY',
     ActionType.REQUEST_CORRECTION,
     ActionType.UNASSIGN
   ],
@@ -493,12 +504,14 @@ export const birthEvent = defineConfig({
           ]
         }
       ],
-      flags: [{ id: 'pending-certified-copy-issuance', operation: 'remove' }],
+      flags: [
+        { id: 'pending-first-certificate-issuance', operation: 'remove' }
+      ],
       conditionals: [
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            flag('pending-certified-copy-issuance'),
+            flag('certified-copy-printed-in-advance-of-issuance'),
             status('REGISTERED')
           )
         }
@@ -723,7 +736,10 @@ export const birthEvent = defineConfig({
         defaultMessage:
           "By clicking 'Confirm', you confirm that the information entered is correct and the event can be registered."
       },
-      flags: [{ id: 'validated', operation: 'remove' }],
+      flags: [
+        { id: 'validated', operation: 'remove' },
+        { id: 'pending-first-certificate-issuance', operation: 'add' }
+      ],
       conditionals: [
         {
           type: ConditionalType.ENABLE,
@@ -756,12 +772,13 @@ export const birthEvent = defineConfig({
       },
       flags: [
         {
-          id: 'pending-certified-copy-issuance',
+          id: 'certified-copy-printed-in-advance-of-issuance',
           operation: 'add',
           conditional: field('collector.requesterId').isEqualTo(
             'PRINT_IN_ADVANCE'
           )
-        }
+        },
+        { id: 'pending-first-certificate-issuance', operation: 'remove' }
       ],
       printForm: BIRTH_CERTIFICATE_COLLECTOR_FORM
     },
