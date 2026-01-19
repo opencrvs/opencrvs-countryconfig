@@ -1,31 +1,22 @@
 import { expect, test, type Page } from '@playwright/test'
 
-import { login, getToken, validateActionMenuButton } from '../../helpers'
+import { login, getToken } from '../../helpers'
 import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../constants'
 import { createDeclaration, Declaration } from '../test-data/birth-declaration'
-import { ActionType } from '@opencrvs/toolkit/events'
 import { formatV2ChildName } from '../birth/helpers'
-import {
-  ensureAssigned,
-  ensureInExternalValidationIsEmpty,
-  ensureOutboxIsEmpty,
-  expectInUrl,
-  selectAction
-} from '../../utils'
-import { getRowByTitle } from '../print-certificate/birth/helpers'
+import { expectInUrl, selectAction } from '../../utils'
 
-test.describe
-  .serial('5(b) Validate Ready for review tab for local registrar', () => {
+test.describe.serial('6 Validate "Pending certification"-workqueue', () => {
   let page: Page
   let declaration: Declaration
   let eventId: string
 
   test.beforeAll(async ({ browser }) => {
     const token = await getToken(
-      CREDENTIALS.FIELD_AGENT.USERNAME,
-      CREDENTIALS.FIELD_AGENT.PASSWORD
+      CREDENTIALS.REGISTRAR.USERNAME,
+      CREDENTIALS.REGISTRAR.PASSWORD
     )
-    const res = await createDeclaration(token, undefined, ActionType.DECLARE)
+    const res = await createDeclaration(token)
     declaration = res.declaration
     eventId = res.eventId
 
@@ -36,33 +27,37 @@ test.describe
     await page.close()
   })
 
-  test('5.0 Login', async () => {
-    await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+  test('6.0 Login', async () => {
+    await login(page, CREDENTIALS.REGISTRAR)
   })
 
-  test('5.1 Go to Ready for review tab', async () => {
+  test('6.1 Go to "Pending certification"-workqueue', async () => {
     await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue.
-    await page.getByText('Ready for review').click()
+    await page.getByText('Pending certification').click()
     await expect(
       page.getByRole('button', { name: formatV2ChildName(declaration) })
     ).toBeVisible()
     await expect(page.getByTestId('search-result')).toContainText(
-      'Ready for review'
+      'Pending certification'
     )
   })
 
-  test('5.2 validate the list', async () => {
+  test('6.2 validate the list', async () => {
+    const button = page.getByRole('button', {
+      name: formatV2ChildName(declaration)
+    })
+
     const header = page.locator('div[class^="TableHeader"]')
     const columns = await header.locator(':scope > div').allInnerTexts()
     expect(columns).toStrictEqual([
       'Title',
       'Event',
       'Date of Event',
-      'Sent for review',
+      'Registered',
       ''
     ])
 
-    const row = getRowByTitle(page, formatV2ChildName(declaration))
+    const row = button.locator('xpath=ancestor::*[starts-with(@id, "row_")]')
     const cells = row.locator(':scope > div')
 
     expect(cells.nth(0)).toHaveText(formatV2ChildName(declaration))
@@ -70,16 +65,20 @@ test.describe
     expect(cells.nth(2)).toHaveText(declaration['child.dob'].split('T')[0])
   })
 
-  test('5.4 Click a name', async () => {
+  test('6.4 Click a name', async () => {
     await page
       .getByRole('button', { name: formatV2ChildName(declaration) })
       .click()
 
-    await expectInUrl(page, `events/${eventId}?workqueue=in-review`)
+    await expectInUrl(page, `events/${eventId}?workqueue=pending-certification`)
   })
 
-  test('5.5 Register action should be unavailable for declared but unvalidated record', async () => {
-    await ensureAssigned(page)
-    await validateActionMenuButton(page, 'Register', false)
+  test('6.5 Click Print action', async () => {
+    await selectAction(page, 'Print')
+    await expect(page.locator('#content-name')).toHaveText('Certify record')
+    await expectInUrl(
+      page,
+      `/events/print-certificate/${eventId}/pages/collector?workqueue=pending-certification`
+    )
   })
 })

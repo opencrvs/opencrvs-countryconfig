@@ -5,14 +5,14 @@ import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../constants'
 import { ensureAssigned } from '../../utils'
 
 test.describe
-  .serial('History rows when Local Registrar registers a birth from scratch', () => {
+  .serial('History rows when Registrar registers a birth from scratch', () => {
   let page: Page
   let declaration: Declaration
 
   test.beforeAll(async ({ browser }) => {
     const token = await getToken(
-      CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
-      CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+      CREDENTIALS.REGISTRAR.USERNAME,
+      CREDENTIALS.REGISTRAR.PASSWORD
     )
     const res = await createDeclaration(token)
     declaration = res.declaration
@@ -28,7 +28,7 @@ test.describe
   })
   test('Assign', async () => {
     await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue.
-    await page.getByText('Ready to print').click()
+    await page.getByText('Pending certification').click()
 
     const childName = `${declaration['child.name'].firstname} ${declaration['child.name'].surname}`
     await page.getByRole('button', { name: childName }).click()

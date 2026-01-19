@@ -7,11 +7,11 @@ const testCases = [
     hasSearch: true
   },
   {
-    credential: CREDENTIALS.REGISTRATION_AGENT,
+    credential: CREDENTIALS.REGISTRATION_OFFICER,
     hasSearch: true
   },
   {
-    credential: CREDENTIALS.LOCAL_REGISTRAR,
+    credential: CREDENTIALS.REGISTRAR,
     hasSearch: true
   },
   {

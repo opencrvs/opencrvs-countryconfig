@@ -41,8 +41,8 @@ test.describe.serial('Correct record - 2', () => {
 
   test.beforeAll(async ({ browser }) => {
     const token = await getToken(
-      CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
-      CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+      CREDENTIALS.REGISTRAR.USERNAME,
+      CREDENTIALS.REGISTRAR.PASSWORD
     )
 
     // Create declaration with father details available
@@ -59,8 +59,8 @@ test.describe.serial('Correct record - 2', () => {
   })
 
   test('2.1 Certificate preview', async () => {
-    await login(page, CREDENTIALS.REGISTRATION_AGENT)
-    await page.getByRole('button', { name: 'Ready to print' }).click()
+    await login(page, CREDENTIALS.REGISTRATION_OFFICER)
+    await page.getByRole('button', { name: 'Pending certification' }).click()
     await navigateToCertificatePrintAction(page, declaration)
     await selectCertificationType(page, 'Birth Certificate')
     await selectRequesterType(page, 'Print and issue to Informant (Mother)')
@@ -148,7 +148,7 @@ test.describe.serial('Correct record - 2', () => {
 
       await expectInUrl(
         page,
-        `/events/request-correction/${eventId}/pages/informant?from=review&workqueue=ready-to-print#informant____relation`
+        `/events/request-correction/${eventId}/pages/informant?from=review&workqueue=pending-certification#informant____relation`
       )
 
       await page.locator('#informant____relation').click()
@@ -186,7 +186,7 @@ test.describe.serial('Correct record - 2', () => {
 
       await expectInUrl(
         page,
-        `/events/request-correction/${eventId}/pages/child?from=review&workqueue=ready-to-print#child____placeOfBirth`
+        `/events/request-correction/${eventId}/pages/child?from=review&workqueue=pending-certification#child____placeOfBirth`
       )
 
       await page.locator('#child____placeOfBirth').click()
@@ -242,17 +242,17 @@ test.describe.serial('Correct record - 2', () => {
       .click()
     await page.getByRole('button', { name: 'Confirm' }).click()
 
-    await expectInUrl(page, `/workqueue/ready-to-print`)
+    await expectInUrl(page, `/workqueue/pending-certification`)
   })
 
   test.describe('2.8 Correction Review', async () => {
     test.beforeAll(async ({ browser }) => {
       await page.close()
       page = await browser.newPage()
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await login(page, CREDENTIALS.REGISTRAR)
     })
 
-    test('2.8.1 Record audit by local registrar', async () => {
+    test('2.8.1 Record audit by Registrar', async () => {
       if (!trackingId) {
         throw new Error('Tracking ID is required')
       }

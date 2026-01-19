@@ -1,22 +1,23 @@
 import { expect, test, type Page } from '@playwright/test'
 
-import { login, getToken } from '../../helpers'
+import { login, getToken, validateActionMenuButton } from '../../helpers'
 import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../constants'
 import { createDeclaration, Declaration } from '../test-data/birth-declaration'
-import { formatV2ChildName } from '../birth/helpers'
 import { ActionType } from '@opencrvs/toolkit/events'
+import { formatV2ChildName } from '../birth/helpers'
+import { ensureAssigned, expectInUrl } from '../../utils'
 import { getRowByTitle } from '../print-certificate/birth/helpers'
-import { expectInUrl } from '../../utils'
 
-test.describe.serial('7 Validate Sent for approval tab', () => {
+test.describe
+  .serial('5(b) Validate "Pending registration"-workqueue for Registrar', () => {
   let page: Page
   let declaration: Declaration
   let eventId: string
 
   test.beforeAll(async ({ browser }) => {
     const token = await getToken(
-      CREDENTIALS.REGISTRATION_AGENT.USERNAME,
-      CREDENTIALS.REGISTRATION_AGENT.PASSWORD
+      CREDENTIALS.REGISTRATION_OFFICER.USERNAME,
+      CREDENTIALS.REGISTRATION_OFFICER.PASSWORD
     )
     const res = await createDeclaration(token, undefined, ActionType.DECLARE)
     declaration = res.declaration
@@ -29,29 +30,29 @@ test.describe.serial('7 Validate Sent for approval tab', () => {
     await page.close()
   })
 
-  test('7.0 Login', async () => {
-    await login(page, CREDENTIALS.REGISTRATION_AGENT)
+  test('5.0 Login', async () => {
+    await login(page, CREDENTIALS.REGISTRAR)
   })
 
-  test('7.1 Go to Sent for approval tab', async () => {
+  test('5.1 Go to "Pending registration"-workqueue', async () => {
     await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue.
-    await page.getByText('Sent for approval').click()
+    await page.getByText('Pending registration').click()
     await expect(
       page.getByRole('button', { name: formatV2ChildName(declaration) })
     ).toBeVisible()
     await expect(page.getByTestId('search-result')).toContainText(
-      'Sent for approval'
+      'Pending registration'
     )
   })
 
-  test('7.2 validate the list', async () => {
+  test('5.2 validate the list', async () => {
     const header = page.locator('div[class^="TableHeader"]')
     const columns = await header.locator(':scope > div').allInnerTexts()
     expect(columns).toStrictEqual([
       'Title',
       'Event',
       'Date of Event',
-      'Sent for approval',
+      'Registration requested',
       ''
     ])
 
@@ -63,12 +64,16 @@ test.describe.serial('7 Validate Sent for approval tab', () => {
     expect(cells.nth(2)).toHaveText(declaration['child.dob'].split('T')[0])
   })
 
-  test('7.4 Click a name', async () => {
+  test('5.4 Click a name', async () => {
     await page
       .getByRole('button', { name: formatV2ChildName(declaration) })
       .click()
 
-    // User should navigate to record audit page
-    await expectInUrl(page, `events/${eventId}?workqueue=sent-for-approval`)
+    await expectInUrl(page, `events/${eventId}?workqueue=pending-registration`)
+  })
+
+  test('5.5 Register action should be available for declared and validated record', async () => {
+    await ensureAssigned(page)
+    await validateActionMenuButton(page, 'Register', true)
   })
 })

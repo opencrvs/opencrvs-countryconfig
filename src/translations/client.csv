@@ -883,7 +883,7 @@ event.birth.custom.action.validate-declaration.audit-history-label,The label to 
 event.birth.custom.action.validate-declaration.field.comments.label,This is the label for the comments field for the validate declaration action,Comments,Commentaires
 event.birth.custom.action.validate-declaration.label,This is shown as the action name anywhere the user can trigger the action from,Validate declaration,Valider la déclaration
 event.birth.custom.action.validate-declaration.supportingCopy,This is the supporting copy for the Validate declaration -action,Validating this declaration confirms it meets all requirements and is eligible for registration.,La validation de cette déclaration confirme qu'elle répond à toutes les exigences et est éligible à l'enregistrement.
-event.birth.flag.pending-certified-copy-issuance,Flag label for pending certified copy issuance,Pending certified copy issuance,En attente de la délivrance d'une copie certifiée conforme
+event.birth.flag.pending-first-certificate-issuance,Pending first certificate issuance,Pending first certificate issuance,En attente de la délivrance d'une copie certifiée conforme
 event.birth.label,This is what this event is referred as in the system,Birth,Naissance
 event.birth.summary.child.dob.empty,Label for date of birth not available,No date of birth,Pas de date de naissance
 event.birth.summary.child.placeOfBirth.empty,Label for place of birth not available,No place of birth,Pas de lieu de naissance
@@ -2183,9 +2183,13 @@ userRole.communityLeader,Name for user role Community Leader,Community Leader,Le
 userRole.fieldAgent,Name for user role Field Agent,Field Agent,Agent de terrain
 userRole.healthcareWorker,Name for user role Healthcare Worker,Healthcare Worker,Personnel de santé
 userRole.hospitalClerk,Name for user role Hospital Clerk,Hospital Clerk,Commis d'hôpital
-userRole.localRegistrar,Name for user role Local Registrar,Local Registrar,Registraire local
 userRole.nationalAdministrator,Name for user role National Administrator,National Administrator,Administrateur national
 userRole.operationsManager,Name for user role Operations Manager,Operations Manager,Responsable des opérations
+userRole.localRegistrar,Name for user role Local Registrar,Registrar,Registraire
+userRole.localSystemAdmin,Name for user role Local System Admin,Local System Admin,Administrateur système local
+userRole.nationalRegistrar,Name for user role National Registrar,National Registrar,Registraire national
+userRole.nationalSystemAdmin,Name for user role National System Admin,National System Admin,Administrateur système national
+userRole.performanceManager,Name for user role Performance Manager,Performance Manager,Gestion des performances
 userRole.policeOfficer,Name for user role Police Officer,Police Officer,Officier de police
 userRole.provincialRegistrar,Name for user role Provincial Registrar,Provincial Registrar,Registraire provincial
 userRole.registrarGeneral, Name for user role Registrar General,Registrar General,Registraire général
@@ -2306,7 +2310,7 @@ workqueues.draft.title,Title of draft workqueue,My drafts,Mes brouillons
 workqueues.escalated.title,Title of escalated workqueue,Escalated,Transmis
 workqueues.outbox.title,Title of outbox workqueue,Outbox,Boîte d'envoi
 workqueues.pendingCertification.emptyMessage,Empty message for pending certification workqueue,No pending certification records,Aucun dossier de certification en attente
-workqueues.pendingCertification.title,Title of pending certification workqueue,Pending Certification,En attente de certification
+workqueues.pendingCertification.title,Title of pending certification workqueue,Pending certification,En attente de certification
 workqueues.pendingFeedback.title,Title of pending feedback workqueue,Pending feedback,En attente de révision
 workqueues.requiresApproval.title,Title of pending approval workqueue,Pending approval,En attente d'approbation
 workqueues.reviewRequested.title,Title of review requested workqueue,Review requested,Révision demandée

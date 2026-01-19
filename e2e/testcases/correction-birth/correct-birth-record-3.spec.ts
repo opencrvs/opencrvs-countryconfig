@@ -92,8 +92,8 @@ test.describe.serial(' Correct record - 3', () => {
 
   test('3.0 Shortcut declaration', async () => {
     const token = await getToken(
-      CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
-      CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+      CREDENTIALS.REGISTRAR.USERNAME,
+      CREDENTIALS.REGISTRAR.PASSWORD
     )
 
     const res = await createDeclarationV2(
@@ -153,7 +153,7 @@ test.describe.serial(' Correct record - 3', () => {
 
   test.describe('3.1 Print > Event overview', async () => {
     test('3.1.1 Print', async () => {
-      await login(page, CREDENTIALS.REGISTRATION_AGENT)
+      await login(page, CREDENTIALS.REGISTRATION_OFFICER)
 
       await auditRecord({
         page,
@@ -909,11 +909,6 @@ test.describe.serial(' Correct record - 3', () => {
       .click()
     await page.getByRole('button', { name: 'Confirm' }).click()
 
-    /*
-     * Expected result: should
-     * - be navigated to sent for approval tab
-     * - include the declaration in this tab
-     */
     expect(page.url().includes(`events/${eventId}`)).toBeTruthy()
 
     await page.getByTestId('exit-event').click()
@@ -932,7 +927,7 @@ test.describe.serial(' Correct record - 3', () => {
       }
     )
 
-    await page.getByRole('button', { name: 'Sent for approval' }).click()
+    await page.getByRole('button', { name: 'Recent' }).click()
     await expect(
       page.getByText(`${formatV2ChildName(declaration)}`).first()
     ).toBeVisible()
@@ -944,10 +939,10 @@ test.describe.serial(' Correct record - 3', () => {
 
       page = await browser.newPage()
 
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await login(page, CREDENTIALS.REGISTRAR)
     })
 
-    test('3.8.1 Record audit by local registrar', async () => {
+    test('3.8.1 Record audit by Registrar', async () => {
       await auditRecord({
         page,
         name: `${formatV2ChildName(declaration)}`,
@@ -1109,11 +1104,6 @@ test.describe.serial(' Correct record - 3', () => {
       await page.getByRole('button', { name: 'Approve', exact: true }).click()
       await page.getByRole('button', { name: 'Confirm', exact: true }).click()
 
-      /*
-       * Expected result: should
-       * - be navigated to ready to print tab
-       * - include the updated declaration in this tab
-       */
       expect(page.url().includes(`events/${eventId}`)).toBeTruthy()
     })
 

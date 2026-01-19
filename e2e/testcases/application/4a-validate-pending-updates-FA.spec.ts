@@ -10,7 +10,7 @@ import { getRowByTitle } from '../print-certificate/birth/helpers'
 import { faker } from '@faker-js/faker'
 
 test.describe
-  .serial('4(a) Validate Requires update tab for field agent', () => {
+  .serial('4(a) Validate "Pending updates"-workqueue for field agent', () => {
   let page: Page
   let declaration: Declaration
   let eventId: string
@@ -32,11 +32,11 @@ test.describe
   })
 
   test('4.0.1 Login', async () => {
-    await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+    await login(page, CREDENTIALS.REGISTRATION_OFFICER)
   })
 
   test('4.0.2 Navigate to record audit', async () => {
-    await page.getByText('Ready for review').click()
+    await page.getByText('Pending validation').click()
 
     await page
       .getByRole('button', { name: formatV2ChildName(declaration) })
@@ -51,15 +51,15 @@ test.describe
     await page.getByRole('button', { name: 'Send For Update' }).click()
   })
 
-  test('4.1 Go to Requires update tab', async () => {
+  test('4.1 Go to "Pending updates"-workqueue', async () => {
     await login(page, CREDENTIALS.FIELD_AGENT)
     await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue.
-    await page.getByText('Requires update').click()
+    await page.getByText('Pending updates').click()
     await expect(
       page.getByRole('button', { name: formatV2ChildName(declaration) })
     ).toBeVisible()
     await expect(page.getByTestId('search-result')).toContainText(
-      'Requires update'
+      'Pending updates'
     )
   })
 
@@ -70,7 +70,7 @@ test.describe
       'Title',
       'Event',
       'Date of Event',
-      'Sent for update',
+      'Update requested',
       ''
     ])
 
@@ -89,7 +89,7 @@ test.describe
       .click()
 
     // User should navigate to record audit page
-    await expectInUrl(page, `events/${eventId}?workqueue=requires-updates-self`)
+    await expectInUrl(page, `events/${eventId}?workqueue=pending-updates`)
   })
 
   test('4.5 Acting directly from workqueue should redirect to the same workqueue', async () => {
@@ -108,7 +108,7 @@ test.describe
 
     await selectDeclarationAction(page, 'Declare with edits')
 
-    // Should redirect back to requires update workqueue
-    await expect(page.locator('#content-name')).toHaveText('Requires updates')
+    // Should redirect back to "Pending updates"-workqueue
+    await expect(page.locator('#content-name')).toHaveText('Pending updates')
   })
 })

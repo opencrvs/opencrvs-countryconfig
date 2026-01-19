@@ -98,9 +98,9 @@ test.describe.serial('5. Birth declaration case - 5', () => {
     await page.close()
   })
 
-  test.describe('5.1 Declaration started by Local Registrar', async () => {
+  test.describe('5.1 Declaration started by Registrar', async () => {
     test.beforeAll(async () => {
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await login(page, CREDENTIALS.REGISTRAR)
       await page.click('#header-new-event')
       await page.getByLabel('Birth').click()
       await page.getByRole('button', { name: 'Continue' }).click()
@@ -516,7 +516,7 @@ test.describe.serial('5. Birth declaration case - 5', () => {
       await selectDeclarationAction(page, 'Register')
       await ensureOutboxIsEmpty(page)
 
-      await page.getByText('Ready to print').click()
+      await page.getByText('Pending certification').click()
 
       await expect(
         page.getByRole('button', {

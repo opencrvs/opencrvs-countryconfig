@@ -69,14 +69,10 @@ describe('Roles config', () => {
     expect(rolesWithCreateRecord.sort()).toEqual([
       'COMMUNITY_LEADER',
       'FIELD_AGENT',
-      'HEALTHCARE_WORKER',
       'HOSPITAL_CLERK',
-      'LOCAL_LEADER',
       'LOCAL_REGISTRAR',
       'NATIONAL_REGISTRAR',
-      'POLICE_OFFICER',
-      'REGISTRATION_AGENT',
-      'SOCIAL_WORKER'
+      'REGISTRATION_AGENT'
     ])
 
     const rolesWithWorkqueue = roles
@@ -89,15 +85,11 @@ describe('Roles config', () => {
     expect(rolesWithWorkqueue.sort()).toEqual([
       'COMMUNITY_LEADER',
       'FIELD_AGENT',
-      'HEALTHCARE_WORKER',
       'HOSPITAL_CLERK',
-      'LOCAL_LEADER',
       'LOCAL_REGISTRAR',
       'NATIONAL_REGISTRAR',
-      'POLICE_OFFICER',
       'PROVINCIAL_REGISTRAR',
-      'REGISTRATION_AGENT',
-      'SOCIAL_WORKER'
+      'REGISTRATION_AGENT'
     ])
   })
 })

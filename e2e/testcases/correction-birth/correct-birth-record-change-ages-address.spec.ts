@@ -38,8 +38,8 @@ test.describe.serial('Correct record - Change ages', () => {
 
   test('Shortcut declaration', async () => {
     let token = await getToken(
-      CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
-      CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+      CREDENTIALS.REGISTRAR.USERNAME,
+      CREDENTIALS.REGISTRAR.PASSWORD
     )
 
     const locations = await getAllLocations('ADMIN_STRUCTURE', token)
@@ -114,8 +114,8 @@ test.describe.serial('Correct record - Change ages', () => {
     declaration = res.declaration
   })
 
-  test('Login as Registration Agent', async () => {
-    await login(page, CREDENTIALS.REGISTRATION_AGENT)
+  test('Login as Registration Officer', async () => {
+    await login(page, CREDENTIALS.REGISTRATION_OFFICER)
   })
 
   test('Ready to correct record > record audit', async () => {
@@ -291,12 +291,12 @@ test.describe.serial('Correct record - Change ages', () => {
     await logout(page)
   })
 
-  test('Login as Local Registrar', async () => {
-    await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+  test('Login as Registrar', async () => {
+    await login(page, CREDENTIALS.REGISTRAR)
   })
 
-  test('Find the event in the "Ready for review" workflow', async () => {
-    await page.getByRole('button', { name: 'Ready for review' }).click()
+  test('Find the event in the "Pending corrections" workqueue', async () => {
+    await page.getByRole('button', { name: 'Pending corrections' }).click()
 
     await page
       .getByRole('button', { name: formatV2ChildName(declaration) })

@@ -15,7 +15,7 @@ test.describe('Save and delete drafts', () => {
     let page: Page
     test.beforeAll(async ({ browser }) => {
       page = await browser.newPage()
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await login(page, CREDENTIALS.REGISTRAR)
       await openBirthDeclaration(page)
     })
 
@@ -48,9 +48,9 @@ test.describe('Save and delete drafts', () => {
       ).not.toBeVisible()
     })
 
-    test('Login as local registrar', async () => {
+    test('Login as Registrar', async () => {
       await logout(page)
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR, true)
+      await login(page, CREDENTIALS.REGISTRAR, true)
     })
 
     test('Delete saved draft', async () => {
@@ -78,7 +78,7 @@ test.describe('Save and delete drafts', () => {
     let page: Page
     test.beforeAll(async ({ browser }) => {
       page = await browser.newPage()
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await login(page, CREDENTIALS.REGISTRAR)
       await openBirthDeclaration(page)
     })
     test('Exit without saving', async () => {
@@ -95,7 +95,6 @@ test.describe('Save and delete drafts', () => {
       await page.getByRole('button', { name: 'Confirm', exact: true }).click()
 
       await ensureOutboxIsEmpty(page)
-      await page.getByText('Ready for review').click()
       await page.getByRole('button', { name: 'Assigned to you' }).click()
 
       await expect(

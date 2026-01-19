@@ -12,8 +12,7 @@ import { CREDENTIALS } from '../../constants'
 import { ensureAssigned, ensureOutboxIsEmpty, selectAction } from '../../utils'
 import { createDeclaration } from '../test-data/birth-declaration-with-father-brother'
 
-test.describe
-  .serial('Escalation of birth registration by local registrar', () => {
+test.describe.serial('Escalation of birth registration by Registrar', () => {
   let page: Page
   let recordForRegistrarGenearal: Awaited<ReturnType<typeof createDeclaration>>
   let recordForProvincialRegistrar: Awaited<
@@ -35,8 +34,8 @@ test.describe
   test.beforeAll(async ({ browser }) => {
     page = await browser.newPage()
     const token = await getToken(
-      CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
-      CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+      CREDENTIALS.REGISTRAR.USERNAME,
+      CREDENTIALS.REGISTRAR.PASSWORD
     )
     recordForRegistrarGenearal = await createDeclaration(
       token,
@@ -60,7 +59,7 @@ test.describe
       'REGISTER',
       'HEALTH_FACILITY'
     )
-    await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+    await login(page, CREDENTIALS.REGISTRAR)
   })
 
   test.afterAll(async () => {
@@ -69,7 +68,7 @@ test.describe
 
   test.describe('Escalate to Provincial Registrar', async () => {
     test('Registrar assigns birth registration', async () => {
-      await page.getByText('Ready to print').click()
+      await page.getByText('Pending certification').click()
       await page
         .getByRole('button', { name: childNameForProvincialFormatted })
         .click()
@@ -220,7 +219,7 @@ test.describe
   test.describe('Audit review by LR', async () => {
     test.describe('Verify audit trail of Registrar General feedback action', () => {
       test('Navigate to the declaration review page', async () => {
-        await login(page, CREDENTIALS.LOCAL_REGISTRAR, true)
+        await login(page, CREDENTIALS.REGISTRAR, true)
         await searchFromSearchBar(page, childNameForRegGeneralFormatted)
       })
 

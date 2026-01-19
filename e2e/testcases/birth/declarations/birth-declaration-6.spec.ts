@@ -512,7 +512,7 @@ test.describe.serial('6. Birth declaration case - 6', () => {
 
       await ensureOutboxIsEmpty(page)
 
-      await page.getByText('Ready to print').click()
+      await page.getByText('Pending certification').click()
 
       await expect(
         page.getByRole('button', {

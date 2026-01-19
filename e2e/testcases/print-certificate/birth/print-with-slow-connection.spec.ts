@@ -22,8 +22,8 @@ test.describe
 
   test.beforeAll(async ({ browser }) => {
     const token = await getToken(
-      CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
-      CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+      CREDENTIALS.REGISTRAR.USERNAME,
+      CREDENTIALS.REGISTRAR.PASSWORD
     )
     const res = await createDeclaration(token)
     declaration = res.declaration
@@ -40,7 +40,7 @@ test.describe
   })
 
   test('Navigate to certificate print action', async () => {
-    await page.getByRole('button', { name: 'Ready to print' }).click()
+    await page.getByRole('button', { name: 'Pending certification' }).click()
     await navigateToCertificatePrintAction(page, declaration)
   })
 
@@ -73,6 +73,6 @@ test.describe
     // Check that the popup URL contains PDF content
     await expect(popup.url()).toBe('about:blank')
     await expect(download.suggestedFilename()).toMatch(/^.*\.pdf$/)
-    await expectInUrl(page, `/workqueue/ready-to-print`)
+    await expectInUrl(page, `/workqueue/pending-certification`)
   })
 })

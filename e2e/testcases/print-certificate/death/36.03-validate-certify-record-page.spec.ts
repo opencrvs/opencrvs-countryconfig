@@ -19,8 +19,8 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
 
   test.beforeAll(async ({ browser }) => {
     const token = await getToken(
-      CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
-      CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+      CREDENTIALS.REGISTRAR.USERNAME,
+      CREDENTIALS.REGISTRAR.PASSWORD
     )
     const res = await createDeclaration(token)
     eventId = res.eventId
@@ -37,7 +37,7 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
   })
 
   test('3.0.2 Navigate to certificate print action', async () => {
-    await page.getByRole('button', { name: 'Ready to print' }).click()
+    await page.getByRole('button', { name: 'Pending certification' }).click()
     await navigateToCertificatePrintAction(page, declaration)
   })
 

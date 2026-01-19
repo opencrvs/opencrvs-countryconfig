@@ -27,8 +27,8 @@ test.describe.serial('Request and accept correction (offline)', () => {
 
   test('Shortcut declaration', async () => {
     let token = await getToken(
-      CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
-      CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+      CREDENTIALS.REGISTRAR.USERNAME,
+      CREDENTIALS.REGISTRAR.PASSWORD
     )
 
     const res = await createDeclarationV2(
@@ -86,9 +86,9 @@ test.describe.serial('Request and accept correction (offline)', () => {
     declaration = res.declaration
   })
 
-  test.describe('Request correction as Registration Agent', () => {
-    test('Login as Registration Agent', async () => {
-      await login(page, CREDENTIALS.REGISTRATION_AGENT)
+  test.describe('Request correction as RO', () => {
+    test('Login as RO', async () => {
+      await login(page, CREDENTIALS.REGISTRATION_OFFICER)
     })
 
     test('Navigate to record correction', async () => {
@@ -181,9 +181,9 @@ test.describe.serial('Request and accept correction (offline)', () => {
     })
   })
 
-  test.describe('Accept correction as Local Registrar (offline)', () => {
-    test('Login as Local Registrar', async () => {
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+  test.describe('Accept correction as Registrar (offline)', () => {
+    test('Login as Registrar', async () => {
+      await login(page, CREDENTIALS.REGISTRAR)
     })
 
     test('Navigate to correction review', async () => {
