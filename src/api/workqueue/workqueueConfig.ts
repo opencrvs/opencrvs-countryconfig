@@ -240,11 +240,7 @@ export const Workqueues = defineWorkqueues([
       defaultMessage: 'Pending feedback',
       description: 'Title of pending feedback workqueue'
     },
-    query: {
-      flags: {
-        anyOf: ['escalated-to-registrar-general']
-      }
-    },
+    query: { flags: { anyOf: ['escalated-to-registrar-general'] } },
     columns: [
       DATE_OF_EVENT_COLUMN,
       {
