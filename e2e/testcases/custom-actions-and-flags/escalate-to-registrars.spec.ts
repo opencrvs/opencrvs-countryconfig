@@ -14,10 +14,6 @@ import { createDeclaration } from '../test-data/birth-declaration-with-father-br
 
 test.describe.serial('Escalation of birth registration by Registrar', () => {
   let page: Page
-  let recordForRegistrarGenearal: Awaited<ReturnType<typeof createDeclaration>>
-  let recordForProvincialRegistrar: Awaited<
-    ReturnType<typeof createDeclaration>
-  >
   const childNameForRegGeneral = {
     firstNames: faker.person.firstName('female'),
     familyName: faker.person.lastName('female')
@@ -37,7 +33,7 @@ test.describe.serial('Escalation of birth registration by Registrar', () => {
       CREDENTIALS.REGISTRAR.USERNAME,
       CREDENTIALS.REGISTRAR.PASSWORD
     )
-    recordForRegistrarGenearal = await createDeclaration(
+    await createDeclaration(
       token,
       {
         'child.name': {
@@ -48,7 +44,7 @@ test.describe.serial('Escalation of birth registration by Registrar', () => {
       'REGISTER',
       'HEALTH_FACILITY'
     )
-    recordForProvincialRegistrar = await createDeclaration(
+    await createDeclaration(
       token,
       {
         'child.name': {
@@ -144,7 +140,7 @@ test.describe.serial('Escalation of birth registration by Registrar', () => {
 
   test.describe('Verify Escalated Status by Registrar General', () => {
     test('Verify Registrar General Escalated Status', async () => {
-      await login(page, CREDENTIALS.NATIONAL_REGISTRAR)
+      await login(page, CREDENTIALS.REGISTRAR_GENERAL)
       await page.getByText('Pending feedback').click()
       await page
         .getByRole('button', { name: childNameForRegGeneralFormatted })

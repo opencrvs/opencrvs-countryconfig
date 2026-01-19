@@ -39,7 +39,7 @@ test.describe('Save and delete drafts', () => {
 
     test('Saved draft is not visible to other users', async () => {
       await logout(page)
-      await login(page, CREDENTIALS.NATIONAL_REGISTRAR)
+      await login(page, CREDENTIALS.REGISTRAR_GENERAL)
 
       await page.getByText('My drafts').click()
 
