@@ -1,7 +1,11 @@
 import { v4 as uuidv4 } from 'uuid'
 import { GATEWAY_HOST } from '../../constants'
 import { faker } from '@faker-js/faker'
-import { getAllLocations, getLocationIdByName } from '../birth/helpers'
+import {
+  getLocations,
+  getIdByName,
+  getAdministrativeAreas
+} from '../birth/helpers'
 import { createClient } from '@opencrvs/toolkit/api'
 import {
   ActionDocument,
@@ -41,11 +45,8 @@ async function getPlaceOfBirth(
   token: string
 ) {
   if (type === 'HEALTH_FACILITY') {
-    const locations = await getAllLocations('HEALTH_FACILITY', token)
-    const locationId = getLocationIdByName(
-      locations,
-      'Ibombo Rural Health Centre'
-    )
+    const locations = await getLocations('HEALTH_FACILITY', token)
+    const locationId = getIdByName(locations, 'Ibombo Rural Health Centre')
 
     return {
       'child.placeOfBirth': 'HEALTH_FACILITY',
@@ -54,12 +55,8 @@ async function getPlaceOfBirth(
   }
 
   if (type === 'PRIVATE_HOME') {
-    const locations = await getAllLocations('ADMIN_STRUCTURE', token)
-    const district = getLocationIdByName(locations, 'Ibombo')
-
-    if (!district) {
-      throw new Error('District not found')
-    }
+    const administrativeAreas = await getAdministrativeAreas(token)
+    const district = getIdByName(administrativeAreas, 'Ibombo')
 
     return {
       'child.placeOfBirth': 'PRIVATE_HOME',
@@ -86,9 +83,9 @@ export async function getDeclaration({
   placeOfBirthType?: 'PRIVATE_HOME' | 'HEALTH_FACILITY'
   token: string
 }) {
-  const locations = await getAllLocations('ADMIN_STRUCTURE', token)
-  const province = getLocationIdByName(locations, 'Central')
-  const district = getLocationIdByName(locations, 'Ibombo')
+  const administrativeAreas = await getAdministrativeAreas(token)
+  const province = getIdByName(administrativeAreas, 'Central')
+  const district = getIdByName(administrativeAreas, 'Ibombo')
 
   if (!province || !district) {
     throw new Error('Province or district not found')

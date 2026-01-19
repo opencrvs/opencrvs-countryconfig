@@ -1,7 +1,11 @@
 import { v4 as uuidv4 } from 'uuid'
 import { GATEWAY_HOST } from '../../constants'
 import { faker } from '@faker-js/faker'
-import { getAllLocations, getLocationIdByName } from '../birth/helpers'
+import {
+  getLocations,
+  getIdByName,
+  getAdministrativeAreas
+} from '../birth/helpers'
 import { createClient } from '@opencrvs/toolkit/api'
 import {
   ActionDocument,
@@ -17,11 +21,8 @@ async function getPlaceOfDeath(
   token: string
 ) {
   if (type === 'HEALTH_FACILITY') {
-    const locations = await getAllLocations('HEALTH_FACILITY', token)
-    const locationId = getLocationIdByName(
-      locations,
-      'Ibombo Rural Health Centre'
-    )
+    const locations = await getLocations('HEALTH_FACILITY', token)
+    const locationId = getIdByName(locations, 'Ibombo Rural Health Centre')
 
     return {
       'deceased.deathLocation': locationId
@@ -29,13 +30,9 @@ async function getPlaceOfDeath(
   }
 
   if (type === 'DECEASED_USUAL_RESIDENCE') {
-    const locations = await getAllLocations('ADMIN_STRUCTURE', token)
-    const province = getLocationIdByName(locations, 'Central')
-    const district = getLocationIdByName(locations, 'Ibombo')
-
-    if (!province || !district) {
-      throw new Error('Province or district not found')
-    }
+    const administrativeAreas = await getAdministrativeAreas(token)
+    const province = getIdByName(administrativeAreas, 'Central')
+    const district = getIdByName(administrativeAreas, 'Ibombo')
 
     return {
       'deceased.address': {
@@ -60,13 +57,9 @@ export async function getDeclaration({
   placeOfDeathType?: 'DECEASED_USUAL_RESIDENCE' | 'HEALTH_FACILITY'
   token: string
 }) {
-  const locations = await getAllLocations('ADMIN_STRUCTURE', token)
-  const province = getLocationIdByName(locations, 'Central')
-  const district = getLocationIdByName(locations, 'Ibombo')
-
-  if (!province || !district) {
-    throw new Error('Province or district not found')
-  }
+  const administrativeAreas = await getAdministrativeAreas(token)
+  const province = getIdByName(administrativeAreas, 'Central')
+  const district = getIdByName(administrativeAreas, 'Ibombo')
 
   const mockDeclaration = {
     'spouse.dob': '1975-02-18',

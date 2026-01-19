@@ -13,9 +13,9 @@ import {
   getPlaceOfBirth
 } from '../test-data/birth-declaration'
 import { CREDENTIALS } from '../../constants'
-import { formatV2ChildName } from '../birth/helpers'
+import { formatV2ChildName, getAdministrativeAreas } from '../birth/helpers'
 import { ensureAssigned, selectAction } from '../../utils'
-import { getAllLocations, getLocationIdByName } from '../birth/helpers'
+import { getIdByName } from '../birth/helpers'
 import { AddressType } from '@opencrvs/toolkit/events'
 
 test.describe.serial('Correct record - Change ages', () => {
@@ -42,9 +42,9 @@ test.describe.serial('Correct record - Change ages', () => {
       CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
     )
 
-    const locations = await getAllLocations('ADMIN_STRUCTURE', token)
-    const province = getLocationIdByName(locations, 'Central')
-    const district = getLocationIdByName(locations, 'Ibombo')
+    const administrativeAreas = await getAdministrativeAreas(token)
+    const province = getIdByName(administrativeAreas, 'Central')
+    const district = getIdByName(administrativeAreas, 'Ibombo')
 
     if (!province || !district) {
       throw new Error('Province or district not found')

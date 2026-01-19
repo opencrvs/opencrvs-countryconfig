@@ -37,7 +37,12 @@ import {
 
 import { getToken, readToken, updateToken } from './auth'
 import { getRandomFromBrackets, log } from './util'
-import { getLocations, getFacilities, Location, Facility } from './location'
+import {
+  getAdministrativeAreas,
+  getFacilities,
+  Location,
+  Facility
+} from './location'
 
 import { getLocationMetrics } from './statistics'
 import { User, createUsers } from './users'
@@ -173,7 +178,7 @@ async function main() {
 
   log('Got token for system administrator')
   log('Fetching locations')
-  const locations = await getLocations()
+  const locations = await getAdministrativeAreas()
   const facilities = await getFacilities()
   const crvsOffices = facilities.filter(
     ({ type }: Location) => type === 'CRVS_OFFICE'
