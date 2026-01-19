@@ -77,7 +77,8 @@ export const roles: Role[] = [
       'record.declared.review-duplicates[event=birth|death|tennis-club-membership]',
       'record.registered.print-certified-copies[event=birth|death|tennis-club-membership]',
       'record.registered.request-correction[event=birth|death|tennis-club-membership]',
-      'record.custom-action[event=birth|death,customActionType=VALIDATE_DECLARATION]'
+      'record.custom-action[event=birth,customActionType=VALIDATE_DECLARATION|ISSUE_CERTIFIED_COPY]',
+      'record.custom-action[event=death,customActionType=VALIDATE_DECLARATION]'
     ]
   },
   {
