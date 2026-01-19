@@ -139,10 +139,7 @@ export const Workqueues = defineWorkqueues([
       defaultMessage: 'Pending updates',
       description: 'Title of pending updates workqueue'
     },
-    query: {
-      ...declaredInMyAdminArea,
-      flags: { anyOf: [InherentFlags.REJECTED] }
-    },
+    query: { flags: { anyOf: [InherentFlags.REJECTED] } },
     actions: [{ type: 'DEFAULT', conditionals: [] }],
     columns: [
       DATE_OF_EVENT_COLUMN,
