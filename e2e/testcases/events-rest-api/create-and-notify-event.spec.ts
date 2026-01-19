@@ -583,7 +583,7 @@ test.describe('Events REST API', () => {
       const body = await response.json()
 
       expect(response.status).toBe(400)
-      expect(body.message).toBe('createdAtLocation must be an office location')
+      expect(body.message).toBe('createdAtLocation must be a valid location id')
     })
 
     test('HTTP 200 with valid payload', async ({ page }) => {
