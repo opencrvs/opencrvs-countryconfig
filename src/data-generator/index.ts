@@ -178,7 +178,7 @@ async function main() {
 
   log('Got token for system administrator')
   log('Fetching locations')
-  const locations = await getAdministrativeAreas()
+  const administrativeAreas = await getAdministrativeAreas()
   const facilities = await getFacilities()
   const crvsOffices = facilities.filter(
     ({ type }: Location) => type === 'CRVS_OFFICE'
@@ -188,7 +188,7 @@ async function main() {
     ({ type }: Facility) => type === 'HEALTH_FACILITY'
   )
 
-  log('Found', locations.length, 'locations')
+  log('Found', administrativeAreas.length, 'administrative areas')
 
   /*
    *
@@ -200,22 +200,22 @@ async function main() {
     log('Generating data for year', y)
     /*
      *
-     * Loop through all locations
+     * Loop through all administrative areas
      *
      */
 
-    for (const location of locations) {
+    for (const administrativeArea of administrativeAreas) {
       log('Fetching already generated interval')
       const generatedInterval = await fetchAlreadyGeneratedInterval(
         registrarToken,
-        location.id
+        administrativeArea.id
       )
 
       if (generatedInterval.length === 0) {
-        log('No events have been generated for this location')
+        log('No events have been generated for this administrative area')
       } else {
         log(
-          'Events already exist for this location between',
+          'Events already exist for this administrative area between',
           generatedInterval[0],
           '-',
           generatedInterval[1]
@@ -227,11 +227,17 @@ async function main() {
        * Create required users & authorization tokens
        *
        */
-      log('Creating users for', location.name, '(', location.id, ')')
+      log(
+        'Creating users for',
+        administrativeArea.name,
+        '(',
+        administrativeArea.id,
+        ')'
+      )
 
       const users = await createUsers(
         localSYSAdminToken,
-        location,
+        administrativeArea,
         countryAlpha3,
         config.config.PHONE_NUMBER_PATTERN,
         {
@@ -268,7 +274,7 @@ async function main() {
       const estimations = await getEstimates(
         randomRegistrar,
         y,
-        location,
+        administrativeArea,
         isCurrentYear,
         days
       )
@@ -281,7 +287,7 @@ async function main() {
         days.splice(currentDayNumber - 1)
       }
 
-      log('Creating declarations for', location.name, 'estimates', {
+      log('Creating declarations for', administrativeArea.name, 'estimates', {
         births: birthRates,
         death: totalDeathsThisYear
       })
@@ -359,7 +365,7 @@ async function main() {
             deathDeclarationWorkflow(
               deathDeclarers,
               submissionDate,
-              location,
+              administrativeArea,
               deathsToday,
               users,
               healthFacilities,
@@ -407,7 +413,7 @@ async function main() {
               submissionDate,
               crvsOffices,
               healthFacilities,
-              location,
+              administrativeArea,
               totalChildBirths,
               completionDays,
               config,
@@ -432,7 +438,7 @@ async function main() {
       const newEstimates = await getEstimates(
         randomRegistrar,
         y,
-        location,
+        administrativeArea,
         isCurrentYear,
         Array.from({ length: getDaysInYear(y) }).map(() => 0)
       )
@@ -489,7 +495,7 @@ async function main() {
             randomSubmissionDate,
             crvsOffices,
             healthFacilities,
-            location,
+            administrativeArea,
             delta,
             completionDays,
             config,
@@ -546,7 +552,7 @@ async function main() {
           deathDeclarationWorkflow(
             deathDeclarers,
             submissionDate,
-            location,
+            administrativeArea,
             deathDelta,
             users,
             healthFacilities,

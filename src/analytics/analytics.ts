@@ -21,6 +21,7 @@ import {
   ActionStatus,
   ActionType,
   AddressFieldValue,
+  AdministrativeArea,
   EventConfig,
   EventDocument,
   EventState,
@@ -262,6 +263,45 @@ export async function importEvent(event: EventDocument, trx: Kysely<any>) {
   logger.info(`Event with id "${event.id}" logged into analytics`)
 }
 
+export async function importAdministrativeAreas(
+  administrativeAreas: AdministrativeArea[]
+) {
+  const client = getClient()
+  await client.transaction().execute(async (trx) => {
+    for (const [index, batch] of chunk(
+      administrativeAreas,
+      INSERT_MAX_CHUNK_SIZE
+    ).entries()) {
+      logger.info(
+        `Importing ${Math.min((index + 1) * INSERT_MAX_CHUNK_SIZE, administrativeAreas.length)}/${administrativeAreas.length} administrative areas`
+      )
+
+      await trx
+        .insertInto('analytics.administrative_areas')
+        .values(
+          batch.map((l) => ({
+            id: l.id,
+            name: l.name,
+            parentId: l.parentId
+          }))
+        )
+        .onConflict((oc) =>
+          oc
+            .column('id')
+            .doUpdateSet(
+              (
+                eb: ExpressionBuilder<any, 'analytics.administrative_areas'>
+              ) => ({
+                name: eb.ref('excluded.name'),
+                parentId: eb.ref('excluded.parentId')
+              })
+            )
+        )
+        .execute()
+    }
+  })
+}
+
 export async function importLocations(locations: Location[]) {
   const client = getClient()
   await client.transaction().execute(async (trx) => {
@@ -279,7 +319,7 @@ export async function importLocations(locations: Location[]) {
           batch.map((l) => ({
             id: l.id,
             name: l.name,
-            parentId: l.parentId,
+            administrativeAreaId: l.administrativeAreaId,
             locationType: l.locationType
           }))
         )
