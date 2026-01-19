@@ -277,7 +277,7 @@ export async function importAdministrativeAreas(
       )
 
       await trx
-        .insertInto('analytics.administrative_areas')
+        .insertInto('analytics.administrativeAreas')
         .values(
           batch.map((l) => ({
             id: l.id,
@@ -290,7 +290,7 @@ export async function importAdministrativeAreas(
             .column('id')
             .doUpdateSet(
               (
-                eb: ExpressionBuilder<any, 'analytics.administrative_areas'>
+                eb: ExpressionBuilder<any, 'analytics.administrativeAreas'>
               ) => ({
                 name: eb.ref('excluded.name'),
                 parentId: eb.ref('excluded.parentId')
