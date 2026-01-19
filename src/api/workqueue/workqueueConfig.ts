@@ -17,6 +17,13 @@ const DATE_OF_EVENT_COLUMN = {
   value: event.field('dateOfEvent')
 }
 
+const createdInMyAdminArea = {
+  createdAtLocation: {
+    type: 'within',
+    location: user('primaryOfficeId')
+  }
+} as const
+
 const declaredInMyAdminArea = {
   ['legalStatuses.DECLARED.createdAtLocation']: {
     type: 'within',
@@ -139,7 +146,10 @@ export const Workqueues = defineWorkqueues([
       defaultMessage: 'Pending updates',
       description: 'Title of pending updates workqueue'
     },
-    query: { flags: { anyOf: [InherentFlags.REJECTED] } },
+    query: {
+      ...createdInMyAdminArea,
+      flags: { anyOf: [InherentFlags.REJECTED] }
+    },
     actions: [{ type: 'DEFAULT', conditionals: [] }],
     columns: [
       DATE_OF_EVENT_COLUMN,
@@ -242,7 +252,7 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of escalated workqueue'
     },
     query: {
-      ...declaredInMyAdminArea,
+      ...createdInMyAdminArea,
       flags: {
         anyOf: [
           'escalated-to-registrar-general',
@@ -260,10 +270,7 @@ export const Workqueues = defineWorkqueues([
       defaultMessage: 'Pending feedback',
       description: 'Title of pending feedback workqueue'
     },
-    query: {
-      ...declaredInMyAdminArea,
-      flags: { anyOf: ['escalated-to-registrar-general'] }
-    },
+    query: { flags: { anyOf: ['escalated-to-registrar-general'] } },
     columns: [
       DATE_OF_EVENT_COLUMN,
       {
@@ -285,10 +292,7 @@ export const Workqueues = defineWorkqueues([
       defaultMessage: 'Pending feedback',
       description: 'Title of pending feedback workqueue'
     },
-    query: {
-      ...declaredInMyAdminArea,
-      flags: { anyOf: ['escalated-to-provincial-registrar'] }
-    },
+    query: { flags: { anyOf: ['escalated-to-provincial-registrar'] } },
     columns: [
       DATE_OF_EVENT_COLUMN,
       {
