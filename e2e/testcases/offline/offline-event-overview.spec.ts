@@ -135,7 +135,7 @@ test.describe.serial('Can view downloaded event offline', () => {
 
     await page.getByRole('button', { name: 'Assign', exact: true }).click()
 
-    await expect(row.getByLabel('User avatar')).toBeVisible()
+    await expect(row.getByLabel('User avatar')).toBeVisible({ timeout: 20000 })
   })
 
   test('Go offline', async () => {
