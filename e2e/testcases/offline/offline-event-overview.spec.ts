@@ -139,6 +139,7 @@ test.describe.serial('Can view downloaded event offline', () => {
   })
 
   test('Go offline', async () => {
+    await page.waitForTimeout(5000) // wait for the record to be assigned
     await mockNetworkConditions(page, 'offline')
   })
 
