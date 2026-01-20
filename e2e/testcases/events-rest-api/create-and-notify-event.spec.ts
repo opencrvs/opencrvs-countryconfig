@@ -489,7 +489,7 @@ test.describe('Events REST API', () => {
 
       expect(response.status).toBe(400)
       expect(body.message).toBe(
-        'createdAtLocation is required and must be a valid office id'
+        'createdAtLocation is required and must be a valid location id'
       )
     })
 
