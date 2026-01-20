@@ -15,7 +15,7 @@ const testCases = [
     hasSearch: true
   },
   {
-    credential: CREDENTIALS.NATIONAL_REGISTRAR,
+    credential: CREDENTIALS.REGISTRAR_GENERAL,
     hasSearch: true
   },
   {

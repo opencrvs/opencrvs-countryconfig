@@ -54,7 +54,7 @@ export const CREDENTIALS = {
     USERNAME: 'k.mweene',
     PASSWORD: TEST_USER_PASSWORD
   },
-  NATIONAL_REGISTRAR: {
+  REGISTRAR_GENERAL: {
     USERNAME: 'j.musonda',
     PASSWORD: TEST_USER_PASSWORD
   },
