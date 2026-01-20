@@ -9,7 +9,7 @@ import {
 import { CREDENTIALS } from '../../constants'
 import { faker } from '@faker-js/faker'
 import { getRowByTitle } from '../print-certificate/birth/helpers'
-import { ensureOutboxIsEmpty } from '../../utils'
+import { ensureOutboxIsEmpty, selectAction } from '../../utils'
 
 test.describe.serial('1: Validate my draft tab', () => {
   let page: Page
@@ -82,12 +82,12 @@ test.describe.serial('1: Validate my draft tab', () => {
 
     await getRowByTitle(page, formatName(name))
       .getByRole('button', {
-        name: 'Declare'
+        name: 'Review'
       })
       .click()
 
+    await selectAction(page, 'Review')
     await goToSection(page, 'review')
-
     await selectDeclarationAction(page, 'Notify')
 
     await ensureOutboxIsEmpty(page)

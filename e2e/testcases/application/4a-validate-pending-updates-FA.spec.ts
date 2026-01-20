@@ -98,7 +98,8 @@ test.describe
 
     const row = getRowByTitle(page, formatV2ChildName(declaration))
 
-    await row.getByRole('button', { name: 'Edit' }).click()
+    await row.getByRole('button', { name: 'Review' }).click()
+    await selectAction(page, 'Edit')
 
     await page.getByTestId('change-button-child.name').click()
     await page
