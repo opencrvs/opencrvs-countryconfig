@@ -48,7 +48,7 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of assigned to you workqueue'
     },
     query: { assignedTo: { type: 'exact', term: user('id') } },
-    actions: [{ type: 'DEFAULT', conditionals: [] }]
+    actions: [{ type: ActionType.READ }]
   },
   {
     slug: 'recent',
@@ -62,7 +62,7 @@ export const Workqueues = defineWorkqueues([
       updatedBy: { type: 'exact', term: user('id') },
       updatedAt: { type: 'timePeriod', term: 'last7Days' }
     },
-    actions: [{ type: 'DEFAULT', conditionals: [] }],
+    actions: [{ type: ActionType.READ }],
     emptyMessage: {
       id: 'workqueues.recent.emptyMessage',
       defaultMessage: 'No recent records',
@@ -84,7 +84,7 @@ export const Workqueues = defineWorkqueues([
       },
       updatedAtLocation: { type: 'within', location: user('primaryOfficeId') }
     },
-    actions: [{ type: 'DEFAULT', conditionals: [] }],
+    actions: [{ type: ActionType.READ }],
     emptyMessage: {
       id: 'workqueues.notifications.emptyMessage',
       defaultMessage: 'No notifications',
@@ -110,7 +110,7 @@ export const Workqueues = defineWorkqueues([
         ]
       }
     },
-    actions: [{ type: 'DEFAULT', conditionals: [] }],
+    actions: [{ type: ActionType.READ }],
     columns: [
       DATE_OF_EVENT_COLUMN,
       {
@@ -136,7 +136,7 @@ export const Workqueues = defineWorkqueues([
       ...declaredInMyAdminArea,
       flags: { anyOf: [InherentFlags.POTENTIAL_DUPLICATE] }
     },
-    actions: [{ type: 'DEFAULT', conditionals: [] }]
+    actions: [{ type: ActionType.READ }]
   },
   {
     slug: 'pending-updates',
@@ -150,7 +150,7 @@ export const Workqueues = defineWorkqueues([
       ...createdInMyAdminArea,
       flags: { anyOf: [InherentFlags.REJECTED] }
     },
-    actions: [{ type: 'DEFAULT', conditionals: [] }],
+    actions: [{ type: ActionType.READ }],
     columns: [
       DATE_OF_EVENT_COLUMN,
       {
@@ -188,7 +188,7 @@ export const Workqueues = defineWorkqueues([
       status: { type: 'exact', term: EventStatus.enum.DECLARED },
       flags: { anyOf: ['approval-required-for-late-registration'] }
     },
-    actions: [{ type: 'DEFAULT', conditionals: [] }]
+    actions: [{ type: ActionType.READ }]
   },
   {
     slug: 'pending-registration',
@@ -206,7 +206,7 @@ export const Workqueues = defineWorkqueues([
         noneOf: ['approval-required-for-late-registration']
       }
     },
-    actions: [{ type: 'DEFAULT', conditionals: [] }],
+    actions: [{ type: ActionType.READ }],
     columns: [
       DATE_OF_EVENT_COLUMN,
       {
@@ -229,7 +229,7 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of pending registration workqueue'
     },
     query: { status: { type: 'exact', term: EventStatus.enum.DECLARED } },
-    actions: [{ type: 'DEFAULT', conditionals: [] }],
+    actions: [{ type: ActionType.READ }],
     columns: [
       DATE_OF_EVENT_COLUMN,
       {
@@ -260,7 +260,7 @@ export const Workqueues = defineWorkqueues([
         ]
       }
     },
-    actions: [{ type: 'DEFAULT', conditionals: [] }]
+    actions: [{ type: ActionType.READ }]
   },
   {
     slug: 'pending-feedback-registrar-general',
@@ -282,7 +282,7 @@ export const Workqueues = defineWorkqueues([
         value: event.field('updatedAt')
       }
     ],
-    actions: [{ type: 'DEFAULT', conditionals: [] }]
+    actions: [{ type: ActionType.READ }]
   },
   {
     slug: 'pending-feedback-provincinal-registrar',
@@ -304,7 +304,7 @@ export const Workqueues = defineWorkqueues([
         value: event.field('updatedAt')
       }
     ],
-    actions: [{ type: 'DEFAULT', conditionals: [] }]
+    actions: [{ type: ActionType.READ }]
   },
   {
     slug: 'in-external-validation',
@@ -322,7 +322,7 @@ export const Workqueues = defineWorkqueues([
       },
       updatedAtLocation: { type: 'within', location: user('primaryOfficeId') }
     },
-    actions: [{ type: 'DEFAULT', conditionals: [] }]
+    actions: [{ type: ActionType.READ }]
   },
   {
     slug: 'pending-certification',
@@ -342,7 +342,7 @@ export const Workqueues = defineWorkqueues([
         noneOf: ['revoked']
       }
     },
-    actions: [{ type: 'DEFAULT', conditionals: [] }],
+    actions: [{ type: ActionType.PRINT_CERTIFICATE }],
     emptyMessage: {
       id: 'workqueues.pendingCertification.emptyMessage',
       defaultMessage: 'No pending certification records',
@@ -375,7 +375,7 @@ export const Workqueues = defineWorkqueues([
         noneOf: ['revoked']
       }
     },
-    actions: [{ type: 'DEFAULT', conditionals: [] }],
+    actions: [{ type: ActionType.READ }],
     emptyMessage: {
       id: 'workqueues.pendingCertification.emptyMessage',
       defaultMessage: 'No pending certification records',
@@ -397,6 +397,6 @@ export const Workqueues = defineWorkqueues([
         noneOf: ['revoked']
       }
     },
-    actions: [{ type: 'DEFAULT', conditionals: [] }]
+    actions: [{ type: ActionType.READ }]
   }
 ])
