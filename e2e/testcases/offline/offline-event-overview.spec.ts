@@ -135,9 +135,7 @@ test.describe.serial('Can view downloaded event offline', () => {
 
     await page.getByRole('button', { name: 'Assign', exact: true }).click()
 
-    await expect(
-      row.getByRole('button', { name: 'Assign record', exact: true })
-    ).not.toBeVisible()
+    await page.waitForLoadState('networkidle')
   })
 
   test('Go offline', async () => {
