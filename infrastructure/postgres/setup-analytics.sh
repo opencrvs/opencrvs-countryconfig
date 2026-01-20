@@ -58,7 +58,7 @@ CREATE SCHEMA IF NOT EXISTS analytics;
 CREATE TABLE IF NOT EXISTS analytics.administrative_areas (
   id TEXT PRIMARY KEY,
   name text NOT NULL,
-  parent_id TEXT REFERENCES analytics.administrative_areas(id),
+  parent_id TEXT REFERENCES analytics.administrative_areas(id)
 );
 
 CREATE TABLE IF NOT EXISTS analytics.locations (

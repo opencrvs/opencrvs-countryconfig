@@ -329,7 +329,7 @@ export async function importLocations(locations: Location[]) {
             .doUpdateSet(
               (eb: ExpressionBuilder<any, 'analytics.locations'>) => ({
                 name: eb.ref('excluded.name'),
-                parentId: eb.ref('excluded.parentId'),
+                administrativeAreaId: eb.ref('excluded.administrativeAreaId'),
                 locationType: eb.ref('excluded.locationType')
               })
             )
