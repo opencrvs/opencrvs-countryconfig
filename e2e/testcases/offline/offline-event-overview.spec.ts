@@ -135,11 +135,10 @@ test.describe.serial('Can view downloaded event offline', () => {
 
     await page.getByRole('button', { name: 'Assign', exact: true }).click()
 
-    await page.waitForLoadState('networkidle')
+    await expect(row.getByLabel('User avatar')).toBeVisible()
   })
 
   test('Go offline', async () => {
-    await page.waitForTimeout(5000) // wait for the record to be assigned
     await mockNetworkConditions(page, 'offline')
   })
 
