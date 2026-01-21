@@ -17,7 +17,7 @@ test.describe('Side menu navigation', () => {
     await login(page, CREDENTIALS.REGISTRAR)
 
     const expectedWorkqueues = [
-      'My drafts',
+      'Drafts',
       'Assigned to you',
       'Recent',
       'Notifications',
@@ -26,7 +26,7 @@ test.describe('Side menu navigation', () => {
       'Pending approval',
       'Pending registration',
       'Escalated',
-      'In external validation',
+      'Pending external validation',
       'Pending certification',
       'Pending issuance'
     ]
@@ -71,7 +71,7 @@ test.describe('Side menu navigation', () => {
     await login(page, CREDENTIALS.REGISTRATION_OFFICER)
 
     const expectedWorkqueues = [
-      'My drafts',
+      'Drafts',
       'Assigned to you',
       'Recent',
       'Notifications',
@@ -79,7 +79,7 @@ test.describe('Side menu navigation', () => {
       'Pending updates',
       'Pending approval',
       'Escalated',
-      'In external validation',
+      'Pending external validation',
       'Pending certification',
       'Pending issuance'
     ]
@@ -133,7 +133,7 @@ test.describe('Side menu navigation', () => {
     // Should not have any workqueues, check that none of the workqueues are present
     const registrationAgentWorkqueues = [
       'Outbox',
-      'My drafts',
+      'Drafts',
       'Assigned to you',
       'Recent',
       'Notifications',
@@ -141,7 +141,7 @@ test.describe('Side menu navigation', () => {
       'Pending updates',
       'Pending approval',
       'Escalated',
-      'In external validation',
+      'Pending external validation',
       'Pending certification',
       'Pending issuance'
     ]

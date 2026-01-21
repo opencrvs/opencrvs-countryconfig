@@ -9,7 +9,7 @@ import { isMobile } from './mobile-helpers'
 
 type Workqueue =
   | 'Outbox'
-  | 'My drafts'
+  | 'Drafts'
   | 'Assigned to you'
   | 'Recent'
   | 'Notifications'
@@ -18,7 +18,7 @@ type Workqueue =
   | 'Pending approval'
   | 'Escalated'
   | 'Pending registration'
-  | 'In external validation'
+  | 'Pending external validation'
   | 'Pending certification'
   | 'Pending issuance'
   | 'Pending corrections'
@@ -147,7 +147,7 @@ export async function ensureInExternalValidationIsEmpty(page: Page) {
 
   await expect(
     page.locator('#navigation_workqueue_in-external-validation')
-  ).toHaveText('In external validation', {
+  ).toHaveText('Pending external validation', {
     timeout: SAFE_IN_EXTERNAL_VALIDATION_MS
   })
 }

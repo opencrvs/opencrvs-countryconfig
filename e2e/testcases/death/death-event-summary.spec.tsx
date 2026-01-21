@@ -144,7 +144,7 @@ test.describe.serial('Death event summary', () => {
     await selectDeclarationAction(page, 'Save & Exit', false)
     await page.getByText('Confirm', { exact: true }).click()
 
-    await page.getByRole('button', { name: 'My drafts' }).click()
+    await page.getByRole('button', { name: 'Drafts' }).click()
 
     await page
       .getByRole('button', {

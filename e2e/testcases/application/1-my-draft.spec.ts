@@ -28,7 +28,7 @@ test.describe.serial('1: Validate my draft tab', () => {
 
   test('1.1 Record does not appear in draft ', async () => {
     await login(page, CREDENTIALS.FIELD_AGENT)
-    await page.getByRole('button', { name: 'My drafts' }).click()
+    await page.getByRole('button', { name: 'Drafts' }).click()
 
     await expect(page.getByTestId('search-result')).not.toContainText(
       formatName(name)
@@ -51,7 +51,7 @@ test.describe.serial('1: Validate my draft tab', () => {
   test('1.3 Record appears in draft ', async () => {
     await ensureOutboxIsEmpty(page)
 
-    await page.getByRole('button', { name: 'My drafts' }).click()
+    await page.getByRole('button', { name: 'Drafts' }).click()
 
     await expect(page.getByTestId('search-result')).toContainText(
       formatName(name)
@@ -60,7 +60,7 @@ test.describe.serial('1: Validate my draft tab', () => {
 
   test('1.4 Record does not appear in draft for other user: RO', async () => {
     await login(page, CREDENTIALS.REGISTRATION_OFFICER)
-    await page.getByRole('button', { name: 'My drafts' }).click()
+    await page.getByRole('button', { name: 'Drafts' }).click()
 
     await expect(page.getByTestId('search-result')).not.toContainText(
       formatName(name)
@@ -69,7 +69,7 @@ test.describe.serial('1: Validate my draft tab', () => {
 
   test('1.5 Record does not appear in draft for other user: LR ', async () => {
     await login(page, CREDENTIALS.REGISTRAR)
-    await page.getByRole('button', { name: 'My drafts' }).click()
+    await page.getByRole('button', { name: 'Drafts' }).click()
 
     await expect(page.getByTestId('search-result')).not.toContainText(
       formatName(name)
@@ -78,7 +78,7 @@ test.describe.serial('1: Validate my draft tab', () => {
 
   test('1.6 Record does not appear in draft after notifying ', async () => {
     await login(page, CREDENTIALS.FIELD_AGENT, true)
-    await page.getByRole('button', { name: 'My drafts' }).click()
+    await page.getByRole('button', { name: 'Drafts' }).click()
 
     await getRowByTitle(page, formatName(name))
       .getByRole('button', {
@@ -92,7 +92,7 @@ test.describe.serial('1: Validate my draft tab', () => {
 
     await ensureOutboxIsEmpty(page)
 
-    await expect(page.getByTestId('search-result')).toContainText('My drafts')
+    await expect(page.getByTestId('search-result')).toContainText('Drafts')
     await expect(page.getByTestId('search-result')).not.toContainText(
       formatName(name)
     )

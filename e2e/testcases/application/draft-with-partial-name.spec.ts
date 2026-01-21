@@ -24,7 +24,7 @@ test.describe.serial('Validate draft with partial name', () => {
 
   test('Record does not appear in draft ', async () => {
     await login(page, CREDENTIALS.FIELD_AGENT)
-    await page.getByRole('button', { name: 'My drafts' }).click()
+    await page.getByRole('button', { name: 'Drafts' }).click()
 
     await expect(page.getByTestId('search-result')).not.toContainText(
       formatName(name1)
@@ -61,7 +61,7 @@ test.describe.serial('Validate draft with partial name', () => {
   })
 
   test('Records appear in draft ', async () => {
-    await page.getByRole('button', { name: 'My drafts' }).click()
+    await page.getByRole('button', { name: 'Drafts' }).click()
 
     await expect(page.getByTestId('search-result')).toContainText(
       formatName(name1)
@@ -73,7 +73,7 @@ test.describe.serial('Validate draft with partial name', () => {
 
   test('Records do not appear in draft for other user: RO', async () => {
     await login(page, CREDENTIALS.REGISTRATION_OFFICER)
-    await page.getByRole('button', { name: 'My drafts' }).click()
+    await page.getByRole('button', { name: 'Drafts' }).click()
 
     await expect(page.getByTestId('search-result')).not.toContainText(
       formatName(name1)
@@ -85,7 +85,7 @@ test.describe.serial('Validate draft with partial name', () => {
 
   test('Records do not appear in draft for other user: LR ', async () => {
     await login(page, CREDENTIALS.REGISTRAR)
-    await page.getByRole('button', { name: 'My drafts' }).click()
+    await page.getByRole('button', { name: 'Drafts' }).click()
 
     await expect(page.getByTestId('search-result')).not.toContainText(
       formatName(name1)

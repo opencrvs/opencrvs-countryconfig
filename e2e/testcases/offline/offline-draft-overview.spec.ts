@@ -44,8 +44,8 @@ test.describe.serial('Can Open Draft offline', () => {
 
   test('Open the draft offline', async () => {
     await mockNetworkConditions(page, 'offline')
-    await page.getByRole('button', { name: 'My drafts' }).click()
-    await expect(page.locator('#content-name')).toHaveText('My drafts')
+    await page.getByRole('button', { name: 'Drafts' }).click()
+    await expect(page.locator('#content-name')).toHaveText('Drafts')
     await page.getByRole('button', { name: formatName(name) }).click()
     await expect(page.locator('#content-name')).toHaveText(formatName(name))
   })
