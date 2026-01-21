@@ -311,8 +311,8 @@ export const Workqueues = defineWorkqueues([
     icon: 'FileText',
     name: {
       id: 'workqueues.inExternalValidation.title',
-      defaultMessage: 'In external validation',
-      description: 'Title of in external validation workqueue'
+      defaultMessage: 'Pending external validation',
+      description: 'Title of pending external validation workqueue'
     },
     query: {
       flags: {
