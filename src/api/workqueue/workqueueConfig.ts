@@ -384,7 +384,7 @@ export const Workqueues = defineWorkqueues([
   },
   {
     slug: 'correction-requested',
-    icon: 'FileText',
+    icon: 'FilePlus',
     name: {
       id: 'workqueues.correctionRequested.title',
       defaultMessage: 'Pending corrections',

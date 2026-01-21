@@ -2010,7 +2010,7 @@ search.labels.results.eventRegistrationNumber,Label for event registration numbe
 search.loadingDeclarations,The text when loading declaration,Loading declarations...,Chargement des déclarations...
 search.locationNotFound,Label for location not found,Location Not Found,Emplacement non trouvé
 search.noDeclarations,The text when there is no declaration to review,No declarations to review,Aucune déclaration à examiner
-search.noRecord,The no record text,"No records {slug, select, draft {in drafts} outbox {require processing} other {{title}}}","Aucun enregistrement {slug, select, draft {dans mes brouillons} outbox {à traiter} other {{title}}}"
+search.noRecord,The no record text,"No records {slug, select, draft {in drafts} outbox {require processing} other {{title}}}","Aucun enregistrement {slug, select, draft {dans brouillons} outbox {à traiter} other {{title}}}"
 search.noResult,The no result text,No result,Pas de résultats”
 search.noResultFor,The no result text,No results for ”{param}”,Aucun résultat pour “{param}”
 search.noResultForSearchTerm,The no result text,No results for “{searchTerm}”,Pas de résultats pour “{searchTerm}”
@@ -2306,14 +2306,27 @@ views.qrReader.tutorial.distance,Distance tutorial,Hold the device steadily 6-12
 views.qrReader.tutorial.lightBalance,Light balance tutorial,Ensure the QR code is well-lit and not damaged or blurry.,Assurez-vous que le code QR est bien éclairé et non endommagé ou flou.
 workqueue.late-registration-approval.column.approval-requested,This is the label for the pending approval workqueue column,Approval requested,Approbation demandée
 workqueue.ready-to-print.column.registered,This is the label for the workqueue column,Registered,Enregistré
+workqueues.assignedToYou.title,Title of assigned to you workqueue,Assigned to you,Attribué à vous
+workqueues.correctionRequested.title,Title of correction requested workqueue,Pending corrections,Corrections en attente
 workqueues.dateOfEvent,Label for workqueue column: dateOfEvent,Date of Event,Date de l'événement
 workqueues.draft.title,Title of draft workqueue,Drafts,Brouillons
 workqueues.escalated.title,Title of escalated workqueue,Escalated,Transmis
+workqueues.escalated.title,Title of escalated workqueue,Escalated,Escalade
+workqueues.inExternalValidation.title,Title of pending external validation workqueue,Pending external validation,En attente de validation externe
+workqueues.notifications.title,Title of notifications workqueue,Notifications,Notifications
 workqueues.outbox.title,Title of outbox workqueue,Outbox,Boîte d'envoi
 workqueues.pendingCertification.emptyMessage,Empty message for pending certification workqueue,No pending certification records,Aucun dossier de certification en attente
-workqueues.pendingCertification.title,Title of pending certification workqueue,Pending certification,En attente de certification
+workqueues.pendingCertification.title,Title of pending certification workqueue,Pending certification,Certification en attente
 workqueues.pendingFeedback.title,Title of pending feedback workqueue,Pending feedback,En attente de révision
+workqueues.pendingFeedback.title,Title of pending feedback workqueue,Pending feedback,En attente de commentaires
+workqueues.pendingIssuance.title,Title of pending issuance workqueue,Pending issuance,En attente d'émission
+workqueues.pendingRegistration.title,Title of pending registration workqueue,Pending registration,Inscription en attente
+workqueues.pendingUpdates.title,Title of pending updates workqueue,Pending updates,Mises à jour en attente
+workqueues.pendingValidation.title,Title of pending validation workqueue,Pending validation,En attente de validation
+workqueues.potentialDuplicate.title,Title of potential duplicate workqueue,Potential duplicate,Duplicata potentiel
+workqueues.recent.title,Title of recent workqueue,Recent,Récent
 workqueues.requiresApproval.title,Title of pending approval workqueue,Pending approval,En attente d'approbation
+workqueues.requiresApproval.title,Title of Pending approval workqueue,Pending approval,En attente d'approbation
 workqueues.reviewRequested.title,Title of review requested workqueue,Review requested,Révision demandée
 wq.noRecords.CREATED,No records messages for empty draft tab,No records in progress,Aucun enregistrement en cours
 wq.noRecords.DECLARED,No records messages for ready for review tab,No records ready for review,Aucun document prêt à être examiné
