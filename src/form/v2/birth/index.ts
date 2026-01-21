@@ -843,10 +843,10 @@ export const birthEvent = defineConfig({
         id: 'event.birth.action.register.label'
       },
       supportingCopy: {
-        id: 'review.register.description.complete',
+        id: 'event.birth.action.register.supportingCopy',
         description: 'Confirmation text for the register action',
         defaultMessage:
-          "By clicking 'Confirm', you confirm that the information entered is correct and the event can be registered."
+          'Registering this birth event will create an official civil registration record. Please ensure all details are correct before proceeding.'
       },
       flags: [
         { id: 'validated', operation: 'remove' },
