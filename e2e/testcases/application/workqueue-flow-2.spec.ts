@@ -154,7 +154,7 @@ test.describe.serial('2. Workqueue flow - 2', () => {
         name: formatName(declaration.child.name),
         workqueues: [
           { title: 'Outbox', exists: false },
-          { title: 'My drafts', exists: false },
+          { title: 'Drafts', exists: false },
           { title: 'Assigned to you', exists: false },
           { title: 'Recent', exists: false },
           { title: 'Notifications', exists: true },
@@ -163,7 +163,7 @@ test.describe.serial('2. Workqueue flow - 2', () => {
           { title: 'Pending approval', exists: false },
           { title: 'Pending registration', exists: false },
           { title: 'Escalated', exists: false },
-          { title: 'In external validation', exists: false },
+          { title: 'Pending external validation', exists: false },
           { title: 'Pending certification', exists: false },
           { title: 'Pending issuance', exists: false }
         ]
@@ -275,7 +275,7 @@ test.describe.serial('2. Workqueue flow - 2', () => {
         name: formatName(declaration.child.name),
         workqueues: [
           { title: 'Outbox', exists: false },
-          { title: 'My drafts', exists: false },
+          { title: 'Drafts', exists: false },
           { title: 'Assigned to you', exists: false },
           { title: 'Recent', exists: true },
           { title: 'Notifications', exists: false },
@@ -284,7 +284,7 @@ test.describe.serial('2. Workqueue flow - 2', () => {
           { title: 'Pending approval', exists: false },
           { title: 'Pending registration', exists: false },
           { title: 'Escalated', exists: false },
-          { title: 'In external validation', exists: false },
+          { title: 'Pending external validation', exists: false },
           { title: 'Pending certification', exists: true },
           { title: 'Pending issuance', exists: false }
         ]
@@ -320,7 +320,7 @@ test.describe.serial('2. Workqueue flow - 2', () => {
         { title: 'Pending updates', exists: false },
         { title: 'Pending approval', exists: false },
         { title: 'Escalated', exists: false },
-        { title: 'In external validation', exists: false },
+        { title: 'Pending external validation', exists: false },
         { title: 'Pending certification', exists: true },
         { title: 'Pending issuance', exists: false }
       ]
