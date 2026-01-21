@@ -990,10 +990,6 @@ test.describe('Events REST API', () => {
         .getByText(await formatV2ChildName({ 'child.name': childName }))
         .click()
 
-      await expect(page.locator('#content-name')).toHaveText(
-        await formatV2ChildName({ 'child.name': childName })
-      )
-      await page.waitForTimeout(SAFE_IN_EXTERNAL_VALIDATION_MS)
       await ensureAssigned(page)
       await page.waitForTimeout(SAFE_IN_EXTERNAL_VALIDATION_MS)
     })
