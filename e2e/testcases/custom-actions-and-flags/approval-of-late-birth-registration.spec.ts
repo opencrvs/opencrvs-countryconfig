@@ -207,7 +207,7 @@ test.describe.serial('Approval of late birth registration', () => {
       await selectAction(page, 'Approve declaration')
       await expect(
         page.getByText(
-          'This birth has been registered late. You are now approving it for further validation and registration.'
+          'Approving this declaration confirms it as legally accepted and eligible for registration.'
         )
       ).toBeVisible()
 
