@@ -803,7 +803,7 @@ event.action.declare.form.section.person.field.age.error,Error message for inval
 event.action.notAvailableForEvent,Shown when user tries to perform an action that is not available for the event,The action you're trying to perform is not available for this event anymore,L'action que vous essayez d'effectuer n'est plus disponible pour cet événement
 event.action.outbox-retry.label,Label for retry button for outbox,Retry,Réessayer
 event.action.review-correction.label,Label for review correction button in dropdown menu,Review correction request,Revoir la demande de correction
-event.birth.action.approve.confirmationText,This is the confirmation text for the approve action,This birth has been registered late. You are now approving it for further validation and registration.,Cette naissance a été enregistrée en retard. Vous l'approuvez maintenant pour une validation et un enregistrement supplémentaires.
+event.birth.action.approve.confirmationText,This is the confirmation text for the approve action,Approving this declaration confirms it as legally accepted and eligible for registration.,L'approbation de cette déclaration confirme qu'elle est légalement acceptée et éligible à l'enregistrement.
 event.birth.action.approve.label,This is shown as the action name anywhere the user can trigger the action from,Approve declaration,Approuver la déclaration
 event.birth.action.archive.label,Label for archive record button in dropdown menu,Archive,Aarchiver
 event.birth.action.certificate.form.section.collectPayment.data.label,Title for the data section,Payment details,Détails du paiement
@@ -873,6 +873,7 @@ event.birth.action.issued.audit-history-label,The label to show in audit history
 event.birth.action.mark-as-duplicate.label,Label for review potential duplicate button in dropdown menu,Review,Revoir
 event.birth.action.provincial-registrar-feedback.label,This is shown when the provincial registrar feedback can be triggered from the action from,Provincial registrar feedback,Retour du registraire provincial
 event.birth.action.register.label,Label for review record button in dropdown menu,Register,Enregistrer
+event.birth.action.register.supportingCopy,The description for registration action when form is complete,Registering this birth event will create an official civil registration record. Please ensure all details are correct before proceeding.,L'enregistrement de cet événement de naissance créera un dossier officiel d'état civil. Veuillez vous assurer que tous les détails sont corrects avant de continuer.
 event.birth.action.registrar-general-feedback.label,This is shown when the registrar general feedback can be triggered from the action from,Registrar general feedback,Retour du registraire général
 event.birth.action.reject.label,This is the label for the reject action,Reject,Rejeter
 event.birth.action.request-correction.label,This is shown as the action name anywhere the user can trigger the action from,Correct record,Enregistrement correct
@@ -1054,6 +1055,7 @@ event.death.action.form.section.relationshipToDeceased.label,This is the label f
 event.death.action.form.section.signedAffidavit.fileName,This is the label for the file name,Signed Affidavit,Déclaration signée
 event.death.action.form.section.signedAffidavit.label,This is the label for uploading a signed affidavit,Signed Affidavit (Optional),Déclaration signée (Optionnel)
 event.death.action.register.label,This is shown as the action name anywhere the user can trigger the action from,Register,Enregistrer
+event.death.action.register.supportingCopy,The description for registration action when form is complete,Registering this death event will create an official civil registration record. Please ensure all details are correct before proceeding.,L'enregistrement de cet événement de décès créera un dossier officiel d'état civil. Veuillez vous assurer que tous les détails sont corrects avant de continuer.
 event.death.action.request-correction.label,This is shown as the action name anywhere the user can trigger the action from,Correct record,Corriger l'enregistrement
 event.death.action.validate.label,This is shown as the action name anywhere the user can trigger the action from,Validate,Valider
 event.death.label,This is what this event is referred as in the system,Death,Décès
@@ -1977,7 +1979,6 @@ review.modal.desc.submitConfirmation,Submit description text on modal,"{complete
 review.modal.title.registerConfirmation,Title for register confirmation modal,Register event?,Enregistrer l'événement?
 review.modal.title.submitConfirmation,Submit title text on modal,"{completeDeclaration, select, true {Send for review?} other {Send for review?}}","{completeDeclaration, select, true {Envoyer la déclaration pour examen?} other {Envoyer une déclaration incomplète?}}"
 review.register.confirmModal.title,The title for review action modal when registering,Register the {event}?,Enregistrer cet {event}?
-review.register.description.complete,The description for registration action when form is complete,"By clicking 'Confirm', you confirm that the information entered is correct and the event can be registered.","En cliquant sur enregistrer, vous confirmez que les informations saisies sont correctes et que l'événement peut être enregistré."
 review.rej.form.reasons.missSupDoc,Label for rejection option missing supporting doc,Missing supporting documents,Documents justificatifs manquants
 review.rejection.form,Rejection form name,Rejection form,Formulaire de rejet
 review.rejection.form.commentLabel,,Comments,Commentaires ou instructions à l'intention de l'agent de santé pour rectifier la déclaration
