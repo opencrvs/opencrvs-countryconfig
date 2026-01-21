@@ -2317,7 +2317,6 @@ workqueues.notifications.title,Title of notifications workqueue,Notifications,No
 workqueues.outbox.title,Title of outbox workqueue,Outbox,Boîte d'envoi
 workqueues.pendingCertification.emptyMessage,Empty message for pending certification workqueue,No pending certification records,Aucun dossier de certification en attente
 workqueues.pendingCertification.title,Title of pending certification workqueue,Pending certification,Certification en attente
-workqueues.pendingFeedback.title,Title of pending feedback workqueue,Pending feedback,En attente de révision
 workqueues.pendingFeedback.title,Title of pending feedback workqueue,Pending feedback,En attente de commentaires
 workqueues.pendingIssuance.title,Title of pending issuance workqueue,Pending issuance,En attente d'émission
 workqueues.pendingRegistration.title,Title of pending registration workqueue,Pending registration,Inscription en attente
