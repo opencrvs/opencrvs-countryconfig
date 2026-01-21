@@ -86,7 +86,7 @@ test.describe.serial('1: Validate my draft tab', () => {
       })
       .click()
 
-    await selectAction(page, 'Review')
+    await selectAction(page, 'Declare')
     await goToSection(page, 'review')
     await selectDeclarationAction(page, 'Notify')
 
