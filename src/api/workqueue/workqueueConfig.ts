@@ -311,8 +311,8 @@ export const Workqueues = defineWorkqueues([
     icon: 'FileText',
     name: {
       id: 'workqueues.inExternalValidation.title',
-      defaultMessage: 'In external validation',
-      description: 'Title of in external validation workqueue'
+      defaultMessage: 'Pending external validation',
+      description: 'Title of pending external validation workqueue'
     },
     query: {
       flags: {
@@ -384,7 +384,7 @@ export const Workqueues = defineWorkqueues([
   },
   {
     slug: 'correction-requested',
-    icon: 'FileText',
+    icon: 'FilePlus',
     name: {
       id: 'workqueues.correctionRequested.title',
       defaultMessage: 'Pending corrections',
