@@ -147,7 +147,7 @@ test.describe.serial('5. Workqueue flow - 5', () => {
       await login(page, CREDENTIALS.REGISTRATION_OFFICER)
     })
 
-    test('Review & Reject', async () => {
+    test('Reject', async () => {
       await page.getByText('Notifications').click()
       await page
         .getByRole('button', {
@@ -155,8 +155,7 @@ test.describe.serial('5. Workqueue flow - 5', () => {
         })
         .click()
 
-      await selectAction(page, 'Review')
-      await selectDeclarationAction(page, 'Reject', false)
+      await selectAction(page, 'Reject')
       await page.getByTestId('reject-reason').fill(faker.lorem.sentence())
       await page.getByRole('button', { name: 'Send For Update' }).click()
     })
@@ -198,7 +197,7 @@ test.describe.serial('5. Workqueue flow - 5', () => {
         ]
       })
     })
-    test('Go to edit', async () => {
+    test('Go to Edit', async () => {
       await assignFromWorkqueue(page, childName)
 
       await getRowByTitle(page, childName)
@@ -266,7 +265,7 @@ test.describe.serial('5. Workqueue flow - 5', () => {
       })
     })
 
-    test('Go to Review', async () => {
+    test('Go to Edit', async () => {
       await page.getByText('Notifications').click()
       await page
         .getByRole('button', {
@@ -274,7 +273,7 @@ test.describe.serial('5. Workqueue flow - 5', () => {
         })
         .click()
 
-      await selectAction(page, 'Review')
+      await selectAction(page, 'Edit')
     })
 
     test('Fill missing details', async () => {
@@ -282,8 +281,6 @@ test.describe.serial('5. Workqueue flow - 5', () => {
         .getByTestId('accordion-Accordion_mother')
         .getByRole('button', { name: 'Change all' })
         .click()
-
-      await page.getByRole('button', { name: 'Continue' }).click()
 
       await page.locator('#firstname').fill(declaration.mother.name.firstNames)
       await page.locator('#surname').fill(declaration.mother.name.familyName)
@@ -345,19 +342,8 @@ test.describe.serial('5. Workqueue flow - 5', () => {
       await page.locator('#father____addressSameAs_YES').click()
     })
 
-    test('Fill up informant comment & signature', async () => {
-      await continueForm(page, 'Back to review')
-      await page.locator('#review____comment').fill(faker.lorem.sentence())
-      await page.getByRole('button', { name: 'Sign', exact: true }).click()
-      await drawSignature(page, 'review____signature_canvas_element', false)
-      await page
-        .locator('#review____signature_modal')
-        .getByRole('button', { name: 'Apply' })
-        .click()
-    })
-
-    test('Declare', async () => {
-      await selectDeclarationAction(page, 'Declare')
+    test('Declare with edits', async () => {
+      await selectDeclarationAction(page, 'Declare with edits')
     })
   })
 
