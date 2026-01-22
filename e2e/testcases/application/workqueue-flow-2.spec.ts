@@ -170,7 +170,7 @@ test.describe.serial('2. Workqueue flow - 2', () => {
       })
     })
 
-    test('2.2.2 Review', async () => {
+    test('2.2.2 Go to Edit', async () => {
       await page.getByText('Notifications').click()
       await page
         .getByRole('button', {
@@ -178,15 +178,14 @@ test.describe.serial('2. Workqueue flow - 2', () => {
         })
         .click()
 
-      await selectAction(page, 'Review')
+      await selectAction(page, 'Edit')
 
       await page
         .getByTestId('accordion-Accordion_informant')
         .getByRole('button', { name: 'Change all' })
         .click()
-
-      await page.getByRole('button', { name: 'Continue' }).click()
     })
+
     test('2.2.3 Fill informant details', async () => {
       await page.locator('#informant____relation').click()
       await page
@@ -263,9 +262,9 @@ test.describe.serial('2. Workqueue flow - 2', () => {
       await page.locator('#father____addressSameAs_YES').click()
     })
 
-    test('2.2.6 Register', async () => {
+    test('2.2.6 Register with edits', async () => {
       await goToSection(page, 'review')
-      await selectDeclarationAction(page, 'Register')
+      await selectDeclarationAction(page, 'Register with edits')
 
       await ensureOutboxIsEmpty(page)
       await ensureInExternalValidationIsEmpty(page)
