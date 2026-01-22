@@ -781,6 +781,7 @@ duplicates.warning,The warning message shown when a declaration has potential du
 email.label.confirmation,Confirmation email address message,A verification code has been sent to {email},Un code de vérification a été envoyé à {email}
 error.child.weightAtBirth.invalidNumberRange,This is the error message for invalid number range,Must be within 0 and 6,Doit être compris entre 0 et 6
 error.code,Error code,401,401
+error.pdf,PDF load Error,Failed to load PDF,Échec du chargement du PDF
 error.draftFailed,Tips for failed declarations,This is some messaging on advicing the user on what to do... in the event of a failed declaration.,Il s'agit d'un message indiquant à l'utilisateur ce qu'il doit faire... en cas d'échec de la déclaration.
 error.invalidInput,Error message when generic field is invalid,Invalid input,Entrée invalide
 error.invalidName,This is the error message for invalid name,"Input contains invalid characters. Please use only letters (a-z, A-Z), numbers (0-9), hyphens (-) and apostrophes(')","L'entrée contient des caractères non valides. Veuillez n'utiliser que des lettres (a-z, A-Z), des chiffres (0-9), des traits d'union (-) et des apostrophes (')"
