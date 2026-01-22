@@ -340,6 +340,7 @@ test.describe.serial('5. Workqueue flow - 5', () => {
         .click()
 
       await page.locator('#father____addressSameAs_YES').click()
+      await continueForm(page, 'Back to review')
     })
 
     test('Declare with edits', async () => {
