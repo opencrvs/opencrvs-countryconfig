@@ -380,7 +380,7 @@ test.describe.serial('5. Workqueue flow - 5', () => {
         .getByRole('button', { name: 'Review' })
         .click()
 
-      await selectDeclarationAction(page, 'Reject', false)
+      await selectAction(page, 'Reject')
 
       await page.getByTestId('reject-reason').fill(faker.lorem.sentence())
 

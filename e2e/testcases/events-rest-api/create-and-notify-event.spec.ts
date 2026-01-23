@@ -809,8 +809,8 @@ test.describe('Events REST API', () => {
         .click()
     })
 
-    test('Review event', async () => {
-      await selectAction(page, 'Review')
+    test('Edit event', async () => {
+      await selectAction(page, 'Edit')
 
       await expect(page.getByTestId('row-value-child.name')).toHaveText(
         formatV2ChildName({ 'child.name': childName })
@@ -820,12 +820,11 @@ test.describe('Events REST API', () => {
         REQUIRED_VALIDATION_ERROR
       )
 
-      await validateActionMenuButton(page, 'Register', false)
+      await validateActionMenuButton(page, 'Register with edits', false)
     })
 
     test('Fill missing child dob field', async () => {
       await page.getByTestId('change-button-child.dob').click()
-      await page.getByRole('button', { name: 'Continue' }).click()
 
       const yesterday = new Date()
       yesterday.setDate(new Date().getDate() - 1)
@@ -861,7 +860,7 @@ test.describe('Events REST API', () => {
     })
 
     test('Register event', async () => {
-      await selectDeclarationAction(page, 'Register')
+      await selectDeclarationAction(page, 'Register with edits')
     })
 
     test("Navigate to event via 'Pending certification' -workqueue", async () => {
@@ -972,12 +971,8 @@ test.describe('Events REST API', () => {
         .click()
     })
 
-    test('Review event', async () => {
-      await selectAction(page, 'Review')
-    })
-
     test('Reject event', async () => {
-      await selectDeclarationAction(page, 'Reject', false)
+      await selectAction(page, 'Reject')
       await page.getByTestId('reject-reason').fill(faker.lorem.sentence())
       await page.getByRole('button', { name: 'Send For Update' }).click()
     })
