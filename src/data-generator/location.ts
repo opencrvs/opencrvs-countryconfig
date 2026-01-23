@@ -21,7 +21,7 @@ export type Facility = {
   partOf: string
 }
 
-export async function getLocations() {
+export async function getAdministrativeAreas() {
   const url = `${GATEWAY_HOST}/location?type=ADMIN_STRUCTURE&_count=0`
 
   const res = await fetch(url, {

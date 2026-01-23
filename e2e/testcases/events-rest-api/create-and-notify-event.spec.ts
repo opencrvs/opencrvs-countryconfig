@@ -20,7 +20,11 @@ import {
 import { addDays, format, subDays } from 'date-fns'
 import { faker } from '@faker-js/faker'
 import { ensureAssigned, expectInUrl, selectAction } from '../../utils'
-import { getAllLocations } from '../birth/helpers'
+import {
+  getAdministrativeAreas,
+  getIdByName,
+  getLocations
+} from '../birth/helpers'
 
 import decode from 'jwt-decode'
 import { formatV2ChildName, REQUIRED_VALIDATION_ERROR } from '../birth/helpers'
@@ -241,7 +245,7 @@ test.describe('Events REST API', () => {
     let healthFacilityId: string
 
     test.beforeAll(async () => {
-      const healthFacilities = await getAllLocations(
+      const healthFacilities = await getLocations(
         'HEALTH_FACILITY',
         clientToken
       )
@@ -485,7 +489,7 @@ test.describe('Events REST API', () => {
 
       expect(response.status).toBe(400)
       expect(body.message).toBe(
-        'createdAtLocation is required and must be a valid office id'
+        'createdAtLocation is required and must be a valid location id'
       )
     })
 
@@ -553,14 +557,8 @@ test.describe('Events REST API', () => {
         familyName: faker.person.lastName()
       }
 
-      const locations = await getAllLocations('ADMIN_STRUCTURE', clientToken)
-      const centralLocation = locations.find(
-        (location) => location.name === 'Central'
-      )
-
-      if (!centralLocation) {
-        throw new Error('No central location found')
-      }
+      const administrativeAreas = await getAdministrativeAreas(clientToken)
+      const centralId = getIdByName(administrativeAreas, 'Central')
 
       const response = await fetchClientAPI(
         '/api/events/events/notifications',
@@ -578,14 +576,14 @@ test.describe('Events REST API', () => {
             'child.dob': format(subDays(new Date(), 1), 'yyyy-MM-dd')
           },
           annotation: {},
-          createdAtLocation: centralLocation.id
+          createdAtLocation: centralId
         }
       )
 
       const body = await response.json()
 
       expect(response.status).toBe(400)
-      expect(body.message).toBe('createdAtLocation must be an office location')
+      expect(body.message).toBe('createdAtLocation must be a valid location id')
     })
 
     test('HTTP 200 with valid payload', async ({ page }) => {
