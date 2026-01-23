@@ -756,7 +756,8 @@ export const birthEvent = defineConfig({
           type: ConditionalType.SHOW,
           conditional: and(
             status('REGISTERED'),
-            not(flag(InherentFlags.CORRECTION_REQUESTED))
+            not(flag(InherentFlags.CORRECTION_REQUESTED)),
+            not(flag('revoked'))
           )
         }
       ],

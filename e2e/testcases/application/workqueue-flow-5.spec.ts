@@ -201,8 +201,10 @@ test.describe.serial('5. Workqueue flow - 5', () => {
       await assignFromWorkqueue(page, childName)
 
       await getRowByTitle(page, childName)
-        .getByRole('button', { name: 'Edit' })
+        .getByRole('button', { name: 'Review' })
         .click()
+
+      await selectAction(page, 'Edit')
     })
 
     test('Fill informant details', async () => {
@@ -433,8 +435,10 @@ test.describe.serial('5. Workqueue flow - 5', () => {
       await page.getByText('Pending updates').click()
       await assignFromWorkqueue(page, childName)
       await getRowByTitle(page, childName)
-        .getByRole('button', { name: 'Edit' })
+        .getByRole('button', { name: 'Review' })
         .click()
+
+      await selectAction(page, 'Edit')
     })
 
     test('Change informant email', async () => {
