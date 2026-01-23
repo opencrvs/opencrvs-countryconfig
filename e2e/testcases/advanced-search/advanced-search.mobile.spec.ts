@@ -3,7 +3,7 @@ import { getToken, login } from '../../helpers'
 import { createDeclaration } from '../test-data/birth-declaration-with-father-brother'
 import { CREDENTIALS } from '../../constants'
 import { faker } from '@faker-js/faker'
-import { getAllLocations, getLocationIdByName } from '../birth/helpers'
+import { getIdByName, getAdministrativeAreas } from '../birth/helpers'
 import { expectInUrl } from '../../utils'
 import { setMobileViewport } from '../../mobile-helpers'
 
@@ -19,9 +19,9 @@ test.describe.serial('Advanced Search - Mobile', () => {
       CREDENTIALS.REGISTRAR.PASSWORD
     )
 
-    const locations = await getAllLocations('ADMIN_STRUCTURE', token)
-    province = getLocationIdByName(locations, 'Central')!
-    district = getLocationIdByName(locations, 'Ibombo')!
+    const administrativeAreas = await getAdministrativeAreas(token)
+    province = getIdByName(administrativeAreas, 'Central')!
+    district = getIdByName(administrativeAreas, 'Ibombo')!
 
     if (!province || !district) {
       throw new Error('Province or district not found')

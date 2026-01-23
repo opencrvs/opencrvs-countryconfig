@@ -83,9 +83,10 @@ import getUserNotificationRoutes from './config/routes/userNotificationRoutes'
 import {
   importEvent,
   importEvents,
-  importLocations,
   syncLocationLevels,
-  syncLocationStatistics
+  syncLocationStatistics,
+  importLocations,
+  importAdministrativeAreas
 } from './analytics/analytics'
 import { getClient } from './analytics/postgres'
 import { createClient } from '@opencrvs/toolkit/api'
@@ -662,7 +663,11 @@ export async function createServer() {
           // Import locations
           const url = new URL('events', GATEWAY_URL).toString()
           const client = createClient(url, req.headers.authorization)
+          const administrativeAreas =
+            await client.administrativeAreas.list.query()
           const locations = await client.locations.list.query()
+
+          await importAdministrativeAreas(administrativeAreas)
           await importLocations(locations)
         })
 
