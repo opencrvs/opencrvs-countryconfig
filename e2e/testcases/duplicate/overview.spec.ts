@@ -35,8 +35,8 @@ test.describe.serial('Duplicate overview', () => {
   test.describe('Shortcut declarations', async () => {
     test('First declaration', async () => {
       const token = await getToken(
-        CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
-        CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+        CREDENTIALS.REGISTRAR.USERNAME,
+        CREDENTIALS.REGISTRAR.PASSWORD
       )
       const res = await createDeclaration(token, details)
 
@@ -47,16 +47,16 @@ test.describe.serial('Duplicate overview', () => {
 
     test('Second declaration', async () => {
       const token = await getToken(
-        CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
-        CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+        CREDENTIALS.REGISTRAR.USERNAME,
+        CREDENTIALS.REGISTRAR.PASSWORD
       )
       await createDeclaration(token, details, ActionType.DECLARE)
     })
   })
 
   test("Navigate to potential duplicate's overview", async () => {
-    await login(page, CREDENTIALS.LOCAL_REGISTRAR)
-    await page.getByRole('button', { name: 'Ready for review' }).click()
+    await login(page, CREDENTIALS.REGISTRAR)
+    await page.getByRole('button', { name: 'Potential duplicate' }).click()
     await page.getByRole('button', { name }).click()
   })
 

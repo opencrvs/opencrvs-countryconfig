@@ -60,7 +60,7 @@ test.describe('Form state', () => {
 
     test('Form states and annotations are not persisted', async () => {
       //@todo: The user should be navigated to "my-drafts" tab by default
-      await page.getByText('My drafts').click()
+      await page.getByText('Drafts').click()
 
       await expect(
         page.getByRole('button', { name: childName, exact: true })
@@ -126,7 +126,7 @@ test.describe('Form state', () => {
     })
 
     test('Form states and annotations are not persisted', async () => {
-      await page.getByRole('button', { name: 'My drafts' }).click()
+      await page.getByRole('button', { name: 'Drafts' }).click()
       await page
         .getByRole('button', { name: actionableEventChildName, exact: true })
         .click()
@@ -165,8 +165,8 @@ test.describe('Form state', () => {
 
     test('Create a declaration', async () => {
       const token = await getToken(
-        CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
-        CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+        CREDENTIALS.REGISTRAR.USERNAME,
+        CREDENTIALS.REGISTRAR.PASSWORD
       )
       declaration = (await createDeclaration(token)).declaration
       await page.reload()
@@ -176,7 +176,7 @@ test.describe('Form state', () => {
     test('Form changes in correction are persisted after reload', async () => {
       const updatedMotherName = faker.person.firstName('female')
       expect(declaration).toBeDefined()
-      await page.getByRole('button', { name: 'Ready to print' }).click()
+      await page.getByRole('button', { name: 'Pending certification' }).click()
       await navigateToCertificatePrintAction(page, declaration!)
       await selectRequesterType(page, 'Print and issue to Informant (Mother)')
       await continueForm(page)
@@ -213,7 +213,7 @@ test.describe('Form state', () => {
       expect(declaration).toBeDefined()
 
       await page.goto(CLIENT_URL)
-      await page.getByRole('button', { name: 'Ready to print' }).click()
+      await page.getByRole('button', { name: 'Pending certification' }).click()
       await navigateToCertificatePrintAction(page, declaration!)
       await selectRequesterType(page, 'Print and issue to someone else')
 

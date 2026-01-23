@@ -10,7 +10,7 @@ test.describe.serial('1. Create user -1', () => {
     firstName: faker.person.firstName('male'),
     surname: faker.person.lastName('male'),
     email: faker.internet.email(),
-    role: 'Local Registrar'
+    role: 'Registrar'
   }
   const signaturePath = path.resolve(__dirname, '../../assets/sign1.png')
   const username = `${userinfo.firstName[0]}.${userinfo.surname}`.toLowerCase()

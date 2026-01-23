@@ -15,8 +15,8 @@ test.describe.serial('Advanced Search - Mobile', () => {
     page = await browser.newPage()
     setMobileViewport(page)
     const token = await getToken(
-      CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
-      CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+      CREDENTIALS.REGISTRAR.USERNAME,
+      CREDENTIALS.REGISTRAR.PASSWORD
     )
 
     const administrativeAreas = await getAdministrativeAreas(token)

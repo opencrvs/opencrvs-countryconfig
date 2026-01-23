@@ -6,6 +6,7 @@ import {
   formatName,
   goToSection,
   login,
+  searchFromSearchBar,
   switchEventTab,
   validateActionMenuButton
 } from '../../helpers'
@@ -132,14 +133,14 @@ test.describe.serial('Approval of late birth registration', () => {
     test('Declare', async () => {
       await selectDeclarationAction(page, 'Declare')
       await ensureOutboxIsEmpty(page)
-      await page.getByText('Sent for review').click()
+      await page.getByText('Recent').click()
     })
   })
 
-  test.describe('Declaration Review by RA', async () => {
+  test.describe('Declaration Review by RO', async () => {
     test('Navigate to the declaration review page', async () => {
-      await login(page, CREDENTIALS.REGISTRATION_AGENT)
-      await page.getByText('Ready for review').click()
+      await login(page, CREDENTIALS.REGISTRATION_OFFICER)
+      await page.getByText('Pending approval').click()
       await page.getByRole('button', { name: childNameFormatted }).click()
 
       await ensureAssigned(page)
@@ -151,16 +152,16 @@ test.describe.serial('Approval of late birth registration', () => {
       ).toBeVisible()
     })
 
-    test('RA should not have the option to Approve', async () => {
+    test('RO should not have the option to Approve', async () => {
       await page.getByRole('button', { name: 'Action', exact: true }).click()
       await expect(page.getByText('Approve', { exact: true })).not.toBeVisible()
     })
   })
 
-  test.describe('Declaration Review by LR', async () => {
+  test.describe('Declaration Review by Registrar', async () => {
     test('Navigate to the declaration review page', async () => {
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
-      await page.getByText('Ready for review').click()
+      await login(page, CREDENTIALS.REGISTRAR)
+      await page.getByText('Pending approval').click()
       await page.getByRole('button', { name: childNameFormatted }).click()
     })
 
@@ -206,7 +207,7 @@ test.describe.serial('Approval of late birth registration', () => {
       await selectAction(page, 'Approve declaration')
       await expect(
         page.getByText(
-          'This birth has been registered late. You are now approving it for further validation and registration.'
+          'Approving this declaration confirms it as legally accepted and eligible for registration.'
         )
       ).toBeVisible()
 
@@ -224,9 +225,7 @@ test.describe.serial('Approval of late birth registration', () => {
 
     test("Validate that the 'Approval required for late registration' -flag is removed after approval", async () => {
       await ensureOutboxIsEmpty(page)
-      await page.locator('#searchText').fill(childNameFormatted)
-      await page.locator('#searchIconButton').click()
-      await page.getByRole('button', { name: childNameFormatted }).click()
+      await searchFromSearchBar(page, childNameFormatted)
 
       await expect(
         page.getByText('Approval required for late registration')
@@ -237,11 +236,10 @@ test.describe.serial('Approval of late birth registration', () => {
     })
   })
 
-  test.describe('Audit review by LR', async () => {
+  test.describe('Audit review by Registrar', async () => {
     test('Navigate to the declaration review page', async () => {
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR, true)
-      await page.getByText('Ready for review').click()
-      await page.getByRole('button', { name: childNameFormatted }).click()
+      await login(page, CREDENTIALS.REGISTRAR, true)
+      await searchFromSearchBar(page, childNameFormatted)
     })
 
     test('Assign', async () => {
@@ -373,7 +371,7 @@ test.describe('Birth with non-late registration will not have flag or Approve-ac
     })
 
     test('Navigate to the record', async () => {
-      await page.getByText('Sent for review').click()
+      await page.getByText('Recent').click()
       await page.getByRole('button', { name: childNameFormatted }).click()
     })
 
@@ -402,9 +400,9 @@ test.describe
     await page.close()
   })
 
-  test.describe('Declaration started by Local Registrar', async () => {
+  test.describe('Declaration started by Registrar', async () => {
     test.beforeAll(async () => {
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await login(page, CREDENTIALS.REGISTRAR)
       await page.click('#header-new-event')
       await page.getByLabel('Birth').click()
       await page.getByRole('button', { name: 'Continue' }).click()
@@ -618,14 +616,14 @@ test.describe
     test('Declare', async () => {
       await selectDeclarationAction(page, 'Declare')
       await ensureOutboxIsEmpty(page)
-      await page.getByText('Sent for review').click()
+      await page.getByText('Recent').click()
     })
   })
 
-  test.describe('Declaration Review by Registration Agent', async () => {
+  test.describe('Declaration Review by RO', async () => {
     test('Navigate to the declaration review page', async () => {
-      await login(page, CREDENTIALS.REGISTRATION_AGENT)
-      await page.getByText('Ready for review').click()
+      await login(page, CREDENTIALS.REGISTRATION_OFFICER)
+      await page.getByText('Pending approval').click()
       await page.getByRole('button', { name: childNameFormatted }).click()
     })
 
@@ -661,7 +659,7 @@ test.describe
     })
 
     test('Go to record', async () => {
-      await page.getByText('Sent for approval').click()
+      await page.getByText('Recent').click()
       await page.getByRole('button', { name: childNameFormatted }).click()
     })
 
@@ -692,9 +690,9 @@ test.describe
     await page.close()
   })
 
-  test.describe('Declaration started by FA', async () => {
+  test.describe('Declaration started by RO', async () => {
     test.beforeAll(async () => {
-      await login(page, CREDENTIALS.FIELD_AGENT)
+      await login(page, CREDENTIALS.REGISTRATION_OFFICER)
       await page.click('#header-new-event')
       await page.getByLabel('Birth').click()
       await page.getByRole('button', { name: 'Continue' }).click()
@@ -780,14 +778,14 @@ test.describe
     test('Declare', async () => {
       await selectDeclarationAction(page, 'Declare')
       await ensureOutboxIsEmpty(page)
-      await page.getByText('Sent for review').click()
+      await page.getByText('Recent').click()
     })
   })
 
-  test.describe('Declaration Review by Local Registrar', async () => {
+  test.describe('Declaration Review by Registrar', async () => {
     test('Navigate to the declaration review page', async () => {
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
-      await page.getByText('Ready for review').click()
+      await login(page, CREDENTIALS.REGISTRAR)
+      await page.getByText('Pending registration').click()
       await page.getByRole('button', { name: childNameFormatted }).click()
     })
 
@@ -828,7 +826,7 @@ test.describe
     })
 
     test('Go to record', async () => {
-      await page.getByText('Sent for review').click()
+      await page.getByText('Recent').click()
       await page.getByRole('button', { name: childNameFormatted }).click()
       await ensureAssigned(page)
     })

@@ -642,10 +642,10 @@ test.describe.serial('3. Death declaration case - 3', () => {
        */
       expect(page.url().includes('assigned-to-you')).toBeTruthy()
 
-      await page.getByText('Sent for review').click()
+      await page.getByText('Recent').click()
 
       /*
-       * Expected result: The declaration should be in sent for review
+       * Expected result: The declaration should be in recent
        */
       await expect(
         page.getByRole('button', {
@@ -657,12 +657,12 @@ test.describe.serial('3. Death declaration case - 3', () => {
       ).toBeVisible()
     })
   })
-  test.describe('3.2 Declaration Review by RA', async () => {
+  test.describe('3.2 Declaration Review by RO', async () => {
     test('3.2.1 Navigate to the declaration "Record" -tab', async () => {
-      await login(page, CREDENTIALS.REGISTRATION_AGENT)
+      await login(page, CREDENTIALS.REGISTRATION_OFFICER)
 
       await ensureOutboxIsEmpty(page)
-      await page.getByText('Ready for review').click()
+      await page.getByText('Pending validation').click()
 
       await page
         .getByRole('button', {

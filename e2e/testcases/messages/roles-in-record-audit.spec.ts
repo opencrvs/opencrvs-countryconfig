@@ -19,12 +19,12 @@ const testCases = [
     expectedAuditRole: 'Community Leader'
   },
   {
-    credential: CREDENTIALS.REGISTRATION_AGENT,
+    credential: CREDENTIALS.REGISTRATION_OFFICER,
     action: ActionType.DECLARE,
     expectedAuditRole: 'Registration Officer'
   },
   {
-    credential: CREDENTIALS.LOCAL_REGISTRAR,
+    credential: CREDENTIALS.REGISTRAR,
     action: ActionType.REGISTER,
     expectedAuditRole: 'Local Registrar'
   }
@@ -37,7 +37,7 @@ test.describe('Roles in Record Audit', () => {
       const token = await getToken(credential.USERNAME, credential.PASSWORD)
       const res = await createDeclaration(token, undefined, action)
 
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await login(page, CREDENTIALS.REGISTRAR)
 
       await expect(page.locator('#content-name')).toHaveText(
         'Assigned to you',

@@ -189,7 +189,8 @@ export async function createDeclaration(
 
     return {
       eventId,
-      declaration: declareAction?.declaration as Declaration
+      declaration: declareAction?.declaration as Declaration,
+      trackingId: declareRes.trackingId
     }
   }
 

@@ -100,9 +100,9 @@ test.describe.serial('Add mother details on review', () => {
     await page.close()
   })
 
-  test.describe('Declaration started by FA', async () => {
-    test('Login as FA', async () => {
-      await login(page, CREDENTIALS.FIELD_AGENT)
+  test.describe('Declaration started by RO', async () => {
+    test('Login as RO', async () => {
+      await login(page, CREDENTIALS.REGISTRATION_OFFICER)
     })
 
     test('Initiate birth declaration', async () => {
@@ -230,7 +230,7 @@ test.describe.serial('Add mother details on review', () => {
 
       await ensureOutboxIsEmpty(page)
 
-      await page.getByText('Sent for review').click()
+      await page.getByText('Recent').click()
 
       await expect(
         page.getByRole('button', {
@@ -240,12 +240,12 @@ test.describe.serial('Add mother details on review', () => {
     })
   })
 
-  test.describe('Declaration Review by Local Registrar', async () => {
+  test.describe('Declaration Review by Registrar', async () => {
     test('Navigate to the declaration Edit-action', async () => {
       await logout(page)
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await login(page, CREDENTIALS.REGISTRAR)
 
-      await page.getByText('Ready for review').click()
+      await page.getByText('Pending registration').click()
 
       await page
         .getByRole('button', {
@@ -258,7 +258,7 @@ test.describe.serial('Add mother details on review', () => {
       await selectAction(page, 'Edit')
       await expect(
         page.getByText(
-          'You are editing a record declared by Kalusha Bwalya (Hospital Clerk at Ibombo District Office)'
+          /You are editing a record declared by Felix Katongo \(Registration (Officer|Agent) at Ibombo District Office\)/
         )
       ).toBeVisible()
     })
@@ -311,7 +311,7 @@ test.describe.serial('Add mother details on review', () => {
 
     test('Assert event is registered', async () => {
       await ensureOutboxIsEmpty(page)
-      await page.getByText('Ready to print').click()
+      await page.getByText('Pending certification').click()
       await page
         .getByRole('button', { name: formatName(declaration.child.name) })
         .click()
