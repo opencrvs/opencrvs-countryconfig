@@ -197,16 +197,26 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
           validation: [
             {
               message: {
-                defaultMessage: 'Number and unit required for registration',
+                defaultMessage: 'Number and unit required',
                 description: 'This is the error message for invalid duration',
                 id: 'event.birth.action.declare.form.section.child.field.birthDuration.error'
               },
-              validator: and(
-                field('applicant.registrationDuration')
-                  .get('numericValue')
-                  .isGreaterThan(0),
-                not(
+              validator: or(
+                and(
+                  field('applicant.registrationDuration')
+                    .get('numericValue')
+                    .isFalsy(),
                   field('applicant.registrationDuration').get('unit').isFalsy()
+                ),
+                not(
+                  or(
+                    field('applicant.registrationDuration')
+                      .get('numericValue')
+                      .isFalsy(),
+                    field('applicant.registrationDuration')
+                      .get('unit')
+                      .isFalsy()
+                  )
                 )
               )
             }
