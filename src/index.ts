@@ -72,6 +72,7 @@ import { onRegisterHandler } from './api/registration'
 import { workqueueconfigHandler } from './api/workqueue/handler'
 import getUserNotificationRoutes from './config/routes/userNotificationRoutes'
 import {
+  importAdministrativeAreas,
   importEvent,
   importEvents,
   importLocations,
@@ -612,7 +613,11 @@ export async function createServer() {
           // Import locations
           const url = new URL('events', GATEWAY_URL).toString()
           const client = createClient(url, req.headers.authorization)
+          const administrativeAreas =
+            await client.administrativeAreas.list.query()
           const locations = await client.locations.list.query()
+
+          await importAdministrativeAreas(administrativeAreas)
           await importLocations(locations)
         })
 

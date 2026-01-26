@@ -181,6 +181,20 @@ export const deathEvent = defineConfig({
       requiresAction: true
     }
   ],
+  actionOrder: [
+    ActionType.ASSIGN,
+    ActionType.REGISTER,
+    ActionType.DECLARE,
+    ActionType.EDIT,
+    'VALIDATE_DECLARATION',
+    ActionType.MARK_AS_DUPLICATE,
+    ActionType.REJECT,
+    ActionType.ARCHIVE,
+    ActionType.DELETE,
+    ActionType.PRINT_CERTIFICATE,
+    ActionType.REQUEST_CORRECTION,
+    ActionType.UNASSIGN
+  ],
   actions: [
     {
       type: ActionType.READ,
@@ -323,10 +337,10 @@ export const deathEvent = defineConfig({
         id: 'event.death.action.register.label'
       },
       supportingCopy: {
-        id: 'review.register.description.complete',
+        id: 'event.death.action.register.supportingCopy',
         description: 'Confirmation text for the register action',
         defaultMessage:
-          "By clicking 'Confirm', you confirm that the information entered is correct and the event can be registered."
+          'Registering this death event will create an official civil registration record. Please ensure all details are correct before proceeding.'
       },
       flags: [{ id: 'validated', operation: 'remove' }],
       conditionals: [

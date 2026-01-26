@@ -67,7 +67,7 @@ export const roles: Role[] = [
       'search[event=birth,access=all]',
       'search[event=death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates-office|in-review|sent-for-approval|in-external-validation|ready-to-print|ready-to-issue]',
+      'workqueue[id=assigned-to-you|recent|requires-completion|in-review|in-external-validation|escalated|pending-validation|pending-updates|pending-approval|pending-certification|pending-issuance|correction-requested]',
       'record.create[event=birth|death|tennis-club-membership]',
       'record.read[event=birth|death|tennis-club-membership]',
       'record.declare[event=birth|death|tennis-club-membership]',
@@ -77,13 +77,14 @@ export const roles: Role[] = [
       'record.declared.review-duplicates[event=birth|death|tennis-club-membership]',
       'record.registered.print-certified-copies[event=birth|death|tennis-club-membership]',
       'record.registered.request-correction[event=birth|death|tennis-club-membership]',
-      'record.custom-action[event=birth|death,customActionType=VALIDATE_DECLARATION]'
+      'record.custom-action[event=birth,customActionType=VALIDATE_DECLARATION|ISSUE_CERTIFIED_COPY]',
+      'record.custom-action[event=death,customActionType=VALIDATE_DECLARATION]'
     ]
   },
   {
     id: 'LOCAL_REGISTRAR',
     label: {
-      defaultMessage: 'Local Registrar',
+      defaultMessage: 'Registrar',
       description: 'Name for user role Local Registrar',
       id: 'userRole.localRegistrar'
     },
@@ -118,7 +119,7 @@ export const roles: Role[] = [
       'search[event=birth,access=all]',
       'search[event=death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates-office|in-review-all|in-external-validation|ready-to-print|ready-to-issue|pending-certification|escalated]',
+      'workqueue[id=assigned-to-you|recent|requires-completion|in-external-validation|escalated|potential-duplicate|pending-updates|pending-registration|pending-approval|pending-certification|pending-issuance|correction-requested]',
       'record.create[event=birth|death|tennis-club-membership]',
       'record.read[event=birth|death|tennis-club-membership]',
       'record.declare[event=birth|death|tennis-club-membership]',
@@ -225,7 +226,7 @@ export const roles: Role[] = [
       'search[event=birth,access=all]',
       'search[event=death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates-office|in-review-all|in-external-validation|ready-to-print|ready-to-issue|pending-feedback-registrar-general]',
+      'workqueue[id=assigned-to-you|recent|requires-completion|in-external-validation|pending-feedback-registrar-general|potential-duplicate|registration-registrar-general]',
       'record.create[event=birth|death|tennis-club-membership]',
       'record.read[event=birth|death|tennis-club-membership]',
       'record.declare[event=birth|death|tennis-club-membership]',
@@ -236,7 +237,7 @@ export const roles: Role[] = [
       'record.register[event=birth|death|tennis-club-membership]',
       'record.registered.print-certified-copies[event=birth|death|tennis-club-membership]',
       'record.registered.correct[event=birth|death|tennis-club-membership]',
-      'record.custom-action[event=birth,customActionType=REGISTRAR_GENERAL_FEEDBACK]',
+      'record.custom-action[event=birth,customActionType=REGISTRAR_GENERAL_FEEDBACK|REVOKE_REGISTRATION|REINSTATE_REVOKE_REGISTRATION]',
       'record.unassign-others[event=birth|death|tennis-club-membership]'
     ]
   },
@@ -250,7 +251,7 @@ export const roles: Role[] = [
     scopes: [
       'record.read[event=birth|death|tennis-club-membership]',
       'record.custom-action[event=birth,customActionType=APPROVE_DECLARATION|PROVINCIAL_REGISTER_FEEDBACK]',
-      'workqueue[id=late-registration-approval-required|recent|pending-feedback-provincinal-registrar]',
+      'workqueue[id=late-registration-approval-required|recent|pending-feedback-provincinal-registrar|pending-approval|correction-requested]',
       'search[event=birth,access=all]'
     ]
   },
@@ -272,7 +273,7 @@ export const roles: Role[] = [
       'search[event=birth,access=all]',
       'search[event=death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]',
+      'workqueue[id=assigned-to-you|recent|pending-updates]',
       'record.create[event=birth|death|tennis-club-membership]',
       'record.read[event=birth|death|tennis-club-membership]',
       'record.declare[event=birth|death|tennis-club-membership]',
@@ -301,118 +302,13 @@ export const roles: Role[] = [
       'search[event=birth,access=all]',
       'search[event=death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|sent-for-review|ready-to-print]',
+      'workqueue[id=assigned-to-you|recent]',
       'record.create[event=birth|death|tennis-club-membership]',
       'record.read[event=birth|death|tennis-club-membership]',
       'record.declare[event=birth|death|tennis-club-membership]',
       'record.declared.edit[event=birth|death|tennis-club-membership]',
       'record.notify[event=birth|death|tennis-club-membership]',
       'record.registered.print-certified-copies[event=birth|death|tennis-club-membership]'
-    ]
-  },
-  // Legacy roles from v1.8 for backwards compatibility
-  {
-    id: 'POLICE_OFFICER',
-    label: {
-      defaultMessage: 'Police Officer',
-      description: 'Name for user role Police Officer',
-      id: 'userRole.policeOfficer'
-    },
-    scopes: [
-      SCOPES.RECORD_DECLARE_BIRTH,
-      SCOPES.RECORD_DECLARE_DEATH,
-      SCOPES.RECORD_DECLARE_MARRIAGE,
-      SCOPES.RECORD_SUBMIT_INCOMPLETE,
-      SCOPES.RECORD_SUBMIT_FOR_REVIEW,
-      SCOPES.SEARCH_BIRTH,
-      SCOPES.SEARCH_DEATH,
-      SCOPES.SEARCH_MARRIAGE,
-      'search[event=birth,access=all]',
-      'search[event=death,access=all]',
-      'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]',
-      `record.create[event=birth|death|tennis-club-membership]`,
-      'record.declare[event=birth|death|tennis-club-membership]',
-      'record.declared.edit[event=birth|death|tennis-club-membership]',
-      'record.notify[event=birth|death|tennis-club-membership]'
-    ]
-  },
-  {
-    id: 'SOCIAL_WORKER',
-    label: {
-      defaultMessage: 'Social Worker',
-      description: 'Name for user role Social Worker',
-      id: 'userRole.socialWorker'
-    },
-    scopes: [
-      SCOPES.RECORD_DECLARE_BIRTH,
-      SCOPES.RECORD_DECLARE_DEATH,
-      SCOPES.RECORD_DECLARE_MARRIAGE,
-      SCOPES.RECORD_SUBMIT_INCOMPLETE,
-      SCOPES.RECORD_SUBMIT_FOR_REVIEW,
-      SCOPES.SEARCH_BIRTH,
-      SCOPES.SEARCH_DEATH,
-      SCOPES.SEARCH_MARRIAGE,
-      'search[event=birth,access=all]',
-      'search[event=death,access=all]',
-      'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]',
-      `record.create[event=birth|death|tennis-club-membership]`,
-      'record.declare[event=birth|death|tennis-club-membership]',
-      'record.declared.edit[event=birth|death|tennis-club-membership]',
-      'record.notify[event=birth|death|tennis-club-membership]'
-    ]
-  },
-  {
-    id: 'HEALTHCARE_WORKER',
-    label: {
-      defaultMessage: 'Healthcare Worker',
-      description: 'Name for user role Healthcare Worker',
-      id: 'userRole.healthcareWorker'
-    },
-    scopes: [
-      SCOPES.RECORD_DECLARE_BIRTH,
-      SCOPES.RECORD_DECLARE_DEATH,
-      SCOPES.RECORD_DECLARE_MARRIAGE,
-      SCOPES.RECORD_SUBMIT_INCOMPLETE,
-      SCOPES.RECORD_SUBMIT_FOR_REVIEW,
-      SCOPES.SEARCH_BIRTH,
-      SCOPES.SEARCH_DEATH,
-      SCOPES.SEARCH_MARRIAGE,
-      'search[event=birth,access=all]',
-      'search[event=death,access=all]',
-      'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]',
-      `record.create[event=birth|death|tennis-club-membership]`,
-      'record.declare[event=birth|death|tennis-club-membership]',
-      'record.declared.edit[event=birth|death|tennis-club-membership]',
-      'record.notify[event=birth|death|tennis-club-membership]'
-    ]
-  },
-  {
-    id: 'LOCAL_LEADER',
-    label: {
-      defaultMessage: 'Local Leader',
-      description: 'Name for user role Local Leader',
-      id: 'userRole.LocalLeader'
-    },
-    scopes: [
-      SCOPES.RECORD_DECLARE_BIRTH,
-      SCOPES.RECORD_DECLARE_DEATH,
-      SCOPES.RECORD_DECLARE_MARRIAGE,
-      SCOPES.RECORD_SUBMIT_INCOMPLETE,
-      SCOPES.RECORD_SUBMIT_FOR_REVIEW,
-      SCOPES.SEARCH_BIRTH,
-      SCOPES.SEARCH_DEATH,
-      SCOPES.SEARCH_MARRIAGE,
-      'search[event=birth,access=all]',
-      'search[event=death,access=all]',
-      'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]',
-      `record.create[event=birth|death|tennis-club-membership]`,
-      'record.declare[event=birth|death|tennis-club-membership]',
-      'record.declared.edit[event=birth|death|tennis-club-membership]',
-      'record.notify[event=birth|death|tennis-club-membership]'
     ]
   }
 ]
