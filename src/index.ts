@@ -81,6 +81,7 @@ import { env } from './environment'
 import { workqueueconfigHandler } from './api/workqueue/handler'
 import getUserNotificationRoutes from './config/routes/userNotificationRoutes'
 import {
+  importAdministrativeAreas,
   importEvent,
   importEvents,
   syncLocationLevels,
