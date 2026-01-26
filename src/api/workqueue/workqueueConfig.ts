@@ -335,10 +335,7 @@ export const Workqueues = defineWorkqueues([
     query: {
       ...registeredInMyAdminArea,
       flags: {
-        anyOf: [
-          'pending-first-certificate-issuance',
-          InherentFlags.PENDING_CERTIFICATION
-        ],
+        anyOf: ['pending-first-certificate-issuance'],
         noneOf: ['revoked']
       }
     },
