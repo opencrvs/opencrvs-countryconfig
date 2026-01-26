@@ -336,7 +336,7 @@ export const Workqueues = defineWorkqueues([
       ...registeredInMyAdminArea,
       flags: {
         anyOf: ['pending-first-certificate-issuance'],
-        noneOf: ['revoked']
+        noneOf: ['revoked', InherentFlags.CORRECTION_REQUESTED]
       }
     },
     actions: [{ type: ActionType.PRINT_CERTIFICATE }],
@@ -369,7 +369,7 @@ export const Workqueues = defineWorkqueues([
       ...registeredInMyAdminArea,
       flags: {
         anyOf: ['certified-copy-printed-in-advance-of-issuance'],
-        noneOf: ['revoked']
+        noneOf: ['revoked', InherentFlags.CORRECTION_REQUESTED]
       }
     },
     actions: [{ type: ActionType.READ }],
