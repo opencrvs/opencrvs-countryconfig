@@ -89,7 +89,18 @@ export const Workqueues = defineWorkqueues([
       id: 'workqueues.notifications.emptyMessage',
       defaultMessage: 'No notifications',
       description: 'Empty message for notifications workqueue'
-    }
+    },
+    columns: [
+      DATE_OF_EVENT_COLUMN,
+      {
+        label: {
+          defaultMessage: 'Notified',
+          description: 'This is the label for the Notified column',
+          id: 'workqueue.notifications.updatedAtColumn'
+        },
+        value: event.field('updatedAt')
+      }
+    ]
   },
   {
     slug: 'pending-validation',
@@ -136,7 +147,18 @@ export const Workqueues = defineWorkqueues([
       ...declaredInMyAdminArea,
       flags: { anyOf: [InherentFlags.POTENTIAL_DUPLICATE] }
     },
-    actions: [{ type: ActionType.READ }]
+    actions: [{ type: ActionType.READ }],
+    columns: [
+      DATE_OF_EVENT_COLUMN,
+      {
+        label: {
+          defaultMessage: 'Flagged as duplicate',
+          description: 'This is the label for the Flagged as duplicate column',
+          id: 'workqueue.potential-duplicate.updatedAtColumn'
+        },
+        value: event.field('updatedAt')
+      }
+    ]
   },
   {
     slug: 'pending-updates',
@@ -260,7 +282,18 @@ export const Workqueues = defineWorkqueues([
         ]
       }
     },
-    actions: [{ type: ActionType.READ }]
+    actions: [{ type: ActionType.READ }],
+    columns: [
+      DATE_OF_EVENT_COLUMN,
+      {
+        label: {
+          defaultMessage: 'Escalated',
+          description: 'This is the label for the Escalated column',
+          id: 'workqueue.escalated.updatedAtColumn'
+        },
+        value: event.field('updatedAt')
+      }
+    ]
   },
   {
     slug: 'pending-feedback-registrar-general',
@@ -322,7 +355,18 @@ export const Workqueues = defineWorkqueues([
       },
       updatedAtLocation: { type: 'within', location: user('primaryOfficeId') }
     },
-    actions: [{ type: ActionType.READ }]
+    actions: [{ type: ActionType.READ }],
+    columns: [
+      DATE_OF_EVENT_COLUMN,
+      {
+        label: {
+          defaultMessage: 'External validated',
+          description: 'This is the label for the External validated column',
+          id: 'workqueue.in-external-validation.updatedAtColumn'
+        },
+        value: event.field('updatedAt')
+      }
+    ]
   },
   {
     slug: 'pending-certification',
@@ -377,7 +421,19 @@ export const Workqueues = defineWorkqueues([
       id: 'workqueues.pendingCertification.emptyMessage',
       defaultMessage: 'No pending certification records',
       description: 'Empty message for pending certification workqueue'
-    }
+    },
+    columns: [
+      DATE_OF_EVENT_COLUMN,
+      {
+        label: {
+          defaultMessage: 'Certified copy printed',
+          description:
+            'This is the label for the Certified copy printed column',
+          id: 'workqueue.pending-issuance.updatedAtColumn'
+        },
+        value: event.field('updatedAt')
+      }
+    ]
   },
   {
     slug: 'correction-requested',
@@ -394,6 +450,17 @@ export const Workqueues = defineWorkqueues([
         noneOf: ['revoked']
       }
     },
-    actions: [{ type: ActionType.READ }]
+    actions: [{ type: ActionType.READ }],
+    columns: [
+      DATE_OF_EVENT_COLUMN,
+      {
+        label: {
+          defaultMessage: 'Correction requested',
+          description: 'This is the label for the Correction requested column',
+          id: 'workqueue.correction-requested.updatedAtColumn'
+        },
+        value: event.field('updatedAt')
+      }
+    ]
   }
 ])
