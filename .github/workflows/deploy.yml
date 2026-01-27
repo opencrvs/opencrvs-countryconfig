@@ -40,7 +40,6 @@ on:
           - v17
           - staging
           - pentest
-          - v19-beta-prod
           - fix-analytics
           - mosip
           - openfn
