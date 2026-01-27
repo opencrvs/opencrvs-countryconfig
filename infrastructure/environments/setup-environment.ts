@@ -803,6 +803,18 @@ ALL_QUESTIONS.push(
 const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
 
 ;(async () => {
+  log(kleur.bold().yellow(
+    '\n------------------------------------------------------------------------------\n' +
+    'Welcome to the OpenCRVS environment setup script!\n\n' +
+    'This is deprecated since OpenCRVS v2.0:\n' +
+    ' - Users who are using 1.9 and are not yet ready to migrate to Kubernetes,\n' +
+    '   continue using this script\n' +
+    ' - Users who are using 1.9 and  wish to migrate from Swarm to Kubernetes,\n' +
+    '   should refer to the migration documentation\n' +
+    ' - New users and users who have already migrated to Kubernetes should no longer use this script.\n' +
+    'Please refer to the documentation for setting up environments using the new infrastructure setup.\n' +
+    '------------------------------------------------------------------------------\n'
+  ))
   const { type: environment } = await prompts<string>(
     [
       {
