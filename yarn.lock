@@ -1734,10 +1734,10 @@
   integrity sha512-oY/Y+MfRKN+FZJLrtx4LJ2xIBKxs4iwRZxhiOSX1DDktifyKFvSd5v9rg0xlkiS5BXlzrL8Yz/xIheMm94DncQ==
 
 
-"@opencrvs/toolkit@1.9.5-rc.d647588":
-  version "1.9.5-rc.d647588"
-  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-1.9.5-rc.d647588.tgz#83ace6eefb38963d0a9981ea979310a04d4e7d2f"
-  integrity sha512-DrTN2xilhX5CA6a8TlIaA518RrWdXRu4HeuVMjuasAIEEOzvOpRI0tRrV9vGxJvUPjCvv6AYHNtuulvshxXBgw==
+"@opencrvs/toolkit@1.9.5-rc.4bc5c06":
+  version "1.9.5-rc.4bc5c06"
+  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-1.9.5-rc.4bc5c06.tgz#58d8336e35da0b11f614c468a55234fab77fe207"
+  integrity sha512-WnpjaJMGB5Grnw5KAsOkOZoPWFuOvhJ0h8Gki8EPMg5H+ZJeWi9Rfio3v/0mUG3XsdLvA4PCP4BW5xyA7In7lg==
   dependencies:
     "@trpc/client" "11.4.3"
     "@trpc/server" "11.4.3"
