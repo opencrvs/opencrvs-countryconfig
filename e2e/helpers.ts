@@ -627,7 +627,6 @@ export async function selectDeclarationAction(
     | 'Declare'
     | 'Validate'
     | 'Register'
-    | 'Reject'
     | 'Delete declaration'
     | 'Save & Exit'
     | 'Declare with edits'
