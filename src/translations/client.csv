@@ -47,6 +47,7 @@ advancedSearch.form.timePeriodLabel,Label for input Time period,Time period,Pér
 advancedSearch.registeredAt,Label for date of registration field,Date of registration,Date d'enregistrement
 advancedSearch.registeredAtLocation,Label for place of registration field,Place of registration,Lieu d'enregistrement
 advancedSearch.registeredAtLocation.helperText,Helper text for place of registration field,"Search for a province, district or registration office","Rechercher une province, un district ou un bureau d'enregistrement"
+advancedSearch.registrationNumber,Label for registration number field,Registration number,Numéro d'enregistrement
 advancedSearch.status,Label for status field,Status of record,Statut de l'enregistrement
 advancedSearch.trackingId,Label for tracking ID field,Tracking ID,ID de suivi
 advancedSearch.updatedAt,Label for date of update field,Time period,Période
@@ -213,6 +214,7 @@ config.emailAllUsers.title,Title for email all users,Email all users,Envoyer un 
 config.userRoles.language,Language name,"{language, select, en {English} fr {French} other {{language}}}","{language, select, en {Anglais} fr {Français} other {{language}}}"
 configuration.dateFormat,Default format for date values,d MMMM y,d MMMM y
 configuration.timeFormat,Default time format for timestamps,"MMMM dd, yyyy · hh.mm a","MMMM dd, yyyy · hh.mm a"
+configuration.timeField.outputFormat,Default output format for time fields,"hh:mm a","hh:mm a"
 conflicts.modal.assign.description,Description for modal when assign,Please note you will have sole access to this record. Please make any updates promptly otherwise unassign the record.,"Veuillez noter que vous aurez un accès exclusif à cet enregistrement. Veuillez effectuer rapidement les mises à jour éventuelles, sinon vous désassignez l'enregistrement."
 conflicts.modal.assign.title,Title for modal when assign,Assign record?,Attribuer un enregistrement ?
 conflicts.modal.assigned.description,Description for modal when record already assigned,{name} at {officeName} has sole editable access to this record,{name} à {officeName} a un accès unique et modifiable à cet enregistrement.
@@ -779,6 +781,7 @@ duplicates.warning,The warning message shown when a declaration has potential du
 email.label.confirmation,Confirmation email address message,A verification code has been sent to {email},Un code de vérification a été envoyé à {email}
 error.child.weightAtBirth.invalidNumberRange,This is the error message for invalid number range,Must be within 0 and 6,Doit être compris entre 0 et 6
 error.code,Error code,401,401
+error.pdf,PDF load Error,Failed to load PDF,Échec du chargement du PDF
 error.draftFailed,Tips for failed declarations,This is some messaging on advicing the user on what to do... in the event of a failed declaration.,Il s'agit d'un message indiquant à l'utilisateur ce qu'il doit faire... en cas d'échec de la déclaration.
 error.invalidInput,Error message when generic field is invalid,Invalid input,Entrée invalide
 error.invalidName,This is the error message for invalid name,"Input contains invalid characters. Please use only letters (a-z, A-Z), numbers (0-9), hyphens (-) and apostrophes(')","L'entrée contient des caractères non valides. Veuillez n'utiliser que des lettres (a-z, A-Z), des chiffres (0-9), des traits d'union (-) et des apostrophes (')"
