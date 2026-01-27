@@ -178,7 +178,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
       })
     })
 
-    test('3.2.2 Review and reject', async () => {
+    test('3.2.2 Reject', async () => {
       await page.getByText('Notifications').click()
       await page
         .getByRole('button', {
@@ -186,12 +186,8 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         })
         .click()
 
-      await selectAction(page, 'Review')
-
-      await selectDeclarationAction(page, 'Reject', false)
-
+      await selectAction(page, 'Reject')
       await page.getByTestId('reject-reason').fill(faker.lorem.sentence())
-
       await page.getByRole('button', { name: 'Send For Update' }).click()
 
       await assertRecordInWorkqueue({
@@ -338,17 +334,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         .click()
 
       await page.locator('#father____addressSameAs_YES').click()
-    })
-
-    test('3.3.6 Fill up informant comment & signature', async () => {
       await continueForm(page, 'Back to review')
-      await page.locator('#review____comment').fill(faker.lorem.sentence())
-      await page.getByRole('button', { name: 'Sign', exact: true }).click()
-      await drawSignature(page, 'review____signature_canvas_element', false)
-      await page
-        .locator('#review____signature_modal')
-        .getByRole('button', { name: 'Apply' })
-        .click()
     })
 
     test('3.3.6 Declare with edits', async () => {
@@ -453,10 +439,8 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         .getByRole('button', { name: 'Review' })
         .click()
 
-      await selectDeclarationAction(page, 'Reject', false)
-
+      await selectAction(page, 'Reject')
       await page.getByTestId('reject-reason').fill(faker.lorem.sentence())
-
       await page.getByRole('button', { name: 'Send For Update' }).click()
 
       await assertRecordInWorkqueue({

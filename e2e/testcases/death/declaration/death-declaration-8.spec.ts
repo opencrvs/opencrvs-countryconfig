@@ -284,7 +284,7 @@ test.describe.serial('8. Death declaration case - 8', () => {
   })
 
   test.describe('8.2 Declaration Review by RO', async () => {
-    test('8.2.1 Navigate to the declaration review page', async () => {
+    test('8.2.1 Navigate to the declaration Edit-action', async () => {
       await login(page, CREDENTIALS.REGISTRATION_OFFICER)
 
       await ensureOutboxIsEmpty(page)
@@ -298,10 +298,10 @@ test.describe.serial('8. Death declaration case - 8', () => {
             declaration.deceased.name.surname
         })
         .click()
+      await selectAction(page, 'Edit')
     })
 
     test('8.2.2 Verify information on review page', async () => {
-      await selectAction(page, 'Review')
       /*
        * Expected result: should include
        * - Deceased's First Name
