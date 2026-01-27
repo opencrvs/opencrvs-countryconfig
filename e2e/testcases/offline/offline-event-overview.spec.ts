@@ -99,10 +99,7 @@ test.describe.serial('Can partially view non-downloaded event offline', () => {
   })
 })
 
-// @TODO: This test was previously passing with the changes from this PR:
-// https://github.com/opencrvs/opencrvs-core/pull/11606
-// However, the changes had to be reverted since it was causing some other issues and test failures.
-test.describe.skip('Can view downloaded event offline', () => {
+test.describe.serial('Can view downloaded event offline', () => {
   let page: Page
   let declaration: Declaration
   let childName: string
