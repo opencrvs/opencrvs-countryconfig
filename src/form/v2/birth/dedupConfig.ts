@@ -9,19 +9,26 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 import { field, and, or, not } from '@opencrvs/toolkit/events/deduplication'
-import { field as $field } from '@opencrvs/toolkit/events'
 
 const similarNamedChild = field('child.name').fuzzyMatches()
 const childDobWithin5Days = field('child.dob').dateRangeMatches({ days: 5 })
 const similarNamedMother = field('mother.name').fuzzyMatches()
-const similarAgedMother = field('mother.age').dateRangeMatches({
-  days: 365,
-  matchAgainst: [$field('mother.age'), $field('mother.dob')]
-})
-const similarDobMother = field('mother.dob').dateRangeMatches({
-  days: 365,
-  matchAgainst: [$field('mother.dob'), $field('mother.age')]
-})
+const similarAgedMother = or(
+  field('mother.dob').dateRangeMatches({
+    days: 365
+  }),
+  field('mother.age').dateRangeMatches({
+    days: 365
+  }),
+  field('mother.dob').dateRangeMatches({
+    days: 365,
+    matchAgainst: 'mother.age'
+  }),
+  field('mother.age').dateRangeMatches({
+    days: 365,
+    matchAgainst: 'mother.dob'
+  })
+)
 
 const differentMotherIdTypes = not(field('mother.idType').strictMatches())
 const motherIdNotProvided = field('mother.idType').strictMatches({
@@ -48,12 +55,12 @@ export const dedupConfig = or(
     similarNamedChild,
     childDobWithin5Days,
     similarNamedMother,
-    or(similarAgedMother, similarDobMother),
+    similarAgedMother,
     motherIdMatchesIfGiven
   ),
   and(
     similarNamedMother,
-    or(similarAgedMother, similarDobMother),
+    similarAgedMother,
     motherIdMatchesIfGiven,
     childDobWithin9Months
   ),
@@ -61,7 +68,7 @@ export const dedupConfig = or(
     exactNamedChild,
     childDobWithin3Years,
     similarNamedMother,
-    or(similarAgedMother, similarDobMother),
+    similarAgedMother,
     motherIdMatchesIfGiven
   )
 )
