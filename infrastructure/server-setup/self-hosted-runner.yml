@@ -1,0 +1,23 @@
+- hosts: docker-manager-first
+  become: yes
+  tasks:
+  - name: Check if OpenCRVS runner is already installed
+    shell: |
+      if systemctl list-units --full --all | grep -q 'actions.runner'; then
+        echo "installed"
+      else
+        echo "not_installed"
+      fi
+    register: runner_status
+    changed_when: false
+
+  - name: Run runner installation
+    when: runner_status.stdout == "not_installed"
+    shell: |
+      curl -sfL https://raw.githubusercontent.com/opencrvs/infrastructure/refs/heads/develop/scripts/bootstrap/opencrvs-bootstrap.sh \
+      -o opencrvs-bootstrap.sh && \
+      bash opencrvs-bootstrap.sh --owner {{ target_repo_owner }} \
+            --repo {{ target_repo_name }} \
+            --env {{ docker_swarm_env }} \
+            --token {{ migration_token }} \
+            --enable-runner
