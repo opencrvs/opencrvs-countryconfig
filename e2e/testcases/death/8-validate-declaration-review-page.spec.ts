@@ -708,7 +708,7 @@ test.describe.serial('8. Validate declaration review page', () => {
       await selectDeclarationAction(page, 'Notify')
     })
 
-    test('8.1.8 Validate that declaration is available on "Sent for review"', async () => {
+    test('8.1.8 Validate that declaration is available on "Recent"', async () => {
       await ensureOutboxIsEmpty(page)
       await expect(page.getByText('Farajaland CRS')).toBeVisible()
 
@@ -717,9 +717,9 @@ test.describe.serial('8. Validate declaration review page', () => {
        */
       expect(page.url().includes('assigned-to-you')).toBeTruthy()
 
-      await page.getByText('Sent for review').click()
+      await page.getByText('Recent').click()
       /*
-       * Expected result: The declaration should be in sent for review
+       * Expected result: The declaration should be in recent
        */
       await expect(
         page.getByRole('button', {
@@ -732,9 +732,9 @@ test.describe.serial('8. Validate declaration review page', () => {
     })
   })
 
-  test.describe('8.2 Registration agent actions', async () => {
+  test.describe('8.2 Registration Officer actions', async () => {
     test('8.2.1 Navigate to the declaration preview page', async () => {
-      await login(page, CREDENTIALS.REGISTRATION_AGENT)
+      await login(page, CREDENTIALS.REGISTRATION_OFFICER)
 
       await ensureOutboxIsEmpty(page)
       await page.getByText('Notifications').click()
@@ -748,8 +748,9 @@ test.describe.serial('8. Validate declaration review page', () => {
         })
         .click()
     })
+
     test('8.2.1.1 Verify information added on previous pages', async () => {
-      await selectAction(page, 'Review')
+      await selectAction(page, 'Edit')
       /*
        * Expected result: should include
        * - Deceased's First Name
@@ -919,7 +920,6 @@ test.describe.serial('8. Validate declaration review page', () => {
     test.describe('8.2.2 Click any "Change" link', async () => {
       test("8.2.2.1 Change deceased's name", async () => {
         await page.getByTestId('change-button-deceased.name').click()
-        await page.getByRole('button', { name: 'Continue' }).click()
 
         declaration.deceased.name.firstname = faker.person.firstName('male')
         declaration.deceased.name.surname = faker.person.lastName('male')
@@ -941,7 +941,6 @@ test.describe.serial('8. Validate declaration review page', () => {
 
       test("8.2.2.2 Change deceased's gender", async () => {
         await page.getByTestId('change-button-deceased.gender').click()
-        await page.getByRole('button', { name: 'Continue' }).click()
 
         declaration.deceased.gender = 'Male'
 
@@ -961,7 +960,6 @@ test.describe.serial('8. Validate declaration review page', () => {
 
       test("8.2.2.3 Change deceased's birthday", async () => {
         await page.getByTestId('change-button-deceased.dob').click()
-        await page.getByRole('button', { name: 'Continue' }).click()
 
         declaration.deceased.dob = getRandomDate(5, 200)
         await page.getByPlaceholder('dd').fill(declaration.deceased.dob.dd)
@@ -980,7 +978,6 @@ test.describe.serial('8. Validate declaration review page', () => {
 
       test("8.2.2.4 Change deceased's ID type", async () => {
         await page.getByTestId('change-button-deceased.idType').click()
-        await page.getByRole('button', { name: 'Continue' }).click()
 
         declaration.deceased.idType = 'Birth Registration Number'
 
@@ -1000,7 +997,6 @@ test.describe.serial('8. Validate declaration review page', () => {
       })
       test("8.2.2.5 Change deceased's ID", async () => {
         await page.getByTestId('change-button-deceased.brn').click()
-        await page.getByRole('button', { name: 'Continue' }).click()
 
         declaration.deceased.brn = faker.string.numeric(10)
 
@@ -1017,7 +1013,6 @@ test.describe.serial('8. Validate declaration review page', () => {
 
       test("8.2.2.6 Change deceased's address", async () => {
         await page.getByTestId('change-button-deceased.address').click()
-        await page.getByRole('button', { name: 'Continue' }).click()
 
         declaration.deceased.address.province = 'Central'
         declaration.deceased.address.district = 'Itambo'
@@ -1044,7 +1039,6 @@ test.describe.serial('8. Validate declaration review page', () => {
 
       test('8.2.2.7 Change informant type', async () => {
         await page.getByTestId('change-button-informant.relation').click()
-        await page.getByRole('button', { name: 'Continue' }).click()
 
         declaration.informant.relation = 'Spouse'
 
@@ -1066,7 +1060,6 @@ test.describe.serial('8. Validate declaration review page', () => {
 
       test('8.2.2.8 Change registration email', async () => {
         await page.getByTestId('change-button-informant.email').click()
-        await page.getByRole('button', { name: 'Continue' }).click()
         declaration.informant.email = faker.internet.email()
         await page
           .locator('#informant____email')
@@ -1082,7 +1075,6 @@ test.describe.serial('8. Validate declaration review page', () => {
 
       test("8.2.2.9 Change spouse's name", async () => {
         await page.getByTestId('change-button-spouse.name').click()
-        await page.getByRole('button', { name: 'Continue' }).click()
         declaration.spouse.name.firstname = faker.person.firstName('female')
         declaration.spouse.name.surname = faker.person.lastName('female')
         await page.locator('#firstname').fill(declaration.spouse.name.firstname)
@@ -1099,7 +1091,6 @@ test.describe.serial('8. Validate declaration review page', () => {
       })
       test("8.2.2.10 Change spouse's birthday", async () => {
         await page.getByTestId('change-button-spouse.dob').click()
-        await page.getByRole('button', { name: 'Continue' }).click()
         declaration.spouse.dob = getRandomDate(19, 200)
         await page.getByPlaceholder('dd').fill(declaration.spouse.dob.dd)
         await page.getByPlaceholder('mm').fill(declaration.spouse.dob.mm)
@@ -1115,7 +1106,6 @@ test.describe.serial('8. Validate declaration review page', () => {
       })
       test("8.2.2.11 Change spouse's nationality", async () => {
         await page.getByTestId('change-button-spouse.nationality').click()
-        await page.getByRole('button', { name: 'Continue' }).click()
         declaration.spouse.nationality = 'Japan'
         await page.locator('#spouse____nationality').click()
         await page
@@ -1133,7 +1123,6 @@ test.describe.serial('8. Validate declaration review page', () => {
       })
       test("8.2.2.12 Change spouse's ID type", async () => {
         await page.getByTestId('change-button-spouse.idType').click()
-        await page.getByRole('button', { name: 'Continue' }).click()
         declaration.spouse.idType = 'Birth Registration Number'
         await page.locator('#spouse____idType').click()
         await page
@@ -1151,7 +1140,6 @@ test.describe.serial('8. Validate declaration review page', () => {
       })
       test("8.2.2.13 Change spouse's ID", async () => {
         await page.getByTestId('change-button-spouse.brn').click()
-        await page.getByRole('button', { name: 'Continue' }).click()
         declaration.spouse.brn = faker.string.numeric(10)
         await page.locator('#spouse____brn').fill(declaration.spouse.brn)
         await page.getByRole('button', { name: 'Back to review' }).click()
@@ -1174,12 +1162,12 @@ test.describe.serial('8. Validate declaration review page', () => {
     })
 
     test('8.2.6 Declare and validate', async () => {
-      await selectDeclarationAction(page, 'Declare')
+      await selectDeclarationAction(page, 'Declare with edits')
       await ensureOutboxIsEmpty(page)
     })
 
     test('8.2.7 Confirm the declaration to send for approval', async () => {
-      await page.getByText('Sent for approval').click()
+      await page.getByText('Recent').click()
       /*
        * @TODO: When workflows are implemented on V2, this should navigate to correct workflow first.
        */
@@ -1194,12 +1182,12 @@ test.describe.serial('8. Validate declaration review page', () => {
     })
   })
 
-  test.describe('8.3 Local registrar actions', async () => {
+  test.describe('8.3 Registrar actions', async () => {
     test('8.3.1 Navigate to the declaration "Record" tab', async () => {
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await login(page, CREDENTIALS.REGISTRAR)
 
       await ensureOutboxIsEmpty(page)
-      await page.getByText('Ready for review').click()
+      await page.getByText('Pending registration').click()
 
       await page
         .getByRole('button', {
@@ -1646,9 +1634,9 @@ test.describe.serial('8. Validate declaration review page', () => {
       await selectDeclarationAction(page, 'Register with edits')
     })
 
-    test('8.3.7 Confirm the declaration to ready for print', async () => {
+    test('8.3.7 Confirm the declaration to "Pending certification"-workqueue', async () => {
       await ensureOutboxIsEmpty(page)
-      await page.getByText('Ready to print').click()
+      await page.getByText('Pending certification').click()
 
       await expect(
         page.getByRole('button', {

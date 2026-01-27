@@ -84,9 +84,9 @@ import {
   importAdministrativeAreas,
   importEvent,
   importEvents,
-  importLocations,
   syncLocationLevels,
-  syncLocationStatistics
+  syncLocationStatistics,
+  importLocations
 } from './analytics/analytics'
 import { getClient } from './analytics/postgres'
 import { createClient } from '@opencrvs/toolkit/api'

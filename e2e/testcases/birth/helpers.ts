@@ -112,8 +112,8 @@ export const assignFromWorkqueue = async (page: Page, name: string) => {
   })
 }
 
-export async function getAllLocations(
-  type: 'ADMIN_STRUCTURE' | 'HEALTH_FACILITY' | 'CRVS_OFFICE',
+export async function getLocations(
+  type: 'HEALTH_FACILITY' | 'CRVS_OFFICE',
   token: string
 ) {
   const client = createClient(GATEWAY_HOST + '/events', `Bearer ${token}`)
@@ -123,8 +123,18 @@ export async function getAllLocations(
   return locations
 }
 
-export function getLocationIdByName(locations: fhir.Location[], name: string) {
-  const location = locations.find((location) => location.name === name)
+export async function getAdministrativeAreas(token: string) {
+  const client = createClient(GATEWAY_HOST + '/events', `Bearer ${token}`)
+  const locations = await client.administrativeAreas.list.query()
+
+  return locations
+}
+
+export function getIdByName(
+  items: { name: string; id: string }[],
+  name: string
+) {
+  const location = items.find((item) => item.name === name)
   if (!location) {
     throw new Error(`Location with name ${name} not found`)
   }

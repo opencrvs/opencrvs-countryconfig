@@ -2,7 +2,7 @@ import { test, type Page, expect } from '@playwright/test'
 import { login } from '../../helpers'
 import { CREDENTIALS } from '../../constants'
 
-test.describe.serial('Side navigation', () => {
+test.describe('Side menu navigation', () => {
   let page: Page
 
   test.beforeAll(async ({ browser }) => {
@@ -13,110 +13,114 @@ test.describe.serial('Side navigation', () => {
     await page.close()
   })
 
-  test('1.1. Check LOCAL REGISTRAR navigation items', async () => {
-    await login(page, CREDENTIALS.LOCAL_REGISTRAR, false)
+  test('Check Registrar navigation items', async () => {
+    await login(page, CREDENTIALS.REGISTRAR)
 
-    // V2 workques is super set of V1 workqueues.
-    const localRegisrarWorkqueues = [
-      'Outbox',
-      'My drafts',
+    const expectedWorkqueues = [
+      'Drafts',
       'Assigned to you',
       'Recent',
       'Notifications',
-      'Ready for review',
-      'Requires updates',
-      'In external validation',
-      'Ready to Print'
+      'Potential duplicate',
+      'Pending updates',
+      'Pending approval',
+      'Pending registration',
+      'Escalated',
+      'Pending external validation',
+      'Pending certification',
+      'Pending issuance'
     ]
 
     // All workqueues are present on home page.
-    for (const item of localRegisrarWorkqueues) {
+    for (const item of expectedWorkqueues) {
       page.getByRole('button', { name: item })
     }
 
-    const localRegistrarNavItemsWithFrame = ['Organisation', 'Team']
+    const expectedItemsWithFrame = ['Organisation', 'Team']
 
-    const localRegistrarNavItemsWithoutFrame = [
+    const expectedItemsWithoutFrame = [
       'Registrations Dashboard',
       'Completeness Dashboard',
       'Registry'
     ]
 
-    for (const item of localRegistrarNavItemsWithFrame) {
+    for (const item of expectedItemsWithFrame) {
       await page.getByRole('button', { name: item }).click()
 
-      // All workqueues are present on each page. V1 have different workqueues, so we should notice.
-      for (const item of localRegisrarWorkqueues) {
-        page.getByRole('button', { name: item })
+      // All workqueues are present on each page.
+      for (const item of expectedWorkqueues) {
+        await page.getByRole('button', { name: item })
       }
-      // All workqueues are present on each page. V1 have different workqueues, so we should notice.
-      for (const item of localRegistrarNavItemsWithoutFrame) {
-        page.getByRole('button', { name: item })
+
+      // All workqueues are present on each page.
+      for (const item of expectedItemsWithoutFrame) {
+        await page.getByRole('button', { name: item })
       }
     }
 
-    for (const item of localRegistrarNavItemsWithoutFrame) {
+    for (const item of expectedItemsWithoutFrame) {
       await page.getByRole('button', { name: item }).click()
       await expect(page.locator('Farajaland CRS')).toBeHidden()
 
       // Only one button available (X)
-      await page.getByRole('button').click()
+      await page.locator('#page-title').getByRole('button').click()
     }
   })
 
-  test('1.2. Check REGISTRATION AGENT navigation items', async () => {
-    await login(page, CREDENTIALS.REGISTRATION_AGENT, false)
+  test('Check Registration Officer navigation items', async () => {
+    await login(page, CREDENTIALS.REGISTRATION_OFFICER)
 
-    // V2 workques is super set of V1 workqueues.
-    const registrationAgentWorkqueues = [
-      'Outbox',
-      'My drafts',
+    const expectedWorkqueues = [
+      'Drafts',
       'Assigned to you',
       'Recent',
       'Notifications',
-      'Ready for review',
-      'Requires updates',
-      'In external validation',
-      'Ready to Print'
+      'Pending validation',
+      'Pending updates',
+      'Pending approval',
+      'Escalated',
+      'Pending external validation',
+      'Pending certification',
+      'Pending issuance'
     ]
 
     // All workqueues are present on home page.
-    for (const item of registrationAgentWorkqueues) {
-      page.getByText(item)
+    for (const item of expectedWorkqueues) {
+      page.getByRole('button', { name: item })
     }
 
-    const registrationAgentNavItemsWithFrame = ['Organisation', 'Team']
+    const expectedItemsWithFrame = ['Organisation', 'Team']
 
-    const registrationAgentNavItemsWithoutFrame = [
+    const expectedItemsWithoutFrame = [
       'Registrations Dashboard',
       'Completeness Dashboard',
       'Registry'
     ]
 
-    for (const item of registrationAgentNavItemsWithFrame) {
+    for (const item of expectedItemsWithFrame) {
       await page.getByText(item).click()
 
       // All workqueues are present on each page. V1 have different workqueues, so we should notice.
-      for (const item of registrationAgentWorkqueues) {
+      for (const item of expectedWorkqueues) {
         page.getByText(item)
       }
       // All workqueues are present on each page. V1 have different workqueues, so we should notice.
-      for (const item of registrationAgentNavItemsWithoutFrame) {
+      for (const item of expectedItemsWithoutFrame) {
         page.getByText(item)
       }
     }
 
-    for (const item of registrationAgentNavItemsWithoutFrame) {
+    for (const item of expectedItemsWithoutFrame) {
       await page.getByText(item).click()
       await expect(page.locator('Farajaland CRS')).toBeHidden()
 
       // Only one button available (X)
-      await page.getByRole('button').click()
+      await page.locator('#page-title').getByRole('button').click()
     }
   })
 
-  test('1.3. Check NATIONAL_SYSTEM_ADMIN navigation items', async () => {
-    await login(page, CREDENTIALS.NATIONAL_SYSTEM_ADMIN, false)
+  test('Check National System Admin navigation items', async () => {
+    await login(page, CREDENTIALS.NATIONAL_SYSTEM_ADMIN)
 
     const nationalSystemAdminNavItemsWithFrame = ['Organisation', 'Team']
 
@@ -129,14 +133,17 @@ test.describe.serial('Side navigation', () => {
     // Should not have any workqueues, check that none of the workqueues are present
     const registrationAgentWorkqueues = [
       'Outbox',
-      'My drafts',
+      'Drafts',
       'Assigned to you',
       'Recent',
       'Notifications',
-      'Ready for review',
-      'Requires updates',
-      'In external validation',
-      'Ready to Print'
+      'Pending validation',
+      'Pending updates',
+      'Pending approval',
+      'Escalated',
+      'Pending external validation',
+      'Pending certification',
+      'Pending issuance'
     ]
 
     const nationalSystemAdminNestedNavItemsWithFrame = [
@@ -148,7 +155,7 @@ test.describe.serial('Side navigation', () => {
       await page.getByRole('button', { name: item }).click()
 
       for (const item of registrationAgentWorkqueues) {
-        await expect(page.locator(item)).toBeHidden()
+        await expect(page.getByRole('button', { name: item })).not.toBeVisible()
       }
 
       for (const items of nationalSystemAdminNestedNavItemsWithFrame) {
@@ -174,7 +181,7 @@ test.describe.serial('Side navigation', () => {
       await expect(page.locator('Farajaland CRS')).toBeHidden()
 
       // Only one button available (X)
-      await page.getByRole('button').click()
+      await page.locator('#page-title').getByRole('button').click()
     }
   })
 })

@@ -15,8 +15,8 @@ export function trackAndDeleteCreatedEvents() {
 
   test.beforeEach(async ({ page }) => {
     token = await getToken(
-      CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
-      CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+      CREDENTIALS.REGISTRAR.USERNAME,
+      CREDENTIALS.REGISTRAR.PASSWORD
     )
 
     page.on('response', async (response) => {

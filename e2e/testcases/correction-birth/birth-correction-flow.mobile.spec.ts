@@ -23,8 +23,8 @@ test.describe.serial('Birth correction flow - Mobile', () => {
 
   test.beforeAll(async ({ browser }) => {
     const token = await getToken(
-      CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
-      CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+      CREDENTIALS.REGISTRAR.USERNAME,
+      CREDENTIALS.REGISTRAR.PASSWORD
     )
     const res = await createDeclaration(
       token,
@@ -40,11 +40,11 @@ test.describe.serial('Birth correction flow - Mobile', () => {
   })
 
   test('Login', async () => {
-    await login(page, CREDENTIALS.REGISTRATION_AGENT)
+    await login(page, CREDENTIALS.REGISTRATION_OFFICER)
   })
 
   test('Navigate to the correction form', async () => {
-    await navigateToWorkqueue(page, 'Ready to print')
+    await navigateToWorkqueue(page, 'Pending certification')
     await page
       .getByRole('button', { name: formatV2ChildName(declaration) })
       .click()
@@ -134,7 +134,7 @@ test.describe.serial('Birth correction flow - Mobile', () => {
 
     await expect(page.getByText('Request record correction?')).toBeVisible()
     await page.getByRole('button', { name: 'Confirm', exact: true }).click()
-    await expectInUrl(page, `/workqueue/ready-to-print`)
+    await expectInUrl(page, `/workqueue/pending-certification`)
     await ensureOutboxIsEmpty(page)
   })
 
@@ -143,12 +143,12 @@ test.describe.serial('Birth correction flow - Mobile', () => {
   })
 
   test.describe('Approve correction request', () => {
-    test('Login as Local Registrar', async () => {
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+    test('Login as Registrar', async () => {
+      await login(page, CREDENTIALS.REGISTRAR)
     })
 
-    test("Find the event in the 'Ready for review' workflow", async () => {
-      await navigateToWorkqueue(page, 'Ready for review')
+    test("Find the event in the 'Pending corrections' workflow", async () => {
+      await navigateToWorkqueue(page, 'Pending corrections')
 
       await page
         .getByRole('button', { name: formatV2ChildName(declaration) })
@@ -208,9 +208,9 @@ test.describe.serial('Birth correction flow - Mobile', () => {
       await page.getByRole('button', { name: 'Approve', exact: true }).click()
       await page.getByRole('button', { name: 'Confirm', exact: true }).click()
 
-      await expectInUrl(page, `/workqueue/in-review-all`)
+      await expectInUrl(page, `/workqueue/correction-requested`)
       await ensureOutboxIsEmpty(page)
-      await navigateToWorkqueue(page, 'Ready to print')
+      await navigateToWorkqueue(page, 'Pending certification')
       await page
         .getByRole('button', {
           name: formatV2ChildName({

@@ -100,9 +100,9 @@ test.describe.serial('6. Death declaration case - 6', () => {
     await page.close()
   })
 
-  test.describe('6.1 Declaration started by Local Registrar', async () => {
+  test.describe('6.1 Declaration started by Registrar', async () => {
     test.beforeAll(async () => {
-      await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+      await login(page, CREDENTIALS.REGISTRAR)
 
       await page.click('#header-new-event')
       await page.getByLabel('Death').click()
@@ -541,11 +541,8 @@ test.describe.serial('6. Death declaration case - 6', () => {
        */
       expect(page.url().includes('assigned-to-you')).toBeTruthy()
 
-      await page.getByText('Ready to print').click()
+      await page.getByText('Pending certification').click()
 
-      /*
-       * Expected result: The declaration should be in sent for review
-       */
       await expect(
         page.getByRole('button', {
           name:
@@ -556,12 +553,12 @@ test.describe.serial('6. Death declaration case - 6', () => {
       ).toBeVisible()
     })
   })
-  test.describe('6.2 Declaration Review by Registration Agent', async () => {
+  test.describe('6.2 Declaration Review by RO', async () => {
     test('6.2.1 Navigate to the declaration "Record" -tab', async () => {
-      await login(page, CREDENTIALS.REGISTRATION_AGENT)
+      await login(page, CREDENTIALS.REGISTRATION_OFFICER)
 
       await ensureOutboxIsEmpty(page)
-      await page.getByText('Ready to print').click()
+      await page.getByText('Pending certification').click()
 
       await page
         .getByRole('button', {

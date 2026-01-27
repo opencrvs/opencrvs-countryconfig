@@ -99,8 +99,8 @@ test.describe.serial('Correct record - 4', () => {
 
   test('4.0 Shortcut declaration', async () => {
     let token = await getToken(
-      CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
-      CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+      CREDENTIALS.REGISTRAR.USERNAME,
+      CREDENTIALS.REGISTRAR.PASSWORD
     )
     const res = await createDeclarationV2(
       token,
@@ -146,7 +146,7 @@ test.describe.serial('Correct record - 4', () => {
   })
 
   test('4.1 Ready to correct record > record audit', async () => {
-    await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+    await login(page, CREDENTIALS.REGISTRAR)
 
     await auditRecord({
       page,
@@ -879,11 +879,6 @@ test.describe.serial('Correct record - 4', () => {
     await page.getByRole('button', { name: 'Correct record' }).click()
     await page.getByRole('button', { name: 'Confirm' }).click()
 
-    /*
-     * Expected result: should
-     * - be navigated to sent for approval tab
-     * - include the declaration in this tab
-     */
     expect(page.url().includes(`events/${eventId}`)).toBeTruthy()
     await page.getByTestId('exit-event').click()
     await page.getByRole('button', { name: 'Outbox' }).click()

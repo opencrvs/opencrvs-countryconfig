@@ -16,8 +16,8 @@ test.describe.serial('Birth Record correction flow', () => {
 
   test.beforeAll(async ({ browser }) => {
     const token = await getToken(
-      CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
-      CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+      CREDENTIALS.REGISTRAR.USERNAME,
+      CREDENTIALS.REGISTRAR.PASSWORD
     )
     const res = await createDeclaration(
       token,
@@ -29,11 +29,11 @@ test.describe.serial('Birth Record correction flow', () => {
     eventId = res.eventId
 
     page = await browser.newPage()
-    await login(page, CREDENTIALS.LOCAL_REGISTRAR)
+    await login(page, CREDENTIALS.REGISTRAR)
   })
 
   test('Navigate to the correction form', async () => {
-    await page.getByRole('button', { name: 'Ready to print' }).click()
+    await page.getByRole('button', { name: 'Pending certification' }).click()
     await page
       .getByRole('button', { name: formatV2ChildName(declaration) })
       .click()
@@ -220,7 +220,7 @@ test.describe.serial('Birth Record correction flow', () => {
 
     await page.getByRole('button', { name: 'Confirm', exact: true }).click()
 
-    await expectInUrl(page, `/workqueue/ready-to-print`)
+    await expectInUrl(page, `/workqueue/pending-certification`)
 
     await page.waitForResponse((response) =>
       response

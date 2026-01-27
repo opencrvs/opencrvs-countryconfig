@@ -1,0 +1,15 @@
+name: Migration docker swarm to k8s
+
+on:
+  workflow_dispatch:
+
+  workflow_call:
+
+
+jobs:
+  dummy-job:
+    name: Dummy Job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo
+        run: echo "This is a placeholder job for migration workflow."

@@ -46,7 +46,7 @@ export async function logout(page: Page) {
 
 export async function login(
   page: Page,
-  credentials = CREDENTIALS.LOCAL_REGISTRAR,
+  credentials = CREDENTIALS.REGISTRAR,
   skipPin?: boolean
 ) {
   const token = await getToken(credentials.USERNAME, credentials.PASSWORD)
@@ -627,7 +627,6 @@ export async function selectDeclarationAction(
     | 'Declare'
     | 'Validate'
     | 'Register'
-    | 'Reject'
     | 'Delete declaration'
     | 'Save & Exit'
     | 'Declare with edits'

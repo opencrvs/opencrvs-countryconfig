@@ -443,9 +443,9 @@ test.describe.serial('1. Birth event declaration', () => {
          * - find the declared birth event record on this page list with saved data
          */
         //@todo: The user should be navigated to "my-drafts" tab by default
-        await page.getByText('My drafts').click()
+        await page.getByText('Drafts').click()
 
-        await expect(page.locator('#content-name')).toHaveText('My drafts')
+        await expect(page.locator('#content-name')).toHaveText('Drafts')
 
         await ensureOutboxIsEmpty(page)
 
@@ -515,15 +515,6 @@ test.describe.serial('1. Birth event declaration', () => {
 
     test('1.10.3 Click Confirm', async ({ page }) => {
       await page.getByRole('button', { name: 'Confirm' }).click()
-      /*
-       * Expected result: should be navigated to "my-drafts" tab but no draft will be saved
-       */
-
-      // @TODO: My drafts page is not available yet in V2 events
-      // await expect(
-      //   page.locator('#content-name', { hasText: 'My drafts' })
-      // ).toBeVisible()
-      // await expect(page.getByText(/seconds ago/)).toBeHidden()
 
       await expect(
         page
@@ -581,16 +572,6 @@ test.describe.serial('1. Birth event declaration', () => {
 
     test('1.11.3 Click Confirm', async ({ page }) => {
       await page.getByRole('button', { name: 'Confirm' }).click()
-
-      /*
-       * Expected result: should be navigated to "my-drafts" tab but no draft will be saved
-       */
-
-      // @TODO: My drafts page is not available yet in V2 events
-      // await expect(
-      //   page.locator('#content-name', { hasText: 'My drafts' })
-      // ).toBeVisible()
-      // await expect(page.getByText(/seconds ago/)).toBeHidden()
 
       await expect(
         page.getByTestId('search-result').getByText('Assigned to you')
