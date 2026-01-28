@@ -573,6 +573,46 @@ export async function createServer() {
   })
 
   server.route({
+    method: '*',
+    path: '/api/upload',
+    handler: (_, h) =>
+      h.proxy({
+        uri: `${GATEWAY_URL}/upload`,
+        passThrough: true
+      }),
+    options: {
+      auth: false,
+      payload: {
+        output: 'data',
+        parse: false,
+        maxBytes: 52428800
+      },
+
+      tags: ['api', 'proxy'],
+      description: 'Proxy for gateway upload endpoint'
+    }
+  })
+
+  server.route({
+    method: '*',
+    path: '/api/events/{path*}',
+    handler: (request, h) =>
+      h.proxy({
+        uri: `${GATEWAY_URL}/events${request.params.path ? '/' + request.params.path : ''}`,
+        passThrough: true
+      }),
+    options: {
+      auth: false,
+      payload: {
+        output: 'data',
+        parse: false
+      },
+      tags: ['api', 'proxy'],
+      description: 'Proxy for gateway events endpoint'
+    }
+  })
+
+  server.route({
     method: 'GET',
     path: '/{param*}',
     options: {
