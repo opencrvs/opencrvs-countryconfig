@@ -594,6 +594,21 @@ export async function createServer() {
   })
 
   server.route({
+    method: 'GET',
+    path: '/api/events/{path*}',
+    handler: (request, h) =>
+      h.proxy({
+        uri: `${GATEWAY_URL}/events${request.params.path ? '/' + request.params.path : ''}`,
+        passThrough: true
+      }),
+    options: {
+      auth: false,
+      tags: ['api', 'proxy'],
+      description: 'Proxy for gateway events endpoint'
+    }
+  })
+
+  server.route({
     method: '*',
     path: '/api/events/{path*}',
     handler: (request, h) =>
