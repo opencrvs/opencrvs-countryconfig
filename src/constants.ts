@@ -18,7 +18,6 @@ export const DOMAIN = env.DOMAIN
 export const GATEWAY_URL = env.GATEWAY_URL
 export const LOGIN_URL = env.LOGIN_URL
 export const CLIENT_APP_URL = env.CLIENT_APP_URL
-export const FHIR_URL = env.FHIR_URL
 
 export const COUNTRY_CONFIG_HOST = env.COUNTRY_CONFIG_HOST
 export const COUNTRY_CONFIG_PORT = env.COUNTRY_CONFIG_PORT
