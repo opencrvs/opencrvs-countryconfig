@@ -558,7 +558,7 @@ export async function createServer() {
   server.route({
     method: '*',
     path: '/graphql',
-    handler: (_, h) =>
+    handler: (request, h) =>
       h.proxy({
         uri: `${GATEWAY_URL}/graphql`,
         passThrough: true
@@ -575,7 +575,7 @@ export async function createServer() {
   server.route({
     method: '*',
     path: '/api/upload',
-    handler: (_, h) =>
+    handler: (request, h) =>
       h.proxy({
         uri: `${GATEWAY_URL}/upload`,
         passThrough: true
@@ -609,6 +609,26 @@ export async function createServer() {
       },
       tags: ['api', 'proxy'],
       description: 'Proxy for gateway events endpoint'
+    }
+  })
+
+  server.route({
+    method: '*',
+    path: '/api/auth/{path*}',
+    handler: (request, h) => {
+      return h.proxy({
+        uri: `${GATEWAY_URL}/auth/${request.params.path}` + request.url.search,
+        passThrough: true
+      })
+    },
+    options: {
+      auth: false,
+      payload: {
+        output: 'data',
+        parse: false
+      },
+      tags: ['api', 'proxy'],
+      description: 'Proxy for gateway auth subpaths'
     }
   })
 
