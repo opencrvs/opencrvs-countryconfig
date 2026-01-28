@@ -21,10 +21,7 @@ import * as Sentry from 'hapi-sentry'
 import * as H2o2 from '@hapi/h2o2'
 import fetch from 'node-fetch'
 import {
-  CLIENT_APP_URL,
-  DOMAIN,
   GATEWAY_URL,
-  LOGIN_URL,
   SENTRY_DSN,
   COUNTRY_CONFIG_HOST,
   COUNTRY_CONFIG_PORT,
@@ -207,20 +204,11 @@ async function getPublicKey(): Promise<string> {
 }
 
 export async function createServer() {
-  let whitelist: string[] = [DOMAIN, 'farajaland-public-portal.figma.site']
-  if (DOMAIN[0] !== '*') {
-    whitelist = [
-      LOGIN_URL,
-      CLIENT_APP_URL,
-      'farajaland-public-portal.figma.site'
-    ]
-  }
-  logger.info(`Whitelist: ${JSON.stringify(whitelist)}`)
   const server = new Hapi.Server({
     host: COUNTRY_CONFIG_HOST,
     port: COUNTRY_CONFIG_PORT,
     routes: {
-      cors: { origin: whitelist },
+      cors: { origin: '*' },
       payload: { maxBytes: 52428800, timeout: DEFAULT_TIMEOUT }
     }
   })
