@@ -207,9 +207,13 @@ async function getPublicKey(): Promise<string> {
 }
 
 export async function createServer() {
-  let whitelist: string[] = [DOMAIN]
+  let whitelist: string[] = [DOMAIN, 'farajaland-public-portal.figma.site']
   if (DOMAIN[0] !== '*') {
-    whitelist = [LOGIN_URL, CLIENT_APP_URL]
+    whitelist = [
+      LOGIN_URL,
+      CLIENT_APP_URL,
+      'farajaland-public-portal.figma.site'
+    ]
   }
   logger.info(`Whitelist: ${JSON.stringify(whitelist)}`)
   const server = new Hapi.Server({
