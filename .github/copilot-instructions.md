@@ -93,11 +93,11 @@ yarn metabase
 - `Dockerfile` - Production container configuration
 
 **Source Code (`src/`)**
-- `src/index.ts` - Main entry point, Hapi server setup (20KB file)
+- `src/index.ts` - Main entry point, Hapi server setup with routing and middleware configuration
 - `src/constants.ts` - Global constants
 - `src/environment.ts` - Environment variable configuration
 - `src/logger.ts` - Pino logger setup
-- `src/api/` - API endpoints for OpenCRVS integration (14 subdirectories)
+- `src/api/` - API endpoints for OpenCRVS integration (12 subdirectories)
 - `src/form/` - Form configuration for registration
 - `src/data-seeding/` - Reference data and seed scripts
 - `src/translations/` - i18n translation files (CSV format)
@@ -133,7 +133,7 @@ yarn metabase
 When a PR is opened, these checks run automatically:
 1. **Compilation**: `yarn test:compilation` (TypeScript type checking)
 2. **Tests**: `yarn test` (Vitest unit tests)
-3. **Bash Linting**: ShellCheck on all .sh scripts (allows SC2086, SC2068 errors)
+3. **Bash Linting**: ShellCheck on all .sh scripts (excludes SC2086, SC2068 errors)
 
 All checks must pass before merging. The test workflow runs on `ubuntu-24.04`.
 
@@ -180,8 +180,8 @@ Before finalizing changes:
 
 **OpenCRVS Integration**
 This service depends on OpenCRVS Core and must be run alongside it. It provides:
-1. Data seeding endpoints: `/application-config`, `/users`, `/roles`, `/locations`, `/statistics`, `/certificates`
-2. Business critical APIs: `/forms`, notifications, dashboards
+1. Data seeding endpoints: `/application-config`, `/users`, `/roles`, `/locations`, `/certificates`
+2. Business critical APIs: `/forms`, `/crude-death-rate`, notifications, dashboards
 3. Static assets: Client configuration, login configuration
 
 **Database Schema**
