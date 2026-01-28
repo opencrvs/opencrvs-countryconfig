@@ -213,6 +213,7 @@ config.emailAllUsers.title,Title for email all users,Email all users,Envoyer un 
 config.userRoles.language,Language name,"{language, select, en {English} fr {French} other {{language}}}","{language, select, en {Anglais} fr {Français} other {{language}}}"
 configuration.dateFormat,Default format for date values,d MMMM y,d MMMM y
 configuration.timeFormat,Default time format for timestamps,"MMMM dd, yyyy · hh.mm a","MMMM dd, yyyy · hh.mm a"
+configuration.timeField.outputFormat,Default output format for time fields,"hh:mm a","hh:mm a"
 conflicts.modal.assign.description,Description for modal when assign,Please note you will have sole access to this record. Please make any updates promptly otherwise unassign the record.,"Veuillez noter que vous aurez un accès exclusif à cet enregistrement. Veuillez effectuer rapidement les mises à jour éventuelles, sinon vous désassignez l'enregistrement."
 conflicts.modal.assign.title,Title for modal when assign,Assign record?,Attribuer un enregistrement ?
 conflicts.modal.assigned.description,Description for modal when record already assigned,{name} at {officeName} has sole editable access to this record,{name} à {officeName} a un accès unique et modifiable à cet enregistrement.
@@ -780,6 +781,7 @@ editPageBanner.notifiedMessage,The message for the edit page banner,You are edit
 email.label.confirmation,Confirmation email address message,A verification code has been sent to {email},Un code de vérification a été envoyé à {email}
 error.child.weightAtBirth.invalidNumberRange,This is the error message for invalid number range,Must be within 0 and 6,Doit être compris entre 0 et 6
 error.code,Error code,401,401
+error.pdf,PDF load Error,Failed to load PDF,Échec du chargement du PDF
 error.draftFailed,Tips for failed declarations,This is some messaging on advicing the user on what to do... in the event of a failed declaration.,Il s'agit d'un message indiquant à l'utilisateur ce qu'il doit faire... en cas d'échec de la déclaration.
 error.invalidInput,Error message when generic field is invalid,Invalid input,Entrée invalide
 error.invalidName,This is the error message for invalid name,"Input contains invalid characters. Please use only letters (a-z, A-Z), numbers (0-9), hyphens (-) and apostrophes(')","L'entrée contient des caractères non valides. Veuillez n'utiliser que des lettres (a-z, A-Z), des chiffres (0-9), des traits d'union (-) et des apostrophes (')"
@@ -1481,13 +1483,15 @@ home.header.placeHolderNationalId,Search menu national ID place holder,Search fo
 home.header.placeHolderPhone,Search menu phone no place holder,Search for a phone no.,Recherche d'un numéro de téléphone
 home.header.placeHolderTrackingId,Search menu tracking id place holder,Search for a tracking ID,Recherche d'un ID de suivi
 home.header.placeholderName,Search menu name placeholder,Search for a name,Rechercher un nom
-home.header.searchTool.placeholder,Search tool placeholder,"Search for a tracking ID, name, registration number, national ID, phone number or email","Rechercher un identifiant de suivi, un nom, un numéro d'enregistrement, un numéro d'identité nationale, un numéro de téléphone ou une adresse e-mail"
+home.header.searchTool.placeholder,Search tool placeholder,"Search for a record","Rechercher un enregistrement"
 home.header.settingsTitle,settings title,Settings,Paramètres
 home.header.systemTitle,System title,System,Système
 home.header.teamTitle,Team title,Team,Équipe
 home.header.typeName,Search menu name type,Name,Nom
 home.header.typePhone,Search menu phone no type,Phone no.,N° de téléphone
 home.header.typeRN,Search menu brn drn type,Registration no.,N ° d'enregistrement.
+imageEditorModal.description,Description for the image editor modal,Resize and position the chosen image,Redimensionner et positionner l'image choisie
+imageEditorModal.title,Title for the image editor modal,Crop & resize image,Recadrer et redimensionner l'image
 imageUploadOption.upload.documentType,Show error message if the document type is not selected,Please select the type of document first,Veuillez d'abord sélectionner le type de document
 imageUploadOption.upload.error,Show error messages while uploading,File format not supported. Please upload a .png or .jpg (max {maxSize}mb),"Format de fichier non pris en charge. Veuillez joindre un png, jpg (max {maxSize}mb)"
 imageUploadOption.upload.imageFormat,Show error message if the selected image type is not supported,File format not supported. Please upload a .png or .jpg (max {maxSize}mb),Le format d'image n'est pas supporté. Veuillez joindre un png ou un jpg (max {maxSize}mb)
