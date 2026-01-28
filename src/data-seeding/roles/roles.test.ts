@@ -13,7 +13,7 @@ describe('Roles config', () => {
 
         const valid =
           // Configurable search scopes
-          scope.startsWith('search[') ||
+          scope.startsWith('type=record.search') ||
           // Legacyt search scopes
           scope.startsWith('search.') ||
           // Records
