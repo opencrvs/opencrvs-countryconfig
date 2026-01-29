@@ -1494,7 +1494,7 @@ home.header.placeHolderNationalId,Search menu national ID place holder,Search fo
 home.header.placeHolderPhone,Search menu phone no place holder,Search for a phone no.,Recherche d'un numéro de téléphone
 home.header.placeHolderTrackingId,Search menu tracking id place holder,Search for a tracking ID,Recherche d'un ID de suivi
 home.header.placeholderName,Search menu name placeholder,Search for a name,Rechercher un nom
-home.header.searchTool.placeholder,Search tool placeholder,"Search for a tracking ID, name, registration number, national ID, phone number or email","Rechercher un identifiant de suivi, un nom, un numéro d'enregistrement, un numéro d'identité nationale, un numéro de téléphone ou une adresse e-mail"
+home.header.searchTool.placeholder,Search tool placeholder,"Search for a record","Rechercher un enregistrement"
 home.header.settingsTitle,settings title,Settings,Paramètres
 home.header.systemTitle,System title,System,Système
 home.header.teamTitle,Team title,Team,Équipe
