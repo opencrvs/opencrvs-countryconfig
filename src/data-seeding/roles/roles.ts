@@ -282,6 +282,8 @@ export const roles: Role[] = [
       id: 'userRole.embassyOffical'
     },
     scopes: [
+      SCOPES.USER_READ_ONLY_MY_AUDIT,
+      'workqueue[id=assigned-to-you|recent|requires-completion|in-review|in-external-validation|escalated|pending-updates|pending-certification|correction-requested]',
       'type=record.search&event=birth,death,tennis-club-membership',
       'record.read[event=birth|death|tennis-club-membership]',
       'record.create[event=birth|death|tennis-club-membership]',
