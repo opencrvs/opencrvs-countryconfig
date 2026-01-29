@@ -131,7 +131,7 @@ test.describe('Form state', () => {
         .getByRole('button', { name: actionableEventChildName, exact: true })
         .click()
 
-      await selectAction(page, 'Declare')
+      await selectAction(page, 'Update')
 
       await expect(page.getByTestId('row-value-child.name')).not.toHaveText(
         REQUIRED_VALIDATION_ERROR
