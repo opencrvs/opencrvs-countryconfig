@@ -297,6 +297,7 @@ export const getLocationNameFromId = async (id: UUID, token: string) => {
   const [location] = await client.locations.list.query({
     locationIds: [id]
   })
+
   return location.name
 }
 

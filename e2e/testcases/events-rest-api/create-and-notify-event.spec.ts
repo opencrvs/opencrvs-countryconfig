@@ -724,7 +724,8 @@ test.describe('Events REST API', () => {
         clientToken,
         {
           type: EVENT_TYPE,
-          transactionId: uuidv4()
+          transactionId: uuidv4(),
+          createdAtLocation: healthFacilityId
         }
       )
 
