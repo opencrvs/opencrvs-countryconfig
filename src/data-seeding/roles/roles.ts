@@ -328,5 +328,14 @@ export const roles: Role[] = [
       id: 'userRole.LocalLeader'
     },
     scopes: []
+  },
+  {
+    id: 'FIELD_AGENT',
+    label: {
+      defaultMessage: 'Field Agent',
+      description: 'Name for user role Field Agent',
+      id: 'userRole.fieldAgent'
+    },
+    scopes: []
   }
 ]

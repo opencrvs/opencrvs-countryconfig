@@ -10,7 +10,7 @@ const testCases = [
   {
     credential: CREDENTIALS.FIELD_AGENT,
     action: ActionType.DECLARE,
-    expectedAuditRole: 'Hospital Clerk'
+    expectedAuditRole: 'Hospital Official'
   },
 
   {
@@ -26,7 +26,7 @@ const testCases = [
   {
     credential: CREDENTIALS.REGISTRAR,
     action: ActionType.REGISTER,
-    expectedAuditRole: 'Local Registrar'
+    expectedAuditRole: 'Registrar'
   }
 ]
 
