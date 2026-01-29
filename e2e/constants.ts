@@ -42,7 +42,7 @@ export const CREDENTIALS = {
     USERNAME: 'k.bwalya',
     PASSWORD: TEST_USER_PASSWORD
   },
-  ANOTHER_FIELD_AGENT: {
+  COMMUNITY_LEADER: {
     USERNAME: 'p.gondwe',
     PASSWORD: TEST_USER_PASSWORD
   },

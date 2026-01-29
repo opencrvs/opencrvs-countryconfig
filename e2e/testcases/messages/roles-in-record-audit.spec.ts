@@ -12,9 +12,8 @@ const testCases = [
     action: ActionType.DECLARE,
     expectedAuditRole: 'Hospital Official'
   },
-
   {
-    credential: CREDENTIALS.ANOTHER_FIELD_AGENT,
+    credential: CREDENTIALS.COMMUNITY_LEADER,
     action: ActionType.DECLARE,
     expectedAuditRole: 'Community Leader'
   },
