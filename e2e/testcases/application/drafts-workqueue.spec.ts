@@ -90,12 +90,10 @@ test.describe.serial('1: Validate my draft tab', () => {
 
     await getRowByTitle(page, formattedName)
       .getByRole('button', {
-        name: 'Review'
+        name: 'Update'
       })
       .click()
 
-    await selectAction(page, 'Declare')
-    await goToSection(page, 'review')
     await selectDeclarationAction(page, 'Notify')
 
     await ensureOutboxIsEmpty(page)

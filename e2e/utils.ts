@@ -54,6 +54,7 @@ export async function selectAction(
     | 'Provincial registrar feedback'
     | 'Revoke registration'
     | 'Reinstate registration'
+    | 'Update'
 ) {
   if (await page.getByRole('button', { name: 'Assign record' }).isVisible()) {
     await ensureAssigned(page)
