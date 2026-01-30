@@ -46,6 +46,7 @@ test.describe('Action menu options', () => {
         'Assign',
         'Edit',
         'Validate declaration',
+        'Escalate',
         'Reject',
         'Archive'
       ])
