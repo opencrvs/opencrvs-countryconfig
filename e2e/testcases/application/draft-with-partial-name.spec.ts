@@ -23,7 +23,7 @@ test.describe.serial('Validate draft with partial name', () => {
   })
 
   test('Record does not appear in draft ', async () => {
-    await login(page, CREDENTIALS.FIELD_AGENT)
+    await login(page, CREDENTIALS.HOSPITAL_CLERK)
     await page.getByRole('button', { name: 'Drafts' }).click()
 
     await expect(page.getByTestId('search-result')).not.toContainText(

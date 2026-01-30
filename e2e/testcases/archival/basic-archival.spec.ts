@@ -91,7 +91,7 @@ test.describe.serial('Basic Archival flow', () => {
   })
 
   test('Login as FA', async () => {
-    await login(page, CREDENTIALS.FIELD_AGENT)
+    await login(page, CREDENTIALS.HOSPITAL_CLERK)
   })
 
   test('Start creating new birth declaration', async () => {
@@ -338,8 +338,8 @@ test.describe.serial('Archival of declaration pending validation', () => {
 
   test.beforeAll(async ({ browser }) => {
     token = await getToken(
-      CREDENTIALS.FIELD_AGENT.USERNAME,
-      CREDENTIALS.FIELD_AGENT.PASSWORD
+      CREDENTIALS.HOSPITAL_CLERK.USERNAME,
+      CREDENTIALS.HOSPITAL_CLERK.PASSWORD
     )
     const res = await createDeclaration(token, undefined, ActionType.DECLARE)
     declaration = res.declaration

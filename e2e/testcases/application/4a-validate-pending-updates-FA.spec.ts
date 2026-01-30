@@ -17,8 +17,8 @@ test.describe
 
   test.beforeAll(async ({ browser }) => {
     const token = await getToken(
-      CREDENTIALS.FIELD_AGENT.USERNAME,
-      CREDENTIALS.FIELD_AGENT.PASSWORD
+      CREDENTIALS.HOSPITAL_CLERK.USERNAME,
+      CREDENTIALS.HOSPITAL_CLERK.PASSWORD
     )
     const res = await createDeclaration(token, undefined, ActionType.DECLARE)
     declaration = res.declaration
@@ -52,7 +52,7 @@ test.describe
   })
 
   test('4.1 Go to "Pending updates"-workqueue', async () => {
-    await login(page, CREDENTIALS.FIELD_AGENT)
+    await login(page, CREDENTIALS.HOSPITAL_CLERK)
     await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue.
     await page.getByText('Pending updates').click()
     await expect(

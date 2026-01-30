@@ -71,7 +71,7 @@ test.describe.serial('8. Validate declaration review page', () => {
 
   test.beforeAll(async ({ browser }) => {
     page = await browser.newPage()
-    await login(page, CREDENTIALS.FIELD_AGENT)
+    await login(page, CREDENTIALS.HOSPITAL_CLERK)
     await page.click('#header-new-event')
     await page.getByLabel('Birth').click()
     await page.getByRole('button', { name: 'Continue' }).click()

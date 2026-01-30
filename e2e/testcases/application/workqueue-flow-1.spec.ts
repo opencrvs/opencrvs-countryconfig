@@ -83,7 +83,7 @@ test.describe.serial('1. Workqueue flow - 1', () => {
 
   test.describe('1.1 Notify by FA', async () => {
     test.beforeAll(async () => {
-      await login(page, CREDENTIALS.FIELD_AGENT)
+      await login(page, CREDENTIALS.HOSPITAL_CLERK)
       await page.click('#header-new-event')
       await page.getByLabel('Birth').click()
       await page.getByRole('button', { name: 'Continue' }).click()
@@ -284,7 +284,7 @@ test.describe.serial('1. Workqueue flow - 1', () => {
   })
 
   test('1.3 FA can not see the validated record', async () => {
-    await login(page, CREDENTIALS.FIELD_AGENT, true)
+    await login(page, CREDENTIALS.HOSPITAL_CLERK, true)
 
     await assertRecordInWorkqueue({
       page,
@@ -420,7 +420,7 @@ test.describe.serial('1. Workqueue flow - 1', () => {
   })
 
   test('1.6 FA can not see the registered record', async () => {
-    await login(page, CREDENTIALS.FIELD_AGENT, true)
+    await login(page, CREDENTIALS.HOSPITAL_CLERK, true)
 
     await assertRecordInWorkqueue({
       page,

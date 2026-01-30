@@ -21,8 +21,8 @@ test.describe
 
   test.beforeAll(async ({ browser }) => {
     const token = await getToken(
-      CREDENTIALS.FIELD_AGENT.USERNAME,
-      CREDENTIALS.FIELD_AGENT.PASSWORD
+      CREDENTIALS.HOSPITAL_CLERK.USERNAME,
+      CREDENTIALS.HOSPITAL_CLERK.PASSWORD
     )
     const res = await createDeclaration(token, undefined, ActionType.DECLARE)
     declaration = res.declaration

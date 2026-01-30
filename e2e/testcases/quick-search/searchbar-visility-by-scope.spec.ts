@@ -3,7 +3,7 @@ import { CREDENTIALS, SAFE_OUTBOX_TIMEOUT_MS } from '../../constants'
 import { login } from '../../helpers'
 const testCases = [
   {
-    credential: CREDENTIALS.FIELD_AGENT,
+    credential: CREDENTIALS.HOSPITAL_CLERK,
     hasSearch: true
   },
   {

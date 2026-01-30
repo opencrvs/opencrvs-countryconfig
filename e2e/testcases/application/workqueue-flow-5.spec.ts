@@ -91,7 +91,7 @@ test.describe.serial('5. Workqueue flow - 5', () => {
 
   test.describe('Notify by FA', async () => {
     test.beforeAll(async () => {
-      await login(page, CREDENTIALS.FIELD_AGENT)
+      await login(page, CREDENTIALS.HOSPITAL_CLERK)
       await page.click('#header-new-event')
       await page.getByLabel('Birth').click()
       await page.getByRole('button', { name: 'Continue' }).click()
@@ -186,7 +186,7 @@ test.describe.serial('5. Workqueue flow - 5', () => {
 
   test.describe('Re-notify by FA', async () => {
     test('Login', async () => {
-      await login(page, CREDENTIALS.FIELD_AGENT, true)
+      await login(page, CREDENTIALS.HOSPITAL_CLERK, true)
       await assertRecordInWorkqueue({
         page,
         name: childName,
