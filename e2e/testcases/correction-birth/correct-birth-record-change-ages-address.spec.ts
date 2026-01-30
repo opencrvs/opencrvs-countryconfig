@@ -262,7 +262,9 @@ test.describe.serial('Correct record - Change ages', () => {
     await expect(page.getByText("Mother's details")).toBeVisible()
 
     await expect(
-      page.getByText('Age of mother' + motherAgeBefore + motherAgeAfter)
+      page.getByText(
+        'Age (at time of event)' + motherAgeBefore + motherAgeAfter
+      )
     ).toBeVisible()
 
     await expect(
@@ -274,7 +276,7 @@ test.describe.serial('Correct record - Change ages', () => {
     await expect(page.getByText("Informant's details")).toBeVisible()
     await expect(
       page.getByText(
-        'Age of informant' + informantAgeBefore + informantAgeAfter
+        'Age (at time of event)' + informantAgeBefore + informantAgeAfter
       )
     ).toBeVisible()
   })

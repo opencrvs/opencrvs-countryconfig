@@ -827,7 +827,7 @@ test.describe.serial(' Correct record - 3', () => {
 
     await visible(
       page.locator('#listTable-corrections-table-mother'),
-      'Age of mother',
+      'Age (at time of event)',
       updatedMotherDetails.age.toString()
     )
 
@@ -1022,7 +1022,7 @@ test.describe.serial(' Correct record - 3', () => {
 
       await visible(
         page.locator('#listTable-corrections-table-mother'),
-        'Age of mother',
+        'Age (at time of event)',
         updatedMotherDetails.age.toString()
       )
 

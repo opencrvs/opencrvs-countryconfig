@@ -163,7 +163,7 @@ test.describe.serial('Certified copies renders spouse age correctly', () => {
         )
         .isVisible()
 
-      await page.getByText('Age of spouse').isVisible()
+      await page.getByText('Age (at time of event)').isVisible()
       await page.getByText(joinValuesWith([spouseAge, 'years'])).isVisible()
 
       await page.getByText('Nationality').isVisible()
@@ -257,7 +257,7 @@ test.describe
         )
         .isVisible()
 
-      await page.getByText('Age of informant').isVisible()
+      await page.getByText('Age (at time of event)').isVisible()
       await page.getByText(joinValuesWith([informantAge, 'years'])).isVisible()
 
       await page.getByText('Nationality').isVisible()

@@ -300,7 +300,9 @@ test.describe.serial('Correct record - 2', () => {
       await expect(
         page
           .locator('#listTable-corrections-table-informant')
-          .getByText('Age of informant' + '-' + updatedInformantDetails.age)
+          .getByText(
+            'Age (at time of event)' + '-' + updatedInformantDetails.age
+          )
       ).toBeVisible()
 
       await expect(
