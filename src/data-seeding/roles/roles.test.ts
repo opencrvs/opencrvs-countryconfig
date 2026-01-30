@@ -51,7 +51,6 @@ describe('Roles config', () => {
     // Update this list if requirements change
     expect(rolesWithAudit.sort()).toEqual([
       'COMMUNITY_LEADER',
-      'EMBASSY_OFFICIAL',
       'HOSPITAL_CLERK',
       'LOCAL_REGISTRAR',
       'NATIONAL_REGISTRAR',
