@@ -48,7 +48,7 @@ export const roles: Role[] = [
       'record.declared.review-duplicates[event=birth|death|tennis-club-membership]',
       'record.registered.print-certified-copies[event=birth|death|tennis-club-membership]',
       'record.registered.request-correction[event=birth|death|tennis-club-membership]',
-      'record.custom-action[event=birth,customActionType=VALIDATE_DECLARATION|ISSUE_CERTIFIED_COPY]',
+      'record.custom-action[event=birth,customActionType=VALIDATE_DECLARATION|ISSUE_CERTIFIED_COPY|ESCALATE]',
       'record.custom-action[event=death,customActionType=VALIDATE_DECLARATION]'
     ]
   },
@@ -218,7 +218,7 @@ export const roles: Role[] = [
     scopes: [
       'record.read[event=birth|death|tennis-club-membership]',
       'record.custom-action[event=birth,customActionType=APPROVE_DECLARATION|PROVINCIAL_REGISTER_FEEDBACK]',
-      'workqueue[id=late-registration-approval-required|recent|pending-feedback-provincinal-registrar|pending-approval|correction-requested]',
+      'workqueue[id=recent|pending-feedback-provincinal-registrar|pending-approval|correction-requested]',
       'type=record.search&event=birth'
     ]
   },
@@ -282,9 +282,8 @@ export const roles: Role[] = [
       id: 'userRole.embassyOffical'
     },
     scopes: [
-      SCOPES.USER_READ_ONLY_MY_AUDIT,
-      'workqueue[id=assigned-to-you|recent|requires-completion|in-review|in-external-validation|escalated|pending-updates|pending-certification|correction-requested]',
-      'type=record.search&event=birth,death,tennis-club-membership',
+      'workqueue[id=assigned-to-you|recent|escalated|pending-updates|pending-certification|potential-duplicate]',
+      'type=record.search&event=birth,death,tennis-club-membership&declaredIn=location',
       'record.read[event=birth|death|tennis-club-membership]',
       'record.create[event=birth|death|tennis-club-membership]',
       'record.declare[event=birth|death|tennis-club-membership]',
