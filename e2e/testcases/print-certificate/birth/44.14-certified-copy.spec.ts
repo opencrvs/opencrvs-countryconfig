@@ -63,7 +63,7 @@ test.describe.serial('44.14.0 Validate "Certified copy" option', () => {
 
   test('44.14.3 "Certified Copy" is now available in certificate types', async () => {
     await page
-      .getByRole('textbox', { name: 'Search for a tracking ID' })
+      .getByRole('textbox', { name: 'Search for a record' })
       .fill(formatV2ChildName(declaration))
 
     await page.getByRole('button', { name: 'Search' }).click()
