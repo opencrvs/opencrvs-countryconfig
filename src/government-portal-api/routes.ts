@@ -14,6 +14,7 @@ import {
   createAuthenticatedProxyHandler,
   createCorsOptionsHandler
 } from './proxy-auth-handler'
+import { notificationsHandler } from './notifications-handler'
 
 export function getGovernmentPortalApiRoutes(): Hapi.ServerRoute[] {
   return [
@@ -49,6 +50,26 @@ export function getGovernmentPortalApiRoutes(): Hapi.ServerRoute[] {
       options: {
         auth: false,
         tags: ['api', 'proxy', 'cors']
+      }
+    },
+    {
+      method: 'OPTIONS',
+      path: '/api/events/notifications',
+      handler: createCorsOptionsHandler(),
+      options: {
+        auth: false,
+        tags: ['api', 'notifications', 'cors']
+      }
+    },
+    {
+      method: 'POST',
+      path: '/api/events/notifications',
+      handler: notificationsHandler,
+      options: {
+        auth: false,
+        tags: ['api', 'notifications'],
+        description:
+          'Finds CRVS office based on birth location administrativeAreaId'
       }
     },
     {
