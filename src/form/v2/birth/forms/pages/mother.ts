@@ -227,9 +227,9 @@ export const mother = defineFormPage({
         required: true,
         analytics: true,
         label: {
-          defaultMessage: 'Age (at time of event)',
+          defaultMessage: 'Age of mother (at the time of event)',
           description: 'This is the label for the field',
-          id: 'form.field.label.age'
+          id: 'event.birth.action.declare.form.section.mother.field.age.label'
         },
         configuration: {
           asOfDate: field('child.dob'),

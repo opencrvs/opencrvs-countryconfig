@@ -407,14 +407,14 @@ export const formMessageDescriptors = {
     id: 'form.section.informant.title'
   },
   ageOfInformant: {
-    defaultMessage: 'Age (at time of event)',
-    description: 'Label for form field: Age (at time of event)',
-    id: 'form.field.label.age'
+    defaultMessage: 'Age of informant',
+    description: 'Label for form field: Age of informant',
+    id: 'form.field.label.ageOfInformant'
   },
   ageOfSpouse: {
-    defaultMessage: 'Age (at time of event)',
-    description: 'Label for form field: Age (at time of event)',
-    id: 'form.field.label.age'
+    defaultMessage: 'Age of spouse',
+    description: 'Label for form field: Age of spouse',
+    id: 'form.field.label.ageOfSpouse'
   },
   motherName: {
     defaultMessage: 'Mother',
@@ -437,9 +437,9 @@ export const formMessageDescriptors = {
     id: 'form.field.label.spouseDetailsExist'
   },
   ageOfMother: {
-    defaultMessage: 'Age (at time of event)',
-    description: 'Label for form field: Age (at time of event)',
-    id: 'form.field.label.age'
+    defaultMessage: 'Age of mother',
+    description: 'Label for form field: Age of mother',
+    id: 'form.field.label.ageOfMother'
   },
   fathersDetailsExist: {
     defaultMessage: "Father's details are not available",
@@ -447,9 +447,9 @@ export const formMessageDescriptors = {
     id: 'form.field.label.fathersDetailsExist'
   },
   ageOfFather: {
-    defaultMessage: 'Age (at time of event)',
-    description: 'Label for form field: Age (at time of event)',
-    id: 'form.field.label.age'
+    defaultMessage: 'Age of father',
+    description: 'Label for form field: Age of father',
+    id: 'form.field.label.ageOfFather'
   },
   documentsName: {
     defaultMessage: 'Documents',
@@ -554,9 +554,9 @@ export const formMessageDescriptors = {
     id: 'form.section.deceased.title'
   },
   ageOfDeceased: {
-    defaultMessage: 'Age (at time of event)',
-    description: 'Label for form field: Age (at time of event)',
-    id: 'form.field.label.age'
+    defaultMessage: 'Age of deceased',
+    description: 'Label for form field: Age of deceased',
+    id: 'form.field.label.ageOfDeceased'
   },
   firstName: {
     defaultMessage: 'First name',
@@ -732,9 +732,9 @@ export const formMessageDescriptors = {
     id: 'form.section.groom.title'
   },
   ageOfGroom: {
-    defaultMessage: 'Age (at time of event)',
-    description: 'Label for form field: Age (at time of event)',
-    id: 'form.field.label.age'
+    defaultMessage: 'Age of groom',
+    description: 'Label for form field: Age of groom',
+    id: 'form.field.label.ageOfGroom'
   },
   marriedLastName: {
     defaultMessage: 'Married Last name (if different)',
@@ -757,9 +757,9 @@ export const formMessageDescriptors = {
     id: 'form.section.bride.title'
   },
   ageOfBride: {
-    defaultMessage: 'Age (at time of event)',
-    description: 'Label for form field: Age (at time of event)',
-    id: 'form.field.label.age'
+    defaultMessage: 'Age of bride',
+    description: 'Label for form field: Age of bride',
+    id: 'form.field.label.ageOfBride'
   },
   marriageEventName: {
     defaultMessage: 'Marriage event details',
