@@ -54,5 +54,15 @@ export const env = cleanEnv(process.env, {
     default: '',
     devDefault: '',
     desc: 'Comma separated list of URLs to forward action events to'
+  }),
+  SYSTEM_CLIENT_ID: str({
+    default: undefined,
+    devDefault: undefined,
+    desc: 'Client ID for system-to-system authentication on /api/ proxy endpoints'
+  }),
+  SYSTEM_CLIENT_SECRET: str({
+    default: undefined,
+    devDefault: undefined,
+    desc: 'Client secret for system-to-system authentication on /api/ proxy endpoints'
   })
 })
