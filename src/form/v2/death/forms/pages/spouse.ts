@@ -177,9 +177,9 @@ export const spouse = defineFormPage({
       type: FieldType.AGE,
       required: true,
       label: {
-        defaultMessage: 'Age (at time of event)',
+        defaultMessage: 'Age of spouse',
         description: 'This is the label for the field',
-        id: 'form.field.label.age'
+        id: 'event.death.action.declare.form.section.spouse.field.age.label'
       },
       configuration: {
         asOfDate: field('eventDetails.date'),

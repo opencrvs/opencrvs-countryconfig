@@ -828,14 +828,17 @@ event.birth.action.declare.form.section.documents.field.proofOfFather.label,This
 event.birth.action.declare.form.section.documents.field.proofOfMother.label,This is the label for the field,Proof of mother's ID,Identité de la mère
 event.birth.action.declare.form.section.documents.field.proofOther.label,This is the label for the field,Other,Autre
 event.birth.action.declare.form.section.father.field.address.addressSameAs.label,This is the label for the field,Same as mother's usual place of residence?,Identique au lieu de résidence habituel de la mère?
+event.birth.action.declare.form.section.father.field.age.label,This is the label for the field,Age of father,Âge du père
 event.birth.action.declare.form.section.father.field.name.label,This is the label for the field,Father's name,Nom du père
 event.birth.action.declare.form.section.father.field.reason.label,This is the label for the field,Reason,Raison
+event.birth.action.declare.form.section.informant.field.age.label,This is the label for the field,Age of informant,Âge de l'informateur
 event.birth.action.declare.form.section.informant.field.email.label,This is the label for the field,Email,E-mail
 event.birth.action.declare.form.section.informant.field.name.label,This is the label for the field,Informant's name,Nom du déclarant
 event.birth.action.declare.form.section.informant.field.other.relation.label,This is the label for the field,Relationship to child,Relation avec l'enfant
 event.birth.action.declare.form.section.informant.field.phoneNo.error,The error message that appears on phone numbers where the first two characters must be a 01 and length must be 11,Must be a valid 10 digit number that starts with 0(7|9),Doit être un nombre valide de  {num} chiffres qui commence par  {start}
 event.birth.action.declare.form.section.informant.field.phoneNo.label,This is the label for the field,Phone number,Numéro de téléphone
 event.birth.action.declare.form.section.informant.field.relation.label,This is the label for the field,Relationship to child,Relation avec l'enfant
+event.birth.action.declare.form.section.mother.field.age.label,This is the label for the field,Age of mother,Âge de la mère
 event.birth.action.declare.form.section.mother.field.name.label,This is the label for the field,Mother's name,Nom de la mère
 event.birth.action.declare.form.section.mother.field.previousBirths.label,This is the label for the field,No. of previous births,Nombre de naissances antérieures
 event.birth.action.declare.form.section.mother.field.reason.label,This is the label for the field,Reason,Raison
@@ -939,6 +942,7 @@ event.death.action.declare.form.section.deceased.field.address.label,This is the
 event.death.action.declare.form.section.deceased.field.addressHelper.label,This is the label for the field,Usual place of residence,Lieu de résidence habituel
 event.death.action.declare.form.section.deceased.field.age.checkbox.label,This is the label for the field,Exact date of birth unknown,Date exacte de naissance inconnue
 event.death.action.declare.form.section.deceased.field.age.error,Error message for invalid age,Age must be between 0 and 120,L'auteur doit avoir entre 0 et 120 ans
+event.death.action.declare.form.section.deceased.field.age.label,This is the label for the field,Age of deceased,Âge du défunt
 event.death.action.declare.form.section.deceased.field.age.postfix,This is the postfix for age field,years,ans
 event.death.action.declare.form.section.deceased.field.deathLocation.label,This is the label for the field,Health Institution,Établissement de santé
 event.death.action.declare.form.section.deceased.field.deathLocationOther.label,This is the label for the field,Death location address,Adresse du lieu de décès
@@ -967,6 +971,7 @@ event.death.action.declare.form.section.informant.field.address.addressSameAs.la
 event.death.action.declare.form.section.informant.field.address.label,This is the label for the field,Usual place of residence,Lieu de résidence habituel
 event.death.action.declare.form.section.informant.field.addressHelper.label,This is the label for the field,Usual place of residence,Lieu de résidence habituel
 event.death.action.declare.form.section.informant.field.age.checkbox.label,This is the label for the field,Exact date of birth unknown,Date exacte de naissance inconnue
+event.death.action.declare.form.section.informant.field.age.label,This is the label for the field,Age of informant,Âge de l'informateur
 event.death.action.declare.form.section.informant.field.age.postfix,This is the postfix for age field,years,ans
 event.death.action.declare.form.section.informant.field.brn.label,This is the label for the field,ID Number,Numéro d'identité
 event.death.action.declare.form.section.informant.field.dob.error,This is the error message for invalid date,Must be a valid Birthdate,Doit être une date de naissance valide
@@ -990,6 +995,7 @@ event.death.action.declare.form.section.spouse.field.address.addressSameAs.label
 event.death.action.declare.form.section.spouse.field.address.label,This is the label for the field,Usual place of residence,Lieu de résidence habituel
 event.death.action.declare.form.section.spouse.field.addressHelper.label,This is the label for the field,Usual place of residence,Lieu de résidence habituel
 event.death.action.declare.form.section.spouse.field.age.checkbox.label,This is the label for the field,Exact date of birth unknown,Date exacte de naissance inconnue
+event.death.action.declare.form.section.spouse.field.age.label,This is the label for the field,Age of spouse,Âge du conjoint
 event.death.action.declare.form.section.spouse.field.age.postfix,This is the postfix for age field,years,ans
 event.death.action.declare.form.section.spouse.field.brn.label,This is the label for the field,ID Number,Numéro d'identité
 event.death.action.declare.form.section.spouse.field.detailsNotAvailable.label,This is the label for the field,Spouse's details are not available,Les informations du conjoint ne sont pas disponibles
@@ -1150,7 +1156,13 @@ form.field.label.No,Label for form field radio option No,No,Non
 form.field.label.Yes,Label for form field radio option Yes,Yes,Ouio
 form.field.label.addFile,,Upload,Télécharger
 form.field.label.addressLine2,,Area / Ward / Mouja / Village,Zone / Quartier / Mouja / Village
-form.field.label.age,,Age (at time of event),Âge (au moment de l'événement)
+form.field.label.ageOfBride,,Age of bride,Âge de la mariée
+form.field.label.ageOfDeceased,,Age of deceased,âge du défunt
+form.field.label.ageOfFather,,Age of father,Âge du père
+form.field.label.ageOfGroom,,Age of groom,Âge du marié
+form.field.label.ageOfInformant,,Age of informant,Âge de l'informateur
+form.field.label.ageOfMother,,Age of mother,Âge de la mère
+form.field.label.ageOfSpouse,,Age of spouse,Âge du conjoint
 form.field.label.app.certifyRecordTo.bride,,Print and issue to bride,Imprimer et envoyer à la mariée
 form.field.label.app.certifyRecordTo.father,,Print and issue to father,Imprimer et remettre au père
 form.field.label.app.certifyRecordTo.groom,,Print and issue to groom,Imprimer et envoyer au marié
