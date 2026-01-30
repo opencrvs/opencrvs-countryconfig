@@ -154,7 +154,7 @@ export const deceased = defineFormPage({
       type: FieldType.AGE,
       required: true,
       label: {
-        defaultMessage: `Age of deceased`,
+        defaultMessage: `Age of deceased at death`,
         description: 'This is the label for the field',
         id: 'event.death.action.declare.form.section.deceased.field.age.label'
       },
