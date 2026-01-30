@@ -47,7 +47,7 @@ test.describe('Roles in Record Audit', () => {
       )
 
       await page
-        .getByRole('textbox', { name: 'Search for a tracking ID' })
+        .getByRole('textbox', { name: 'Search for a record' })
         .fill(formatV2ChildName(res.declaration))
 
       await page.getByRole('button', { name: 'Search' }).click()

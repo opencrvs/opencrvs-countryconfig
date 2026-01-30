@@ -492,7 +492,7 @@ export const auditRecord = async ({
 }) => {
   if (trackingId) {
     await page
-      .getByRole('textbox', { name: 'Search for a tracking ID' })
+      .getByRole('textbox', { name: 'Search for a record' })
       .fill(trackingId)
 
     await page.getByRole('button', { name: 'Search' }).click()

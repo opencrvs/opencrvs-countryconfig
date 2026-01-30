@@ -57,7 +57,7 @@ test.describe
 
   test('Go to review', async () => {
     await page
-      .getByRole('textbox', { name: 'Search for a tracking ID' })
+      .getByRole('textbox', { name: 'Search for a record' })
       .fill(formatV2ChildName(declaration))
 
     await page.getByRole('button', { name: 'Search' }).click()
