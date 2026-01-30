@@ -87,10 +87,7 @@ import {
 } from './analytics/analytics'
 import { getClient } from './analytics/postgres'
 import { createClient } from '@opencrvs/toolkit/api'
-import {
-  createAuthenticatedProxyHandler,
-  createCorsOptionsHandler
-} from './government-portal-api/proxy-auth-handler'
+import { getGovernmentPortalApiRoutes } from './government-portal-api/routes'
 
 export interface ITokenPayload {
   sub: string
@@ -571,107 +568,7 @@ export async function createServer() {
     }
   })
 
-  server.route({
-    method: 'OPTIONS',
-    path: '/api/upload',
-    handler: createCorsOptionsHandler(),
-    options: {
-      auth: false,
-      tags: ['api', 'proxy', 'cors']
-    }
-  })
-
-  server.route({
-    method: '*',
-    path: '/api/upload',
-    handler: createAuthenticatedProxyHandler(`${GATEWAY_URL}/upload`, true),
-    options: {
-      auth: false,
-      payload: {
-        output: 'data',
-        parse: false,
-        maxBytes: 52428800
-      },
-      tags: ['api', 'proxy'],
-      description:
-        'Proxy for gateway upload endpoint with system authentication'
-    }
-  })
-
-  server.route({
-    method: 'OPTIONS',
-    path: '/api/events/{path*}',
-    handler: createCorsOptionsHandler(),
-    options: {
-      auth: false,
-      tags: ['api', 'proxy', 'cors']
-    }
-  })
-
-  server.route({
-    method: 'GET',
-    path: '/api/events/{path*}',
-    handler: createAuthenticatedProxyHandler(
-      (request) =>
-        `${GATEWAY_URL}/events${request.params.path ? '/' + request.params.path : ''}`,
-      true
-    ),
-    options: {
-      auth: false,
-      tags: ['api', 'proxy'],
-      description:
-        'Proxy for gateway events endpoint with system authentication'
-    }
-  })
-
-  server.route({
-    method: '*',
-    path: '/api/events/{path*}',
-    handler: createAuthenticatedProxyHandler(
-      (request) =>
-        `${GATEWAY_URL}/events${request.params.path ? '/' + request.params.path : ''}`,
-      true
-    ),
-    options: {
-      auth: false,
-      payload: {
-        output: 'data',
-        parse: false
-      },
-      tags: ['api', 'proxy'],
-      description:
-        'Proxy for gateway events endpoint with system authentication'
-    }
-  })
-
-  server.route({
-    method: 'OPTIONS',
-    path: '/api/auth/{path*}',
-    handler: createCorsOptionsHandler(),
-    options: {
-      auth: false,
-      tags: ['api', 'proxy', 'cors']
-    }
-  })
-
-  server.route({
-    method: '*',
-    path: '/api/auth/{path*}',
-    handler: createAuthenticatedProxyHandler(
-      (request) =>
-        `${GATEWAY_URL}/auth/${request.params.path}` + request.url.search,
-      true
-    ),
-    options: {
-      auth: false,
-      payload: {
-        output: 'data',
-        parse: false
-      },
-      tags: ['api', 'proxy'],
-      description: 'Proxy for gateway auth subpaths with system authentication'
-    }
-  })
+  server.route(getGovernmentPortalApiRoutes())
 
   server.route({
     method: 'GET',
