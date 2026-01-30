@@ -40,7 +40,7 @@ test.describe.serial('1. User conditional form flow', () => {
 
   test.describe('1.1 Declaration started by FA', async () => {
     test.beforeAll(async () => {
-      await login(page, CREDENTIALS.HOSPITAL_CLERK)
+      await login(page, CREDENTIALS.HOSPITAL_OFFICIAL)
       await page.click('#header-new-event')
       await page.getByLabel('Tennis club membership application').click()
       await page.getByRole('button', { name: 'Continue' }).click()

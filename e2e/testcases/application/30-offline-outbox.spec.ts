@@ -108,7 +108,7 @@ test.describe
   })
 
   test('30.0 Login', async () => {
-    await login(page, CREDENTIALS.HOSPITAL_CLERK)
+    await login(page, CREDENTIALS.HOSPITAL_OFFICIAL)
 
     // this is needed to get eventConfig before going offline
     await page.click('#header-new-event')

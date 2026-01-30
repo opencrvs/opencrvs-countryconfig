@@ -38,7 +38,7 @@ export const SAFE_WORKQUEUE_TIMEOUT_MS = 5 * 1000
 const TEST_USER_PASSWORD = 'test'
 
 export const CREDENTIALS = {
-  HOSPITAL_CLERK: {
+  HOSPITAL_OFFICIAL: {
     USERNAME: 'k.bwalya',
     PASSWORD: TEST_USER_PASSWORD
   },

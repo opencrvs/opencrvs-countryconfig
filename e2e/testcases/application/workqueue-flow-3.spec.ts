@@ -92,7 +92,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
 
   test.describe('3.1 Notify by FA', async () => {
     test.beforeAll(async () => {
-      await login(page, CREDENTIALS.HOSPITAL_CLERK)
+      await login(page, CREDENTIALS.HOSPITAL_OFFICIAL)
       await page.click('#header-new-event')
       await page.getByLabel('Birth').click()
       await page.getByRole('button', { name: 'Continue' }).click()
@@ -234,7 +234,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
 
   test.describe('3.3 Declare by FA', async () => {
     test('3.3.1 Login', async () => {
-      await login(page, CREDENTIALS.HOSPITAL_CLERK, true)
+      await login(page, CREDENTIALS.HOSPITAL_OFFICIAL, true)
       await assertRecordInWorkqueue({
         page,
         name: childName,

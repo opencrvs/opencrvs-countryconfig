@@ -28,7 +28,7 @@ test.describe.serial('1: Validate my draft tab', () => {
   })
 
   test('1.1 Record does not appear in draft ', async () => {
-    await login(page, CREDENTIALS.HOSPITAL_CLERK)
+    await login(page, CREDENTIALS.HOSPITAL_OFFICIAL)
     await page.getByRole('button', { name: 'Drafts' }).click()
 
     await expect(page.getByTestId('search-result')).not.toContainText(
@@ -85,7 +85,7 @@ test.describe.serial('1: Validate my draft tab', () => {
   })
 
   test('1.7 Record does not appear in draft after notifying ', async () => {
-    await login(page, CREDENTIALS.HOSPITAL_CLERK, true)
+    await login(page, CREDENTIALS.HOSPITAL_OFFICIAL, true)
     await page.getByRole('button', { name: 'Drafts' }).click()
 
     await getRowByTitle(page, formattedName)

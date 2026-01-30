@@ -8,7 +8,7 @@ import { formatV2ChildName } from '../birth/helpers'
 
 const testCases = [
   {
-    credential: CREDENTIALS.HOSPITAL_CLERK,
+    credential: CREDENTIALS.HOSPITAL_OFFICIAL,
     action: ActionType.DECLARE,
     expectedAuditRole: 'Hospital Official'
   },
