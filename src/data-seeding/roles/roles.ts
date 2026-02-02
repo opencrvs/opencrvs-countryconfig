@@ -56,7 +56,7 @@ export const roles: Role[] = [
     id: 'LOCAL_REGISTRAR',
     label: {
       defaultMessage: 'Registrar',
-      description: 'Name for user role Local Registrar',
+      description: 'Name for user role Registrar',
       id: 'userRole.localRegistrar'
     },
     scopes: [
