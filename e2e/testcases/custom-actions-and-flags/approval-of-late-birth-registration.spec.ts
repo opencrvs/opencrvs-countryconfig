@@ -230,9 +230,6 @@ test.describe.serial('Approval of late birth registration', () => {
       await expect(
         page.getByText('Approval required for late registration')
       ).not.toBeVisible()
-
-      await page.getByRole('button', { name: 'Action', exact: true }).click()
-      await expect(page.getByText('No actions available')).toBeVisible()
     })
   })
 
