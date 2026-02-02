@@ -301,7 +301,9 @@ test.describe.serial('Correct record - 2', () => {
         page
           .locator('#listTable-corrections-table-informant')
           .getByText(
-            'Age (at time of event)' + '-' + updatedInformantDetails.age
+            'Age of informant (at the time of event)' +
+              '-' +
+              updatedInformantDetails.age
           )
       ).toBeVisible()
 
