@@ -44,7 +44,7 @@ test.describe.serial('Approval of late birth registration', () => {
     await page.close()
   })
 
-  test.describe('Declaration started by FA', async () => {
+  test.describe('Declaration started by HO', async () => {
     test.beforeAll(async () => {
       await login(page, CREDENTIALS.HOSPITAL_OFFICIAL)
       await page.click('#header-new-event')
@@ -280,7 +280,7 @@ test.describe('Birth with non-late registration will not have flag or Approve-ac
     await page.close()
   })
 
-  test.describe.serial('Declaration started by FA', async () => {
+  test.describe.serial('Declaration started by HO', async () => {
     test.beforeAll(async () => {
       await login(page, CREDENTIALS.HOSPITAL_OFFICIAL)
       await page.click('#header-new-event')
@@ -527,7 +527,7 @@ test.describe
     await page.close()
   })
 
-  test.describe('Declaration started by FA', async () => {
+  test.describe('Declaration started by HO', async () => {
     test.beforeAll(async () => {
       await login(page, CREDENTIALS.HOSPITAL_OFFICIAL)
       await page.click('#header-new-event')

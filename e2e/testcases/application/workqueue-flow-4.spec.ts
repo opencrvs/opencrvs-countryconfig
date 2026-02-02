@@ -17,7 +17,7 @@ import {
 } from '../../utils'
 import { assertRecordInWorkqueue, fillDate } from '../birth/helpers'
 
-// FA Declares => RO Validates => Registrar Registers
+// HO Declares => RO Validates => Registrar Registers
 test.describe.serial('4. Workqueue flow - 4', () => {
   let page: Page
   const declaration = {
@@ -79,7 +79,7 @@ test.describe.serial('4. Workqueue flow - 4', () => {
     await page.close()
   })
 
-  test.describe('4.1 Declare by FA', async () => {
+  test.describe('4.1 Declare by HO', async () => {
     test.beforeAll(async () => {
       await login(page, CREDENTIALS.HOSPITAL_OFFICIAL)
       await page.click('#header-new-event')
@@ -301,7 +301,7 @@ test.describe.serial('4. Workqueue flow - 4', () => {
     })
   })
 
-  test('4.4 FA can not see the validated record', async () => {
+  test('4.4 HO can not see the validated record', async () => {
     await login(page, CREDENTIALS.HOSPITAL_OFFICIAL, true)
 
     await assertRecordInWorkqueue({
@@ -376,7 +376,7 @@ test.describe.serial('4. Workqueue flow - 4', () => {
     })
   })
 
-  test('4.6 FA can not see the registered record', async () => {
+  test('4.6 HO can not see the registered record', async () => {
     await login(page, CREDENTIALS.HOSPITAL_OFFICIAL, true)
 
     await assertRecordInWorkqueue({

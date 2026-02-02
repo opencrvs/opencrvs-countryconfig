@@ -23,7 +23,7 @@ import {
 } from '../birth/helpers'
 import { getRowByTitle } from '../print-certificate/birth/helpers'
 
-// FA Notifies => RO Rejects => FA Declares with edits => RO validates => Registrar rejects
+// HO Notifies => RO Rejects => HO Declares with edits => RO validates => Registrar rejects
 // => RO validates again => Registrar registers
 
 test.describe.serial('3. Workqueue flow - 3', () => {
@@ -90,7 +90,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
     await page.close()
   })
 
-  test.describe('3.1 Notify by FA', async () => {
+  test.describe('3.1 Notify by HO', async () => {
     test.beforeAll(async () => {
       await login(page, CREDENTIALS.HOSPITAL_OFFICIAL)
       await page.click('#header-new-event')
@@ -232,7 +232,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
     })
   })
 
-  test.describe('3.3 Declare by FA', async () => {
+  test.describe('3.3 Declare by HO', async () => {
     test('3.3.1 Login', async () => {
       await login(page, CREDENTIALS.HOSPITAL_OFFICIAL, true)
       await assertRecordInWorkqueue({
