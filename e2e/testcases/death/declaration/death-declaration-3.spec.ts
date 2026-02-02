@@ -109,7 +109,7 @@ test.describe.serial('3. Death declaration case - 3', () => {
 
   test.describe('3.1 Declaration started by FA', async () => {
     test.beforeAll(async () => {
-      await login(page, CREDENTIALS.FIELD_AGENT)
+      await login(page, CREDENTIALS.HOSPITAL_OFFICIAL)
 
       await page.click('#header-new-event')
       await page.getByLabel('Death').click()

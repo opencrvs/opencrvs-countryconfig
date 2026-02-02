@@ -40,13 +40,23 @@ test.describe.serial('1. User conditional form flow', () => {
 
   test.describe('1.1 Declaration started by FA', async () => {
     test.beforeAll(async () => {
-      await login(page, CREDENTIALS.FIELD_AGENT)
+      await login(page, CREDENTIALS.HOSPITAL_OFFICIAL)
       await page.click('#header-new-event')
       await page.getByLabel('Tennis club membership application').click()
       await page.getByRole('button', { name: 'Continue' }).click()
     })
 
+    test('1.1.0 Go to review page and ensure default values are resolved properly', async () => {
+      await continueForm(page)
+      await continueForm(page)
+
+      await expect(page.getByText('Invalid input')).not.toBeVisible()
+    })
+
     test('1.1.1 Fill applicant details', async () => {
+      await page.getByTestId('change-button-applicant.name').click()
+      await page.getByTestId('confirm_edit').click()
+
       await page
         .locator('#firstname')
         .fill(declaration.applicant.name.firstName)

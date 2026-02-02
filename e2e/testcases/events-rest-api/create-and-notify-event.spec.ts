@@ -126,6 +126,7 @@ test.describe('Events REST API', () => {
   let clientId: string
   let systemAdminToken: string
   let clientName: string
+  let healthFacilityId: string
 
   test.beforeAll(async () => {
     systemAdminToken = await getToken(
@@ -138,6 +139,14 @@ test.describe('Events REST API', () => {
     clientName = name
     clientId = system.clientId
     clientToken = await getClientToken(clientId, clientSecret)
+
+    const healthFacilities = await getLocations('HEALTH_FACILITY', clientToken)
+
+    if (!healthFacilities[0].id) {
+      throw new Error('No health facility found')
+    }
+
+    healthFacilityId = healthFacilities[0].id
   })
 
   test.afterAll(async () => {
@@ -177,7 +186,7 @@ test.describe('Events REST API', () => {
       expect(body.message).toBe('Input validation failed')
     })
 
-    test('HTTP 400 with invalid payload', async () => {
+    test('HTTP 400 without', async () => {
       const response = await fetchClientAPI(
         '/api/events/events',
         'POST',
@@ -192,7 +201,7 @@ test.describe('Events REST API', () => {
       expect(body.message).toBe('Input validation failed')
     })
 
-    test('HTTP 200 with valid payload', async () => {
+    test('HTTP 400 when createdAtLocation is missing', async () => {
       const response = await fetchClientAPI(
         '/api/events/events',
         'POST',
@@ -200,6 +209,42 @@ test.describe('Events REST API', () => {
         {
           type: EVENT_TYPE,
           transactionId: uuidv4()
+        }
+      )
+
+      expect(response.status).toBe(400)
+      const body = await response.json()
+      expect(body.message).toBe(
+        'createdAtLocation is required and must be a valid location id'
+      )
+    })
+
+    test('HTTP 400 when createdAtLocation is invalid', async () => {
+      const response = await fetchClientAPI(
+        '/api/events/events',
+        'POST',
+        clientToken,
+        {
+          type: EVENT_TYPE,
+          transactionId: uuidv4(),
+          createdAtLocation: uuidv4()
+        }
+      )
+
+      expect(response.status).toBe(400)
+      const body = await response.json()
+      expect(body.message).toBe('createdAtLocation must be a valid location id')
+    })
+
+    test('HTTP 200 with valid payload', async () => {
+      const response = await fetchClientAPI(
+        '/api/events/events',
+        'POST',
+        clientToken,
+        {
+          type: EVENT_TYPE,
+          transactionId: uuidv4(),
+          createdAtLocation: healthFacilityId
         }
       )
 
@@ -218,7 +263,8 @@ test.describe('Events REST API', () => {
         clientToken,
         {
           type: EVENT_TYPE,
-          transactionId
+          transactionId,
+          createdAtLocation: healthFacilityId
         }
       )
 
@@ -228,6 +274,7 @@ test.describe('Events REST API', () => {
         clientToken,
         {
           type: EVENT_TYPE,
+          createdAtLocation: healthFacilityId,
           transactionId
         }
       )
@@ -242,21 +289,6 @@ test.describe('Events REST API', () => {
   })
 
   test.describe('POST /api/events/events/notifications', () => {
-    let healthFacilityId: string
-
-    test.beforeAll(async () => {
-      const healthFacilities = await getLocations(
-        'HEALTH_FACILITY',
-        clientToken
-      )
-
-      if (!healthFacilities[0].id) {
-        throw new Error('No health facility found')
-      }
-
-      healthFacilityId = healthFacilities[0].id
-    })
-
     test('HTTP 401 when invalid token is used', async () => {
       const response = await fetchClientAPI(
         '/api/events/events/notifications',
@@ -310,7 +342,8 @@ test.describe('Events REST API', () => {
         clientToken,
         {
           type: EVENT_TYPE,
-          transactionId: uuidv4()
+          transactionId: uuidv4(),
+          createdAtLocation: healthFacilityId
         }
       )
 
@@ -345,25 +378,27 @@ test.describe('Events REST API', () => {
     test('HTTP 200 with payload containing declaration with half filled names', async ({
       page
     }) => {
+      const token = await login(page)
+      const { sub } = decode<{ sub: string }>(token)
+      const location = await fetchUserLocationHierarchy(sub, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+
       const createEventResponse = await fetchClientAPI(
         '/api/events/events',
         'POST',
         clientToken,
         {
           type: EVENT_TYPE,
-          transactionId: uuidv4()
+          transactionId: uuidv4(),
+          createdAtLocation: location[location.length - 1]
         }
       )
 
-      const token = await login(page)
-      const { sub } = decode<{ sub: string }>(token)
       const createEventResponseBody = await createEventResponse.json()
       const eventId = createEventResponseBody.id
-      const location = await fetchUserLocationHierarchy(sub, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
 
       const fakeSurname = faker.person.lastName()
 
@@ -395,7 +430,8 @@ test.describe('Events REST API', () => {
         clientToken,
         {
           type: EVENT_TYPE,
-          transactionId: uuidv4()
+          transactionId: uuidv4(),
+          createdAtLocation: healthFacilityId
         }
       )
 
@@ -454,7 +490,8 @@ test.describe('Events REST API', () => {
         clientToken,
         {
           type: EVENT_TYPE,
-          transactionId: uuidv4()
+          transactionId: uuidv4(),
+          createdAtLocation: healthFacilityId
         }
       )
 
@@ -500,7 +537,8 @@ test.describe('Events REST API', () => {
         clientToken,
         {
           type: EVENT_TYPE,
-          transactionId: uuidv4()
+          transactionId: uuidv4(),
+          createdAtLocation: healthFacilityId
         }
       )
 
@@ -545,7 +583,8 @@ test.describe('Events REST API', () => {
         clientToken,
         {
           type: EVENT_TYPE,
-          transactionId: uuidv4()
+          transactionId: uuidv4(),
+          createdAtLocation: healthFacilityId
         }
       )
 
@@ -593,7 +632,8 @@ test.describe('Events REST API', () => {
         clientToken,
         {
           type: EVENT_TYPE,
-          transactionId: uuidv4()
+          transactionId: uuidv4(),
+          createdAtLocation: healthFacilityId
         }
       )
 
@@ -684,7 +724,8 @@ test.describe('Events REST API', () => {
         clientToken,
         {
           type: EVENT_TYPE,
-          transactionId: uuidv4()
+          transactionId: uuidv4(),
+          createdAtLocation: healthFacilityId
         }
       )
 
@@ -764,7 +805,8 @@ test.describe('Events REST API', () => {
         clientToken,
         {
           type: EVENT_TYPE,
-          transactionId: uuidv4()
+          transactionId: uuidv4(),
+          createdAtLocation: healthFacilityId
         }
       )
 
@@ -925,7 +967,8 @@ test.describe('Events REST API', () => {
         clientToken,
         {
           type: EVENT_TYPE,
-          transactionId: uuidv4()
+          transactionId: uuidv4(),
+          createdAtLocation: healthFacilityId
         }
       )
 

@@ -3,7 +3,7 @@ import { goToSection, login, logout } from '../../helpers'
 import { CREDENTIALS } from '../../constants'
 import { fillChildDetails, openBirthDeclaration } from './helpers'
 import { selectDeclarationAction } from '../../helpers'
-import { ensureOutboxIsEmpty } from '../../utils'
+import { ensureOutboxIsEmpty, selectAction } from '../../utils'
 
 /**
  * Skipping tests until the outbox workqueue is implemented.
@@ -56,9 +56,7 @@ test.describe('Save and delete drafts', () => {
     test('Delete saved draft', async () => {
       await page.getByRole('button', { name: 'Drafts' }).click()
       await page.getByRole('button', { name: childName, exact: true }).click()
-      await page.getByRole('button', { name: 'Action', exact: true }).click()
-
-      await page.getByText('Declare').click()
+      await selectAction(page, 'Update')
       await selectDeclarationAction(page, 'Delete declaration', false)
       await expect(
         page.getByText('Are you sure you want to delete this declaration?')

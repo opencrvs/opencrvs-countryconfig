@@ -13,7 +13,7 @@ describe('Roles config', () => {
 
         const valid =
           // Configurable search scopes
-          scope.startsWith('search[') ||
+          scope.startsWith('type=record.search') ||
           // Legacyt search scopes
           scope.startsWith('search.') ||
           // Records
@@ -51,7 +51,6 @@ describe('Roles config', () => {
     // Update this list if requirements change
     expect(rolesWithAudit.sort()).toEqual([
       'COMMUNITY_LEADER',
-      'FIELD_AGENT',
       'HOSPITAL_CLERK',
       'LOCAL_REGISTRAR',
       'NATIONAL_REGISTRAR',
@@ -68,7 +67,7 @@ describe('Roles config', () => {
     // Update this list if requirements change
     expect(rolesWithCreateRecord.sort()).toEqual([
       'COMMUNITY_LEADER',
-      'FIELD_AGENT',
+      'EMBASSY_OFFICIAL',
       'HOSPITAL_CLERK',
       'LOCAL_REGISTRAR',
       'NATIONAL_REGISTRAR',
@@ -84,7 +83,7 @@ describe('Roles config', () => {
     // Update this list if requirements change
     expect(rolesWithWorkqueue.sort()).toEqual([
       'COMMUNITY_LEADER',
-      'FIELD_AGENT',
+      'EMBASSY_OFFICIAL',
       'HOSPITAL_CLERK',
       'LOCAL_REGISTRAR',
       'NATIONAL_REGISTRAR',

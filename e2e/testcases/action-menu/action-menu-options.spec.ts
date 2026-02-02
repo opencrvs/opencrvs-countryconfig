@@ -32,8 +32,8 @@ test.describe('Action menu options', () => {
 
     test.beforeAll(async () => {
       const token = await getToken(
-        CREDENTIALS.FIELD_AGENT.USERNAME,
-        CREDENTIALS.FIELD_AGENT.PASSWORD
+        CREDENTIALS.HOSPITAL_OFFICIAL.USERNAME,
+        CREDENTIALS.HOSPITAL_OFFICIAL.PASSWORD
       )
       const res = await createDeclaration(token, undefined, ActionType.DECLARE)
       declaration = res.declaration
@@ -46,6 +46,7 @@ test.describe('Action menu options', () => {
         'Assign',
         'Edit',
         'Validate declaration',
+        'Escalate',
         'Reject',
         'Archive'
       ])

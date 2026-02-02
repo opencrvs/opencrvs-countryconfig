@@ -459,7 +459,7 @@ test.describe.serial('1. Birth event declaration', () => {
           })
           .click()
 
-        await selectAction(page, 'Declare')
+        await selectAction(page, 'Update')
 
         await expect(page.locator('#select_document')).toContainText(
           "Proof of mother's ID (Birth Certificate)"
