@@ -22,7 +22,6 @@ export const roles: Role[] = [
       SCOPES.ORGANISATION_READ_LOCATIONS_MY_OFFICE,
       SCOPES.USER_READ_ONLY_MY_AUDIT,
       SCOPES.ORGANISATION_READ_LOCATIONS_MY_JURISDICTION,
-      SCOPES.USER_READ_ONLY_MY_AUDIT,
       'type=record.search&event=birth,death,tennis-club-membership',
       'workqueue[id=assigned-to-you|recent|requires-completion|in-review|in-external-validation|escalated|pending-validation|pending-updates|pending-approval|pending-certification|pending-issuance|correction-requested]',
       'record.create[event=birth|death|tennis-club-membership]',
@@ -50,13 +49,11 @@ export const roles: Role[] = [
       SCOPES.PROFILE_ELECTRONIC_SIGNATURE,
       SCOPES.PERFORMANCE_READ,
       SCOPES.PERFORMANCE_READ_DASHBOARDS,
-      SCOPES.PROFILE_ELECTRONIC_SIGNATURE,
-      SCOPES.USER_READ_ONLY_MY_AUDIT,
       SCOPES.ORGANISATION_READ_LOCATIONS_MY_OFFICE,
       SCOPES.PERFORMANCE_EXPORT_VITAL_STATISTICS,
       SCOPES.ORGANISATION_READ_LOCATIONS_MY_JURISDICTION,
-      SCOPES.USER_READ_MY_OFFICE,
-      'type=record.search&event=birth,death,tennis-club-membership',
+      SCOPES.USER_READ_MY_JURISDICTION,
+      'type=record.search&event=birth,death,tennis-club-membership&declaredIn=administrativeArea',
       'workqueue[id=assigned-to-you|recent|requires-completion|in-external-validation|escalated|potential-duplicate|pending-updates|pending-registration|pending-approval|pending-certification|pending-issuance|correction-requested]',
       'record.create[event=birth|death|tennis-club-membership]',
       'record.read[event=birth|death|tennis-club-membership]',
@@ -103,12 +100,10 @@ export const roles: Role[] = [
       'user.edit[role=HOSPITAL_CLERK|COMMUNITY_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR|NATIONAL_REGISTRAR|LOCAL_SYSTEM_ADMIN|NATIONAL_SYSTEM_ADMIN|PERFORMANCE_MANAGER|PROVINCIAL_REGISTRAR]',
       SCOPES.USER_READ,
       SCOPES.USER_UPDATE,
-      SCOPES.USER_READ,
       SCOPES.PERFORMANCE_READ,
       SCOPES.PERFORMANCE_READ_DASHBOARDS,
       SCOPES.PERFORMANCE_EXPORT_VITAL_STATISTICS,
-      SCOPES.RECORD_REINDEX,
-      SCOPES.CONFIG_UPDATE_ALL
+      SCOPES.RECORD_REINDEX
     ]
   },
   {
@@ -138,12 +133,8 @@ export const roles: Role[] = [
       SCOPES.PERFORMANCE_READ,
       SCOPES.PERFORMANCE_READ_DASHBOARDS,
       SCOPES.PERFORMANCE_EXPORT_VITAL_STATISTICS,
-      SCOPES.USER_READ_ONLY_MY_AUDIT,
-      SCOPES.PROFILE_ELECTRONIC_SIGNATURE,
-      SCOPES.ORGANISATION_READ_LOCATIONS_MY_OFFICE,
-      SCOPES.USER_READ_MY_OFFICE,
-      SCOPES.ORGANISATION_READ_LOCATIONS_MY_JURISDICTION,
-      SCOPES.USER_READ_MY_OFFICE,
+      SCOPES.ORGANISATION_READ_LOCATIONS,
+      SCOPES.USER_READ,
       'type=record.search&event=birth,death,tennis-club-membership',
       'workqueue[id=assigned-to-you|recent|requires-completion|in-external-validation|pending-feedback-registrar-general|potential-duplicate|registration-registrar-general]',
       'record.create[event=birth|death|tennis-club-membership]',
@@ -156,7 +147,8 @@ export const roles: Role[] = [
       'record.register[event=birth|death|tennis-club-membership]',
       'record.registered.print-certified-copies[event=birth|death|tennis-club-membership]',
       'record.registered.correct[event=birth|death|tennis-club-membership]',
-      'record.custom-action[event=birth,customActionType=REGISTRAR_GENERAL_FEEDBACK|REVOKE_REGISTRATION|REINSTATE_REVOKE_REGISTRATION]',
+      'record.custom-action[event=birth,customActionType=REGISTRAR_GENERAL_FEEDBACK|REVOKE_REGISTRATION|REINSTATE_REVOKE_REGISTRATION|APPROVE_DECLARATION]',
+      'record.custom-action[event=death,customActionType=APPROVE_DECLARATION]',
       'record.unassign-others[event=birth|death|tennis-club-membership]'
     ]
   },
@@ -168,10 +160,19 @@ export const roles: Role[] = [
       id: 'userRole.provincialRegistrar'
     },
     scopes: [
-      'record.read[event=birth|death|tennis-club-membership]',
-      'record.custom-action[event=birth,customActionType=APPROVE_DECLARATION|PROVINCIAL_REGISTER_FEEDBACK]',
+      SCOPES.ORGANISATION_READ_LOCATIONS_MY_JURISDICTION,
+      SCOPES.USER_READ_MY_JURISDICTION,
+      SCOPES.PERFORMANCE_READ,
+      SCOPES.PERFORMANCE_READ_DASHBOARDS,
+      'type=record.search&event=birth,death,tennis-club-membership&declaredIn=administrativeArea',
       'workqueue[id=recent|pending-feedback-provincinal-registrar|pending-approval|correction-requested]',
-      'type=record.search&event=birth'
+      'record.declared.reject[event=birth|death|tennis-club-membership]',
+      'record.register[event=birth|death|tennis-club-membership]',
+      'record.read[event=birth|death|tennis-club-membership]',
+      'record.declared.archive[event=birth|death|tennis-club-membership]',
+      'record.custom-action[event=birth,customActionType=APPROVE_DECLARATION|PROVINCIAL_REGISTER_FEEDBACK|REINSTATE_REVOKE_REGISTRATION|ESCALATE]',
+      'record.registered.print-certified-copies[event=birth|death|tennis-club-membership]',
+      'record.registered.correct[event=birth|death|tennis-club-membership]'
     ]
   },
   {
@@ -219,6 +220,7 @@ export const roles: Role[] = [
       id: 'userRole.embassyOffical'
     },
     scopes: [
+      SCOPES.USER_READ_ONLY_MY_AUDIT,
       'workqueue[id=assigned-to-you|recent|escalated|pending-updates|pending-certification|potential-duplicate]',
       'type=record.search&event=birth,death,tennis-club-membership&declaredIn=location',
       'record.read[event=birth|death|tennis-club-membership]',
