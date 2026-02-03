@@ -197,6 +197,35 @@ export const child = defineFormPage({
       id: 'child.name',
       type: FieldType.NAME,
       required: true,
+      // fields: [
+      //   {
+      //     id: 'firstname',
+      //     label: {
+      //       defaultMessage: 'First name(s)',
+      //       description: 'This is the label for the firstname field',
+      //       id: 'field.name.firstname.label'
+      //     },
+      //     required: true
+      //   },
+      //   {
+      //     id: 'middlename',
+      //     label: {
+      //       defaultMessage: 'Middle name(s)',
+      //       description: 'This is the label for the middlename field',
+      //       id: 'field.name.middlename.label'
+      //     },
+      //     required: true
+      //   },
+      //   {
+      //     id: 'surname',
+      //     label: {
+      //       defaultMessage: 'Sur name(s)',
+      //       description: 'This is the label for the surname field',
+      //       id: 'field.name.surname.label'
+      //     },
+      //     required: true
+      //   }
+      // ],
       configuration: farajalandNameConfig,
       hideLabel: true,
       label: {
