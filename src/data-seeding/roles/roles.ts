@@ -22,6 +22,7 @@ export const roles: Role[] = [
       SCOPES.USER_READ_MY_JURISDICTION,
       SCOPES.ORGANISATION_READ_LOCATIONS_MY_JURISDICTION,
       SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES,
+      SCOPES.PERFORMANCE_READ_DASHBOARDS,
       'type=record.search&event=birth,death,tennis-club-membership',
       'workqueue[id=assigned-to-you|recent|requires-completion|in-review|in-external-validation|escalated|pending-validation|pending-updates|pending-approval|pending-certification|pending-issuance|correction-requested]',
       'record.create[event=birth|death|tennis-club-membership]',
@@ -52,6 +53,7 @@ export const roles: Role[] = [
       SCOPES.ORGANISATION_READ_LOCATIONS_MY_JURISDICTION,
       SCOPES.USER_READ_MY_JURISDICTION,
       SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES,
+      SCOPES.PERFORMANCE_READ_DASHBOARDS,
       'type=record.search&event=birth,death,tennis-club-membership',
       'workqueue[id=assigned-to-you|recent|requires-completion|in-external-validation|escalated|potential-duplicate|pending-updates|pending-registration|pending-approval|pending-certification|pending-issuance|correction-requested]',
       'record.create[event=birth|death|tennis-club-membership]',
@@ -100,7 +102,8 @@ export const roles: Role[] = [
       SCOPES.USER_READ,
       SCOPES.USER_UPDATE,
       SCOPES.PERFORMANCE_READ,
-      SCOPES.RECORD_REINDEX
+      SCOPES.RECORD_REINDEX,
+      SCOPES.PERFORMANCE_READ_DASHBOARDS
     ]
   },
   {
@@ -110,7 +113,11 @@ export const roles: Role[] = [
       description: 'Name for user role Operations Manager',
       id: 'userRole.operationsManager'
     },
-    scopes: [SCOPES.PERFORMANCE_READ, SCOPES.ORGANISATION_READ_LOCATIONS]
+    scopes: [
+      SCOPES.PERFORMANCE_READ,
+      SCOPES.ORGANISATION_READ_LOCATIONS,
+      SCOPES.PERFORMANCE_READ_DASHBOARDS
+    ]
   },
   {
     id: 'NATIONAL_REGISTRAR',
@@ -154,6 +161,7 @@ export const roles: Role[] = [
       SCOPES.ORGANISATION_READ_LOCATIONS_MY_JURISDICTION,
       SCOPES.USER_READ_MY_JURISDICTION,
       SCOPES.PERFORMANCE_READ,
+      SCOPES.PERFORMANCE_READ_DASHBOARDS,
       SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES,
       SCOPES.PROFILE_ELECTRONIC_SIGNATURE,
       'type=record.search&event=birth,death,tennis-club-membership',
