@@ -18,9 +18,8 @@ export const roles: Role[] = [
     scopes: [
       SCOPES.RECORD_READ,
       SCOPES.PERFORMANCE_READ,
-      SCOPES.PERFORMANCE_READ_DASHBOARDS,
       SCOPES.ORGANISATION_READ_LOCATIONS_MY_OFFICE,
-      SCOPES.USER_READ_ONLY_MY_AUDIT,
+      SCOPES.USER_READ_MY_JURISDICTION,
       SCOPES.ORGANISATION_READ_LOCATIONS_MY_JURISDICTION,
       SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES,
       'type=record.search&event=birth,death,tennis-club-membership',
@@ -49,9 +48,7 @@ export const roles: Role[] = [
       SCOPES.RECORD_READ,
       SCOPES.PROFILE_ELECTRONIC_SIGNATURE,
       SCOPES.PERFORMANCE_READ,
-      SCOPES.PERFORMANCE_READ_DASHBOARDS,
       SCOPES.ORGANISATION_READ_LOCATIONS_MY_OFFICE,
-      SCOPES.PERFORMANCE_EXPORT_VITAL_STATISTICS,
       SCOPES.ORGANISATION_READ_LOCATIONS_MY_JURISDICTION,
       SCOPES.USER_READ_MY_JURISDICTION,
       SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES,
@@ -103,8 +100,6 @@ export const roles: Role[] = [
       SCOPES.USER_READ,
       SCOPES.USER_UPDATE,
       SCOPES.PERFORMANCE_READ,
-      SCOPES.PERFORMANCE_READ_DASHBOARDS,
-      SCOPES.PERFORMANCE_EXPORT_VITAL_STATISTICS,
       SCOPES.RECORD_REINDEX
     ]
   },
@@ -115,12 +110,7 @@ export const roles: Role[] = [
       description: 'Name for user role Operations Manager',
       id: 'userRole.operationsManager'
     },
-    scopes: [
-      SCOPES.PERFORMANCE_READ,
-      SCOPES.PERFORMANCE_READ_DASHBOARDS,
-      SCOPES.PERFORMANCE_EXPORT_VITAL_STATISTICS,
-      SCOPES.ORGANISATION_READ_LOCATIONS
-    ]
+    scopes: [SCOPES.PERFORMANCE_READ, SCOPES.ORGANISATION_READ_LOCATIONS]
   },
   {
     id: 'NATIONAL_REGISTRAR',
@@ -133,8 +123,6 @@ export const roles: Role[] = [
       SCOPES.RECORD_READ,
       SCOPES.PROFILE_ELECTRONIC_SIGNATURE,
       SCOPES.PERFORMANCE_READ,
-      SCOPES.PERFORMANCE_READ_DASHBOARDS,
-      SCOPES.PERFORMANCE_EXPORT_VITAL_STATISTICS,
       SCOPES.ORGANISATION_READ_LOCATIONS,
       SCOPES.USER_READ,
       SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES,
@@ -166,15 +154,16 @@ export const roles: Role[] = [
       SCOPES.ORGANISATION_READ_LOCATIONS_MY_JURISDICTION,
       SCOPES.USER_READ_MY_JURISDICTION,
       SCOPES.PERFORMANCE_READ,
-      SCOPES.PERFORMANCE_READ_DASHBOARDS,
       SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES,
+      SCOPES.PROFILE_ELECTRONIC_SIGNATURE,
       'type=record.search&event=birth,death,tennis-club-membership',
       'workqueue[id=recent|pending-feedback-provincinal-registrar|pending-approval|correction-requested]',
+      'record.read[event=birth|death|tennis-club-membership]',
       'record.declared.reject[event=birth|death|tennis-club-membership]',
       'record.register[event=birth|death|tennis-club-membership]',
-      'record.read[event=birth|death|tennis-club-membership]',
       'record.declared.archive[event=birth|death|tennis-club-membership]',
       'record.custom-action[event=birth,customActionType=APPROVE_DECLARATION|PROVINCIAL_REGISTER_FEEDBACK|REINSTATE_REVOKE_REGISTRATION|ESCALATE]',
+      'record.custom-action[event=death,customActionType=APPROVE_DECLARATION]',
       'record.registered.print-certified-copies[event=birth|death|tennis-club-membership]',
       'record.registered.correct[event=birth|death|tennis-club-membership]'
     ]
@@ -211,10 +200,8 @@ export const roles: Role[] = [
       'workqueue[id=assigned-to-you|recent]',
       'record.create[event=birth|death|tennis-club-membership]',
       'record.read[event=birth|death|tennis-club-membership]',
-      'record.declare[event=birth|death|tennis-club-membership]',
       'record.declared.edit[event=birth|death|tennis-club-membership]',
-      'record.notify[event=birth|death|tennis-club-membership]',
-      'record.registered.print-certified-copies[event=birth|death|tennis-club-membership]'
+      'record.notify[event=birth|death|tennis-club-membership]'
     ]
   },
   {
