@@ -88,11 +88,13 @@ test.describe
           `Child's Name: ${fullNameOfChild}`
         ]
       })
-      await expect(page.getByRole('button', { name: 'Edit' })).toBeVisible()
+      await expect(
+        page.getByRole('button', { name: 'Edit', exact: true })
+      ).toBeVisible()
     })
 
     test('2.5.3 - Validate clicking on the search edit button', async () => {
-      await page.getByRole('button', { name: 'Edit' }).click()
+      await page.getByRole('button', { name: 'Edit', exact: true }).click()
       await expect(page).toHaveURL(/.*\/advanced-search/)
       expect(page.url()).toContain(`child.dob=${yyyy}-${mm}-${dd}`)
       expect(page.url()).toContain(`child.gender=female`)

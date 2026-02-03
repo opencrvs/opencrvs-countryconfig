@@ -6,7 +6,7 @@ import {
   selectDeclarationAction
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
-import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../../constants'
+import { CREDENTIALS } from '../../../constants'
 import { ensureOutboxIsEmpty } from '../../../utils'
 
 test.describe.serial('Submit and verify incomplete birth declaration', () => {
@@ -29,7 +29,7 @@ test.describe.serial('Submit and verify incomplete birth declaration', () => {
     await page.close()
   })
 
-  test.describe('Declaration started by FA', async () => {
+  test.describe('Declaration started by HO', async () => {
     test.beforeAll(async () => {
       await login(page, CREDENTIALS.HOSPITAL_OFFICIAL)
       await page.click('#header-new-event')

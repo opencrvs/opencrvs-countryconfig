@@ -90,7 +90,7 @@ test.describe.serial('Basic Archival flow', () => {
     await page.close()
   })
 
-  test('Login as FA', async () => {
+  test('Login as HO', async () => {
     await login(page, CREDENTIALS.HOSPITAL_OFFICIAL)
   })
 
@@ -264,7 +264,7 @@ test.describe.serial('Basic Archival flow', () => {
     await ensureOutboxIsEmpty(page)
   })
 
-  test('Archival is not available for FA', async () => {
+  test('Archival is not available for HO', async () => {
     await page.getByText('Recent').click()
     await page
       .getByRole('button', {

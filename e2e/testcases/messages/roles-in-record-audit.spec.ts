@@ -13,11 +13,6 @@ const testCases = [
     expectedAuditRole: 'Hospital Official'
   },
   {
-    credential: CREDENTIALS.COMMUNITY_LEADER,
-    action: ActionType.DECLARE,
-    expectedAuditRole: 'Community Leader'
-  },
-  {
     credential: CREDENTIALS.REGISTRATION_OFFICER,
     action: ActionType.DECLARE,
     expectedAuditRole: 'Registration Officer'

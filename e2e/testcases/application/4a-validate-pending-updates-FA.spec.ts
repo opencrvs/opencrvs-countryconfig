@@ -9,8 +9,7 @@ import { ensureAssigned, expectInUrl, selectAction } from '../../utils'
 import { getRowByTitle } from '../print-certificate/birth/helpers'
 import { faker } from '@faker-js/faker'
 
-test.describe
-  .serial('4(a) Validate "Pending updates"-workqueue for field agent', () => {
+test.describe.serial('4(a) Validate "Pending updates"-workqueue for HO', () => {
   let page: Page
   let declaration: Declaration
   let eventId: string

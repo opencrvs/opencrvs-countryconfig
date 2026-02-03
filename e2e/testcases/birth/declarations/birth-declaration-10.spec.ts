@@ -37,7 +37,7 @@ test.describe.serial('10. Birth declaration case - 10', () => {
     await page.close()
   })
 
-  test.describe('10.1 Declaration started by FA', async () => {
+  test.describe('10.1 Declaration started by HO', async () => {
     test.beforeAll(async () => {
       await login(page, CREDENTIALS.HOSPITAL_OFFICIAL)
       await page.click('#header-new-event')

@@ -17,7 +17,7 @@ import {
 import { selectDeclarationAction } from '../../helpers'
 import { assertRecordInWorkqueue, fillDate } from '../birth/helpers'
 
-// FA Notifies => Registrar Registers
+// HO Notifies => Registrar Registers
 
 test.describe.serial('2. Workqueue flow - 2', () => {
   let page: Page
@@ -80,7 +80,7 @@ test.describe.serial('2. Workqueue flow - 2', () => {
     await page.close()
   })
 
-  test.describe('2.1 Notify by FA', async () => {
+  test.describe('2.1 Notify by HO', async () => {
     test.beforeAll(async () => {
       await login(page, CREDENTIALS.HOSPITAL_OFFICIAL)
       await page.click('#header-new-event')
@@ -291,7 +291,7 @@ test.describe.serial('2. Workqueue flow - 2', () => {
     })
   })
 
-  test('2.3 FA can not see the registered record', async () => {
+  test('2.3 HO can not see the registered record', async () => {
     await login(page, CREDENTIALS.HOSPITAL_OFFICIAL, true)
 
     await assertRecordInWorkqueue({

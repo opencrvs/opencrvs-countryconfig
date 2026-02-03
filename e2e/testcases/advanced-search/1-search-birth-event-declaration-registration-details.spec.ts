@@ -117,11 +117,13 @@ test.describe
       })
 
       // Check for Edit button
-      await expect(page.getByRole('button', { name: 'Edit' })).toBeVisible()
+      await expect(
+        page.getByRole('button', { name: 'Edit', exact: true })
+      ).toBeVisible()
     })
 
     test('1.5.3 - Validate clicking on the search edit button', async () => {
-      await page.getByRole('button', { name: 'Edit' }).click()
+      await page.getByRole('button', { name: 'Edit', exact: true }).click()
       await expect(page).toHaveURL(/.*\/advanced-search/)
       // event____legalStatuses____REGISTERED____createdAt=2025-05-19&
       await expect(page.url()).toContain(
