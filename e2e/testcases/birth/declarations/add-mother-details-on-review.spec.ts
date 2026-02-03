@@ -351,7 +351,9 @@ test.describe.serial('Add mother details on review', () => {
 
       await expect(
         page.getByText(
-          'Age of mother' + '-' + declaration.mother.age.toString()
+          'Age of mother (at the time of event)' +
+            '-' +
+            declaration.mother.age.toString()
         )
       ).toBeVisible()
 
