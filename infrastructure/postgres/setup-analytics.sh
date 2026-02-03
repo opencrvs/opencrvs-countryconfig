@@ -55,10 +55,16 @@ PGPASSWORD="$POSTGRES_PASSWORD" psql -v ON_ERROR_STOP=1 -h "$POSTGRES_HOST" -p "
 
 CREATE SCHEMA IF NOT EXISTS analytics;
 
+CREATE TABLE IF NOT EXISTS analytics.administrative_areas (
+  id TEXT PRIMARY KEY,
+  name text NOT NULL,
+  parent_id TEXT REFERENCES analytics.administrative_areas(id)
+);
+
 CREATE TABLE IF NOT EXISTS analytics.locations (
   id TEXT PRIMARY KEY,
   name text NOT NULL,
-  parent_id TEXT REFERENCES analytics.locations(id),
+  administrative_area_id TEXT REFERENCES analytics.administrative_areas(id),
   location_type TEXT NOT NULL
 );
 
@@ -86,6 +92,8 @@ CREATE TABLE IF NOT EXISTS analytics.event_actions (
   content jsonb,
   UNIQUE (id, event_id)
 );
+
+ALTER TABLE analytics.event_actions ADD COLUMN IF NOT EXISTS custom_action_type TEXT;
 
 CREATE TABLE IF NOT EXISTS analytics.location_levels (
   id text PRIMARY KEY,

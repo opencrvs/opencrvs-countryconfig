@@ -12,7 +12,14 @@ import {
   ActionType,
   ConditionalType,
   defineConfig,
-  field
+  field,
+  or,
+  user,
+  and,
+  status,
+  not,
+  flag,
+  InherentFlags
 } from '@opencrvs/toolkit/events'
 import {
   DEATH_DECLARATION_REVIEW,
@@ -34,6 +41,7 @@ export const deathEvent = defineConfig({
     id: 'event.death.label'
   },
   dateOfEvent: field('eventDetails.date'),
+  placeOfEvent: field('eventDetails.deathLocationId'),
   title: {
     defaultMessage: '{deceased.name.firstname} {deceased.name.surname}',
     description: 'This is the title of the summary',
@@ -162,6 +170,40 @@ export const deathEvent = defineConfig({
       }
     ]
   },
+  flags: [
+    {
+      id: 'validated',
+      label: {
+        id: 'event.birth.flag.validated',
+        defaultMessage: 'Validated',
+        description: 'Flag label for validated'
+      },
+      requiresAction: true
+    },
+    {
+      id: 'pending-first-certificate-issuance',
+      label: {
+        id: 'event.birth.flag.pending-first-certificate-issuance',
+        defaultMessage: 'Pending first certificate issuance',
+        description: 'Flag label for first certificate issuance'
+      },
+      requiresAction: true
+    }
+  ],
+  actionOrder: [
+    ActionType.ASSIGN,
+    ActionType.REGISTER,
+    ActionType.DECLARE,
+    ActionType.EDIT,
+    'VALIDATE_DECLARATION',
+    ActionType.MARK_AS_DUPLICATE,
+    ActionType.REJECT,
+    ActionType.ARCHIVE,
+    ActionType.DELETE,
+    ActionType.PRINT_CERTIFICATE,
+    ActionType.REQUEST_CORRECTION,
+    ActionType.UNASSIGN
+  ],
   actions: [
     {
       type: ActionType.READ,
@@ -191,26 +233,108 @@ export const deathEvent = defineConfig({
           id: 'event.death.action.detect-duplicate.label'
         },
         query: dedupConfig
+      },
+      flags: [
+        {
+          id: 'validated',
+          operation: 'add',
+          conditional: or(
+            user.hasRole('REGISTRATION_AGENT'),
+            user.hasRole('LOCAL_REGISTRAR')
+          )
+        }
+      ]
+    },
+    {
+      type: ActionType.EDIT,
+      label: {
+        defaultMessage: 'Edit',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'actions.edit'
+      },
+      flags: [{ id: 'validated', operation: 'remove' }],
+      dialogCopy: {
+        notify: {
+          id: 'event.death.action.edit.notify.copy',
+          defaultMessage:
+            'Are you sure you want to notify this event with these edits?',
+          description: 'Confirmation text for the notify with edits action'
+        },
+        declare: {
+          id: 'event.death.action.edit.declare.copy',
+          defaultMessage:
+            'Are you sure you want to edit this declaration? By confirming you are redeclaring this event and override past changes.',
+          description: 'Confirmation text for the declare with edits action'
+        },
+        register: {
+          id: 'event.death.action.edit.register.copy',
+          defaultMessage:
+            'You are about to register this death event with your edits. Registering this event will create an official civil registration record.',
+          description: 'Confirmation text for the register with edits action'
+        }
       }
     },
     {
-      type: ActionType.VALIDATE,
+      type: ActionType.CUSTOM,
+      customActionType: 'VALIDATE_DECLARATION',
+      icon: 'Stamp',
       label: {
-        defaultMessage: 'Validate',
+        defaultMessage: 'Validate declaration',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'event.death.action.validate.label'
+        id: 'event.death.custom.action.validate-declaration.label'
       },
-      review: DEATH_DECLARATION_REVIEW,
-      deduplication: {
-        id: 'death-deduplication',
-        label: {
-          defaultMessage: 'Detect duplicate',
-          description:
-            'This is shown as the action name anywhere the user can trigger the action from',
-          id: 'event.death.action.detect-duplicate.label'
+      supportingCopy: {
+        defaultMessage:
+          'Approving this declaration confirms it as legally accepted and eligible for registration.',
+        description:
+          'This is the supporting copy for the Validate declaration -action',
+        id: 'event.death.custom.action.validate-declaration.supportingCopy'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(status('DECLARED'), not(flag('validated')))
         },
-        query: dedupConfig
+        {
+          type: ConditionalType.ENABLE,
+          conditional: not(flag(InherentFlags.POTENTIAL_DUPLICATE))
+        }
+      ],
+      flags: [{ id: 'validated', operation: 'add' }],
+      form: [
+        {
+          id: 'comments',
+          type: 'TEXTAREA',
+          label: {
+            defaultMessage: 'Comments',
+            description:
+              'This is the label for the comments field for the validate declaration action',
+            id: 'event.death.custom.action.validate-declaration.field.comments.label'
+          }
+        }
+      ],
+      auditHistoryLabel: {
+        defaultMessage: 'Validated',
+        description:
+          'The label to show in audit history for the validate action',
+        id: 'event.death.custom.action.validate-declaration.audit-history-label'
+      }
+    },
+    {
+      type: ActionType.REJECT,
+      label: {
+        defaultMessage: 'Reject',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'event.death.action.reject.label'
+      },
+      supportingCopy: {
+        id: 'rejectModal.description',
+        defaultMessage:
+          'Rejecting this declaration will return it to the submitter for updates. Please ensure a valid reason for rejection has been recorded.',
+        description: 'The description for reject modal'
       }
     },
     {
@@ -221,7 +345,22 @@ export const deathEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.death.action.register.label'
       },
-      review: DEATH_DECLARATION_REVIEW,
+      supportingCopy: {
+        id: 'event.death.action.register.supportingCopy',
+        description: 'Confirmation text for the register action',
+        defaultMessage:
+          'Registering this death event will create an official civil registration record. Please ensure all details are correct before proceeding.'
+      },
+      flags: [
+        { id: 'validated', operation: 'remove' },
+        { id: 'pending-first-certificate-issuance', operation: 'add' }
+      ],
+      conditionals: [
+        {
+          type: ConditionalType.ENABLE,
+          conditional: flag('validated')
+        }
+      ],
       deduplication: {
         id: 'death-deduplication',
         label: {
@@ -241,6 +380,9 @@ export const deathEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.death.action.collect-certificate.label'
       },
+      flags: [
+        { id: 'pending-first-certificate-issuance', operation: 'remove' }
+      ],
       printForm: DEATH_CERTIFICATE_COLLECTOR_FORM
     },
     {
@@ -252,6 +394,21 @@ export const deathEvent = defineConfig({
         id: 'event.death.action.request-correction.label'
       },
       correctionForm: DEATH_CORRECTION_FORM
+    },
+    {
+      type: ActionType.ARCHIVE,
+      label: {
+        defaultMessage: 'Archive',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'event.death.action.archive.label'
+      },
+      supportingCopy: {
+        id: 'recordAudit.archive.confirmation.body',
+        defaultMessage:
+          'This will remove the declaration from the workqueue and change the status to Archive. To revert this change you will need to search for the declaration.',
+        description: 'Confirmation body for archiving a declaration'
+      }
     }
   ],
   advancedSearch: advancedSearchDeath

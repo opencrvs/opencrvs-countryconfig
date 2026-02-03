@@ -58,7 +58,8 @@ import { fontsHandler } from './api/fonts/handler'
 import { recordNotificationHandler } from './api/record-notification/handler'
 import {
   getCustomEventsHandler,
-  onAnyActionHandler
+  onAnyActionHandler,
+  onCustomActionHandler
 } from '@countryconfig/api/custom-event/handler'
 import {
   ActionDocument,
@@ -71,6 +72,7 @@ import { onRegisterHandler } from './api/registration'
 import { workqueueconfigHandler } from './api/workqueue/handler'
 import getUserNotificationRoutes from './config/routes/userNotificationRoutes'
 import {
+  importAdministrativeAreas,
   importEvent,
   importEvents,
   importLocations,
@@ -91,7 +93,7 @@ export interface ITokenPayload {
 export default function getPlugins() {
   const plugins: any[] = [inert, JWT]
 
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV !== 'test') {
     plugins.push({
       plugin: Pino,
       options: {
@@ -611,7 +613,11 @@ export async function createServer() {
           // Import locations
           const url = new URL('events', GATEWAY_URL).toString()
           const client = createClient(url, req.headers.authorization)
+          const administrativeAreas =
+            await client.administrativeAreas.list.query()
           const locations = await client.locations.list.query()
+
+          await importAdministrativeAreas(administrativeAreas)
           await importLocations(locations)
         })
 
@@ -637,6 +643,16 @@ export async function createServer() {
       auth: false,
       tags: ['api', 'events'],
       description: 'Serves custom events'
+    }
+  })
+
+  server.route({
+    method: 'POST',
+    path: `/trigger/events/{event}/actions/${ActionType.CUSTOM}`,
+    handler: onCustomActionHandler,
+    options: {
+      tags: ['api', 'events'],
+      description: 'Receives notifications on event custom action'
     }
   })
 
@@ -747,9 +763,9 @@ export async function createServer() {
     await syncLocationLevels()
     await syncLocationStatistics()
 
-    const logMsg = `Server successfully started on ${COUNTRY_CONFIG_HOST}:${COUNTRY_CONFIG_PORT}`
-    logger.info(logMsg)
-    server.log('info', logMsg)
+    logger.info(
+      `Server successfully started on ${COUNTRY_CONFIG_HOST}:${COUNTRY_CONFIG_PORT}`
+    )
   }
 
   return { server, start, stop }
