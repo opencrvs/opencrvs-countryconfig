@@ -52,8 +52,7 @@ describe('Roles config', () => {
     expect(rolesWithAudit.sort()).toEqual([
       'COMMUNITY_LEADER',
       'EMBASSY_OFFICIAL',
-      'HOSPITAL_CLERK',
-      'REGISTRATION_AGENT'
+      'HOSPITAL_CLERK'
     ])
 
     const createRecordScope =
