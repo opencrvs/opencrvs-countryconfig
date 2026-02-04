@@ -10,7 +10,7 @@
  */
 
 import fetch from 'node-fetch'
-import { APPLICATION_CONFIG_URL, FHIR_URL } from '@countryconfig/constants'
+import { APPLICATION_CONFIG_URL } from '@countryconfig/constants'
 import { callingCountries } from 'country-data'
 import csv2json from 'csv2json'
 import { createReadStream } from 'fs'
@@ -25,7 +25,6 @@ export const DECEASED_CODE = 'deceased-details'
 export const OPENCRVS_SPECIFICATION_URL = 'http://opencrvs.org/specs/'
 import { join } from 'path'
 import { stringify } from 'csv-stringify/sync'
-import { promisify } from 'util'
 
 export interface ILocation {
   id?: string
@@ -128,42 +127,6 @@ export function getTrackingIdFromTaskResource(taskResource: fhir.Task) {
     throw new Error("Didn't find any identifier for tracking id")
   }
   return trackingIdentifier.value
-}
-
-export const getFromFhir = (suffix: string) => {
-  return fetch(`${FHIR_URL}${suffix.startsWith('/') ? '' : '/'}${suffix}`, {
-    headers: {
-      'Content-Type': 'application/json+fhir'
-    }
-  })
-    .then((response) => {
-      return response.json()
-    })
-    .catch((error) => {
-      return Promise.reject(new Error(`FHIR request failed: ${error.message}`))
-    })
-}
-
-export async function updateResourceInHearth(resource: fhir.ResourceBase) {
-  const res = await fetch(
-    `${FHIR_URL}/${resource.resourceType}/${resource.id}`,
-    {
-      method: 'PUT',
-      body: JSON.stringify(resource),
-      headers: {
-        'Content-Type': 'application/fhir+json'
-      }
-    }
-  )
-  if (!res.ok) {
-    throw new Error(
-      `FHIR update to ${resource.resourceType} failed with [${
-        res.status
-      }] body: ${await res.text()}`
-    )
-  }
-
-  return res.text()
 }
 
 export const convertToMSISDN = (phone: string, countryAlpha3: string) => {

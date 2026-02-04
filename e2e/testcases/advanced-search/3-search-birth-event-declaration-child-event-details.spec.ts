@@ -107,11 +107,13 @@ test.describe
           `Child's Name: ${fullNameOfChild}`
         ]
       })
-      await expect(page.getByRole('button', { name: 'Edit' })).toBeVisible()
+      await expect(
+        page.getByRole('button', { name: 'Edit', exact: true })
+      ).toBeVisible()
     })
 
     test('3.1.3 - Validate clicking on the search edit button', async () => {
-      await page.getByRole('button', { name: 'Edit' }).click()
+      await page.getByRole('button', { name: 'Edit', exact: true }).click()
       await expect(page).toHaveURL(/.*\/advanced-search/)
       expect(page.url()).toContain(`child.birthLocation=${facilityId}`)
       expect(page.url()).toContain(`child.dob=${yyyy}-${mm}-${dd}`)
@@ -240,11 +242,13 @@ test.describe
           fullNameOfChild
         ]
       })
-      await expect(page.getByRole('button', { name: 'Edit' })).toBeVisible()
+      await expect(
+        page.getByRole('button', { name: 'Edit', exact: true })
+      ).toBeVisible()
     })
 
     test('3.2.3 - Validate clicking on the search edit button', async () => {
-      await page.getByRole('button', { name: 'Edit' }).click()
+      await page.getByRole('button', { name: 'Edit', exact: true }).click()
       await expect(page).toHaveURL(/.*\/advanced-search/)
       const searchParams = new URLSearchParams(page.url())
       const address = searchParams.get('child.birthLocation.privateHome')

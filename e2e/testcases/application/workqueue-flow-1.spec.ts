@@ -19,7 +19,7 @@ import {
 import { assertRecordInWorkqueue, fillDate } from '../birth/helpers'
 import { getRowByTitle } from '../print-certificate/birth/helpers'
 
-// FA Notifies => RO Validates => Registrar Registers => Registrar Prints
+// HO Notifies => RO Validates => Registrar Registers => Registrar Prints
 test.describe.serial('1. Workqueue flow - 1', () => {
   let page: Page
   const declaration = {
@@ -81,7 +81,7 @@ test.describe.serial('1. Workqueue flow - 1', () => {
     await page.close()
   })
 
-  test.describe('1.1 Notify by FA', async () => {
+  test.describe('1.1 Notify by HO', async () => {
     test.beforeAll(async () => {
       await login(page, CREDENTIALS.HOSPITAL_OFFICIAL)
       await page.click('#header-new-event')
@@ -283,7 +283,7 @@ test.describe.serial('1. Workqueue flow - 1', () => {
     })
   })
 
-  test('1.3 FA can not see the validated record', async () => {
+  test('1.3 HO can not see the validated record', async () => {
     await login(page, CREDENTIALS.HOSPITAL_OFFICIAL, true)
 
     await assertRecordInWorkqueue({
@@ -419,7 +419,7 @@ test.describe.serial('1. Workqueue flow - 1', () => {
     })
   })
 
-  test('1.6 FA can not see the registered record', async () => {
+  test('1.6 HO can not see the registered record', async () => {
     await login(page, CREDENTIALS.HOSPITAL_OFFICIAL, true)
 
     await assertRecordInWorkqueue({

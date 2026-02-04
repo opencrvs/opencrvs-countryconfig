@@ -107,7 +107,7 @@ test.describe.serial('3. Death declaration case - 3', () => {
     await page.close()
   })
 
-  test.describe('3.1 Declaration started by FA', async () => {
+  test.describe('3.1 Declaration started by HO', async () => {
     test.beforeAll(async () => {
       await login(page, CREDENTIALS.HOSPITAL_OFFICIAL)
 
