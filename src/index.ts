@@ -21,16 +21,16 @@ import * as Sentry from 'hapi-sentry'
 import * as H2o2 from '@hapi/h2o2'
 import fetch from 'node-fetch'
 import {
-  CLIENT_APP_URL,
-  DOMAIN,
   GATEWAY_URL,
-  LOGIN_URL,
   SENTRY_DSN,
   COUNTRY_CONFIG_HOST,
   COUNTRY_CONFIG_PORT,
   CHECK_INVALID_TOKEN,
   AUTH_URL,
-  DEFAULT_TIMEOUT
+  DEFAULT_TIMEOUT,
+  DOMAIN,
+  LOGIN_URL,
+  CLIENT_APP_URL
 } from '@countryconfig/constants'
 import {
   contentHandler,
@@ -89,6 +89,7 @@ import {
 } from './analytics/analytics'
 import { getClient } from './analytics/postgres'
 import { createClient } from '@opencrvs/toolkit/api'
+import { getGovernmentPortalApiRoutes } from './government-portal-api/routes'
 
 export interface ITokenPayload {
   sub: string
@@ -559,6 +560,8 @@ export async function createServer() {
       }
     }
   })
+
+  server.route(getGovernmentPortalApiRoutes())
 
   server.route({
     method: 'GET',
