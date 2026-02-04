@@ -27,7 +27,10 @@ import {
   COUNTRY_CONFIG_PORT,
   CHECK_INVALID_TOKEN,
   AUTH_URL,
-  DEFAULT_TIMEOUT
+  DEFAULT_TIMEOUT,
+  DOMAIN,
+  LOGIN_URL,
+  CLIENT_APP_URL
 } from '@countryconfig/constants'
 import {
   contentHandler,
@@ -204,13 +207,16 @@ async function getPublicKey(): Promise<string> {
 }
 
 export async function createServer() {
+  let whitelist: string[] = [DOMAIN]
+  if (DOMAIN[0] !== '*') {
+    whitelist = [LOGIN_URL, CLIENT_APP_URL]
+  }
+  logger.info(`Whitelist: ${JSON.stringify(whitelist)}`)
   const server = new Hapi.Server({
     host: COUNTRY_CONFIG_HOST,
     port: COUNTRY_CONFIG_PORT,
     routes: {
-      cors: {
-        origin: ['*']
-      },
+      cors: { origin: whitelist },
       payload: { maxBytes: 52428800, timeout: DEFAULT_TIMEOUT }
     }
   })
@@ -285,7 +291,6 @@ export async function createServer() {
   server.route({
     method: 'GET',
     path: '/ping',
-
     // eslint-disable-next-line no-unused-vars
     handler: (request: any, h: any) => {
       // Perform any health checks and return true or false for success prop
@@ -542,7 +547,7 @@ export async function createServer() {
   server.route({
     method: '*',
     path: '/graphql',
-    handler: (request, h) =>
+    handler: (_, h) =>
       h.proxy({
         uri: `${GATEWAY_URL}/graphql`,
         passThrough: true
