@@ -9,6 +9,7 @@ import {
   ensureAssigned,
   ensureOutboxIsEmpty,
   expectInUrl,
+  navigateToWorkqueue,
   selectAction
 } from '../../utils'
 import { getRowByTitle } from '../print-certificate/birth/helpers'
@@ -117,5 +118,16 @@ test.describe.serial('4(b) Validate "Pending updates"-workqueue for RO', () => {
     await expect(
       page.getByRole('button', { name: formatV2ChildName(declaration) })
     ).not.toBeVisible()
+  })
+
+  test('4.6 Assert record has correct flags', async () => {
+    await navigateToWorkqueue(page, 'Recent')
+    await page
+      .getByRole('button', { name: formatV2ChildName(declaration) })
+      .click()
+    await expect(page.getByTestId('flags-value')).toHaveText('Validated')
+    await expect(page.getByTestId('flags-value')).not.toHaveText(
+      'Edit in progress'
+    )
   })
 })
