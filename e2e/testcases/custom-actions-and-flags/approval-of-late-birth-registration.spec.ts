@@ -661,9 +661,13 @@ test.describe
     })
 
     test("Event should not have the 'Approval required for late registration' -flag", async () => {
+      await expect(page.getByTestId('flags-value')).toHaveText('Validated')
       await expect(
         page.getByText('Approval required for late registration')
       ).not.toBeVisible()
+      await expect(page.getByTestId('flags-value')).not.toHaveText(
+        'Edit in progress'
+      )
     })
   })
 })
@@ -832,6 +836,10 @@ test.describe
       await expect(
         page.getByText('Approval required for late registration')
       ).toBeVisible()
+      await expect(page.getByTestId('flags-value')).not.toHaveText('Validated')
+      await expect(page.getByTestId('flags-value')).not.toHaveText(
+        'Edit in progress'
+      )
     })
 
     test('Assert audit trail', async () => {
