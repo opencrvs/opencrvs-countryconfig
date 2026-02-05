@@ -1560,14 +1560,7 @@ integrations.recordSearchDescription,Label for  record search description,"A Rec
 integrations.registrationDetailsnNoPII,Label for registration details no PII,Registration Details (No PII),Détails de l'enregistrement (pas de PII)
 integrations.revealKeys,Label for reveal keys option,Reveal Keys,Montrer clés de décodage
 integrations.shaSecret,Label for SHA secret,SHA secret,SHA Secret
-integrations.type.citizenPortal,Label for citizen portal type system,Citizen portal,Portail citoyen
-integrations.type.eventNotification,Label for event notification,Event notification,Notification d'événement
-integrations.type.healthSystem,Label for health system type,Health integration,Intégration de la santé
-integrations.type.import,Label for import type system,Import,Importer
-integrations.type.importExport,Label for import export type system,Import/Export,Importer/Exporter
-integrations.type.nationalId,Label for national id,National id,Identité nationale
-integrations.type.recordSearch,Label for record search,Record search,Recherche d'enregistrements
-integrations.type.webhook,Label for web hook,Webhook,Webhook
+integrations.type,Labels for integration types,{type, select
 integrations.uniqueKeyDescription,Label for the unique key description,These unique keys will be required by the client integrating...,Ces clés uniques seront requises par l'interface du système
 integrations.updatePermissionsMsg,Label for update permissions message,Permissions update successfully,Mise à jour des permissions avec succès
 integrations.webhook.PII,Label for PII,Include PII data,Inclure les données PII

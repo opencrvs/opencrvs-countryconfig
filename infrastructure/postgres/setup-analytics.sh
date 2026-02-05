@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS analytics.event_actions (
   created_at timestamp with time zone NOT NULL DEFAULT now(),
   created_at_location TEXT,
   created_by text NOT NULL,
-  created_by_role text NOT NULL,
+  created_by_role text,
   created_by_signature text,
   created_by_user_type TEXT NOT NULL,
   declared_at timestamp with time zone,
@@ -94,6 +94,7 @@ CREATE TABLE IF NOT EXISTS analytics.event_actions (
 );
 
 ALTER TABLE analytics.event_actions ADD COLUMN IF NOT EXISTS custom_action_type TEXT;
+ALTER TABLE analytics.event_actions ALTER COLUMN created_by_role DROP NOT NULL;
 
 CREATE TABLE IF NOT EXISTS analytics.location_levels (
   id text PRIMARY KEY,
