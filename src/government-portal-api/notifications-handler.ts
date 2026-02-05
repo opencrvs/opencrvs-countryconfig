@@ -172,7 +172,7 @@ async function findLocationAndOffice(
 }
 
 /**
- * Handler for /api/events/notifications endpoint
+ * Handler for /api/events/<event id>/notify endpoint
  * Takes child.birthLocationId from declaration data, finds it and its administrativeAreaId,
  * then finds a CRVS_OFFICE type location with that same administrativeAreaId,
  * adds the office to the request body and forwards to gateway
@@ -221,7 +221,7 @@ export async function notificationsHandler(
 
     // Get system token and forward request to gateway
     const token = await systemClient.getToken()
-    const targetUrl = `${GATEWAY_URL}/events/events/notifications`
+    const targetUrl = `${GATEWAY_URL}/events/events/${payload.eventId}/notify`
 
     const response = await fetch(targetUrl, {
       method: 'POST',

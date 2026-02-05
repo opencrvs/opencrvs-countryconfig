@@ -53,7 +53,7 @@ async function fetchClientAPI(
 }
 
 async function createSystemUser(token: string) {
-  const name = `Test-int. ${format(new Date(), 'dd.MM. HH:mm:ss')}`
+  const name = `Health integration ${format(new Date(), 'dd.MM. HH:mm:ss')}`
   const res = await fetch(`${GATEWAY_HOST}/graphql`, {
     method: 'POST',
     headers: {
@@ -120,6 +120,7 @@ async function deleteSystemUser(token: string, clientId: string) {
 }
 
 const EVENT_TYPE = 'birth'
+const NON_EXISTING_UUID = 'b3ca0644-ffc4-461f-afe0-5fb84bedfcfd'
 
 test.describe('Events REST API', () => {
   let clientToken: string
@@ -138,6 +139,7 @@ test.describe('Events REST API', () => {
 
     clientName = name
     clientId = system.clientId
+
     clientToken = await getClientToken(clientId, clientSecret)
 
     const healthFacilities = await getLocations('HEALTH_FACILITY', clientToken)
@@ -288,10 +290,10 @@ test.describe('Events REST API', () => {
     })
   })
 
-  test.describe('POST /api/events/events/notifications', () => {
+  test.describe('POST /api/events/events/notify', () => {
     test('HTTP 401 when invalid token is used', async () => {
       const response = await fetchClientAPI(
-        '/api/events/events/notifications',
+        `/api/events/events/${NON_EXISTING_UUID}/notify`,
         'POST',
         'foobar'
       )
@@ -300,7 +302,7 @@ test.describe('Events REST API', () => {
 
     test('HTTP 403 when user is missing scope', async () => {
       const response = await fetchClientAPI(
-        '/api/events/events/notifications',
+        `/api/events/events/${NON_EXISTING_UUID}/notify`,
         'POST',
         // use system admin token which doesnt have required scope to create event
         systemAdminToken
@@ -310,7 +312,7 @@ test.describe('Events REST API', () => {
 
     test('HTTP 400 with missing payload', async () => {
       const response = await fetchClientAPI(
-        '/api/events/events/notifications',
+        `/api/events/events/${NON_EXISTING_UUID}/notify`,
         'POST',
         clientToken
       )
@@ -322,7 +324,7 @@ test.describe('Events REST API', () => {
 
     test('HTTP 400 with invalid payload', async () => {
       const response = await fetchClientAPI(
-        '/api/events/events/notifications',
+        `/api/events/events/${NON_EXISTING_UUID}/notify`,
         'POST',
         clientToken,
         {
@@ -352,7 +354,7 @@ test.describe('Events REST API', () => {
 
       const fakeSurname = faker.person.lastName()
       const response = await fetchClientAPI(
-        '/api/events/events/notifications',
+        `/api/events/events/${eventId}/notify`,
         'POST',
         clientToken,
         {
@@ -403,7 +405,7 @@ test.describe('Events REST API', () => {
       const fakeSurname = faker.person.lastName()
 
       const response = await fetchClientAPI(
-        '/api/events/events/notifications',
+        `/api/events/events/${eventId}/notify`,
         'POST',
         clientToken,
         {
@@ -439,7 +441,7 @@ test.describe('Events REST API', () => {
       const eventId = createEventResponseBody.id
 
       const response = await fetchClientAPI(
-        '/api/events/events/notifications',
+        `/api/events/events/${eventId}/notify`,
         'POST',
         clientToken,
         {
@@ -462,7 +464,7 @@ test.describe('Events REST API', () => {
 
     test('HTTP 404 when trying to notify a non-existing event', async () => {
       const response = await fetchClientAPI(
-        '/api/events/events/notifications',
+        '/api/events/events/notify',
         'POST',
         clientToken,
         {
@@ -504,7 +506,7 @@ test.describe('Events REST API', () => {
       }
 
       const response = await fetchClientAPI(
-        '/api/events/events/notifications',
+        `/api/events/events/${eventId}/notify`,
         'POST',
         clientToken,
         {
@@ -551,7 +553,7 @@ test.describe('Events REST API', () => {
       }
 
       const response = await fetchClientAPI(
-        '/api/events/events/notifications',
+        `/api/events/events/${eventId}/notify`,
         'POST',
         clientToken,
         {
@@ -600,7 +602,7 @@ test.describe('Events REST API', () => {
       const centralId = getIdByName(administrativeAreas, 'Central')
 
       const response = await fetchClientAPI(
-        '/api/events/events/notifications',
+        `/api/events/events/${eventId}/notify`,
         'POST',
         clientToken,
         {
@@ -657,7 +659,7 @@ test.describe('Events REST API', () => {
       })
 
       const response = await fetchClientAPI(
-        '/api/events/events/notifications',
+        `/api/events/events/${eventId}/notify`,
         'POST',
         clientToken,
         {
@@ -753,14 +755,14 @@ test.describe('Events REST API', () => {
       }
 
       const response1 = await fetchClientAPI(
-        '/api/events/events/notifications',
+        `/api/events/events/${eventId}/notify`,
         'POST',
         clientToken,
         requestBody
       )
 
       const response2 = await fetchClientAPI(
-        '/api/events/events/notifications',
+        `/api/events/events/${eventId}/notify`,
         'POST',
         clientToken,
         requestBody
@@ -827,7 +829,7 @@ test.describe('Events REST API', () => {
       }
 
       const response = await fetchClientAPI(
-        '/api/events/events/notifications',
+        `/api/events/events/${eventId}/notify`,
         'POST',
         clientToken,
         {
@@ -989,7 +991,7 @@ test.describe('Events REST API', () => {
       }
 
       const res = await fetchClientAPI(
-        '/api/events/events/notifications',
+        `/api/events/events/${eventId}/notify`,
         'POST',
         clientToken,
         {
