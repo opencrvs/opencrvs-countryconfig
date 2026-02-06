@@ -3,7 +3,7 @@
   block:
     - name: Backup LUKS header
       shell: |
-        loop_device=$(losetup -j /cryptfs_file_sparse.img | cut -d: -f1)
+        loop_device=$(losetup -j {{ data_file_path }} | cut -d: -f1)
         rm -vf /tmp/luks-header.img
         cryptsetup luksHeaderBackup $loop_device --header-backup-file /tmp/luks-header.img
 

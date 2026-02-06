@@ -9,6 +9,9 @@
 ansible_python_interpreter: /usr/bin/python3
 encrypt_data: False
 swap_file_path: /swapfile
+
+# Path to encrypted file with citizens data
+data_file_path: /cryptfs_file_sparse.img
 swap_file_size_mb: 8000
 backup_server_user: 'backup'
 backup_server_user_home: '/home/backup'
