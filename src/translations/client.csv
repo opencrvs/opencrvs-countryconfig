@@ -1096,6 +1096,7 @@ event.tennis-club-membership.action.certificate.form.section.requester.informant
 event.tennis-club-membership.action.certificate.form.section.requester.label,This is the label for the field,Requester,Requester
 event.tennis-club-membership.action.certificate.form.section.requester.other.label,This is the label for the field,Print and issue someone else,Print and issue someone else
 event.tennis-club-membership.action.certificate.form.section.requester.printInAdvance.label,This is the label for the field,Print in advance,Imprimer à l'avance pour les signatures et la collecte
+event.tennis-club-membership.action.certificate.form.section.requester.recommender.label,This is the label for the field,Print and issue Recommender,Print and issue Recommender
 event.tennis-club-membership.action.certificate.form.section.who.title,This is the title of the section,Print certified copy,Imprimer une copie certifiée
 event.tennis-club-membership.action.collect-certificate.label,This is shown as the action name anywhere the user can trigger the action from,Print certificate,Imprimer le certificat
 event.tennis-club-membership.action.declare.form.label,This is what this form is referred as in the system,Tennis club membership application,Tennis club membership application
