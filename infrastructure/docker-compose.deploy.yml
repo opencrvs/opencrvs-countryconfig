@@ -672,7 +672,6 @@ services:
       - NODE_ENV=production
       - SENTRY_DSN=${SENTRY_DSN:-}
       - APN_SERVICE_URL=http://apm-server:8200
-      - RECORD_SEARCH_QUOTA=2000
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
       - MONGO_URL=mongodb://user-mgnt:${USER_MGNT_MONGODB_PASSWORD}@mongo1/user-mgnt?replicaSet=rs0
     deploy:
@@ -743,6 +742,7 @@ services:
       - COUNTRY=${COUNTRY:-FAR}
       - REDIS_USERNAME=${GATEWAY_REDIS_USERNAME}
       - REDIS_PASSWORD=${GATEWAY_REDIS_PASSWORD}
+      - RECORD_SEARCH_QUOTA=2000
     deploy:
       labels:
         - 'traefik.enable=true'
