@@ -8,7 +8,19 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
-import pino from 'pino'
+import pino, { LogFn } from 'pino'
+
+function filterHealthCheckLogs(this: Logger, args: unknown[], method: LogFn) {
+  const logger = this as any
+  for (const arg of args) {
+    if (typeof arg === 'string' && arg.includes('get /ping 200')) {
+      if (logger.debug) {
+        return logger.debug(...args)
+      }
+    }
+  }
+  return method.apply(this, args)
+}
 export const logger =
   process.env.NODE_ENV === 'production'
     ? pino({
@@ -16,7 +28,8 @@ export const logger =
           'req.headers.authorization',
           'req.remoteAddress',
           "req.headers['x-real-ip']"
-        ]
+        ],
+        hooks: { logMethod: filterHealthCheckLogs }
       })
     : pino({
         serializers: {
@@ -24,6 +37,7 @@ export const logger =
           res: () => undefined,
           responseTime: () => undefined
         },
+        hooks: { logMethod: filterHealthCheckLogs },
         transport: {
           target: 'pino-pretty',
           options: {
