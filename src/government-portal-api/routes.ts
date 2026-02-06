@@ -105,34 +105,6 @@ export function getGovernmentPortalApiRoutes(): Hapi.ServerRoute[] {
         description:
           'Proxy for gateway events endpoint with system authentication'
       }
-    },
-    {
-      method: 'OPTIONS',
-      path: '/api/auth/{path*}',
-      handler: createCorsOptionsHandler(),
-      options: {
-        auth: false,
-        tags: ['api', 'proxy', 'cors']
-      }
-    },
-    {
-      method: '*',
-      path: '/api/auth/{path*}',
-      handler: createAuthenticatedProxyHandler(
-        (request) =>
-          `${GATEWAY_URL}/auth/${request.params.path}` + request.url.search,
-        true
-      ),
-      options: {
-        auth: false,
-        payload: {
-          output: 'data',
-          parse: false
-        },
-        tags: ['api', 'proxy'],
-        description:
-          'Proxy for gateway auth subpaths with system authentication'
-      }
     }
   ]
 }
