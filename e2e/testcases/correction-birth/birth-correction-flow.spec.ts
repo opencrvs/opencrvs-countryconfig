@@ -319,18 +319,15 @@ test.describe.serial('Birth correction flow', () => {
         })
         .click()
 
-      await expect(
-        page.getByText(
-          formatV2ChildName({
-            'child.name': {
-              firstname: newFirstName,
-              surname: declaration['child.name'].surname
-            }
-          })
-        )
-      ).toBeVisible({
-        timeout: 60_000
-      })
+      await expect(page.locator('#content-name')).toHaveText(
+        formatV2ChildName({
+          'child.name': {
+            firstname: newFirstName,
+            surname: declaration['child.name'].surname
+          }
+        }),
+        { timeout: 60_000 }
+      )
     })
 
     test('Correction approved action appears in audit history', async () => {
