@@ -373,6 +373,7 @@ export const child = defineFormPage({
         administrativeArea: user('primaryOfficeId').locationLevel('district')
       },
       configuration: {
+        fields: ['country', 'province', 'district'],
         streetAddressForm: defaultStreetAddressConfiguration
       }
     },
