@@ -1175,9 +1175,9 @@
   integrity sha512-KeAKtlObirLJk/na6jHBFEdTDjDfFS6Vcr0eG2FjiHKn3Nw8axJFfIu0Y9TpwaauRldQBj/pZm/MHtK76r6OWg==
 
 "@types/lodash@^4.14.117":
-  version "4.14.200"
-  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.200.tgz#435b6035c7eba9cdf1e039af8212c9e9281e7149"
-  integrity sha512-YI/M/4HRImtNf3pJgbF+W6FrXovqj+T+/HpENLTooK9PnkacBsDpeP3IpHab40CClUfhNmdM2WTNP2sa2dni5Q==
+  version "4.17.23"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.17.23.tgz#c1bb06db218acc8fc232da0447473fc2fb9d9841"
+  integrity sha512-RDvF6wTulMPjrNdCoYRC8gNR880JNGT8uB+REUpC2Ns4pRqQJhGz90wh7rgdXDPpCczF3VGktDuFGVnz8zP7HA==
 
 "@types/luxon@^3.7.1":
   version "3.7.1"
@@ -1185,9 +1185,9 @@
   integrity sha512-H3iskjFIAn5SlJU7OuxUmTEpebK6TKB8rxZShDslBMZJ5u9S//KM1sbdAisiSrqwLQncVjnpi2OK2J51h+4lsg==
 
 "@types/mime-db@*":
-  version "1.43.3"
-  resolved "https://registry.yarnpkg.com/@types/mime-db/-/mime-db-1.43.3.tgz#f7bec64a9a62ddded3371e82862c0516539710e8"
-  integrity sha512-vg0UsF1p1Qi/8iCARoie7F/Ng92zo7tQlL+sqE15GonkKVl55n/0vB6jSbrYTgDO0PSx9pKfGG1iZg9gJum3wA==
+  version "1.43.6"
+  resolved "https://registry.yarnpkg.com/@types/mime-db/-/mime-db-1.43.6.tgz#8a5bedb35fe0fccac46a939d4520490f1bbc4668"
+  integrity sha512-r2cqxAt/Eo5yWBOQie1lyM1JZFCiORa5xtLlhSZI0w8RJggBPKw8c4g/fgQCzWydaDR5bL4imnmix2d1n52iBw==
 
 "@types/mute-stream@^0.0.4":
   version "0.0.4"
