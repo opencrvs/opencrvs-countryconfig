@@ -8,6 +8,8 @@ import {
   user
 } from '@opencrvs/toolkit/events'
 
+// Example of a column that is used in the workqueue config
+// eslint-disable-next-line no-unused-vars
 const DATE_OF_EVENT_COLUMN = {
   label: {
     id: 'workqueues.dateOfEvent',
@@ -89,18 +91,7 @@ export const Workqueues = defineWorkqueues([
       id: 'workqueues.notifications.emptyMessage',
       defaultMessage: 'No notifications',
       description: 'Empty message for notifications workqueue'
-    },
-    columns: [
-      DATE_OF_EVENT_COLUMN,
-      {
-        label: {
-          defaultMessage: 'Notified',
-          description: 'This is the label for the Notified column',
-          id: 'workqueue.notifications.updatedAtColumn'
-        },
-        value: event.field('updatedAt')
-      }
-    ]
+    }
   },
   {
     slug: 'pending-validation',
@@ -115,18 +106,7 @@ export const Workqueues = defineWorkqueues([
       status: { type: 'exact', term: EventStatus.enum.DECLARED },
       flags: { noneOf: [InherentFlags.REJECTED, 'validated'] }
     },
-    actions: [{ type: ActionType.READ }],
-    columns: [
-      DATE_OF_EVENT_COLUMN,
-      {
-        label: {
-          defaultMessage: 'Validation requested',
-          description: 'This is the label for the validation requested column',
-          id: 'workqueue.pending-validation.updatedAtColumn'
-        },
-        value: event.field('updatedAt')
-      }
-    ]
+    actions: [{ type: ActionType.READ }]
   },
 
   {
@@ -141,18 +121,7 @@ export const Workqueues = defineWorkqueues([
       ...declaredInMyAdminArea,
       flags: { anyOf: [InherentFlags.POTENTIAL_DUPLICATE] }
     },
-    actions: [{ type: ActionType.READ }],
-    columns: [
-      DATE_OF_EVENT_COLUMN,
-      {
-        label: {
-          defaultMessage: 'Flagged as duplicate',
-          description: 'This is the label for the Flagged as duplicate column',
-          id: 'workqueue.potential-duplicate.updatedAtColumn'
-        },
-        value: event.field('updatedAt')
-      }
-    ]
+    actions: [{ type: ActionType.READ }]
   },
   {
     slug: 'pending-updates',
@@ -166,18 +135,7 @@ export const Workqueues = defineWorkqueues([
       ...createdInMyAdminArea,
       flags: { anyOf: [InherentFlags.REJECTED] }
     },
-    actions: [{ type: ActionType.READ }],
-    columns: [
-      DATE_OF_EVENT_COLUMN,
-      {
-        label: {
-          defaultMessage: 'Update requested',
-          description: 'This is the label for the update requested column',
-          id: 'workqueue.pending-updates.updatedAtColumn'
-        },
-        value: event.field('updatedAt')
-      }
-    ]
+    actions: [{ type: ActionType.READ }]
   },
   {
     slug: 'pending-approval',
@@ -187,18 +145,6 @@ export const Workqueues = defineWorkqueues([
       defaultMessage: 'Pending approval',
       description: 'Title of Pending approval workqueue'
     },
-    columns: [
-      DATE_OF_EVENT_COLUMN,
-      {
-        label: {
-          defaultMessage: 'Approval requested',
-          description:
-            'This is the label for the pending approval workqueue column',
-          id: 'workqueue.late-registration-approval.column.approval-requested'
-        },
-        value: event.field('updatedAt')
-      }
-    ],
     query: {
       ...declaredInMyAdminArea,
       status: { type: 'exact', term: EventStatus.enum.DECLARED },
@@ -228,19 +174,7 @@ export const Workqueues = defineWorkqueues([
         ]
       }
     },
-    actions: [{ type: ActionType.READ }],
-    columns: [
-      DATE_OF_EVENT_COLUMN,
-      {
-        label: {
-          defaultMessage: 'Registration requested',
-          description:
-            'This is the label for the registration requested column',
-          id: 'workqueue.pending-registration.updatedAtColumn'
-        },
-        value: event.field('updatedAt')
-      }
-    ]
+    actions: [{ type: ActionType.READ }]
   },
   {
     slug: 'registration-registrar-general',
@@ -251,19 +185,7 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of pending registration workqueue'
     },
     query: { status: { type: 'exact', term: EventStatus.enum.DECLARED } },
-    actions: [{ type: ActionType.READ }],
-    columns: [
-      DATE_OF_EVENT_COLUMN,
-      {
-        label: {
-          defaultMessage: 'Registration requested',
-          description:
-            'This is the label for the registration requested column',
-          id: 'workqueue.pending-registration.updatedAtColumn'
-        },
-        value: event.field('updatedAt')
-      }
-    ]
+    actions: [{ type: ActionType.READ }]
   },
   {
     slug: 'escalated',
@@ -282,18 +204,7 @@ export const Workqueues = defineWorkqueues([
         ]
       }
     },
-    actions: [{ type: ActionType.READ }],
-    columns: [
-      DATE_OF_EVENT_COLUMN,
-      {
-        label: {
-          defaultMessage: 'Escalated',
-          description: 'This is the label for the Escalated column',
-          id: 'workqueue.escalated.updatedAtColumn'
-        },
-        value: event.field('updatedAt')
-      }
-    ]
+    actions: [{ type: ActionType.READ }]
   },
   {
     slug: 'pending-feedback-registrar-general',
@@ -304,17 +215,6 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of pending feedback workqueue'
     },
     query: { flags: { anyOf: ['escalated-to-registrar-general'] } },
-    columns: [
-      DATE_OF_EVENT_COLUMN,
-      {
-        label: {
-          id: 'workqueues.reviewRequested.title',
-          defaultMessage: 'Review requested',
-          description: 'Title of review requested workqueue'
-        },
-        value: event.field('updatedAt')
-      }
-    ],
     actions: [{ type: ActionType.READ }]
   },
   {
@@ -326,17 +226,6 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of pending feedback workqueue'
     },
     query: { flags: { anyOf: ['escalated-to-provincial-registrar'] } },
-    columns: [
-      DATE_OF_EVENT_COLUMN,
-      {
-        label: {
-          id: 'workqueues.reviewRequested.title',
-          defaultMessage: 'Review requested',
-          description: 'Title of review requested workqueue'
-        },
-        value: event.field('updatedAt')
-      }
-    ],
     actions: [{ type: ActionType.READ }]
   },
   {
@@ -355,18 +244,7 @@ export const Workqueues = defineWorkqueues([
       },
       updatedAtLocation: { type: 'within', location: user('primaryOfficeId') }
     },
-    actions: [{ type: ActionType.READ }],
-    columns: [
-      DATE_OF_EVENT_COLUMN,
-      {
-        label: {
-          defaultMessage: 'External validated',
-          description: 'This is the label for the External validated column',
-          id: 'workqueue.in-external-validation.updatedAtColumn'
-        },
-        value: event.field('updatedAt')
-      }
-    ]
+    actions: [{ type: ActionType.READ }]
   },
   {
     slug: 'pending-certification',
@@ -388,18 +266,7 @@ export const Workqueues = defineWorkqueues([
       id: 'workqueues.pendingCertification.emptyMessage',
       defaultMessage: 'No pending certification records',
       description: 'Empty message for pending certification workqueue'
-    },
-    columns: [
-      DATE_OF_EVENT_COLUMN,
-      {
-        label: {
-          defaultMessage: 'Registered',
-          description: 'This is the label for the registered column',
-          id: 'workqueue.pending-certification.updatedAtColumn'
-        },
-        value: event.field('updatedAt')
-      }
-    ]
+    }
   },
   {
     slug: 'pending-issuance',
@@ -421,19 +288,7 @@ export const Workqueues = defineWorkqueues([
       id: 'workqueues.pendingCertification.emptyMessage',
       defaultMessage: 'No pending certification records',
       description: 'Empty message for pending certification workqueue'
-    },
-    columns: [
-      DATE_OF_EVENT_COLUMN,
-      {
-        label: {
-          defaultMessage: 'Certified copy printed',
-          description:
-            'This is the label for the Certified copy printed column',
-          id: 'workqueue.pending-issuance.updatedAtColumn'
-        },
-        value: event.field('updatedAt')
-      }
-    ]
+    }
   },
   {
     slug: 'correction-requested',
@@ -450,17 +305,6 @@ export const Workqueues = defineWorkqueues([
         noneOf: ['revoked']
       }
     },
-    actions: [{ type: ActionType.READ }],
-    columns: [
-      DATE_OF_EVENT_COLUMN,
-      {
-        label: {
-          defaultMessage: 'Correction requested',
-          description: 'This is the label for the Correction requested column',
-          id: 'workqueue.correction-requested.updatedAtColumn'
-        },
-        value: event.field('updatedAt')
-      }
-    ]
+    actions: [{ type: ActionType.READ }]
   }
 ])
