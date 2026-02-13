@@ -113,13 +113,7 @@ export const Workqueues = defineWorkqueues([
     query: {
       ...declaredInMyAdminArea,
       status: { type: 'exact', term: EventStatus.enum.DECLARED },
-      flags: {
-        noneOf: [
-          InherentFlags.REJECTED,
-          'validated',
-          'approval-required-for-late-registration'
-        ]
-      }
+      flags: { noneOf: [InherentFlags.REJECTED, 'validated'] }
     },
     actions: [{ type: ActionType.READ }],
     columns: [

@@ -516,7 +516,11 @@ export const birthEvent = defineConfig({
         }
       ],
       flags: [
-        { id: 'pending-first-certificate-issuance', operation: 'remove' }
+        { id: 'pending-first-certificate-issuance', operation: 'remove' },
+        {
+          id: 'certified-copy-printed-in-advance-of-issuance',
+          operation: 'remove'
+        }
       ],
       conditionals: [
         {
