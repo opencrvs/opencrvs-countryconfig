@@ -17,6 +17,7 @@ actionModal.confirm,The label for confirm button of action modal,Confirm,Confirm
 actionModal.description,The description for action modal,The informant will be notified of this decision and a record of this decision will be recorded.,L'informateur sera informé de cette décision et celle-ci sera consignée dans un dossier.
 actions.edit,Edit action label,Edit,Modifier
 actions.notify,Notify action label,Notify,Notifier
+actions.read,Action label for reading a record from the workqueue,Review,Reviser
 advancedSearch.accordion.hide,Label for hide button when accordion is closed,Hide,Cacher
 advancedSearch.accordion.show,Label for show button when accordion is closed,Show,Voir
 advancedSearch.form.childDetails,The title of Child details accordion,Child details,information de l'enfant
