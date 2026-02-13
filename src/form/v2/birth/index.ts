@@ -12,6 +12,7 @@ import {
   ActionType,
   ConditionalType,
   defineConfig,
+  event,
   field
 } from '@opencrvs/toolkit/events'
 import {
@@ -33,7 +34,7 @@ export const birthEvent = defineConfig({
     description: 'This is what this event is referred as in the system',
     id: 'event.birth.label'
   },
-  dateOfEvent: field('child.dob'),
+  dateOfEvent: event('legalStatuses.REGISTERED.acceptedAt'),
   title: {
     defaultMessage: '{child.name.firstname} {child.name.surname}',
     description: 'This is the title of the summary',
