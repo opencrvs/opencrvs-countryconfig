@@ -6,7 +6,7 @@
 
 - name: 'Register encrypted file system'
   stat:
-    path: /cryptfs_file_sparse.img
+    path: "{{ data_file_path }}"
     get_checksum: False
   register: encryptedFileSystemPostCheck
   when: disk_encryption_key is defined
@@ -71,7 +71,7 @@
       Description=Mount encrypted dir
 
       [Service]
-      ExecStart=bash /opt/opencrvs/infrastructure/cryptfs/decrypt.sh -key /root/disk-encryption-key.txt >> /var/log/cryptfs-reboot.log 2>&1
+      ExecStart=bash /opt/opencrvs/infrastructure/cryptfs/decrypt.sh -f {{ data_file_path }} -key /root/disk-encryption-key.txt >> /var/log/cryptfs-reboot.log 2>&1
 
       [Install]
       WantedBy=multi-user.target
