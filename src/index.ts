@@ -698,6 +698,20 @@ export async function createServer() {
 
   server.route(getUserNotificationRoutes())
 
+  server.route({
+    method: 'GET',
+    path: '/triggers/system/ready',
+    handler: (_request, h) => {
+      // Not implemented by default
+      // You can use this endpoint to for instance set up integration clients
+      return h.response().code(501)
+    },
+    options: {
+      tags: ['api', 'triggers'],
+      description: 'System ready endpoint'
+    }
+  })
+
   server.ext({
     type: 'onRequest',
     method(request: Hapi.Request & { sentryScope?: any }, h) {
