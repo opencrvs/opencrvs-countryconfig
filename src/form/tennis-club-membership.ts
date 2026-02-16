@@ -301,6 +301,8 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
           },
           validation: [
             {
+              // TODO(#11653): Remove ts-ignore once opencrvs-core#11798 merges and toolkit is published
+              // @ts-ignore - customClientValidator added in core PR #11798
               validator: field('applicant.minimumAge').customClientValidator((value: unknown, ctx: any) => {
                 const dob = ctx.$form['applicant.dob']
                 if (!dob) return false
@@ -323,6 +325,8 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
             description: 'Custom evaluation: concatenates first and surname',
             id: 'event.tennis-club-membership.action.declare.form.section.who.field.fullNameDisplay.label'
           },
+          // TODO(#11653): Remove ts-ignore once opencrvs-core#11798 merges and toolkit is published
+          // @ts-ignore - customClientEvaluation added in core PR #11798
           value: field('applicant.fullNameDisplay').customClientEvaluation((value: unknown, ctx: any) => {
             const first = ctx.$form['applicant.name']?.firstname || ''
             const surname = ctx.$form['applicant.name']?.surname || ''
@@ -337,6 +341,8 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
                   description: 'Computed full name',
                   id: 'event.tennis-club-membership.action.declare.form.section.who.field.fullNameDisplay.computed'
                 },
+                // TODO(#11653): Remove ts-ignore once opencrvs-core#11798 merges and toolkit is published
+                // @ts-ignore - customClientEvaluation added in core PR #11798
                 value: field('applicant.fullNameDisplay').customClientEvaluation((value: unknown, ctx: any) => {
                   const first = ctx.$form['applicant.name']?.firstname || ''
                   const surname = ctx.$form['applicant.name']?.surname || ''
