@@ -289,6 +289,62 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
               )
             }
           ]
+        },
+        {
+          id: 'applicant.minimumAge',
+          type: FieldType.TEXT,
+          required: false,
+          label: {
+            defaultMessage: 'Verify age requirement (16+)',
+            description: 'Custom validator: member must be 16+ to join',
+            id: 'event.tennis-club-membership.action.declare.form.section.who.field.minimumAge.label'
+          },
+          validation: [
+            {
+              validator: field('applicant.minimumAge').customClientValidator((value: unknown, ctx: any) => {
+                const dob = ctx.$form['applicant.dob']
+                if (!dob) return false
+                const age = Math.floor((new Date(ctx.$now).getTime() - new Date(dob).getTime()) / (365.25 * 24 * 60 * 60 * 1000))
+                return age >= 16
+              }),
+              message: {
+                defaultMessage: 'Member must be at least 16 years old to join',
+                description: 'Error message for age validation',
+                id: 'event.tennis-club-membership.action.declare.form.section.who.field.minimumAge.error'
+              }
+            }
+          ]
+        },
+        {
+          id: 'applicant.fullNameDisplay',
+          type: FieldType.DATA,
+          label: {
+            defaultMessage: "Applicant's Full Name (Computed)",
+            description: 'Custom evaluation: concatenates first and surname',
+            id: 'event.tennis-club-membership.action.declare.form.section.who.field.fullNameDisplay.label'
+          },
+          value: field('applicant.fullNameDisplay').customClientEvaluation((value: unknown, ctx: any) => {
+            const first = ctx.$form['applicant.name']?.firstname || ''
+            const surname = ctx.$form['applicant.name']?.surname || ''
+            return [first, surname].filter(Boolean).join(' ')
+          }),
+          configuration: {
+            data: [
+              {
+                id: 'fullName.computed',
+                label: {
+                  defaultMessage: 'Full Name',
+                  description: 'Computed full name',
+                  id: 'event.tennis-club-membership.action.declare.form.section.who.field.fullNameDisplay.computed'
+                },
+                value: field('applicant.fullNameDisplay').customClientEvaluation((value: unknown, ctx: any) => {
+                  const first = ctx.$form['applicant.name']?.firstname || ''
+                  const surname = ctx.$form['applicant.name']?.surname || ''
+                  return [first, surname].filter(Boolean).join(' ')
+                })
+              }
+            ]
+          }
         }
       ]
     },
