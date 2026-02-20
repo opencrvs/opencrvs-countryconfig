@@ -171,22 +171,10 @@ export const birthEvent = defineConfig({
           id: 'event.birth.summary.event.registeredAt.label'
         },
         value: {
-          defaultMessage: '{event.legalStatuses.REGISTERED.acceptedAt}',
+          defaultMessage:
+            '{event.legalStatuses.REGISTERED.acceptedAt, date, ::dd MMMM yyyy}',
           description: 'This is the registration date value',
           id: 'event.birth.summary.event.registeredAt.value'
-        }
-      },
-      {
-        eventFieldId: 'event.legalStatuses.REGISTERED.acceptedAt',
-        emptyValueMessage: {
-          defaultMessage: 'No registration date',
-          description: 'This is shown when there is no registration date',
-          id: 'event.birth.summary.event.registeredAt.empty'
-        },
-        label: {
-          defaultMessage: 'Registration date',
-          description: 'This is the label for the registration date',
-          id: 'event.birth.summary.event.registeredAt.label'
         }
       }
     ]
