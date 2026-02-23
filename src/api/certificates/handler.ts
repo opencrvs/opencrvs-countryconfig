@@ -72,7 +72,11 @@ const libreBaskervilleFont: Record<string, FontFamilyTypes> = {
 export async function certificateHandler(
   request: Request,
   h: ResponseToolkit
-): Promise<ICertificateConfigData[]> {
+): Promise<ICertificateConfigData[] | ResponseObject> {
+  if (request.params.id) {
+    const filePath = `${__dirname}/source/${request.params.id}`
+    return h.file(filePath)
+  }
   const certificateConfigs: ICertificateConfigData[] = [
     {
       id: 'birth-certificate',
