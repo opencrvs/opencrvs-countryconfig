@@ -333,10 +333,10 @@ export const roles: Role[] = [
       'search[event=death,access=all]',
       'search[event=tennis-club-membership,access=all]',
       'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]',
-      'template[id=v2.tennis-club-membership-certified-certificate]',
       `record.create[event=birth|death|tennis-club-membership]`,
       'record.declare[event=birth|death|tennis-club-membership]',
-      'record.notify[event=birth|death|tennis-club-membership]'
+      'record.notify[event=birth|death|tennis-club-membership]',
+      'record.registered.print-certified-copies[event=tennis-club-membership,templateIds=v2.tennis-club-membership-certificate-alpha]'
     ]
   },
   {

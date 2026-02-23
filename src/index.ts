@@ -267,6 +267,16 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
+    path: '/certificates/{id}',
+    handler: certificateHandler,
+    options: {
+      tags: ['api', 'certificates'],
+      description: 'Returns only one certificate metadata'
+    }
+  })
+
+  server.route({
+    method: 'GET',
     path: '/certificates',
     handler: certificateHandler,
     options: {

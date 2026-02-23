@@ -71,7 +71,7 @@ const TENNIS_CLUB_DECLARATION_REVIEW = {
         id: 'event.tennis-club-membership.action.declare.form.review.print.label'
       },
       configuration: {
-        template: 'v2.tennis-club-membership-certified-certificate',
+        template: 'v2.tennis-club-membership-certificate-alpha',
         buttonLabel: {
           defaultMessage: 'Print declaration summary',
           description: "Print button's label",
@@ -620,6 +620,7 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
     {
       id: 'collector',
       type: PageTypes.enum.FORM,
+      requireCompletionToContinue: true,
       title: {
         id: 'event.tennis-club-membership.action.certificate.form.section.who.title',
         defaultMessage: 'Print certified copy',
