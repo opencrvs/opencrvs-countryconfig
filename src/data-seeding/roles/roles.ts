@@ -77,7 +77,6 @@ export const roles: Role[] = [
       'search[event=death,access=all]',
       'search[event=tennis-club-membership,access=all]',
       'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]',
-      'template[id=v2.tennis-club-membership-certified-certificate]',
       `record.create[event=birth|death|tennis-club-membership]`,
       'record.declare[event=birth|death|tennis-club-membership]',
       'record.notify[event=birth|death|tennis-club-membership]'
@@ -220,7 +219,7 @@ export const roles: Role[] = [
       'record.declared.archive[event=birth|death|tennis-club-membership]',
       'record.declared.review-duplicates[event=birth|death|tennis-club-membership]',
       'record.register[event=birth|death|tennis-club-membership]',
-      'record.registered.print-certified-copies[event=birth|death|tennis-club-membership]',
+      'record.registered.print-certified-copies[event=birth|death|tennis-club-membership,templateIds=birth-certificate|birth-certificate-certified-copy|death-certificate-certified-copy]',
       'record.registered.correct[event=birth|death|tennis-club-membership]',
       'record.unassign-others[event=birth|death|tennis-club-membership]'
     ]
