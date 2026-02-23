@@ -71,7 +71,7 @@ const TENNIS_CLUB_DECLARATION_REVIEW = {
         id: 'event.tennis-club-membership.action.declare.form.review.print.label'
       },
       configuration: {
-        template: 'v2.tennis-club-membership-certificate-alpha',
+        template: 'v2.tennis-club-membership-certified-certificate',
         buttonLabel: {
           defaultMessage: 'Print declaration summary',
           description: "Print button's label",
@@ -86,6 +86,29 @@ const TENNIS_CLUB_DECLARATION_REVIEW = {
             not(event.hasAction(ActionType.DECLARE)),
             not(event.hasAction(ActionType.NOTIFY))
           )
+        }
+      ]
+    },
+    {
+      type: FieldType.ALPHA_PRINT_BUTTON,
+      id: 'review.print-declaration',
+      label: {
+        defaultMessage: 'Print declaration for hospital clerk',
+        description: 'Print',
+        id: 'event.tennis-club-membership.action.declare.form.review.print-record.label'
+      },
+      configuration: {
+        template: 'v2.tennis-club-membership-certificate-alpha',
+        buttonLabel: {
+          defaultMessage: 'Print declaration summary',
+          description: "Print button's label",
+          id: 'event.tennis-club-membership.action.declare.form.review.print.button.label'
+        }
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: user.hasRole('HOSPITAL_CLERK')
         }
       ]
     }
