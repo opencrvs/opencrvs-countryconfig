@@ -100,7 +100,7 @@ const TENNIS_CLUB_DECLARATION_REVIEW = {
       configuration: {
         template: 'v2.tennis-club-membership-certificate-alpha',
         buttonLabel: {
-          defaultMessage: 'Print declaration summary',
+          defaultMessage: 'Print declaration summary by hospital clerk',
           description: "Print button's label",
           id: 'event.tennis-club-membership.action.declare.form.review.print.button.label'
         }
