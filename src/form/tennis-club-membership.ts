@@ -1017,6 +1017,25 @@ export const tennisClubMembershipEvent = defineConfig({
           description: 'Label for the recommender’s ID field',
           id: 'event.tennis-club-membership.summary.field.recommender.id.label'
         }
+      },
+      {
+        id: 'event.registeredAt',
+        emptyValueMessage: {
+          defaultMessage: 'No registration date',
+          description: 'This is shown when there is no registration date',
+          id: 'event.birth.summary.event.registeredAt.empty'
+        },
+        label: {
+          defaultMessage: 'Registration date',
+          description: 'This is the label for the registration date',
+          id: 'event.birth.summary.event.registeredAt.label'
+        },
+        value: {
+          defaultMessage:
+            '{event.legalStatuses.REGISTERED.acceptedAt, date, ::dd MMMM yyyy}',
+          description: 'This is the registration date value',
+          id: 'event.birth.summary.event.registeredAt.value'
+        }
       }
     ]
   },

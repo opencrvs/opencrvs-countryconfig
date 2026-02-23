@@ -12,7 +12,6 @@ import {
   ActionType,
   ConditionalType,
   defineConfig,
-  event,
   field
 } from '@opencrvs/toolkit/events'
 import {
@@ -34,7 +33,7 @@ export const birthEvent = defineConfig({
     description: 'This is what this event is referred as in the system',
     id: 'event.birth.label'
   },
-  dateOfEvent: event('legalStatuses.REGISTERED.acceptedAt'),
+  dateOfEvent: field('child.dob'),
   title: {
     defaultMessage: '{child.name.firstname} {child.name.surname}',
     description: 'This is the title of the summary',
@@ -156,25 +155,6 @@ export const birthEvent = defineConfig({
           defaultMessage: '{informant.phoneNo} {informant.email}',
           description: 'This is the contact value of the informant',
           id: 'event.birth.summary.informant.contact.value'
-        }
-      },
-      {
-        id: 'event.registeredAt',
-        emptyValueMessage: {
-          defaultMessage: 'No registration date',
-          description: 'This is shown when there is no registration date',
-          id: 'event.birth.summary.event.registeredAt.empty'
-        },
-        label: {
-          defaultMessage: 'Registration date',
-          description: 'This is the label for the registration date',
-          id: 'event.birth.summary.event.registeredAt.label'
-        },
-        value: {
-          defaultMessage:
-            '{event.legalStatuses.REGISTERED.acceptedAt, date, ::dd MMMM yyyy}',
-          description: 'This is the registration date value',
-          id: 'event.birth.summary.event.registeredAt.value'
         }
       }
     ]
