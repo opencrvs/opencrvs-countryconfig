@@ -347,7 +347,7 @@ jobs:
           yarn environment:swarm-to-k8s
       - name: Commit, push changes and create PR
         working-directory: infrastructure-repo
-        if: matrix.environment != 'backup' && matrix.environment != 'jumpbox'
+        if: matrix.environment != 'backup' && matrix.environment != 'jump'
         env:
           BRANCH_NAME: add-config-files-${{ matrix.environment }}
         run: |
