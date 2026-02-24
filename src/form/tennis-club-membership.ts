@@ -88,6 +88,29 @@ const TENNIS_CLUB_DECLARATION_REVIEW = {
           )
         }
       ]
+    },
+    {
+      type: FieldType.ALPHA_PRINT_BUTTON,
+      id: 'review.print-declaration',
+      label: {
+        defaultMessage: 'Print declaration for hospital clerk',
+        description: 'Print',
+        id: 'event.tennis-club-membership.action.declare.form.review.print-record.label'
+      },
+      configuration: {
+        template: 'v2.tennis-club-membership-certificate-alpha',
+        buttonLabel: {
+          defaultMessage: 'Print declaration summary by hospital clerk',
+          description: "Print button's label",
+          id: 'event.tennis-club-membership.action.declare.form.review.print.button.label'
+        }
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: user.hasRole('HOSPITAL_CLERK')
+        }
+      ]
     }
   ]
 }
@@ -620,6 +643,7 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
     {
       id: 'collector',
       type: PageTypes.enum.FORM,
+      requireCompletionToContinue: true,
       title: {
         id: 'event.tennis-club-membership.action.certificate.form.section.who.title',
         defaultMessage: 'Print certified copy',
