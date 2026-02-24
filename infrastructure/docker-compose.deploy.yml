@@ -646,7 +646,7 @@ services:
     deploy:
       labels:
         - 'traefik.enable=true'
-        - 'traefik.http.routers.auth.rule=Host(`auth.{{hostname}}`)'
+        - 'traefik.http.routers.auth.rule=Host(`auth.{{hostname}}`) && !Path(`/internal/reindexing-token`)'
         - 'traefik.http.services.auth.loadbalancer.server.port=4040'
         - 'traefik.http.routers.auth.tls=true'
         - 'traefik.http.routers.auth.tls.certresolver=certResolver'
@@ -658,6 +658,9 @@ services:
         - 'traefik.http.middlewares.auth.headers.stsseconds=31536000'
         - 'traefik.http.middlewares.auth.headers.stsincludesubdomains=true'
         - 'traefik.http.middlewares.auth.headers.stspreload=true'
+        # Block /internal/reindexing-token from external access (only reachable internally via overlay network)
+        - 'traefik.http.routers.block-auth-reindexing-token.rule=Host(`auth.{{hostname}}`) && Path(`/internal/reindexing-token`)'
+        - 'traefik.http.routers.block-auth-reindexing-token.middlewares=block-internal-routes'
       replicas: 1
     networks:
       - overlay_net
