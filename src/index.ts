@@ -30,7 +30,7 @@ import {
   AUTH_URL,
   DEFAULT_TIMEOUT,
   GATEWAY_URL,
-  THIRTY_MINUTES_IN_MILISECOND
+  THIRTY_MINUTES_IN_MILLISECONDS
 } from '@countryconfig/constants'
 import {
   contentHandler,
@@ -217,7 +217,7 @@ export async function createServer() {
     }
   })
 
-  server.listener.requestTimeout = THIRTY_MINUTES_IN_MILISECOND
+  server.listener.requestTimeout = THIRTY_MINUTES_IN_MILLISECONDS
 
   await server.register(getPlugins())
 
@@ -583,8 +583,8 @@ export async function createServer() {
         parse: false
       },
       timeout: {
-        server: THIRTY_MINUTES_IN_MILISECOND,
-        socket: THIRTY_MINUTES_IN_MILISECOND
+        server: THIRTY_MINUTES_IN_MILLISECONDS,
+        socket: THIRTY_MINUTES_IN_MILLISECONDS
       }
     },
     handler: async (req, h) => {
