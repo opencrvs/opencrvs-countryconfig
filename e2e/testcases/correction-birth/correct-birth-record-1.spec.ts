@@ -198,12 +198,15 @@ test.describe('1. Correct record - 1', () => {
       await page.close()
     })
 
-    test('1.2.0 Navigate to record correction', async () => {
+    test('Navigate to record and assign', async () => {
       await page.getByRole('button', { name: 'Pending certification' }).click()
       await page
         .getByRole('button', { name: formatV2ChildName(declaration) })
         .click()
       await ensureAssigned(page)
+    })
+
+    test('1.2.0 Navigate to record correction', async () => {
       await selectAction(page, 'Correct record')
 
       await page.locator('#requester____type').click()
@@ -403,7 +406,7 @@ test.describe('1. Correct record - 1', () => {
         )
 
         await page
-          .getByTestId('child____birthLocation')
+          .locator('#searchable-select-child____birthLocation input')
           .fill(updatedChildDetails.birthLocation.slice(0, 2))
         await page.getByText(updatedChildDetails.birthLocation).click()
 

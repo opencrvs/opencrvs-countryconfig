@@ -341,14 +341,16 @@ test.describe.serial("2. Validate the child's details page", () => {
         await expect(page.locator('#child____birthLocation')).toBeVisible()
       })
       await test.step('Enter any health institution', async () => {
-        await page.locator('#child____birthLocation').fill('b')
+        await page
+          .locator('#searchable-select-child____birthLocation input')
+          .fill('b')
         await page.getByText('Bombwe Health Post').click()
-        /*
-         * Expected result: should select "Bombwe Health Post" as health institute
-         */
-        await expect(page.locator('#child____birthLocation')).toHaveValue(
-          'Bombwe Health Post'
-        )
+
+        await expect(
+          page.locator(
+            '#searchable-select-child____birthLocation .react-select__single-value'
+          )
+        ).toHaveText('Bombwe Health Post')
       })
     })
 
