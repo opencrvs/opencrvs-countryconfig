@@ -303,7 +303,7 @@ export const child = defineFormPage({
       ],
       configuration: {
         allowedLocations: user.jurisdiction(
-          user.scope('record.create').attribute('placeOfEvent')
+          user.scope('record.create').option('placeOfEvent')
         )
       }
     },
@@ -351,7 +351,7 @@ export const child = defineFormPage({
       configuration: {
         streetAddressForm: defaultStreetAddressConfiguration,
         allowedLocations: user.jurisdiction(
-          user.scope('record.create').attribute('placeOfEvent')
+          user.scope('record.create').option('placeOfEvent')
         )
       }
     },
