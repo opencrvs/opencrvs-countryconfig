@@ -76,7 +76,7 @@ test.describe.serial('4(b) Validate "Pending updates"-workqueue for RO', () => {
       'Title',
       'Event',
       'Date of Event',
-      'Update requested',
+      'Last updated',
       ''
     ])
 
@@ -84,9 +84,11 @@ test.describe.serial('4(b) Validate "Pending updates"-workqueue for RO', () => {
 
     const cells = row.locator(':scope > div')
 
-    expect(cells.nth(0)).toHaveText(formatV2ChildName(declaration))
-    expect(cells.nth(1)).toHaveText('Birth')
-    expect(cells.nth(2)).toHaveText(declaration['child.dob'].split('T')[0])
+    await expect(cells.nth(0)).toHaveText(formatV2ChildName(declaration))
+    await expect(cells.nth(1)).toHaveText('Birth')
+    await expect(cells.nth(2)).toHaveText(
+      declaration['child.dob'].split('T')[0]
+    )
   })
 
   test('4.3 Click a name', async () => {

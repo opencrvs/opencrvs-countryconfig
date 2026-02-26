@@ -1,15 +1,10 @@
 import { expect, test, type Page } from '@playwright/test'
 
-import {
-  formatName,
-  goToSection,
-  login,
-  selectDeclarationAction
-} from '../../helpers'
+import { formatName, login, selectDeclarationAction } from '../../helpers'
 import { CREDENTIALS } from '../../constants'
 import { faker } from '@faker-js/faker'
 import { getRowByTitle } from '../print-certificate/birth/helpers'
-import { ensureOutboxIsEmpty, selectAction } from '../../utils'
+import { ensureOutboxIsEmpty } from '../../utils'
 
 test.describe.serial('1: Validate my draft tab', () => {
   let page: Page

@@ -3,7 +3,6 @@ import { login } from '../../helpers'
 import path from 'path'
 import { faker } from '@faker-js/faker'
 import { ensureOutboxIsEmpty, expectInUrl, selectAction } from '../../utils'
-import { REQUIRED_VALIDATION_ERROR } from './helpers'
 import { trackAndDeleteCreatedEvents } from '../test-data/eventDeletion'
 
 const child = {
@@ -391,7 +390,7 @@ test.describe.serial('1. Birth event declaration', () => {
       })
     })
 
-    test.describe('1.9 Validate "Save & Exit" Button  ', async () => {
+    test.describe('1.9 Validate "Save & Exit" Button', () => {
       test('1.9.1 Click the "Save & Exit" button from review page', async () => {
         await page.getByRole('button', { name: 'Action' }).click()
         await page.getByText('Save & Exit', { exact: true }).click()

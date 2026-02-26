@@ -20,13 +20,11 @@ export async function validateAddress(
   // selection is not rendered as part of the address.
   const addressWithoutGeographicalArea = omit(address, 'urbanOrRural')
 
-  await Promise.all(
-    Object.values(addressWithoutGeographicalArea).map(
-      (val) =>
-        typeof val === 'string' &&
-        expect(page.getByTestId(elementTestId).getByText(val)).toBeVisible()
-    )
-  )
+  for (const val of Object.values(addressWithoutGeographicalArea)) {
+    if (typeof val === 'string') {
+      await expect(page.getByTestId(elementTestId).getByText(val)).toBeVisible()
+    }
+  }
 }
 
 export async function fillDate(
@@ -139,4 +137,27 @@ export function getIdByName(
     throw new Error(`Location with name ${name} not found`)
   }
   return location.id
+}
+
+export async function verifyMembersEnabled(page: Page, members: string[]) {
+  for (const member of members) {
+    const row = page.getByRole('row', { name: new RegExp(member) })
+    await expect(row.getByText('Active')).toBeVisible()
+    await expect(row.getByRole('button', { name: member })).toBeEnabled()
+  }
+}
+
+export async function verifyMembersClickable(
+  page: Page,
+  members: string[],
+  officeButtonName: string
+) {
+  for (const member of members) {
+    const row = page.getByRole('row', { name: new RegExp(member) })
+    await expect(row.getByText('Active')).toBeVisible()
+    await row.getByRole('button', { name: member }).click()
+    await expect(page.locator('#content-name')).toHaveText(member)
+    await page.getByRole('button', { name: officeButtonName }).click()
+    await expect(page).toHaveURL(/.*\/team/)
+  }
 }

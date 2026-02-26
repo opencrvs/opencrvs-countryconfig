@@ -49,11 +49,15 @@ function getInformantDetails(
 
 export async function getPlaceOfBirth(
   type: 'PRIVATE_HOME' | 'HEALTH_FACILITY',
-  token: string
+  token: string,
+  name?: string
 ) {
   if (type === 'HEALTH_FACILITY') {
     const locations = await getLocations('HEALTH_FACILITY', token)
-    const locationId = getIdByName(locations, 'Ibombo Rural Health Centre')
+    const locationId = getIdByName(
+      locations,
+      name ?? 'Ibombo Rural Health Centre'
+    )
 
     return {
       'child.placeOfBirth': 'HEALTH_FACILITY',
@@ -63,7 +67,7 @@ export async function getPlaceOfBirth(
 
   if (type === 'PRIVATE_HOME') {
     const administrativeAreas = await getAdministrativeAreas(token)
-    const province = getIdByName(administrativeAreas, 'Central')
+
     const district = getIdByName(administrativeAreas, 'Ibombo')
 
     return {
@@ -91,7 +95,7 @@ export async function getDeclaration({
   token: string
 }) {
   const administrativeAreas = await getAdministrativeAreas(token)
-  const province = getIdByName(administrativeAreas, 'Central')
+
   const district = getIdByName(administrativeAreas, 'Ibombo')
 
   const mockDeclaration = {
@@ -151,7 +155,12 @@ export async function createDeclaration(
     dec ??
     (await getDeclaration({
       placeOfBirthType,
-      token
+      token,
+      partialDeclaration:
+        action === ActionType.NOTIFY
+          ? // Drop arbitrary fields not needed for notify action
+            { 'mother.nid': null, 'mother.dob': null }
+          : undefined
     }))
 
   const client = createClient(GATEWAY_HOST + '/events', `Bearer ${token}`)
@@ -170,6 +179,28 @@ export async function createDeclaration(
     'review.signature': filename
   }
 
+  if (action === ActionType.NOTIFY) {
+    const notifyRes = await client.event.actions.notify.request.mutate({
+      eventId: eventId,
+      transactionId: uuidv4(),
+      declaration,
+      annotation
+    })
+
+    const declareAction = notifyRes.actions.find(
+      (action: ActionDocument) => action.type === ActionType.NOTIFY
+    )
+
+    if (!declareAction || !('declaration' in declareAction)) {
+      throw new Error('Declaration info not found in action')
+    }
+
+    return {
+      eventId,
+      declaration: declareAction?.declaration as Declaration
+    }
+  }
+
   const declareRes = await client.event.actions.declare.request.mutate({
     eventId,
     transactionId: uuidv4(),
@@ -180,7 +211,7 @@ export async function createDeclaration(
 
   if (action === ActionType.DECLARE) {
     const declareAction = declareRes.actions.find(
-      (action: ActionDocument) => action.type === 'DECLARE'
+      (action: ActionDocument) => action.type === ActionType.DECLARE
     )
 
     if (!declareAction || !('declaration' in declareAction)) {
@@ -202,7 +233,7 @@ export async function createDeclaration(
   })
 
   const registerAction = registerRes.actions.find(
-    (action: ActionDocument) => action.type === 'REGISTER'
+    (action: ActionDocument) => action.type === ActionType.REGISTER
   )
 
   const trackingId = registerRes?.trackingId as string

@@ -53,16 +53,18 @@ test.describe.serial('6 Validate "Pending certification"-workqueue', () => {
       'Title',
       'Event',
       'Date of Event',
-      'Registered',
+      'Last updated',
       ''
     ])
 
     const row = button.locator('xpath=ancestor::*[starts-with(@id, "row_")]')
     const cells = row.locator(':scope > div')
 
-    expect(cells.nth(0)).toHaveText(formatV2ChildName(declaration))
-    expect(cells.nth(1)).toHaveText('Birth')
-    expect(cells.nth(2)).toHaveText(declaration['child.dob'].split('T')[0])
+    await expect(cells.nth(0)).toHaveText(formatV2ChildName(declaration))
+    await expect(cells.nth(1)).toHaveText('Birth')
+    await expect(cells.nth(2)).toHaveText(
+      declaration['child.dob'].split('T')[0]
+    )
   })
 
   test('6.4 Click a name', async () => {

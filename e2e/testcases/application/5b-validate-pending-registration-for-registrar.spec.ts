@@ -52,16 +52,18 @@ test.describe
       'Title',
       'Event',
       'Date of Event',
-      'Registration requested',
+      'Last updated',
       ''
     ])
 
     const row = getRowByTitle(page, formatV2ChildName(declaration))
     const cells = row.locator(':scope > div')
 
-    expect(cells.nth(0)).toHaveText(formatV2ChildName(declaration))
-    expect(cells.nth(1)).toHaveText('Birth')
-    expect(cells.nth(2)).toHaveText(declaration['child.dob'].split('T')[0])
+    await expect(cells.nth(0)).toHaveText(formatV2ChildName(declaration))
+    await expect(cells.nth(1)).toHaveText('Birth')
+    await expect(cells.nth(2)).toHaveText(
+      declaration['child.dob'].split('T')[0]
+    )
   })
 
   test('5.4 Click a name', async () => {

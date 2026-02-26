@@ -93,7 +93,5 @@ test.describe("Advanced Search 8 - Death - Deceased's place of death", () => {
       ],
       testId: 'search-result'
     })
-
-    const t = page.locator('#abcd')
   })
 })

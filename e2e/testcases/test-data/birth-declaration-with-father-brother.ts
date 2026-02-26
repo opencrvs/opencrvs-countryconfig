@@ -31,7 +31,7 @@ async function getPlaceOfBirth(
 
   if (type === 'PRIVATE_HOME') {
     const administrativeAreas = await getAdministrativeAreas(token)
-    const province = getIdByName(administrativeAreas, 'Central')
+
     const district = getIdByName(administrativeAreas, 'Ibombo')
 
     return {

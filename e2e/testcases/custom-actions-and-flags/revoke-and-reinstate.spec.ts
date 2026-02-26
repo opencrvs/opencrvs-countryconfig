@@ -1,15 +1,9 @@
 import { expect, test, type Page } from '@playwright/test'
-import {
-  formatName,
-  getToken,
-  login,
-  logout,
-  searchFromSearchBar
-} from '../../helpers'
+import { getToken, login, searchFromSearchBar } from '../../helpers'
 import { CREDENTIALS } from '../../constants'
 import { ensureAssigned, ensureOutboxIsEmpty, selectAction } from '../../utils'
 import { createDeclaration, Declaration } from '../test-data/birth-declaration'
-import { assertRecordInWorkqueue, formatV2ChildName } from '../birth/helpers'
+import { formatV2ChildName } from '../birth/helpers'
 
 test.describe.serial('Revoke and reinstate record', () => {
   let page: Page

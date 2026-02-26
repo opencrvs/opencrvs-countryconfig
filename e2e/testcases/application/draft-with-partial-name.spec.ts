@@ -22,7 +22,7 @@ test.describe.serial('Validate draft with partial name', () => {
     await page.close()
   })
 
-  test('Record does not appear in draft ', async () => {
+  test('Record does not appear in draft', async () => {
     await login(page, CREDENTIALS.HOSPITAL_OFFICIAL)
     await page.getByRole('button', { name: 'Drafts' }).click()
 
@@ -60,7 +60,7 @@ test.describe.serial('Validate draft with partial name', () => {
     await ensureOutboxIsEmpty(page)
   })
 
-  test('Records appear in draft ', async () => {
+  test('Records appear in draft', async () => {
     await page.getByRole('button', { name: 'Drafts' }).click()
 
     await expect(page.getByTestId('search-result')).toContainText(
@@ -83,7 +83,7 @@ test.describe.serial('Validate draft with partial name', () => {
     )
   })
 
-  test('Records do not appear in draft for other user: LR ', async () => {
+  test('Records do not appear in draft for other user: LR', async () => {
     await login(page, CREDENTIALS.REGISTRAR)
     await page.getByRole('button', { name: 'Drafts' }).click()
 

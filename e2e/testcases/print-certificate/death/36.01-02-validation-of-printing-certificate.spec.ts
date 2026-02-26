@@ -107,7 +107,7 @@ test.describe.serial('Certified copies renders spouse age correctly', () => {
       CREDENTIALS.REGISTRAR.USERNAME,
       CREDENTIALS.REGISTRAR.PASSWORD
     )
-    const res = await createDeclaration(token, (mockDeclaration) => ({
+    const res = await createDeclaration(token, () => ({
       'spouse.dobUnknown': true,
       'spouse.age': {
         age: spouseAge,

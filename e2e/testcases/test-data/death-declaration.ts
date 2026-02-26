@@ -31,7 +31,7 @@ async function getPlaceOfDeath(
 
   if (type === 'DECEASED_USUAL_RESIDENCE') {
     const administrativeAreas = await getAdministrativeAreas(token)
-    const province = getIdByName(administrativeAreas, 'Central')
+
     const district = getIdByName(administrativeAreas, 'Ibombo')
 
     return {
@@ -57,10 +57,6 @@ export async function getDeclaration({
   placeOfDeathType?: 'DECEASED_USUAL_RESIDENCE' | 'HEALTH_FACILITY'
   token: string
 }) {
-  const administrativeAreas = await getAdministrativeAreas(token)
-  const province = getIdByName(administrativeAreas, 'Central')
-  const district = getIdByName(administrativeAreas, 'Ibombo')
-
   const mockDeclaration = {
     'spouse.dob': '1975-02-18',
     'spouse.age': undefined,

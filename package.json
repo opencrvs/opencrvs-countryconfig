@@ -1,10 +1,11 @@
 {
   "name": "@opencrvs/countryconfig",
-  "version": "1.9.7",
+  "version": "1.9.8",
   "description": "OpenCRVS country configuration for reference data",
   "os": [
     "darwin",
-    "linux"
+    "linux",
+    "win32"
   ],
   "engines": {
     "node": "22.x.x"
@@ -12,6 +13,7 @@
   "license": "MPL-2.0",
   "scripts": {
     "dev": "yarn start",
+    "e2e-win": "yarn playwright test --ui",
     "e2e": "NODE_OPTIONS=--dns-result-order=ipv4first yarn playwright test --ui",
     "e2e-dev": "NODE_ENV=development NODE_OPTIONS=--dns-result-order=ipv4first yarn playwright test --ui",
     "e2e:generate-types": "graphql-codegen --config e2e/codegen.yml && yarn prettier --write e2e/gateway.ts",
@@ -81,7 +83,7 @@
     "@hapi/hapi": "^20.0.1",
     "@hapi/inert": "^6.0.3",
     "@opencrvs/mosip": "1.9.0",
-    "@opencrvs/toolkit": "1.9.7-rc.75ec234",
+    "@opencrvs/toolkit": "1.9.8-rc.20292e3",
     "@types/chalk": "^2.2.0",
     "@types/code": "^4.0.3",
     "@types/csv2json": "^1.4.0",

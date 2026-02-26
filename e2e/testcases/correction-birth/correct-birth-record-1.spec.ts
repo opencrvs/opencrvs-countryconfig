@@ -77,7 +77,10 @@ test.describe('1. Correct record - 1', () => {
        * - Navigate to record audit page
        * - See status, event, trackingId, BRN, DOB, Place of birth, Informant contact
        */
-      await expect(page.getByText(formatV2ChildName(declaration))).toBeVisible()
+      await expect(page.locator('#content-name')).toHaveText(
+        formatV2ChildName(declaration),
+        { timeout: 60_000 }
+      )
       await expect(
         page.getByRole('button', { name: 'Action' }).first()
       ).toBeVisible()

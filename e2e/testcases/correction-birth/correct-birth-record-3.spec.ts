@@ -21,12 +21,7 @@ import {
 import { format, subDays, subYears } from 'date-fns'
 import { formatV2ChildName } from '../birth/helpers'
 import { IdType } from '@countryconfig/form/v2/person'
-import {
-  ensureAssigned,
-  ensureOutboxIsEmpty,
-  expectInUrl,
-  selectAction
-} from '../../utils'
+import { ensureAssigned, expectInUrl, selectAction } from '../../utils'
 
 test.describe.serial(' Correct record - 3', () => {
   let declaration: DeclarationV2
@@ -160,7 +155,7 @@ test.describe.serial(' Correct record - 3', () => {
         name: `${formatV2ChildName(declaration)}`,
         trackingId
       })
-      await page.getByText(formatV2ChildName(declaration)).click()
+
       await ensureAssigned(page)
 
       await page.getByRole('button', { name: 'Action' }).click()
@@ -950,7 +945,9 @@ test.describe.serial(' Correct record - 3', () => {
       })
       await ensureAssigned(page)
 
-      await expect(page.getByText(formatV2ChildName(declaration))).toBeVisible()
+      await expect(page.locator('#content-name')).toHaveText(
+        formatV2ChildName(declaration)
+      )
       await expect(
         page.locator('#summary').getByText('Registered')
       ).toBeVisible()
