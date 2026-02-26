@@ -44,7 +44,7 @@ while true; do
   else
     echo "Reindex attempt failed"
     reindexing_attempts=$((reindexing_attempts + 1))
-    if [ "$reindexing_attempts" -gt 30 ]; then
+    if [ "$reindexing_attempts" -gt 3 ]; then
       echo "Failed to reindex search after $reindexing_attempts attempts."
       exit 1
     fi
