@@ -378,6 +378,12 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
             description: 'This is the label for the field',
             id: 'event.tennis-club-membership.action.declare.form.section.recommender.field.search.label'
           },
+          helperText: {
+            defaultMessage:
+              'You can search tennis records created on Farajaland since beginning of 2023',
+            description: 'This is the helper text for the field',
+            id: 'tennis-club-membership.searchField.helperText'
+          },
           configuration: {
             query: {
               type: 'or',
