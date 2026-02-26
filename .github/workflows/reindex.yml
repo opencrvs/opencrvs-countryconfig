@@ -54,7 +54,7 @@ jobs:
 
       - name: Run reindex script in docker container
         run: |
-          ssh -p ${{ vars.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ vars.SSH_HOST }} ${{ vars.SSH_ARGS }} "
+          ssh -o ServerAliveInterval=30 -o ServerAliveCountMax=120 -p ${{ vars.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ vars.SSH_HOST }} ${{ vars.SSH_ARGS }} "
             docker run --rm \
               -v /opt/opencrvs/infrastructure/deployment:/workspace \
               -w /workspace \
