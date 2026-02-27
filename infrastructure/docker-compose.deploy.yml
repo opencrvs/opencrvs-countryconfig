@@ -253,7 +253,7 @@ services:
         tag: 'mongo-on-update'
   # Configure redis
   redis:
-    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    command: ['redis-server', '/usr/local/etc/redis/redis.conf']
     secrets:
       - source: redis-acl.{{ts}}
         target: /usr/local/etc/redis/users.acl
@@ -652,7 +652,7 @@ services:
     deploy:
       labels:
         - 'traefik.enable=true'
-        - 'traefik.http.routers.auth.rule=Host(`auth.{{hostname}}`)'
+        - 'traefik.http.routers.auth.rule=Host(`auth.{{hostname}}`) && !Path(`/internal/reindexing-token`)'
         - 'traefik.http.services.auth.loadbalancer.server.port=4040'
         - 'traefik.http.routers.auth.tls=true'
         - 'traefik.http.routers.auth.tls.certresolver=certResolver'
@@ -669,6 +669,9 @@ services:
         - 'traefik.http.middlewares.block-internal-routes.ipwhitelist.sourcerange=255.255.255.255'
         - 'traefik.http.routers.block-internal.rule=Host(`countryconfig.{{hostname}}`) && PathPrefix(`/internal`)'
         - 'traefik.http.routers.block-internal.middlewares=block-internal-routes'
+        # Block /internal/reindexing-token from external access (only reachable internally via overlay network)
+        - 'traefik.http.routers.block-auth-reindexing-token.rule=Host(`auth.{{hostname}}`) && Path(`/internal/reindexing-token`)'
+        - 'traefik.http.routers.block-auth-reindexing-token.middlewares=block-internal-routes'
       replicas: 1
     networks:
       - overlay_net
@@ -1000,7 +1003,7 @@ services:
 
   postgres-on-update:
     image: postgres:17.6
-    command: ["bash", "-c", "bash /on-deploy.sh && bash /setup-analytics.sh"]
+    command: ['bash', '-c', 'bash /on-deploy.sh && bash /setup-analytics.sh']
     configs:
       - source: postgres-on-deploy.{{ts}}
         target: /on-deploy.sh
@@ -1069,7 +1072,7 @@ services:
       - /opt/opencrvs/infrastructure/metabase/initialize-database.sh:/initialize-database.sh
       - /opt/opencrvs/infrastructure/metabase/update-database.sh:/update-database.sh
       - /opt/opencrvs/infrastructure/metabase/environment-configuration.sql:/environment-configuration.sql
-    entrypoint: ["/bin/sh", "/run.sh"]
+    entrypoint: ['/bin/sh', '/run.sh']
     networks:
       - overlay_net
     environment:
