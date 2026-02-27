@@ -8,11 +8,14 @@ import { getLocations } from '../birth/helpers'
 export const EVENT_TYPE = 'birth'
 export const NON_EXISTING_UUID = 'b3ca0644-ffc4-461f-afe0-5fb84bedfcfd'
 export const INTEGRATION_SCOPES = [
-  'record.create[event=birth]',
+  'record.create',
   'type=record.search',
-  'record.notify[event=birth]',
-  'record.read[event=birth]',
-  'record.registered.correct[event=birth]'
+  'record.notify',
+  'record.read',
+  'record.registered.correct[event=birth]',
+  'record.registration-request-correction[event=birth]',
+  'record.confirm-registration[event=birth]',
+  'record.reject-registration[event=birth]'
 ]
 
 export async function fetchClientAPI(
