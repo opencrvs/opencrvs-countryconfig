@@ -323,6 +323,6 @@ docker run --rm \
   -w /workspace \
   --network $NETWORK \
   -e 'AUTH_URL=http://auth:4040/' \
-  -e 'EVENTS_URL=http://gateway:7070/events' \
+  -e 'EVENTS_URL=http://events:5555/' \
   alpine \
   sh -c 'apk add --no-cache curl jq && sh reindex.sh'
