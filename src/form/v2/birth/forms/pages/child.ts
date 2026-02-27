@@ -396,7 +396,10 @@ export const child = defineFormPage({
         administrativeArea: user('primaryOfficeId').locationLevel('district')
       },
       configuration: {
-        streetAddressForm: defaultStreetAddressConfiguration
+        streetAddressForm: defaultStreetAddressConfiguration,
+        allowedLocations: user.jurisdiction(
+          user.scope('record.create').attribute('placeOfEvent')
+        )
       }
     },
     {
