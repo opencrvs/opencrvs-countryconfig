@@ -10,7 +10,7 @@ export const NON_EXISTING_UUID = 'b3ca0644-ffc4-461f-afe0-5fb84bedfcfd'
 export const INTEGRATION_SCOPES = [
   'record.create',
   'type=record.search',
-  'record.notify',
+  'record.notify[event=birth]',
   'record.read',
   'record.registered.correct[event=birth]',
   'record.registration-request-correction[event=birth]',

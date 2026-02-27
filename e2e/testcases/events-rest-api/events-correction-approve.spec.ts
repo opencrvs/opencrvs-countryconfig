@@ -13,7 +13,7 @@ test.describe('POST /api/events/events/{eventId}/correction/approve', () => {
 
   test.beforeAll(async () => {
     const context = await createIntegrationContext()
-    ({ clientToken, registrarToken, healthFacilityId } = context)
+    ;({ clientToken, registrarToken, healthFacilityId } = context)
   })
 
   test('HTTP 200 for correction approve with updated state', async () => {
