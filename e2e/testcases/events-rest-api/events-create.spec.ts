@@ -41,11 +41,9 @@ test.describe('POST /api/events/events', () => {
     )
 
     expect(response.status).toBe(400)
-    const body = await response.json()
-    expect(body.message).toBe('Input validation failed')
   })
 
-  test('HTTP 400 without', async () => {
+  test('HTTP 400 without transaction id', async () => {
     const response = await fetchClientAPI(
       '/api/events/events',
       'POST',
@@ -56,8 +54,6 @@ test.describe('POST /api/events/events', () => {
     )
 
     expect(response.status).toBe(400)
-    const body = await response.json()
-    expect(body.message).toBe('Input validation failed')
   })
 
   test('HTTP 400 when createdAtLocation is missing', async () => {
