@@ -9,6 +9,134 @@ type Role = {
 
 export const roles: Role[] = [
   {
+    id: 'FIELD_AGENT',
+    label: {
+      defaultMessage: 'Field Agent',
+      description: 'Name for user role Field Agent',
+      id: 'userRole.fieldAgent'
+    },
+    scopes: [
+      SCOPES.RECORD_DECLARE_BIRTH,
+      SCOPES.RECORD_DECLARE_DEATH,
+      SCOPES.RECORD_DECLARE_MARRIAGE,
+      SCOPES.RECORD_SUBMIT_INCOMPLETE,
+      SCOPES.RECORD_SUBMIT_FOR_REVIEW,
+      SCOPES.SEARCH_BIRTH,
+      SCOPES.SEARCH_DEATH,
+      SCOPES.SEARCH_MARRIAGE,
+      'search[event=birth,access=all]',
+      'search[event=death,access=my-jurisdiction]',
+      'search[event=tennis-club-membership,access=all]',
+      'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]',
+      `record.create[event=birth|death|tennis-club-membership]`,
+      'record.declare[event=birth|death|tennis-club-membership]',
+      'record.notify[event=birth|death|tennis-club-membership]'
+    ]
+  },
+  {
+    id: 'POLICE_OFFICER',
+    label: {
+      defaultMessage: 'Police Officer',
+      description: 'Name for user role Police Officer',
+      id: 'userRole.policeOfficer'
+    },
+    scopes: [
+      SCOPES.RECORD_DECLARE_BIRTH,
+      SCOPES.RECORD_DECLARE_DEATH,
+      SCOPES.RECORD_DECLARE_MARRIAGE,
+      SCOPES.RECORD_SUBMIT_INCOMPLETE,
+      SCOPES.RECORD_SUBMIT_FOR_REVIEW,
+      SCOPES.SEARCH_BIRTH,
+      SCOPES.SEARCH_DEATH,
+      SCOPES.SEARCH_MARRIAGE,
+      'search[event=birth,access=all]',
+      'search[event=death,access=all]',
+      'search[event=tennis-club-membership,access=all]',
+      `record.create[event=birth|death|tennis-club-membership]`,
+      'record.declare[event=birth|death|tennis-club-membership]',
+      'record.notify[event=birth|death|tennis-club-membership]'
+    ]
+  },
+  {
+    id: 'HOSPITAL_CLERK',
+    label: {
+      defaultMessage: 'Hospital Clerk',
+      description: 'Name for user role Hospital Clerk',
+      id: 'userRole.hospitalClerk'
+    },
+    scopes: [
+      SCOPES.RECORD_DECLARE_BIRTH,
+      SCOPES.RECORD_DECLARE_DEATH,
+      SCOPES.RECORD_DECLARE_MARRIAGE,
+      SCOPES.RECORD_SUBMIT_INCOMPLETE,
+      SCOPES.RECORD_SUBMIT_FOR_REVIEW,
+      SCOPES.SEARCH_BIRTH,
+      SCOPES.SEARCH_DEATH,
+      SCOPES.SEARCH_MARRIAGE,
+      'search[event=birth,access=all]',
+      'search[event=death,access=all]',
+      'search[event=tennis-club-membership,access=all]',
+      'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]',
+      `record.create[event=birth|death|tennis-club-membership]`,
+      'record.declare[event=birth|death|tennis-club-membership]',
+      'record.notify[event=birth|death|tennis-club-membership]',
+      'record.registered.print-certified-copies[event=tennis-club-membership,templates=v2.tennis-club-membership-certificate-alpha]'
+    ]
+  },
+  {
+    id: 'HEALTHCARE_WORKER',
+    label: {
+      defaultMessage: 'Healthcare Worker',
+      description: 'Name for user role Healthcare Worker',
+      id: 'userRole.healthcareWorker'
+    },
+    scopes: [
+      SCOPES.RECORD_DECLARE_BIRTH,
+      SCOPES.RECORD_DECLARE_DEATH,
+      SCOPES.RECORD_DECLARE_MARRIAGE,
+      SCOPES.RECORD_SUBMIT_INCOMPLETE,
+      SCOPES.RECORD_SUBMIT_FOR_REVIEW,
+      SCOPES.SEARCH_BIRTH,
+      SCOPES.SEARCH_DEATH,
+      SCOPES.SEARCH_MARRIAGE,
+      'search[event=birth,access=all]',
+      'search[event=death,access=all]',
+      'search[event=tennis-club-membership,access=all]',
+      `record.create[event=birth|death|tennis-club-membership]`,
+      'record.declare[event=birth|death|tennis-club-membership]',
+      'record.notify[event=birth|death|tennis-club-membership]'
+    ]
+  },
+  {
+    id: 'COMMUNITY_LEADER',
+    label: {
+      defaultMessage: 'Community Leader',
+      description: 'Name for user role Community Leader',
+      id: 'userRole.communityLeader'
+    },
+    scopes: [
+      SCOPES.RECORD_DECLARE_BIRTH,
+      SCOPES.RECORD_DECLARE_DEATH,
+      SCOPES.RECORD_DECLARE_MARRIAGE,
+      SCOPES.RECORD_SUBMIT_INCOMPLETE,
+      SCOPES.RECORD_SUBMIT_FOR_REVIEW,
+      SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES,
+      SCOPES.SEARCH_BIRTH,
+      SCOPES.SEARCH_DEATH,
+      SCOPES.SEARCH_MARRIAGE,
+      SCOPES.USER_READ_ONLY_MY_AUDIT,
+      'search[event=birth,access=all]',
+      'search[event=death,access=all]',
+      'search[event=tennis-club-membership,access=all]',
+      'workqueue[id=assigned-to-you|recent|sent-for-review|ready-to-print]',
+      'record.create[event=birth|death|tennis-club-membership]',
+      'record.read[event=birth|death|tennis-club-membership]',
+      'record.declare[event=birth|death|tennis-club-membership]',
+      'record.notify[event=birth|death|tennis-club-membership]',
+      'record.registered.print-certified-copies[event=birth|death|tennis-club-membership]'
+    ]
+  },
+  {
     id: 'REGISTRATION_AGENT',
     label: {
       defaultMessage: 'Registration Officer',
