@@ -19,7 +19,6 @@
  */
 ;(function initClientConfig() {
   window.config = {
-    LOGIN_URL: 'http://localhost:3020',
     MINIO_BUCKET: 'ocrvs',
     MINIO_URL: 'http://localhost:3535/ocrvs/',
     MINIO_BASE_URL: 'http://localhost:3535', // URL without path/bucket information, used for file uploads, v2
