@@ -17,7 +17,7 @@
  * If the network is slow, the browser might start loading and executing client-config.js again before the previous one is torn down, causing the error.
  *
  */
-;(function initClientConfig() {
+; (function initClientConfig() {
   const scheme = window.location.protocol // "http:" or "https:"
   const hostname = '{{hostname}}' // Replace dynamically if needed
   const sentry = '{{sentry}}' // Replace dynamically if needed
@@ -25,24 +25,19 @@
   const minioBaseUrl = '{{minio_base_url}}'
 
   window.config = {
-    API_GATEWAY_URL: `${scheme}//gateway.${hostname}/`,
-    CONFIG_API_URL: `${scheme}//config.${hostname}`,
-    LOGIN_URL: `${scheme}//login.${hostname}`,
-    AUTH_URL: `${scheme}//gateway.${hostname}/auth/`,
     MINIO_URL: `${scheme}//minio.${hostname}/ocrvs/`,
     /** E2E uses single minio for all the different services. @see start-prod.sh.  */
     MINIO_BASE_URL: minioBaseUrl.startsWith('http')
       ? minioBaseUrl
       : // Resolve the protocol on the same level as the other URLs.
-        `${scheme}${minioBaseUrl}`, // URL without path/bucket information, used for file uploads, v2
+      `${scheme}${minioBaseUrl}`, // URL without path/bucket information, used for file uploads, v2
     /** Bucket name is hardcoded as 'ocrvs'. In live system, it cannot be changed without data migration.
      * In E2E environment, buckets are separated from different PR environments to avoid conflicts. @see start-prod.sh
      */
     MINIO_BUCKET: minioBucket,
-    COUNTRY_CONFIG_URL: `${scheme}//countryconfig.${hostname}`,
     // Country code in uppercase ALPHA-3 format
     COUNTRY: 'FAR',
-    LANGUAGES: 'en,fr',
+    LANGUAGES: ['en', 'fr'],
     SENTRY: sentry,
     DASHBOARDS: [
       {
