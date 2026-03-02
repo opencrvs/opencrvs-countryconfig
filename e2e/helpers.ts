@@ -97,7 +97,7 @@ export async function getToken(username: string, password: string) {
 }
 
 export async function getClientToken(client_id: string, client_secret: string) {
-  const authUrl = `${AUTH_URL}/token?client_id=${client_id}&client_secret=${client_secret}&grant_type=client_credentials`
+  const authUrl = `${GATEWAY_HOST}/auth/token?client_id=${client_id}&client_secret=${client_secret}&grant_type=client_credentials`
 
   const authResponse = await fetch(authUrl, {
     method: 'POST',
@@ -107,8 +107,13 @@ export async function getClientToken(client_id: string, client_secret: string) {
   })
 
   const authBody = await authResponse.json()
+  const token = authBody.token ?? authBody.access_token
 
-  return authBody.access_token
+  if (!token) {
+    throw new Error('Client token missing from gateway /auth/token response')
+  }
+
+  return token
 }
 
 type DeclarationSection =
