@@ -12,6 +12,5 @@ window.config = {
   // Country code in uppercase ALPHA-3 format
   COUNTRY: 'FAR',
   LANGUAGES: ['en', 'fr'],
-  CLIENT_APP_URL: 'http://localhost:3000/',
   SENTRY: ''
 }
