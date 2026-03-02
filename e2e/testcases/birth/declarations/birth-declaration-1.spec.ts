@@ -31,12 +31,7 @@ test.describe.serial('1. Birth declaration case - 1', () => {
     birthType: 'Single',
     weightAtBirth: 2.4,
     placeOfBirth: 'Health Institution',
-    birthLocation: {
-      facility: 'Golden Valley Rural Health Centre',
-      district: 'Ibombo',
-      province: 'Central',
-      country: 'Farajaland'
-    },
+    birthLocation: { facility: 'Ibombo District Office' },
     informantType: 'Mother',
     informantEmail: faker.internet.email(),
     mother: {
@@ -290,7 +285,7 @@ test.describe.serial('1. Birth declaration case - 1', () => {
       )
       await expect(
         page.getByTestId('row-value-child.birthLocation')
-      ).toHaveText(Object.values(declaration.birthLocation).join(', '))
+      ).toHaveText('Ibombo District Office, Ibombo, Central, Farajaland')
 
       /*
        * Expected result: should include
@@ -554,7 +549,7 @@ test.describe.serial('1. Birth declaration case - 1', () => {
       await expectRowValue(
         page,
         'child.birthLocation',
-        Object.values(declaration.birthLocation).join(', ')
+        'Ibombo District Office, Ibombo, Central, Farajaland'
       )
 
       /*

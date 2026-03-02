@@ -32,7 +32,7 @@ test.describe.serial('8. Validate declaration review page', () => {
     birthType: 'Single',
     weightAtBirth: 2.4,
     placeOfBirth: 'Health Institution',
-    birthLocation: 'Bombwe Health Post',
+    birthLocation: 'Ibombo District Office',
     informantType: 'Mother',
     informantEmail: faker.internet.email(),
     mother: {

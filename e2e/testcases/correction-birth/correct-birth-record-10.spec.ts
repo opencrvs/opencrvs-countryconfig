@@ -33,7 +33,7 @@ test.describe('10. Correct record', () => {
       subDays(new Date(), Math.ceil(15 * Math.random()) + 5),
       'yyyy-MM-dd'
     ),
-    birthLocation: 'Tembwe Rural Health Centre',
+    birthLocation: 'Golden Valley Rural Health Centre',
     attendantAtBirth: 'Nurse',
     typeOfBirth: 'Twin',
     weightAtBirth: '3.1'

@@ -1,6 +1,6 @@
 import { test, expect, Page } from '@playwright/test'
 import { goToSection, login } from '../../helpers'
-import { NAME_VALIDATION_ERROR, REQUIRED_VALIDATION_ERROR } from './helpers'
+import { REQUIRED_VALIDATION_ERROR } from './helpers'
 import { trackAndDeleteCreatedEvents } from '../test-data/eventDeletion'
 
 const loginAndBeginBirthDeclaration = async ({ page }: { page: Page }) => {
@@ -343,14 +343,14 @@ test.describe.serial("2. Validate the child's details page", () => {
       await test.step('Enter any health institution', async () => {
         await page
           .locator('#searchable-select-child____birthLocation input')
-          .fill('b')
-        await page.getByText('Bombwe Health Post').click()
+          .fill('go')
+        await page.getByText('Golden Valley Rural Health Centre').click()
 
         await expect(
           page.locator(
             '#searchable-select-child____birthLocation .react-select__single-value'
           )
-        ).toHaveText('Bombwe Health Post')
+        ).toHaveText('Golden Valley Rural Health Centre')
       })
     })
 
