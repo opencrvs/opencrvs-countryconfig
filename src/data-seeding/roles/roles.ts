@@ -187,7 +187,7 @@ export const roles: Role[] = [
       'type=record.create&event=birth,death,tennis-club-membership&placeOfEvent=location',
       'type=record.read&event=birth,death,tennis-club-membership',
       'record.declare[event=birth|death|tennis-club-membership]',
-      'record.notify[event=birth|death|tennis-club-membership]',
+      'type=record.notify&event=birth,death,tennis-club-membership',
       'record.declared.edit[event=birth|death|tennis-club-membership]'
     ]
   },
@@ -206,7 +206,7 @@ export const roles: Role[] = [
       'type=record.create&event=birth,death,tennis-club-membership&placeOfEvent=location',
       'type=record.read&event=birth,death,tennis-club-membership',
       'record.declared.edit[event=birth|death|tennis-club-membership]',
-      'record.notify[event=birth|death|tennis-club-membership]'
+      'type=record.notify&event=birth,death,tennis-club-membership'
     ]
   },
   {
