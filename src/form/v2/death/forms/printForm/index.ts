@@ -24,6 +24,7 @@ import { printCertificateCollectorOther } from './collector-other'
 import { printCertificateCollectorIdentityVerify } from './collector-identity-verify'
 
 import { CollectorType } from './collector-other'
+import { DEATH_REGISTRATION_TARGET_DAYS } from '@countryconfig/form/v2/constants'
 export const DEATH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
   label: {
     id: 'event.death.action.certificate.form.label',
@@ -116,7 +117,7 @@ export const DEATH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
                 not(
                   field('eventDetails.date')
                     .isAfter()
-                    .days(applicationConfig.DEATH.REGISTRATION_TARGET)
+                    .days(DEATH_REGISTRATION_TARGET_DAYS)
                     .inPast()
                 ),
                 field('eventDetails.date').isBefore().now()
@@ -166,7 +167,7 @@ export const DEATH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
               conditional: and(
                 field('eventDetails.date')
                   .isAfter()
-                  .days(applicationConfig.DEATH.REGISTRATION_TARGET)
+                  .days(DEATH_REGISTRATION_TARGET_DAYS)
                   .inPast(),
                 field('eventDetails.date').isBefore().now()
               )
