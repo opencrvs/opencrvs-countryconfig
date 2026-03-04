@@ -26,7 +26,6 @@ import {
   SENTRY_DSN,
   COUNTRY_CONFIG_HOST,
   COUNTRY_CONFIG_PORT,
-  CHECK_INVALID_TOKEN,
   AUTH_URL,
   DEFAULT_TIMEOUT,
   GATEWAY_URL
@@ -156,32 +155,6 @@ export const verifyToken = async (token: string, authUrl: string) => {
   return false
 }
 
-const validateFunc = async (
-  payload: any,
-  request: Hapi.Request,
-  checkInvalidToken: boolean,
-  authUrl: string
-) => {
-  let valid
-  if (checkInvalidToken) {
-    valid = await verifyToken(
-      request.headers.authorization.replace('Bearer ', ''),
-      authUrl
-    )
-  }
-
-  if (valid === true || !checkInvalidToken) {
-    return {
-      isValid: true,
-      credentials: payload
-    }
-  }
-
-  return {
-    isValid: false
-  }
-}
-
 async function getPublicKey(): Promise<string> {
   try {
     const response = await fetch(`${AUTH_URL}/.well-known`)
@@ -253,8 +226,10 @@ export async function createServer() {
       issuer: 'opencrvs:auth-service',
       audience: 'opencrvs:countryconfig-user'
     },
-    validate: (payload: any, request: Hapi.Request) =>
-      validateFunc(payload, request, CHECK_INVALID_TOKEN, AUTH_URL)
+    validate: (payload: any, request: Hapi.Request) => ({
+      isValid: true,
+      credentials: payload
+    })
   })
 
   server.auth.default('jwt')
