@@ -8,10 +8,10 @@ import { getLocations } from '../birth/helpers'
 export const EVENT_TYPE = 'birth'
 export const NON_EXISTING_UUID = 'b3ca0644-ffc4-461f-afe0-5fb84bedfcfd'
 export const INTEGRATION_SCOPES = [
-  'record.create',
+  'type=record.create',
   'type=record.search',
-  'record.notify[event=birth]',
-  'record.read',
+  'type=record.notify&event=birth',
+  'type=record.read',
   'record.registered.correct[event=birth]',
   'record.registration-request-correction[event=birth]',
   'record.confirm-registration[event=birth]',
@@ -67,6 +67,7 @@ export async function createIntegrationContext(): Promise<IntegrationContext> {
   )
 
   const name = `Health integration ${format(new Date(), 'dd.MM. HH:mm:ss')}`
+
   const integrationClient = createClient(
     `${GATEWAY_HOST}/events`,
     `Bearer ${systemAdminToken}`

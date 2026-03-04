@@ -62,8 +62,19 @@ test.describe('POST /api/events/events/{eventId}/notify', () => {
   })
 
   test('HTTP 400 with missing payload', async () => {
+    const createEventResponse = await fetchClientAPI(
+      '/api/events/events',
+      'POST',
+      clientToken,
+      {
+        type: EVENT_TYPE,
+        transactionId: uuidv4(),
+        createdAtLocation: healthFacilityId
+      }
+    )
+    const event = await createEventResponse.json()
     const response = await fetchClientAPI(
-      `/api/events/events/${NON_EXISTING_UUID}/notify`,
+      `/api/events/events/${event.id}/notify`,
       'POST',
       clientToken
     )
@@ -74,8 +85,21 @@ test.describe('POST /api/events/events/{eventId}/notify', () => {
   })
 
   test('HTTP 400 with invalid payload', async () => {
+    const createEventResponse = await fetchClientAPI(
+      '/api/events/events',
+      'POST',
+      clientToken,
+      {
+        type: EVENT_TYPE,
+        transactionId: uuidv4(),
+        createdAtLocation: healthFacilityId
+      }
+    )
+
+    const event = await createEventResponse.json()
+
     const response = await fetchClientAPI(
-      `/api/events/events/${NON_EXISTING_UUID}/notify`,
+      `/api/events/events/${event.id}/notify`,
       'POST',
       clientToken,
       {
