@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.9.11
+
+### Improvements
+
+- Change reindex from stream to batch API to avoid timeouts [#11877](https://github.com/opencrvs/opencrvs-core/issues/11877)
+
 ## 1.9.3
 
 ### New features
