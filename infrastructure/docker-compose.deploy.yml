@@ -503,6 +503,11 @@ services:
     environment:
       - DECLARED_DECLARATION_SEARCH_QUERY_COUNT=100
       - COUNTRY_CONFIG_URL=https://countryconfig.{{hostname}}
+      - COUNTRY_CONFIG_URL_INTERNAL=https://countryconfig.{{hostname}}
+      - LOGIN_URL=https://login.{{hostname}}
+      - AUTH_URL_INTERNAL=https://auth.{{hostname}}
+      - CONFIG_API_URL_INTERNAL=https://config.{{hostname}}
+      - GATEWAY_URL_INTERNAL=https://gateway.{{hostname}}
       - CONTENT_SECURITY_POLICY_WILDCARD=${CONTENT_SECURITY_POLICY_WILDCARD}
       - MINIO_URL=https://minio.{{hostname}}
     deploy:
@@ -606,6 +611,11 @@ services:
   login:
     environment:
       - COUNTRY_CONFIG_URL=https://countryconfig.{{hostname}}
+      - COUNTRY_CONFIG_URL_INTERNAL=https://countryconfig.{{hostname}}
+      - CLIENT_APP_URL=https://register.{{hostname}}
+      - AUTH_URL_INTERNAL=https://auth.{{hostname}}
+      - CONFIG_API_URL_INTERNAL=https://config.{{hostname}}
+      - GATEWAY_URL_INTERNAL=https://gateway.{{hostname}}
       - CONTENT_SECURITY_POLICY_WILDCARD=${CONTENT_SECURITY_POLICY_WILDCARD}
     deploy:
       labels:
