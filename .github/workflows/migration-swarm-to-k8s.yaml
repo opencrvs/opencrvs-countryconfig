@@ -1,22 +1,5 @@
-<<<<<<< HEAD
-name: Migration docker swarm to k8s
-
-on:
-  workflow_dispatch:
-
-  workflow_call:
-
-
-jobs:
-  dummy-job:
-    name: Dummy Job
-    runs-on: ubuntu-latest
-    steps:
-      - name: Echo
-        run: echo "This is a placeholder job for migration workflow."
-=======
 name: Migration swarm to k8s
-run-name: "Migration to ${{ inputs.target_repo_name }}"
+run-name: 'Migration to ${{ inputs.target_repo_name }}'
 on:
   workflow_dispatch:
     inputs:
@@ -79,7 +62,7 @@ jobs:
           else
             echo environments='["${{ inputs.environment_to_migrate }}"]' >> $GITHUB_OUTPUT
           fi
-          
+
 
           TARGET_SECRETS=$(gh api repos/$TARGET_REPO/actions/secrets --jq '.secrets')
           TARGET_SECRETS_COUNT=$(echo "$TARGET_SECRETS" | jq 'length')
@@ -102,17 +85,17 @@ jobs:
           - 🔐 Number of secrets (repo scope): $TARGET_SECRETS_COUNT
           - 📋 Number of variables (repo scope): $TARGET_VARS_COUNT
           " >> $GITHUB_STEP_SUMMARY
-      - name: "Export variables from ${{ github.repository }}"
+      - name: 'Export variables from ${{ github.repository }}'
         id: export-repo-variables
         run: |
-            jq -n -r \
-            '
-                [${{ toJSON(vars) }}] 
-                | add
-                | with_entries(.value |= @base64)
-                | to_entries[] 
-                | "\(.key)=\(.value)"
-            ' > variables.env
+          jq -n -r \
+          '
+              [${{ toJSON(vars) }}] 
+              | add
+              | with_entries(.value |= @base64)
+              | to_entries[] 
+              | "\(.key)=\(.value)"
+          ' > variables.env
       - name: Import variables to ${{ inputs.target_owner }}/${{ inputs.target_repo_name }}
         run: |
           echo "📊 Importing variables to $TARGET_REPO"
@@ -128,14 +111,14 @@ jobs:
       - name: Export repository secrets
         id: export-repo-secrets
         run: |
-            jq -n -r \
-            '
-                [${{ toJSON(secrets) }}] 
-                | add
-                | with_entries(.value |= @base64)
-                | to_entries[] 
-                | "\(.key)=\(.value)"
-            ' > secrets.env
+          jq -n -r \
+          '
+              [${{ toJSON(secrets) }}] 
+              | add
+              | with_entries(.value |= @base64)
+              | to_entries[] 
+              | "\(.key)=\(.value)"
+          ' > secrets.env
       - name: Import secrets to ${{ inputs.target_owner }}/${{ inputs.target_repo_name }}
         run: |
           echo "📊 Importing secrets to $TARGET_REPO"
@@ -165,26 +148,26 @@ jobs:
       VARS_LIST: ${{ needs.repository-configuration-migration.outputs.variables }}
       ENVIRONMENT: ${{ matrix.environment }}
     steps:
-      - name: "Export variables from ${{ github.repository }}/${{ matrix.environment }}"
+      - name: 'Export variables from ${{ github.repository }}/${{ matrix.environment }}'
         run: |
-            jq -n -r \
-            '
-                [${{ toJSON(vars) }}] 
-                | add
-                | with_entries(.value |= @base64)
-                | to_entries[] 
-                | "\(.key)=\(.value)"
-            ' > variables.env
-      - name: "Export secrets from ${{ github.repository }}/${{ matrix.environment }}"
+          jq -n -r \
+          '
+              [${{ toJSON(vars) }}] 
+              | add
+              | with_entries(.value |= @base64)
+              | to_entries[] 
+              | "\(.key)=\(.value)"
+          ' > variables.env
+      - name: 'Export secrets from ${{ github.repository }}/${{ matrix.environment }}'
         run: |
-            jq -n -r \
-            '
-                [${{ toJSON(secrets) }}] 
-                | add
-                | with_entries(.value |= @base64)
-                | to_entries[] 
-                | "\(.key)=\(.value)"
-            ' > secrets.env
+          jq -n -r \
+          '
+              [${{ toJSON(secrets) }}] 
+              | add
+              | with_entries(.value |= @base64)
+              | to_entries[] 
+              | "\(.key)=\(.value)"
+          ' > secrets.env
       - name: Create environment in ${{ inputs.target_owner }}/${{ inputs.target_repo_name }} if not exists
         run: |
           if gh api repos/$TARGET_REPO/environments/$ENVIRONMENT 2>/dev/null; then
@@ -390,4 +373,3 @@ jobs:
             --base $BASE_BRANCH \
             --head $BRANCH_NAME
           echo "✅ Pull request created for ${{ matrix.environment }} environment with configuration files." >> $GITHUB_STEP_SUMMARY
->>>>>>> upstream/develop
