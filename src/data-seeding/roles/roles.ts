@@ -153,7 +153,7 @@ export const roles: Role[] = [
       SCOPES.PERFORMANCE_READ_DASHBOARDS,
       'type=record.search&event=birth,death,tennis-club-membership',
       'workqueue[id=assigned-to-you|recent|requires-completion|in-review|in-external-validation|escalated|pending-validation|pending-updates|pending-approval|pending-certification|pending-issuance|correction-requested]',
-      'type=record.create&event=birth,death,tennis-club-membership',
+      'type=record.create&event=birth,death,tennis-club-membership&placeOfEvent=administrativeArea',
       'type=record.read&event=birth,death,tennis-club-membership',
       'record.declare[event=birth|death|tennis-club-membership]',
       'record.declared.edit[event=birth|death|tennis-club-membership]',
@@ -183,7 +183,7 @@ export const roles: Role[] = [
       SCOPES.PERFORMANCE_READ_DASHBOARDS,
       'type=record.search&event=birth,death,tennis-club-membership',
       'workqueue[id=assigned-to-you|recent|requires-completion|in-external-validation|escalated|potential-duplicate|pending-updates|pending-registration|pending-approval|pending-certification|pending-issuance|correction-requested]',
-      'type=record.create&event=birth,death,tennis-club-membership',
+      'type=record.create&event=birth,death,tennis-club-membership&placeOfEvent=administrativeArea',
       'type=record.read&event=birth,death,tennis-club-membership',
       'record.declare[event=birth|death|tennis-club-membership]',
       'record.declared.edit[event=birth|death|tennis-club-membership]',
@@ -262,10 +262,8 @@ export const roles: Role[] = [
       SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES,
       'type=record.search&event=birth,death,tennis-club-membership',
       'workqueue[id=assigned-to-you|recent|requires-completion|in-external-validation|pending-feedback-registrar-general|potential-duplicate|registration-registrar-general]',
-      'type=record.create&event=birth,death,tennis-club-membership',
       'type=record.read&event=birth,death,tennis-club-membership',
       'record.declare[event=birth|death|tennis-club-membership]',
-      'record.declared.edit[event=birth|death|tennis-club-membership]',
       'record.declared.reject[event=birth|death|tennis-club-membership]',
       'record.declared.archive[event=birth|death|tennis-club-membership]',
       'record.declared.review-duplicates[event=birth|death|tennis-club-membership]',
@@ -314,10 +312,10 @@ export const roles: Role[] = [
       SCOPES.USER_READ_ONLY_MY_AUDIT,
       'type=record.search&event=birth,death,tennis-club-membership',
       'workqueue[id=assigned-to-you|recent|pending-updates]',
-      'type=record.create&event=birth,death,tennis-club-membership',
+      'type=record.create&event=birth,death,tennis-club-membership&placeOfEvent=location',
       'type=record.read&event=birth,death,tennis-club-membership',
       'record.declare[event=birth|death|tennis-club-membership]',
-      'record.notify[event=birth|death|tennis-club-membership]',
+      'type=record.notify&event=birth,death,tennis-club-membership',
       'record.declared.edit[event=birth|death|tennis-club-membership]'
     ]
   },
@@ -333,10 +331,10 @@ export const roles: Role[] = [
       SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES,
       'type=record.search&event=birth,death,tennis-club-membership',
       'workqueue[id=assigned-to-you|recent]',
-      'type=record.create&event=birth,death,tennis-club-membership',
+      'type=record.create&event=birth,death,tennis-club-membership&placeOfEvent=location',
       'type=record.read&event=birth,death,tennis-club-membership',
       'record.declared.edit[event=birth|death|tennis-club-membership]',
-      'record.notify[event=birth|death|tennis-club-membership]'
+      'type=record.notify&event=birth,death,tennis-club-membership'
     ]
   },
   {
@@ -351,7 +349,7 @@ export const roles: Role[] = [
       SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES,
       'workqueue[id=assigned-to-you|recent|escalated|pending-updates|pending-certification|potential-duplicate]',
       'type=record.search&event=birth,death,tennis-club-membership&declaredIn=location',
-      'type=record.create&event=birth,death,tennis-club-membership',
+      'type=record.create&event=birth,death,tennis-club-membership&placeOfEvent=location',
       'type=record.read&event=birth,death,tennis-club-membership',
       'record.declare[event=birth|death|tennis-club-membership]',
       'record.declared.edit[event=birth|death|tennis-club-membership]',

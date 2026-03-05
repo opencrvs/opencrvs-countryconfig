@@ -23,7 +23,7 @@ import {
 } from '@opencrvs/toolkit/events'
 import { not } from '@opencrvs/toolkit/conditionals'
 
-import { applicationConfig } from '@countryconfig/api/application/application-config'
+import { BIRTH_LATE_REGISTRATION_TARGET_DAYS } from '@countryconfig/form/v2/constants'
 
 import { createSelectOptions, emptyMessage } from '@countryconfig/form/v2/utils'
 import {
@@ -256,7 +256,7 @@ export const child = defineFormPage({
             not(
               field('child.dob')
                 .isAfter()
-                .days(applicationConfig.BIRTH.LATE_REGISTRATION_TARGET)
+                .days(BIRTH_LATE_REGISTRATION_TARGET_DAYS)
                 .inPast()
             ),
             field('child.dob').isBefore().now()
@@ -285,7 +285,7 @@ export const child = defineFormPage({
     {
       id: 'child.birthLocation',
       analytics: true,
-      type: 'FACILITY',
+      type: FieldType.FACILITY,
       required: true,
       secured: true,
       label: {
@@ -300,7 +300,12 @@ export const child = defineFormPage({
             PlaceOfBirth.HEALTH_FACILITY
           )
         }
-      ]
+      ],
+      configuration: {
+        allowedLocations: user.jurisdiction(
+          user.scope('record.create').attribute('placeOfEvent')
+        )
+      }
     },
     {
       id: 'child.birthLocation.privateHome',
@@ -344,7 +349,10 @@ export const child = defineFormPage({
         administrativeArea: user('primaryOfficeId').locationLevel('district')
       },
       configuration: {
-        streetAddressForm: defaultStreetAddressConfiguration
+        streetAddressForm: defaultStreetAddressConfiguration,
+        allowedLocations: user.jurisdiction(
+          user.scope('record.create').attribute('placeOfEvent')
+        )
       }
     },
     {
@@ -388,7 +396,10 @@ export const child = defineFormPage({
         administrativeArea: user('primaryOfficeId').locationLevel('district')
       },
       configuration: {
-        streetAddressForm: defaultStreetAddressConfiguration
+        streetAddressForm: defaultStreetAddressConfiguration,
+        allowedLocations: user.jurisdiction(
+          user.scope('record.create').attribute('placeOfEvent')
+        )
       }
     },
     {
