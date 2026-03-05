@@ -1166,6 +1166,7 @@ field.address.residentialArea.label,Label for residential area in address,Reside
 field.address.state.label,This is the label for the field,State,État
 field.address.street.label,Label for street in address,Street,Rue
 field.address.town.label,Label for town in address,Town,Ville
+field.address.village.label,Label for village in address,Village,Village
 field.name.firstname.label,This is the label for the firstname field,First name(s),Prénom(s)
 field.name.middlename.label,This is the label for the middleName field,Middle name,Deuxième prénom(s)
 field.name.surname.label,This is the label for the surname field,Last name,Nom(s)
