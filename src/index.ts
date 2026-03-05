@@ -50,7 +50,6 @@ import { usersHandler } from './data-seeding/employees/handler'
 import { applicationConfigHandler } from './api/application/handler'
 import { validatorsHandler } from './form/common/custom-validation-conditionals/validators-handler'
 import { conditionalsHandler } from './form/common/custom-validation-conditionals/conditionals-handler'
-import { COUNTRY_WIDE_CRUDE_DEATH_RATE } from './api/application/application-config'
 import { handlebarsHandler } from './form/common/certificate/handlebars/handler'
 import { trackingIDHandler } from './api/tracking-id/handler'
 import { dashboardQueriesHandler } from './api/dashboards/handler'
@@ -422,18 +421,6 @@ export async function createServer() {
       tags: ['api'],
       description:
         'Opportunity for sychrounous integrations with 3rd party systems as a final step in event registration. If successful returns identifiers for that event.'
-    }
-  })
-
-  server.route({
-    method: 'GET',
-    path: '/crude-death-rate',
-    handler: () => ({
-      crudeDeathRate: COUNTRY_WIDE_CRUDE_DEATH_RATE
-    }),
-    options: {
-      tags: ['api'],
-      description: 'Serves country wise crude death rate'
     }
   })
 

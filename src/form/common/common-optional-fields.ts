@@ -19,13 +19,6 @@ import { certificateHandlebars } from '../birth/certificate-handlebars'
 import { getFieldMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
 import { Validator } from '../types/validators'
 
-const exactDobConditional: Conditional[] = [
-  {
-    action: 'hide',
-    expression: '!window.config.FEATURES.DATE_OF_BIRTH_UNKNOWN'
-  }
-]
-
 export const exactDateOfBirthUnknown = (
   conditionalCase: Conditional[]
 ): SerializedFormField => ({
@@ -41,7 +34,7 @@ export const exactDateOfBirthUnknown = (
   hideHeader: true,
   initialValue: false,
   validator: [],
-  conditionals: exactDobConditional.concat(conditionalCase),
+  conditionals: conditionalCase,
   mapping: {
     query: {
       operation: 'booleanTransformer'
