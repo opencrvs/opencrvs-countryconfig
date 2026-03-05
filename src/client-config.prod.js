@@ -23,17 +23,12 @@
   const sentry = '{{sentry}}' // Replaced dynamically
 
   window.config = {
-    API_GATEWAY_URL: `${scheme}//gateway.${hostname}/`,
-    CONFIG_API_URL: `${scheme}//config.${hostname}`,
-    LOGIN_URL: `${scheme}//login.${hostname}`,
-    AUTH_URL: `${scheme}//gateway.${hostname}/auth/`,
     MINIO_URL: `${scheme}//minio.${hostname}/ocrvs/`,
     MINIO_BASE_URL: `${scheme}//minio.${hostname}`, // URL without path/bucket information, used for file uploads, v2
     MINIO_BUCKET: 'ocrvs',
-    COUNTRY_CONFIG_URL: `${scheme}//countryconfig.${hostname}`,
     // Country code in uppercase ALPHA-3 format
     COUNTRY: 'FAR',
-    LANGUAGES: 'en,fr',
+    LANGUAGES: ['en', 'fr'],
     SENTRY: sentry,
     REGISTER_BACKGROUND: { backgroundColor: '36304E' },
     DASHBOARDS: [

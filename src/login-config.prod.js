@@ -13,13 +13,9 @@ const scheme = window.location.protocol; // "http:" or "https:"
 const hostname = "{{hostname}}"; // Replace dynamically if needed
 const sentry = "{{sentry}}"; // Replace dynamically if needed
 window.config = {
-  AUTH_API_URL: `${scheme}//gateway.${hostname}/auth/`,
-  CONFIG_API_URL: `${scheme}//config.${hostname}`,
   // Country code in uppercase ALPHA-3 format
   COUNTRY: 'FAR',
-  LANGUAGES: 'en,fr',
-  CLIENT_APP_URL: `${scheme}//register.${hostname}/`,
-  COUNTRY_CONFIG_URL: `${scheme}//countryconfig.${hostname}`,
+  LANGUAGES: ['en', 'fr'],
   LOGIN_BACKGROUND: { backgroundColor: '36304E' },
   SENTRY: sentry
 };

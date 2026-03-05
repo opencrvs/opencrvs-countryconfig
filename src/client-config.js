@@ -19,17 +19,12 @@
  */
 ; (function initClientConfig() {
   window.config = {
-    API_GATEWAY_URL: 'http://localhost:7070/',
-    CONFIG_API_URL: 'http://localhost:2021',
-    LOGIN_URL: 'http://localhost:3020',
-    AUTH_URL: 'http://localhost:7070/auth/',
     MINIO_BUCKET: 'ocrvs',
     MINIO_URL: 'http://localhost:3535/ocrvs/',
     MINIO_BASE_URL: 'http://localhost:3535', // URL without path/bucket information, used for file uploads, v2
-    COUNTRY_CONFIG_URL: 'http://localhost:3040',
     // Country code in uppercase ALPHA-3 format
     COUNTRY: 'FAR',
-    LANGUAGES: 'en,fr',
+    LANGUAGES: ['en', 'fr'],
     SENTRY: '',
     REGISTER_BACKGROUND: { backgroundColor: '36304E' },
     DASHBOARDS: [
