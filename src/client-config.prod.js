@@ -17,7 +17,7 @@
  * If the network is slow, the browser might start loading and executing client-config.js again before the previous one is torn down, causing the error.
  *
  */
-;(function initClientConfig() {
+; (function initClientConfig() {
   const scheme = window.location.protocol // "http:" or "https:"
   const hostname = '{{hostname}}' // Replaced dynamically
   const sentry = '{{sentry}}' // Replaced dynamically
@@ -35,6 +35,7 @@
     COUNTRY: 'FAR',
     LANGUAGES: 'en,fr',
     SENTRY: sentry,
+    REGISTER_BACKGROUND: { backgroundColor: '36304E' },
     DASHBOARDS: [
       {
         id: 'registrations',

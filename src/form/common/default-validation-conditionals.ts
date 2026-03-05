@@ -296,20 +296,12 @@ export function getNationalIDValidators(configCase: string): Validator[] {
   if (configCase === 'father') {
     return [
       {
-        operation: 'validIDNumber',
-        parameters: ['NATIONAL_ID']
-      },
-      {
         operation: 'duplicateIDNumber',
         parameters: ['mother.iD']
       }
     ]
   } else if (configCase === 'mother') {
     return [
-      {
-        operation: 'validIDNumber',
-        parameters: ['NATIONAL_ID']
-      },
       {
         operation: 'duplicateIDNumber',
         parameters: ['father.iD']
@@ -318,20 +310,12 @@ export function getNationalIDValidators(configCase: string): Validator[] {
   } else if (configCase === 'deceased') {
     return [
       {
-        operation: 'validIDNumber',
-        parameters: ['NATIONAL_ID']
-      },
-      {
         operation: 'duplicateIDNumber',
         parameters: ['informant.informantID']
       }
     ]
   } else if (configCase === 'groom') {
     return [
-      {
-        operation: 'validIDNumber',
-        parameters: ['NATIONAL_ID']
-      },
       {
         operation: 'duplicateIDNumber',
         parameters: ['bride.iD']
@@ -340,10 +324,6 @@ export function getNationalIDValidators(configCase: string): Validator[] {
   } else if (configCase === 'bride') {
     return [
       {
-        operation: 'validIDNumber',
-        parameters: ['NATIONAL_ID']
-      },
-      {
         operation: 'duplicateIDNumber',
         parameters: ['groom.iD']
       }
@@ -351,10 +331,6 @@ export function getNationalIDValidators(configCase: string): Validator[] {
   } else {
     // informant id
     return [
-      {
-        operation: 'validIDNumber',
-        parameters: ['NATIONAL_ID']
-      },
       {
         operation: 'duplicateIDNumber',
         parameters: ['deceased.deceasedID']
