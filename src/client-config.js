@@ -17,7 +17,7 @@
  * If the network is slow, the browser might start loading and executing client-config.js again before the previous one is torn down, causing the error.
  *
  */
-;(function initClientConfig() {
+; (function initClientConfig() {
   window.config = {
     API_GATEWAY_URL: 'http://localhost:7070/',
     CONFIG_API_URL: 'http://localhost:2021',
@@ -31,6 +31,7 @@
     COUNTRY: 'FAR',
     LANGUAGES: 'en,fr',
     SENTRY: '',
+    REGISTER_BACKGROUND: { backgroundColor: '36304E' },
     DASHBOARDS: [
       {
         id: 'registrations',

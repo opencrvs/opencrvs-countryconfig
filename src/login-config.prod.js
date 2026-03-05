@@ -20,5 +20,6 @@ window.config = {
   LANGUAGES: 'en,fr',
   CLIENT_APP_URL: `${scheme}//register.${hostname}/`,
   COUNTRY_CONFIG_URL: `${scheme}//countryconfig.${hostname}`,
+  LOGIN_BACKGROUND: { backgroundColor: '36304E' },
   SENTRY: sentry
 };
