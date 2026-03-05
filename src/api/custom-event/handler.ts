@@ -80,7 +80,7 @@ export async function onBirthActionHandler(
     declaration['mother.nid'] &&
     declaration['mother.name']
 
-  if (isMotherAvailable && declaration['mother.verified'] !== 'authenticated')
+  if (isMotherAvailable && declaration['mother.verified'] !== 'authenticated') {
     updatedFields['mother.verified'] = await mosipInteropClient.verifyNid({
       dob: declaration['mother.dob'],
       nid: declaration['mother.nid'],
@@ -88,6 +88,7 @@ export async function onBirthActionHandler(
       gender: 'female',
       transactionId: `mother-${event.id}`
     })
+  }
 
   const isFatherAvailable =
     declaration['father.dob'] &&
@@ -107,7 +108,6 @@ export async function onBirthActionHandler(
     declaration['informant.dob'] &&
     declaration['informant.nid'] &&
     declaration['informant.name']
-
   if (
     isInformantAvailable &&
     declaration['informant.verified'] !== 'authenticated'
@@ -118,7 +118,6 @@ export async function onBirthActionHandler(
       name: declaration['informant.name'],
       transactionId: `informant-${event.id}`
     })
-
   return h.response({ declaration: updatedFields }).code(200)
 }
 

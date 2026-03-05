@@ -15,7 +15,7 @@ test.describe('Save and delete drafts', () => {
     let page: Page
     test.beforeAll(async ({ browser }) => {
       page = await browser.newPage()
-      await login(page, CREDENTIALS.REGISTRAR)
+      await login(page, CREDENTIALS.REGISTRATION_OFFICER)
       await openBirthDeclaration(page)
     })
 
@@ -39,7 +39,7 @@ test.describe('Save and delete drafts', () => {
 
     test('Saved draft is not visible to other users', async () => {
       await logout(page)
-      await login(page, CREDENTIALS.REGISTRAR_GENERAL)
+      await login(page, CREDENTIALS.REGISTRAR)
 
       await page.getByText('Drafts').click()
 
@@ -48,9 +48,9 @@ test.describe('Save and delete drafts', () => {
       ).not.toBeVisible()
     })
 
-    test('Login as Registrar', async () => {
+    test('Login as Registration Officer', async () => {
       await logout(page)
-      await login(page, CREDENTIALS.REGISTRAR, true)
+      await login(page, CREDENTIALS.REGISTRATION_OFFICER, true)
     })
 
     test('Delete saved draft', async () => {
@@ -76,7 +76,7 @@ test.describe('Save and delete drafts', () => {
     let page: Page
     test.beforeAll(async ({ browser }) => {
       page = await browser.newPage()
-      await login(page, CREDENTIALS.REGISTRAR)
+      await login(page, CREDENTIALS.REGISTRATION_OFFICER)
       await openBirthDeclaration(page)
     })
     test('Exit without saving', async () => {

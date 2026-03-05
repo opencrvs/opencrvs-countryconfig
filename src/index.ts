@@ -25,7 +25,6 @@ import {
   SENTRY_DSN,
   COUNTRY_CONFIG_HOST,
   COUNTRY_CONFIG_PORT,
-  CHECK_INVALID_TOKEN,
   AUTH_URL,
   DEFAULT_TIMEOUT,
   DOMAIN,
@@ -51,7 +50,6 @@ import { usersHandler } from './data-seeding/employees/handler'
 import { applicationConfigHandler } from './api/application/handler'
 import { validatorsHandler } from './form/common/custom-validation-conditionals/validators-handler'
 import { conditionalsHandler } from './form/common/custom-validation-conditionals/conditionals-handler'
-import { COUNTRY_WIDE_CRUDE_DEATH_RATE } from './api/application/application-config'
 import { handlebarsHandler } from './form/common/certificate/handlebars/handler'
 import { trackingIDHandler } from './api/tracking-id/handler'
 import { dashboardQueriesHandler } from './api/dashboards/handler'
@@ -164,32 +162,6 @@ export const verifyToken = async (token: string, authUrl: string) => {
   return false
 }
 
-const validateFunc = async (
-  payload: any,
-  request: Hapi.Request,
-  checkInvalidToken: boolean,
-  authUrl: string
-) => {
-  let valid
-  if (checkInvalidToken) {
-    valid = await verifyToken(
-      request.headers.authorization.replace('Bearer ', ''),
-      authUrl
-    )
-  }
-
-  if (valid === true || !checkInvalidToken) {
-    return {
-      isValid: true,
-      credentials: payload
-    }
-  }
-
-  return {
-    isValid: false
-  }
-}
-
 async function getPublicKey(): Promise<string> {
   try {
     const response = await fetch(`${AUTH_URL}/.well-known`)
@@ -261,8 +233,10 @@ export async function createServer() {
       issuer: 'opencrvs:auth-service',
       audience: 'opencrvs:countryconfig-user'
     },
-    validate: (payload: any, request: Hapi.Request) =>
-      validateFunc(payload, request, CHECK_INVALID_TOKEN, AUTH_URL)
+    validate: (payload: any, request: Hapi.Request) => ({
+      isValid: true,
+      credentials: payload
+    })
   })
 
   server.auth.default('jwt')
@@ -447,18 +421,6 @@ export async function createServer() {
       tags: ['api'],
       description:
         'Opportunity for sychrounous integrations with 3rd party systems as a final step in event registration. If successful returns identifiers for that event.'
-    }
-  })
-
-  server.route({
-    method: 'GET',
-    path: '/crude-death-rate',
-    handler: () => ({
-      crudeDeathRate: COUNTRY_WIDE_CRUDE_DEATH_RATE
-    }),
-    options: {
-      tags: ['api'],
-      description: 'Serves country wise crude death rate'
     }
   })
 

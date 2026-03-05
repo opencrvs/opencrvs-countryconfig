@@ -60,11 +60,12 @@ describe('Roles config', () => {
       'HOSPITAL_CLERK'
     ])
 
-    const createRecordScope =
-      'record.create[event=birth|death|tennis-club-membership]'
+    const createRecordScope = 'type=record.create'
 
     const rolesWithCreateRecord = roles
-      .filter((role) => role.scopes.includes(createRecordScope))
+      .filter((role) =>
+        role.scopes.some((scope) => scope.startsWith(createRecordScope))
+      )
       .map((role) => role.id)
 
     // Update this list if requirements change
@@ -74,7 +75,6 @@ describe('Roles config', () => {
       'HEALTH_OFFICER',
       'HOSPITAL_CLERK',
       'LOCAL_REGISTRAR',
-      'NATIONAL_REGISTRAR',
       'REGISTRATION_AGENT'
     ])
 

@@ -55,7 +55,7 @@ test.describe.serial('Correct record - 4', () => {
 
   const updatedChildDetails = {
     placeOfBirth: 'Health Institution',
-    birthFacility: 'Mwenekombe Health Post',
+    birthFacility: 'Golden Valley Rural Health Centre',
     firstNames: faker.person.firstName(),
     familyName: faker.person.lastName()
   }

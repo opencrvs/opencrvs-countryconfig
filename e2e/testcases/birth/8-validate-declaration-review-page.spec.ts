@@ -32,7 +32,7 @@ test.describe.serial('8. Validate declaration review page', () => {
     birthType: 'Single',
     weightAtBirth: 2.4,
     placeOfBirth: 'Health Institution',
-    birthLocation: 'Bombwe Health Post',
+    birthLocation: 'Ibombo District Office',
     informantType: 'Mother',
     informantEmail: faker.internet.email(),
     mother: {
@@ -509,25 +509,6 @@ test.describe.serial('8. Validate declaration review page', () => {
         await expect(page.getByTestId('row-value-child.dob')).toContainText(
           formatDateObjectTo_dMMMMyyyy(declaration.child.birthDate)
         )
-      })
-
-      test("8.1.2.4 Change child's birth location", async () => {
-        await page.getByTestId('change-button-child.birthLocation').click()
-        await page.getByRole('button', { name: 'Continue' }).click()
-
-        declaration.birthLocation = 'Chikonkomene Health Post'
-        await page
-          .locator('#child____birthLocation')
-          .fill(declaration.birthLocation.slice(0, 3))
-        await page.getByText(declaration.birthLocation).click()
-        await page.getByRole('button', { name: 'Back to review' }).click()
-
-        /*
-         * Expected result: should change child's place of birth
-         */
-        await expect(
-          page.getByTestId('row-value-child.birthLocation')
-        ).toContainText(declaration.birthLocation)
       })
 
       test('8.1.2.5 Change attendant at birth', async () => {

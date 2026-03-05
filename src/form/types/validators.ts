@@ -43,7 +43,6 @@ type CoreValidator =
   | 'englishOnlyNameFormat'
   | 'range'
   | 'oneOf'
-  | 'validIDNumber'
   | 'duplicateIDNumber'
   | 'isValidDeathOccurrenceDate'
   | 'isMoVisitDateAfterBirthDateAndBeforeDeathDate'

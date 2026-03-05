@@ -30,8 +30,8 @@ test.describe.serial('5. Birth declaration case - 5', () => {
     placeOfBirth: 'Other',
     birthLocation: {
       country: 'Farajaland',
-      province: 'Pualula',
-      district: 'Funabuli',
+      province: 'Central',
+      district: 'Ibombo',
       town: faker.location.city(),
       residentialArea: faker.location.county(),
       street: faker.location.street(),
@@ -126,19 +126,14 @@ test.describe.serial('5. Birth declaration case - 5', () => {
         })
         .click()
 
-      await page.locator('#province').click()
-      await page
-        .getByText(declaration.birthLocation.province, {
-          exact: true
-        })
-        .click()
+      // Province and district are disabled because the user jurisdiction is limited to user's administrative area
+      await expect(
+        page.locator('#child____birthLocation____other-form-input #province')
+      ).toBeDisabled()
 
-      await page.locator('#district').click()
-      await page
-        .getByText(declaration.birthLocation.district, {
-          exact: true
-        })
-        .click()
+      await expect(
+        page.locator('#child____birthLocation____other-form-input #district')
+      ).toBeDisabled()
 
       await page.locator('#town').fill(declaration.birthLocation.town)
       await page

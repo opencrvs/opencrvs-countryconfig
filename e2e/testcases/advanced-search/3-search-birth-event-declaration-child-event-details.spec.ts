@@ -128,9 +128,9 @@ test.describe
       await expect(page.getByTestId('select__child____gender')).toContainText(
         'Female'
       )
-      await expect(page.locator('#child____birthLocation')).toHaveValue(
-        'Ibombo Rural Health Centre'
-      )
+      await expect(
+        page.locator('#searchable-select-child____birthLocation')
+      ).toHaveText('Ibombo Rural Health Centre')
     })
   })
 })

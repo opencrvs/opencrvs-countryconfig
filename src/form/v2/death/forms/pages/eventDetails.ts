@@ -28,6 +28,7 @@ import {
   defaultStreetAddressConfiguration,
   getNestedFieldValidators
 } from '@countryconfig/form/street-address-configuration'
+import { DEATH_REGISTRATION_TARGET_DAYS } from '@countryconfig/form/v2/constants'
 
 export const MannerDeathType = {
   MANNER_NATURAL: 'MANNER_NATURAL',
@@ -196,7 +197,7 @@ export const eventDetails = defineFormPage({
             not(
               field('eventDetails.date')
                 .isAfter()
-                .days(applicationConfig.DEATH.REGISTRATION_TARGET)
+                .days(DEATH_REGISTRATION_TARGET_DAYS)
                 .inPast()
             ),
             field('eventDetails.date').isBefore().now()

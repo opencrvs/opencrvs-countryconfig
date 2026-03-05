@@ -31,12 +31,7 @@ test.describe
     birthType: 'Single',
     weightAtBirth: 2.4,
     placeOfBirth: 'Health Institution',
-    birthLocation: {
-      facility: 'Golden Valley Rural Health Centre',
-      district: 'Ibombo',
-      province: 'Central',
-      country: 'Farajaland'
-    },
+    birthLocation: { facility: 'Ibombo District Office' },
     informantType: 'Mother',
     informantEmail: faker.internet.email(),
     mother: {
