@@ -68,8 +68,8 @@ test.describe.serial('Approval of late birth registration', () => {
       await page.getByText('Health Institution', { exact: true }).click()
       await page
         .locator('#child____birthLocation')
-        .fill('Golden Valley Rural Health Centre'.slice(0, 3))
-      await page.getByText('Golden Valley Rural Health Centre').click()
+        .fill('Ibombo District Office'.slice(0, 3))
+      await page.getByText('Ibombo District Office').click()
 
       await continueForm(page)
     })
@@ -300,8 +300,8 @@ test.describe('Birth with non-late registration will not have flag or Approve-ac
       await page.getByText('Health Institution', { exact: true }).click()
       await page
         .locator('#child____birthLocation')
-        .fill('Golden Valley Rural Health Centre'.slice(0, 3))
-      await page.getByText('Golden Valley Rural Health Centre').click()
+        .fill('Ibombo District Office'.slice(0, 3))
+      await page.getByText('Ibombo District Office').click()
 
       await continueForm(page)
     })
@@ -548,8 +548,8 @@ test.describe
       await page.getByText('Health Institution', { exact: true }).click()
       await page
         .locator('#child____birthLocation')
-        .fill('Golden Valley Rural Health Centre'.slice(0, 3))
-      await page.getByText('Golden Valley Rural Health Centre').click()
+        .fill('Ibombo District Office'.slice(0, 3))
+      await page.getByText('Ibombo District Office').click()
 
       await continueForm(page)
     })

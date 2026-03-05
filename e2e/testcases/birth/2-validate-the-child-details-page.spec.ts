@@ -1,6 +1,6 @@
 import { test, expect, Page } from '@playwright/test'
 import { goToSection, login } from '../../helpers'
-import { NAME_VALIDATION_ERROR, REQUIRED_VALIDATION_ERROR } from './helpers'
+import { REQUIRED_VALIDATION_ERROR } from './helpers'
 import { trackAndDeleteCreatedEvents } from '../test-data/eventDeletion'
 
 const loginAndBeginBirthDeclaration = async ({ page }: { page: Page }) => {
@@ -341,14 +341,16 @@ test.describe.serial("2. Validate the child's details page", () => {
         await expect(page.locator('#child____birthLocation')).toBeVisible()
       })
       await test.step('Enter any health institution', async () => {
-        await page.locator('#child____birthLocation').fill('b')
-        await page.getByText('Bombwe Health Post').click()
-        /*
-         * Expected result: should select "Bombwe Health Post" as health institute
-         */
-        await expect(page.locator('#child____birthLocation')).toHaveValue(
-          'Bombwe Health Post'
-        )
+        await page
+          .locator('#searchable-select-child____birthLocation input')
+          .fill('go')
+        await page.getByText('Golden Valley Rural Health Centre').click()
+
+        await expect(
+          page.locator(
+            '#searchable-select-child____birthLocation .react-select__single-value'
+          )
+        ).toHaveText('Golden Valley Rural Health Centre')
       })
     })
 

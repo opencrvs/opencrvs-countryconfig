@@ -30,17 +30,8 @@ test.describe.serial('2. Birth declaration case - 2', () => {
     },
     attendantAtBirth: 'Nurse',
     birthType: 'Twin',
-    placeOfBirth: 'Residential address',
-    birthLocation: {
-      country: 'Farajaland',
-      province: 'Pualula',
-      district: 'Funabuli',
-      town: faker.location.city(),
-      residentialArea: faker.location.county(),
-      street: faker.location.street(),
-      number: faker.location.buildingNumber(),
-      postcodeOrZip: faker.location.zipCode()
-    },
+    placeOfBirth: 'Health Institution',
+    birthLocation: { facility: 'Ibombo District Office' },
     informantType: 'Father',
     informantEmail: faker.internet.email(),
     mother: {
@@ -125,46 +116,10 @@ test.describe.serial('2. Birth declaration case - 2', () => {
           exact: true
         })
         .click()
-
       await page
-        .locator(
-          '#child____birthLocation____privateHome-form-input #country-form-input input'
-        )
-        .fill(declaration.birthLocation.country.slice(0, 3))
-      await page
-        .locator(
-          '#child____birthLocation____privateHome-form-input #country-form-input'
-        )
-        .getByText(declaration.birthLocation.country, { exact: true })
-        .click()
-
-      await page
-        .locator('#child____birthLocation____privateHome-form-input #province')
-        .click()
-      await page
-        .getByText(declaration.birthLocation.province, {
-          exact: true
-        })
-        .click()
-
-      await page
-        .locator('#child____birthLocation____privateHome-form-input #district')
-        .click()
-      await page
-        .getByText(declaration.birthLocation.district, {
-          exact: true
-        })
-        .click()
-
-      await page.locator('#town').fill(declaration.birthLocation.town)
-      await page
-        .locator('#residentialArea')
-        .fill(declaration.birthLocation.residentialArea)
-      await page.locator('#street').fill(declaration.birthLocation.street)
-      await page.locator('#number').fill(declaration.birthLocation.number)
-      await page
-        .locator('#zipCode')
-        .fill(declaration.birthLocation.postcodeOrZip)
+        .locator('#child____birthLocation')
+        .fill(declaration.birthLocation.facility.slice(0, 3))
+      await page.getByText(declaration.birthLocation.facility).click()
 
       await page.locator('#child____attendantAtBirth').click()
       await page
@@ -361,11 +316,9 @@ test.describe.serial('2. Birth declaration case - 2', () => {
         declaration.placeOfBirth
       )
 
-      await validateAddress(
-        page,
-        declaration.birthLocation,
-        'row-value-child.birthLocation.privateHome'
-      )
+      await expect(
+        page.getByTestId('row-value-child.birthLocation')
+      ).toHaveText('Ibombo District Office, Ibombo, Central, Farajaland')
 
       /*
        * Expected result: should include
@@ -622,12 +575,9 @@ test.describe.serial('2. Birth declaration case - 2', () => {
        */
       await expectRowValue(
         page,
-        'child.birthLocation.privateHome',
-        Object.values(declaration.birthLocation)
-          .filter((t) => t !== 'Urban')
-          .join('')
+        'child.birthLocation',
+        'Ibombo District Office, Ibombo, Central, Farajaland'
       )
-
       /*
        * Expected result: should include
        * - Child's Attendant at birth
