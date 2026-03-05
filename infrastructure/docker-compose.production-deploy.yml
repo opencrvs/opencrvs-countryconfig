@@ -97,7 +97,6 @@ services:
       - jwt-public-key.{{ts}}
     environment:
       - NODE_ENV=production
-      - CHECK_INVALID_TOKEN=true
       - SENTRY_DSN=${SENTRY_DSN:-}
       - SENDER_EMAIL_ADDRESS=${SENDER_EMAIL_ADDRESS}
       - ALERT_EMAIL=${ALERT_EMAIL}
