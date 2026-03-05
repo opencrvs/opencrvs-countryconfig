@@ -39,6 +39,7 @@
     COUNTRY: 'FAR',
     LANGUAGES: ['en', 'fr'],
     SENTRY: sentry,
+    REGISTER_BACKGROUND: { backgroundColor: '36304E' },
     DASHBOARDS: [
       {
         id: 'registrations',
