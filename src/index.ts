@@ -375,7 +375,7 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/application-config',
+    path: '/config/application',
     handler: applicationConfigHandler,
     options: {
       auth: false,
@@ -386,7 +386,7 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/workqueue',
+    path: '/config/workqueues',
     handler: workqueueconfigHandler,
     options: {
       auth: false,
@@ -397,7 +397,7 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/locations',
+    path: '/config/locations',
     handler: locationsHandler,
     options: {
       auth: false,
@@ -408,7 +408,7 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/roles',
+    path: '/config/roles',
     handler: rolesHandler,
     options: {
       auth: false,
@@ -419,7 +419,7 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/users',
+    path: '/config/users',
     handler: usersHandler,
     options: {
       tags: ['api', 'users'],
@@ -518,7 +518,7 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/events',
+    path: '/config/events',
     handler: getCustomEventsHandler,
     options: {
       auth: false,
