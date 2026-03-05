@@ -35,8 +35,7 @@
     "port-forward": "bash infrastructure/port-forward.sh",
     "environment:init": "ts-node infrastructure/environments/setup-environment.ts",
     "environment:upgrade": "yarn environment:init",
-    "sort-translations": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/sort-translations.ts",
-    "prepare": "husky"
+    "sort-translations": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/sort-translations.ts"
   },
   "devDependencies": {
     "@graphql-codegen/add": "^3.1.1",
@@ -61,7 +60,6 @@
     "eslint": "^8.43.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
-    "husky": "^9.1.7",
     "inquirer": "^9.2.12",
     "js-yaml": "^4.1.0",
     "kleur": "^4.1.5",
@@ -83,7 +81,7 @@
     "@hapi/hapi": "^20.0.1",
     "@hapi/inert": "^6.0.3",
     "@opencrvs/mosip": "1.9.0",
-    "@opencrvs/toolkit": "1.9.10",
+    "@opencrvs/toolkit": "1.9.10-rc.554212e",
     "@types/chalk": "^2.2.0",
     "@types/code": "^4.0.3",
     "@types/csv2json": "^1.4.0",
