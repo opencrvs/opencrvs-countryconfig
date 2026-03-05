@@ -18,7 +18,10 @@ import {
   not,
   PageTypes
 } from '@opencrvs/toolkit/events'
-import { applicationConfig } from '@countryconfig/api/application/application-config'
+import {
+  BIRTH_REGISTRATION_TARGET_DAYS,
+  BIRTH_LATE_REGISTRATION_TARGET_DAYS
+} from '@countryconfig/form/v2/constants'
 import { printCertificateCollectors } from './collectors'
 import { printCertificateCollectorOther } from './collector-other'
 import { printCertificateCollectorIdentityVerify } from './collector-identity-verify'
@@ -112,7 +115,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
                 not(
                   field('child.dob')
                     .isAfter()
-                    .days(applicationConfig.BIRTH.LATE_REGISTRATION_TARGET)
+                    .days(BIRTH_LATE_REGISTRATION_TARGET_DAYS)
                     .inPast()
                 ),
                 field('child.dob').isBefore().now()
@@ -164,13 +167,13 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
                 not(
                   field('child.dob')
                     .isAfter()
-                    .days(applicationConfig.BIRTH.REGISTRATION_TARGET)
+                    .days(BIRTH_REGISTRATION_TARGET_DAYS)
                     .inPast()
                 ),
 
                 field('child.dob')
                   .isAfter()
-                  .days(applicationConfig.BIRTH.LATE_REGISTRATION_TARGET)
+                  .days(BIRTH_LATE_REGISTRATION_TARGET_DAYS)
                   .inPast(),
                 field('child.dob').isBefore().now()
               )
@@ -219,7 +222,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
               conditional: and(
                 field('child.dob')
                   .isAfter()
-                  .days(applicationConfig.BIRTH.REGISTRATION_TARGET)
+                  .days(BIRTH_REGISTRATION_TARGET_DAYS)
                   .inPast(),
                 field('child.dob').isBefore().now()
               )

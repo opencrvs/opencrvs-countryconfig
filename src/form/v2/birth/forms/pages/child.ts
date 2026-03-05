@@ -23,7 +23,7 @@ import {
 } from '@opencrvs/toolkit/events'
 import { not } from '@opencrvs/toolkit/conditionals'
 
-import { applicationConfig } from '@countryconfig/api/application/application-config'
+import { BIRTH_LATE_REGISTRATION_TARGET_DAYS } from '@countryconfig/form/v2/constants'
 
 import { createSelectOptions, emptyMessage } from '@countryconfig/form/v2/utils'
 import {
@@ -256,7 +256,7 @@ export const child = defineFormPage({
             not(
               field('child.dob')
                 .isAfter()
-                .days(applicationConfig.BIRTH.LATE_REGISTRATION_TARGET)
+                .days(BIRTH_LATE_REGISTRATION_TARGET_DAYS)
                 .inPast()
             ),
             field('child.dob').isBefore().now()
