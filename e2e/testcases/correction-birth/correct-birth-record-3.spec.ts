@@ -1107,8 +1107,11 @@ test.describe.serial(' Correct record - 3', () => {
       expect(page.url().includes(`events/${eventId}`)).toBeTruthy()
     })
 
-    test('3.8.4 Validate history in record audit', async () => {
+    test('3.8.4 Assign record', async () => {
       await ensureAssigned(page)
+    })
+
+    test('3.8.5 Validate history in record audit', async () => {
       await page.getByRole('button', { name: 'Audit' }).click()
       await page.getByRole('button', { name: 'Next page' }).click()
 
