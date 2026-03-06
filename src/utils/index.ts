@@ -264,3 +264,51 @@ export function createCustomFieldHandlebarName(fieldId: string) {
 export function uppercaseFirstLetter(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1)
 }
+
+
+function generateRegistrationNumber(trackingId: string): string {
+  /* adding current year */
+  let brn = new Date().getFullYear().toString()
+
+  /* appending tracking id */
+  brn = brn.concat(trackingId)
+
+  return brn
+}
+
+export function createUniqueRegistrationNumberFromBundle(bundle: fhir.Bundle) {
+  const taskResource = getTaskResource(bundle)
+
+  if (!taskResource || !taskResource.extension) {
+    throw new Error(
+      'Failed to validate registration: could not find task resource in bundle or task resource had no extensions'
+    )
+  }
+
+  const trackingId = getTrackingIdFromTaskResource(taskResource)
+  const compositionId = getCompositionId(bundle)
+
+  return {
+    trackingId,
+    compositionId,
+    registrationNumber: generateRegistrationNumber(trackingId),
+    ...(taskResource.code?.coding?.[0].code === 'BIRTH' && {
+      // Some countries desire to create multiple identifiers for citizens at the point of birth registration using external systems.
+      // OpenCRVS supports up to 3 additional, custom identifiers that can be created
+      childIdentifiers: [
+        {
+          type: 'BIRTH_CONFIGURABLE_IDENTIFIER_1',
+          value: ''
+        },
+        {
+          type: 'BIRTH_CONFIGURABLE_IDENTIFIER_2',
+          value: ''
+        },
+        {
+          type: 'BIRTH_CONFIGURABLE_IDENTIFIER_3',
+          value: ''
+        }
+      ]
+    })
+  }
+}
