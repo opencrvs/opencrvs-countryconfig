@@ -4,6 +4,23 @@
 
 ### Breaking changes
 
+- The following countryconfig endpoints have been removed [#11899](https://github.com/opencrvs/opencrvs-core/issues/11899):
+  - `GET /validators.js`
+  - `GET /conditionals.js`
+  - `GET /dashboards/queries.json`
+  - `GET /forms`
+  - `POST /event-registration`
+  - `POST /tracking-id`
+  - `GET /record-notification`
+- The following countryconfig endpoints have been renamed to sit under the `/config/` namespace:
+  | Old path | New path |
+  |---|---|
+  | `GET /workqueue` | `GET /config/workqueues` |
+  | `GET /application-config` | `GET /config/application` |
+  | `GET /locations` | `GET /config/locations` |
+  | `GET /roles` | `GET /config/roles` |
+  | `GET /users` | `GET /config/users` |
+  | `GET /events` | `GET /config/events` |
 - Switch to docker.io/chumaky/postgres_mongo_fdw:17.6_fdw5.5.2 image to support `mongo_fdw`. This is required for the legacy user migrations to work. It will be switched back to the official postgres image in a future release.
 - A new service `legacy-user-migration` which runs the same migration image but with the `migrate-legacy-users` flag and with the following new environment variables:
   - EVENTS_SUPERUSER_POSTGRES_URL
@@ -16,6 +33,7 @@
 The default values for these variables have been added to the `docker-compose.deploy.yml` file. They should work out of the box for most deployments, but please ensure to set them correctly if you have a custom MongoDB setup.
 
 ### New features
+
 - Docker swarm to Kubernetes migration script [#10858](https://github.com/opencrvs/opencrvs-core/issues/10858), [#10787](https://github.com/opencrvs/opencrvs-core/issues/10787)
 
 ## 1.9.3
