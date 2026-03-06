@@ -4,6 +4,7 @@ import {
   CLIENT_URL,
   CREDENTIALS,
   GATEWAY_HOST,
+  LOGIN_URL,
   SAFE_INPUT_CHANGE_TIMEOUT_MS,
   SAFE_OUTBOX_TIMEOUT_MS
 } from './constants'
@@ -42,6 +43,8 @@ export async function logout(page: Page) {
     })
     .click()
   await page.context().clearCookies()
+  await page.waitForURL((url) => url.origin === LOGIN_URL)
+
 }
 
 export async function login(
@@ -153,10 +156,10 @@ export const getRandomDate = (
   const randomDate = new Date()
   randomDate.setDate(
     new Date().getDate() -
-      Math.random() * range -
-      minAge * 365 -
-      (minAge + 3) / 4 -
-      offset
+    Math.random() * range -
+    minAge * 365 -
+    (minAge + 3) / 4 -
+    offset
   )
   const [yyyy, mm, dd] = randomDate.toISOString().split('T')[0].split('-')
   return { dd, mm, yyyy }
