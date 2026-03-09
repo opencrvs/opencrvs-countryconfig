@@ -502,6 +502,11 @@ services:
     environment:
       - DECLARED_DECLARATION_SEARCH_QUERY_COUNT=100
       - COUNTRY_CONFIG_URL=https://countryconfig.{{hostname}}
+      - COUNTRY_CONFIG_URL_INTERNAL=http://countryconfig:3040
+      - LOGIN_URL=https://login.{{hostname}}
+      - AUTH_URL_INTERNAL=http://auth:4040
+      - CONFIG_API_URL_INTERNAL=http://config:2021
+      - GATEWAY_URL_INTERNAL=http://gateway:7070
       - CONTENT_SECURITY_POLICY_WILDCARD=${CONTENT_SECURITY_POLICY_WILDCARD}
       - MINIO_URL=https://minio.{{hostname}}
     deploy:
@@ -600,6 +605,11 @@ services:
   login:
     environment:
       - COUNTRY_CONFIG_URL=https://countryconfig.{{hostname}}
+      - COUNTRY_CONFIG_URL_INTERNAL=http://countryconfig:3040
+      - CLIENT_APP_URL=https://register.{{hostname}}
+      - AUTH_URL_INTERNAL=http://auth:4040
+      - CONFIG_API_URL_INTERNAL=http://config:2021
+      - GATEWAY_URL_INTERNAL=http://gateway:7070
       - CONTENT_SECURITY_POLICY_WILDCARD=${CONTENT_SECURITY_POLICY_WILDCARD}
     deploy:
       labels:
@@ -645,7 +655,7 @@ services:
     deploy:
       labels:
         - 'traefik.enable=true'
-        - 'traefik.http.routers.auth.rule=Host(`auth.{{hostname}}`)'
+        - 'traefik.http.routers.auth.rule=Host(`auth.{{hostname}}`) && !Path(`/internal/reindexing-token`)'
         - 'traefik.http.services.auth.loadbalancer.server.port=4040'
         - 'traefik.http.routers.auth.tls=true'
         - 'traefik.http.routers.auth.tls.certresolver=certResolver'
@@ -657,6 +667,9 @@ services:
         - 'traefik.http.middlewares.auth.headers.stsseconds=31536000'
         - 'traefik.http.middlewares.auth.headers.stsincludesubdomains=true'
         - 'traefik.http.middlewares.auth.headers.stspreload=true'
+        # Block /internal/reindexing-token from external access (only reachable internally via overlay network)
+        - 'traefik.http.routers.block-auth-reindexing-token.rule=Host(`auth.{{hostname}}`) && Path(`/internal/reindexing-token`)'
+        - 'traefik.http.routers.block-auth-reindexing-token.middlewares=block-internal-routes'
       replicas: 1
     networks:
       - overlay_net

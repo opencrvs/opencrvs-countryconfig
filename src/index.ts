@@ -26,36 +26,28 @@ import {
   SENTRY_DSN,
   COUNTRY_CONFIG_HOST,
   COUNTRY_CONFIG_PORT,
-  CHECK_INVALID_TOKEN,
   AUTH_URL,
   DEFAULT_TIMEOUT,
-  GATEWAY_URL
+  GATEWAY_URL,
+  THIRTY_MINUTES_IN_MILLISECONDS
 } from '@countryconfig/constants'
 import {
   contentHandler,
   countryLogoHandler
 } from '@countryconfig/api/content/handler'
-import { eventRegistrationHandler } from '@countryconfig/api/event-registration/handler'
 import decode from 'jwt-decode'
 import { join } from 'path'
 import { logger } from '@countryconfig/logger'
 import { emailHandler, emailSchema } from './api/notification/handler'
 import { ErrorContext } from 'hapi-auth-jwt2'
 import { mapGeojsonHandler } from '@countryconfig/api/dashboards/handler'
-import { formHandler } from '@countryconfig/form'
 import { locationsHandler } from './data-seeding/locations/handler'
 import { certificateHandler } from './api/certificates/handler'
 import { rolesHandler } from './data-seeding/roles/handler'
 import { usersHandler } from './data-seeding/employees/handler'
 import { applicationConfigHandler } from './api/application/handler'
-import { validatorsHandler } from './form/common/custom-validation-conditionals/validators-handler'
-import { conditionalsHandler } from './form/common/custom-validation-conditionals/conditionals-handler'
-import { COUNTRY_WIDE_CRUDE_DEATH_RATE } from './api/application/application-config'
 import { handlebarsHandler } from './form/common/certificate/handlebars/handler'
-import { trackingIDHandler } from './api/tracking-id/handler'
-import { dashboardQueriesHandler } from './api/dashboards/handler'
 import { fontsHandler } from './api/fonts/handler'
-import { recordNotificationHandler } from './api/record-notification/handler'
 import {
   getCustomEventsHandler,
   onAnyActionHandler,
@@ -156,32 +148,6 @@ export const verifyToken = async (token: string, authUrl: string) => {
   return false
 }
 
-const validateFunc = async (
-  payload: any,
-  request: Hapi.Request,
-  checkInvalidToken: boolean,
-  authUrl: string
-) => {
-  let valid
-  if (checkInvalidToken) {
-    valid = await verifyToken(
-      request.headers.authorization.replace('Bearer ', ''),
-      authUrl
-    )
-  }
-
-  if (valid === true || !checkInvalidToken) {
-    return {
-      isValid: true,
-      credentials: payload
-    }
-  }
-
-  return {
-    isValid: false
-  }
-}
-
 async function getPublicKey(): Promise<string> {
   try {
     const response = await fetch(`${AUTH_URL}/.well-known`)
@@ -209,9 +175,16 @@ export async function createServer() {
     port: COUNTRY_CONFIG_PORT,
     routes: {
       cors: { origin: whitelist },
-      payload: { maxBytes: 52428800, timeout: DEFAULT_TIMEOUT }
+      timeout: {
+        server: DEFAULT_TIMEOUT
+      },
+      payload: {
+        maxBytes: 52428800
+      }
     }
   })
+
+  server.listener.requestTimeout = THIRTY_MINUTES_IN_MILLISECONDS
 
   await server.register(getPlugins())
 
@@ -253,8 +226,10 @@ export async function createServer() {
       issuer: 'opencrvs:auth-service',
       audience: 'opencrvs:countryconfig-user'
     },
-    validate: (payload: any, request: Hapi.Request) =>
-      validateFunc(payload, request, CHECK_INVALID_TOKEN, AUTH_URL)
+    validate: (payload: any, request: Hapi.Request) => ({
+      isValid: true,
+      credentials: payload
+    })
   })
 
   server.auth.default('jwt')
@@ -357,55 +332,12 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/validators.js',
-    handler: validatorsHandler,
-    options: {
-      auth: false,
-      tags: ['api'],
-      description: 'Serves validation functions as JS'
-    }
-  })
-
-  server.route({
-    method: 'GET',
-    path: '/conditionals.js',
-    handler: conditionalsHandler,
-    options: {
-      auth: false,
-      tags: ['api'],
-      description: 'Serves conditionals as JS'
-    }
-  })
-
-  server.route({
-    method: 'GET',
     path: '/content/{application}',
     handler: contentHandler,
     options: {
       auth: false,
       tags: ['api'],
       description: 'Serves language content'
-    }
-  })
-
-  server.route({
-    method: 'GET',
-    path: '/dashboards/queries.json',
-    handler: dashboardQueriesHandler,
-    options: {
-      tags: ['api'],
-      auth: false,
-      description: 'Serves dashboard view refresher queries'
-    }
-  })
-
-  server.route({
-    method: 'GET',
-    path: '/forms',
-    handler: formHandler,
-    options: {
-      tags: ['api'],
-      description: 'Serves form configuration'
     }
   })
 
@@ -433,29 +365,6 @@ export async function createServer() {
 
   server.route({
     method: 'POST',
-    path: '/event-registration',
-    handler: eventRegistrationHandler,
-    options: {
-      tags: ['api'],
-      description:
-        'Opportunity for sychrounous integrations with 3rd party systems as a final step in event registration. If successful returns identifiers for that event.'
-    }
-  })
-
-  server.route({
-    method: 'GET',
-    path: '/crude-death-rate',
-    handler: () => ({
-      crudeDeathRate: COUNTRY_WIDE_CRUDE_DEATH_RATE
-    }),
-    options: {
-      tags: ['api'],
-      description: 'Serves country wise crude death rate'
-    }
-  })
-
-  server.route({
-    method: 'POST',
     path: '/email',
     handler: emailHandler,
     options: {
@@ -474,7 +383,7 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/application-config',
+    path: '/config/application',
     handler: applicationConfigHandler,
     options: {
       auth: false,
@@ -485,7 +394,7 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/workqueue',
+    path: '/config/workqueues',
     handler: workqueueconfigHandler,
     options: {
       auth: false,
@@ -496,7 +405,7 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/locations',
+    path: '/config/locations',
     handler: locationsHandler,
     options: {
       auth: false,
@@ -507,7 +416,7 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/roles',
+    path: '/config/roles',
     handler: rolesHandler,
     options: {
       auth: false,
@@ -518,21 +427,11 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/users',
+    path: '/config/users',
     handler: usersHandler,
     options: {
       tags: ['api', 'users'],
       description: 'Returns users metadata'
-    }
-  })
-
-  server.route({
-    method: 'POST',
-    path: '/tracking-id',
-    handler: trackingIDHandler,
-    options: {
-      tags: ['api'],
-      description: 'Provides a tracking id'
     }
   })
 
@@ -554,16 +453,6 @@ export async function createServer() {
   })
 
   server.route({
-    method: 'GET',
-    path: '/record-notification',
-    handler: recordNotificationHandler,
-    options: {
-      tags: ['api'],
-      description: 'Checks for enabled notification for record'
-    }
-  })
-
-  server.route({
     method: 'POST',
     path: '/reindex',
     options: {
@@ -575,6 +464,10 @@ export async function createServer() {
       payload: {
         output: 'stream',
         parse: false
+      },
+      timeout: {
+        server: THIRTY_MINUTES_IN_MILLISECONDS,
+        socket: THIRTY_MINUTES_IN_MILLISECONDS
       }
     },
     handler: async (req, h) => {
@@ -637,7 +530,7 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/events',
+    path: '/config/events',
     handler: getCustomEventsHandler,
     options: {
       auth: false,

@@ -32,7 +32,7 @@ import { BIRTH_CERTIFICATE_COLLECTOR_FORM } from './forms/printForm'
 import { PlaceOfBirth } from './forms/pages/child'
 import { CORRECTION_FORM } from './forms/correctionForm'
 import { dedupConfig } from './dedupConfig'
-import { applicationConfig } from '@countryconfig/api/application/application-config'
+import { BIRTH_LATE_REGISTRATION_TARGET_DAYS } from '@countryconfig/form/v2/constants'
 
 export const birthEvent = defineConfig({
   id: Event.Birth,
@@ -294,7 +294,7 @@ export const birthEvent = defineConfig({
             not(
               field('child.dob')
                 .isAfter()
-                .days(applicationConfig.BIRTH.LATE_REGISTRATION_TARGET)
+                .days(BIRTH_LATE_REGISTRATION_TARGET_DAYS)
                 .inPast()
             ),
             field('child.dob').isBefore().now()

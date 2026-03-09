@@ -13,6 +13,7 @@ import { env } from './environment'
 export const TEST_SOURCE = `${process.cwd()}/src/tests/`
 export const DEFAULT_TIMEOUT = 600000
 export const SEVEN_DAYS_IN_MILISECOND = 1000 * 60 * 60 * 24 * 7
+export const THIRTY_MINUTES_IN_MILLISECONDS = 1000 * 60 * 30
 
 export const DOMAIN = env.DOMAIN
 export const GATEWAY_URL = env.GATEWAY_URL
@@ -26,7 +27,6 @@ export const COUNTRY_CONFIG_URL = env.COUNTRY_CONFIG_URL
 export const APPLICATION_CONFIG_URL = env.APPLICATION_CONFIG_URL
 
 export const SENTRY_DSN = env.SENTRY_DSN
-export const CHECK_INVALID_TOKEN = env.CHECK_INVALID_TOKEN
 
 export const PRODUCTION = env.isProd
 export const QA_ENV = env.QA_ENV

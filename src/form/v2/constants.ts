@@ -9,13 +9,6 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-const scheme = window.location.protocol; // "http:" or "https:"
-const hostname = "{{hostname}}"; // Replace dynamically if needed
-const sentry = "{{sentry}}"; // Replace dynamically if needed
-window.config = {
-  // Country code in uppercase ALPHA-3 format
-  COUNTRY: 'FAR',
-  LANGUAGES: ['en', 'fr'],
-  LOGIN_BACKGROUND: { backgroundColor: '36304E' },
-  SENTRY: sentry
-};
+export const BIRTH_REGISTRATION_TARGET_DAYS = 30
+export const BIRTH_LATE_REGISTRATION_TARGET_DAYS = 365
+export const DEATH_REGISTRATION_TARGET_DAYS = 45
