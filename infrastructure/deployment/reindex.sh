@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -7,7 +8,6 @@
 #
 # Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
 
-#!/usr/bin/env bash
 set -euo pipefail
 
 EVENTS_URL="${EVENTS_URL:-http://localhost:5555/}"
@@ -68,20 +68,20 @@ echo "Polling reindex status..."
 polls=0
 first_poll=true
 while true; do
-  if [[ "$first_poll" == true ]]; then
+  if [ "$first_poll" = true ]; then
     sleep 3
     first_poll=false
   else
     sleep "$POLL_INTERVAL"
   fi
-  polls=$((polls + 1))
+  polls=$(( polls + 1 ))
 
   RUN=$(fetch_latest_run_since "$TOKEN" "$TRIGGER_TIME")
 
-  if [[ -z "$RUN" ]]; then
+  if [ -z "$RUN" ]; then
     echo "  Waiting for reindex to start... (${polls})"
 
-    if (( polls > MAX_POLLS )); then
+    if [ "$polls" -gt "$MAX_POLLS" ]; then
       echo "ERROR: timed out waiting for reindex to start."
       exit 1
     fi
@@ -94,8 +94,8 @@ while true; do
   case "$STATUS" in
     running)
       echo "  Running... ${PROCESSED} events processed so far"
-      if (( polls > MAX_POLLS )); then
-        echo "ERROR: reindex timed out after $((polls * POLL_INTERVAL)) seconds."
+      if [ "$polls" -gt "$MAX_POLLS" ]; then
+        echo "ERROR: reindex timed out after $(( polls * POLL_INTERVAL )) seconds."
         exit 1
       fi
       ;;
@@ -110,7 +110,7 @@ while true; do
       ;;
     *)
       echo "  Unknown status '${STATUS}' — continuing to poll..."
-      if (( polls > MAX_POLLS )); then
+      if [ "$polls" -gt "$MAX_POLLS" ]; then
         exit 1
       fi
       ;;
