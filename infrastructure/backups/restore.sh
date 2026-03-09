@@ -142,7 +142,7 @@ docker run --rm --network=$NETWORK appropriate/curl curl -X DELETE "http://$(ela
 
 # Delete all data from elasticsearch
 #-----------------------------------
-approved_words=${ES_INDEX_PREFIXES:-"events_ ocrvs-"}
+approved_words=${ES_INDEX_PREFIXES:-"events_ ocrvs- reindexing_status"}
 indices=$(docker run --rm --network=$NETWORK appropriate/curl curl -sS -XGET "http://$(elasticsearch_host)/_cat/indices?h=index")
 echo "--------------------------"
 echo "🧹 cleanup for indices: $approved_words from $indices"
