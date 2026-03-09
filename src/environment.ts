@@ -21,11 +21,6 @@ export const env = cleanEnv(process.env, {
   COUNTRY_CONFIG_URL: url({ devDefault: 'http://localhost:3040' }),
   APPLICATION_CONFIG_URL: url({ devDefault: 'http://localhost:2021/' }),
   SENTRY_DSN: str({ default: undefined }),
-  CHECK_INVALID_TOKEN: bool({
-    default: true,
-    devDefault: false,
-    desc: 'Check if the token has been invalidated in the auth service before it has expired'
-  }),
   CONFIRM_REGISTRATION_URL: url({
     devDefault: 'http://localhost:5050/confirm/registration'
   }),

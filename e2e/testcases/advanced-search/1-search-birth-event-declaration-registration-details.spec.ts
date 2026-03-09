@@ -141,9 +141,9 @@ test.describe
 
       await expect(
         page.locator(
-          '#event____legalStatuses____REGISTERED____createdAtLocation'
+          '#searchable-select-event____legalStatuses____REGISTERED____createdAtLocation'
         )
-      ).toHaveValue('Ibombo District Office')
+      ).toHaveText('Ibombo District Office')
       await expect(
         page.locator('#event____legalStatuses____REGISTERED____acceptedAt-dd')
       ).toHaveValue(todayDate)

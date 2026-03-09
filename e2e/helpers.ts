@@ -14,7 +14,7 @@ import { isMobile } from './mobile-helpers'
 import { createClient } from '@opencrvs/toolkit/api'
 import { UUID } from 'crypto'
 
-async function createPIN(page: Page) {
+export async function createPIN(page: Page) {
   await page.click('#pin-input')
   for (let i = 1; i <= 8; i++) {
     await page.type('#pin-input', `${i % 2}`)
@@ -269,7 +269,7 @@ export const expectAddress = async (
 
 /*
   The deletion section is formatted like below:
-  	'-'
+    '-'
     'Farajaland'
     'Central'
     'Ibombo'

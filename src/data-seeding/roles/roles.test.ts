@@ -75,7 +75,6 @@ describe('Roles config', () => {
       'HEALTH_OFFICER',
       'HOSPITAL_CLERK',
       'LOCAL_REGISTRAR',
-      'NATIONAL_REGISTRAR',
       'REGISTRATION_AGENT'
     ])
 

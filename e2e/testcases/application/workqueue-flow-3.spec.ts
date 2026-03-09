@@ -38,12 +38,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
       birthDate: getRandomDate(0, 200)
     },
     placeOfBirth: 'Health Institution',
-    birthLocation: {
-      facility: 'Golden Valley Rural Health Centre',
-      district: 'Ibombo',
-      province: 'Central',
-      country: 'Farajaland'
-    },
+    birthLocation: { facility: 'Ibombo District Office' },
     informantType: 'Mother',
     informantEmail: faker.internet.email(),
     mother: {
