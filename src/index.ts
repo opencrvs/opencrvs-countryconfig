@@ -460,67 +460,30 @@ export async function createServer() {
        * In deployed environments, the reindex path is blocked by Traefik.
        * See docker-compose.deploy.yml for more details.
        */
-      auth: false,
-      payload: {
-        output: 'stream',
-        parse: false
-      },
-      timeout: {
-        server: THIRTY_MINUTES_IN_MILLISECONDS,
-        socket: THIRTY_MINUTES_IN_MILLISECONDS
-      }
+      auth: false
     },
     handler: async (req, h) => {
       if (!env.ANALYTICS_DATABASE_URL) {
-        // kill client upload immediately
-        if (!req.raw.req.destroyed) {
-          req.raw.req.destroy()
-        }
-
         logger.warn(
           'Skipping reindex, no ANALYTICS_DATABASE_URL environment variable set.'
         )
         return h.response().code(200)
       }
 
-      const stream = req.raw.req.pipe(StreamArray.withParser())
-      const BATCH_SIZE = 1000
-      const queue: EventDocument[] = []
+      const batch = req.payload as EventDocument[]
       const client = getClient()
 
       try {
         await client.transaction().execute(async (trx) => {
-          for await (const { value } of stream) {
-            queue.push(value)
-
-            if (queue.length >= BATCH_SIZE) {
-              const batch = queue.splice(0, queue.length)
-              await importEvents(batch, trx)
-            }
-          }
-
-          if (queue.length > 0) {
-            await importEvents(queue, trx)
-          }
-
-          // Import locations
-          const url = new URL('events', GATEWAY_URL).toString()
-          const client = createClient(url, req.headers.authorization)
-          const administrativeAreas =
-            await client.administrativeAreas.list.query()
-          const locations = await client.locations.list.query()
-
-          await importAdministrativeAreas(administrativeAreas)
-          await importLocations(locations)
+          await importEvents(batch, trx)
         })
 
-        logger.info('Reindexed all events into analytics.')
+        await syncLocations(req)
+
+        logger.info(`Reindexed batch of ${batch.length} events into analytics.`)
 
         return h.response().code(200)
       } catch (e) {
-        // stop consuming the stream if something failed on import
-        if (!stream.destroyed) stream.destroy(e)
-
         logger.error(e)
 
         return h.response({ error: 'Unexpected error' }).code(500)
@@ -659,6 +622,22 @@ export async function createServer() {
     }
     return h.continue
   })
+
+  let lastLocationSyncAt = 0
+  const ONE_HOUR_MS = 60 * 60 * 1000
+
+  async function syncLocations(req: Hapi.Request<Hapi.ReqRefDefaults>) {
+    const now = Date.now()
+    // Sync locations at most once per hour rather than every call
+    if (now - lastLocationSyncAt > ONE_HOUR_MS) {
+      const url = new URL('events', GATEWAY_URL).toString()
+      const apiClient = createClient(url, req.headers.authorization)
+      const locations = await apiClient.locations.list.query()
+      await importLocations(locations)
+      lastLocationSyncAt = now
+      logger.info('Reindex: locations synced into analytics.')
+    }
+  }
 
   async function stop() {
     await server.stop()

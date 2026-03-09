@@ -36,6 +36,10 @@ The default values for these variables have been added to the `docker-compose.de
 
 - Docker swarm to Kubernetes migration script [#10858](https://github.com/opencrvs/opencrvs-core/issues/10858), [#10787](https://github.com/opencrvs/opencrvs-core/issues/10787)
 
+### Improvements
+
+- Change reindex from stream to batch API to avoid timeouts [#11877](https://github.com/opencrvs/opencrvs-core/issues/11877)
+
 ## 1.9.3
 
 ### New features
