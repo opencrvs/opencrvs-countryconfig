@@ -23,9 +23,6 @@
   const sentry = '{{sentry}}' // Replaced dynamically
 
   window.config = {
-    MINIO_URL: `${scheme}//minio.${hostname}/ocrvs/`,
-    MINIO_BASE_URL: `${scheme}//minio.${hostname}`, // URL without path/bucket information, used for file uploads, v2
-    MINIO_BUCKET: 'ocrvs',
     // Country code in uppercase ALPHA-3 format
     COUNTRY: 'FAR',
     LANGUAGES: ['en', 'fr'],

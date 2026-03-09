@@ -253,7 +253,7 @@ services:
         tag: 'mongo-on-update'
   # Configure redis
   redis:
-    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    command: ['redis-server', '/usr/local/etc/redis/redis.conf']
     secrets:
       - source: redis-acl.{{ts}}
         target: /usr/local/etc/redis/users.acl
@@ -508,7 +508,8 @@ services:
       - CONFIG_API_URL_INTERNAL=http://config:2021
       - GATEWAY_URL_INTERNAL=http://gateway:7070
       - CONTENT_SECURITY_POLICY_WILDCARD=${CONTENT_SECURITY_POLICY_WILDCARD}
-      - MINIO_URL=https://minio.{{hostname}}
+      - MINIO_BUCKET=ocrvs
+      - MINIO_BASE_URL=https://minio.{{hostname}}
     deploy:
       labels:
         - 'traefik.enable=true'
@@ -958,7 +959,8 @@ services:
 
   legacy-user-migration:
     image: ghcr.io/opencrvs/ocrvs-migration:${VERSION}
-    command: ["/bin/sh", "-c", "/app/wait && yarn start:prod --migrate-legacy-users"]
+    command:
+      ['/bin/sh', '-c', '/app/wait && yarn start:prod --migrate-legacy-users']
     environment:
       - USER_MGNT_MONGO_URL=mongodb://user-mgnt:${USER_MGNT_MONGODB_PASSWORD}@mongo1/user-mgnt?replicaSet=rs0
       - DASHBOARD_MONGO_URL=mongodb://performance:${PERFORMANCE_MONGODB_PASSWORD}@mongo1/performance?replicaSet=rs0
@@ -1042,7 +1044,7 @@ services:
 
   postgres-on-update:
     image: postgres:17.6
-    command: ["bash", "-c", "bash /on-deploy.sh && bash /setup-analytics.sh"]
+    command: ['bash', '-c', 'bash /on-deploy.sh && bash /setup-analytics.sh']
     configs:
       - source: postgres-on-deploy.{{ts}}
         target: /on-deploy.sh
@@ -1111,7 +1113,7 @@ services:
       - /opt/opencrvs/infrastructure/metabase/initialize-database.sh:/initialize-database.sh
       - /opt/opencrvs/infrastructure/metabase/update-database.sh:/update-database.sh
       - /opt/opencrvs/infrastructure/metabase/environment-configuration.sql:/environment-configuration.sql
-    entrypoint: ["/bin/sh", "/run.sh"]
+    entrypoint: ['/bin/sh', '/run.sh']
     networks:
       - overlay_net
     environment:
