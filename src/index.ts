@@ -28,7 +28,8 @@ import {
   COUNTRY_CONFIG_PORT,
   AUTH_URL,
   DEFAULT_TIMEOUT,
-  GATEWAY_URL
+  GATEWAY_URL,
+  THIRTY_MINUTES_IN_MILLISECONDS
 } from '@countryconfig/constants'
 import {
   contentHandler,
@@ -174,9 +175,16 @@ export async function createServer() {
     port: COUNTRY_CONFIG_PORT,
     routes: {
       cors: { origin: whitelist },
-      payload: { maxBytes: 52428800, timeout: DEFAULT_TIMEOUT }
+      timeout: {
+        server: DEFAULT_TIMEOUT
+      },
+      payload: {
+        maxBytes: 52428800
+      }
     }
   })
+
+  server.listener.requestTimeout = THIRTY_MINUTES_IN_MILLISECONDS
 
   await server.register(getPlugins())
 
@@ -456,6 +464,10 @@ export async function createServer() {
       payload: {
         output: 'stream',
         parse: false
+      },
+      timeout: {
+        server: THIRTY_MINUTES_IN_MILLISECONDS,
+        socket: THIRTY_MINUTES_IN_MILLISECONDS
       }
     },
     handler: async (req, h) => {
