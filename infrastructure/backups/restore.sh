@@ -142,7 +142,7 @@ docker run --rm --network=$NETWORK appropriate/curl curl -X DELETE "http://$(ela
 
 # Delete all data from elasticsearch
 #-----------------------------------
-approved_words=${ES_INDEX_PREFIXES:-"events_ ocrvs-"}
+approved_words=${ES_INDEX_PREFIXES:-"events_ ocrvs- reindexing_status"}
 indices=$(docker run --rm --network=$NETWORK appropriate/curl curl -sS -XGET "http://$(elasticsearch_host)/_cat/indices?h=index")
 echo "--------------------------"
 echo "🧹 cleanup for indices: $approved_words from $indices"
@@ -323,6 +323,6 @@ docker run --rm \
   -w /workspace \
   --network $NETWORK \
   -e 'AUTH_URL=http://auth:4040/' \
-  -e 'EVENTS_URL=http://gateway:7070/events' \
+  -e 'EVENTS_URL=http://events:5555/' \
   alpine \
   sh -c 'apk add --no-cache curl jq && sh reindex.sh'

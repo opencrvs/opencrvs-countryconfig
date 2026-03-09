@@ -28,32 +28,26 @@ import {
   COUNTRY_CONFIG_PORT,
   AUTH_URL,
   DEFAULT_TIMEOUT,
-  GATEWAY_URL
+  GATEWAY_URL,
+  THIRTY_MINUTES_IN_MILLISECONDS
 } from '@countryconfig/constants'
 import {
   contentHandler,
   countryLogoHandler
 } from '@countryconfig/api/content/handler'
-import { eventRegistrationHandler } from '@countryconfig/api/event-registration/handler'
 import decode from 'jwt-decode'
 import { join } from 'path'
 import { logger } from '@countryconfig/logger'
 import { emailHandler, emailSchema } from './api/notification/handler'
 import { ErrorContext } from 'hapi-auth-jwt2'
 import { mapGeojsonHandler } from '@countryconfig/api/dashboards/handler'
-import { formHandler } from '@countryconfig/form'
 import { locationsHandler } from './data-seeding/locations/handler'
 import { certificateHandler } from './api/certificates/handler'
 import { rolesHandler } from './data-seeding/roles/handler'
 import { usersHandler } from './data-seeding/employees/handler'
 import { applicationConfigHandler } from './api/application/handler'
-import { validatorsHandler } from './form/common/custom-validation-conditionals/validators-handler'
-import { conditionalsHandler } from './form/common/custom-validation-conditionals/conditionals-handler'
 import { handlebarsHandler } from './form/common/certificate/handlebars/handler'
-import { trackingIDHandler } from './api/tracking-id/handler'
-import { dashboardQueriesHandler } from './api/dashboards/handler'
 import { fontsHandler } from './api/fonts/handler'
-import { recordNotificationHandler } from './api/record-notification/handler'
 import {
   getCustomEventsHandler,
   onAnyActionHandler,
@@ -181,9 +175,16 @@ export async function createServer() {
     port: COUNTRY_CONFIG_PORT,
     routes: {
       cors: { origin: whitelist },
-      payload: { maxBytes: 52428800, timeout: DEFAULT_TIMEOUT }
+      timeout: {
+        server: DEFAULT_TIMEOUT
+      },
+      payload: {
+        maxBytes: 52428800
+      }
     }
   })
+
+  server.listener.requestTimeout = THIRTY_MINUTES_IN_MILLISECONDS
 
   await server.register(getPlugins())
 
@@ -331,55 +332,12 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/validators.js',
-    handler: validatorsHandler,
-    options: {
-      auth: false,
-      tags: ['api'],
-      description: 'Serves validation functions as JS'
-    }
-  })
-
-  server.route({
-    method: 'GET',
-    path: '/conditionals.js',
-    handler: conditionalsHandler,
-    options: {
-      auth: false,
-      tags: ['api'],
-      description: 'Serves conditionals as JS'
-    }
-  })
-
-  server.route({
-    method: 'GET',
     path: '/content/{application}',
     handler: contentHandler,
     options: {
       auth: false,
       tags: ['api'],
       description: 'Serves language content'
-    }
-  })
-
-  server.route({
-    method: 'GET',
-    path: '/dashboards/queries.json',
-    handler: dashboardQueriesHandler,
-    options: {
-      tags: ['api'],
-      auth: false,
-      description: 'Serves dashboard view refresher queries'
-    }
-  })
-
-  server.route({
-    method: 'GET',
-    path: '/forms',
-    handler: formHandler,
-    options: {
-      tags: ['api'],
-      description: 'Serves form configuration'
     }
   })
 
@@ -407,17 +365,6 @@ export async function createServer() {
 
   server.route({
     method: 'POST',
-    path: '/event-registration',
-    handler: eventRegistrationHandler,
-    options: {
-      tags: ['api'],
-      description:
-        'Opportunity for sychrounous integrations with 3rd party systems as a final step in event registration. If successful returns identifiers for that event.'
-    }
-  })
-
-  server.route({
-    method: 'POST',
     path: '/email',
     handler: emailHandler,
     options: {
@@ -436,7 +383,7 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/application-config',
+    path: '/config/application',
     handler: applicationConfigHandler,
     options: {
       auth: false,
@@ -447,7 +394,7 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/workqueue',
+    path: '/config/workqueues',
     handler: workqueueconfigHandler,
     options: {
       auth: false,
@@ -458,7 +405,7 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/locations',
+    path: '/config/locations',
     handler: locationsHandler,
     options: {
       auth: false,
@@ -469,7 +416,7 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/roles',
+    path: '/config/roles',
     handler: rolesHandler,
     options: {
       auth: false,
@@ -480,21 +427,11 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/users',
+    path: '/config/users',
     handler: usersHandler,
     options: {
       tags: ['api', 'users'],
       description: 'Returns users metadata'
-    }
-  })
-
-  server.route({
-    method: 'POST',
-    path: '/tracking-id',
-    handler: trackingIDHandler,
-    options: {
-      tags: ['api'],
-      description: 'Provides a tracking id'
     }
   })
 
@@ -516,16 +453,6 @@ export async function createServer() {
   })
 
   server.route({
-    method: 'GET',
-    path: '/record-notification',
-    handler: recordNotificationHandler,
-    options: {
-      tags: ['api'],
-      description: 'Checks for enabled notification for record'
-    }
-  })
-
-  server.route({
     method: 'POST',
     path: '/reindex',
     options: {
@@ -533,63 +460,30 @@ export async function createServer() {
        * In deployed environments, the reindex path is blocked by Traefik.
        * See docker-compose.deploy.yml for more details.
        */
-      auth: false,
-      payload: {
-        output: 'stream',
-        parse: false
-      }
+      auth: false
     },
     handler: async (req, h) => {
       if (!env.ANALYTICS_DATABASE_URL) {
-        // kill client upload immediately
-        if (!req.raw.req.destroyed) {
-          req.raw.req.destroy()
-        }
-
         logger.warn(
           'Skipping reindex, no ANALYTICS_DATABASE_URL environment variable set.'
         )
         return h.response().code(200)
       }
 
-      const stream = req.raw.req.pipe(StreamArray.withParser())
-      const BATCH_SIZE = 1000
-      const queue: EventDocument[] = []
+      const batch = req.payload as EventDocument[]
       const client = getClient()
 
       try {
         await client.transaction().execute(async (trx) => {
-          for await (const { value } of stream) {
-            queue.push(value)
-
-            if (queue.length >= BATCH_SIZE) {
-              const batch = queue.splice(0, queue.length)
-              await importEvents(batch, trx)
-            }
-          }
-
-          if (queue.length > 0) {
-            await importEvents(queue, trx)
-          }
-
-          // Import locations
-          const url = new URL('events', GATEWAY_URL).toString()
-          const client = createClient(url, req.headers.authorization)
-          const administrativeAreas =
-            await client.administrativeAreas.list.query()
-          const locations = await client.locations.list.query()
-
-          await importAdministrativeAreas(administrativeAreas)
-          await importLocations(locations)
+          await importEvents(batch, trx)
         })
 
-        logger.info('Reindexed all events into analytics.')
+        await syncLocations(req)
+
+        logger.info(`Reindexed batch of ${batch.length} events into analytics.`)
 
         return h.response().code(200)
       } catch (e) {
-        // stop consuming the stream if something failed on import
-        if (!stream.destroyed) stream.destroy(e)
-
         logger.error(e)
 
         return h.response({ error: 'Unexpected error' }).code(500)
@@ -599,7 +493,7 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/events',
+    path: '/config/events',
     handler: getCustomEventsHandler,
     options: {
       auth: false,
@@ -728,6 +622,22 @@ export async function createServer() {
     }
     return h.continue
   })
+
+  let lastLocationSyncAt = 0
+  const ONE_HOUR_MS = 60 * 60 * 1000
+
+  async function syncLocations(req: Hapi.Request<Hapi.ReqRefDefaults>) {
+    const now = Date.now()
+    // Sync locations at most once per hour rather than every call
+    if (now - lastLocationSyncAt > ONE_HOUR_MS) {
+      const url = new URL('events', GATEWAY_URL).toString()
+      const apiClient = createClient(url, req.headers.authorization)
+      const locations = await apiClient.locations.list.query()
+      await importLocations(locations)
+      lastLocationSyncAt = now
+      logger.info('Reindex: locations synced into analytics.')
+    }
+  }
 
   async function stop() {
     await server.stop()
