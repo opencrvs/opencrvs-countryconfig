@@ -88,6 +88,29 @@ const TENNIS_CLUB_DECLARATION_REVIEW = {
           )
         }
       ]
+    },
+    {
+      type: FieldType.ALPHA_PRINT_BUTTON,
+      id: 'review.print-declaration',
+      label: {
+        defaultMessage: 'Print declaration for hospital clerk',
+        description: 'Print',
+        id: 'event.tennis-club-membership.action.declare.form.review.print-record.label'
+      },
+      configuration: {
+        template: 'v2.tennis-club-membership-certificate-alpha',
+        buttonLabel: {
+          defaultMessage: 'Print declaration summary by hospital clerk',
+          description: "Print button's label",
+          id: 'event.tennis-club-membership.action.declare.form.review.print.button.label'
+        }
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: user.hasRole('HOSPITAL_CLERK')
+        }
+      ]
     }
   ]
 }
@@ -388,6 +411,12 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
             description: 'This is the label for the field',
             id: 'event.tennis-club-membership.action.declare.form.section.recommender.field.search.label'
           },
+          helperText: {
+            defaultMessage:
+              'You can search tennis records created on Farajaland since beginning of 2023',
+            description: 'This is the helper text for the field',
+            id: 'tennis-club-membership.searchField.helperText'
+          },
           configuration: {
             query: {
               type: 'or',
@@ -620,6 +649,7 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
     {
       id: 'collector',
       type: PageTypes.enum.FORM,
+      requireCompletionToContinue: true,
       title: {
         id: 'event.tennis-club-membership.action.certificate.form.section.who.title',
         defaultMessage: 'Print certified copy',
@@ -1106,6 +1136,25 @@ export const tennisClubMembershipEvent = defineConfig({
           defaultMessage: "Recommender's ID",
           description: 'Label for the recommender’s ID field',
           id: 'event.tennis-club-membership.summary.field.recommender.id.label'
+        }
+      },
+      {
+        id: 'event.registeredAt',
+        emptyValueMessage: {
+          defaultMessage: 'No registration date',
+          description: 'This is shown when there is no registration date',
+          id: 'event.birth.summary.event.registeredAt.empty'
+        },
+        label: {
+          defaultMessage: 'Registration date',
+          description: 'This is the label for the registration date',
+          id: 'event.birth.summary.event.registeredAt.label'
+        },
+        value: {
+          defaultMessage:
+            '{event.legalStatuses.REGISTERED.acceptedAt, date, ::dd MMMM yyyy}',
+          description: 'This is the registration date value',
+          id: 'event.birth.summary.event.registeredAt.value'
         }
       }
     ]
