@@ -54,12 +54,12 @@ jobs:
 
       - name: Run reindex script in docker container
         run: |
-          ssh -p ${{ vars.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ vars.SSH_HOST }} ${{ vars.SSH_ARGS }} "
+          ssh -o ServerAliveInterval=30 -o ServerAliveCountMax=120 -p ${{ vars.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ vars.SSH_HOST }} ${{ vars.SSH_ARGS }} "
             docker run --rm \
               -v /opt/opencrvs/infrastructure/deployment:/workspace \
               -w /workspace \
               --network opencrvs_overlay_net \
               -e 'AUTH_URL=http://auth:4040/' \
-              -e 'EVENTS_URL=http://gateway:7070/events' \
+              -e 'EVENTS_URL=http://events:5555/' \
               alpine \
-              sh -c 'apk add --no-cache curl jq && sh reindex.sh'"
+              sh -c 'apk add --no-cache curl jq && timeout 60m sh reindex.sh'"

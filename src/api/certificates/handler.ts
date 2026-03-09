@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /*
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -10,8 +11,8 @@
  */
 
 import { Event } from '@countryconfig/form/types/types'
-import { Request, ResponseToolkit } from '@hapi/hapi'
-import { ActionType, event, not } from '@opencrvs/toolkit/events'
+import { Request, ResponseObject, ResponseToolkit } from '@hapi/hapi'
+import { ActionType, event, never, not } from '@opencrvs/toolkit/events'
 
 type FontFamilyTypes = {
   normal: string
@@ -68,7 +69,10 @@ const libreBaskervilleFont: Record<string, FontFamilyTypes> = {
   }
 }
 
-export async function certificateHandler(request: Request, h: ResponseToolkit) {
+export async function certificateHandler(
+  request: Request,
+  h: ResponseToolkit
+): Promise<ICertificateConfigData[] | ResponseObject> {
   if (request.params.id) {
     const filePath = `${__dirname}/source/${request.params.id}`
     return h.file(filePath)
@@ -326,6 +330,33 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       svgUrl:
         '/api/countryconfig/certificates/v2.tennis-club-membership-certificate-multipage.svg',
       fonts: libreBaskervilleFont
+    },
+    {
+      id: 'v2.tennis-club-membership-certificate-alpha',
+      event: Event.TENNIS_CLUB_MEMBERSHIP,
+      isV2Template: true,
+      label: {
+        id: 'certificates.tennis-club-membership.certificate.alpha',
+        defaultMessage: 'Tennis Club Membership Certificate Alpha',
+        description:
+          'The label for a tennis club membership certificate for alpha print button testing'
+      },
+      isDefault: false,
+      fee: {
+        onTime: 7,
+        late: 10.6,
+        delayed: 18
+      },
+      svgUrl:
+        '/api/countryconfig/certificates/v2.tennis-club-membership-alpha.svg',
+      fonts: libreBaskervilleFont,
+      conditionals: [
+        {
+          type: 'SHOW',
+          // Never show in print-cert flow
+          conditional: never()
+        }
+      ]
     },
     {
       id: 'v2.death-certificate',
