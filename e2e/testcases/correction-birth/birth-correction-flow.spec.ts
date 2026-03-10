@@ -44,7 +44,7 @@ test.describe.serial('Birth correction flow', () => {
       .getByRole('button', { name: formatV2ChildName(declaration) })
       .click()
     await ensureAssigned(page)
-    await selectAction(page, 'Correct record')
+    await selectAction(page, 'Correct')
   })
 
   test('Try to continue without filling in required fields', async () => {
@@ -342,7 +342,7 @@ test.describe.serial('Birth correction flow', () => {
     })
 
     test('Enter the direct correction form to ensure form is reset', async () => {
-      await selectAction(page, 'Correct record')
+      await selectAction(page, 'Correct')
 
       await expect(page.locator('#requester____type')).toHaveText('Select...')
       await expect(page.locator('#reason____option')).toHaveText('Select...')

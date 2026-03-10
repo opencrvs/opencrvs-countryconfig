@@ -183,16 +183,7 @@ test.describe.serial(' Correct record - 3', () => {
 
     test('3.1.2 Record audit', async () => {
       await ensureAssigned(page)
-      await page.getByRole('button', { name: 'Action', exact: true }).click()
-
-      /*
-       * Expected result: should show correct record button in action menu
-       */
-      await expect(
-        await page.getByText('Correct record', { exact: true })
-      ).toBeVisible()
-
-      await page.getByText('Correct record', { exact: true }).click()
+      await selectAction(page, 'Correct')
     })
   })
 

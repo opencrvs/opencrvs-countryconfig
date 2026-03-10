@@ -103,13 +103,7 @@ test.describe.serial("Correct record - Change father's ID number", () => {
     })
     await ensureAssigned(page)
 
-    await page.getByRole('button', { name: 'Action', exact: true }).click()
-
-    await expect(
-      page.getByText('Correct record', { exact: true })
-    ).toBeVisible()
-
-    await page.getByText('Correct record', { exact: true }).click()
+    await selectAction(page, 'Correct')
   })
 
   test('Correction requester: legal guardian', async () => {

@@ -43,7 +43,7 @@ export async function selectAction(
     | 'Assign'
     | 'Unassign'
     | 'Delete'
-    | 'Correct record'
+    | 'Correct'
     | 'Archive'
     | 'Reject'
     | 'Review correction request'

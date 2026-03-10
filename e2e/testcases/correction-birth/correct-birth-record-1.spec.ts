@@ -115,11 +115,11 @@ test.describe('1. Correct record - 1', () => {
         page.getByText(`Contact${declaration['informant.email']}`)
       ).toBeVisible()
 
-      await selectAction(page, 'Correct record')
+      await selectAction(page, 'Correct')
     })
 
     test('1.1.2 Validate correction requester page', async ({ page }) => {
-      await selectAction(page, 'Correct record')
+      await selectAction(page, 'Correct')
 
       /*
        * Expected result: should
@@ -138,7 +138,7 @@ test.describe('1. Correct record - 1', () => {
     test('1.1.3 Validate identity verification page for Mother', async ({
       page
     }) => {
-      await selectAction(page, 'Correct record')
+      await selectAction(page, 'Correct')
 
       await page.locator('#requester____type').click()
       await page.getByText('Informant (Mother)', { exact: true }).click()
@@ -207,7 +207,7 @@ test.describe('1. Correct record - 1', () => {
     })
 
     test('1.2.0 Navigate to record correction', async () => {
-      await selectAction(page, 'Correct record')
+      await selectAction(page, 'Correct')
 
       await page.locator('#requester____type').click()
       await page.getByText('Informant (Mother)', { exact: true }).click()
