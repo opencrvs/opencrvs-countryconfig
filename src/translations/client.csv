@@ -189,6 +189,7 @@ certificates.death.certificate,Death Certificate,Death Certificate,Certificat de
 certificates.death.certificate.copy,Death Certificate Certified Copy,Death Certificate Certified Copy,Copie certifiée conforme du certificat de décès
 certificates.marriage.certificate,Marriage Certificate,Marriage Certificate,Acte de mariage
 certificates.marriage.certificate.copy,Marriage Certificate Certified Copy,Marriage Certificate Certified Copy,Copie certifiée conforme de l'acte de mariage
+review.annotations.title,Title for the annotations accordion section in review,Annotations,Annotations
 changeEmail.validation.msg,Phone number validation message,Must be a valid email address,Doit être une adresse e-mail valide
 changeModal.continue,The label for continue button of change modal,Continue,Continuer
 changeModal.description,The description for change modal,A record will be created of any changes you make,Un enregistrement sera créé pour toute modification que vous apporterez
