@@ -189,7 +189,6 @@ certificates.death.certificate,Death Certificate,Death Certificate,Certificat de
 certificates.death.certificate.copy,Death Certificate Certified Copy,Death Certificate Certified Copy,Copie certifiée conforme du certificat de décès
 certificates.marriage.certificate,Marriage Certificate,Marriage Certificate,Acte de mariage
 certificates.marriage.certificate.copy,Marriage Certificate Certified Copy,Marriage Certificate Certified Copy,Copie certifiée conforme de l'acte de mariage
-review.annotations.title,Title for the annotations accordion section in review,Annotations,Annotations
 changeEmail.validation.msg,Phone number validation message,Must be a valid email address,Doit être une adresse e-mail valide
 changeModal.continue,The label for continue button of change modal,Continue,Continuer
 changeModal.description,The description for change modal,A record will be created of any changes you make,Un enregistrement sera créé pour toute modification que vous apporterez
@@ -1937,6 +1936,7 @@ review.actions.description.confirmInComplete,Description for review action compo
 review.actions.description.hasError,Description for review action component when declaration has errors on fields,Please ensure all fields are either empty or have a valid value in them.,Veuillez vous assurer que tous les champs sont vides ou qu'ils contiennent une valeur valide.
 review.actions.title.declarationStatus,Title for review action component,"Declaration {completeDeclaration, select, true {complete} other {incomplete}}","Déclaration {completeDeclaration, select, true {complet} other {incomplet}}"
 review.actions.title.registerActionTitle,,Register event,Enregistrer l'événement
+review.annotations.title,Title for the annotations accordion section in review,Annotations,Annotations
 review.birthRegistration.queryError,The error message shown when a query fails,An error occurred while fetching birth registration,Une erreur s'est produite lors de la récupération de l'enregistrement de la naissance
 review.button.approve,Label for Send For Approval button,Send for approval,Envoyer pour approbation
 review.declare.confirmModal.title,The title for review action modal when declaring,Declare event?,Déclarer l'événement?
