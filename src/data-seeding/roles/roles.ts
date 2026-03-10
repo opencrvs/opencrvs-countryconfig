@@ -58,6 +58,7 @@ export const roles: Role[] = [
       'type=record.create&event=birth,death,tennis-club-membership&placeOfEvent=administrativeArea',
       'type=record.read&event=birth,death,tennis-club-membership',
       'type=record.declare&event=birth,death,tennis-club-membership',
+      'record.declared.edit[event=birth|death|tennis-club-membership]',
       'record.declared.reject[event=birth|death|tennis-club-membership]',
       'record.declared.archive[event=birth|death|tennis-club-membership]',
       'record.declared.review-duplicates[event=birth|death|tennis-club-membership]',
