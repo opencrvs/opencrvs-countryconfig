@@ -38,7 +38,7 @@ test.describe.serial('Birth Record correction flow', () => {
       .getByRole('button', { name: formatV2ChildName(declaration) })
       .click()
     await ensureAssigned(page)
-    await selectAction(page, 'Correct record')
+    await selectAction(page, 'Correct')
   })
 
   test('Try to continue without filling in required fields', async () => {
@@ -182,9 +182,7 @@ test.describe.serial('Birth Record correction flow', () => {
     await expect(
       page.getByRole('button', { name: 'Back to review' })
     ).toBeEnabled()
-    await expect(
-      page.getByRole('button', { name: 'Correct record' })
-    ).toBeEnabled()
+    await expect(page.getByRole('button', { name: 'Correct' })).toBeEnabled()
   })
 
   test('Press Fees change link and change the fee amount', async () => {
@@ -214,7 +212,7 @@ test.describe.serial('Birth Record correction flow', () => {
   })
 
   test('Record correction', async () => {
-    await page.getByRole('button', { name: 'Correct record' }).click()
+    await page.getByRole('button', { name: 'Correct' }).click()
 
     await expect(page.getByText('Correct record?')).toBeVisible()
 

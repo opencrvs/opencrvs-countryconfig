@@ -46,7 +46,7 @@ test.describe('Action menu options', () => {
       expect(options).toStrictEqual([
         'Assign',
         'Edit',
-        'Validate declaration',
+        'Validate',
         'Escalate',
         'Reject',
         'Archive'
@@ -111,8 +111,8 @@ test.describe('Action menu options', () => {
       expect(options).toStrictEqual([
         'Assign',
         'Escalate',
-        'Print',
-        'Correct record'
+        'Print certified copy',
+        'Correct'
       ])
     })
   })

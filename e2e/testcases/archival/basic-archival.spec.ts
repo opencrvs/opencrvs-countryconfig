@@ -356,7 +356,7 @@ test.describe.serial('Archival of declaration pending validation', () => {
   })
 
   test('Validate the declaration', async () => {
-    await selectAction(page, 'Validate declaration')
+    await selectAction(page, 'Validate')
     await page.getByRole('button', { name: 'Confirm', exact: true }).click()
     await ensureOutboxIsEmpty(page)
   })

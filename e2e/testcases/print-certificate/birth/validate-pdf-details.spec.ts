@@ -67,7 +67,7 @@ test.describe
         exact: true
       })
       .click()
-    await selectAction(page, 'Print')
+    await selectAction(page, 'Print certified copy')
     await selectCertificationType(page, 'Birth Certificate Certified Copy')
     await selectRequesterType(page, 'Print and issue to Informant (Mother)')
     await page.getByRole('button', { name: 'Continue' }).click()
