@@ -79,9 +79,9 @@ test.describe
     await expectInUrl(page, `events/${eventId}?workqueue=pending-validation`)
   })
 
-  test('5.4 Click "Validate declaration"-action', async () => {
+  test('5.4 Click "Validate"-action', async () => {
     await ensureAssigned(page)
-    await selectAction(page, 'Validate declaration')
+    await selectAction(page, 'Validate')
 
     await expect(
       page.getByRole('heading', { name: 'Validate declaration?', exact: true })
