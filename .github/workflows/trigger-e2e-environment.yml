@@ -52,10 +52,16 @@ jobs:
       - name: Check if branch exists in opencrvs-core repo
         run: |
           CORE_REPO=https://github.com/opencrvs/opencrvs-core
+          BASE_BRANCH="${{ github.base_ref || 'develop' }}"
           if git ls-remote --heads $CORE_REPO ${{ env.BRANCH_NAME }} | grep -q "${{ env.BRANCH_NAME }}"; then
             COMMIT_HASH=$(git ls-remote $CORE_REPO refs/heads/${{ env.BRANCH_NAME }} | cut -c1-7)
+            echo "Branch ${{ env.BRANCH_NAME }} exists in opencrvs-core repo: $COMMIT_HASH"
+          elif git ls-remote --heads $CORE_REPO $BASE_BRANCH | grep -q "$BASE_BRANCH"; then
+            COMMIT_HASH=$(git ls-remote $CORE_REPO refs/heads/$BASE_BRANCH | cut -c1-7)
+            echo "Branch ${{ env.BRANCH_NAME }} does not exist in opencrvs-core repo, using base branch($BASE_BRANCH): $COMMIT_HASH"
           else
             COMMIT_HASH=$(git ls-remote $CORE_REPO refs/heads/develop | cut -c1-7)
+            echo "Branch ${{ env.BRANCH_NAME }} does not exist in opencrvs-core repo, using develop branch: $COMMIT_HASH"
           fi
           echo "CORE_COMMIT_HASH=${COMMIT_HASH}" >> $GITHUB_ENV
 
