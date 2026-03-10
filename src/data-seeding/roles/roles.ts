@@ -134,7 +134,7 @@ export const roles: Role[] = [
       SCOPES.USER_READ,
       SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES,
       'type=record.search&event=birth,death,tennis-club-membership',
-      'workqueue[id=assigned-to-you|recent|requires-completion|in-external-validation|pending-feedback-registrar-general|potential-duplicate|registration-registrar-general]',
+      'workqueue[id=assigned-to-you|recent|pending-feedback-registrar-general|potential-duplicate|registration-registrar-general]',
       'type=record.read&event=birth,death,tennis-club-membership',
       'record.declare[event=birth|death|tennis-club-membership]',
       'record.declared.reject[event=birth|death|tennis-club-membership]',
