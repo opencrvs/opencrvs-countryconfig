@@ -35,19 +35,19 @@ export async function navigateToWorkqueue(page: Page, workqueue: Workqueue) {
 export async function selectAction(
   page: Page,
   action:
-    | 'Print'
+    | 'Print certified copy'
     | 'Declare'
-    | 'Validate declaration'
+    | 'Validate'
     | 'Review'
     | 'Register'
     | 'Assign'
     | 'Unassign'
     | 'Delete'
-    | 'Correct record'
+    | 'Correct'
     | 'Archive'
     | 'Reject'
     | 'Review correction request'
-    | 'Approve declaration'
+    | 'Approve'
     | 'Edit'
     | 'Escalate'
     | 'Registrar general feedback'

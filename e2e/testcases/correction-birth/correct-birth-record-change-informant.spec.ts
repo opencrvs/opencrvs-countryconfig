@@ -19,7 +19,7 @@ import {
 import { IdType } from '@countryconfig/form/v2/person'
 import { random } from 'lodash'
 import { formatV2ChildName, REQUIRED_VALIDATION_ERROR } from '../birth/helpers'
-import { ensureAssigned } from '../../utils'
+import { ensureAssigned, selectAction } from '../../utils'
 
 test.describe.serial('Correct record - change informant type', () => {
   let declaration: DeclarationV2
@@ -125,8 +125,7 @@ test.describe.serial('Correct record - change informant type', () => {
     })
     await ensureAssigned(page)
 
-    await page.getByRole('button', { name: 'Action', exact: true }).click()
-    await page.getByText('Correct record', { exact: true }).click()
+    await selectAction(page, 'Correct')
   })
 
   test('Correction requester: legal guardian', async () => {

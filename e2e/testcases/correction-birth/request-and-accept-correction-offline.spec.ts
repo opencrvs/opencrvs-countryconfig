@@ -99,16 +99,7 @@ test.describe.serial('Request and accept correction (offline)', () => {
       })
       await ensureAssigned(page)
 
-      await page.getByRole('button', { name: 'Action', exact: true }).click()
-
-      /*
-       * Expected result: should show correct record button in action menu
-       */
-      await expect(
-        page.getByText('Correct record', { exact: true })
-      ).toBeVisible()
-
-      await page.getByText('Correct record', { exact: true }).click()
+      await selectAction(page, 'Correct')
     })
 
     test('Add correction requester', async () => {

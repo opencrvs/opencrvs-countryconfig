@@ -49,7 +49,7 @@ test.describe.serial('Birth correction flow - Mobile', () => {
       .getByRole('button', { name: formatV2ChildName(declaration) })
       .click()
 
-    await selectAction(page, 'Correct record')
+    await selectAction(page, 'Correct')
   })
 
   test('Fill in the correction details form', async () => {

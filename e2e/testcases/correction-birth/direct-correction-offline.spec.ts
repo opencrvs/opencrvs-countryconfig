@@ -8,7 +8,7 @@ import {
 import { format, subDays, subYears } from 'date-fns'
 import { CREDENTIALS, SAFE_OUTBOX_TIMEOUT_MS } from '../../constants'
 import { formatV2ChildName } from '../birth/helpers'
-import { ensureAssigned } from '../../utils'
+import { ensureAssigned, selectAction } from '../../utils'
 
 test.describe.serial('Direct correction offline', () => {
   let declaration: DeclarationV2
@@ -96,16 +96,7 @@ test.describe.serial('Direct correction offline', () => {
     })
     await ensureAssigned(page)
 
-    await page.getByRole('button', { name: 'Action', exact: true }).click()
-
-    /*
-     * Expected result: should show correct record button in action menu
-     */
-    await expect(
-      page.getByText('Correct record', { exact: true })
-    ).toBeVisible()
-
-    await page.getByText('Correct record', { exact: true }).click()
+    await selectAction(page, 'Correct')
   })
 
   test('Add correction requester', async () => {

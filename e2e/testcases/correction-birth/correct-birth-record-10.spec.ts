@@ -84,7 +84,7 @@ test.describe('10. Correct record', () => {
         .getByRole('button', { name: formatV2ChildName(declaration) })
         .click()
       await ensureAssigned(page)
-      await selectAction(page, 'Correct record')
+      await selectAction(page, 'Correct')
     })
 
     test('10.1.0 Correction details', async () => {

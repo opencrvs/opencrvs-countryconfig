@@ -21,7 +21,7 @@ export async function navigateToCertificatePrintAction(
 ) {
   const deceasedName = `${declaration['deceased.name'].firstname} ${declaration['deceased.name'].surname}`
   await page.getByRole('button', { name: deceasedName }).click()
-  await selectAction(page, 'Print')
+  await selectAction(page, 'Print certified copy')
 }
 
 export function getRowByTitle(page: Page, title: string) {

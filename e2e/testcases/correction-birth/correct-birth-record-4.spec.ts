@@ -21,7 +21,7 @@ import {
 import { IdType } from '@countryconfig/form/v2/person'
 import { random } from 'lodash'
 import { formatV2ChildName, REQUIRED_VALIDATION_ERROR } from '../birth/helpers'
-import { ensureAssigned } from '../../utils'
+import { ensureAssigned, selectAction } from '../../utils'
 
 test.describe.serial('Correct record - 4', () => {
   let declaration: DeclarationV2
@@ -155,16 +155,7 @@ test.describe.serial('Correct record - 4', () => {
     })
     await ensureAssigned(page)
 
-    await page.getByRole('button', { name: 'Action', exact: true }).click()
-
-    /*
-     * Expected result: should show correct record button in action menu
-     */
-    await expect(
-      page.getByText('Correct record', { exact: true })
-    ).toBeVisible()
-
-    await page.getByText('Correct record', { exact: true }).click()
+    await selectAction(page, 'Correct')
   })
 
   test('4.2 Correction requester: legal guardian', async () => {
