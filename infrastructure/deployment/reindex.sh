@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -38,12 +38,14 @@ fire_trigger() {
 # Both sides of the comparison are truncated to 19 chars (YYYY-MM-DDTHH:MM:SS)
 # to avoid the '.' < 'Z' string-sort trap with millisecond timestamps.
 fetch_latest_run_since() {
-  local token=$1 since=$2
+  local token=$1
+  local since
+  since=$(echo "$2" | cut -c1-19)
   curl -s \
     -H "Authorization: Bearer ${token}" \
     -H "Content-Type: application/json" \
     "${EVENTS_URL%/}/events/reindex" \
-  | jq -c --arg since "${since:0:19}" \
+  | jq -c --arg since "$since" \
     'map(select(.timestamp[0:19] >= $since)) | sort_by(.timestamp) | reverse | .[0] // empty'
 }
 
@@ -95,7 +97,8 @@ while true; do
     running)
       echo "  Running... ${PROCESSED} events processed so far"
       if [ "$polls" -gt "$MAX_POLLS" ]; then
-        echo "ERROR: reindex timed out after $(( polls * POLL_INTERVAL )) seconds."
+        timeout_secs=$(( polls * POLL_INTERVAL ))
+        echo "ERROR: reindex timed out after ${timeout_secs} seconds."
         exit 1
       fi
       ;;
