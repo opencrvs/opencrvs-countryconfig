@@ -133,7 +133,7 @@ export const roles: Role[] = [
       SCOPES.USER_READ,
       SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES,
       'type=record.search&event=birth,death,tennis-club-membership',
-      'workqueue[id=assigned-to-you|recent|pending-feedback-registrar-general|potential-duplicate|registration-registrar-general]',
+      'workqueue[id=assigned-to-you|recent|pending-feedback-registrar-general|potential-duplicate|registration-registrar-general|correction-requested]',
       'type=record.read&event=birth,death,tennis-club-membership',
       'type=record.declare&event=birth,death,tennis-club-membership',
       'record.declared.edit[event=birth|death|tennis-club-membership]',
