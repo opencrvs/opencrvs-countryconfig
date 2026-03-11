@@ -280,7 +280,7 @@ export const deathEvent = defineConfig({
       customActionType: 'VALIDATE_DECLARATION',
       icon: 'Stamp',
       label: {
-        defaultMessage: 'Validate declaration',
+        defaultMessage: 'Validate',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.death.custom.action.validate-declaration.label'
@@ -375,7 +375,7 @@ export const deathEvent = defineConfig({
     {
       type: ActionType.PRINT_CERTIFICATE,
       label: {
-        defaultMessage: 'Print certificate',
+        defaultMessage: 'Print certified copy',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.death.action.collect-certificate.label'
