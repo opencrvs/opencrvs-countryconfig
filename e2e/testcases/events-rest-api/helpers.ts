@@ -12,7 +12,7 @@ export const INTEGRATION_SCOPES = [
   'type=record.search',
   'type=record.notify&event=birth',
   'type=record.read',
-  'record.registered.correct[event=birth]',
+  'type=record.correct&event=birth',
   'record.registration-request-correction[event=birth]',
   'record.confirm-registration[event=birth]',
   'record.reject-registration[event=birth]'
