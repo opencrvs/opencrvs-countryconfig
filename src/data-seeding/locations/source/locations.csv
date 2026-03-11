@@ -1,17 +1,321 @@
-admin2Name_en,admin2Name_alias,admin2Pcode,admin1Name_en,admin1Name_alias,admin1Pcode,admin0Name_en,admin0Name_alias,admin0Pcode
-Ibombo,Ibombo,oEBf29y8JP8,Central,Central,AWn3s2RqgAN,Farajaland,Farajaland,FAR
-Ilanga,Ilanga,HPGiE9Jjh2r,Sulaka,Sulaka,KozcEjeTyuD,Farajaland,Farajaland,FAR
-Embe,Embe,BxrIbNW7f3K,Pualula,Pualula,B1u1bVtIA92,Farajaland,Farajaland,FAR
-Ama,Ama,SQT8xjbvWwf,Chuminga,Chuminga,dbTLdTi7s8F,Farajaland,Farajaland,FAR
-Isamba,Isamba,ntoX1PkiWri,Central,Central,AWn3s2RqgAN,Farajaland,Farajaland,FAR
-Irundu,Irundu,SvFNQpplnch,Sulaka,Sulaka,KozcEjeTyuD,Farajaland,Farajaland,FAR
-Ienge,Ienge,NLjvK1QsrN3,Pualula,Pualula,B1u1bVtIA92,Farajaland,Farajaland,FAR
-Nsali,Nsali,hywxVKv48Xp,Chuminga,Chuminga,dbTLdTi7s8F,Farajaland,Farajaland,FAR
-Itambo,Itambo,QTtxiWj8ONP,Central,Central,AWn3s2RqgAN,Farajaland,Farajaland,FAR
-Zobwe,Zobwe,Oapn6R4rt3D,Sulaka,Sulaka,KozcEjeTyuD,Farajaland,Farajaland,FAR
-Funabuli,Funabuli,idR0pJWLqcR,Pualula,Pualula,B1u1bVtIA92,Farajaland,Farajaland,FAR
-Soka,Soka,jCJxK8sFH40,Chuminga,Chuminga,dbTLdTi7s8F,Farajaland,Farajaland,FAR
-Ezhi,Ezhi,ydyJb1RAy4U,Central,Central,AWn3s2RqgAN,Farajaland,Farajaland,FAR
-Afue,Afue,nO68NTtcdw2,Sulaka,Sulaka,KozcEjeTyuD,Farajaland,Farajaland,FAR
-Pili,Pili,FuvOOwvBw0p,Pualula,Pualula,B1u1bVtIA92,Farajaland,Farajaland,FAR
-Chibiya,Chibiya,R22tRIhdm5Y,Chuminga,Chuminga,dbTLdTi7s8F,Farajaland,Farajaland,FAR
+id,name,partOf,locationType
+LHUYvwY2Aq1,HQ Office,Location/0,CRVS_OFFICE
+Ov8OIeilmwj,French Embassy Office,Location/0,CRVS_OFFICE
+QrJy3W76BGd,UK Embassy Office,Location/0,CRVS_OFFICE
+eF8mK8JAMKZ,Central Province Office,Location/WoNZq5uKPT0,CRVS_OFFICE
+n2fiap4evma,Chuminga Province Office,Location/jJflULHjjIk,CRVS_OFFICE
+TpQfg7EbAul,Pualula Province Office,Location/o44wEmWlYr8,CRVS_OFFICE
+Ry6NHyadadA,Sulaka Province Office,Location/EdAHjSJkuLb,CRVS_OFFICE
+DC5stjQ45n3,Isamba District Office,Location/Qxj1vERd9JJ,CRVS_OFFICE
+R2i8nqg83Y0,Isamba District Hospital,Location/Qxj1vERd9JJ,HEALTH_FACILITY
+xmJJAsGfSTn,Ibombo District Office,Location/RNblUNSnSpQ,CRVS_OFFICE
+t0qT1Vh8qi3,Ibombo District Hospital,Location/RNblUNSnSpQ,HEALTH_FACILITY
+TzgPMNl3Jap,Itambo District Office,Location/SXsrYaPI77h,CRVS_OFFICE
+MCcAvVYHmsU,Itambo District Hospital,Location/SXsrYaPI77h,HEALTH_FACILITY
+Cyq8mi6tRVM,Ezhi District Office,Location/yIg1VrjnkAy,CRVS_OFFICE
+zPA4fKgZPZM,Ezhi District Hospital,Location/yIg1VrjnkAy,HEALTH_FACILITY
+Ap0mxDoJJ9s,Ilanga District Office,Location/g9bEobgzisg,CRVS_OFFICE
+8OrJQUdLE4r,Ilanga District Hospital,Location/g9bEobgzisg,HEALTH_FACILITY
+XLvNMQSOZM4,Irundu District Office,Location/z9zl7RuwERC,CRVS_OFFICE
+OtBJTfsUkiH,Irundu District Hospital,Location/z9zl7RuwERC,HEALTH_FACILITY
+8G4ZpZDYUvh,Zobwe District Office,Location/P9K63LSFZH3,CRVS_OFFICE
+7i71S87XwXa,Zobwe District Hospital,Location/P9K63LSFZH3,HEALTH_FACILITY
+HCPPKY6gob2,Afue District Office,Location/f2pCLxb0lnX,CRVS_OFFICE
+I4ndZ4szi6s,Afue District Hospital,Location/f2pCLxb0lnX,HEALTH_FACILITY
+iuntV0UV3Tc,Ama District Office,Location/MaDrivTETpr,CRVS_OFFICE
+hq2w5KP2M6d,Ama District Hospital,Location/MaDrivTETpr,HEALTH_FACILITY
+QtRZPH5M1Xd,Nsali District Office,Location/S1rKGyWYnsi,CRVS_OFFICE
+W1zgTm2kGWP,Nsali District Hospital,Location/S1rKGyWYnsi,HEALTH_FACILITY
+nyzHo1A1Asw,Soka District Office,Location/XRlphADibcf,CRVS_OFFICE
+kQtB1WmEoBp,Soka District Hospital,Location/XRlphADibcf,HEALTH_FACILITY
+IRgUVi3fs82,Chibiya District Office,Location/RKQ6R4bAjTg,CRVS_OFFICE
+CbHospX0011,Chibiya District Hospital,Location/RKQ6R4bAjTg,HEALTH_FACILITY
+dAbiROAW2Qq,Liteta District Hospital,Location/g9bEobgzisg,HEALTH_FACILITY
+Nn2Nt8mXWHE,Itezhi-Tezhi District Hospital,Location/MaDrivTETpr,HEALTH_FACILITY
+gdYjm723x8Q,Kafue District Hospital,Location/S1rKGyWYnsi,HEALTH_FACILITY
+oHlcVn3rdb1,Chienge District Hospital,Location/P9K63LSFZH3,HEALTH_FACILITY
+UMFJpvlLVTn,Chama District Hospital,Location/yIg1VrjnkAy,HEALTH_FACILITY
+oEAPngMSIE3,Chinsali District Hospital,Location/EdAHjSJkuLb,HEALTH_FACILITY
+pXhz0PLiYZX,Chamakubi Health Post,Location/RNblUNSnSpQ,HEALTH_FACILITY
+di3U5u7F8Y3,Ibombo Rural Health Centre,Location/RNblUNSnSpQ,HEALTH_FACILITY
+B5LpoYehUfI,Chikobo Rural Health Centre,Location/RNblUNSnSpQ,HEALTH_FACILITY
+g42i3akwlpj,Chilochabalenje Health Post,Location/RNblUNSnSpQ,HEALTH_FACILITY
+FhCAve1Ndla,Chipeso Rural Health Centre,Location/RNblUNSnSpQ,HEALTH_FACILITY
+uhVtTq0ICIF,Chisamba Rural Health Centre,Location/RNblUNSnSpQ,HEALTH_FACILITY
+dhcU6eMvhRQ,Chitanda Rural Health Centre,Location/RNblUNSnSpQ,HEALTH_FACILITY
+xUFGW5vo7No,Golden Valley Rural Health Centre,Location/RNblUNSnSpQ,HEALTH_FACILITY
+h1YIvEZ6dla,Ipongo Rural Health Centre,Location/RNblUNSnSpQ,HEALTH_FACILITY
+VEhbknBaEOz,Itumbwe Health Post,Location/RNblUNSnSpQ,HEALTH_FACILITY
+sbFApO4who4,Kabangalala Rural Health Centre,Location/RNblUNSnSpQ,HEALTH_FACILITY
+DdG82TKHJl9,Kamaila Health Post,Location/RNblUNSnSpQ,HEALTH_FACILITY
+eEYycD4oleC,Kanwanjiba Health Post,Location/RNblUNSnSpQ,HEALTH_FACILITY
+wfrgYBT51M1,Kaparu Rural Health Centre,Location/RNblUNSnSpQ,HEALTH_FACILITY
+U9mqwYGtxbz,Kapila Health Post,Location/RNblUNSnSpQ,HEALTH_FACILITY
+NeNRxi0fu5m,Kapopo Health Post,Location/RNblUNSnSpQ,HEALTH_FACILITY
+TFzTMM5oaDD,Kayosha Rural Health Centre,Location/RNblUNSnSpQ,HEALTH_FACILITY
+TsWOcEzohYx,Keembe Rural Health Centre,Location/RNblUNSnSpQ,HEALTH_FACILITY
+xnToDJPNGP6,Makoka Rural Health Centre,Location/RNblUNSnSpQ,HEALTH_FACILITY
+okixaxAZHNC,Malambanyama Rural Health Centre,Location/RNblUNSnSpQ,HEALTH_FACILITY
+UCdIC6Zes0A,Malundu Health Post,Location/RNblUNSnSpQ,HEALTH_FACILITY
+KlwgbatKrXD,Mboshya Rural Health Centre,Location/RNblUNSnSpQ,HEALTH_FACILITY
+tA490zpfdaG,Mukashichimbwe Health Post,Location/RNblUNSnSpQ,HEALTH_FACILITY
+us8T9gyaOYW,Mulonda Health Post,Location/RNblUNSnSpQ,HEALTH_FACILITY
+BkVihZcIW8c,Mungule Rural Health Centre,Location/RNblUNSnSpQ,HEALTH_FACILITY
+Nw5x6uTYgJF,Muntemba Rural Health Centre,Location/RNblUNSnSpQ,HEALTH_FACILITY
+TcoKhDnIm8w,Musopelo Health Post,Location/RNblUNSnSpQ,HEALTH_FACILITY
+JJUb1CUEptb,Mwachisompola Demo Zone Rural Health Centre,Location/RNblUNSnSpQ,HEALTH_FACILITY
+j2BMk5tWYlm,Mwachisompola Rural Health Centre,Location/RNblUNSnSpQ,HEALTH_FACILITY
+TkQRVyc9gXO,Mwanjuni Health Post,Location/RNblUNSnSpQ,HEALTH_FACILITY
+wKJRSXJzO87,Mwelebi Keembe Health Post,Location/RNblUNSnSpQ,HEALTH_FACILITY
+gZzOMAPaGWo,Naluyanda Rural Health Centre,Location/RNblUNSnSpQ,HEALTH_FACILITY
+mde9quO59mj,Namayani Health Post,Location/RNblUNSnSpQ,HEALTH_FACILITY
+w5fXlHOnHJM,Namununga Health Post,Location/RNblUNSnSpQ,HEALTH_FACILITY
+M4e4R8Marao,Ntapwila Health Post,Location/RNblUNSnSpQ,HEALTH_FACILITY
+xJo05sbtKbm,Shifwankula Health Post,Location/RNblUNSnSpQ,HEALTH_FACILITY
+ABOFImxcg03,Shimukuni Rural Health Centre,Location/RNblUNSnSpQ,HEALTH_FACILITY
+Zve7Ecm6Gq5,SR Brian Memorial Rural Health Centre,Location/RNblUNSnSpQ,HEALTH_FACILITY
+TJdMgSlkIHR,Twalumba Rural Health Centre,Location/RNblUNSnSpQ,HEALTH_FACILITY
+NtzuCllVXfG,Bombwe Health Post,Location/g9bEobgzisg,HEALTH_FACILITY
+b6hKBhgGbPT,Chikonkomene Health Post,Location/g9bEobgzisg,HEALTH_FACILITY
+hTuMuK2i6dF,Chipembi Rural Health Centre,Location/g9bEobgzisg,HEALTH_FACILITY
+stQomg2T3lr,Chisamba Ranch Health Post,Location/g9bEobgzisg,HEALTH_FACILITY
+OK5pIbqh8AJ,Chisamba Rural Health Centre,Location/g9bEobgzisg,HEALTH_FACILITY
+d5HgpZoFDZ5,Kachele Health Post,Location/g9bEobgzisg,HEALTH_FACILITY
+WM145DSBK4l,Kanakantapa Rural Health Centre,Location/g9bEobgzisg,HEALTH_FACILITY
+n7EbzxgN3rB,Kasosolo Health Post,Location/g9bEobgzisg,HEALTH_FACILITY
+OxlLGLAONOk,Kawama Health Post,Location/g9bEobgzisg,HEALTH_FACILITY
+pWbJrQaU7nt,Lifwambula Rural Health Centre,Location/g9bEobgzisg,HEALTH_FACILITY
+iMzTDZgyaJk,Liteta Hospital Affiliated Health Centre,Location/g9bEobgzisg,HEALTH_FACILITY
+YX9HctYjj7r,Malombe Rural Health Centre,Location/g9bEobgzisg,HEALTH_FACILITY
+lx9EIGd5eo5,Momboshi Health post,Location/g9bEobgzisg,HEALTH_FACILITY
+BOLneMMBJw9,Mulungushi Agro Rural Health Centre,Location/g9bEobgzisg,HEALTH_FACILITY
+ve8k5eTMnwF,Muswishi Rural Health Centre,Location/g9bEobgzisg,HEALTH_FACILITY
+nfjLEcv9zhB,Mwantaya Health Post,Location/g9bEobgzisg,HEALTH_FACILITY
+dZK1x2CkZFw,Mwapula Health Post,Location/g9bEobgzisg,HEALTH_FACILITY
+u0Kxxp8uuwQ,Banamwaze Rural Health Centre,Location/MaDrivTETpr,HEALTH_FACILITY
+zjDc72AVjwY,Basanga Rural Health Centre,Location/MaDrivTETpr,HEALTH_FACILITY
+pkREAlK2S2i,Bushinga Rural Health Post,Location/MaDrivTETpr,HEALTH_FACILITY
+huGZsnkz4bQ,Buunga Health Post,Location/MaDrivTETpr,HEALTH_FACILITY
+OzL8SVoMmRx,Chishila Rural Health Post,Location/MaDrivTETpr,HEALTH_FACILITY
+RBlIkfACTLh,Itumbi Rural Health Post,Location/MaDrivTETpr,HEALTH_FACILITY
+WBlI9w8DKGN,Kaanzwa Rural Health Centre,Location/MaDrivTETpr,HEALTH_FACILITY
+aZKtSEmVant,Lubanda Rural Health Centre,Location/MaDrivTETpr,HEALTH_FACILITY
+wSn3GyFUOtq,Luubwe Health Post,Location/MaDrivTETpr,HEALTH_FACILITY
+nTJdkERDwUT,Makuzu Rurral Health Post,Location/MaDrivTETpr,HEALTH_FACILITY
+sIQGY7SP2q2,Masasabi Health Post,Location/MaDrivTETpr,HEALTH_FACILITY
+HZcbuTeLHyL,MasemuUrban Health Centre,Location/MaDrivTETpr,HEALTH_FACILITY
+fy3TOuJ082I,Mbila Rural Health Centre,Location/MaDrivTETpr,HEALTH_FACILITY
+O5zH5XTuzzq,Mutenda Rural Health Post,Location/MaDrivTETpr,HEALTH_FACILITY
+A6hsoKzGQh5,Muunga Rural Health Centre,Location/MaDrivTETpr,HEALTH_FACILITY
+gGEpfxID3u0,Nachishila Rural Health Centre,Location/MaDrivTETpr,HEALTH_FACILITY
+yCUgTKpGGoi,Nansenga Rural Health Centre,Location/MaDrivTETpr,HEALTH_FACILITY
+rm5rfKGTRRX,Nanzhila Rural Health Centre,Location/MaDrivTETpr,HEALTH_FACILITY
+Ns7t5cAsY4q,Ngoma Rural Health Centre,Location/MaDrivTETpr,HEALTH_FACILITY
+FrOn8lcbzPb,Balmoral Health Post,Location/Qxj1vERd9JJ,HEALTH_FACILITY
+Ufr8nYcPCQQ,Chilanga Hospice,Location/Qxj1vERd9JJ,HEALTH_FACILITY
+Uhkl6NC5yIc,Chilanga Urban Health Centre,Location/Qxj1vERd9JJ,HEALTH_FACILITY
+k2kKFAEjPhu,Human ServiTrust Hospice,Location/Qxj1vERd9JJ,HEALTH_FACILITY
+xwUD5u7CKKq,Kazimva Rural Health Centre,Location/Qxj1vERd9JJ,HEALTH_FACILITY
+XWbUIccnUzo,Kris Katumba Health Post,Location/Qxj1vERd9JJ,HEALTH_FACILITY
+dKj1T229tVI,MaaHealth Post,Location/Qxj1vERd9JJ,HEALTH_FACILITY
+Bvp6RBPo62N,Makeni_Konga Rural Health Centre,Location/Qxj1vERd9JJ,HEALTH_FACILITY
+HO8d6yM5ItR,Mt Eugenia Hospital,Location/Qxj1vERd9JJ,HEALTH_FACILITY
+XpKKx7Zqdub,Mt Makulu Health Post,Location/Qxj1vERd9JJ,HEALTH_FACILITY
+qnBP9Wm3MK7,Mt Makulu Urban Health Centre,Location/Qxj1vERd9JJ,HEALTH_FACILITY
+hgcHEArb3st,Munyeu Health Post,Location/Qxj1vERd9JJ,HEALTH_FACILITY
+edP6CRRrAyN,Mwembeshi Prisons Health Post,Location/Qxj1vERd9JJ,HEALTH_FACILITY
+uZFREFe5Vds,Mwembeshi Rural Health Centre,Location/Qxj1vERd9JJ,HEALTH_FACILITY
+Cunzgs27VkS,Paramilitary Health Post,Location/Qxj1vERd9JJ,HEALTH_FACILITY
+bOo3kXTQfvT,Sekelela Health Post,Location/Qxj1vERd9JJ,HEALTH_FACILITY
+x1Tfu2HRQUD,Victoria Clinic,Location/Qxj1vERd9JJ,HEALTH_FACILITY
+sfSGuVk954T,Zambia Army Apollo Rural Health Centre,Location/Qxj1vERd9JJ,HEALTH_FACILITY
+oqBLYbMJXcg,Zambia Helpers Society Hospital,Location/Qxj1vERd9JJ,HEALTH_FACILITY
+QwiQcWknlhR,ZNS-BB Health Post,Location/Qxj1vERd9JJ,HEALTH_FACILITY
+LPzSO1ZEvrD,ZNS-LDB Health Post,Location/Qxj1vERd9JJ,HEALTH_FACILITY
+eChTvZQNbEz,ZNS-Safari Health Post,Location/Qxj1vERd9JJ,HEALTH_FACILITY
+zoVWIb9J1wh,ZNS-Sopelo Health Post,Location/Qxj1vERd9JJ,HEALTH_FACILITY
+oABTNoRnphB,Chibende Health Post,Location/z9zl7RuwERC,HEALTH_FACILITY
+WVR7X7U5l1J,Chikanzaya Rural Health Centre,Location/z9zl7RuwERC,HEALTH_FACILITY
+LlrP8fstjfM,Chipepo Rural Health Centre,Location/z9zl7RuwERC,HEALTH_FACILITY
+wPGo3hSQmS4,Hachipilika Rural Health Centre,Location/z9zl7RuwERC,HEALTH_FACILITY
+H3Ri3M3nenv,Ibbwemunyama Rural Health Centre,Location/z9zl7RuwERC,HEALTH_FACILITY
+RMTYyPy81zw,Jamba Rural Health Centre,Location/z9zl7RuwERC,HEALTH_FACILITY
+nOBgDJKBTs4,Kapululira Rural Health Centre,Location/z9zl7RuwERC,HEALTH_FACILITY
+gP8ovsHKPwc,Lumbembe Health Post,Location/z9zl7RuwERC,HEALTH_FACILITY
+HGoPoZDjm54,Lusitu Rural Health Centre,Location/z9zl7RuwERC,HEALTH_FACILITY
+XqKkJUutg8T,Mtendere Mission Hospital,Location/z9zl7RuwERC,HEALTH_FACILITY
+Hkue6N1TNBl,Mtendere Mission Hospital Affiliated Health Centre,Location/z9zl7RuwERC,HEALTH_FACILITY
+MKsK3cS0quF,Nabbanda Health Post,Location/z9zl7RuwERC,HEALTH_FACILITY
+LLWjjVQMpGH,Sikoongo Rural Health Centre,Location/z9zl7RuwERC,HEALTH_FACILITY
+pgh8kxpUHJU,Chanyanya Rural Health Centre,Location/S1rKGyWYnsi,HEALTH_FACILITY
+OkiRXQpHse1,Chiawa Rural Health Centre,Location/S1rKGyWYnsi,HEALTH_FACILITY
+zcYphl5V9dk,Chikoka Health Post,Location/S1rKGyWYnsi,HEALTH_FACILITY
+WSCLQdy2T0z,Chikupi Rural Health Centre,Location/S1rKGyWYnsi,HEALTH_FACILITY
+y4IFOiyhzbx,Chipapa Rural Health Centre,Location/S1rKGyWYnsi,HEALTH_FACILITY
+vLlhYmwF0ci,Chisakila Health Post,Location/S1rKGyWYnsi,HEALTH_FACILITY
+vYBdT4suNfM,Chisankane Rural Health Centre,Location/S1rKGyWYnsi,HEALTH_FACILITY
+a7JqhqXMXuq,Estate Urban Health Centre,Location/S1rKGyWYnsi,HEALTH_FACILITY
+Pbq94it7Ea5,Kabweza Health Post,Location/S1rKGyWYnsi,HEALTH_FACILITY
+vnui93eZUl8,Kafue East Health Post,Location/S1rKGyWYnsi,HEALTH_FACILITY
+gvTcEpgJfuZ,Kafue Mission Rural Health Centre,Location/S1rKGyWYnsi,HEALTH_FACILITY
+pvoo4jsUPph,Kambale Rural Health Centre,Location/S1rKGyWYnsi,HEALTH_FACILITY
+j9tfO9PRlFV,Lukolongo Health Post,Location/S1rKGyWYnsi,HEALTH_FACILITY
+ehhM0FmvKRa,Mtendere Health Post,Location/S1rKGyWYnsi,HEALTH_FACILITY
+WnmrKYPWi2Y,MugurameHealth Post,Location/S1rKGyWYnsi,HEALTH_FACILITY
+YgA9AKH7WmF,Mungu Health Post,Location/S1rKGyWYnsi,HEALTH_FACILITY
+PBWWSJDskS5,Nangongwe OPD/Maternity Health Centre,Location/S1rKGyWYnsi,HEALTH_FACILITY
+hazGJwKHigL,Old Kabweza Health Post,Location/S1rKGyWYnsi,HEALTH_FACILITY
+ujYjZtiIiSR,Railway GRZ Urban Health Centre,Location/S1rKGyWYnsi,HEALTH_FACILITY
+BiIWZnHXGbC,Shifa shikoswe Health Centre,Location/S1rKGyWYnsi,HEALTH_FACILITY
+XuptJowZoJf,Shimabala Health Post,Location/S1rKGyWYnsi,HEALTH_FACILITY
+rb5TICRlYdH,ZNS Kafue Health Post,Location/S1rKGyWYnsi,HEALTH_FACILITY
+aEXcyG2MVNB,Embe Rural Health Centre,Location/SXsrYaPI77h,HEALTH_FACILITY
+o5NAXpTNizr,Chipete Rural Health Centre,Location/SXsrYaPI77h,HEALTH_FACILITY
+y8NVOhsvCaK,Fikombo HP,Location/SXsrYaPI77h,HEALTH_FACILITY
+T0mKBlh3G9h,Kalasa Kando HP,Location/SXsrYaPI77h,HEALTH_FACILITY
+uFdT61U1OsA,Kasomalwela Rural Health Centre,Location/SXsrYaPI77h,HEALTH_FACILITY
+mpIb08vMOAp,KundamfumuRural Health Centre,Location/SXsrYaPI77h,HEALTH_FACILITY
+U8TvVHIWTRw,Lukola Rural Health Centre,Location/SXsrYaPI77h,HEALTH_FACILITY
+QDqivIRiSaQ,Chipungu Rural Health Centre,Location/P9K63LSFZH3,HEALTH_FACILITY
+AGpIcsdu6xf,Kabole Rural Health Centre,Location/P9K63LSFZH3,HEALTH_FACILITY
+CmrN87EOlBQ,Kabwe Rural Health Centre,Location/P9K63LSFZH3,HEALTH_FACILITY
+kU5YjYgVbTZ,Kalembwe Rural Health Centre,Location/P9K63LSFZH3,HEALTH_FACILITY
+RkntOU90ZHr,Kapako Health Post (Chienge),Location/P9K63LSFZH3,HEALTH_FACILITY
+jfcYt0tnsTx,Lambwe Chikwama Health Post,Location/P9K63LSFZH3,HEALTH_FACILITY
+NI1tAcnIfAT,Lambwe Chomba Rural Health Centre,Location/P9K63LSFZH3,HEALTH_FACILITY
+i11VXdZmkhP,Lunchinda Health Post,Location/P9K63LSFZH3,HEALTH_FACILITY
+tr9eo7P3f5L,Mukunta Rural Health Centre,Location/P9K63LSFZH3,HEALTH_FACILITY
+Bz7oIBxRTU1,Mwabu Rural Health Centre,Location/P9K63LSFZH3,HEALTH_FACILITY
+EIbwCt3jZHv,lu Puta Rural Health Centre,Location/P9K63LSFZH3,HEALTH_FACILITY
+x8BQtQpWK9h,Sambula Rural Health Centre,Location/P9K63LSFZH3,HEALTH_FACILITY
+cY0ExeKU9zM,Chinshinki Health Post,Location/XRlphADibcf,HEALTH_FACILITY
+Na48iwprcRj,Chipili Rural Health Centre,Location/XRlphADibcf,HEALTH_FACILITY
+e84HjdMPuOs,Chisheta Rural Health Centre,Location/XRlphADibcf,HEALTH_FACILITY
+KeUh9W868Kb,Kabongo Health Post,Location/XRlphADibcf,HEALTH_FACILITY
+EmpfjY6bRII,Kalundu Rural Health Centre,Location/XRlphADibcf,HEALTH_FACILITY
+BqMR1kOfeZa,Kamami Health Post,Location/XRlphADibcf,HEALTH_FACILITY
+MamVEbk3svG,Kaoma Makasa Rural Health Centre,Location/XRlphADibcf,HEALTH_FACILITY
+NegKu98wuBb,Luminu Rural Health Centre,Location/XRlphADibcf,HEALTH_FACILITY
+SPzrFtzD83O,Lupososhi Rural Health Centre,Location/XRlphADibcf,HEALTH_FACILITY
+DUOUmsjKjPy,MimbuluHealth Post,Location/XRlphADibcf,HEALTH_FACILITY
+Z2NGkmiOKz0,Mukabi Health Post,Location/XRlphADibcf,HEALTH_FACILITY
+DGTbYecueeB,Mukanga Health Post,Location/XRlphADibcf,HEALTH_FACILITY
+y5g5UOIekbe,Mukonshi Rural Health Centre,Location/XRlphADibcf,HEALTH_FACILITY
+krc82I1RBcF,Mulunda Health Post,Location/XRlphADibcf,HEALTH_FACILITY
+EIcZNbwIUP7,Mupeta Rural Health Centre,Location/XRlphADibcf,HEALTH_FACILITY
+MLxowtKhnOt,Musalango Health Post,Location/XRlphADibcf,HEALTH_FACILITY
+ZOchRWrgsdN,Musele Health Post,Location/XRlphADibcf,HEALTH_FACILITY
+JQxmMJop7dI,Mutipula Rural Health Centre,Location/XRlphADibcf,HEALTH_FACILITY
+U1cB77Ro8w0,Mwenda Rural Health Centre,Location/XRlphADibcf,HEALTH_FACILITY
+thxSZm62CbT,Buli Rural Health Centre,Location/yIg1VrjnkAy,HEALTH_FACILITY
+bL6DCojCmfh,Chama Hospital Affiliated Health Centre,Location/yIg1VrjnkAy,HEALTH_FACILITY
+ttOUWZVpeZQ,Chibale Rural Health Centre,Location/yIg1VrjnkAy,HEALTH_FACILITY
+bfyQToVApYb,Chifunda Rural Health Centre,Location/yIg1VrjnkAy,HEALTH_FACILITY
+UGhnk7JcnYM,Chigoma Rural Health Centre,Location/yIg1VrjnkAy,HEALTH_FACILITY
+Ye4TJDnlpJb,Chikwa Rural Health Centre,Location/yIg1VrjnkAy,HEALTH_FACILITY
+f9B913DB8K0,Chilubanama Rural Health Centre,Location/yIg1VrjnkAy,HEALTH_FACILITY
+kTiNWJDxN9u,Chitukula Health Post,Location/yIg1VrjnkAy,HEALTH_FACILITY
+buZB7Fcmo7S,Fulaza Rural Health Centre,Location/yIg1VrjnkAy,HEALTH_FACILITY
+UZLDUEhHb1u,Kalovya Health Post,Location/yIg1VrjnkAy,HEALTH_FACILITY
+NjEmIfrAVti,Kambombo Rural Health Centre,Location/yIg1VrjnkAy,HEALTH_FACILITY
+SHiENiDUTrE,Kambwili Health Post,Location/yIg1VrjnkAy,HEALTH_FACILITY
+myd7zyw1ocl,Kamfutu Health Post,Location/yIg1VrjnkAy,HEALTH_FACILITY
+mhkLgoddtIt,Kanyelele Rural Health Centre,Location/yIg1VrjnkAy,HEALTH_FACILITY
+rK7PWlnBaRS,Kapichilasenga Rural Health Centre,Location/yIg1VrjnkAy,HEALTH_FACILITY
+j2T2l15fqZC,Kapilingizya Health Post,Location/yIg1VrjnkAy,HEALTH_FACILITY
+CJ0nbEcseSR,Kasela Health Post,Location/yIg1VrjnkAy,HEALTH_FACILITY
+jiy3fKnMFRg,Lundu Rural Health Centre,Location/yIg1VrjnkAy,HEALTH_FACILITY
+uwXHGDzulWz,Manga Mission Health Centre,Location/yIg1VrjnkAy,HEALTH_FACILITY
+Rlz618EA32z,Mapamba Rural Health Centre,Location/yIg1VrjnkAy,HEALTH_FACILITY
+Dhul2UUAQpp,Mphyanakunda Rural Health Centre,Location/yIg1VrjnkAy,HEALTH_FACILITY
+gWHlelRdxII,Mulilo Rural Health Centre,Location/yIg1VrjnkAy,HEALTH_FACILITY
+OC9Wb7txB6i,Mwalala Rural Health Centre,Location/yIg1VrjnkAy,HEALTH_FACILITY
+FUf4B6D0a28,Mwila Health Post,Location/yIg1VrjnkAy,HEALTH_FACILITY
+fG4h9MfxAyM,Nthonkho Rural Health Centre,Location/yIg1VrjnkAy,HEALTH_FACILITY
+Xn1oEbyBNhr,Pondo Rural Health Centre,Location/yIg1VrjnkAy,HEALTH_FACILITY
+JZd2PkjXXj8,Sitwe Rural Health Centre,Location/yIg1VrjnkAy,HEALTH_FACILITY
+PVPj4sROxfb,Tembwe Rural Health Centre,Location/yIg1VrjnkAy,HEALTH_FACILITY
+C513dA5CNF8,Chinsali Hospital Affiliated Health Centre,Location/EdAHjSJkuLb,HEALTH_FACILITY
+DTPBXVCb77t,Chunga Rural Health Centre,Location/EdAHjSJkuLb,HEALTH_FACILITY
+PbN0L5TMEcj,Kalela Health Post,Location/EdAHjSJkuLb,HEALTH_FACILITY
+wqCWnKvPBkJ,Kalwala Health Post,Location/EdAHjSJkuLb,HEALTH_FACILITY
+ZVmjD9okMQ9,Lubwa Rural Health Centre,Location/EdAHjSJkuLb,HEALTH_FACILITY
+tjwK61zIZv8,Mulilansolo Rural Health Centre,Location/EdAHjSJkuLb,HEALTH_FACILITY
+XzYfwBZwFYN,Mundu Rural Health Centre,Location/EdAHjSJkuLb,HEALTH_FACILITY
+oLOvXNp9M9Y,Munsanya Health Post,Location/EdAHjSJkuLb,HEALTH_FACILITY
+Eul4eDttk4G,Nambuluma PoliRural Health Centre,Location/EdAHjSJkuLb,HEALTH_FACILITY
+ZMT1eFtJe9a,Nkula Health Post,Location/EdAHjSJkuLb,HEALTH_FACILITY
+kg7wXu1ZTPM,Nkweto Health Post,Location/EdAHjSJkuLb,HEALTH_FACILITY
+KtHVXgCJdRm,Chalabesa Rural Health Centre,Location/RKQ6R4bAjTg,HEALTH_FACILITY
+uByLHFIS52p,Chikakala Health Post,Location/RKQ6R4bAjTg,HEALTH_FACILITY
+TJzkN2eAAZu,Chinkobo Health Post,Location/RKQ6R4bAjTg,HEALTH_FACILITY
+bQuM5aHZsxx,Kabinga Rural Health Centre,Location/RKQ6R4bAjTg,HEALTH_FACILITY
+TsPgbyuQUaj,Kaonda Rural Health Centre,Location/RKQ6R4bAjTg,HEALTH_FACILITY
+BoToxyoSPZg,Kopa Rural Health Centre,Location/RKQ6R4bAjTg,HEALTH_FACILITY
+uIe1oR9QhLH,Luchembe Health Post,Location/RKQ6R4bAjTg,HEALTH_FACILITY
+Nyk45dHMpsl,Mapoma Rural Health Centre,Location/RKQ6R4bAjTg,HEALTH_FACILITY
+HhrumkQRmrS,Mbati Rural Health Centre,Location/RKQ6R4bAjTg,HEALTH_FACILITY
+coBD5bAkl3u,Mpepo Rural Health Centre,Location/RKQ6R4bAjTg,HEALTH_FACILITY
+wePut0Sstzy,Amani Village Office,Location/shA6P3MsHar,CRVS_OFFICE
+AJOCBnD3Xkf,Bakari Village Office,Location/FNuYUPnmbpD,CRVS_OFFICE
+0ezNmREpOaU,Chuma Village Office,Location/VgAk7Gdp0CX,CRVS_OFFICE
+UDqpNVGMrer,Dalila Village Office,Location/qtHioRRdzHz,CRVS_OFFICE
+mA4KR1VxavU,Elimu Village Office,Location/07zUHLnnBbu,CRVS_OFFICE
+QzkChMbyIbN,Fahari Village Office,Location/iCdxnuVxUZp,CRVS_OFFICE
+obtqn62tOy4,Felani Village Office,Location/gSqpoCGdMXp,CRVS_OFFICE
+fbH9vOWOU6m,Gani Village Office,Location/bjhPInRVkLU,CRVS_OFFICE
+CqpIqK3yn9F,Goroma Village Office,Location/KvAAIaNqVrp,CRVS_OFFICE
+hY7gbtP7ySe,Hakuna Village Office,Location/QMgV0Lh8WvA,CRVS_OFFICE
+fcgMXAdx9G8,Halifu Village Office,Location/qe4UnEVt1hv,CRVS_OFFICE
+wFv0Yg7NZRB,Imani Village Office,Location/T7qYHDBTq0Z,CRVS_OFFICE
+1aSQHqNgAC7,Jabari Village Office,Location/yHH9Nz4rLOt,CRVS_OFFICE
+v2Rra6fSEVQ,Jamii Village Office,Location/OEXfnQsKDGA,CRVS_OFFICE
+UuRqphlhHVl,Kazi Village Office,Location/nES8Grgmola,CRVS_OFFICE
+2qFl41sNLjV,Kifani Village Office,Location/eSWmXIGeu1I,CRVS_OFFICE
+Ctu8zF9OHzl,Kitu Village Office,Location/efICdt4slOT,CRVS_OFFICE
+PmAyxAJkxiJ,Klow Village Office,Location/IkYcYBUcyY2,CRVS_OFFICE
+wUMVmI5BRh8,Laini Village Office,Location/mmW3Dc2mvtJ,CRVS_OFFICE
+Hr8IRh1E2JD,Lakini Village Office,Location/Bld6DYyeNdj,CRVS_OFFICE
+HWGaub52Ztd,Lumela Village Office,Location/bh0b3aI1uP3,CRVS_OFFICE
+LojIIf94ChZ,Maji Village Office,Location/VGYeAy4l3Gg,CRVS_OFFICE
+26fEeVVhDIq,Makulu Village Office,Location/NIZoUkU1lEn,CRVS_OFFICE
+eVjED8aCu1H,Mbondo Village Office,Location/Qhvv5hvo3mY,CRVS_OFFICE
+FbmOHnKYaXR,Mbula Village Office,Location/osEbKjRc9Kg,CRVS_OFFICE
+Is9hVLXnGBB,Moja Village Office,Location/19sMLT6mnOj,CRVS_OFFICE
+nXbOqc9PhWF,Ndara Village Office,Location/crXh068O9TR,CRVS_OFFICE
+vj7uff0LYTH,Ndoki Village Office,Location/aq4daBUAGr3,CRVS_OFFICE
+ESFqZ8pIx5F,Nguvu Village Office,Location/susd8QUOSd4,CRVS_OFFICE
+keaBKsoRRCQ,Nia Village Office,Location/5WMO5AHO4Ze,CRVS_OFFICE
+2AnHTmt9OBG,Nyala Village Office,Location/ZapDslZdS9c,CRVS_OFFICE
+hnuKoneNo41,Obiwa Village Office,Location/InxW9uC8m4a,CRVS_OFFICE
+B2DjIXE16c3,Olani Village Office,Location/r00It8Tvvp7,CRVS_OFFICE
+21rWz5FYrsK,Oro Village Office,Location/E9wNkTotFZk,CRVS_OFFICE
+ktUJrhQR6FE,Oya Village Office,Location/p3MinOBkT3e,CRVS_OFFICE
+ecAtpf7ZJ69,Pamoja Village Office,Location/snK3vUpxhW3,CRVS_OFFICE
+LhCinzvFDJO,Pemba Village Office,Location/ZnUWsbONIaH,CRVS_OFFICE
+eoPni6JDWYl,Pendwa Village Office,Location/t7uA69o3vox,CRVS_OFFICE
+9EjHvIHCtlR,Pesa Village Office,Location/ZgyUA00EGca,CRVS_OFFICE
+x3LR9wxW7zO,Quanza Village Office,Location/fDZycvQTa7l,CRVS_OFFICE
+JoWcURYxPY8,Queli Village Office,Location/UQl7Vl1YzoP,CRVS_OFFICE
+gAACTP9gyv1,Quilani Village Office,Location/ilYURbLy4bA,CRVS_OFFICE
+PqcUDO4lKNE,Quisha Village Office,Location/BseVCOHTNi6,CRVS_OFFICE
+fvuP1uRr6YI,Raha Village Office,Location/XKQ6R4bAjTG,CRVS_OFFICE
+EcFK12BGCSz,Rangi Village Office,Location/I8eZdkXLMeO,CRVS_OFFICE
+fBDlbuWS5Ix,Rivka Village Office,Location/KqswxCGTELa,CRVS_OFFICE
+plBArp5B1Id,Ruwanda Village Office,Location/elnZroVIXK9,CRVS_OFFICE
+9Z850kEnydx,Sabuni Village Office,Location/9qWCA79ISjs,CRVS_OFFICE
+OjD8uQO001x,Sina Village Office,Location/B5nvalfKOXi,CRVS_OFFICE
+tSV2ceN59UA,Tano Village Office,Location/X1gv3NId9V7,CRVS_OFFICE
+8JHUdKF0j7e,Tembo Village Office,Location/lKPoh3pKMzK,CRVS_OFFICE
+8xIZM1JRcor,Tsanga Village Office,Location/cqis6Y8trbJ,CRVS_OFFICE
+G5mSoyPstUe,Ubongo Village Office,Location/C99enq522wj,CRVS_OFFICE
+gN2BR4cXsxj,Ufiki Village Office,Location/SCqQwF26GU6,CRVS_OFFICE
+GJXke1Mo4iC,Vuli Village Office,Location/JRfmgliFAeF,CRVS_OFFICE
+ZRL9OaYsP6i,Vumilia Village Office,Location/hgIqLSmNqE4,CRVS_OFFICE
+ppaX3QjBvKN,Wapi Village Office,Location/VQ9OAw2ORsi,CRVS_OFFICE
+0fAraVNqTIA,Watu Village Office,Location/ae24HZKjht3,CRVS_OFFICE
+eogrNwwmq6O,Waziri Village Office,Location/LMijHPyyx6d,CRVS_OFFICE
+X13npgW2zMj,Xhosa Village Office,Location/518Y2bTu5X1,CRVS_OFFICE
+YqWg21nYCsX,Yazidi Village Office,Location/oblu17rNy8H,CRVS_OFFICE
+6h8l7qgATtL,Zalika Village Office,Location/FxJpRa5HSUP,CRVS_OFFICE
+LkTkx9NIQ0W,Zimbi Village Office,Location/pcQYbPuKGZ7,CRVS_OFFICE

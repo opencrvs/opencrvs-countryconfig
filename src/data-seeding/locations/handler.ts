@@ -64,50 +64,48 @@ const JURISDICTION_TYPE = [
 ] as const
 
 export async function locationsHandler(_: Request, h: ResponseToolkit) {
-  const [humdataLocations, healthFacilities, crvsFacilities, statistics] =
-    await Promise.all([
-      readCSVToJSON<HumdataLocation[]>(
-        './src/data-seeding/locations/source/locations.csv'
-      ),
-      readCSVToJSON<Facility[]>(
-        './src/data-seeding/locations/source/health-facilities.csv'
-      ),
-      readCSVToJSON<Facility[]>(
-        './src/data-seeding/locations/source/crvs-facilities.csv'
-      ),
-      getStatistics()
-    ])
+  const [humdataLocations, crvsLocations, statistics] = await Promise.all([
+    readCSVToJSON<HumdataLocation[]>(
+      './src/data-seeding/locations/source/administrative-areas.csv'
+    ),
+    readCSVToJSON<Facility[]>(
+      './src/data-seeding/locations/source/locations.csv'
+    ),
+    getStatistics()
+  ])
   const locations = new Map<string, Location>()
   const statisticsMap = extractStatisticsMap(statistics)
   humdataLocations.forEach((humdataLocation) => {
     ;([1, 2, 3, 4] as const).forEach((locationLevel) => {
       const id = humdataLocation[`admin${locationLevel}Pcode`]
       if (id) {
+        const nonEmptyLevels = ([1, 2, 3, 4] as const)
+          .slice(0, locationLevel)
+          .filter((l) => humdataLocation[`admin${l}Pcode`])
+        const depth = nonEmptyLevels.length
+        const parentPcode = nonEmptyLevels[depth - 2]
+        const partOf = parentPcode
+          ? `Location/${humdataLocation[`admin${parentPcode}Pcode`]}`
+          : 'Location/0'
+
         locations.set(id, {
           id,
           name: humdataLocation[`admin${locationLevel}Name_en`]!,
           alias: humdataLocation[`admin${locationLevel}Name_alias`]!,
-          partOf:
-            locationLevel == 1
-              ? 'Location/0'
-              : `Location/${
-                  humdataLocation[
-                    `admin${(locationLevel - 1) as 1 | 2 | 3}Pcode`
-                  ]
-                }`,
+          partOf,
           locationType: 'ADMIN_STRUCTURE',
-          jurisdictionType: JURISDICTION_TYPE[locationLevel - 1],
+          jurisdictionType: JURISDICTION_TYPE[depth - 1],
           statistics: statisticsMap.get(id)?.years
         })
       }
     })
   })
-  ;[...healthFacilities, ...crvsFacilities].forEach((healthFacility) => {
-    locations.set(healthFacility.id, {
-      ...healthFacility,
+  crvsLocations.forEach((crvsLocation) => {
+    locations.set(crvsLocation.id, {
+      ...crvsLocation,
       // We haven't set aliases for the facilities in farajaland
       // that's why just using the name instead
-      alias: healthFacility.name
+      alias: crvsLocation.name
     })
   })
   return h.response(Array.from(locations.values()))
