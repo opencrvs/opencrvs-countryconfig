@@ -108,7 +108,8 @@ export const Workqueues = defineWorkqueues([
         noneOf: [
           InherentFlags.REJECTED,
           'validated',
-          'approval-required-for-late-registration'
+          'approval-required-for-late-registration',
+          InherentFlags.POTENTIAL_DUPLICATE
         ]
       }
     },
@@ -190,7 +191,10 @@ export const Workqueues = defineWorkqueues([
       defaultMessage: 'Pending registration',
       description: 'Title of pending registration workqueue'
     },
-    query: { status: { type: 'exact', term: EventStatus.enum.DECLARED } },
+    query: {
+      status: { type: 'exact', term: EventStatus.enum.DECLARED },
+      flags: { noneOf: [InherentFlags.POTENTIAL_DUPLICATE] }
+    },
     action: { type: ActionType.READ }
   },
   {
