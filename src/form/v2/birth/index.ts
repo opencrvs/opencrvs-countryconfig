@@ -894,7 +894,7 @@ export const birthEvent = defineConfig({
     {
       type: ActionType.PRINT_CERTIFICATE,
       label: {
-        defaultMessage: 'Print certified copy',
+        defaultMessage: 'Print',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.birth.action.collect-certificate.label'

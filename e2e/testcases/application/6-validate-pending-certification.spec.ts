@@ -76,7 +76,7 @@ test.describe.serial('6 Validate "Pending certification"-workqueue', () => {
   })
 
   test('6.5 Click Print action', async () => {
-    await selectAction(page, 'Print certified copy')
+    await selectAction(page, 'Print')
     await expect(page.locator('#content-name')).toHaveText('Certify record')
     await expectInUrl(
       page,

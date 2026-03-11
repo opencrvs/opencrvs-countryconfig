@@ -71,7 +71,7 @@ test.describe.serial('Issue verifiable credential', () => {
     await searchFromSearchBar(page, childName)
     await ensureAssigned(page)
 
-    await selectAction(page, 'Print certified copy')
+    await selectAction(page, 'Print')
     await selectCertificationType(page, 'Birth Certificate')
     await selectRequesterType(page, 'Print and issue to Informant (Mother)')
     await page.getByRole('button', { name: 'Continue' }).click()
