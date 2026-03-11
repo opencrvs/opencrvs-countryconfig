@@ -259,6 +259,11 @@ async function upsertAnalyticsEventActions(
       allEventActions.push(actionWithFilteredDeclaration)
     }
   }
+
+  if (allEventActions.length === 0) {
+    return []
+  }
+
   return trx
     .insertInto('analytics.event_actions')
     .values(allEventActions)
@@ -275,11 +280,14 @@ async function upsertAnalyticsEventActions(
 }
 
 export async function importEvents(events: EventDocument[], trx: Kysely<any>) {
+  if (events.length === 0) {
+    return
+  }
   await upsertAnalyticsEventActions(events, trx)
 }
 
 export async function importEvent(event: EventDocument, trx: Kysely<any>) {
-  const eventConfig = getEventConfig(event.type)
+  const eventConfig = findEventConfig(event.type)
   if (!eventConfig) {
     logger.warn(
       `Event with id "${event.id}" has unsupported event type "${event.type}". Record will not be written in the analytics database.`
