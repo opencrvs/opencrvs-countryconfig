@@ -136,7 +136,6 @@ export const roles: Role[] = [
       'workqueue[id=assigned-to-you|recent|pending-feedback-registrar-general|potential-duplicate|registration-registrar-general]',
       'type=record.read&event=birth,death,tennis-club-membership',
       'type=record.declare&event=birth,death,tennis-club-membership',
-      'record.declared.edit[event=birth|death|tennis-club-membership]',
       'record.declared.reject[event=birth|death|tennis-club-membership]',
       'record.declared.archive[event=birth|death|tennis-club-membership]',
       'record.declared.review-duplicates[event=birth|death|tennis-club-membership]',
