@@ -31,7 +31,7 @@ import {
 } from '@opencrvs/toolkit/events'
 import { differenceInDays } from 'date-fns'
 import { ExpressionBuilder, Kysely } from 'kysely'
-import { chunk, get, pickBy } from 'lodash'
+import { chunk, pickBy } from 'lodash'
 import { getClient } from './postgres'
 import { getStatistics } from '@countryconfig/utils'
 import { COUNTRY_NAMES_BY_CODE } from './countries'
