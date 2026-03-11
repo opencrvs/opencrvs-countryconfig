@@ -262,15 +262,46 @@ export async function importEvent(event: EventDocument, trx: Kysely<any>) {
   logger.info(`Event with id "${event.id}" logged into analytics`)
 }
 
+function sortLocationsByParentFirst(locations: Location[]): Location[] {
+  const locationMap = new Map(locations.map((loc) => [loc.id, loc]))
+  const result: Location[] = []
+  const visited = new Set<string>()
+
+  function addWithAncestors(loc: Location) {
+    if (visited.has(loc.id)) return
+
+    if (
+      loc.parentId &&
+      locationMap.has(loc.parentId) &&
+      !visited.has(loc.parentId)
+    ) {
+      addWithAncestors(locationMap.get(loc.parentId)!)
+    }
+
+    visited.add(loc.id)
+    result.push(loc)
+  }
+
+  for (const loc of locations) {
+    addWithAncestors(loc)
+  }
+
+  return result
+}
+
 export async function importLocations(locations: Location[]) {
   const client = getClient()
+
+  // Sort locations so that parent locations appear before their children
+  const sortedLocations = sortLocationsByParentFirst(locations)
+
   await client.transaction().execute(async (trx) => {
     for (const [index, batch] of chunk(
-      locations,
+      sortedLocations,
       INSERT_MAX_CHUNK_SIZE
     ).entries()) {
       logger.info(
-        `Importing ${Math.min((index + 1) * INSERT_MAX_CHUNK_SIZE, locations.length)}/${locations.length} locations`
+        `Importing ${Math.min((index + 1) * INSERT_MAX_CHUNK_SIZE, sortedLocations.length)}/${sortedLocations.length} locations`
       )
 
       await trx
