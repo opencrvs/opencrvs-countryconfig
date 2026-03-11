@@ -412,9 +412,8 @@
       <rect width="222.13" height="30" fill="white" transform="translate(289.95 543.99)" />
     </clipPath>
   </defs>
-  {{#if $review}}
-    <image width="36" height="36" xlink:href="{{qrCode}}" x="500" y="770"></image>
-  {{/if}}
+  <image data-testid="verifiable-credential-qr-code" width="112" height="112" xlink:href="{{ $lookup ($action "PRINT_CERTIFICATE") "annotation.verifiable-credential" }}" x="55" y="43"></image>
+
   <!-- #ifCond printInAdvance '!==' true}} -->
   <image width="140" height="70"
     xlink:href="{{$lookup $metadata 'legalStatuses.REGISTERED.createdBySignature'}}"

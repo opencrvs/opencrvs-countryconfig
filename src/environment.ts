@@ -58,5 +58,15 @@ export const env = cleanEnv(process.env, {
     default: undefined,
     devDefault: undefined,
     desc: 'Client secret for system-to-system authentication on /api/ proxy endpoints'
+  }),
+  VERIFIABLE_CREDENTIALS_SDJWT_ISSUE_URL: url({
+    default: 'http://countryconfig:3040/_demo-issuer/openid4vc/sdjwt/issue',
+    devDefault: 'http://localhost:3040/_demo-issuer/openid4vc/sdjwt/issue',
+    desc: 'URL for requesting SD-JWT credential offers for verifiable credentials issuance'
+  }),
+  VERIFIABLE_CREDENTIALS_RAW_JWT_SIGN_URL: url({
+    default: 'http://countryconfig:3040/_demo-issuer/raw/jwt/sign',
+    devDefault: 'http://localhost:3040/_demo-issuer/raw/jwt/sign',
+    desc: 'URL for signing raw JWTs for verifiable credentials issuance'
   })
 })

@@ -66,7 +66,7 @@ export const roles: Role[] = [
       'type=record.print-certified-copies&event=birth,death,tennis-club-membership',
       'type=record.correct&event=birth,death,tennis-club-membership',
       'record.unassign-others[event=birth|death|tennis-club-membership]',
-      'record.custom-action[event=birth,customActionType=ESCALATE|ISSUE_CERTIFIED_COPY]'
+      'record.custom-action[event=birth,customActionType=ESCALATE|ISSUE_CERTIFIED_COPY|ISSUE_VERIFIABLE_CREDENTIAL]'
     ]
   },
   {
@@ -137,7 +137,6 @@ export const roles: Role[] = [
       'workqueue[id=assigned-to-you|recent|pending-feedback-registrar-general|potential-duplicate|registration-registrar-general]',
       'type=record.read&event=birth,death,tennis-club-membership',
       'type=record.declare&event=birth,death,tennis-club-membership',
-      'type=record.edit&event=birth,death,tennis-club-membership',
       'type=record.reject&event=birth,death,tennis-club-membership',
       'type=record.archive&event=birth,death,tennis-club-membership',
       'type=record.review-duplicates&event=birth,death,tennis-club-membership',
@@ -295,7 +294,7 @@ export const roles: Role[] = [
       `type=record.create&event=birth,death,tennis-club-membership`,
       'type=record.declare&event=birth,death,tennis-club-membership',
       'type=record.notify&event=birth,death,tennis-club-membership',
-      'record.declared.edit[event=birth|death]'
+      'type=record.edit&event=birth,death'
     ]
   }
 ]
