@@ -112,7 +112,8 @@ test.describe('Action menu options', () => {
         'Assign',
         'Escalate',
         'Print certified copy',
-        'Correct'
+        'Correct',
+        'Issue a verifiable credential'
       ])
     })
   })

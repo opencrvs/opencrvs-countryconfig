@@ -188,7 +188,6 @@ export const buildTypeScriptToJavaScript = memoize(async (path: string) => {
   const result = await build({
     entryPoints: [path],
     write: false,
-    loader: { '.ts': 'ts' },
     format: 'esm',
     platform: 'browser'
   })
