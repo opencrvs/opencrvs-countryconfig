@@ -74,7 +74,7 @@ test.describe.serial('44.14.0 Validate "Certified copy" option', () => {
       })
       .click()
 
-    await selectAction(page, 'Print certified copy')
+    await selectAction(page, 'Print')
     await page.locator('#certificateTemplateId svg').click()
     await expect(
       page.getByText('Birth Certificate Certified Copy', { exact: true })

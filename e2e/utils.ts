@@ -35,7 +35,7 @@ export async function navigateToWorkqueue(page: Page, workqueue: Workqueue) {
 export async function selectAction(
   page: Page,
   action:
-    | 'Print certified copy'
+    | 'Print'
     | 'Declare'
     | 'Validate'
     | 'Review'

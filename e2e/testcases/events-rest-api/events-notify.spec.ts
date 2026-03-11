@@ -681,7 +681,7 @@ test.describe('POST /api/events/events/{eventId}/notify', () => {
     })
 
     test('Print certificate', async () => {
-      await selectAction(page, 'Print certified copy')
+      await selectAction(page, 'Print')
       await selectRequesterType(page, 'Print and issue to Informant (Mother)')
       await page.getByRole('button', { name: 'Continue' }).click()
       await page.getByRole('button', { name: 'Verified' }).click()
