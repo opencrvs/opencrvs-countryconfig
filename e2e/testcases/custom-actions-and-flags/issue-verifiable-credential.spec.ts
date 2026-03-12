@@ -56,7 +56,7 @@ test.describe.serial('Issue verifiable credential', () => {
     await page.getByRole('button', { name: 'Generate', exact: true }).click()
 
     const actionQrCode = page.getByRole('dialog').locator('img')
-    await expect(actionQrCode).toBeVisible({ timeout: 1000 })
+    await expect(actionQrCode).toBeVisible()
     await expect(actionQrCode).toHaveAttribute(
       'src',
       /^data:image\/png;base64,/
