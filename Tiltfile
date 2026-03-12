@@ -3,17 +3,22 @@
 # For more information about variables, please check:
 # https://github.com/opencrvs/infrastructure/blob/develop/Tiltfile
 
-core_images_tag = "develop"
+core_images_tag = "v1.9.11"
 # Build countryconfig image in local registry (use any name and tag you want)
 countryconfig_image_name="opencrvs/ocrvs-countryconfig"
 countryconfig_image_tag="local"
 
 load('ext://git_resource', 'git_checkout')
 if not os.path.exists('../infrastructure'):
-    # FIXME: Replace ocrvs-10672 to develop after testing
     git_checkout('git@github.com:opencrvs/infrastructure.git', '../infrastructure')
 if not os.path.exists('../infrastructure/tilt/opencrvs.tilt'):
   fail('Something went wrong while cloning infrastructure repository!')
+
+if not os.path.exists('../opencrvs-helm-charts'):
+    git_checkout('git@github.com:opencrvs/opencrvs-helm-charts.git', '../opencrvs-helm-charts')
+if not os.path.exists('../opencrvs-helm-charts/charts/dependencies') or not os.path.exists('../opencrvs-helm-charts/charts/opencrvs-services'):
+  fail('Something went wrong while cloning infrastructure repository!')
+
 load('../infrastructure/tilt/opencrvs.tilt', 'setup_opencrvs')
 
 # Build countryconfig image
@@ -39,10 +44,10 @@ docker_build(
     sync('./start-prod.sh', '/usr/src/app/start-prod.sh'),
   ]
 )
-countryconfig_assets_image_name="{0}:{1}-assets".format(countryconfig_image_name, countryconfig_image_tag)
+
 
 # Build image with postgres and metabase assets
-docker_build(countryconfig_assets_image_name, ".",
+docker_build("{0}:{1}-assets".format(countryconfig_image_name, countryconfig_image_tag), ".",
               dockerfile="Dockerfile.assets",
               network="host",
               only=[
@@ -53,7 +58,8 @@ docker_build(countryconfig_assets_image_name, ".",
 )
 
 setup_opencrvs(
-    infrastructure_path='../infrastructure',
+    infrastructure_repo='../infrastructure',
+    opencrvs_chart_repo='../opencrvs-helm-charts',
     core_images_tag=core_images_tag,
     countryconfig_image_name=countryconfig_image_name,
     countryconfig_image_tag=countryconfig_image_tag,
