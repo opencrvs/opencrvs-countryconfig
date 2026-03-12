@@ -3,7 +3,10 @@
 # For more information about variables, please check:
 # https://github.com/opencrvs/infrastructure/blob/develop/Tiltfile
 
-core_images_tag = "v1.9.11"
+# NOTE: Apple Silicon users:
+# "develop" image of OpenCRVS core doesn't have arm64 version,
+# Please use "v1.X.X/v2.X.X" tags for local development or build image by yourself and update "core_images_tag" variable below.
+core_images_tag = "develop"
 # Build countryconfig image in local registry (use any name and tag you want)
 countryconfig_image_name="opencrvs/ocrvs-countryconfig"
 countryconfig_image_tag="local"
