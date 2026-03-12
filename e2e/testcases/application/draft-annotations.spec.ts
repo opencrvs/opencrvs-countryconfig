@@ -67,7 +67,6 @@ test.describe.serial('2: Annotations on draft records', () => {
 
     await page.getByRole('button', { name: 'Drafts' }).click()
 
-    // const row = getRowByTitle(page, formattedName)
     await page.getByRole('button', { name: formattedName }).click()
     await switchEventTab(page, 'Record')
 
