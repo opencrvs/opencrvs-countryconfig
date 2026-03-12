@@ -375,7 +375,7 @@ export const deathEvent = defineConfig({
     {
       type: ActionType.PRINT_CERTIFICATE,
       label: {
-        defaultMessage: 'Print certified copy',
+        defaultMessage: 'Print',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.death.action.collect-certificate.label'

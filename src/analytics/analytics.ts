@@ -55,6 +55,16 @@ function findEventConfig(eventType: string) {
   return null
 }
 
+function getEventConfig(eventType: string) {
+  const config = findEventConfig(eventType)
+
+  if (!config) {
+    throw new Error(`Unsupported event type: ${eventType}`)
+  }
+
+  return config
+}
+
 /**
  * Only analytics fields (`analytics: true`) must be included in `declaration`
  */
@@ -161,97 +171,123 @@ function convertDotKeysToUnderscore(
   return newObj
 }
 
+type ActionDocWithId = Record<string, unknown>
 async function upsertAnalyticsEventActions(
-  event: EventDocument,
-  eventConfig: EventConfig,
+  events: EventDocument[],
   trx: Kysely<any>
 ) {
   await trx
     .deleteFrom('analytics.event_actions')
-    .where('event_id', '=', event.id)
+    .where(
+      'event_id',
+      'in',
+      events.map((e) => e.id)
+    )
     .execute()
 
-  for (let i = 0; i < event.actions.length; i++) {
-    const actionsFromStartToCurrentPoint = event.actions
-      .sort((a, b) => {
-        // CREATE type always comes first
-        if (a.type === ActionType.CREATE && b.type !== ActionType.CREATE)
-          return -1
-        if (b.type === ActionType.CREATE && a.type !== ActionType.CREATE)
-          return 1
-        // Otherwise sort by createdAt
-        return a.createdAt.localeCompare(b.createdAt)
-      })
-      .slice(0, i + 1)
+  const allEventActions: ActionDocWithId[] = []
+  for (const event of events) {
+    const eventConfig = getEventConfig(event.type)
+    for (let i = 0; i < event.actions.length; i++) {
+      const actionsFromStartToCurrentPoint = event.actions
+        .sort((a, b) => {
+          // CREATE type always comes first
+          if (a.type === ActionType.CREATE && b.type !== ActionType.CREATE)
+            return -1
+          if (b.type === ActionType.CREATE && a.type !== ActionType.CREATE)
+            return 1
+          // Otherwise sort by createdAt
+          return a.createdAt.localeCompare(b.createdAt)
+        })
+        .slice(0, i + 1)
 
-    const action = event.actions[i]
+      const action = event.actions[i]
 
-    const actionAtCurrentPoint = getCurrentEventState(
-      {
-        ...event,
-        actions: actionsFromStartToCurrentPoint
-      },
-      eventConfig
-    )
+      const actionAtCurrentPoint = getCurrentEventState(
+        {
+          ...event,
+          actions: actionsFromStartToCurrentPoint
+        },
+        eventConfig
+      )
 
-    const { type, ...act } = action
+      const { type, ...act } = action
 
-    if (
-      action.status === ActionStatus.Requested ||
-      action.status === ActionStatus.Rejected
-    ) {
-      continue
-    }
+      if (
+        action.status === ActionStatus.Requested ||
+        action.status === ActionStatus.Rejected
+      ) {
+        continue
+      }
 
-    const actionConfig = eventConfig.actions.find((a) => a.type === type)
+      const actionConfig = eventConfig.actions.find((a) => a.type === type)
 
-    const annotation = actionConfig
-      ? pickAnnotationAnalyticsFields(
-          getAnnotation(action, event.actions),
-          actionConfig
-        )
-      : {}
+      const annotation = actionConfig
+        ? pickAnnotationAnalyticsFields(
+            getAnnotation(action, event.actions),
+            actionConfig
+          )
+        : {}
 
-    const actions = event.actions
-    /*
-     * Add date of declaration and date of registration to all events for each access
-     */
-    const declareAction = actions.find((a) => a.type === ActionType.DECLARE)
-    const registerAction = actions.find((a) => a.type === ActionType.REGISTER)
+      const actions = event.actions
+      /*
+       * Add date of declaration and date of registration to all events for each access
+       */
+      const declareAction = actions.find((a) => a.type === ActionType.DECLARE)
+      const registerAction = actions.find((a) => a.type === ActionType.REGISTER)
 
-    const actionWithFilteredDeclaration = {
-      ...act,
-      eventId: event.id,
-      actionType: type,
-      eventType: event.type,
-      declaredAt: declareAction ? declareAction.createdAt : null,
-      registeredAt: registerAction ? registerAction.createdAt : null,
-      annotation: convertDotKeysToUnderscore(annotation),
-      declaration: convertDotKeysToUnderscore(
-        precalculateAdditionalAnalytics(
-          action,
-          pickDeclarationAnalyticsFields(
-            actionAtCurrentPoint.declaration,
+      const actionWithFilteredDeclaration = {
+        ...act,
+        eventId: event.id,
+        actionType: type,
+        eventType: event.type,
+        declaredAt: declareAction ? declareAction.createdAt : null,
+        registeredAt: registerAction ? registerAction.createdAt : null,
+        annotation: convertDotKeysToUnderscore(annotation),
+        declaration: convertDotKeysToUnderscore(
+          precalculateAdditionalAnalytics(
+            action,
+            pickDeclarationAnalyticsFields(
+              actionAtCurrentPoint.declaration,
+              eventConfig
+            ),
             eventConfig
-          ),
-          eventConfig
+          )
+        )
+      }
+
+      allEventActions.push(actionWithFilteredDeclaration)
+    }
+  }
+
+  if (allEventActions.length === 0) {
+    return []
+  }
+
+  return trx
+    .insertInto('analytics.event_actions')
+    .values(allEventActions)
+    .onConflict((oc) =>
+      oc.column('id').doUpdateSet((eb) =>
+        Object.fromEntries(
+          Object.keys(allEventActions[0])
+            .filter((key) => key !== 'id')
+            .map((key) => [key, eb.ref(`excluded.${key}`)])
         )
       )
-    }
+    )
+    .execute()
+}
 
-    await trx
-      .insertInto('analytics.event_actions')
-      .values(actionWithFilteredDeclaration)
-      .onConflict((oc) =>
-        oc.columns(['id']).doUpdateSet(actionWithFilteredDeclaration)
-      )
-      .execute()
+export async function importEvents(events: EventDocument[], trx: Kysely<any>) {
+  if (events.length === 0) {
+    return
   }
+  await upsertAnalyticsEventActions(events, trx)
 }
 
 export async function importEvent(event: EventDocument, trx: Kysely<any>) {
   const eventConfig = findEventConfig(event.type)
-
   if (!eventConfig) {
     logger.warn(
       `Event with id "${event.id}" has unsupported event type "${event.type}". Record will not be written in the analytics database.`
@@ -259,7 +295,7 @@ export async function importEvent(event: EventDocument, trx: Kysely<any>) {
     return
   }
 
-  await upsertAnalyticsEventActions(event, eventConfig, trx)
+  await upsertAnalyticsEventActions([event], trx)
   logger.info(`Event with id "${event.id}" logged into analytics`)
 }
 
@@ -337,12 +373,6 @@ export async function importLocations(locations: Location[]) {
         .execute()
     }
   })
-}
-
-export async function importEvents(events: EventDocument[], trx: Kysely<any>) {
-  for (const event of events) {
-    await importEvent(event, trx)
-  }
 }
 
 export async function syncLocationLevels() {
