@@ -1556,6 +1556,11 @@ integrations.updatePermissionsMsg,Label for update permissions message,Permissio
 integrations.webhook.PII,Label for PII,Include PII data,Inclure les données PII
 integrations.webhookDescription,label for webhook client,"A Webhook client can subscribe to be notified upon a birth or death registration following W3C WebSub standards. For more information, visit:","Un client Webhook peut s'abonner pour être notifié lors de l'enregistrement d'une naissance ou d'un décès selon les normes WebSub du W3C. Pour plus d'informations, consultez le site :"
 integrations.webhookPermissionsDescription,Webhook description above permissions,Select the data you wish to be contained within the webhook payload,Sélectionnez les données que vous souhaitez voir figurer dans les données utiles du webhook.
+integrations.createdOnBy,"Label showing when an integration was created and by whom","Created {date} by {user}","Créé le {date} par {user}"
+integrations.createdOn,"Label showing when an integration was created (no user info)","Created {date}","Créé le {date}"
+integrations.clientDetails,"Label for the client details menu item and dialog title","Client details","Détails du client"
+integrations.clientName,"Heading for the client name field in the details dialog","Client name","Nom du client"
+integrations.scopes,"Heading for the scopes list in the client details dialog","Scopes","Autorisations"
 loading.records,Loading indicator while fetching records,Loading records...,Chargement des enregistrements...
 messages.emptyString,Empty string, ,
 misc.confirmPinTitle,The title displayed while creating a PIN,Confirm PIN,Confirmer le  Code PIN
