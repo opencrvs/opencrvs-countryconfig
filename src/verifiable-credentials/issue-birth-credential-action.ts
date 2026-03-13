@@ -274,6 +274,37 @@ export const issueBirthCredentialAction = {
           conditional: qrGenerated
         }
       ]
+    },
+    {
+      id: 'requester.acceptedVcOffer',
+      parent: field('get-credential-offer'),
+      type: FieldType.CHECKBOX,
+      required: true,
+      defaultValue: false,
+      label: {
+        defaultMessage:
+          'I confirm that the citizen has accepted the verifiable credential offer',
+        description:
+          'Confirmation checkbox shown before issuing verifiable credential',
+        id: 'event.birth.custom.action.issue-vc.field.accepted-vc-offer.label'
+      },
+      validation: [
+        {
+          message: {
+            defaultMessage:
+              'Please confirm that the citizen has accepted the verifiable credential offer',
+            description: 'Validation for credential offer acceptance checkbox',
+            id: 'event.birth.custom.action.issue-vc.field.accepted-vc-offer.error'
+          },
+          validator: field('requester.acceptedVcOffer').isEqualTo(true)
+        }
+      ],
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: qrGenerated
+        }
+      ]
     }
   ]
 } satisfies ActionConfig

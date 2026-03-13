@@ -62,7 +62,16 @@ test.describe.serial('Issue verifiable credential', () => {
       /^data:image\/png;base64,/
     )
 
-    await page.getByRole('button', { name: 'Confirm' }).click()
+    const acceptedOfferCheckbox = page.locator('#requester____acceptedVcOffer')
+    await expect(acceptedOfferCheckbox).toBeVisible()
+
+    const confirmButton = page.getByRole('button', { name: 'Confirm' })
+    await expect(confirmButton).toBeDisabled()
+
+    await acceptedOfferCheckbox.check()
+    await expect(confirmButton).toBeEnabled()
+
+    await confirmButton.click()
     await ensureOutboxIsEmpty(page)
   })
 
