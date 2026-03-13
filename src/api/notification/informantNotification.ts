@@ -15,7 +15,8 @@ import {
   deepMerge,
   EventDocument,
   FieldUpdateValue,
-  getPendingAction
+  getPendingAction,
+  type Location
 } from '@opencrvs/toolkit/events'
 import { applicationConfig } from '../application/application-config'
 import { COUNTRY_LOGO_URL } from './constant'
@@ -51,7 +52,7 @@ const resolveName = (name: FieldUpdateValue) => {
   }
 }
 
-async function getLocations(token: string) {
+async function getLocations(token: string): Promise<Location[]> {
   const url = new URL('events', GATEWAY_URL).toString()
   const client = createClient(url, `Bearer ${token}`)
   return client.locations.list.query()
