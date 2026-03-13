@@ -3,23 +3,30 @@
 # For more information about variables, please check:
 # https://github.com/opencrvs/infrastructure/blob/develop/Tiltfile
 
-core_images_tag = "v1.9.11"
+# Helm charts branch or tag:
+helm_chart_branch_or_tag = "develop"
+
+# OpenCRVS core images tag:
+# For releases it's ok to keeps same as branch_or_tag
+core_images_tag = "develop"
+
 # Build countryconfig image in local registry (use any name and tag you want)
 countryconfig_image_name="opencrvs/ocrvs-countryconfig"
 countryconfig_image_tag="local"
 
 load('ext://git_resource', 'git_checkout')
-if not os.path.exists('../infrastructure'):
-    git_checkout('git@github.com:opencrvs/infrastructure.git', '../infrastructure')
-if not os.path.exists('../infrastructure/tilt/opencrvs.tilt'):
-  fail('Something went wrong while cloning infrastructure repository!')
+
+charts_repo_url = "git@github.com:opencrvs/opencrvs-helm-charts.git#{}".format(helm_chart_branch_or_tag)
 
 if not os.path.exists('../opencrvs-helm-charts'):
-    git_checkout('git@github.com:opencrvs/opencrvs-helm-charts.git', '../opencrvs-helm-charts')
+  print("Cloning OpenCRVS Helm charts from {}...".format(charts_repo_url))
+  git_checkout(charts_repo_url, '../opencrvs-helm-charts')
+else:
+  print("⚠️ Skipping clonning {}, folder {} already exists. Use `git` CLI to update repository".format(charts_repo_url, '../opencrvs-helm-charts'))
 if not os.path.exists('../opencrvs-helm-charts/charts/dependencies') or not os.path.exists('../opencrvs-helm-charts/charts/opencrvs-services'):
   fail('Something went wrong while cloning infrastructure repository!')
 
-load('../infrastructure/tilt/opencrvs.tilt', 'setup_opencrvs')
+load('../opencrvs-helm-charts/tilt/opencrvs.tilt', 'setup_opencrvs')
 
 # Build countryconfig image
 docker_build(
@@ -58,7 +65,6 @@ docker_build("{0}:{1}-assets".format(countryconfig_image_name, countryconfig_ima
 )
 
 setup_opencrvs(
-    infrastructure_repo='../infrastructure',
     opencrvs_chart_repo='../opencrvs-helm-charts',
     core_images_tag=core_images_tag,
     countryconfig_image_name=countryconfig_image_name,
