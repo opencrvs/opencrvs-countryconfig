@@ -19,9 +19,6 @@
  */
 ; (function initClientConfig() {
   window.config = {
-    MINIO_BUCKET: 'ocrvs',
-    MINIO_URL: 'http://localhost:3535/ocrvs/',
-    MINIO_BASE_URL: 'http://localhost:3535', // URL without path/bucket information, used for file uploads, v2
     // Country code in uppercase ALPHA-3 format
     COUNTRY: 'FAR',
     LANGUAGES: ['en', 'fr'],
