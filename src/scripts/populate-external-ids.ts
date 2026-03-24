@@ -18,18 +18,16 @@
  *   - Administrative areas: matched using `adminXName_en` columns in administrative-areas.csv
  *   - Facilities/offices:   matched using `name` column in locations.csv
  *
- * Requires a national system admin JWT to reactivate the super user for seeding.
+ * Requires a national system admin JWT (has CONFIG_UPDATE_ALL scope which satisfies
+ * the locations.set / administrativeAreas.set scope check).
  * The script will prompt for this token interactively.
  *
  * Run after ensuring the core services are up:
  *   yarn populate-ids               (dev — uses devDefault env values)
- *   yarn populate-ids:prod          (prod — all env vars must be set explicitly,
- *                                    including USER_MGNT_URL=http://user-mgnt:3030)
+ *   yarn populate-ids:prod          (prod — all env vars must be set explicitly)
  */
 
-import fetch from 'node-fetch'
 import prompts from 'prompts'
-import decode from 'jwt-decode'
 import { createClient } from '@opencrvs/toolkit/api'
 import { env } from '@countryconfig/environment'
 import {
@@ -38,94 +36,9 @@ import {
   readCSVToJSON
 } from '@countryconfig/data-seeding/locations/csv-helpers'
 
-interface TokenPayload {
-  sub: string
-  exp: string
-  algorithm: string
-  scope: string[]
-}
-
-function getTokenPayload(token: string): TokenPayload {
-  return decode<TokenPayload>(token)
-}
-
-async function userMgnt(
-  token: string,
-  path: string,
-  body: Record<string, unknown>
-): Promise<Record<string, unknown>> {
-  const res = await fetch(`${env.USER_MGNT_URL}/${path}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
-    },
-    body: JSON.stringify(body)
-  })
-
-  if (!res.ok) {
-    throw new Error(
-      `user-mgnt /${path} failed: ${res.status} ${await res.text()}`
-    )
-  }
-
-  return (res.json() as Promise<Record<string, unknown>>).catch(() => ({}))
-}
-
-async function findSuperUserId(adminToken: string): Promise<string> {
-  const data = await userMgnt(adminToken, 'getUser', {
-    email: 'o.admin@opencrvs.org'
-  })
-
-  const id = data.id as string | undefined
-  if (!id) {
-    throw new Error(
-      'Super user (o.admin@opencrvs.org) not found. Ensure the system was seeded correctly.'
-    )
-  }
-  return id
-}
-
-async function reactivateSuperUser(
-  adminToken: string,
-  superUserId: string
-): Promise<void> {
-  const { sub: auditedBy } = getTokenPayload(adminToken)
-  await userMgnt(adminToken, 'auditUser', {
-    userId: superUserId,
-    auditedBy,
-    action: 'REACTIVATE',
-    reason: 'ROLE_REGAINED',
-    comment: 'Reactivated by populate-external-ids script'
-  })
-}
-
-async function getSuperUserToken(): Promise<string> {
-  const res = await fetch(
-    new URL('authenticate-super-user', env.AUTH_URL).toString(),
-    {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        username: 'o.admin',
-        password: env.SUPER_USER_PASSWORD
-      })
-    }
-  )
-
-  if (!res.ok) {
-    throw new Error(
-      `Super user authentication failed: ${res.status} ${await res.text()}`
-    )
-  }
-
-  const body = (await res.json()) as { token: string }
-  return body.token
-}
-
-async function populate(superUserToken: string): Promise<void> {
+async function populate(token: string): Promise<void> {
   const eventsUrl = new URL('events', env.GATEWAY_URL).toString()
-  const client = createClient(eventsUrl, `Bearer ${superUserToken}`)
+  const client = createClient(eventsUrl, `Bearer ${token}`)
 
   console.log('Fetching existing locations from core...')
   const [existingAdminAreas, existingLocations] = await Promise.all([
@@ -296,17 +209,6 @@ async function populate(superUserToken: string): Promise<void> {
   }
 }
 
-async function deactivateSuperUser(superUserToken: string): Promise<void> {
-  const { sub } = getTokenPayload(superUserToken)
-  await userMgnt(superUserToken, 'auditUser', {
-    userId: sub,
-    auditedBy: sub,
-    action: 'DEACTIVATE',
-    reason: 'OTHER',
-    comment: 'Deactivated by populate-external-ids script'
-  })
-}
-
 async function main() {
   const { adminToken } = await prompts({
     type: 'password',
@@ -319,19 +221,7 @@ async function main() {
     process.exit(1)
   }
 
-  console.log('Finding super user...')
-  const superUserId = await findSuperUserId(adminToken)
-
-  console.log('Reactivating super user...')
-  await reactivateSuperUser(adminToken, superUserId)
-
-  console.log('Authenticating as super user...')
-  const superUserToken = await getSuperUserToken()
-
-  await populate(superUserToken)
-
-  console.log('Deactivating super user...')
-  await deactivateSuperUser(superUserToken)
+  await populate(adminToken)
 
   console.log('Done.')
 }
