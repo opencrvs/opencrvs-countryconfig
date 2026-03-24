@@ -25,6 +25,8 @@ export const env = cleanEnv(process.env, {
     devDefault: 'http://localhost:5050/confirm/registration'
   }),
   QA_ENV: bool({ default: false }),
+  SUPER_USER_PASSWORD: str({ devDefault: 'password' }),
+  USER_MGNT_URL: url({ devDefault: 'http://localhost:3030' }),
   ANALYTICS_DATABASE_URL: url({
     devDefault:
       'postgres://events_analytics:analytics_password@localhost:5432/events',

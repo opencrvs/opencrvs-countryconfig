@@ -11,7 +11,6 @@
 require('app-module-path').addPath(require('path').join(__dirname))
 require('dotenv').config()
 
-import StreamArray from 'stream-json/streamers/StreamArray'
 import path from 'path'
 import * as Hapi from '@hapi/hapi'
 import * as Pino from 'hapi-pino'
@@ -226,6 +225,7 @@ export async function createServer() {
       issuer: 'opencrvs:auth-service',
       audience: 'opencrvs:countryconfig-user'
     },
+    // eslint-disable-next-line no-unused-vars
     validate: (payload: any, request: Hapi.Request) => ({
       isValid: true,
       credentials: payload
@@ -633,7 +633,8 @@ export async function createServer() {
       const url = new URL('events', GATEWAY_URL).toString()
       const apiClient = createClient(url, req.headers.authorization)
       const locations = await apiClient.locations.list.query()
-      const administrativeAreas = await apiClient.administrativeAreas.list.query()
+      const administrativeAreas =
+        await apiClient.administrativeAreas.list.query()
 
       await importAdministrativeAreas(administrativeAreas)
       await importLocations(locations)

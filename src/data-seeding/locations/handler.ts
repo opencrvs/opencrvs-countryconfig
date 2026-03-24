@@ -9,41 +9,12 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 import {
-  readCSVToJSON,
   extractStatisticsMap,
   getStatistics,
   LocationStatistic
 } from '@countryconfig/utils'
 import { Request, ResponseToolkit } from '@hapi/hapi'
-
-type HumdataLocation = {
-  admin0Pcode: string
-  admin0Name_en: string
-  admin0Name_alias?: string
-
-  admin1Pcode?: string
-  admin1Name_en?: string
-  admin1Name_alias?: string
-
-  admin2Pcode?: string
-  admin2Name_en?: string
-  admin2Name_alias?: string
-
-  admin3Pcode?: string
-  admin3Name_en?: string
-  admin3Name_alias?: string
-
-  admin4Pcode?: string
-  admin4Name_en?: string
-  admin4Name_alias?: string
-}
-
-type Facility = {
-  id: string
-  name: string
-  partOf: string
-  locationType: 'HEALTH_FACILITY' | 'CRVS_OFFICE'
-}
+import { HumdataLocation, FacilityRow, readCSVToJSON } from './csv-helpers'
 
 type Location = {
   id: string
@@ -68,7 +39,7 @@ export async function locationsHandler(_: Request, h: ResponseToolkit) {
     readCSVToJSON<HumdataLocation[]>(
       './src/data-seeding/locations/source/administrative-areas.csv'
     ),
-    readCSVToJSON<Facility[]>(
+    readCSVToJSON<FacilityRow[]>(
       './src/data-seeding/locations/source/locations.csv'
     ),
     getStatistics()
