@@ -15,30 +15,27 @@ import * as Hapi from '@hapi/hapi'
 import { sendInformantNotification } from '../notification/informantNotification'
 import { ActionConfirmationRequest } from '../registration'
 
-export function getCustomEventsHandler(
-  _: Hapi.Request,
-  h: Hapi.ResponseToolkit
-) {
+export function getEventsHandler(_: Hapi.Request, h: Hapi.ResponseToolkit) {
   return h
     .response([tennisClubMembershipEvent, birthEvent, deathEvent])
     .code(200)
 }
 
 export async function onCustomActionHandler(
-  request: ActionConfirmationRequest,
+  _: ActionConfirmationRequest,
   h: Hapi.ResponseToolkit
 ) {
   return h.response().code(200)
 }
 
+/**
+ * This catch-all action route will receive event actions with `Content-Type: application/json`
+ */
 export async function onAnyActionHandler(
   request: ActionConfirmationRequest,
   h: Hapi.ResponseToolkit
 ) {
-  // This catch-all event route will receive v2 events with `Content-Type: application/json`
-
   const token = request.auth.artifacts.token as string
-
   const event = request.payload
 
   await sendInformantNotification({ event, token })
