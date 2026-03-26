@@ -9,8 +9,31 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { AdvancedSearchConfig, event, field } from '@opencrvs/toolkit/events'
-import { placeOfBirthOptions } from './forms/pages/child'
+import {
+  AdvancedSearchConfig,
+  event,
+  field,
+  SelectOption
+} from '@opencrvs/toolkit/events'
+import {
+  PlaceOfBirth,
+  placeOfBirthMessageDescriptors
+} from './forms/pages/child'
+
+const placeOfBirthOptions = [
+  {
+    value: PlaceOfBirth.HEALTH_FACILITY,
+    label: placeOfBirthMessageDescriptors.HEALTH_FACILITY
+  },
+  {
+    value: PlaceOfBirth.PRIVATE_HOME,
+    label: placeOfBirthMessageDescriptors.PRIVATE_HOME
+  },
+  {
+    value: PlaceOfBirth.OTHER,
+    label: placeOfBirthMessageDescriptors.OTHER
+  }
+] satisfies SelectOption[]
 
 const childPrefix = {
   id: 'birth.search.criteria.label.prefix.child',
@@ -72,9 +95,7 @@ export const advancedSearchBirth = [
       id: 'advancedSearch.form.eventDetails'
     },
     fields: [
-      field('child.placeOfBirth', {
-        options: placeOfBirthOptions
-      }).exact(),
+      field('child.placeOfBirth', { options: placeOfBirthOptions }).exact(),
       field('child.birthLocation', {
         searchCriteriaLabelPrefix: childPrefix
       }).exact(),
