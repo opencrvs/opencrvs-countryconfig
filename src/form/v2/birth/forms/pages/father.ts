@@ -341,14 +341,20 @@ export const father = defineFormPage({
     },
     {
       id: 'father.addressHelper',
-      type: FieldType.PARAGRAPH,
+      type: FieldType.HEADING,
       label: {
         defaultMessage: 'Usual place of residence',
         description: 'This is the label for the field',
         id: 'event.birth.action.declare.form.section.person.field.addressHelper.label'
       },
-      configuration: { styles: { fontVariant: 'h3' } },
+      configuration: {
+        styles: { fontVariant: 'h3' }
+      },
       conditionals: [
+        {
+          type: ConditionalType.DISPLAY_ON_REVIEW,
+          conditional: never()
+        },
         {
           type: ConditionalType.SHOW,
           conditional: requireFatherDetails

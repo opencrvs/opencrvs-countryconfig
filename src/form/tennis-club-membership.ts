@@ -444,6 +444,16 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
           ]
         },
         {
+          id: 'recommender1.heading',
+          type: FieldType.HEADING,
+          label: {
+            defaultMessage: 'Recommender 1',
+            description: 'This is the label for the field',
+            id: `recommender1.heading.label`
+          },
+          configuration: { styles: { fontVariant: 'h3' } }
+        },
+        {
           id: 'recommender.name',
           configuration: { maxLength: MAX_NAME_LENGTH },
           type: FieldType.NAME,
@@ -543,6 +553,16 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
           }
         },
         {
+          id: 'recommender2.heading',
+          type: FieldType.HEADING,
+          label: {
+            defaultMessage: 'Recommender 2',
+            description: 'This is the label for the field',
+            id: `recommender2.heading.label`
+          },
+          configuration: { styles: { fontVariant: 'h3' } }
+        },
+        {
           id: 'recommender2.id',
           type: 'TEXT',
           conditionals: [
@@ -552,10 +572,20 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
             }
           ],
           label: {
-            defaultMessage: "2nd recommender's membership ID",
+            defaultMessage: 'Membership ID',
             description: 'This is the label for the field',
-            id: 'event.tennis-club-membership.action.declare.form.section.recommender2.field.id.label'
+            id: 'event.tennis-club-membership.action.declare.form.section.recommender.field.id.label'
           }
+        },
+        {
+          id: 'recommender3.heading',
+          type: FieldType.HEADING,
+          label: {
+            defaultMessage: 'Recommender 3',
+            description: 'This is the label for the field',
+            id: `recommender3.heading.label`
+          },
+          configuration: { styles: { fontVariant: 'h3' } }
         },
         {
           id: 'recommender3.id',
@@ -567,10 +597,20 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
             }
           ],
           label: {
-            defaultMessage: "3rd recommender's membership ID",
+            defaultMessage: 'Membership ID',
             description: 'This is the label for the field',
-            id: 'event.tennis-club-membership.action.declare.form.section.recommender3.field.id.label'
+            id: 'event.tennis-club-membership.action.declare.form.section.recommender.field.id.label'
           }
+        },
+        {
+          id: 'recommender4.heading',
+          type: FieldType.HEADING,
+          label: {
+            defaultMessage: 'Recommender 4',
+            description: 'This is the label for the field',
+            id: `recommender4.heading.label`
+          },
+          configuration: { styles: { fontVariant: 'h3' } }
         },
         {
           id: 'recommender4.id',
@@ -582,10 +622,20 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
             }
           ],
           label: {
-            defaultMessage: "4th recommender's membership ID",
+            defaultMessage: 'Membership ID',
             description: 'This is the label for the field',
-            id: 'event.tennis-club-membership.action.declare.form.section.recommender4.field.id.label'
+            id: 'event.tennis-club-membership.action.declare.form.section.recommender.field.id.label'
           }
+        },
+        {
+          id: 'recommender5.heading',
+          type: FieldType.HEADING,
+          label: {
+            defaultMessage: 'Recommender 5',
+            description: 'This is the label for the field',
+            id: `recommender5.heading.label`
+          },
+          configuration: { styles: { fontVariant: 'h3' } }
         },
         {
           id: 'recommender5.id',
@@ -597,9 +647,9 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
             }
           ],
           label: {
-            defaultMessage: "5th recommender's membership ID",
+            defaultMessage: 'Membership ID',
             description: 'This is the label for the field',
-            id: 'event.tennis-club-membership.action.declare.form.section.recommender5.field.id.label'
+            id: 'event.tennis-club-membership.action.declare.form.section.recommender.field.id.label'
           }
         }
       ]

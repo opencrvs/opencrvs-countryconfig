@@ -299,13 +299,21 @@ export const deceased = defineFormPage({
     },
     {
       id: `deceased.addressHelper`,
-      type: FieldType.PARAGRAPH,
+      type: FieldType.HEADING,
       label: {
         defaultMessage: 'Usual place of residence',
         description: 'This is the label for the field',
         id: `v2.event.death.action.declare.form.section.deceased.field.addressHelper.label`
       },
-      configuration: { styles: { fontVariant: 'h3' } }
+      configuration: {
+        styles: { fontVariant: 'h3' }
+      },
+      conditionals: [
+        {
+          type: ConditionalType.DISPLAY_ON_REVIEW,
+          conditional: never()
+        }
+      ]
     },
     {
       id: `deceased.address`,

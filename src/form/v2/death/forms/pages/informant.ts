@@ -416,14 +416,20 @@ export const informant = defineFormPage({
     },
     {
       id: 'informant.addressHelper',
-      type: FieldType.PARAGRAPH,
+      type: FieldType.HEADING,
       label: {
         defaultMessage: 'Usual place of residence',
         description: 'This is the label for the field',
         id: 'event.death.action.declare.form.section.informant.field.addressHelper.label'
       },
-      configuration: { styles: { fontVariant: 'h3' } },
+      configuration: {
+        styles: { fontVariant: 'h3' }
+      },
       conditionals: [
+        {
+          type: ConditionalType.DISPLAY_ON_REVIEW,
+          conditional: never()
+        },
         {
           type: ConditionalType.SHOW,
           conditional: and(

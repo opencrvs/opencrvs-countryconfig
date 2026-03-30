@@ -154,8 +154,7 @@ export const documents = defineFormPage({
         defaultMessage: 'The following documents are required',
         description: 'The following documents are required',
         id: 'form.field.label.proofOfBirth.fileName'
-      },
-      configuration: { styles: { fontVariant: 'reg16' } }
+      }
     },
     {
       id: 'documents.proofOfDeceased',
