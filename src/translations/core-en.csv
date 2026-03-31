@@ -1,0 +1,1808 @@
+id,description,en
+action.action,Label for action button in dropdown menu,Action
+action.archive,Label for archive record button in dropdown menu,Archive Record
+action.assignee,Label for assignee,Assigned to {name} at {officeName}
+action.correct,Label for correct record button in dropdown menu,Correct Record
+action.issue,Label for issue certificate in dropdown menu,Issue certificate
+action.noActionsAvailable,No actions available message,No actions available
+action.print,Label for print certified copy in dropdown menu,Print certified copy
+action.reinstate,Label for reinstate record button in dropdown menu,Reinstate Record
+action.review.correction,Label for review correction request button in dropdown menu,Review correction request
+action.review.declaration,Label for review record button in dropdown menu,"Review {isDuplicate, select, true{potential duplicate} other{declaration}}"
+action.update,Label for update record button in dropdown menu,Update declaration
+action.view,Label for view button in dropdown menu,View {recordOrDeclaration}
+actionModal.cancel,The label for cancel button of action modal,Cancel
+actionModal.confirm,The label for confirm button of action modal,Confirm
+actionModal.description,The description for action modal,The informant will be notified of this decision and a record of this decision will be recorded.
+actions.edit,Edit action label,Edit
+actions.notify,Notify action label,Notify
+actions.read,Action label for reading a record from the workqueue,Review
+advancedSearch.accordion.hide,Label for hide button when accordion is closed,Hide
+advancedSearch.accordion.show,Label for show button when accordion is closed,Show
+advancedSearch.form.childDetails,The title of Child details accordion,Child details
+advancedSearch.form.dateOfRegistration,Label for input date of registration,Date of registration
+advancedSearch.form.deceasedDetails,The title of Deceased details accordion,Deceased details
+advancedSearch.form.eventDetails,The title of event details accordion,Event details
+advancedSearch.form.fatherDetails,The title of Father details accordion,Father details
+advancedSearch.form.informantDetails,The title informant details form,Informant details
+advancedSearch.form.motherDetails,The title of Mother details accordion,Mother details
+advancedSearch.form.placeOfRegistration,Label for input Place of registration,Place of registration
+advancedSearch.form.placeOfRegistrationHelperText,Helper text for input Place of registration,"Search for a province, district or registration office"
+advancedSearch.form.recordStatusAchived,Option for form field: status of record,Archived
+advancedSearch.form.recordStatusAny,Option for form field: status of record,Any status
+advancedSearch.form.recordStatusArchived,Option for form field: status of record,Archived
+advancedSearch.form.recordStatusCertified,Option for form field: status of record,Certified
+advancedSearch.form.recordStatusCorrectionRequested,Option for form field: status of record,Correction requested
+advancedSearch.form.recordStatusDeclared,Option for form field: status of record,Declared
+advancedSearch.form.recordStatusInReview,Option for form field: status of record,In review
+advancedSearch.form.recordStatusInprogress,Option for form field: status of record,In progress
+advancedSearch.form.recordStatusNotified,Option for form field: status of record,Notified
+advancedSearch.form.recordStatusRegistered,Option for form field: status of record,Registered
+advancedSearch.form.recordStatusRequireUpdate,Option for form field: status of record,Requires updates
+advancedSearch.form.recordStatusValidated,Option for form field: status of record,Validated
+advancedSearch.form.registrationDetails,The title of Registration details accordion,Registration details
+advancedSearch.form.statusOfRecordLabel,Label for input Status of record,Status of record
+advancedSearch.form.timePeriodHelperText,Helper text for input Time period,Period of time since the record status changed
+advancedSearch.form.timePeriodLabel,Label for input Time period,Time period
+advancedSearch.registeredAt,Label for date of registration field,Date of the registration was accepted
+advancedSearch.registeredAtLocation,Label for place of registration field,Place of registration
+advancedSearch.registeredAtLocation.helperText,Helper text for place of registration field,"Search for a province, district or registration office"
+advancedSearch.registrationNumber,Label for registration number field,Registration number
+advancedSearch.status,Label for status field,Status of record
+advancedSearch.trackingId,Label for tracking ID field,Tracking ID
+advancedSearch.updatedAt,Label for date of update field,Time period
+advancedSearch.updatedAt.helperText,Helper text for date of update field,Period of time since the record status changed
+advancedSearchResult.pill.childDoB,The label for child d.o.b in active advancedSearchParams,Child d.o.b
+advancedSearchResult.pill.childFirstName,The label for child firstname in active advancedSearchParams,Child firstname
+advancedSearchResult.pill.childLastName,The label for child lastname in active advancedSearchParams,Child lastname
+advancedSearchResult.pill.deceasedDoB,The label for deceased d.o.b in active advancedSearchParams,Deceased d.o.b
+advancedSearchResult.pill.deceasedFirstName,The label for deceased firstname in active advancedSearchParams,Deceased Ffirstname
+advancedSearchResult.pill.deceasedLastName,The label for deceased lastname in active advancedSearchParams,Deceased lastname
+advancedSearchResult.pill.event,The label for event param in active advancedSearchParams,Event
+advancedSearchResult.pill.eventDate,The label for event date param in active advancedSearchParams,Event date
+advancedSearchResult.pill.eventLocation,The label for event location in active advancedSearchParams,Event location
+advancedSearchResult.pill.fatherDoB,The label for father d.o.b in active advancedSearchParams,Father d.o.b
+advancedSearchResult.pill.fatherFirstName,The label for father firstname in active advancedSearchParams,Father firstname
+advancedSearchResult.pill.fatherLastName,The label for father lastname in active advancedSearchParams,Father lastname
+advancedSearchResult.pill.gender,The label for gender in active advancedSearchParams,Sex
+advancedSearchResult.pill.informantDoB,The label for informant d.o.b in active advancedSearchParams,Informant d.o.b
+advancedSearchResult.pill.informantFirstName,The label for informant firstname in active advancedSearchParams,Informant Firstname
+advancedSearchResult.pill.informantLastName,The label for informant lastname in active advancedSearchParams,Informant lastname
+advancedSearchResult.pill.motherDoB,The label for mother d.o.b in active advancedSearchParams,Mother d.o.b
+advancedSearchResult.pill.motherFirstName,The label for mother firstname in active advancedSearchParams,Mother firstname
+advancedSearchResult.pill.motherLastName,The label for mother lastname in active advancedSearchParams,Mother lastname
+advancedSearchResult.pill.regDate,The label for  registration date in active advancedSearchParams,Registration date
+advancedSearchResult.pill.regLocation,The label for event location in active advancedSearchParams,Location
+advancedSearchResult.pill.regNumber,The label for registration number in active advancedSearchParams,Registration number
+advancedSearchResult.pill.registationStatus,The label for registration Status param in active advancedSearchParams,Registration status
+advancedSearchResult.pill.timePeriod,The label for time period in active advancedSearchParams,Time period
+advancedSearchResult.pill.trackingId,The label for tracking id in active advancedSearchParams,Tracking ID
+advancedSearchResult.table.noResult,The label for no result in advancedSearchResult page,No result
+advancedSearchResult.table.searchResult,The label for search result header in advancedSearchResult page,Search results
+buttons.add,Add button text on form config,Add
+buttons.apply,Apply button label,Apply
+buttons.approve,Approve button text,Approve
+buttons.archive,Archive button text,Archive
+buttons.assign,Assign button label,Assign
+buttons.back,Back button text,Back
+buttons.backToReview,Back to review button text,Back to review
+buttons.cancel,Cancel button text in the modal,Cancel
+buttons.change,The label for the change button,Change
+buttons.changeAll,The label for the change all button,Change all
+buttons.closeDeclaration,Close declaration button text,Close declaration
+buttons.configure,Configure button text,Configure
+buttons.confirm,Label used for confirm button,Confirm
+buttons.continue,Label used for continue button,Continue
+buttons.copied,Copied button text,Copied
+buttons.copy,Copy button text,Copy
+buttons.correctRecord,Record corrected button text,Correct record
+buttons.create,Label for submit button of client integration creation form,Create
+buttons.delete,Delete button,Delete
+buttons.deleteDeclaration,The label for the delete declaration button,Delete declaration
+buttons.edit,Edit button text,Edit
+buttons.editRecord,Correct record button text on review certificate,"No, make correction"
+buttons.editRegistration,Edit registration button text,Edit Registration
+buttons.exactDateUnknown,Label for DateRangePickerForFormField components daterangepicker toggle button,Exact date unknown
+buttons.exit,The label for the exit button,Exit
+buttons.finish,The label for finish printing certificate button,Finish
+buttons.forgotPassword,The label for forgot password button,Forgot password
+buttons.forgottenPIN,The label for forgotten pin button,Forgotten PIN
+buttons.goToHomePage,Label for Go to Homepage button,Back to home
+buttons.issue,Button for issuing,Issue
+buttons.login,The title that appears in step one of the form,Login
+buttons.logout,logout title,Logout
+buttons.makeCorrection,Make correction button text on correction summary,Make correction
+buttons.next,The label for next button,Next
+buttons.no,No button text,No
+buttons.preview,Preview button,Preview
+buttons.print,,Print
+buttons.printDeclaration,Print declaration button text,Print declaration
+buttons.publish,Publish button text on form config,Publish
+buttons.refresh,Refresh button,Refresh
+buttons.register,Label for button on register confirmation modal,Register
+buttons.reinstate,Label for reinstate button,Reinstate
+buttons.reject,A label for reject link,Reject
+buttons.rejectDeclaration,Reject declaration button text,Reject declaration
+buttons.replace,Label for replacing the whole section in review form,Change all
+buttons.retry,The title of retry button for failed declaration,Retry
+buttons.review,Review button text,Review
+buttons.save,Save Button Text,Save
+buttons.saveAndExit,Save & exit Button Text,Save & exit
+buttons.saveExit,The label for the save and exit button,Save & Exit
+buttons.saving,Saving Button Text,Saving...
+buttons.search,Label for search button,Search
+buttons.select,The select title,Select
+buttons.send,Submit button on submit modal,Send
+buttons.sendForApproval,Title for complete submit button,Send For approval
+buttons.sendForReview,Submit Button Text,Send For review
+buttons.sendForUpdates,,Send for updates
+buttons.sendIncomplete,Title for Incomplete submit button,Send incomplete
+buttons.settings,Menu item settings,Settings
+buttons.start,Label of start button,Start
+buttons.status,Label of status button,Status
+buttons.submitCorrectionRequest,Submit correction request button text,Submit correction request
+buttons.unassign,Unassign button label,Unassign
+buttons.update,The title of update button for draft declaration,Update
+buttons.upload,Upload buttton,Upload
+buttons.verify,Label for verify password button,Verify
+buttons.view,Label for link button view,View
+buttons.yes,Yes button text,Yes
+certificate.confirmCorrect,Edit,Edit
+certificate.isCertificateCorrect,Question asking the user if the information on the  certificate is correct,Is the {event} certificate correct?
+certificate.parent.details.label.age,Person age,Age
+certificate.parent.details.label.dateOfBirth,Parent Date of Birth,Date of Birth
+certificate.parent.details.label.familyName,Parent last name,Last Name
+certificate.parent.details.label.familyNameInEng,Parent last name,Last Name(in english)
+certificate.parent.details.label.firstName,Parent first names,First Name(s)
+certificate.parent.details.label.firstNameInEng,Parent first names,First Name(s)(in english)
+certificate.parent.details.label.nationality,Parent Nationality,Nationality
+certificate.parent.details.label.number,Parent number,Number
+certificate.parent.details.label.typeOfID,Parent Type of ID,Type of ID
+certificate.receipt.amount,Amount paid for certificate label,"Amount paid:
+
+"
+certificate.receipt.amountDue,The label for due amount,Fee
+certificate.receipt.birthService.after,Amount due on certificate for birth label,Birth registration after {target} days of date of birth
+certificate.receipt.birthService.before,Amount due on certificate for birth label before target days,Birth registration before {target} days of date of birth
+certificate.receipt.birthService.between,Amount due on certificate for birth label,Birth registration between {target} days and {latetarget} days of date of birth
+certificate.receipt.deathService.after,Amount due on certificate for death label,Death registration after {target} days of date of death
+certificate.receipt.deathService.before,Amount due on certificate for death label before target days,Death registration before {target} days of date of death
+certificate.receipt.header,Receipt header for payment on certificate,Receipt for {event} Certificate of
+certificate.receipt.issuedAt,Receipt on payment on certificate issued at label,Issued at:
+certificate.receipt.issuer,Issuer information for receipt of certificate payment label,"By: {role}, {name}
+ Date of payment: {dateOfPayment}"
+certificate.receipt.marriageService.after,Amount due on certificate for marriage label,Marriage registration after {target} days of date of marriage
+certificate.receipt.marriageService.before,Amount due on certificate for marriage label before target days,Marriage registration before {target} days of date of marriage
+certificate.receipt.service,Service received for receipt label,Service
+certificate.receipt.subheader,Subheader for receipt on payment on certificate,{event} Registration after {DOBDiff} of {DOE}
+certificate.selectTemplate,The title of select certificate template action,Type
+certificate.selectedTemplate,The title of selected certificate template label,Selected certificate template
+changeEmail.validation.msg,Phone number validation message,Must be a valid email address
+changeModal.continue,The label for continue button of change modal,Continue
+changeModal.description,The description for change modal,A record will be created of any changes you make
+changeModal.title,The title for change modal,Edit declaration?
+changePhone.validation.msg,Phone number validation message,Must be a valid {num} digit number that starts with {start}
+config.advanced.search,This is used for the advanced search,Advanced Search
+config.advanced.search.instruction,This is used for the advanced search,Select the options to build an advanced search. A minimum of two search parameters is required.
+config.application.birthTabTitle,The title for birth tab,Birth
+config.application.birthTabTitleExport,The title for birth tab for VSExport,Births
+config.application.deathTabTitle,The title for death tab,Death
+config.application.deathTabTitleExport,The title for death tab for VSExport,Deaths
+config.application.emptystate,Vital Statistics Export Empty State Text,The previous month's vital statistics data (based on vital event registrations occurring within that month) will become available for you to export as of the 1st of every month. Large CSV files cannot be opened in Excel and should therefore be opened in a statistical program such as {posit}.
+config.application.export,Download Export CSV,Export
+config.application.vitalStatistics,Vital Statistics Export,"Month-{month}-Farajaland-{event, select, birth{birth} death{death} other{birth}}-event-statistics.csv {fileSize}"
+config.application.vsExportDownloadFailed,Vital Statistics Export Empty State Text,Sorry! Something went wrong
+config.application.vsexport,VS Export tab,Vital statistics
+config.certTemplate,Label for certificate templates,Certificate Template
+config.certificate.options,Show options,Options
+config.emailAllUsers.modal.supportingCopy,Label for send email all users confirmation supporting copy,User will receive emails over the next 24 hours
+config.emailAllUsers.modal.title,Label for send email all users confirmation title,Send email to all users?
+config.emailAllUsers.subtitle,Subtitle for email all users,This email will be sent to all users who are active. Emails will be sent over the next 24 hours. Only one email can be sent per day
+config.emailAllUsers.title,Title for email all users,Email all users
+config.userRoles.language,Language name,{language}
+configuration.dateFormat,Default format for date values,d MMMM y
+configuration.timeField.outputFormat,Default format for time values,HH:mm
+configuration.timeFormat,Time format for timestamps in event history,"MMMM dd, yyyy · hh.mm a"
+conflicts.modal.assign.description,Description for modal when assign,Please note you will have sole access to this record. Please make any updates promptly otherwise unassign the record.
+conflicts.modal.assign.title,Title for modal when assign,Assign record?
+conflicts.modal.assigned.description,Description for modal when record already assigned,{name} at {officeName} has sole editable access to this record
+conflicts.modal.assigned.title,Title for modal when record already assigned,Assigned record
+conflicts.modal.regUnassign.description,Description for modal when registrar wants to unassign an assigned user,{name} at {officeName} currently has sole editable access to this record. Unassigning this record will mean their current edits will be lost. Please confirm you wish to continue.
+conflicts.modal.selfUnassign.description,Description for modal when user wants to unassign him/herself,Unassigning this record will mean that any current edits will be lost. Please confirm you wish to continue.
+conflicts.modal.unassign.title,Title for modal when unassign record,Unassign record?
+constants.PIN,PIN label,PIN
+constants.address,Label for address,Address
+constants.ageVerificationApiUser,The description for AGE_VERIFICATION_API_USER role,Age verificatiion API role
+constants.allEvents,Label for select option All events,All events
+constants.allStatuses,Label for select option All statuses,All statuses
+constants.apiUser,The description for API_USER role,API role
+constants.application.title,Application title,Application
+constants.applicationName,Declaration name of CRVS,OpenCRVS
+constants.archived_declaration,Application has been archived,Archived
+constants.assignRecord,A label for the Assign record -button,Assign record
+constants.audit,Audit heading,Audit
+constants.averageRateOfRegistrations,A label for Average rate of registrations,avg. {amount}%
+constants.birth,A label from the birth event,Birth
+constants.births,A label from the births event,Births
+constants.by,Label for By (the person who performed the action),By
+constants.certificate.title,Certificate title,Certificate
+constants.certificationPaymentTitle,Label for certification payment performance reports,"Payment collected for {event, select, birth{birth} death{death} other{birth}} certificates"
+constants.certified,A label for certified,certified
+constants.cha,The description for CHA type,CHA
+constants.chairman,The description for CHAIRMAN type,Chairman
+constants.collected,The status label for collected,collected
+constants.collectedBy,The collected by sec text,Collected by
+constants.collectorDetails,Label for collector details,Collector Details
+constants.comment,Label for rejection comment,Comment
+constants.communityLeader,The description for Community Leader type,Community Leader
+constants.countryName,Name of the OpenCRVS implementation country,Farajaland
+constants.customTimePeriod,Label for Custom time period,Custom time period
+constants.dataEntryClerk,The description for DATA_ENTRY_CLERK type,Data entry clerk
+constants.dateOfDeclaration,Date of declaration label,Date of declaration
+constants.death,A label from the death event,Death
+constants.deaths,A label from the deaths event,Deaths
+constants.declaration,A label for declaration,declaration
+constants.declarationCollectedOn,Label for the workflow timestamp when the status is collected,Certificate collected on
+constants.declarationFailedOn,Label for the workflow timestamp when the status is failed,Failed to send on
+constants.declarationRegisteredOn,Label for the workflow timestamp when the status is registered,Declaration registered on
+constants.declarationRejectedOn,Label for the workflow timestamp when the status is rejected,Declaration sent for updates on
+constants.declarationRequestedCorrectionOn,Label for the workflow timestamp when the status is requested correction,Declaration requested correction on
+constants.declarationSentForExternalValidationOn,Label for the workflow timestamp when the status is waiting_validation,Declaration sent for external validation on
+constants.declarationStarted,Label for table header column Declaration started,Started
+constants.declarationStartedBy,Label for table header column Started by,Started by
+constants.declarationStartedOn,Label for the workflow timestamp when the status is draft created,Started on
+constants.declarationState,A label to describe when the declaration was actioned on,Declaration {action} on
+constants.declarationSubmittedOn,Label for the workflow timestamp when the status is declaration,Declaration submitted on
+constants.declarationUpdatedOn,Label for the workflow timestamp when the status is draft updated,Updated on
+constants.declarationValidatedOn,Label for the workflow timestamp when the status is validated,Declaration reviewed on
+constants.declarations,Declaration title,Declarations
+constants.declarationsCount,A label for declarations count,Declarations ({totalItems})
+constants.declrationArchivedOn,Label for the workflow timestamp when the status is archived,Application archived on
+constants.districtRegistrar,The description for DISTRICT_REGISTRAR role,District Registrar
+constants.dnrpc,The description for DNRPC type,DNRPC
+constants.dob,Date of birth label,D.o.B.
+constants.dod,Label for DoD in work queue list item,D.o.D
+constants.downloaded,Label for application download status Downloaded,Downloaded
+constants.downloading,Label for declaration download status Downloading,Downloading...
+constants.draft,A label for draft,Draft
+constants.duplicateOf,table header for `duplicate of` in record audit,Duplicate of
+constants.emailAddress,Label used for email address input field,Email Address
+constants.emailBody,Label for email body input,Message
+constants.emailSubject,Label for email subject input,Subject
+constants.entrepeneur,The description for ENTREPENEUR type,Entrepeneur
+constants.estimatedNumberOfEvents,A label for Estimated number of events,"Estimated no. of {eventType, select, birth {birth} death {death} other {birth}}s"
+constants.estimatedNumberOfRegistartion,A label for estimated no. of registrations,Estimated no. of registrations
+constants.estimatedTargetDaysRegistrationTitle,A label for estimated vs total registered in {registrationTargetDays} days,Estimated vs total registered in {registrationTargetDays} days
+constants.event,Label for Event of event in work queue list item,Event
+constants.eventDate,Label for event date in list item,Date of event
+constants.eventType,Label for table header column Event type,Event
+constants.export,Label used for export,Export
+constants.failedToSend,Label for declaration status Failed,Failed to send
+constants.female,The duplicates text for female,Female
+constants.femaleOver18,Label for femaleOver18,Female Over 18
+constants.femaleUnder18,Label for femaleUnder18,Female Under 18
+constants.fieldAgent,The description for FIELD_AGENT role,Field Agent
+constants.form.title,Form Declaration title,Declaration forms
+constants.from,Label for text From,From
+constants.gender,Gender label,Gender
+constants.healthDivision,The description for HEALTH_DIVISION type,Health Division
+constants.healthcareWorker,The description for Healthcare Worker type,Healthcare Worker
+constants.history,History heading,History
+constants.humanName,A localized order of the full name,{firstName} {middleName} {lastName}
+constants.id,ID Label,ID
+constants.idCheckWithoutVerify,Issuance without the confirmation of proof,Continue without proof of ID?
+constants.inReview.status,A label for In Review,In Review
+constants.incomplete.status,A label for Incomplete,Incomplete
+constants.informant,Informant Label,Informant
+constants.informantContactNumber,The title of contact number label,Informant contact number
+constants.integrations,Integration title,Integrations
+constants.issueCertificate,Label for issue certificate,Issue Certificate
+constants.issueConfirmationMessage,Confirmation of issuance,Please confirm that the certificate has been issued to the informant or collector.
+constants.issueToBride,Issuing to bride,Issue to bride
+constants.issueToFather,Issuing to father,Issue to father
+constants.issueToGroom,Issuing to groom,Issue to groom
+constants.issueToInformant,Issuance of death to informant,Issue to informant ({informant})
+constants.issueToMother,Issuing to mother,Issue to mother
+constants.issueToSomeoneElse,Issuing to someone else,Issue to someone else
+constants.issuedBy,The issued by sec text,Issued by
+constants.label.action,Action Label,Action
+constants.label.date,Date Label,Date
+constants.language,language label,Language
+constants.last12Months,Label for preset date range Last 12 months,Last 12 months
+constants.last30Days,Label for  preset date range Last 30 days,Last 30 days
+constants.lastEdited,Label for rejection date in work queue list item,Last edited
+constants.lastUpdated,Label for Last updated in list item,Last updated
+constants.loadMore,A label for load more,Load more
+constants.localRegistrar,The description for LOCAL_REGISTRAR role,Registrar
+constants.location,Label for location,Location
+constants.male,The duplicates text for male,Male
+constants.maleOver18,Label for maleOver18,Male Over 18
+constants.maleUnder18,Label for maleUnder18,Male Under 18
+constants.marriage,A label from the marriage event,Marriage
+constants.marriages,A label from the marriages event,Marriages
+constants.matchedTo,table header for `Matched to` in record audit,Matched to
+constants.mayor,The description for MAYOR type,Mayor
+constants.month,Label for month,Month
+constants.name,Name label,Name
+constants.nationalRegistrar,The description for NATIONAL_REGISTRAR role,National Registrar
+constants.nationalSystemAdmin,The description for System admin (national),System admin (national)
+constants.noConnection,No Connection hover text,No connection
+constants.noNameProvided,Label for empty title,No name provided
+constants.noResults,Text to display if the search return no results for the current filters,No result
+constants.noResultsOutbox,Text to display if there is no items in outbox,No records require processing
+constants.notificationApiUser,The description for NOTIFICATION_API_USER role,Notification API role
+constants.notificationSent,label for notification sent,Notification sent
+constants.orgDivision,The description for ORG_DIVISION type,ORG Division
+constants.over5Years,Label for registrations over 5 years,Over 5 years
+constants.password,Password label,Password
+constants.pendingConnection,Label for declaration status Pending Connection,Pending connection
+constants.percentageOfEstimation,A label for percentage of estimate,Percentage of estimate
+constants.performance,Performance title,Performance
+constants.performanceManagement,The description for Performance Management role,Performance Management
+constants.phoneNumber,Label used for phone number input field,Phone number
+constants.policeOfficer,The description for Police Officer type,Police Officer
+constants.reason,Label for rejection correction reason,Reason
+constants.record,Label for header table header Record,Record
+constants.refresh,label for refresh,Refresh
+constants.registered,A label for registered,registered
+constants.registered.status,A label for registered,Registered
+constants.registeredAt,Label for comparison row registeredAt type,Registered at
+constants.registeredBy,Label for comparison row registeredBy type,Registered by
+constants.registeredInTargetd,A label for Registered in {registrationTargetDays} days,Registered in {registrationTargetDays} days
+constants.registeredWithinTargetd,A label for Registered {registrationTargetDays} within  days of event,"Registered within
+{registrationTargetDays} days of event"
+constants.registrationAgent,The description for REGISTRATION_AGENT role,Registration Agent
+constants.registrationNumber,Label for registered number,Reg no.
+constants.rejected,A label for rejected,rejected
+constants.rejectedDays,The title of rejected days of declaration,Sent for updates {text}
+constants.relationship,Relationship Label for death,Relationship
+constants.requestReason,Label for Reason the declaration was corrected,Reason for request
+constants.requestedCorrection,A label for requested correction,requested correction
+constants.requireUpdatesLoading,The text when all rejected declarations are loading,Checking your declarations
+constants.requiresUpdates.status,A label for Requires updates,Requires updates
+constants.review,A label from the review button,Review
+constants.role,Role label,Role
+constants.search,The title of the page,Search
+constants.secretary,The description for SECRETARY type,Secretary
+constants.sending,Label for declaration status Submitting,Sending...
+constants.sentForApproval,label for sent for approval,Sent for approval
+constants.sentForReview,label for sent for review,Sent for review
+constants.sentForUpdates,label for sent for updates,Sent for updates
+constants.sentForUpdatesOn,Label for rejection date in work queue list item,Sent for updates on
+constants.sentForValidation,label for sent for validation,Sent for validation
+constants.sentOn,Label for rejection date in work queue list item,Sent on
+constants.sent_incomplete,Declaration submitted without completing the required fields,Sent incomplete
+constants.showMore,Label for show more link,Show next {pageSize}
+constants.skipToMainContent,Label for a keyboard accessibility link which skips to the main content,Skip to main content
+constants.socialWorker,The description for Hospital Clerk type,Hospital Clerk
+constants.startedAt,Label for Started At in list item,Started
+constants.startedBy,Label for Started by in list item,Started by
+constants.stateRegistrar,The description for STATE_REGISTRAR role,State Registrar
+constants.status,Title for column,Status
+constants.submissionStatus,Label for table header of column Submission status,Submission status
+constants.submitted,A label for submitted,submitted
+constants.systemrole,System Role label,System Role
+constants.timeFramesTitle,Header for tabel performance timeframs,"{event, select, birth{Birth} death{Death} other{Birth}} registered by time period, from date of occurrence"
+constants.timeInProgress,Label for column Time in progress,Time in progress
+constants.timePeriod,A label for Time period,Time period
+constants.timeReadyForReview,Label for column Time in ready for review,Time in ready for review
+constants.timeReadyToPrint,Label for column Time in ready to print,Time in ready to print
+constants.timeRequireUpdates,Label for column Time in require updates,Time in require updates
+constants.timeWaitingExternalValidation,Label for column Time in external validation BRIS,Time in external validation
+constants.timeWatingApproval,Label for column Time in waiting for approval,Time in waiting for approval
+constants.to,Used in sentence,to
+constants.toCapitalized,Label for To,To
+constants.total,Label for total,Total
+constants.totalFileSizeExceed,Accumulated File size exceed message,Total size of documents exceeds {fileSize}. Please reduce file size of your uploads
+constants.totalRegistered,A label for Total registered,Total registered
+constants.totalRegisteredInTargetDays,A label for total registered in {registrationTargetDays} days,Total registered in {registrationTargetDays} days
+constants.trackingId,Search menu tracking id type,Tracking ID
+constants.type,Label for type of event in work queue list item,Type
+constants.update,The title of reject button in list item actions,Update
+constants.updated,Application has been updated,Updated
+constants.updated_declaration,Declaration has been updated,Updated declaration
+constants.user,The name of the user form,User
+constants.user.role,Label for role input in user creation,Role
+constants.username,The name of the user name form,Username
+constants.validated,A label for validated,validated
+constants.validatorApiUser,The description for VALIDATOR_API_USER role,Validator API role
+constants.viewAll,Label for view all link,View all
+constants.waitingToSend,Label for declaration status Ready to Submit,Waiting to send
+constants.waitingValidated,A label for waitingValidated,Waiting for validation
+constants.waitingValidation,A label for waitingValidation,sent for validation
+constants.week,Label for week,Week
+constants.within1YearTo5Years,Label for registrations within 1 year to 5 years,1 year - 5 years
+constants.withinTargetDays,Label for registrations within {registrationTargetDays} days,Within {registrationTargetDays} days
+constants.withinTargetDaysTo1Year,Label for registrations within {registrationTargetDays} days to 1 year,{registrationTargetDays} days - 1 year
+correction.certificate.corrector.idCheck,The title for id check component,Verify their identity
+correction.certificate.corrector.idCheckVerify,The label for id check component action when verify details,Verified
+correction.certificate.corrector.idCheckWithoutVerify,The label for id check component action when does not verify details,Identity does not match
+correction.certificate.corrector.otherIdCheck,The title for other id check component,Have you checked their proof of identification?
+correction.correctRecordDialog.description,The description for the dialog when record correction sent by a registrar,Approving this correction will permanently update the official record.
+correction.correctRecordDialog.title,The title for the dialog when record correction sent by a registrar,Correct record ?
+correction.correctionForApprovalDialog.actions.cancel,The cancel button for the dialog when record correction sent by registration agent for approval,Cancel
+correction.correctionForApprovalDialog.actions.send,The send button for the dialog when record correction sent by registration agent for approval,Confirm
+correction.correctionForApprovalDialog.description,The description for the dialog when record correction sent by registration agent for approval,This will initiate a formal correction request for the selected record. Supporting documentation may be required.
+correction.correctionForApprovalDialog.title,The title for the dialog when record correction sent by registration agent for approval,Request record correction?
+correction.correctionReject.description,The description for reject correction modal,Rejecting this correction request will leave the original record unchanged. A reason for rejection should be provided.
+correction.correctionReject.reason,Correction request rejection reason,Reason for rejection
+correction.correctionRequest,Correction request text,Correction request
+correction.corrector.anotherAgent,Label for another registration or field agent option in certificate correction form,Another registration agent or field agent
+correction.corrector.birth.note,Birth correction note,Note: In the case that the child is now of legal age (18) then only they should be able to request a change to their birth record.
+correction.corrector.bride,Label for bride option in certificate correction form,Bride
+correction.corrector.child,Label for child option in certificate correction form,Child
+correction.corrector.court,Label for court option in certificate correction form,Court
+correction.corrector.description,The description for the dialog when details of the corrector not verified,"Please be aware that if you proceed, you will be responsible for making a change to this record without the necessary proof of identification"
+correction.corrector.error,Error for corrector form,Please select who is correcting the certificate
+correction.corrector.father,Label for father option in certificate correction form,Father
+correction.corrector.groom,Label for groom option in certificate correction form,Groom
+correction.corrector.informant,Label for informant option in certificate correction form,Informant ({informant})
+correction.corrector.legalGuardian,Label for legal guardian option in certificate correction form,Legal guardian
+correction.corrector.me,Label for registrar option in certificate correction form,Me (Registrar)
+correction.corrector.mother,Label for mother option in certificate correction form,Mother
+correction.corrector.others,Label for someone else option in certificate correction form,Someone else
+correction.corrector.title,The title for the corrector form,Who is requesting a change to this record?
+correction.informant.error,Error for corrector form,Please select who is informant
+correction.label.verifyIdentity.cancel,Label for cancellation of identity verificationin correction request,No
+correction.label.verifyIdentity.confirm,Label for verification of identity in correction request,Yes
+correction.name,Certificate correction section name,Correction
+correction.reason.additionalComment,Label for any additional comment for correction reason form,Any additional comment?
+correction.reason.clericalError,Label for clerical error for correction reason form,Myself or an agent made a mistake (Clerical error)
+correction.reason.error,Error for reason form,Please type the reason for change
+correction.reason.judicialOrder,Label for judicial order for correction reason form,Requested to do so by the court (Judicial order)
+correction.reason.materialError,Label for material error for correction reason form,Informant provided incorrect information (Material error)
+correction.reason.materialOmission,Label for material omission for correction reason form,Informant did not provide this information (Material omission)
+correction.reason.other,Label for other for correction reason form,Other
+correction.reason.reasonForChange,Label for other reason for correction reason form,Reason for correction
+correction.reason.title,The title for the correction reason form,What was the reason for making a correction?
+correction.request,Status for application being requested for correction,Requested correction
+correction.requesterOffice,Correction requester office label,Office
+correction.submittedBy,Correction submitted by label,Submitter
+correction.submittedOn,Correction submitted on label,Submitted on
+correction.summary.addComments,Add Comments header for certificate correction summary,Add Comments
+correction.summary.change,Change link label,Change
+correction.summary.comments,Comments header for certificate correction summary,Comments
+correction.summary.correction,Correction value table header for certificate correction summary,Correction
+correction.summary.feesRequired,Fees required for certificate correction summary,Fees required?
+correction.summary.feesRequiredNegative,Negative label for Fees required for certificate correction summary,No
+correction.summary.feesRequiredPositive,Positive label for Fees required for certificate correction summary,Yes
+correction.summary.idCheck,ID check header for certificate correction summary,ID check
+correction.summary.idCheckForCorrection,The title for the dialog when details of the collector not verified for correction,Correct without proof of ID?
+correction.summary.item,Corrected item table header for certificate correction summary,Item
+correction.summary.office,Office where certificate correction summary was submitted,Office
+correction.summary.original,Original value table header for certificate correction summary,Original
+correction.summary.proofOfPayment,Proof of payment label fees payment document,Proof of payment
+correction.summary.proofOfPaymentRequired,Validation for proof of payment document for certificate correction summary,Proof of payment is required
+correction.summary.reasonForRequest,Reason for request header for certificate correction summary,Reason for request
+correction.summary.requestedBy,Requested by header for certificate correction summary,Requested by
+correction.summary.requestedOn,Date when certificate correction summary was submitted,Requested on
+correction.summary.required,Payment and proof of payment input error,Required for correction
+correction.summary.section.title,Corrections section title,Request correction(s)
+correction.summary.submitter,Submitter of certificate correction summary,Submitter
+correction.summary.supportingDocuments,Supporting documents header for certificate correction summary,Supporting documents
+correction.summary.title,Title for certificate correction summary,Correction summary
+correction.summary.totalPaymentLabel,Label of total payment in correction summary,Total {currency}
+correction.supportingDocuments.attestToSeeCorrectionDocument,Option for form field: Correction Supporting Document,I attest to seeing supporting documentation and have a copy filed at my office
+correction.supportingDocuments.docTypeAffidavitProof,Label for select option Affidavit,Affidavit
+correction.supportingDocuments.docTypeCourtDocument,Label for select option Court Document,Court Document
+correction.supportingDocuments.docTypeOther,Label for select option Other,Other
+correction.supportingDocuments.noDocumentsRequiredForCorrection,Option for form field: Correction Supporting Document,No supporting documents required
+correction.supportingDocuments.proofOfLegalDocuments,Label for list item of legal proof,Proof of legal correction documents
+correction.supportingDocuments.select.placeholder,Placeholder text for a select,Select
+correction.supportingDocuments.subtitle,Label for supportingDocuments form subtitle in certificate correction form,"For all record corrections at a minimum an affidavit must be provided. For material errors and omissions eg. in paternity cases, a court order must also be provided."
+correction.supportingDocuments.supportDocumentForCorrection,Label for form field: Correction Supporting Document,Check Supporting Document?
+correction.supportingDocuments.title,Label for supportingDocuments form title in certificate correction form,Upload supporting documents
+correction.title,Certificate correction section title,Correct record
+countries.ABW,ISO Country: ABW,Aruba
+countries.AFG,ISO Country: AFG,Afghanistan
+countries.AGO,ISO Country: AGO,Angola
+countries.AIA,ISO Country: AIA,Anguilla
+countries.ALA,ISO Country: ALA,Åland Islands
+countries.ALB,ISO Country: ALB,Albania
+countries.AND,ISO Country: AND,Andorra
+countries.ARE,ISO Country: ARE,United Arab Emirates
+countries.ARG,ISO Country: ARG,Argentina
+countries.ARM,ISO Country: ARM,Armenia
+countries.ASM,ISO Country: ASM,American Samoa
+countries.ATA,ISO Country: ATA,Antarctica
+countries.ATF,ISO Country: ATF,French Southern Territories
+countries.ATG,ISO Country: ATG,Antigua and Barbuda
+countries.AUS,ISO Country: AUS,Australia
+countries.AUT,ISO Country: AUT,Austria
+countries.AZE,ISO Country: AZE,Azerbaijan
+countries.BDI,ISO Country: BDI,Burundi
+countries.BEL,ISO Country: BEL,Belgium
+countries.BEN,ISO Country: BEN,Benin
+countries.BES,ISO Country: BES,"Bonaire, Sint Eustatius and Saba"
+countries.BFA,ISO Country: BFA,Burkina Faso
+countries.BGD,ISO Country: BGD,Bangladesh
+countries.BGR,ISO Country: BGR,Bulgaria
+countries.BHR,ISO Country: BHR,Bahrain
+countries.BHS,ISO Country: BHS,Bahamas
+countries.BIH,ISO Country: BIH,Bosnia and Herzegovina
+countries.BLM,ISO Country: BLM,Saint Barthélemy
+countries.BLR,ISO Country: BLR,Belarus
+countries.BLZ,ISO Country: BLZ,Belize
+countries.BMU,ISO Country: BMU,Bermuda
+countries.BOL,ISO Country: BOL,Bolivia (Plurinational State of)
+countries.BRA,ISO Country: BRA,Brazil
+countries.BRB,ISO Country: BRB,Barbados
+countries.BRN,ISO Country: BRN,Brunei Darussalam
+countries.BTN,ISO Country: BTN,Bhutan
+countries.BVT,ISO Country: BVT,Bouvet Island
+countries.BWA,ISO Country: BWA,Botswana
+countries.CAF,ISO Country: CAF,Central African Republic
+countries.CAN,ISO Country: CAN,Canada
+countries.CCK,ISO Country: CCK,Cocos (Keeling) Islands
+countries.CHE,ISO Country: CHE,Switzerland
+countries.CHL,ISO Country: CHL,Chile
+countries.CHN,ISO Country: CHN,China
+countries.CIV,ISO Country: CIV,Côte d'Ivoire
+countries.CMR,ISO Country: CMR,Cameroon
+countries.COD,ISO Country: COD,Democratic Republic of the Congo
+countries.COG,ISO Country: COG,Congo
+countries.COK,ISO Country: COK,Cook Islands
+countries.COL,ISO Country: COL,Colombia
+countries.COM,ISO Country: COM,Comoros
+countries.CPV,ISO Country: CPV,Cabo Verde
+countries.CRI,ISO Country: CRI,Costa Rica
+countries.CUB,ISO Country: CUB,Cuba
+countries.CUW,ISO Country: CUW,Curaçao
+countries.CXR,ISO Country: CXR,Christmas Island
+countries.CYM,ISO Country: CYM,Cayman Islands
+countries.CYP,ISO Country: CYP,Cyprus
+countries.CZE,ISO Country: CZE,Czechia
+countries.DEU,ISO Country: DEU,Germany
+countries.DJI,ISO Country: DJI,Djibouti
+countries.DMA,ISO Country: DMA,Dominica
+countries.DNK,ISO Country: DNK,Denmark
+countries.DOM,ISO Country: DOM,Dominican Republic
+countries.DZA,ISO Country: DZA,Algeria
+countries.ECU,ISO Country: ECU,Ecuador
+countries.EGY,ISO Country: EGY,Egypt
+countries.ERI,ISO Country: ERI,Eritrea
+countries.ESH,ISO Country: ESH,Western Sahara
+countries.ESP,ISO Country: ESP,Spain
+countries.EST,ISO Country: EST,Estonia
+countries.ETH,ISO Country: ETH,Ethiopia
+countries.FAR,Fictional country for OpenCRVS demo,Farajaland
+countries.FIN,ISO Country: FIN,Finland
+countries.FJI,ISO Country: FJI,Fiji
+countries.FLK,ISO Country: FLK,Falkland Islands (Malvinas)
+countries.FRA,ISO Country: FRA,France
+countries.FRO,ISO Country: FRO,Faroe Islands
+countries.FSM,ISO Country: FSM,Micronesia (Federated States of)
+countries.GAB,ISO Country: GAB,Gabon
+countries.GBR,ISO Country: GBR,United Kingdom of Great Britain and Northern Ireland
+countries.GEO,ISO Country: GEO,Georgia
+countries.GGY,ISO Country: GGY,Guernsey
+countries.GHA,ISO Country: GHA,Ghana
+countries.GIB,ISO Country: GIB,Gibraltar
+countries.GIN,ISO Country: GIN,Guinea
+countries.GLP,ISO Country: GLP,Guadeloupe
+countries.GMB,ISO Country: GMB,Gambia
+countries.GNB,ISO Country: GNB,Guinea-Bissau
+countries.GNQ,ISO Country: GNQ,Equatorial Guinea
+countries.GRC,ISO Country: GRC,Greece
+countries.GRD,ISO Country: GRD,Grenada
+countries.GRL,ISO Country: GRL,Greenland
+countries.GTM,ISO Country: GTM,Guatemala
+countries.GUF,ISO Country: GUF,French Guiana
+countries.GUM,ISO Country: GUM,Guam
+countries.GUY,ISO Country: GUY,Guyana
+countries.HKG,ISO Country: HKG,"""China, Hong Kong Special Administrative Region"""
+countries.HMD,ISO Country: HMD,Heard Island and McDonald Islands
+countries.HND,ISO Country: HND,Honduras
+countries.HRV,ISO Country: HRV,Croatia
+countries.HTI,ISO Country: HTI,Haiti
+countries.HUN,ISO Country: HUN,Hungary
+countries.IDN,ISO Country: IDN,Indonesia
+countries.IMN,ISO Country: IMN,Isle of Man
+countries.IND,ISO Country: IND,India
+countries.IOT,ISO Country: IOT,British Indian Ocean Territory
+countries.IRL,ISO Country: IRL,Ireland
+countries.IRN,ISO Country: IRN,Iran (Islamic Republic of)
+countries.IRQ,ISO Country: IRQ,Iraq
+countries.ISL,ISO Country: ISL,Iceland
+countries.ISR,ISO Country: ISR,Israel
+countries.ITA,ISO Country: ITA,Italy
+countries.JAM,ISO Country: JAM,Jamaica
+countries.JEY,ISO Country: JEY,Jersey
+countries.JOR,ISO Country: JOR,Jordan
+countries.JPN,ISO Country: JPN,Japan
+countries.KAZ,ISO Country: KAZ,Kazakhstan
+countries.KEN,ISO Country: KEN,Kenya
+countries.KGZ,ISO Country: LAO,Lao People's Democratic Republic Republic
+countries.KHM,ISO Country: KHM,Cambodia
+countries.KIR,ISO Country: KIR,Kiribati
+countries.KNA,ISO Country: KNA,Saint Kitts and Nevis
+countries.KOR,ISO Country: KOR,Republic of Korea
+countries.KWT,ISO Country: KWT,Kuwait
+countries.LBN,ISO Country: LBN,Lebanon
+countries.LBR,ISO Country: LBR,Liberia
+countries.LBY,ISO Country: LBY,Libya
+countries.LCA,ISO Country: LCA,Saint Lucia
+countries.LIE,ISO Country: LIE,Liechtenstein
+countries.LKA,ISO Country: LKA,Sri Lanka
+countries.LSO,ISO Country: LSO,Lesotho
+countries.LTU,ISO Country: LTU,Lithuania
+countries.LUX,ISO Country: LUX,Luxembourg
+countries.LVA,ISO Country: LVA,Latvia
+countries.MAC,ISO Country: MAC,"""China, Macao Special Administrative Region"""
+countries.MAF,ISO Country: MAF,Saint Martin (French Part)
+countries.MAR,ISO Country: MAR,Morocco
+countries.MCO,ISO Country: MCO,Monaco
+countries.MDA,ISO Country: MDA,Republic of Moldova
+countries.MDG,ISO Country: MDG,Madagascar
+countries.MDV,ISO Country: MDV,Maldives
+countries.MEX,ISO Country: MEX,Mexico
+countries.MHL,ISO Country: MHL,Marshall Islands
+countries.MKD,ISO Country: MKD,The former Yugoslav Republic of Macedonia
+countries.MLI,ISO Country: MLI,Mali
+countries.MLT,ISO Country: MLT,Malta
+countries.MMR,ISO Country: MMR,Myanmar
+countries.MNE,ISO Country: MNE,Montenegro
+countries.MNG,ISO Country: MNG,Mongolia
+countries.MNP,ISO Country: MNP,Northern Mariana Islands
+countries.MOZ,ISO Country: MOZ,Mozambique
+countries.MRT,ISO Country: MRT,Mauritania
+countries.MSR,ISO Country: MSR,Montserrat
+countries.MTQ,ISO Country: MTQ,Martinique
+countries.MUS,ISO Country: MUS,Mauritius
+countries.MWI,ISO Country: MWI,Malawi
+countries.MYS,ISO Country: MYS,Malaysia
+countries.MYT,ISO Country: MYT,Mayotte
+countries.NAM,ISO Country: NAM,Namibia
+countries.NCL,ISO Country: NCL,New Caledonia
+countries.NER,ISO Country: NER,Niger
+countries.NFK,ISO Country: NFK,Norfolk Island
+countries.NGA,ISO Country: NGA,Nigeria
+countries.NIC,ISO Country: NIC,Nicaragua
+countries.NIU,ISO Country: NIU,Niue
+countries.NLD,ISO Country: NLD,Netherlands
+countries.NOR,ISO Country: NOR,Norway
+countries.NPL,ISO Country: NPL,Nepal
+countries.NRU,ISO Country: NRU,Nauru
+countries.NZL,ISO Country: NZL,New Zealand
+countries.OMN,ISO Country: OMN,Oman
+countries.PAK,ISO Country: PAK,Pakistan
+countries.PAN,ISO Country: PAN,Panama
+countries.PCN,ISO Country: PCN,Pitcairn
+countries.PER,ISO Country: PER,Peru
+countries.PHL,ISO Country: PHL,Philippines
+countries.PLW,ISO Country: PLW,Palau
+countries.PNG,ISO Country: PNG,Papua New Guinea
+countries.POL,ISO Country: POL,Poland
+countries.PRI,ISO Country: PRI,Puerto Rico
+countries.PRK,PRK,Democratic People's Republic of Korea
+countries.PRT,ISO Country: PRT,Portugal
+countries.PRY,ISO Country: PRY,Paraguay
+countries.PSE,ISO Country: PSE,State of Palestine
+countries.PYF,ISO Country: PYF,French Polynesia
+countries.QAT,ISO Country: QAT,Qatar
+countries.REU,ISO Country: REU,Réunion
+countries.ROU,ISO Country: ROU,Romania
+countries.RUS,ISO Country: RUS,Russian Federation
+countries.RWA,ISO Country: RWA,Rwanda
+countries.SAU,ISO Country: SAU,Saudi Arabia
+countries.SDN,ISO Country: SDN,Sudan
+countries.SEN,ISO Country: SEN,Senegal
+countries.SGP,ISO Country: SGP,Singapore
+countries.SGS,ISO Country: SGS,South Georgia and the South Sandwich Islands
+countries.SHN,ISO Country: SHN,Saint Helena
+countries.SJM,ISO Country: SJM,Svalbard and Jan Mayen Islands
+countries.SLB,ISO Country: SLB,Solomon Islands
+countries.SLE,ISO Country: SLE,Sierra Leone
+countries.SLV,ISO Country: SLV,El Salvador
+countries.SMR,ISO Country: SMR,San Marino
+countries.SOM,ISO Country: SOM,Somalia
+countries.SPM,ISO Country: SPM,Saint Pierre and Miquelon
+countries.SRB,ISO Country: SRB,Serbia
+countries.SSD,ISO Country: SSD,South Sudan
+countries.STP,ISO Country: STP,Sao Tome and Principe
+countries.SUR,ISO Country: SUR,Suriname
+countries.SVK,ISO Country: SVK,Slovakia
+countries.SVN,ISO Country: SVN,Slovenia
+countries.SWE,ISO Country: SWE,Sweden
+countries.SWZ,ISO Country: SWZ,Eswatini
+countries.SXM,ISO Country: SXM,Sint Maarten (Dutch part)
+countries.SYC,ISO Country: SYC,Seychelles
+countries.SYR,ISO Country: SYR,Syrian Arab Republic
+countries.TCA,ISO Country: TCA,Turks and Caicos Islands
+countries.TCD,ISO Country: TCD,Chad
+countries.TGO,ISO Country: TGO,Togo
+countries.THA,ISO Country: THA,Thailand
+countries.TJK,ISO Country: TJK,Tajikistan
+countries.TKL,ISO Country: TKL,Tokelau
+countries.TKM,ISO Country: TKM,Turkmenistan
+countries.TLS,ISO Country: TLS,Timor-Leste
+countries.TON,ISO Country: TON,Tonga
+countries.TTO,ISO Country: TTO,Trinidad and Tobago
+countries.TUN,ISO Country: TUN,Tunisia
+countries.TUR,ISO Country: TUR,Turkey
+countries.TUV,ISO Country: TUV,Tuvalu
+countries.TZA,ISO Country: TZA,United Republic of Tanzania
+countries.UGA,ISO Country: UGA,Uganda
+countries.UKR,ISO Country: UKR,Ukraine
+countries.UMI,ISO Country: UMI,United States Minor Outlying Islands
+countries.URY,ISO Country: URY,Uruguay
+countries.USA,ISO Country: USA,United States of America
+countries.UZB,ISO Country: UZB,Uzbekistan
+countries.VAT,ISO Country: VAT,Holy See
+countries.VCT,ISO Country: VCT,Saint Vincent and the Grenadines
+countries.VEN,ISO Country: VEN,Venezuela (Bolivarian Republic of)
+countries.VGB,ISO Country: VGB,British Virgin Islands
+countries.VIR,ISO Country: VIR,United States Virgin Islands
+countries.VNM,ISO Country: VNM,Viet Nam
+countries.VUT,ISO Country: VUT,Vanuatu
+countries.WLF,ISO Country: WLF,Wallis and Futuna Islands
+countries.WSM,ISO Country: WSM,Samoa
+countries.YEM,ISO Country: YEM,Yemen
+countries.ZAF,ISO Country: ZAF,South Africa
+countries.ZMB,ISO Country: ZMB,Zambia
+countries.ZWE,ISO Country ZWE,Zimbabwe
+duplicates.button.markAsDuplicate,Mark as duplicate button text,Mark as duplicate
+duplicates.button.notDuplicate,Not a duplicate button text,Not a duplicate
+duplicates.compare.supportingDocuments,Supporting documents header for duplicates comparison,Supporting documents
+duplicates.compare.title,Duplicate compare page title message,Review {actualTrackingId} against {duplicateTrackingId}
+duplicates.content.duplicateDropdownMessage,Selecting from the duplicate trackingIds,Duplicate of
+duplicates.content.header,Declaration details header of two duplicate ones,Declaration details
+duplicates.content.markAsDuplicate,Mark as duplicate content confirmation title message,Mark {trackingId} as duplicate?
+duplicates.content.markAsDuplicateReason,Review page header for duplicates declarations,Please describe your reason
+duplicates.content.notDuplicateConfirmationTitle,Not a duplicate content confirmation title message,Are you sure {name} ({trackingId}) is not duplicate?
+duplicates.content.registeredAt,Registered at label for duplicates comparison,Registered at
+duplicates.content.registeredBy,Registered by label for duplicates comparison,Registered by
+duplicates.content.subtitle,Duplicates content subtitle message,"This record was flagged as a potential duplicate of: {trackingIds}. Please review these by clicking on each tracking ID in the tab section to view a side-by-side comparison below, and confirm if this record is a duplicate."
+duplicates.content.title,Duplicates content title message,Is {name} ({trackingId}) a duplicate?
+duplicates.review.header,Review page header for duplicates declarations,Potential {event} duplicate review
+duplicates.warning,The warning message shown when a declaration has potential duplicates,Potential duplicate of record {trackingId}
+editPageBanner.declaredMessage,The message for the edit page banner,You are editing a record declared by {name} ({role} at {location})
+editPageBanner.notifiedMessage,The message for the edit page banner,You are editing a record notified by {name} ({role} at {location})
+email.label.confirmation,Confirmation email address message,A confirmational SMS has been sent to {email}
+error.code,Error code,401
+error.draftFailed,Tips for failed declarations,This is some messaging on advicing the user on what to do... in the event of a failed applicaton.
+error.errorEmailAddressNotFound,Error message for email address not found,Email address not found.
+error.errorPhoneNumberNotFound,Error message for phone number not found,Mobile phone number not found.
+error.networkError,The error that appears when there is no internet connection,Unable to connect to server
+error.occurred,The error message that displays if we want the user to try the action again,An error occurred. Please try again.
+error.page.load.failed,Error message when page failed to load,"Sorry, we couldn't load the content for this page"
+error.passwordSubmissionError,Error message when password verification fails,The password you entered was incorrect
+error.pdf,PDF loading error message,Failed to load PDF
+error.required.password,New password required,New password is not valid
+error.search,The error message shown when a search query fails,An error occurred while searching
+error.searchParamCountError,Error message when the search parameters are less than two,You must select a minimum of 2 search criteria
+error.somethingWentWrong,Error description,Something went wrong.
+error.title,Error title,Oops!
+error.title.unauthorized,Error title unauthorized,Unauthorized!
+error.userListError,Error message when user list loads fails,Failed to load users
+error.weAreTryingToFixThisError,Error description,This page could not be found
+errors.notAssigned,User not assigned error toast message,You've been unassigned from the event
+errors.somethingWentWrong,Error toast message for general errors,Something went wrong. Please try again.
+event.action.notAvailableForEvent,Shown when user tries to perform an action that is not available for the event,The action you're trying to perform is not available for this event anymore.
+event.action.outbox-retry.label,Label for retry button for outbox,Retry
+event.action.review-correction.label,Label for review correction button in dropdown menu,Review correction request
+event.birth.action.archive.label,Label for archive record button in dropdown menu,Archive
+event.birth.action.collect-certificate.label,This is shown as the action name anywhere the user can trigger the action from,Print
+event.birth.action.declare.label,This is shown as the action name anywhere the user can trigger the action from,Declare
+event.birth.action.delete.label,Label for delete button in dropdown menu,Delete
+event.birth.action.mark-as-duplicate.label,Label for review potential duplicate button in dropdown menu,Review potential duplicates
+event.birth.action.register.label,Label for review record button in dropdown menu,Register
+event.birth.action.reject.label,Label for reject button in dropdown menu,Reject
+event.birth.action.request-correction.label,Label for request correction button in dropdown menu,Correct
+event.default.action.certificate.template.type.label,This is the label for the field,Type
+event.default.action.certificate.template.type.notFound,Select certificate template options not found,"No template available for this event, contact Admin"
+event.edit.comment.label,The label for the comment,Comments
+event.edit.declareWithEdits.label,Label for Declare with edits in edit action menu,Declare with edits
+event.edit.notifyWithEdits.label,"Label for ""Notify with edits"" in edit action menu",Notify with edits
+event.edit.registerWithEdits.label,Label for Register with edits in edit action menu,Register with edits
+event.history.role,,Unknown
+event.history.system,Name for system initiated actions in the event history,System
+event.history.systemDefaultName,Fallback for system integration name in the event history,System integration
+event.not.downloaded,Shown when user tries to perform an action on event that is not available ,Please ensure the event is first assigned and downloaded to the browser.
+event.summary.assignedTo.empty,Not assigned message,Not assigned
+event.summary.assignedTo.label,Assigned to label,Assigned to
+event.summary.assignedTo.value,Assigned to value,{event.assignedTo}
+event.summary.event.label,Event label,Event
+event.summary.flags.label,Flags of the event,Flags
+event.summary.flags.placeholder,Message when no flags are present,No flags
+event.summary.registrationNumber.empty,No registration number message,No registration number
+event.summary.registrationNumber.label,Registration Number label,Registration Number
+event.summary.registrationNumber.value,Registration number value,{event.registrationNumber}
+event.summary.status.label,Status of the event,Status
+event.summary.status.value,Status of the event,"{event.status, select, CREATED {Draft} NOTIFIED {Notified} VALIDATED {Validated} DRAFT {Draft} DECLARED {Declared} REGISTERED {Registered} CERTIFIED {Certified} REJECTED {Requires update} ARCHIVED {Archived} MARK_AS_DUPLICATE {Marked as a duplicate} other {Unknown}}"
+event.summary.trackingId.empty,No tracking ID message,No tracking ID
+event.summary.trackingId.label,Tracking id label,Tracking ID
+event.summary.trackingId.value,Tracking id value,{event.trackingId}
+events.history.status,,"{status, select, Requested {Waiting for external validation} other {{action, select, CREATE {Draft} NOTIFY {Notified} EDIT {Edited} VALIDATE {Validated} DRAFT {Draft} DECLARE {Declared} REGISTER {Registered} PRINT_CERTIFICATE {Certified} REJECT {Rejected} ARCHIVE {Archived} DUPLICATE_DETECTED {Flagged as potential duplicate} MARK_AS_DUPLICATE {Marked as a duplicate} CORRECTED {Record corrected} REQUEST_CORRECTION {Correction requested} APPROVE_CORRECTION {Correction approved} REJECT_CORRECTION {Correction rejected} READ {Viewed} ASSIGN {Assigned} UNASSIGN {Unassigned} UPDATE {Updated} other {Unknown}}}}"
+events.outbox.processingAction,,"{action, select, DECLARE {Sending} REGISTER {Registering} VALIDATE {Sending for approval} NOTIFY {Sending} REJECT {Sending for updates} ARCHIVE {Archiving} PRINT_CERTIFICATE {Certifying} REQUEST_CORRECTION {Requesting correction} APPROVE_CORRECTION {Approving correction} REJECT_CORRECTION {Rejecting correction} ASSIGN {Assigning} UNASSIGN {Unassigning} other {Processing action}}"
+events.outbox.waitingForAction,,"Waiting to {action, select, DECLARE {send} REGISTER {register} VALIDATE {send for approval} NOTIFY {send} REJECT {send for updates} ARCHIVE {archive} PRINT_CERTIFICATE {certify} REQUEST_CORRECTION {request correction} APPROVE_CORRECTION {approve correction} REJECT_CORRECTION {reject correction} ASSIGN {assign} UNASSIGN {unassign} other {action}}"
+events.overview.tabs.audit,,Audit
+events.overview.tabs.record,,Record
+events.overview.tabs.summary,,Summary
+events.status,,"{status, select, OUTBOX {Syncing..} CREATED {Draft} VALIDATED {Validated} DRAFT {Draft} DECLARED {Declared} REGISTERED {Registered} CERTIFIED {Certified} REJECTED {Requires update} ARCHIVED {Archived} MARK_AS_DUPLICATE {Marked as a duplicate} NOTIFIED {In progress} other {Unknown}}"
+exitModal.cancel,,Cancel
+exitModal.exitWithoutSaving,,Exit without saving changes?
+exitModal.exitWithoutSavingDescription,,You have unsaved changes on your declaration form. Are you sure you want to exit without saving?
+field.address.country.label,This is the label for the field,Country
+field.address.district.label,Label for district in address,District
+field.address.province.label,Label for province in address,Province
+field.name.firstname.label,This is the label for the firstname field,First name(s)
+field.name.middlename.label,This is the label for the middlename field,Middle name
+field.name.surname.label,This is the label for the surname field,Last name
+fieldAgentHome.queryError,The text when error ocurred loading rejected declarations,An error occurred while loading declarations
+file.upload.fileSize.error,Error message when the selected file is too large,File size must be less than {maxSize}mb
+file.upload.fileType.error,Error message when the selected file type is not supported,File format not supported. Please attach {types} (max {maxSize}mb)
+flags.builtin.correction-requested.label,Flag label for correction requested,Correction requested
+flags.builtin.edit-in-progress.label,Flag label for edit in progress,Edit in progress
+flags.builtin.incomplete.label,Flag label for incomplete,Incomplete
+flags.builtin.potential-duplicate.label,Flag label for potential duplicate,Potential duplicate
+flags.builtin.rejected.label,Flag label for rejected,Rejected
+form.field.dateRangepicker.checkbox.dateLabel,Label for daterange picker checkbox,{rangeStart} to {rangeEnd}
+form.field.helpertext.nid,Helper text for nid input field,The National ID can only be numeric and must be 10 digits long
+form.field.hideLabel,Button to hide section,Hide
+form.field.label.NID,National ID,NID
+form.field.label.addFile,text for add file button,Add file
+form.field.label.app.certifyRecordTo.bride,Label for bride select option to certify record,Print and issue to bride
+form.field.label.app.certifyRecordTo.father,Label for father select option to certify record,Print and issue to father
+form.field.label.app.certifyRecordTo.groom,Label for groom select option to certify record,Print and issue to groom
+form.field.label.app.certifyRecordTo.informant,Label for mother select option to certify record,Print and issue to informant ({informant})
+form.field.label.app.certifyRecordTo.mother,Label for mother select option to certify record,Print and issue to mother
+form.field.label.app.whoContDet.app,"Label for ""Informant"" select option",Informant
+form.field.label.app.whoContDet.father,"Label for ""Father"" select option",Father
+form.field.label.app.whoContDet.mother,"Label for ""Mother"" select option",Mother
+form.field.label.birthLocation,Label for form field: Hospital or Health Institution,Hospital / Clinic
+form.field.label.certificatePrintInAdvance,Label for certificate collection option,Print in advance
+form.field.label.cityUrbanOption,Label for City,City
+form.field.label.confirm,confirmation label for yes / no radio button,Yes
+form.field.label.country,Title for the country select,Country
+form.field.label.creatingNewUser,label for creating new user,Creating new user
+form.field.label.dateOfBirth,Label for form field: Date of birth,Date of birth
+form.field.label.dateOfMarriage,Option for form field: Date of marriage,Date of marriage
+form.field.label.deny,deny label for yes / no radio button,No
+form.field.label.district,Label for District,District
+form.field.label.docTypeBirthCert,Label for select option birth certificate,Birth certificate
+form.field.label.email,Input label for email address,Email
+form.field.label.empty,empty string, 
+form.field.label.familyName,Label for family name text input,Last name
+form.field.label.fileSizeError,text for error on file size,File size must be less than 2MB
+form.field.label.fileUploadError,text for error on file upload,{type} supported image only
+form.field.label.firstName,Input label for certificate collector's first name,First name
+form.field.label.firstNames,Label for form field: First names,First name(s)
+form.field.label.fullHonorificName,Input label for full honorific name,Full Honorific Name
+form.field.label.healthInstitution,Select item for Health Institution,Health Institution
+form.field.label.iD,Label for form field: ID Number,ID Number
+form.field.label.iDType,,Type of ID
+form.field.label.iDTypeAlienNumber,,Alien Number
+form.field.label.iDTypeBRN,,Birth Registration Number
+form.field.label.iDTypeDRN,,Death Registration Number
+form.field.label.iDTypeDrivingLicense,,Drivers License
+form.field.label.iDTypeNationalID,,National ID
+form.field.label.iDTypeNoID,,No ID available
+form.field.label.iDTypeOther,,Other
+form.field.label.iDTypeOtherLabel,Label for form field: Other type of ID,Other type of ID
+form.field.label.iDTypePassport,,Passport
+form.field.label.iDTypeRefugeeNumber,,Refugee Number
+form.field.label.informant,Informant Label,Informant
+form.field.label.informantRelation.bride,Label for option bride,Bride
+form.field.label.informantRelation.brother,Label for option brother,Brother
+form.field.label.informantRelation.daughter,Label for option Daughter,Daughter
+form.field.label.informantRelation.daughterInLaw,Label for option Daughter in law,Daughter in law
+form.field.label.informantRelation.extendedFamily,Label for option Extended Family,Extended Family
+form.field.label.informantRelation.father,Label for option father,Father
+form.field.label.informantRelation.granddaughter,Label for option Granddaughter,Granddaughter
+form.field.label.informantRelation.grandfather,Label for option Grandfather,Grandfather
+form.field.label.informantRelation.grandmother,Label for option Grandmother,Grandmother
+form.field.label.informantRelation.grandson,Label for option Grandson,Grandson
+form.field.label.informantRelation.groom,Label for option groom,Groom
+form.field.label.informantRelation.groomAndBride,Label for option Groom & Bride,Groom & Bride
+form.field.label.informantRelation.legalGuardian,Label for option Legal Guardian,Legal guardian
+form.field.label.informantRelation.mother,Label for option mother,Mother
+form.field.label.informantRelation.others,Label for option someone else,Someone else
+form.field.label.informantRelation.sister,Label for option Sister,Sister
+form.field.label.informantRelation.son,Label for option Son,Son
+form.field.label.informantRelation.sonInLaw,Label for option Son in law,Son in law
+form.field.label.informantRelation.spouse,Label for option Spouse,Spouse
+form.field.label.informantRelation.whoIsBirthInformant,Label for option birth informant,Who is informant
+form.field.label.informantRelation.whoIsDeathInformant,Label for option death informant,Who is informant
+form.field.label.informantsRelationWithChild,Label for Relationship to child,Relationship to child
+form.field.label.informantsRelationWithDeceased,Label for Relationship to Deceased select,Relationship to Deceased
+form.field.label.lastName,Input label for certificate collector's last name,Last name
+form.field.label.locationLevel3,Label for locationLevel3,Location Level 3
+form.field.label.locationLevel4,Label for locationLevel4,Location Level 4
+form.field.label.locationLevel5,Label for locationLevel5,Location Level 5
+form.field.label.multipleBirth,Label for form field: multipleBirth,No. of previous births
+form.field.label.optionalLabel,Optional label,Optional
+form.field.label.otherOption,Other option for select,Other
+form.field.label.phoneNumber,Input label for phone input,Phone number
+form.field.label.placeOfBirth,Label for form field: Place of delivery,Location
+form.field.label.privateHome,Select item for Private Home,Residential address
+form.field.label.registrationOffice,Registration office,Registration Office
+form.field.label.relationOtherFamilyMember,Label for other family member relation,Other family member
+form.field.label.relationSomeoneElse,Label for option Someone else,Someone else
+form.field.label.relationshipToSpouses,Input label for witness's relationship with spouses,Relationship to spouses
+form.field.label.self,The title that appears when selecting self as informant,Self
+form.field.label.sex,Label for form field: Sex name,Sex
+form.field.label.sexFemale,Option for form field: Sex name,Female
+form.field.label.sexMale,Option for form field: Sex name,Male
+form.field.label.sexUnknown,Option for form field: Sex name,Unknown
+form.field.label.someoneElse,Other Label,Someone else
+form.field.label.someoneElseCollector,Other Label,Print and issue to someone else
+form.field.label.state,Label for State,State
+form.field.label.typeOfId,Input label for certificate collector's id type options,Type of ID
+form.field.label.updatingUser,label for updating user,Updating user
+form.field.label.uploadDocForMother,Label for radio option Mother,Mother
+form.field.label.uploadFile,text for upload file button,Upload
+form.field.label.userAttachmentSection,label for user signature attachment,Attachments
+form.field.label.userDevice,User device,Device
+form.field.label.userFirstName,User's English first name,User's first name
+form.field.label.userSignatureAttachment,Input label for user signature attachment,User’s signature
+form.field.label.userSignatureAttachmentDesc,Description for user signature attachment,Ask the user to sign a piece of paper and then scan or take a photo.
+form.field.label.userSignatureAttachmentTitle,Title for user signature attachment,Attach the signature
+form.field.label.userSurname,User's English surname,User's surname
+form.field.nidNotVerified,label for verified nid state,Authenticate
+form.field.nidNotVerifiedReviewSection,Label for indicating unauthenticated status for the a review section,Unauthenticated
+form.field.nidVerificationOngoing,Label for indicating offline status for the user. NID verification is not currently available offline.,National ID authentication is currently not available offline.
+form.field.nidVerified,label for unverified nid state,Authenticated
+form.field.select.placeholder,Placeholder text for a select,Select
+form.field.showLabel,Button to show section,Show
+form.field.tooltip.tooltipNationalID,Tooltip for form field: iD number,The National ID can only be numeric and must be 10 digits long
+form.section.accountDetails,Account details section,Account details
+form.section.assignedRegistrationOffice,Assigned Registration Office section,Assigned Registration Office
+form.section.assignedRegistrationOfficeGroupTitle,Assigned Registration Office section,Assigned registration office
+form.section.bride.name,Form section name for Bride,Bride
+form.section.child.title,Form section title for Child,Child's details
+form.section.deceased.title,Form section title for Deceased,What are the deceased details?
+form.section.documents.name,Form section name for Documents,Documents
+form.section.documents.title,Form section title for Documents,Attach supporting documents
+form.section.groom.name,Form section name for Groom,Groom
+form.section.groom.title,Form section title for Groom,Groom's details
+form.section.informant.name,Form section name for Informant,Informant
+form.section.label.timePeriodLast30Days,Label for option of time period select: last 30 days,Last 30 days
+form.section.label.timePeriodLast7Days,Label for option of time period select: last 7 days,Last 7 days
+form.section.label.timePeriodLast90Days,Label for option of time period select: last 90 days,Last 90 days
+form.section.label.timePeriodLastYear,Label for option of time period select: last year,Last year
+form.section.mother.title,Form section title for Mother,Mother's details
+form.section.user.preview.title,The title of the review page of the user form,Please review the new users details
+form.section.user.title,The title of user form,Create new user
+form.section.userDetails,User details section,User details
+home.header.advancedSearch,Search menu advanced search type,Advanced Search
+home.header.email,Search email type,Email
+home.header.localSystemAdmin,The description for Sysadmin role,Sysadmin
+home.header.placeHolderBrnDrn,Search menu brn drn place holder,Search for a BRN/DRN
+home.header.placeHolderEmail,Search menu email place holder,Search for an email.
+home.header.placeHolderId,Search menu ID place holder,Search for an ID.
+home.header.placeHolderPhone,Search menu phone no place holder,Search for a phone No.
+home.header.placeHolderTrackingId,Search menu tracking id place holder,Search for a tracking ID
+home.header.placeholderName,Search menu name placeholder,Search for a name
+home.header.searchTool.placeholder,Search tool placeholder,"Search by name, ID, or by using contact details."
+home.header.settingsTitle,settings title,Settings
+home.header.systemTitle,System title,System
+home.header.teamTitle,settings title,Settings
+home.header.typeName,Search menu name type,Name
+home.header.typePhone,Search menu phone no type,Phone No.
+home.header.typeRN,Search menu brn drn type,Registration no.
+imageEditorModal.description,Description for the image editor modal,Resize and position the chosen image
+imageEditorModal.title,Title for the image editor modal,Crop & resize image
+imageUploadOption.upload.documentType,Show error message if the document type is not selected,Please select the type of document first
+imageUploadOption.upload.error,Show error messages while uploading,"File format not supported. Please attach a png, jpg or pdf (max {maxSize}mb)"
+imageUploadOption.upload.imageFormat,Show error message if the selected image type is not supported,Image format not supported. Please attach a png or jpg (max {maxSize}mb)
+imageUploadOption.upload.overSized,Error message for Attachment size greater than defined max size.,File is too large. Please attach file less than {maxSize}mb
+informant.name,Informant section name,Informant
+informant.title,Informant section title,Select Informant
+integrations.activate,Label for activate option,Activate
+integrations.activate.client,Label for activate client option,Activate Client?
+integrations.activate.status,Label for activate client,Client activated
+integrations.activatetext,This will activate the client,This will activate the client
+integrations.active,Label for active integration,Active
+integrations.birth,Label for birth,Birth
+integrations.childDetails,Label for child details,Child's details
+integrations.childDetailsNoPII,Label for child details no PII,Childs Details (No PII)
+integrations.client.type,Label for type of client,Type
+integrations.clientId,Label for client Id,Client ID
+integrations.clientSecret,Label for client secret,Client secret
+integrations.copy,Label for the text Copy,Copy
+integrations.createClient,Label for the button creating client,Create client
+integrations.deactivate,Label for deactivate option,Deactivate
+integrations.deactivate.client,Label for deactivate client option,Deactivate Client?
+integrations.deactivate.status,Label for deactivate client,Client deactivated
+integrations.deactivatetext,This will deactivate the client,This will deactivate the client
+integrations.death,Label for death,Death
+integrations.deathEventDetails,Label for death event details,Event details
+integrations.deceasedDetails,Label for Deceased details,Deceased's details
+integrations.delete,Label for delete option,Delete
+integrations.deleteSystemMsg,Label for system deletion success message,System has been deleted successfully
+integrations.deleteSystemText,Label for system delete description,Are you sure you want to <b>permanently</b> delete the integration?
+integrations.disable,Label for disable option,Disable
+integrations.documentDetails,Label for document details,Document details
+integrations.enable,Label for enable option,Enable
+integrations.error,Label for error option,Something went wrong
+integrations.eventNotificationDescription,Label for  health notification description,"A notification client (eg. hospital) can send a partial notification or a full declaration of a birth or death to OpenCRVS for processing. For more information, visit:"
+integrations.fatherDetails,Label for fathers details,Father's details
+integrations.fatherDetailsNoPII,Label for fathers details no PII,Fathers Details (No PII)
+integrations.inactive,Label for inactive integration,Inactive
+integrations.informantDetails,Label for informant details,Informant's details
+integrations.informantDetailsNoPII,Label for informant details no PII,Informant Details (No PII)
+integrations.integratingSystemType,Label for integrating system type,System
+integrations.integratingSystemTypeAlertMosip,Label for alert when selecting MOSIP type,Mosip copy tbd. TODO: Euan
+integrations.integratingSystemTypeAlertOther,Label for alert when selecting other type,Other copy tbd. TODO: Euan
+integrations.integratingSystemTypeMosip,"Integrating system type option ""MOSIP""",MOSIP
+integrations.integratingSystemTypeOther,"Integrating system type option ""Other""",Other
+integrations.label,Label,Label
+integrations.loading,Label for loading option,Loading
+integrations.motherDetails,Label for mothers details,Mother's details
+integrations.motherDetailsNoPII,Label for mothers details no PII,Mothers Details (No PII)
+integrations.name,Label for name input,Name
+integrations.nationalIDName,Label for name input for National ID,Name
+integrations.newIntegrationDescription,Description to help user fill name and type of a new integration client,Add a unique name and select the type of client you would like to create
+integrations.pageIntroduction,Label for the text integration page intorduction,"For each new client that needs to integrate with OpenCRVS you can create unique client IDs. A number of integration use cases are currently supported, based on both API and webhook technologies."
+integrations.pageTitle,Title for integrations page,Integrations
+integrations.recordSearchDescription,Label for  record search description,"A Record search client can perform an advanced search on OpenCRVS data. For more information, visit:"
+integrations.registrationDetailsnNoPII,Label for registration details no PII,Registration Details (No PII)
+integrations.revealKeys,Label for reveal keys option,Reveal Keys
+integrations.shaSecret,Label for SHA secret,SHA secret
+integrations.type,Label for integration type using ICU MessageFormat select for all types,"{type, select, HEALTH {Health integration} NATIONAL_ID {National ID} RECORD_SEARCH {Record search} IMPORT_EXPORT {Import/Export} other {Custom}}"
+integrations.uniqueKeyDescription,Label for the unique key description,These unique keys will be required by the client integrating
+integrations.updatePermissionsMsg,Label for update permissions message,Permissions updated successfully
+integrations.webhook.PII,Label for PII,Include PII data
+integrations.webhookDescription,label for webhook client,Select the data you wish to be contained within the webhook payload
+integrations.webhookPermissionsDescription,Webhook description above permissions,Select the data you wish to be contained within the webhook payload
+label.error,Generic error message for invalid form nput,Invalid input
+login.codeSubmissionError,The error that appears when the user entered sms code is unauthorised,Sorry that code did not work.
+login.fieldMissing,The error if user doesn't fill all the field,Mobile number and password must be provided
+login.forbiddenCredentialError,The error that appears when the user entered details are forbidden,Sorry given user is not allowed to login.
+login.forgotPassword,The label that appears on the Forgot password button,Forgot password
+login.language,,{language}
+login.optionalLabel,Optional label,Optional
+login.passwordLabel,The label that appears on the password input,Password
+login.resend,Text for button that resends SMS or email verification code,Resend SMS
+login.resentEMAIL,The message that appears when the resend button is clicked and tells user than code is resent to email,We just resent you another code to {email}
+login.resentSMS,The message that appears when the resend button is clicked and tells user than code is resent to email,We just resent you another code to {number}
+login.stepOneInstruction,The instruction that appears in step one of the form,Please enter your mobile number and password.
+login.stepOneText,The instruction that appears in step one of the login form, 
+login.stepTwoInstruction.email,The instruction that appears in step two of the form that lets users know that code has been sent to email,A verification code has been sent to your email. ending in {email}. This code will be valid for 10 minutes.
+login.stepTwoInstruction.sms,The instruction that appears in step two of the form that lets users know that code has been sent to phone,A verification code has been sent to your phone. ending in {number}. This code will be valid for 10 minutes.
+login.stepTwoResendTitle,The title that appears in step two of the form after resend button click,Verification code resent
+login.stepTwoTitle,The title that appears in step two of the form,Verify your account
+login.submissionError,The error that appears when the user entered details are unauthorised,Sorry that mobile number and password did not work.
+login.submit,The label that appears on the submit button,Submit
+login.username,The label that appears on the mobile number input,Username
+login.verficationCodeLabel,Verification code label,Verification code (6 digits)
+login.verify,The label that appears on the verify code button,Verify
+messages.emptyString,empty string,
+misc.confirmPinTitle,The title displayed while creating a PIN,Confirm PIN
+misc.createDescription,The description displayed while creating a PIN,Choose a PIN that doesn't have 4 repeating digits or sequential numbers
+misc.createTitle,The title displayed while creating a PIN,Create a PIN
+misc.description.Complete,Description for review action component when complete declaration,By sending for approval you confirm that the declaration is ready for approval.
+misc.description.inComplete,,Mandatory information is missing. Please add this information so that you can send for approval.
+misc.newPass.header,New Password header,Choose a new password
+misc.newPass.instruction,New Password instruction,"Create a unique password - one that you don't use for other websites or applications. A secure and easy to remember passphrase could include three random words, while avoiding the use of personal info."
+misc.notif.declarationsSynced,The message that appears in notification when background sync takes place,"As you have connectivity, we can synchronize your declarations."
+misc.notif.draftsSaved,The message that appears in notification when save drafts button is clicked,Your draft has been saved
+misc.notif.duplicateRecord,Label for when a duplicate record is detected when registering a record.,{trackingId} is a potential duplicate. Record is ready for review.
+misc.notif.emailAllUsersError,Label for Email all users error toast,Only one email can be sent per day
+misc.notif.emailAllUsersSuccess,Label for Email all users success toast,Email sent to all users
+misc.notif.offlineError,The message that appears in notification when a new user creation fails in offline mode,Offline. Try again when reconnected
+misc.notif.onlineUserStatus,Label for online user status toast notification,You are back online
+misc.notif.outboxText,Declaration outbox text,Outbox({num})
+misc.notif.processingText,Declaration processing text,{num} declaration processing...
+misc.notif.sorryError,The message that appears in notification when a new user creation fails,Sorry! Something went wrong
+misc.notif.unassign,Label for unassigned toast notification,You were unassigned from {trackingId}
+misc.notif.updatePINSuccess,Label for update PIN success notification toast,Your pin has been successfully updated
+misc.notif.userAuditSuccess,Label for user audit success notification,"{name} was {action, select, DEACTIVATE {deactivated} REACTIVATE {reactivated} other {deactivated}}"
+misc.notif.userFormSuccess,The message that appears in notification when a new user is created,New user created
+misc.notif.userFormUpdateSuccess,The message that appears in notification when user details have been updated,User details have been updated
+misc.pinMatchError,The error displayed if PINs don't match,PIN code did not match. Please try again
+misc.pinSameDigitsError,The error displayed if PIN contains 4 same digits.,PIN cannot have same 4 digits
+misc.pinSeqDigitsError,The error displayed if PIN contains sequential digits.,PIN cannot contain sequential digits
+misc.reEnterDescription,,Let's make sure we collected your PIN correctly
+misc.reEnterTitle,The title displayed while creating a PIN,Re-enter your new PIN
+misc.session.expired,SessionExpire modal confirmation text,Your session has expired. Please login again.
+misc.title.declarationStatus,Title for review action component,Send for approval?
+modal.approveCorrection,The title for approve correction modal,Approve correction?
+modal.rejectCorrection,The title for reject correction modal,Reject correction?
+navigation.analytic,Analytic Group,Analytics
+navigation.application,Application label in navigation,Application
+navigation.approvals,Sent for approval label in navigation,Sent for approval
+navigation.certificate,Certificates label in navigation,Certificate
+navigation.communications,Communications label in navigation,Communications
+navigation.completenessRates,Completeness rates in navigation,Completeness rates
+navigation.config,Config label in navigation,Config
+navigation.dashboard,Title for the test dashboard,Test Dashboard
+navigation.declarationForms,Declaration forms label in navigation,Declaration forms
+navigation.emailAllUsers,Email all users label in navigation,Email all users
+navigation.informantNotification,Informant notifications label in navigation,Informant notifications
+navigation.integration,Integration forms label in navigation,Integrations
+navigation.myDrafts,My drafts label in navigation,My drafts
+navigation.organisation,settings title,Settings
+navigation.outbox,Label for navigation item outbox,Outbox
+navigation.performance,Performance label in navigation,Performance
+navigation.print,Ready to print label in navigation,Ready to print
+navigation.progress,In progress label in navigation,In progress
+navigation.readyForReview,Ready for review label in navigation,Ready for review
+navigation.readyToIssue,Ready to issue label in navigation,Ready to issue
+navigation.report,Report Dashboard Section,Report
+navigation.reports,Reports label in navigation,Vital statistics
+navigation.requiresUpdate,Requires update label for registrar in navigation,Requires update
+navigation.sentForReview,Sent for review label in navigation,Sent for review
+navigation.team,Team label in navigation,Team
+navigation.userroles,User roles label in navigation,User roles
+navigation.waitingValidation,Waiting for validation label in navigation,In external validation
+number.twelve,Minimum length password,12
+password.cases,Password validation,At least one upper and lower case character
+password.label.confirm,Confirm password label,Confirm new password
+password.label.current,Current password label,Current password
+password.label.new,New password label,New password:
+password.match,Password validation,Passwords match
+password.minLength,Password validation,{min} characters minimum
+password.mismatch,Password validation,Passwords do not match
+password.number,Password validation,At least one number
+password.validation.msg,Password validation message,Password must have:
+performance.appSrc.labels.fieldAgents,Label for field agents in application sources,Field agents
+performance.appSrc.labels.hospitalApplications,Label for hospital applications,Health system (integration)
+performance.appSrc.labels.nationalRegistrars,Label for national registrars in application sources,National Registrars
+performance.appSrc.labels.registrars,Label for registrars in application sources,Registrars
+performance.appSrc.labels.registrationAgents,Label for registration agents in application sources,Registration agents
+performance.completenessTable.completenessRate,Title for Completeness rate column in the table,Completeness {lineBreak}rate
+performance.fieldAgents.col.avgCompTime,Column header for avg declaration completion time in field agent list,Avg. time to send{linebreak}complete declaration
+performance.fieldAgents.col.totInProg,Column header for total inprogress declaration sent in field agent list,Sent{linebreak}incomplete
+performance.fieldAgents.col.totRej,Column header for total rejected declarations in field agent list,Rejected
+performance.fieldAgents.columnHeader.name,Column header for field agent,Field agents ({totalAgents})
+performance.fieldAgents.columnHeader.office,Column header for office in field agent list,Office
+performance.fieldAgents.columnHeader.role,Column header for role in field agent list,Role
+performance.fieldAgents.columnHeader.startMonth,Column header for start of month in field agent list,Start month
+performance.fieldAgents.columnHeader.totalSent,Column header for total declaration sent in field agent list,Declarations{linebreak}sent
+performance.fieldAgents.columnHeader.type,Column header for type in field agent list,Type
+performance.fieldAgents.noResult,Text for no field agent found,No users found
+performance.fieldAgents.options.event.births,Label for birth event option,Births
+performance.fieldAgents.options.event.both,Label for both event option,Births and deaths
+performance.fieldAgents.options.event.deaths,Label for death event option,Deaths
+performance.fieldAgents.options.status.active,Label for active status option,Active
+performance.fieldAgents.options.status.deactive,Label for deactive status option,Deactive
+performance.fieldAgents.options.status.pending,Label for pending status option,Pending
+performance.fieldAgents.showMore,Label for show more link,Show next {pageSize}
+performance.fieldAgents.title,Header title for field agent list page,Field agnets
+performance.header.sysadmin.home,Header for system admin performance home page,Search for an administrative area or office
+performance.labels.certificationRate,,Certification rate
+performance.operational.workflowStatus.header,Header title for work flow status page,Current declarations in workflow
+performance.ops.statCount.desc,Description of the status wise declaration count view,"Current status of {event, select, BIRTH{birth} DEATH{death} records being processed."
+performance.payments.label.certificationFee,Label for certification fee,Certification fee
+performance.payments.label.correctionFee,Label for correction fee,Correction fee
+performance.regRates.column.location,Title for location column on estimation table,Locations
+performance.regRates.select.item.byLocation,Label for select option By location,By location
+performance.regRates.select.item.byRegistrar,Label for select option By Registrar,By Registrars
+performance.regRates.select.item.overTime,Label for select option Over time,Over time
+performance.registrarsToCitizen,Title for Registrars to citizens,Registrars to citizens
+performance.registrarsToCitizenValue,Value for Registrars to citizens,1 to {citizen}
+performance.registrationByStatus.header,Title for Registration by status,Registration by status
+performance.registrationsListTable.locationColumn,Title for location column in the table,Location
+performance.registrationsListTable.monthColumn,Title for month column in the table,Month
+performance.registrationsListTable.registrarColumn,Title for registrar column in the table,Registrar
+performance.registrationsListTable.totalRegistrationsColumn,Title for total registrations column in the table,Total Registrations
+performance.reports.appStart.desc,Description for declarations started in performance reports,Total and percentage breakdown of the declarations started by source from 
+performance.reports.appStart.fieldAgents,Field agent declarations started title,Field agents
+performance.reports.corrections.other.label,"Label ""Other"" category in corrections",Other
+performance.reports.declarationsStarted.hospitals,Hospitals declarations started title,Hospitals (DHIS2)
+performance.reports.declarationsStarted.offices,Offices declarations started title,Registration offices
+performance.reports.declarationsStarted.title,Title for declarations started in performance reports,Declarations started
+performance.reports.declarationsStarted.total,Total declarations started title,Total started
+performance.reports.header.applicationSources,Header for sources of registrations,Sources of registrations
+performance.reports.header.completenessRates,Header for report completeness rates,Completeness rates
+performance.reports.header.totalCertificates,Header for report total certificates,Certificates issued
+performance.reports.header.totalCorrections,Header for report total corrections,Corrections
+performance.reports.header.totalPayments,Header for report total payments,Fees collected
+performance.reports.header.totalRegistrations,Header for report total registrations,Registrations
+performance.reports.select.item.operational,Label for select option Operational,Operational
+performance.reports.select.item.reports,Label for select option Reports,Reports
+performance.reports.subHeader.applicationSources,Subheader for sources of registrations,The number and percentage of declarations started by each system role that has been registered
+performance.reports.subHeader.completenessRates,Sub header for report completeness rates,"The no. of registrations, expressed as a % of the total estimated no. of {event, select, BIRTH{birth} DEATH{death} other{birth}}s occurring"
+performance.reports.subHeader.totalCertificates,Sub header for report total certificates,"Certification rate is the no. of certificates issues, expressed as a percentage of the total number of registrations"
+performance.stats.header,Title for perforamce stats,Stats
+performance.values.labels.birth.healthFacility,Label text for display showing health facility births,Health facility birth
+performance.values.labels.birth.home,Label text for display showing private home births,Home birth
+performance.values.labels.death.healthFacility,Label text for display showing health facility deaths,Health facility death
+performance.values.labels.death.home,Label text for display showing private home deaths,Home death
+performance.values.labels.delayed,Label text for display showing delayed registrations,Delayed registrations
+performance.values.labels.female,Label text for displays showing the number of females,Female
+performance.values.labels.late,Label text for display showing late registrations,Late registrations
+performance.values.labels.male,Label text for displays showing the number of males,Male
+performance.values.labels.total,Label text for displays showing totals,Total
+performance.values.labels.within1Year,Label text for displays showing registered within 1 year,Within 1 year
+performance.values.labels.within5Years,Label text for displays showing registered within 5 years,Within 5 years
+performance.values.labels.withinTargetDays,Label text for displays showing registered within target days,"{withPrefix, select, true {Registered within} other {Within}} {target} days"
+phone.digit,,10
+phone.label.changeEmail,Change email address label,What is your new email?
+phone.label.changeNumber,Change phone number label,What is your new number?
+phone.label.confirmation,Confirmation phone number message,A confirmational SMS has been sent to {num}
+phone.label.verify,Verify phone number label,Enter 6 digit verification code
+phone.start,Should starts with,0(4|5)
+print.cert.coll.id.actions.cancel,The for the dialog when details of the collector not verified,Cancel
+print.cert.coll.id.actions.send,The for the dialog when details of the collector not verified,SEND
+print.cert.coll.id.description,The description for the dialog when details of the collector not verified,"Please be aware that if you proceed, you will be responsible for issuing a certificate without the necessary proof of ID from the collector"
+print.cert.coll.idCheck.actions.noVer,The label for id check component action when does not verify details,Identity does not match
+print.cert.coll.idCheck.actions.ver,The label for id check component action when verify details,Verified
+print.cert.coll.other.aff.check,Label for no affidavit checkbox,No signed affidavit available
+print.cert.coll.other.aff.description,Modal description for other coller form submission without signed affidavit,"Please be aware that if you proceed, you will be responsible for issuing a certificate without necessary evidence from the collector"
+print.cert.coll.other.aff.error,Form level error for other collector affidavit form,Upload signed affidavit or click the checkbox if they do not have one.
+print.cert.coll.other.aff.form.title,Form title for other collector affidavit form,Upload signed affidavit
+print.cert.coll.other.aff.label,File label for signed affidavit,Signed affidavit
+print.cert.coll.other.aff.paragraph,Form paragraph for other collector affidavit form,This document should clearly prove that the individual has the authority to collect the certificate
+print.cert.coll.other.aff.title,Modal title for other coller form submission without signed affidavit,Print without signed affidavit?
+print.certificate.addAnotherSignature,,Add another
+print.certificate.birthService,Amount due on certificate for birth label,Service: <strong>Birth registration after {service} of D.o.B.</strong><br/>Amount Due:
+print.certificate.button.confirmPrint,The text for print button,"Yes, print certificate"
+print.certificate.button.makeCorrection,The label for correction button of print action,"No, make correction"
+print.certificate.certificatePreview,The title for certificate preview form,Certificate Preview
+print.certificate.collectPayment,The label for collect payment paragraph,"Please collect the payment, print the receipt and hand it over to the payee."
+print.certificate.collector.father,The label for select value when father is the collector of certificate,Father
+print.certificate.collector.form.error,Form level error for collector form,Please select who is collecting the certificate
+print.certificate.collector.form.error.template,Form level error for collector certificate template,Please select certificate type
+print.certificate.collector.idCheck.title,The title for id check component,Verify their identity
+print.certificate.collector.idCheckDialog.title,The title for the dialog when details of the collector not verified,Print without proof of ID?
+print.certificate.collector.informant,The label for select value when informant is the collector of certificate,Informant
+print.certificate.collector.mother,The label for select value when mother is the collector of certificate,Mother
+print.certificate.collector.other,The label for select value when the collector of certificate is other person,Other
+print.certificate.collector.other.form.error,Form level error for other collector information form,Complete all the mandatory fields
+print.certificate.collector.other.title,Title for other collector form,Collector details
+print.certificate.collector.whoToCollect,The label for collector of certificate select,Certificate collector
+print.certificate.deathService,Amount due on certificate for death label,Service: <strong>Death registration after {service} of D.o.D.</strong><br/>Amount Due:
+print.certificate.form.name,The title of review button in list expansion actions,Print
+print.certificate.form.title,The title of review button in list expansion actions,Print certificate
+print.certificate.manualPaymentMethod,The label for select option for manual payment method,Manual
+print.certificate.noLabel,, 
+print.certificate.noPayment,The title for no payment section,No payment required
+print.certificate.onlineOnly,Print certificate online only message,Print certificate is an online only action. Please go online to print the certificate
+print.certificate.payment,The title for payment section,Collect payment
+print.certificate.paymentAmount,The label for payment amount subsection,{paymentAmount}
+print.certificate.paymentInstruction,Description for payment section,"Please collect the payment, print the receipt and hand it over to the payee."
+print.certificate.paymentMethod,The label for payment method select,Payment method
+print.certificate.printReceipt,The label for print receipt button,Print receipt
+print.certificate.queryError,The error message shown when a query fails,An error occurred while querying for birth registration data
+print.certificate.review.description,Certificate review description,Please confirm that the informant has reviewed that the information on the certificate is correct and that it is ready to print.
+print.certificate.review.modal.body.print,Print certificate modal body text,A PDF of the certificate will open in a new tab for you to print. This record will then be moved to your ready to issue work-queue
+print.certificate.review.modal.body.printAndIssue,Print certificate modal body text,This will generate a certified copy of the record for printing.
+print.certificate.review.printAndIssueModalTitle,Print and issue certificate modal title text,Print certified copy?
+print.certificate.review.printModalTitle,Print certificate modal title text,Print certificate?
+print.certificate.review.title,Certificate review title,Ready to certify?
+print.certificate.section.title,The title of print certificate action,Certify record
+print.certificate.selectSignature,The label for choose signature select,Select e-signatures
+print.certificate.serviceMonth,The label for service paragraph,"Service: <strong>Birth registration after {service, plural, =0 {0 month} one {1 month} other{{service} months}} of D.o.B.</strong><br/>Amount Due:"
+print.certificate.toast.message,Floating Toast message upon certificate ready to print,Certificate is ready to print
+print.certificate.userReviewed,,The informant has reviewed and confirmed that the information on the certificate is correct.
+print.declaration.civilRegistrationOffice,Label for declaration details table entry,Civil registration office
+print.declaration.informantAttestation,Text for declaration details table entry,"I attest to having received this {eventType, select, birth{birth} death{death} marriage{marriage} other{}} declaration"
+print.declaration.placeOfDeclaration,Label for declaration details table entry,Place of declaration
+print.declaration.warning.declarationDetails,Warning text that shows before declaration details,To be completed by office
+printAction.description,The description for print action,Please confirm that the informant has reviewed that the information on the certificate is correct and that it is ready to print.
+printAction.title,The title for print action,Print certificate
+record-corrected.summary.section.title,Make corrections section title,Correction(s)
+record.certificate.collectedInAdvance,Table column header showing collector info in record audit,Printed in advance by
+record.certificate.collector,Table column header showing collector info in record audit,Printed on collection
+recordAudit.archive.confirmation.body,Confirmation body for archiving a declaration,This will remove the declaration from the workqueue and change the status to Archive. To revert this change you will need to search for the declaration.
+recordAudit.archive.confirmation.title,Confirmation title for archiving a declaration,Archive declaration?
+recordAudit.archive.status,Archived status,Archived
+recordAudit.contact,Contact for record audit,Contact
+recordAudit.dateOfBirth,Label for date of birth,Date of birth
+recordAudit.dateOfDeath,Label for date of death,Date of death
+recordAudit.dateOfMarriage,Label for date of marriage,Date of marriage
+recordAudit.declaration.markAsDuplicate,,Marked as a duplicate
+recordAudit.declaration.reinstateDialog.actions.cancel,Button label for the dialog when cancel reinstate declaration,Cancel
+recordAudit.declaration.reinstateDialog.actions.confirm,Button label for the dialog when confirm reinstate declaration,Confirm
+recordAudit.declaration.reinstateDialogDescription,Description for the dialog when reinstate declaration,This will revert the application back to its original status and add it to your workqueue.
+recordAudit.declaration.reinstateDialogTitle,Title for the dialog when reinstate declaration,Reinstate declaration?
+recordAudit.history.started,Declaration Started,Started
+recordAudit.noContact,No contact for record audit,No contact details provided
+recordAudit.noDateOfBirth,Label for date of birth not available,No date of birth
+recordAudit.noDateOfDeath,Label for date of death not available,No date of death
+recordAudit.noDateOfMarriage,Label for date of marriage not available,No date of marriage
+recordAudit.noName,Label for name not available,No name provided
+recordAudit.noPlaceOfBirth,Label for place of birth not available,No place of birth
+recordAudit.noPlaceOfDeath,Label for place of death not availale,No place of death
+recordAudit.noPlaceOfMarriage,Label for place of marriage not availale,No place of marriage
+recordAudit.noStatus,Label for status not available,No status
+recordAudit.noTrackingId,Label for tracking id not available,No tracking id
+recordAudit.noType,Label for type of event not available,No event
+recordAudit.placeOfBirth,Label for place of birth,Place of birth
+recordAudit.placeOfDeath,Label for place of death,Place of death
+recordAudit.placeOfMarriage,Label for place of marriage,Place of marriage
+recordAudit.regAction.approvedCorrection,Approved Correction action,Correction approved
+recordAudit.regAction.assigned,Assigned action,Assigned
+recordAudit.regAction.corrected,Corrected action,Record corrected
+recordAudit.regAction.downloaded,Retrieved action,Retrieved
+recordAudit.regAction.flaggedAsPotentialDuplicate,Flagged as potential duplicate status message for record audit,Flagged as potential duplicate
+recordAudit.regAction.markedAsDuplicate,Marked as a duplicate status message for record audit,Marked as a duplicate
+recordAudit.regAction.markedAsNotDuplicate,Marked not a duplicate status message for record audit,Marked not a duplicate
+recordAudit.regAction.reinstated,Reinstated action,"Reinstated to {regStatus, select, registered{registered} validated{ready for review} in_progress{in progress} declared{ready for review} rejected{requires updates} other{}}"
+recordAudit.regAction.rejectedCorrection,Rejected Correction action,Correction rejected
+recordAudit.regAction.requestedCorrection,Requested Correction action,Correction requested
+recordAudit.regAction.unassigned,Unassigned action,Unassigned
+recordAudit.regAction.verified,Verified action,Certificate verified
+recordAudit.regAction.viewed,Viewed Record action,Viewed
+recordAudit.regStatus.archived,Label for registration status archived,Archived
+recordAudit.regStatus.certified,Label for registration status certified,Certified
+recordAudit.regStatus.correctionRequested,Label for when someone requested correction,Correction requested
+recordAudit.regStatus.declared,Label for registration status declared,Declaration started
+recordAudit.regStatus.declared.sentNotification,Field agent sent notification,Sent notification for review
+recordAudit.regStatus.issued,Label for registration status Issued,Issued
+recordAudit.regStatus.registered,Label for registration status registered,Registered
+recordAudit.regStatus.rejected,A label for registration status rejected,Rejected
+recordAudit.regStatus.updatedDeclaration,Declaration has been updated,Updated
+recordAudit.regStatus.waitingValidation,Label for registration status waitingValidation,Waiting for validation
+recordAudit.registrationNo,Label for Event Registration Number,Registration No
+recordAudit.rn,Label for Birth Registration Number,Registration no.
+recordAudit.status,Label for status,Status
+recordAudit.trackingId,Label for tracking id,Tracking ID
+recordAudit.type,Label for event type,Event
+regHome.archived,Label for registration status archived,Archived
+regHome.certified,Label for registration status certified,Certified
+regHome.inPro.selector.field.agents,The title of In progress field agents,Field agents
+regHome.inPro.selector.hospital.drafts,The title of In progress Hospitals,Health System
+regHome.inPro.selector.own.drafts,The title of In progress own drafts,My Drafts
+regHome.inProgress,The title of In progress,In progress
+regHome.issued,Label for registration status issued,Issued
+regHome.outbox.failed,Label for declaration status failed,Failed to send
+regHome.outbox.retry,"Copy for ""Retry"" button in Outbox shown for records that failed to send",Retry
+regHome.outbox.statusArchiving,Label for application status Archiving,Archiving...
+regHome.outbox.statusCertifying,Label for declaration status Certifying,Certifying...
+regHome.outbox.statusIssuing,Label for declaration status Issuing,Issuing...
+regHome.outbox.statusRegistering,Label for declaration status Registering,Registering...
+regHome.outbox.statusReinstating,Label for application status Reinstating,Reinstating...
+regHome.outbox.statusRejecting,Label for declaration status Rejecting,Sending for updates...
+regHome.outbox.statusRequestingCorrection,Label for declaration status Requesting correction,Correcting...
+regHome.outbox.statusSendingForApproval,Label for declaration status waiting for validate,Sending for approval...
+regHome.outbox.statusSubmitting,Label for declaration status submitting,Sending...
+regHome.outbox.statusWaitingToBeArchived,Label for application status waiting to be archived,Waiting to be archived
+regHome.outbox.statusWaitingToBeReinstated,Label for application status waiting to be reinstated,Waiting to be reinstated
+regHome.outbox.statusWaitingToCertify,Label for declaration status waiting for certify,Waiting to certify
+regHome.outbox.statusWaitingToIssue,Label for declaration status waiting for certify,Waiting to issue
+regHome.outbox.statusWaitingToRegister,Label for declaration status waiting for register,Waiting to register
+regHome.outbox.statusWaitingToReject,Label for declaration status waiting for reject,Waiting to send for updates
+regHome.outbox.statusWaitingToRequestCorrection,Label for declaration status waiting for request correction,Waiting to correct
+regHome.outbox.statusWaitingToSubmit,Label for declaration status waiting for reject,Waiting to send
+regHome.outbox.statusWaitingToValidate,Label for declaration status waiting for validate,Waiting to send for approval
+regHome.outbox.waitingToRetry,Label for declaration status waiting for connection,Waiting to retry
+regHome.readyForReview,The title of ready for review,Ready for review
+regHome.readyToPrint,The title of ready to print tab,Ready to print
+regHome.registrationNumber,The heading of registration no. column,Registration no.
+regHome.requestedCorrection,Label for registration status requested correction,Requested correction
+regHome.sentForApprovals,The title of sent for approvals tab,Sent for approval
+regHome.sentForExternalValidation,The label for external validation waiting duration column,Sent for ext. validation
+regHome.sentForUpdates,The title of sent for updates tab,Sent for updates
+regHome.table.label,Results label at the top of the data table component,Results
+regHome.table.label.action,Label for action in work queue list item,Action
+regHome.table.label.declarationDate,Label for declaration date in work queue list item,Declaration sent
+regHome.table.label.registeredDate,Label for date of registration in work queue list item,Declaration registered
+regHome.val.regAgent.tooltip,Text to display for validated declaration as tooltip,Declaration has been validated and waiting for approval
+regHome.validated.registrar.tooltip,Text to display for validated declaration as tooltip,Declaration has been validated by a registration agent
+regHome.waitingForExternalValidation,The title of waiting for external validation,Waiting for ext. validation
+regHome.workqueue.downloadDeclarationFailed,Label for declaration downloading failed,Failed to download declaration. Please try again
+register.SelectContactPoint.phoneNoError,Phone no error text,Not a valid mobile number
+register.eventInfo.birth.listItem0,Event info bullet list item for birth,I am here to complete the birth registration declaration for you.
+register.eventInfo.birth.listItem1,Event info bullet list item for birth,"Once I complete the declaration, it will be sent to the registration office for review."
+register.eventInfo.birth.listItem2,Event info bullet list item for birth,Wait for an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.
+register.eventInfo.death.listItem0,Event info bullet list item for death,I am here to complete the death registration declaration for you. 
+register.eventInfo.death.listItem1,Event info bullet list item for death,"Once I complete the declaration, it will be sent to the registration office for review."
+register.eventInfo.death.listItem2,Event info bullet list item for death,Wait for an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.
+register.eventInfo.event.title,,"Introduce the {eventType, select, birth{birth} death{death} other{marriage}} registration process to the informant"
+register.eventInfo.marriage.listItem0,Event info bullet list item for marriage,I am here to complete the marriage registration declaration for you. 
+register.eventInfo.marriage.listItem1,Event info bullet list item for marriage,"Once I complete the declaration, it will be sent to the registration office for review."
+register.eventInfo.marriage.listItem2,Event info bullet list item for marriage,Wait for an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.
+register.form.modal.desc.deleteDeclarationConfirm,Description for delete declaration confirmation modal,"Are you certain you want to delete this draft declaration form? Please note, this action can't be undone."
+register.form.modal.desc.exitWithoutSavingDeclarationConfirm,Description for exit declaration without saving confirmation modal,You have unsaved changes on your declaration form. Are you sure you want to exit without saving?
+register.form.modal.desc.exitWithoutSavingModalForCorrection,Description for exit declaration without saving confirmation modal for correct record,Are you sure you want to exit? Any corrections you have made will not be saved.
+register.form.modal.desc.saveCorrectionConfirm,Description for save correction confirmation modal,The declarant will be notified of this correction and a record of this decision will be recorded
+register.form.modal.desc.saveCorrectionReject,Description for reject correction modal,The declarant will be notified of this decision and a record of this decision will be recorded
+register.form.modal.desc.saveDeclarationConfirm,Description for save declaration confirmation modal,All inputted data will be kept secure for future editing. Are you ready to save any changes to this declaration form?
+register.form.modal.desc.validateConfirmation,Description for validate confirmation modal,This declaration will be sent for approval prior to registration.
+register.form.modal.description.deleteDeclarationConfirm,Description for delete declaration confirmation modal,"Are you certain you want to delete this draft declaration form? Please note, this action can't be undone."
+register.form.modal.submitDescription,Submit description text on submit modal,By clicking “Submit” you confirm that the informant has read and reviewed the information and understands that this information will be shared with Civil Registration authorities.
+register.form.modal.title.deleteDeclarationConfirm,Title for delete declaration confirmation modal,Delete draft?
+register.form.modal.title.exitWithoutSavingDeclarationConfirm,Title for exit declaration without saving confirmation modal,Exit without saving changes?
+register.form.modal.title.exitWithoutSavingModalForCorrection,Title for exiting correction record without saving confirmation,Exit correct record?
+register.form.modal.title.saveCorrectionConfirm,Title for save correction confirmation modal,Approve correction?
+register.form.modal.title.saveCorrectionReject,Title for reject correction modal,Reject correction?
+register.form.modal.title.saveDeclarationConfirm,Title for save declaration confirmation modal,Save & exit?
+register.form.modal.title.validateConfirmation,Title for validate confirmation modal,Send for approval?
+register.form.newVitalEventRegistration,The message that appears for new vital event registration,"{event, select, birth {Birth} death {Death} marriage {Marriage} divorce {Divorce} adoption {Adoption}} declaration"
+register.form.previewEventRegistration,The message that appears for new birth registrations,"{event, select, birth {Birth} death {Death} marriage {Marriage} divorce {Divorce} adoption {Adoption}} Declaration Preview"
+register.form.required,Required field error message,This field is required
+register.form.reviewEventRegistration,The message that appears for new birth registrations,"{event, select, birth {Birth} death {Death} marriage {Marriage} divorce {Divorce} adoption {Adoption}} Declaration Review"
+register.form.section.preview.name,Form section name for Preview,Preview
+register.form.section.preview.title,Form section title for Preview,Preview
+register.registerForm.queryError,The error message shown when a search query fails,"The page cannot be loaded at this time due to low connectivity or a network error. Please click refresh to try again, or try again later."
+register.selectInformant.birthErrorMessage,Label for birth error message,Please select who is present and applying
+register.selectInformant.birthInformantTitle,Who is applying for birth registration,Who is applying for birth registration?
+register.selectInformant.deathErrorMessage,Label for death error message,Please select the relationship to the deceased.
+register.selectInformant.deathInformantTitle,Who is applying for death registration,Who is applying for death registration?
+register.selectInformant.marriageInformantTitle,Who is applying for marriage registration,Who is applying for marriage registration?
+register.selectInformant.newBirthRegistration,The title that appears for new birth registrations,New birth declaration
+register.selectInformant.newDeathRegistration,The title that appears for new death registrations,New death declaration
+register.selectInformant.newMarriageRegistration,The title that appears for new marriage registrations,New marriage declaration
+register.selectInformant.parents,The description that appears when selecting the parent as informant,Mother & Father
+register.selectVitalEvent.backToReviewButton,,Back to review
+register.selectVitalEvent.errorMessage,Error Message to show when no event is being selected,Please select the type of event
+register.selectVitalEvent.registerNewEventHeader,The section heading on the page,What type of event do you want to declare?
+register.selectVitalEvent.registerNewEventHeading,The section heading on the page,What type of event do you want to declare?
+register.selectVitalEvent.registerNewEventTitle,The title that appears on the select vital event page,New declaration
+rejectModal.archive,The label for archive button of reject modal,Archive
+rejectModal.markAsDuplicate,The label for mark as duplicate checkbox of reject modal,Mark as a duplicate
+rejectModal.sendForUpdate,The label for send For Update button of reject modal,Send For Update
+rejectModal.title,The title for reject modal,Reason for rejection?
+reloadmodal.body,Body of reload modal,There’s a new version of {app_name} available. Please update to continue.
+reloadmodal.button.update,Label of update button,Update
+reloadmodal.title,Title when update is available,Update available
+resend.sms,Text for button that resend SMS or email verification code,"Resend {notificationMethod, select, sms {SMS} email {Email} other {}}"
+resetCredentials.emailAddressConfirmation.form.body.header,Form body header used in the body of email address confirmation step,Enter your email address
+resetCredentials.forgottenItem.form.body.header,Body header for forgotten item form,What have you forgotten?
+resetCredentials.forgottenItem.form.title,Title used for forgotten item form,Can't login
+resetCredentials.form.title,Title used reset credentials forms,"{forgottenItem, select, username {Username reminder request} password {Password reset} other {}} "
+resetCredentials.label.field.answer,Label used for answer input field,Answer
+resetCredentials.label.field.verificationCode,Label used for verification code input field,Verification code (6 digits)
+resetCredentials.option.password,Option used for password,My password
+resetCredentials.option.username,Option used for username,My username
+resetCredentials.phoneNumberConfirmation.form.body.header,Form body header used in the body of phone number confirmation step,Enter your phone number
+resetCredentials.recoveryCodeEntry.codeResent.form.body.header,The title that appears in step two of the form after resend button click,Verification code resent
+resetCredentials.recoveryCodeEntry.codeResent.form.body.subheader,The message that appears when the resend button is clicked.,We just resent you another code to {number}.
+resetCredentials.recoveryCodeEntry.form.body.header,Form body header used for recovery code entry step,Enter the 6-digit recovery code
+resetCredentials.recoveryCodeEntry.form.body.subheader,Form body subheader used for recovery code entry step in mobile flow,The recovery code was sent to your phone number. Please enter the code. Didn't receive it? {link}
+resetCredentials.recoveryCodeEntry.form.body.subheader.email,Form body subheader used for recovery code entry step in email flow,The recovery code was sent to your email. Please enter the code. Didn't receive it? {link}
+resetCredentials.securityQuestion.form.body.subheader,Form body subheader used for security question step,This is one of the security questions you choose when setting up your account
+resetCredentials.success.page.subtitle.email,Subtitle for success page for email,"{forgottenItem, select, username {Check your email for a reminder of your username} password {You can now login with your new password} other {}}"
+resetCredentials.success.page.subtitle.phone,Subtitle for success page for phone,"{forgottenItem, select, username {Check your phone for a reminder of your username} password {You can now login with your new password} other {}}"
+resetCredentials.success.page.title,Title for success page,"{forgottenItem, select, username {Username reminder sent} password {Passowrd reset successful} other {}}"
+review.actions.desc.regConfComp,,"By clicking register, you confirm that the information is correct and has been reviewed by the informant. The informant understands that it will be used to register the {eventType, select, birth {birth declaration} death {death declaration}} and for planning purposes.
+
+By registering this {eventType, select, birth {birth declaration} death {death declaration}}, a {eventType, select, birth {birth} death {death}} certificate will be generated with your signature for issuance."
+review.actions.desc.regConfInComp,,Mandatory information is missing. Please add this information so that you can complete the registration process.
+review.actions.description,,By registering you confirm that you have reviewed this declaration and satisfied it fulfils requirements required for registration. 
+review.actions.description.confirmComplete,Description for review action component when complete declaration,"By sending this declaration for review you confirm that the information has been reviewed by the informant and that they are aware that they will receive an {deliveryMethod} with a tracking ID and details of how to collect the {eventType, select, birth {birth} death {death}} certificate"
+review.actions.description.confirmInComplete,Description for review action component when incomplete declaration,The informant will receive an {deliveryMethod} with a tracking ID that they can use to provide the additional mandatory information required for registration.
+review.actions.description.hasError,Description for review action component when declaration has errors on fields,Please ensure all fields are either empty or have a valid value in them.
+review.actions.title.declarationStatus,Title for review action component,"Declaration {completeDeclaration, select, true {complete} false {incomplete}}"
+review.actions.title.registerActionTitle,,Register event
+review.annotations.title,Title for the annotations accordion section in review,Annotations
+review.birthRegistration.queryError,The error message shown when a query fails,An error occurred while fetching birth registration
+review.button.approve,Label for Send For Approval button,Send for approval
+review.declare.confirmModal.title,The title for review action modal when declaring,Declare the {event}?
+review.declare.incomplete.confirmModal.title,The title for review action modal when declaring,Notify the {event}?
+review.documentViewer.title,Label for Supporting documents section,Supporting documents
+review.documents.editDocuments,Edit documents text,Add attachment
+review.documents.zeroDocumentsText,Zero documents text,"No supporting documents for {section, select, child {child} mother {mother} father {father} deceased {deceased} informant {informant} primaryCaregiver {parents}}"
+review.documents.zeroDocumentsTextForAnySection,Zero documents text,No supporting documents
+review.edit.modal.backToPreview,Preview button on edit modal,Back to Preview
+review.edit.modal.confirmationText,Edit modal confirmation text,A record will be created of any changes you make.
+review.edit.modal.confirmationTitle,Edit modal confirmation title,Edit declaration?
+review.error.unauthorized,The error message shown when a query fails,We are unable to display this page to you
+review.form.section.review.name,Form section name for Review,Review
+review.form.section.review.title,Form section title for Review,Review
+review.form.title,Review form label for update action,Review form
+review.header.subject.subjectWitName,Header subject that shows which declaration type to review with informant name,"{name} {eventType, select, birth {Birth} death {Death} other {Marriage} } declaration"
+review.header.subject.subjectWithoutName,Header subject that shows which declaration type to review,"{eventType, select, birth {Birth} death {Death} other {Marriage}} declaration"
+review.header.title.govtName,Header title that shows govt name,Government
+review.inputs.additionalComments,Label for input Additional comments,Any additional comments?
+review.inputs.brideSignature,Label for informants signature input,Signature of Bride
+review.inputs.groomSignature,Label for informants signature input,Signature of Groom
+review.inputs.informantsSignature,Label for informants signature input,Signature of informant
+review.inputs.supportingDocuments,Section heading title for supporting documents,Supporting documents
+review.inputs.terms,Label for signature terms,"We, the undersigned declare under penalty of perjury under the laws of Farajaland that the forgoing information is true and correct to the best of our knowledge and belief. We further declare that no legal objections to the marriage is known and hereby apply for a certificate of marriage"
+review.inputs.witnessOneSignature,Label for informants signature input,Signature of Witness 1
+review.inputs.witnessTwoSignature,Label for informants signature input,Signature of Witness 2
+review.modal.desc.submitConfirmation,Submit description text on modal,"{completeDeclaration, select, true {This declaration will be sent to the registrar for them to review.} false {This declaration will be sent to the Registrar for completion. Please inform the Informant that they will need to visit the office with the missing information and supporting documents.}}"
+review.modal.title.registerConfirmation,Title for register confirmation modal,Register the {event}?
+review.modal.title.submitConfirmation,Submit title text on modal,"{completeDeclaration, select, true {Send declaration for review?} false {Send incomplete declaration?}}"
+review.register.confirmModal.title,The title for review action modal when registering,Register the {event}?
+review.rej.form.reasons.missSupDoc,Label for rejection option missing supporting doc,Missing supporting documents
+review.rejection.form,Rejection form name,Rejection Form
+review.rejection.form.commentLabel,,Comments or instructions for health worker to rectify declaration
+review.rejection.form.instruction,Rejection form instruction,Please describe the updates required to this record for follow up action.
+review.rejection.form.reasons,Rejection reasons checkbox label,Reason(s) for rejection:
+review.rejection.form.reasons.duplicate,Label for rejection option duplicate,Duplicate declaration
+review.rejection.form.reasons.markDuplicate,Label for rejection option duplicate,Mark as a duplicate
+review.rejection.form.reasons.misspelling,Label for rejection option misspelling,Misspelling
+review.rejection.form.reasons.other,Label for rejection option other,Other
+review.rejection.form.submitButton,Rejection form submit button,Submit rejection
+review.rejection.form.title,Rejection form title,What update does the declaration require?
+review.signature.clear,Label for button that clear signature input,Clear
+review.signature.delete,Label for button that deletes signature,Delete
+review.signature.description,Label awknowledging the correctness of the declaration,"I, the undersigned, hereby declare that the particulars in this form are true and correct to the best of my knowledge."
+review.signature.input.description,Description awknowledging the correctness of the declaration,"By signing this document with an electronic signature, I agree that such signature will be valid as handwritten signatures to the extent allowed by the laws of Farajaland."
+review.signature.open,Label for button that opens the signature input,Sign
+saveAndExit.desc.saveDeclarationConfirm,Description for save declaration confirmation modal,All inputted data will be kept secure for future editing. Are you ready to save any changes to this declaration form?
+saveAndExit.title.saveDeclarationConfirm,Title for save declaration confirmation modal,Save & exit?
+search.advancedSearch.result.title,Advanced search result title,Search results ({count})
+search.bookmark.error.notification,Error Notification messages for bookmark advanced search result,"Sorry, something went wrong. Please try again"
+search.bookmark.loading.notification,Loading Notification messages for bookmark advanced search result,Bookmarking your advanced search results...
+search.bookmark.remove.loading.notification,Loading Notification messages for remove advanced search bookmark,Removing your advanced search bookmark...
+search.bookmark.remove.success.notification,Success Notification messages for remove advanced search bookmark,Your advanced search bookmark has been removed successfully
+search.bookmark.success.notification,Success Notification messages for bookmark advanced search result,Your advanced search result has been bookmarked successfully
+search.bookmarkAdvancedSearchModalBody,Modal body for bookmark advacnced search,A shortcut will be added to the side bar so you can rerun this search query
+search.bookmarkAdvancedSearchModalTitle,Modal title for bookmark advacnced search,Save search query?
+search.informantContact,The rejected reason,Informant contact number
+search.labels.results.eventRegistrationNumber,Label for event registration number in search result list item,"{event, select, birth {B} death {D} marriage {M} divorce {Divorce } adoption {A}}RN"
+search.loadingDeclarations,The text when loading declaration,Loading declarations...
+search.locationNotFound,Label for location not found,Location not found
+search.noDeclarations,The text when there is no declaration to review,No declarations to review
+search.noRecord,The no record text,"No records {slug, select, draft {in drafts} outbox {require processing} other {{title}}}"
+search.noResult,The no result text,No result
+search.noResultFor,The no result text,No results for ”{param}”
+search.noResultForSearchTerm,The no result text,"No results for ""{searchTerm}"""
+search.noResults,Text to display if the search return no results for the current filters,No result to display
+search.placeholder,Placeholder text of search input,Name of query
+search.quickSearch.result.title,Title for search result page,Search result for “{searchTerm}”
+search.removeBbookmarkAdvancedSearchModalBody,Modal body for remove bookmark advacnced search,This advanced search bookmark will be removed from the side bar shortcut
+search.removeBookmarkAdvancedSearchModalTitle,Modal title for remove bookmark advacnced search,Remove search query?
+search.results,Results label at the top of the data table component,Results
+search.searchResultFor,The search result text,Search results for ”{param}”
+search.searchingFor,The searching for text,Searching for “{param}”
+search.totalResultText,The total result text,"{total, plural, =0 {} one {# record found} other {# records found}} "
+search.waitingForConnection,The text when there is no connectivity,Reconnect to load declarations
+searchField.indicators.clearButton,Clear button text,Clear
+searchField.indicators.clearModal.cancel,Cancel button for clear confirmation modal,Cancel
+searchField.indicators.clearModal.confirm,Confirm button for clear confirmation modal,Confirm
+searchField.indicators.clearModal.description,Description for the clear confirmation modal,This will remove the current search results.
+searchField.indicators.clearModal.title,Title for the clear confirmation modal,Clear search results?
+searchField.indicators.confirmButton,Confirm button text,Search
+searchField.indicators.httpError,HTTP error indicator,"{statusCode, select, 408{Timed out} other{An error occurred while fetching data}}"
+searchField.indicators.loading,Loading indicator,Searching...
+searchField.indicators.noResultsError,No results found indicator,No record found
+searchField.indicators.offline,Offline indicator,Search is unavailable while offline
+searchField.indicators.ok,OK button text,Found {count} results
+settings.account.tile,Account header,Account
+settings.changeAvatar,Avatar change modal header,Change profile image
+settings.changeAvatar.changeImage,Change image label,Change image
+settings.changeAvatar.resizeAvatar,Avatar resize and position message,Resize and position the chosen image.
+settings.changeLanguage,Change language title,Change language
+settings.changeLanguage.success,Change language success,Language updated
+settings.changePassword,Password change modal header,Change password
+settings.changePhone,Change phone number title,Change phone number
+settings.message.changeLanguage,Change language message,Your prefered language that you want to use on OpenCRVS
+settings.profile.tile,Profile header,Profile
+settings.security.tile,Security header,Security
+settings.system.tile,System header,System
+settings.title,Title of the settings page,Settings
+settings.user.label.assignedOffice,Assigned office,Assigned office
+settings.user.label.nameBN,,Bengali name
+settings.user.label.nameEN,,Full name
+settings.verifyPhone,Verify phone number title,Verify phone number
+sysAdHome.config,The title of config tab,Config
+sysAdHome.devices,The title of devices tab,Devices
+sysAdHome.network,The title of network tab,Network
+sysAdHome.offices,The title of offices tab,Offices
+sysAdHome.overview,The title of overview tab,Overview
+sysAdHome.resendInvite,The label for menu option resend invitation,Resend invite
+sysAdHome.resendInviteError,The label for error notification of resend invite,Invite could not be sent
+sysAdHome.resendInviteSuccess,The label for success notification of resend invite,Invite sent
+sysAdHome.resentPasswordError,The label for error notification of reset password sms invite,Temporary password could not be sent
+sysAdHome.resentPasswordSuccess,The label for success notification of reset password sms invite,Temporary password sent to {username}
+sysAdHome.sendUsernameReminderInvite,The label for menu option to send username reminder,Send username reminder
+sysAdHome.sendUsernameReminderInviteError,The label for error notification of send username reminder,Username reminder could not be sent
+sysAdHome.sendUsernameReminderInviteModalMessage,Message for send username reminder,The user will receive a username reminder via an {deliveryMethod} sent to {recipient}
+sysAdHome.sendUsernameReminderInviteModalTitle,Title for send username reminder,Send username reminder?
+sysAdHome.sendUsernameReminderInviteSuccess,The label for success notification of send username reminder,Username reminder sent to {name}
+sysAdHome.user.audit.comments,The label for form field deactivate comments,Comments: 
+sysAdHome.user.audit.deactiv.reasonInv,The label for radio option being investigated,Being investigated due to suspicious activity on their account
+sysAdHome.user.audit.deactiv.reasonNotEmp,The label for radio option not employee,No longer an employee
+sysAdHome.user.audit.deactivation.subtitle,The subtitle of user deactivation confirmation modal,This will revoke {name}’s ability to login and access the system. The account can be reactivated at a later date.
+sysAdHome.user.audit.deactivation.title,The title of user deactivation confirmation modal,Deactivate {name}?
+sysAdHome.user.audit.form.error,The label for form error,A reason is required for {auditAction} this user
+sysAdHome.user.audit.reactiv.noLongerInv,The label for radio option no longer investigated,No longer being investigated for suspicious activity
+sysAdHome.user.audit.reactiv.returned,The label for radio option Returned to role,Returned to their role
+sysAdHome.user.audit.reactivation.subtitle,The subtitle of user reactivation confirmation modal,This will reactivate {name}’s ability to login and access the system.
+sysAdHome.user.audit.reactivation.title,The title of user reactivation confirmation modal,Reactivate {name}?
+sysAdHome.user.audit.reason,The label for form field deactivate reason,Please provide a reason: 
+sysAdHome.user.audit.reasonOther,The label for radio option other,Other (please provide a reason in the comments)
+sysAdHome.user.deactivate,Label for toggle menu option deactivate,Deactivate
+sysAdHome.user.edit.commonGroupTitle,Common title of form view groups when edit user,Edit user
+sysAdHome.user.header,Title for edit user details,Edit details
+sysAdHome.user.reactivate,Label for toggle menu option reactivate,Reactivate
+sysAdHome.user.resetPasswordModal.message,Message for reset password modal,The user will receive a temporary password via {deliveryMethod} sent to {recipient}. They will then be prompted to create a new password on successful login
+sysAdHome.user.resetPasswordModal.title,Title for reset user password modal,Reset password?
+sysAdHome.user.resetpassword.title,Title for reset user password,Reset Password
+sysAdHome.users,The title of users tab,Users
+system.user.active,Pill label for active user,Active
+system.user.deactivated,Pill label for deactivated user,Deactivated
+system.user.disabled,Pill label for disabled user,Disabled
+system.user.duplicateEmailError,This error message shows when user tries to input an already existing email,{email} is already used by another user. Please use a different email
+system.user.duplicateMobileError,This error messege shows when user try to input already exsisted mobile number,{number} is already used by another user. Please use a different phone number
+system.user.newUser,This text will show to create new user button,New User
+system.user.pending,Pill label for pending user,Pending
+system.user.queryError,The text when error ocurred loading system users,An error occurred while loading system users
+system.user.settings.avatarUpdated,Profile image change message on success,Profile image successfully updated
+system.user.settings.avatarUpdating,Profile image message when uploading,Updating profile image
+system.user.settings.emailAddressUpdated,Email change message on success,Email Address updated
+system.user.settings.incorrectPassword,Response message for incorrect password for password change,Current password incorrect. Please try again.
+system.user.settings.incorrectVerifyCode,Response message for incorrect Verify code for phone number change,Verify code incorrect. Please try again.
+system.user.settings.language,,{language}
+system.user.settings.name,label for Name,Name
+system.user.settings.passwordUpdated,Password change message on success,Password was successfully changed
+system.user.settings.phonedNumberUpdated,Phone change message on success,Phone number updated
+system.user.settings.profileImage,Label for profile image,Profile Image
+system.user.settings.systemLanguage,Label for system language,System language
+system.user.total,User list table header text,{totalUser} users
+system.user.unlock.pinLabel,Label for entering unlock user profile,Enter your pin
+team.header.sysadmin.home,Header for system admin team home page,Search for an office
+team.user.buttons.deactivate,Label for confirmation modal for user deactivation,Deactivate
+team.user.buttons.reactivate,Label for confirmation modal for user reactivation,Reactivate
+unlockApp.incorrectPin,The message displayed when a user enters an incorrect PIN,Incorrect pin. Please try again
+unlockApp.lastTry,The message displayed before the 3rd attempt of an incorrect PIN,Last Try
+unlockApp.locked,The title displayed while creating a PIN,Your account has been locked. Please try again in 1 minute
+user.avatar,,User avatar
+user.form.buttons.submit,Label for submit button of user creation form,Create user
+user.form.securityquestion.answer,,Answer
+user.form.securityquestion.description,,"From the drop down lists below, select questions that can be used later to confirm your identity should you forget your password."
+user.form.securityquestion.enterResponse,,Enter a response to your chosen security question
+user.form.securityquestion.heading,,Set your security questions
+user.form.securityquestion.securityQuestionLabel,,Security question {count}
+user.form.securityquestion.selectSecurityQuestion,,Select a security question
+user.form.securityquestion.title,,Security questions
+user.profile.assignedOffice,Title for assigned office field,Assigned registration office
+user.profile.audit.column.action,Title for audit action column,Action
+user.profile.audit.column.date,Title for audit date column,Date
+user.profile.audit.column.deviceIPAddress,Title for audit Device/IP Address column,Device/IP Address
+user.profile.audit.column.eventType,Title for audit event type column,Event
+user.profile.audit.column.trackingId,Title for audit tracking id column,Record
+user.profile.audit.description.certified,Description for certified declaration,Certified
+user.profile.audit.description.declared,Description for complete declaration,Declaration started
+user.profile.audit.description.inProgress,Description for incomplete declaration,Sent incomplete
+user.profile.audit.description.issued,Description for Issued declaration,Issued
+user.profile.audit.description.registered,Description for registered declaration,Registered
+user.profile.audit.description.rejected,Description for rejected declaration,Rejected
+user.profile.audit.description.updated,Description for updated declaration,Updated
+user.profile.audit.description.validated,Description for validated declaration,Sent for approval
+user.profile.audit.list.noDataFound,Text for audit list,No audits to display
+user.profile.auditList.approvedCorrectionAuditAction,Description for record correction being approved,Approved correction request
+user.profile.auditList.archived,Description for declaration archived,Archived
+user.profile.auditList.assigned,Description for declaration assignment,Assigned
+user.profile.auditList.corrected,Description for declaration corrected,Corrected Record
+user.profile.auditList.emailAddressChanged,Description for user change email,Email Address changed
+user.profile.auditList.loggedIn,Description for user logged in,Logged in
+user.profile.auditList.loggedOut,Description for user logged out,Logged out
+user.profile.auditList.markedAsDuplicate,Description for marked as duplicate in audit action,Marked as duplicate
+user.profile.auditList.markedAsNotDuplicate,Description for marked as not duplicate in audit action,Marked as not duplicate
+user.profile.auditList.passwordChanged,Description for user change password,Changed Password
+user.profile.auditList.passwordReset,Description for User reset password action,Reset password
+user.profile.auditList.passwordResetByAdmin,Description for sending temporal password action,Sent password
+user.profile.auditList.phoneNumberChanged,Description for user change phoneNumber,Phone number changed
+user.profile.auditList.reInstatedToInProgress,Description for sending registration from Reinstated to In progress audit action,Reinstated to in progress
+user.profile.auditList.reInstatedToInReview,Description for sending registration from Reinstated to In review audit action,Reinstated to ready for review
+user.profile.auditList.reInstatedToUpdate,Description for sending registration from Reinstated to require updates audit action,Reinstated to requires updates
+user.profile.auditList.rejectedCorrectedAuditAction,Description for record correction being rejected,Rejected correction request
+user.profile.auditList.requestedCorrectionAuditAction,Description for record correction being requested,Requested correction
+user.profile.auditList.retrieved,Description for declaration retrieved audit action,Retrieved
+user.profile.auditList.sentForApproval,Description for sending registration for approval audit action,Sent for approval
+user.profile.auditList.showMore,Label for show more link,Show next {pageSize} of {totalItems}
+user.profile.auditList.unAssigned,Description for declaration not assigned to self,Unassigned
+user.profile.auditList.userCreated,Description for User created action,Created User
+user.profile.auditList.userDeactivated,Description for User deactivated,Deactivated User
+user.profile.auditList.userEdited,Description for User edited action,Edit User
+user.profile.auditList.userReactivated,Description for User reactivated,Reactivates User
+user.profile.auditList.usernameReminderByAdmin,Description for send username reminder audit action,Sent username reminder
+user.profile.auditList.usernameRequested,Description for User username requested audit action,Username Reminder Requested
+user.profile.auditList.viewed,Description for declaration viewed audit action,Viewed
+user.profile.nid,Title for nid,National ID
+user.profile.phoneNumber,Title for phoneNumber field,Phone number
+user.profile.roleType,Title for roleType field,Role/Type
+user.profile.sectionTitle.audit,Title for audit section,History
+user.profile.startDate,Title for startDate field,Start date
+user.profile.userName,Title for userName field,Username
+userSetup.complete.instruction,Instruction for the setup complete,Now login to your account with your username and newly created password
+userSetup.complete.title,Title for the setup complete page,Account setup complete
+userSetup.instruction,User setup review page instruction,Check the details below to confirm your account details are correct. and make annecessary changes to confirm your account details are correct.
+userSetup.landing.instruction,Instruction for the account setup langing page,You just a few steps away from completing your account set up.
+userSetup.landing.title,Title for the landing page,Welcome to {applicationName}
+userSetup.review.header,User setup review page subtitle,Confirm your details
+userSetup.review.title,User setup review page title,Your details
+userSetup.securityQuestions.birthTown,The description for BIRTH_TOWN key,What city were you born in?
+userSetup.securityQuestions.favoriteFood,The description for FAVORITE_FOOD key,What is your favorite food?
+userSetup.securityQuestions.favoriteMovie,The description for FAVORITE_MOVIE key,What is your favorite movie?
+userSetup.securityQuestions.favoriteSong,The description for FAVORITE_SONG key,What is your favorite song?
+userSetup.securityQuestions.favoriteTeacher,The description for FAVORITE_TEACHER key,What is the name of your favorite school teacher?
+userSetup.securityQuestions.firstChildName,The description for FIRST_CHILD_NAME key,What is your first child's name?
+userSetup.securityQuestions.hightSchool,The description for HIGH_SCHOOL key,What is the name of your high school?
+userSetup.securityQuestions.motherName,The description for MOTHER_NAME key,What is your mother's name?
+userSetup.type.healthSystem,The description for health system type,Health System
+userSetup.type.hospital,The description for HOSPITAL type,Hospital
+userSetup.type.system,The description for system type,System
+userSetup.waiting,The message that displays when the user is waiting for the account to be created,Setting up your account
+validate.complete.declaration.action.description,,By sending for approval you confirm that the declaration is ready for approval
+validate.complete.declaration.action.title,,Send for approval or reject?
+validate.declaration.action.modal.description,,This declaration will be sent for approval prior to registration.
+validate.declaration.action.modal.title,,Send for approval?
+validations.bengaliOnlyNameFormat,The error message that appears when a non bengali character is used in a Bengali name,Must contain only Bengali characters
+validations.blockAlphaNumericDot,The error message that appears when an invalid value is used,"Can contain only block character, number and dot (e.g. C91.5)"
+validations.correctionReason,The error message that appears on reason field on correction form,Please provide a reason for this correction
+validations.dateFormat,The error message appears when the given date is not valid,Must be a valid date
+validations.dobEarlierThanDom,The error message appears when the given birth date is later than the given marriage date,Must be earlier than marriage date
+validations.domLaterThanDob,The error message appears when the given marriage date is earlier than the given birth date,Must be later than birth date
+validations.duplicateNationalID,Unique Nid validation,National ID must be unique
+validations.emailAddressFormat,The error message that appears on email address,Must be a valid email address
+validations.englishOnlyNameFormat,"The error message that appears when a non English character except numbers, hyphens and underscores is used in an English name","Input contains invalid characters. Please use only letters (a-z), numbers (0-9), hyphens (-), and underscores (_)"
+validations.facilityMustBeSelected,The error message appears when no valid facility is selected,No facility selected
+validations.greaterThanZero,The error message appears when input is less than or equal to 0,Must be a greater than zero
+validations.illegalMarriageAge,The error message appears when the birth date is not old enough to register for marriage,Illegal age of marriage
+validations.invalidDate,The error message that appears when a date field is invalid,Invalid date field
+validations.isAgeInYearsBetween,The error message that appears when a date is outside the valid age range,Age must be between {min} and {max} years
+validations.isDateNotAfterDeath,The error message appears when the given date of death is not valid,Date must be before decease date
+validations.isDateNotBeforeBirth,The error message appears when the given date of death is not valid,Date must be after deceased birth date
+validations.isInformantOfLegalAge,The error message appears when the informant is not old enough to register an event,Informant is not of legal age
+validations.isMoVisitAfterDeath,The error message appears when the given date of visit of medical practitioner is after the death date,Medical Practitioner visit date must not be after the date of death
+validations.isMoVisitBeforeBirth,The error message appears when the given date of visit of medical practitioner is before the birth date of deceased,Medical Practitioner visit date must not be before the birth of deceased
+validations.isValidBirthDate,The error message appears when the given birth date is not valid,Must be a valid birth date
+validations.isValidDateOfDeath,The error message appears when the given date of death is not valid,Must be a valid date of death
+validations.maxLength,The error message that appears on fields with a maximum length,Must not be more than {max} characters
+validations.minLength,The error message that appears on fields with a minimum length,Must be {min} characters or more
+validations.mobileNumberFormat,The format of the mobile number that appears in an error message,07123456789
+validations.mobilePhoneRegex,The regular expression to use when validating a local mobile phone number,"07[0-9]{9,10}"
+validations.nonDecimalPointNumber,The error message that appeards when any decimal point number is used,Can not have any decimal point number
+validations.notGreaterThan,The error message that appears on numeric fields that exceed a limit,Must not be more than {maxValue}
+validations.numberRequired,The error message that appears on fields where the value must be number,Must be number
+validations.officeMustBeSelected,The error message appears when no valid office is selected,No Office selected
+validations.phoneNumberFormat,The error message that appears on phone numbers where the first character must be a 0,Must be a valid 10 digit number that starts with 0(7|9)
+validations.range,The error message that appears when an out of range value is used,Must be within {min} and {max}
+validations.required,The error message that appears on required fields,Required
+validations.requiredBasic,The error message that appears on required fields,Required
+validations.requiredSymbol,A blank error message. Used for highlighting a required field without showing an error,
+validations.userform.required,The error message that appears on required fields on new user form,Required to register a new user
+validations.validBirthRegistrationNumber,The error message that appears when an invalid value is used as brn,The Birth Registration Number can only be numeric and must be {validLength} characters long
+validations.validDeathRegistrationNumber,The error message that appears when an invalid value is used as drn,The Death Registration Number can only be numeric and must be {validLength} characters long
+validations.validDrivingLicenseNumber,The error message that appeards when an invalid value is used as driving license number,The Driving License Number can only be alpha numeric and must be {validLength} characters long
+validations.validNationalIDLengths,Nid valid lengths,10 or 17
+validations.validNationalId,The error message that appears when an invalid value is used as nid,The National ID can only be numeric and must be 10 digits long
+validations.validPassportNumber,The error message that appears when an invalid value is used as passport number,The Passport Number can only be alpha numeric and must be {validLength} characters long
+verified,This is the label for the verification field,Verified
+verifyCertificate.brn,Label for Birth Registration Number,BRN
+verifyCertificate.certifiedAt,Label for date of certification,Date of certification
+verifyCertificate.dateOfBirth,Label for date of birth,Date of birth
+verifyCertificate.dateOfDeath,Label for date of death,Date of death
+verifyCertificate.drn,Label for Death Registration Number,DRN
+verifyCertificate.errorMessage,message for error alert,The certificate is a potential forgery please...
+verifyCertificate.errorTitle,title for error alert,Invalid QR code
+verifyCertificate.fullname,title for success alert for url validation,Full Name
+verifyCertificate.loading,message when verification is checking,Verifying certificate
+verifyCertificate.placeOfBirth,Label for place of birth,Place of birth
+verifyCertificate.placeOfDeath,Label for place of death,Place of death
+verifyCertificate.registar,Label for name of registar center,Name of registar
+verifyCertificate.registrationCenter,Label for registration center,Registration Center
+verifyCertificate.sex,Label for sex,Sex
+verifyCertificate.sexFemale,Option for form field: Sex name,Female
+verifyCertificate.sexMale,Option for form field: Sex name,Male
+verifyCertificate.successMessage,message for success alert,Compare the partial details of the record below against those against those recorded on the certificate
+verifyCertificate.successTitle,title for success alert,Valid QR code
+verifyCertificate.successUrl,title for success alert for url validation,URL Verification
+verifyCertificate.timeOut,message when time out after few minute,You been timed out
+verifyCertificate.toastMessage,Message for the toast when time spend 1 minute,"After verifying the certificate, please close the browser window"
+views.idReader.label.manualInput,Label that shows below the divider on the id reader component,Complete fields below
+views.idReader.label.or,Label that shows on the divider,Or
+views.idVerification.banner.actions.reset,,Reset
+views.idVerification.banner.actions.revoke,,Revoke
+views.idVerification.banner.authenticated.description,,"This identity has been successfully authenticated with the Farajaland’s National ID System. To make edits, please remove the authentication first."
+views.idVerification.banner.authenticated.resetConfirmation.description,,"By clicking ‘Continue,’ you’ll remove ID Authenticated status and unlock the fields for editing."
+views.idVerification.banner.authenticated.resetConfirmation.title,,Revoke authenticated ID?
+views.idVerification.banner.authenticated.title,,ID Authenticated
+views.idVerification.banner.failed.description,,The identity card scanned has not be successfully authenticated
+views.idVerification.banner.failed.resetConfirmation.description,,"By clicking ‘Continue,’ you’ll clear all information to it’s default state."
+views.idVerification.banner.failed.resetConfirmation.title,,Reset information?
+views.idVerification.banner.failed.title,,ID Verification Failed
+views.idVerification.banner.failedFetchIdDetails.description,,We were unable to retrieve the individuals details for the National ID System. Please try again.
+views.idVerification.banner.failedFetchIdDetails.title,,Failed to retrieve individuals details
+views.idVerification.banner.verified.description,,"This identity data has been successfully verified with the Farajaland’s National ID System. Please note that their identity has not been authenticated using the individuals biometrics. To make edits, please remove the verification first."
+views.idVerification.banner.verified.resetConfirmation.description,,"By clicking ‘Continue,’ you’ll remove ID Verified status and unlock the fields for editing."
+views.idVerification.banner.verified.resetConfirmation.title,,Revoke valid ID?
+views.idVerification.banner.verified.title,,ID Verified
+views.qrReader.button,Button to scan QR code,Scan QR code
+views.qrReader.scannerDialogSupportingCopy,Supporting copy for the scanner dialog,Place the Notifier's ID card in front of the camera.
+views.qrReader.tutorial.cameraCleanliness,Camera cleanliness tutorial,Ensure your camera is clean and functional.
+views.qrReader.tutorial.distance,Distance tutorial,Hold the device steadily 6-12 inches away from the QR code.
+views.qrReader.tutorial.lightBalance,Light balance tutorial,Ensure the QR code is well-lit and not damaged or blurry.
+workqueues.dateOfEvent,Label for workqueue column: dateOfEvent,Date of Event
+workqueues.draft.title,Title of draft workqueue,Drafts
+workqueues.outbox.title,Title of outbox workqueue,Outbox
+wq.noRecords.draft,No records messages for empty draft tab,No records in my drafts
+wq.noRecords.externalValidation,No records messages for empty external validation tab,No records in external validation
+wq.noRecords.fieldAgents,No records messages for empty field agents tab,No records from field agents
+wq.noRecords.healthSystem,No records messages for empty health system tab,No records from health system
+wq.noRecords.readyForReview,No records messages for ready for review tab,No records ready for review
+wq.noRecords.readyToIssue,No records messages for ready to issue tab,No records ready to issue
+wq.noRecords.readyToPrint,No records messages for ready to print tab,No records ready to print
+wq.noRecords.requiresUpdate,No records messages for require updates tab,No records require updates
+wq.noRecords.sentForApproval,No records messages for sent for approval tab,No records sent for approval
+wq.noRecords.sentForReview,No records messages for sent for review tab,No records sent for review
