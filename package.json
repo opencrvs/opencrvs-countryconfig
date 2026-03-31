@@ -26,6 +26,8 @@
     "port-forward": "bash infrastructure/port-forward.sh",
     "environment:init": "ts-node infrastructure/environments/setup-environment.ts",
     "environment:upgrade": "yarn environment:init",
+    "validate:translations": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/validate-translations.ts",
+    "validate:translations:ci": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/validate-translations.ts --ci",
     "sort-translations": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/sort-translations.ts"
   },
   "devDependencies": {
@@ -62,7 +64,7 @@
     "@hapi/boom": "^9.1.1",
     "@hapi/hapi": "^20.0.1",
     "@hapi/inert": "^6.0.3",
-    "@opencrvs/toolkit": "1.9.11-rc.a720263",
+    "@opencrvs/toolkit": "1.9.10-rc.c7b5bf8",
     "@types/chalk": "^2.2.0",
     "@types/csv2json": "^1.4.0",
     "@types/fhir": "^0.0.30",
