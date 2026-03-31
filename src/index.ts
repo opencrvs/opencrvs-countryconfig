@@ -75,6 +75,7 @@ import {
 } from './analytics/analytics'
 import { getClient } from './analytics/postgres'
 import { env } from './environment'
+import { checkTranslations } from './validate-translations'
 import { createClient } from '@opencrvs/toolkit/api'
 import { Event } from './events/utils/types'
 
@@ -654,6 +655,7 @@ export async function createServer() {
     await server.start()
     await syncLocationLevels()
     await syncLocationStatistics()
+    await checkTranslations(true)
 
     logger.info(
       `Server successfully started on ${COUNTRY_CONFIG_HOST}:${COUNTRY_CONFIG_PORT}`
