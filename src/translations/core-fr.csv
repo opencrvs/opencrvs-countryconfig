@@ -1025,8 +1025,8 @@ integrations.informantDetailsNoPII,Label for informant details no PII,informatio
 integrations.integratingSystemType,Label for integrating system type,Système
 integrations.integratingSystemTypeAlertMosip,Label for alert when selecting MOSIP type,"Lorsque le type d'identification nationale ""MOSIP"" est activé, tous les formulaires requièrent l'authentification E-Signet. est activé, tous les formulaires requièrent l'authentification MOSIP E-Signet. Le MOSIP Token Seeder et le médiateur MOSIP compatible avec le webhook OpenCRVS doivent être installés. Pour plus d'informations, visitez le site:"
 integrations.integratingSystemTypeAlertOther,Label for alert when selecting other type,"Lorsque l'option ""Other ID"" est activée, le médiateur OpenCRVS National ID par défaut doit être installé. Pour plus d'informations, visitez le site:"
-integrations.integratingSystemTypeMosip,"Integrating system type option ""MOSIP""",
-integrations.integratingSystemTypeOther,"Integrating system type option ""Other""",
+integrations.integratingSystemTypeMosip,"Integrating system type option ""MOSIP""",MOSIP
+integrations.integratingSystemTypeOther,"Integrating system type option ""Other""",Autre
 integrations.label,Label,Étiquette
 integrations.loading,Label for loading option,Chargement
 integrations.motherDetails,Label for mothers details,Information de la mère
