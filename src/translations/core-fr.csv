@@ -792,7 +792,7 @@ event.edit.comment.label,The label for the comment,Commentaires
 event.edit.declareWithEdits.label,Label for Declare with edits in edit action menu,Déclarer avec modifications
 event.edit.notifyWithEdits.label,"Label for ""Notify with edits"" in edit action menu",Notifier avec modifications
 event.edit.registerWithEdits.label,Label for Register with edits in edit action menu,Enregistrer avec modifications
-event.history.role,,"{role, select, LOCAL_REGISTRAR {Officier d'état civil local} POLICE_OFFICER {Agent de police} FIELD_AGENT {Agent de terrain} REGISTRATION_AGENT {Agent d'enregistrement} HEALTHCARE_WORKER {Professionnel de santé} PERFORMANCE_MANAGER {Responsable des opérations} LOCAL_SYSTEM_ADMIN {Administrateur} NATIONAL_SYSTEM_ADMIN {Administrateur national} NATIONAL_REGISTRAR {Registraire général} HOSPITAL_CLERK {Officiel de l'hôpital} COMMUNITY_LEADER {Responsable communautaire} PROVINCIAL_REGISTRAR {Registraire provincial} EMBASSY_OFFICIAL {Officiel d'ambassade} other {Inconnu}}"
+event.history.role,,"{role, select, LOCAL_REGISTRAR {Officier d'état civil local} REGISTRATION_AGENT {Agent d'enregistrement} PERFORMANCE_MANAGER {Responsable des opérations} LOCAL_SYSTEM_ADMIN {Administrateur} NATIONAL_SYSTEM_ADMIN {Administrateur national} NATIONAL_REGISTRAR {Registraire général} HOSPITAL_CLERK {Officiel de l'hôpital} COMMUNITY_LEADER {Responsable communautaire} PROVINCIAL_REGISTRAR {Registraire provincial} EMBASSY_OFFICIAL {Officiel d'ambassade} other {Inconnu}}"
 event.history.system,Name for system initiated actions in the event history,System
 event.history.systemDefaultName,Fallback for system integration name in the event history,Intégration système
 event.not.downloaded,Shown when user tries to perform an action on event that is not available ,Veuillez vous assurer que l'événement est d'abord attribué et téléchargé dans le navigateur.
@@ -859,7 +859,6 @@ form.field.label.deny,deny label for yes / no radio button,Non
 form.field.label.district,Label for District,District
 form.field.label.docTypeBirthCert,Label for select option birth certificate,Certificat de la naissance
 form.field.label.email,Input label for email address,e-mail
-form.field.label.empty,empty string,
 form.field.label.familyName,Label for family name text input,Nom de famille
 form.field.label.fileSizeError,text for error on file size,La taille du fichier doit être inférieure à 2 Mo
 form.field.label.fileUploadError,text for error on file upload,{type} format d'images accepté
@@ -995,10 +994,14 @@ integrations.birth,Label for birth,Naissance
 integrations.childDetails,Label for child details,information de l'enfant
 integrations.childDetailsNoPII,Label for child details no PII,information  de l'enfant (pas de PII)
 integrations.client.type,Label for type of client,Type
+integrations.clientDetails,Label for the client details menu item and dialog title,Détails du client
 integrations.clientId,Label for client Id,ID du client
+integrations.clientName,Heading for the client name field in the details dialog,Nom du client
 integrations.clientSecret,Label for client secret,Secret du client
 integrations.copy,Label for the text Copy,copie
 integrations.createClient,Label for the button creating client,Créer un client
+integrations.createdOn,Label showing when an integration was created (no user info),Créé le {date}
+integrations.createdOnBy,Label showing when an integration was created and by whom,Créé le {date} par {user}
 integrations.deactivate,Label for deactivate option,Désactiver
 integrations.deactivate.client,Label for deactivate client option,Désactiver le client?
 integrations.deactivate.status,Label for deactivate client,Client désactivé
@@ -1036,6 +1039,7 @@ integrations.pageTitle,Title for integrations page,Intégrations
 integrations.recordSearchDescription,Label for  record search description,"Un client de recherche d'enregistrements peut effectuer une recherche avancée sur les données OpenCRVS. Pour plus d'informations, visitez :"
 integrations.registrationDetailsnNoPII,Label for registration details no PII,Détails de l'enregistrement (pas de PII)
 integrations.revealKeys,Label for reveal keys option,Montrer clés de décodage
+integrations.scopes,Heading for the scopes list in the client details dialog,Autorisations
 integrations.shaSecret,Label for SHA secret,SHA Secret
 integrations.type,Label for integration type using ICU MessageFormat select for all types,"{type, select, HEALTH {Intégration de la santé} NATIONAL_ID {Identité nationale} RECORD_SEARCH {Recherche d'enregistrements} other {Personnalisé}}"
 integrations.uniqueKeyDescription,Label for the unique key description,Ces clés uniques seront requises par l'interface du système

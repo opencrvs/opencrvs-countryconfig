@@ -34,11 +34,14 @@ correction.reason.title,The title for the corrector form,Reason for correction?
 correction.requester.relationshop.intro.label,The title for the corrector form,Note: In the case that the child is now of legal age (18) then only they should be able to request a change to their birth record.
 correction.supportingDocuments.attest.label,,I attest to seeing supporting documentation and have a copy filed at my office
 correction.supportingDocuments.notNeeded.label,,No supporting documents required
+dashboard.completenessTitle,Menu item for completeness dashboard,Completeness Dashboard
+dashboard.registrationsTitle,Menu item for registrations dashboard,Registrations Dashboard
+dashboard.registryTitle,Menu item for registry dashboard,Registry
 death.search.criteria.label.prefix.deceased,Deceased prefix,Deceased's
 death.search.criteria.label.prefix.informant,Informant prefix,Informant's
 error.child.weightAtBirth.invalidNumberRange,This is the error message for invalid number range,Must be within 0 and 6
 error.invalidInput,Error message when generic field is invalid,Invalid input
-error.invalidName,This is the error message for invalid name,"Input contains invalid characters. Please use only letters (a-z, A-Z), numbers (0-9), hyphens (-) and apostrophes(')"
+error.invalidName,This is the error message for invalid name,"Input contains invalid characters. Please use only letters (a-z, A-Z), numbers (0-9), hyphens (-), apostrophes(') and underscores (_)"
 error.invalidNationalId,This is the error message for an invalid national ID,The national ID can only be numeric and must be 10 digits long
 event.action.declare.form.section.person.field.age.error,Error message for invalid age,Age must be between 12 and 120
 event.birth.action.Read.label,This is shown as the action name anywhere the user can trigger the action from,Read
@@ -420,16 +423,12 @@ event.tennis-club-membership.action.declare.form.review.print.label,Print,Print 
 event.tennis-club-membership.action.declare.form.review.title,Title of the review page,"{applicant.name.firstname, select, __EMPTY__ {Member declaration} other {{applicant.name.surname, select, __EMPTY__ {Member declaration for {applicant.name.firstname}} other {Member declaration for {applicant.name.firstname} {applicant.name.surname}}}}}"
 event.tennis-club-membership.action.declare.form.section.recommender.device,This is the label for the field,Recommender's device
 event.tennis-club-membership.action.declare.form.section.recommender.field.firstname.label,This is the label for the field,Recommender's name
-event.tennis-club-membership.action.declare.form.section.recommender.field.id.label,This is the label for the field,Recommender's membership ID
+event.tennis-club-membership.action.declare.form.section.recommender.field.id.label,This is the label for the field,Membership ID
 event.tennis-club-membership.action.declare.form.section.recommender.field.none.label,This is the label for the field,No recommender
 event.tennis-club-membership.action.declare.form.section.recommender.field.search.label,This is the label for the field,Registration Number of recommender
 event.tennis-club-membership.action.declare.form.section.recommender.role,This is the label for the field,Recommender role
 event.tennis-club-membership.action.declare.form.section.recommender.title,This is the title of the section,Who is recommending the applicant?
-event.tennis-club-membership.action.declare.form.section.recommender2.field.id.label,This is the label for the field,2nd recommender's membership ID
 event.tennis-club-membership.action.declare.form.section.recommender2.fullHonorificName,This is the label for the field,Recommender full honorific name
-event.tennis-club-membership.action.declare.form.section.recommender3.field.id.label,This is the label for the field,3rd recommender's membership ID
-event.tennis-club-membership.action.declare.form.section.recommender4.field.id.label,This is the label for the field,4th recommender's membership ID
-event.tennis-club-membership.action.declare.form.section.recommender5.field.id.label,This is the label for the field,5th recommender's membership ID
 event.tennis-club-membership.action.declare.form.section.senior-pass.field.id.label,This is the label for the field,Senior pass ID
 event.tennis-club-membership.action.declare.form.section.senior-pass.title,This is the title of the section,Assign senior pass for applicant
 event.tennis-club-membership.action.declare.form.section.who.field.dob.error,This is the error message for invalid date,Please enter a valid date
@@ -495,28 +494,12 @@ field.address.street.label,This is the label for the field,Street
 field.address.town.label,This is the label for the field,Town
 field.address.village.label,Label for village in address,Village
 form.birth.child.title,Form section title for Child,Child's details
-form.customField.label.favoriteColor,A form field that asks for the persons favorite color.,What is your favorite color?
-form.customField.label.numberOfDependants,A form field that asks for the persons number of dependants.,No. of dependants
-form.customField.label.reasonForLateRegistrationBirth,A form field that asks the reason for a late registration.,Reason for delayed registration
-form.customField.label.reasonForLateRegistrationDeath,A form field that asks the reason for a late registration.,Reason for late registration
 form.death.deceased.title,Form section title for Deceased,Deceased's details
 form.death.eventDetails.title,Form section title for event details,Event details
-form.field.helpertext.nid,Helper text for nid input field,The National ID can only be numeric and must be 10 digits long
 form.field.label.No,Label for form field radio option No,No
 form.field.label.Yes,Label for form field radio option Yes,Yes
-form.field.label.addressLine1,Title for the address line 1,Residential Area
-form.field.label.addressLine2,Title for the address line 2,Street
-form.field.label.ageOfBride,Label for form field: Age of bride,Age of bride
-form.field.label.ageOfDeceased,Label for form field: Age of deceased,Age of deceased
-form.field.label.ageOfFather,Label for form field: Age of father,Age of father
-form.field.label.ageOfGroom,Label for form field: Age of groom,Age of groom
-form.field.label.ageOfInformant,Label for form field: Age of informant,Age of informant
-form.field.label.ageOfMother,Label for form field: Age of mother,Age of mother
-form.field.label.ageOfSpouse,Label for form field: Age of spouse,Age of spouse
 form.field.label.app.whoContDet.mother,Label for mother,Mother
 form.field.label.assignedResponsibilityProof,Label for docuemnt option Proof of assigned responsibility,Proof of assigned responsibility
-form.field.label.attBirthOtherParaPers,Label for form field: Attendant at birth,Other paramedical personnel
-form.field.label.attendantAtBirth,Label for form field: Attendant at birth,Attendant at birth
 form.field.label.attendantAtBirthLayperson,Label for layperson attendant,Layperson
 form.field.label.attendantAtBirthMidwife,Label for midwife attendant,Midwife
 form.field.label.attendantAtBirthNone,Label for no attendant,None
@@ -524,70 +507,33 @@ form.field.label.attendantAtBirthNurse,Label for nurse attendant,Nurse
 form.field.label.attendantAtBirthOtherParamedicalPersonnel,Label for other paramedical personnel,Other paramedical personnel
 form.field.label.attendantAtBirthPhysician,Label for physician attendant,Physician
 form.field.label.attendantAtBirthTraditionalBirthAttendant,Label for traditional birth attendant,Traditional birth attendant
-form.field.label.birthType,Label for form field: Type of birth,Type of birth
 form.field.label.birthTypeHigherMultipleDelivery,Label for higher multiple delivery birth,Higher multiple delivery
 form.field.label.birthTypeQuadruplet,Label for quadruplet birth,Quadruplet
 form.field.label.birthTypeSingle,Label for single birth,Single
 form.field.label.birthTypeTriplet,Label for triplet birth,Triplet
 form.field.label.birthTypeTwin,Label for twin birth,Twin
-form.field.label.causeOfDeathEstablished,Label for form field: Cause of Death Established,Cause of death has been established
-form.field.label.causeOfDeathMethod,Source of cause of death,Source of cause of death
-form.field.label.causeOfDeathProof,Label for doc section: Proof of cause of death,Proof of cause of death
-form.field.label.city,Title for the address line 4,Town
-form.field.label.confirm,confirmation label for yes / no radio button,Yes
-form.field.label.country,Title for the country select,Country
-form.field.label.dateOfBirth,Label for form field: Date of birth,Date of birth
-form.field.label.dateOfMarriage,Option for form field: Date of marriage,Date of marriage
-form.field.label.deathDescription,Description of cause of death by lay person or verbal autopsy,Description
-form.field.label.deceasedDeathProof,Option for radio group field: Type of Document To Upload,Proof of death of deceased
-form.field.label.deceasedDocumentParagraph,Documents Paragraph text,"For this death registration, the following documents are required:"
-form.field.label.deceasedIDProof,Option for radio group field: Type of Document To Upload,Proof of deceased's ID
-form.field.label.deceasedPrimaryAddress,Title for the primary address fields for the deceased,Usual place of residence
-form.field.label.deceasedSecondaryAddress,Title for the secondary address fields for the deceased,Secondary address?
-form.field.label.deny,deny label for yes / no radio button,No
-form.field.label.docTypeBirthCert,Label for select option birth certificate,Birth certificate
-form.field.label.docTypeChildBirthProof,Label for select option Notification of birth,Notification of birth
 form.field.label.docTypeCopyOfBurialReceipt,Label for select option Certified Copy of Burial Receipt,Certified copy of burial receipt
 form.field.label.docTypeCoronersReport,Label for select option Coroner's report,Coroner's report
 form.field.label.docTypeHospitalDeathCertificate,Label for select option Hospital certificate of death,Hospital certificate of death
 form.field.label.docTypeLetterOfDeath,Label for select option Attested Letter of Death,Attested letter of death
-form.field.label.docTypeMarriageNotice,Label for document section for marriage notice,Notice of marriage
-form.field.label.docTypeNID,Label for select option radio option NID,National ID
 form.field.label.docTypeOther,Option for form field: Other,Other
-form.field.label.docTypePassport,Label for radio option Passport,Passport
 form.field.label.docTypePoliceCertificate,Label for select option Police death certificate,Police certificate of death
-form.field.label.educationAttainment,Label for form field: Education Attainment,Level of education
 form.field.label.educationAttainmentISCED1,Option for form field: ISCED1 education,Primary
 form.field.label.educationAttainmentISCED4,Option for form field: ISCED4 education,Secondary
 form.field.label.educationAttainmentISCED5,Option for form field: ISCED5 education,Tertiary
 form.field.label.educationAttainmentNone,Option for form field: no education,No schooling
-form.field.label.email,Input label for email,Email
-form.field.label.empty,empty string, 
-form.field.label.exactDateOfBirthUnknown,Checkbox for exact date of birth unknown,Exact date of birth unknown
-form.field.label.familyName,Label for family name text input,Last name
-form.field.label.fathersDetailsExist,Question to ask the user if they have the father's details,Father's details are not available
-form.field.label.firstName,Input label for certificate collector's first name,First name
-form.field.label.firstNames,Label for form field: First names,First name(s)
 form.field.label.healthInstitution,Select item for Health Institution,Health Institution
-form.field.label.iD,A form field that asks for the id number.,ID number
-form.field.label.iDType,A form field that asks for the type of ID.,Type of ID
-form.field.label.iDTypeAlienNumber,Option for form field: Type of ID,Alien Number
 form.field.label.iDTypeBRN,Option for form field: Type of ID,Birth Registration Number
 form.field.label.iDTypeBirthCertificate,Option for form field: Type of ID,Birth Certificate
-form.field.label.iDTypeDRN,Option for form field: Type of ID,Death Registration Number
-form.field.label.iDTypeDrivingLicense,Option for form field: Type of ID,Drivers License
 form.field.label.iDTypeNationalID,Option for form field: Type of ID,National ID
-form.field.label.iDTypeNoID,Option for form field: Type of ID,No ID available
 form.field.label.iDTypeNone,Option for form field: Type of ID,None
 form.field.label.iDTypeOther,Option for form field: Type of ID,Other
 form.field.label.iDTypePassport,Option for form field: Type of ID,Passport
-form.field.label.iDTypeRefugeeNumber,Option for form field: Type of ID,Refugee Number
-form.field.label.informantPrimaryAddress,Title for the primary address fields for the informant,Usual place of residence
 form.field.label.informantRelation.bride,Label for option bride,Bride
 form.field.label.informantRelation.brother,Label for option brother,Brother
 form.field.label.informantRelation.contactPoint,Label for option Contact point,Contact Point
-form.field.label.informantRelation.daughter,Label for option daughter,Daughter
-form.field.label.informantRelation.daughterInLaw,Label for option daughter in law,Daughter in law
+form.field.label.informantRelation.daughter,Label for option Daughter,Daughter
+form.field.label.informantRelation.daughterInLaw,Label for option Daughter in law,Daughter in law
 form.field.label.informantRelation.father,Label for option father,Father
 form.field.label.informantRelation.granddaughter,Label for option Granddaughter,Granddaughter
 form.field.label.informantRelation.grandfather,Label for option Grandfather,Grandfather
@@ -598,127 +544,40 @@ form.field.label.informantRelation.legalGuardian,Label for option Legal Guardian
 form.field.label.informantRelation.mother,Label for option mother,Mother
 form.field.label.informantRelation.others,Label for option someone else,Someone else
 form.field.label.informantRelation.sister,Label for option Sister,Sister
-form.field.label.informantRelation.son,Label for option son,Son
-form.field.label.informantRelation.sonInLaw,Label for option son in law,Son in law
-form.field.label.informantRelation.spouse,Label for option spouse,Spouse
-form.field.label.informantSecondaryAddress,Title for the secondary address fields for the informant,Secondary Address
-form.field.label.informantTitle,Label for informant details,Informant's details
-form.field.label.informantsRelationWithChild,Label for Relationship to child,Relationship to child
-form.field.label.internationalAddressLine1,Title for the international address line 1 select,Address Line 1
-form.field.label.internationalAddressLine2,Title for the international address line 2 select,Address Line 2
-form.field.label.internationalAddressLine3,Title for the international address line 3 select,Address Line 3
-form.field.label.internationalCity,Title for the international city select,City / Town
-form.field.label.internationalDistrict,Title for the international district select,District
-form.field.label.internationalPostcode,Title for the international postcode,Postcode / Zip
-form.field.label.internationalState,Title for the international state select,State
-form.field.label.lastNameAtBirth,Label for a different last name text input,Last name at birth (if different from above)
+form.field.label.informantRelation.son,Label for option Son,Son
+form.field.label.informantRelation.sonInLaw,Label for option Son in law,Son in law
+form.field.label.informantRelation.spouse,Label for option Spouse,Spouse
 form.field.label.layReported,Label for form field: Lay reported,Lay reported
 form.field.label.legalGuardianProof,Label for document option Proof of legal guardianship,Proof of legal guardianship
-form.field.label.mannerOfDeath,Label for form field: Manner of death,Manner of death
 form.field.label.mannerOfDeathAccident,Option for form field: Manner of death,Accident
 form.field.label.mannerOfDeathHomicide,Option for form field: Manner of death,Homicide
 form.field.label.mannerOfDeathNatural,Option for form field: Manner of death,Natural causes
 form.field.label.mannerOfDeathSuicide,Option for form field: Manner of death,Suicide
 form.field.label.mannerOfDeathUndetermined,Option for form field: Manner of death,Manner undetermined
-form.field.label.maritalStatus,Label for form field: Marital status,Marital status
 form.field.label.maritalStatusDivorced,Option for form field: Marital status,Divorced
 form.field.label.maritalStatusMarried,Option for form field: Marital status,Married
 form.field.label.maritalStatusNotStated,Option for form field: Marital status,Not stated
 form.field.label.maritalStatusSeparated,Option for form field: Marital status,Separated
 form.field.label.maritalStatusSingle,Option for form field: Marital status,Single
 form.field.label.maritalStatusWidowed,Option for form field: Marital status,Widowed
-form.field.label.marriedLastName,Label for married last name text input,Married Last name (if different)
 form.field.label.medicallyCertified,Option for form field: Method of Cause of Death,Medically Certified Cause of Death
-form.field.label.middleName,Label for middle name text input,Middle name
-form.field.label.monogamy,Option for form field: Monogamy,Monogamous
-form.field.label.mothersDetailsExist,Question to ask the user if they have the mother's details,Mother's details are not available
-form.field.label.multipleBirth,Label for form field: multipleBirth,No. of previous births
-form.field.label.nationality,Label for form field: Nationality,Nationality
-form.field.label.number,Title for the number field,Number
-form.field.label.occupation,text for occupation form field,Occupation
-form.field.label.other,Option for form field: Other,Other
-form.field.label.otherBirthSupportingDocuments,Option for other supporting documents,Other
 form.field.label.otherInstitution,Select item for Other location,Other
-form.field.label.phoneNumber,Input label for phone input,Phone number
 form.field.label.physician,Label for form field: physician,Physician
-form.field.label.placeOfBirth,Label for form field: Place of delivery,Location
-form.field.label.placeOfBirthPreview,Title for place of birth sub section,Place of delivery
-form.field.label.placeOfDeath,Title for place of death sub section,Where did the death occur?
 form.field.label.placeOfDeathSameAsPrimary,Option for place of occurrence of death same as deceased primary address,Deceased's usual place of residence
-form.field.label.placeOfMarriage,Label for form field: Place of occurrence of marriage,Place of marriage
-form.field.label.polygamy,Option for form field: Polygamy,Polygamous
-form.field.label.primaryAddress,Title of the primary adress,Usual place of residence
-form.field.label.primaryAddressSameAsDeceasedsPrimary,Label for informant's address to be same as deceased's usual place of residence,Same as deceased's usual place of residence
-form.field.label.primaryAddressSameAsOtherPrimary,Title for the radio button to select that the persons primary address is the same as the mother's primary address,Same as mother's usual place of residence?
 form.field.label.privateHome,Select item for Private Home,Residential address
-form.field.label.proofOfBirth,Label for list item Proof of birth,Proof of birth
 form.field.label.proofOfBirth.fileName,The following documents are required,The following documents are required
-form.field.label.proofOfBridesID,Label for list item Bride ID Proof,Proof of Bride's identity
-form.field.label.proofOfFathersID,Label for list item Father ID Proof,Father's identity
-form.field.label.proofOfGroomsID,Label for list item Groom ID Proof,Proof of Groom's identity
-form.field.label.proofOfInformantsID,Option for radio group field: Type of Document To Upload,Proof of informant's ID
-form.field.label.proofOfMarriageNotice,Label for list item notice of marriage,Notice of intention to marriage
-form.field.label.proofOfMothersID,Label for list item Mother ID Proof,Mother's identity
 form.field.label.reasonNotApplying,This is the label for reason field,Reason
-form.field.label.registrationName,Label for registration name,Registration Name
 form.field.label.relationOtherFamilyMember,Label for other family member relation,Other family member
-form.field.label.relationshipPlaceHolder,Relationship place holder,eg. Grandmother
-form.field.label.relationshipToSpouses,Input label for witness's relationship with spouses,Relationship to spouses
-form.field.label.rural,Label for form field checkbox option Rural,Rural
-form.field.label.secondaryAddress,Title for the secondary address fields,Secondary Address
-form.field.label.sex,Label for form field: Sex name,Sex
 form.field.label.sexFemale,Label for option female,Female
 form.field.label.sexMale,Label for option male,Male
 form.field.label.sexUnknown,Label for option unknown,Unknown
-form.field.label.spouseDetailsExist,Question to ask the user if they have the spouse's details,Spouse's details are not available
-form.field.label.typeOfMarriage,Option for form field: Type of marriage,Type of marriage
-form.field.label.urban,Label for form field checkbox option Urban,Urban
 form.field.label.verbalAutopsy,Option for form field: verbalAutopsy,Verbal autopsy
 form.field.label.verbalAutopsyReport,Option for form field: verbalAutopsy,Verbal autopsy report
-form.field.label.weightAtBirth,Label for form field: Weight at birth,Weight at birth
-form.field.nidNotVerified,label for verified nid state,Authenticate
-form.field.nidVerificationOngoing,Label for indicating offline status for the user. NID verification is not currently available offline.,National ID authentication is currently not available offline.
-form.field.nidVerified,label for unverified nid state,Authenticated
-form.field.previewGroups.primaryAddress,Preview groups label for form field: residential address,Residential address
-form.field.previewGroups.secondaryAddress,Preview group label for secodary address,Secondary address
-form.field.select.placeholder,Placeholder text for a select,Select
-form.field.tooltip.tooltipNationalID,Tooltip for form field: iD number,The National ID can only be numeric and must be 10 digits long
-form.preview.group.label.bride.english.name,Group label for bride's name in english,Full name
-form.preview.group.label.english.name,Label for child name in english,Full name
-form.preview.group.label.father.english.name,Group label for father's name in english,Full name
-form.preview.group.label.groom.english.name,Group label for groom's name in english,Full name
-form.preview.group.label.informant.english.name,Label for informant's name in english,Full name
-form.preview.group.label.mother.english.name,Group label for mother's name in english,Full name
-form.preview.group.label.spouse.english.name,Group label for spouse's name in english,Full name
-form.preview.group.label.witness.one.english.name,Label for Witness one name in english,Witness One English name
-form.preview.group.label.witness.two.english.name,Label for Witness two name in english,Full name
-form.review.label.mainContact,Label for point of contact on the review page,Main Contact
-form.section.bride.headOfBrideFamily,Form select option for witness relationship,Head of bride's family
-form.section.bride.name,Form section name for Bride,Bride
-form.section.bride.title,Form section title for Bride,Bride's details
-form.section.child.name,Form section name for Child,Child
-form.section.child.title,Form section title for Child,Child's details
-form.section.deathEvent.date,Form section title for date of Death Event,Date of death
-form.section.deathEvent.name,Form section name for Death Event,Death event details
-form.section.deathEvent.title,Form section title for Death Event,Death details?
-form.section.deceased.name,Form section name for Deceased,Deceased
-form.section.deceased.relationship,Relationship of applicant to the deceased person,Relationship to deceased
-form.section.deceased.spouse.title,Title of the spouse section,Spouse details
-form.section.deceased.title,Form section title for Deceased,What are the deceased details?
-form.section.declaration.name,Form section name for Registration,Registration
-form.section.documents.birth.requirements,Documents Paragraph text,The following documents are required
-form.section.documents.name,Form section name for Documents,Documents
-form.section.documents.title,Form section title for documents,Upload supporting documents
-form.section.father.name,Form section name for Father,Father
+form.section.documents.title,This is the title of the section,Upload supporting documents
 form.section.father.title,Form section title for fathers details,Father's details
-form.section.groom.headOfGroomFamily,Form select option for witness relationship,Head of groom's family
-form.section.groom.name,Form section name for Groom,Groom
-form.section.groom.title,Form section title for Groom,Groom's details
-form.section.informant.name,Form section name for Informant,Informant
 form.section.informant.title,Form section title for informants details,Informant's details
 form.section.information.birth.bullet1,Form information for birth,I am going to help you make a declaration of birth.
 form.section.information.birth.bullet2,Form information for birth,As the legal Informant it is important that all the information provided by you is accurate.
-form.section.information.birth.bullet3,Form information for birth,Once the declaration is processed you will receive an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.
 form.section.information.birth.bullet3.sms,Form information for birth,Once the declaration is processed you will receive an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.
 form.section.information.birth.bullet4,Form information for birth,"Make sure you collect the certificate. A birth certificate is critical for this child, especially to make their life easy later on. It will help to access health services, school examinations and government benefits."
 form.section.information.birth.bulletList.label,Label for the birth information bullet list,Birth Information
@@ -727,36 +586,22 @@ form.section.information.death.bullet2,Form information for death,As the legal I
 form.section.information.death.bullet3,Form information for death,Once the declaration is processed you will receive an email to tell you when to visit the office to collect the certificate - Take your ID with you.
 form.section.information.death.bullet4,Form information for death,Make sure you collect the certificate. A death certificate is critical to support with inheritance claims and to resolve the affairs of the deceased e.g. closing bank accounts and setting loans.
 form.section.information.death.bulletList.label,Label for the death information bullet list,Death Information
-form.section.information.name,Form section name for Information,Information
-form.section.marriageEvent.date,Form section title for date of Marriage Event,Date of marriage
-form.section.marriageEvent.name,Form section name for Marriage Event,Marriage event details
-form.section.marriageEvent.title,Form section title for Marriage Event,Marriage details?
-form.section.mother.name,Form section name for Mother,Mother
 form.section.mother.title,Form section title for mothers details,Mother's details
 form.section.spouse.title,Form section title for spouse details,Spouse details
-form.section.witnessOne.name,Form section name for Witness one,Witness 1
-form.section.witnessOne.title,Form section title for witnesses,What are the witnesses one details?
-form.section.witnessTwo.name,Form section name for Witness two,Witness 2
-form.section.witnessTwo.title,Form section title for witnesses,What are the witnesses two details?
 informant.name,Label for informant option in certificate correction form,Informant
 messages.emptyString,empty string,
+recommender1.heading.label,This is the label for the field,Recommender 1
+recommender2.heading.label,This is the label for the field,Recommender 2
+recommender3.heading.label,This is the label for the field,Recommender 3
+recommender4.heading.label,This is the label for the field,Recommender 4
+recommender5.heading.label,This is the label for the field,Recommender 5
 recordAudit.archive.confirmation.body,Confirmation body for archiving a declaration,This will remove the declaration from the workqueue and change the status to Archive. To revert this change you will need to search for the declaration.
-register.SelectContactPoint.heading,Form section title for contact point,Who is the main point of contact for this declaration?
 register.eventInfo.birth.title,Event information title for the birth,Introduce the birth registration process to the informant
 register.eventInfo.death.title,Event information title for the death,Introduce the death registration process to the informant
-register.form.section.preview.name,Form section name for Preview,Preview
-register.form.section.preview.title,Form section title for Preview,Preview
 register.selectInformant.birthInformantTitle,Who is applying for birth registration,Informant type
 register.selectInformant.deathInformantTitle,Who is applying for death registration,Who is applying for death registration?
 register.selectInformant.marriageInformantTitle,Who is applying for marriage registration,Who is applying for marriage registration?
 rejectModal.description,The description for reject modal,Rejecting this declaration will return it to the submitter for updates. Please ensure a valid reason for rejection has been recorded.
-review.form.section.review.name,Form section name for Review,Review
-review.form.section.review.title,Form section title for Review,Review
-review.inputs.brideSignature,Label for bride's signature input,Signature of Bride
-review.inputs.groomSignature,Label for groom's signature input,Signature of groom
-review.inputs.informantsSignature,Label for informants signature input,Signature of informant
-review.inputs.witnessOneSignature,Label for witnessOne's signature input,Signature of witnessOne
-review.inputs.witnessTwoSignature,Label for witnessTwo's signature input,Signature of witnessTwo
 signature.upload.modal.title,Title for the modal to draw signature,Draw signature
 tennis-club-membership.searchField.helperText,This is the helper text for the field,You can search tennis records created on Farajaland since beginning of 2023
 tennis-club-membership.searchField.indicators.clearModal.description,Description for the clear confirmation modal,This will remove the details of the current recommender.
