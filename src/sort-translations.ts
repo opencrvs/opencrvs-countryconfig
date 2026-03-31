@@ -32,4 +32,15 @@ async function sortMessages(path: string) {
   return writeJSONToCSV(path, data)
 }
 
-process.argv.slice(2).forEach((filePath) => sortMessages(filePath))
+import { readdirSync } from 'fs'
+import { join } from 'path'
+
+const args = process.argv.slice(2)
+const filePaths =
+  args.length > 0
+    ? args
+    : readdirSync(join(__dirname, 'translations'))
+        .filter((f) => f.endsWith('.csv'))
+        .map((f) => join(__dirname, 'translations', f))
+
+filePaths.forEach((filePath) => sortMessages(filePath))
