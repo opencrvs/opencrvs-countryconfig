@@ -36,6 +36,9 @@ The default values for these variables have been added to the `docker-compose.de
 
 - Docker swarm to Kubernetes migration script [#10858](https://github.com/opencrvs/opencrvs-core/issues/10858), [#10787](https://github.com/opencrvs/opencrvs-core/issues/10787)
 
+### Improvements
+- Create a translation file per language with tooling to keep it up to date with core [#12192](https://github.com/opencrvs/opencrvs-core/issues/12192)
+
 ## 1.9.11
 
 ### Improvements
