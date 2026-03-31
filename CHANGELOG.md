@@ -38,6 +38,9 @@ The default values for these variables have been added to the `docker-compose.de
 - Mother's address in `v2.birth-certificate-certified-copy.svg` now uses the `administrativeHierarchy` convenience variable (`{{$lookup $declaration "mother.address.administrativeHierarchy"}}`) instead of individual fields.
 - Docker swarm to Kubernetes migration script [#10858](https://github.com/opencrvs/opencrvs-core/issues/10858), [#10787](https://github.com/opencrvs/opencrvs-core/issues/10787)
 
+### Improvements
+- Create a translation file per language with tooling to keep it up to date with core [#12192](https://github.com/opencrvs/opencrvs-core/issues/12192)
+
 ## 1.9.12
 
 ### Improvements
