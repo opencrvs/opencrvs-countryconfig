@@ -10,6 +10,7 @@
  */
 import { readCSVToJSON } from '@countryconfig/utils'
 
+import { existsSync, readdirSync } from 'fs'
 import { join } from 'path'
 
 interface IMessageIdentifier {
@@ -28,11 +29,35 @@ export type CSVRow = { id: string; description: string } & Record<
   string
 >
 
+/**
+ * Reads translation data for an application.
+ *
+ * If per-language files exist (e.g. client-en.csv, client-fr.csv) they are
+ * merged together and take precedence over the combined file.  This lets
+ * country teams maintain one language per file while the application still
+ * receives a single merged response.
+ *
+ * Falls back to the original combined CSV (e.g. client.csv) when no
+ * per-language files are found.
+ */
 export async function getLanguages(
   application: string
 ): Promise<ILanguageDataResponse> {
+  const translationsDir = 'src/translations'
+  const prefix = `${application}-`
+
+  const perLanguageFiles = existsSync(translationsDir)
+    ? readdirSync(translationsDir)
+        .filter((f) => f.startsWith(prefix) && f.endsWith('.csv'))
+        .map((f) => join(translationsDir, f))
+    : []
+
+  if (perLanguageFiles.length > 0) {
+    return mergePerLanguageFiles(perLanguageFiles)
+  }
+
   const csvData = await readCSVToJSON<CSVRow[]>(
-    join('src/translations/', `${application}.csv`)
+    join(translationsDir, `${application}.csv`)
   )
   const languages = Object.keys(csvData[0]).filter(
     (key) => !['id', 'description'].includes(key)
@@ -43,10 +68,26 @@ export async function getLanguages(
     csvData.forEach((row) => {
       messages[row.id] = row[lang]
     })
-
-    return {
-      lang,
-      messages
-    }
+    return { lang, messages }
   })
+}
+
+async function mergePerLanguageFiles(
+  files: string[]
+): Promise<ILanguageDataResponse> {
+  const results = await Promise.all(
+    files.map(async (file) => {
+      const rows = await readCSVToJSON<CSVRow[]>(file)
+      const lang = Object.keys(rows[0]).find(
+        (key) => !['id', 'description'].includes(key)
+      )
+      if (!lang) throw new Error(`No language column found in ${file}`)
+      const messages: IMessageIdentifier = {}
+      rows.forEach((row) => {
+        messages[row.id] = row[lang]
+      })
+      return { lang, messages }
+    })
+  )
+  return results
 }
