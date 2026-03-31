@@ -758,7 +758,7 @@ duplicates.review.header,Review page header for duplicates declarations,Potentia
 duplicates.warning,The warning message shown when a declaration has potential duplicates,Potential duplicate of record {trackingId}
 editPageBanner.declaredMessage,The message for the edit page banner,You are editing a record declared by {name} ({role} at {location})
 editPageBanner.notifiedMessage,The message for the edit page banner,You are editing a record notified by {name} ({role} at {location})
-email.label.confirmation,Confirmation email address message,A confirmational SMS has been sent to {email}
+email.label.confirmation,Confirmation email address message,Verification code has been sent to {email}
 error.code,Error code,401
 error.draftFailed,Tips for failed declarations,This is some messaging on advicing the user on what to do... in the event of a failed applicaton.
 error.errorEmailAddressNotFound,Error message for email address not found,Email address not found.
@@ -862,7 +862,6 @@ form.field.label.deny,deny label for yes / no radio button,No
 form.field.label.district,Label for District,District
 form.field.label.docTypeBirthCert,Label for select option birth certificate,Birth certificate
 form.field.label.email,Input label for email address,Email
-form.field.label.empty,empty string, 
 form.field.label.familyName,Label for family name text input,Last name
 form.field.label.fileSizeError,text for error on file size,File size must be less than 2MB
 form.field.label.fileUploadError,text for error on file upload,{type} supported image only
@@ -998,10 +997,14 @@ integrations.birth,Label for birth,Birth
 integrations.childDetails,Label for child details,Child's details
 integrations.childDetailsNoPII,Label for child details no PII,Childs Details (No PII)
 integrations.client.type,Label for type of client,Type
+integrations.clientDetails,Label for the client details menu item and dialog title,Client details
 integrations.clientId,Label for client Id,Client ID
+integrations.clientName,Heading for the client name field in the details dialog,Client name
 integrations.clientSecret,Label for client secret,Client secret
 integrations.copy,Label for the text Copy,Copy
 integrations.createClient,Label for the button creating client,Create client
+integrations.createdOn,Label showing when an integration was created (no user info),Created {date}
+integrations.createdOnBy,Label showing when an integration was created and by whom,Created {date} by {user}
 integrations.deactivate,Label for deactivate option,Deactivate
 integrations.deactivate.client,Label for deactivate client option,Deactivate Client?
 integrations.deactivate.status,Label for deactivate client,Client deactivated
@@ -1039,6 +1042,7 @@ integrations.pageTitle,Title for integrations page,Integrations
 integrations.recordSearchDescription,Label for  record search description,"A Record search client can perform an advanced search on OpenCRVS data. For more information, visit:"
 integrations.registrationDetailsnNoPII,Label for registration details no PII,Registration Details (No PII)
 integrations.revealKeys,Label for reveal keys option,Reveal Keys
+integrations.scopes,Heading for the scopes list in the client details dialog,Scopes
 integrations.shaSecret,Label for SHA secret,SHA secret
 integrations.type,Label for integration type using ICU MessageFormat select for all types,"{type, select, HEALTH {Health integration} NATIONAL_ID {National ID} RECORD_SEARCH {Record search} IMPORT_EXPORT {Import/Export} other {Custom}}"
 integrations.uniqueKeyDescription,Label for the unique key description,These unique keys will be required by the client integrating
@@ -1212,7 +1216,7 @@ performance.values.labels.withinTargetDays,Label text for displays showing regis
 phone.digit,,10
 phone.label.changeEmail,Change email address label,What is your new email?
 phone.label.changeNumber,Change phone number label,What is your new number?
-phone.label.confirmation,Confirmation phone number message,A confirmational SMS has been sent to {num}
+phone.label.confirmation,Confirmation phone number message,Verification code has been sent to {email}
 phone.label.verify,Verify phone number label,Enter 6 digit verification code
 phone.start,Should starts with,0(4|5)
 print.cert.coll.id.actions.cancel,The for the dialog when details of the collector not verified,Cancel
