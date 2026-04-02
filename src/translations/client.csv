@@ -2142,8 +2142,8 @@ user.profile.auditList.approvedCorrectionAuditAction,Description for record corr
 user.profile.auditList.archived,Description for declaration archived,Archived,Archivé
 user.profile.auditList.assigned,Description for declaration assignment,Assigned,Assigné
 user.profile.auditList.corrected,Description for declaration corrected,Corrected record,dossier corrigé
-user.profile.auditList.customAction,Description for custom action audit action,{customActionType},
-user.profile.auditList.download,Description for download audit action,Downloaded record,
+user.profile.auditList.customAction,Description for custom action audit action,{customActionType},{customActionType}
+user.profile.auditList.download,Description for download audit action,Downloaded record,Téléchargé
 user.profile.auditList.emailAddressChanged,Description for user change email,Email Address changed,L'adresse e-mail a été modifiée
 user.profile.auditList.loggedIn,Description for user logged in,Logged in,Connecté
 user.profile.auditList.loggedOut,Description for user logged out,Logged out,Déconnecté
@@ -2159,7 +2159,7 @@ user.profile.auditList.reInstatedToUpdate,Description for sending registration f
 user.profile.auditList.rejectedCorrectedAuditAction,Description for record correction being rejected,Rejected correction request,Demande de correction rejetée
 user.profile.auditList.requestedCorrectionAuditAction,Description for record correction being requested,Requested correction,Correction demandée
 user.profile.auditList.retrieved,Description for declaration retrieved audit action,Retrieved,Récupéré
-user.profile.auditList.search,Description for search audit action,Searched record,
+user.profile.auditList.search,Description for search audit action,Searched record,Recherché
 user.profile.auditList.sentForApproval,Description for sending registration for approval audit action,Sent for approval,Envoyé pour approbation
 user.profile.auditList.showMore,Label for show more link,Show next {pageSize} of {totalItems},Afficher le prochain {pageSize} de {totalItems
 user.profile.auditList.unAssigned,Description for declaration not assigned to self,Unassigned,Non attribué
