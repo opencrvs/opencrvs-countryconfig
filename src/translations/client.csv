@@ -2142,7 +2142,7 @@ user.profile.auditList.approvedCorrectionAuditAction,Description for record corr
 user.profile.auditList.archived,Description for declaration archived,Archived,Archivé
 user.profile.auditList.assigned,Description for declaration assignment,Assigned,Assigné
 user.profile.auditList.corrected,Description for declaration corrected,Corrected record,dossier corrigé
-user.profile.auditList.customAction,Description for custom action audit action,{customActionType},{customActionType}
+user.profile.auditList.created,Description for created audit action,Created,Créé
 user.profile.auditList.download,Description for download audit action,Downloaded record,Téléchargé
 user.profile.auditList.emailAddressChanged,Description for user change email,Email Address changed,L'adresse e-mail a été modifiée
 user.profile.auditList.loggedIn,Description for user logged in,Logged in,Connecté
