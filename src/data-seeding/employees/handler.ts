@@ -8,16 +8,13 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
-import { TWO_FA_ENABLED } from '@countryconfig/constants'
+import { OPENCRVS_ENVIRONMENT } from '@countryconfig/constants'
 import { readCSVToJSON } from '@countryconfig/utils'
 import { Request, ResponseToolkit } from '@hapi/hapi'
 
 export async function usersHandler(_: Request, h: ResponseToolkit) {
-  // TWO_FA_ENABLED is used as a proxy for "real production environment".
-  // QA/staging deployments disable 2FA for testing convenience, so when it's
-  // false we seed default (test) employees instead of production ones.
   const users: unknown[] = await readCSVToJSON(
-    process.env.NODE_ENV === 'production' && TWO_FA_ENABLED
+    ['staging', 'production'].includes(OPENCRVS_ENVIRONMENT)
       ? './src/data-seeding/employees/source/prod-employees.csv'
       : './src/data-seeding/employees/source/default-employees.csv'
   )

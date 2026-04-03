@@ -42,6 +42,7 @@ services:
     environment:
       - NODE_ENV=production
       - TWO_FA_ENABLED=false
+      - OPENCRVS_ENVIRONMENT=qa
       - AUTH_URL=http://auth:4040
       - APPLICATION_CONFIG_URL=http://config:2021
       - CONFIRM_REGISTRATION_URL=http://workflow:5050/confirm/registration
