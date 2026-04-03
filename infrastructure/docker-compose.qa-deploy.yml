@@ -32,7 +32,6 @@ services:
     environment:
       - LANGUAGES=en,fr
       - SENTRY_DSN=${SENTRY_DSN:-}
-      - TWO_FA_ENABLED=false
       - NODE_ENV=production
 
   countryconfig:
@@ -75,19 +74,16 @@ services:
     environment:
       - LANGUAGES=en,fr
       - SENTRY_DSN=${SENTRY_DSN:-}
-      - TWO_FA_ENABLED=false
       - NODE_ENV=production
 
   search:
     environment:
       - SENTRY_DSN=${SENTRY_DSN:-}
-      - TWO_FA_ENABLED=false
       - NODE_ENV=production
 
   metrics:
     environment:
       - SENTRY_DSN=${SENTRY_DSN:-}
-      - TWO_FA_ENABLED=false
       - NODE_ENV=production
 
   auth:
@@ -99,27 +95,22 @@ services:
   user-mgnt:
     environment:
       - SENTRY_DSN=${SENTRY_DSN:-}
-      - TWO_FA_ENABLED=false
       - NODE_ENV=production
 
   webhooks:
     environment:
       - SENTRY_DSN=${SENTRY_DSN:-}
-      - TWO_FA_ENABLED=false
       - NODE_ENV=production
 
   config:
     environment:
       - SENTRY_DSN=${SENTRY_DSN:-}
-      - TWO_FA_ENABLED=false
       - NODE_ENV=production
 
   documents:
     environment:
-      - TWO_FA_ENABLED=false
       - NODE_ENV=production
 
   scheduler:
     environment:
-      - TWO_FA_ENABLED=false
       - NODE_ENV=production
