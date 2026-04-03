@@ -67,6 +67,7 @@ services:
     environment:
       - SENTRY_DSN=${SENTRY_DSN:-}
       - NODE_ENV=production
+      - DEFAULT_USER_PASSWORD=test
 
   webhooks:
     environment:
