@@ -24,7 +24,7 @@ export const env = cleanEnv(process.env, {
   CONFIRM_REGISTRATION_URL: url({
     devDefault: 'http://localhost:5050/confirm/registration'
   }),
-  TWO_FA_ENABLED: bool({ default: false }),
+  TWO_FA_ENABLED: bool({ default: true }),
   ANALYTICS_DATABASE_URL: url({
     devDefault:
       'postgres://events_analytics:analytics_password@localhost:5432/events',
