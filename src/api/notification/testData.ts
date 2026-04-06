@@ -1,5 +1,5 @@
 import { Recipient, TriggerEvent } from '@opencrvs/toolkit/notification'
-import { UUID } from '@opencrvs/toolkit/events'
+import { UUID, DocumentPath } from '@opencrvs/toolkit/events'
 import { TriggerEventPayloadPair } from './handler'
 import {
   Action,
@@ -285,7 +285,7 @@ const RequestDeathNotificationAction = {
   annotation: {
     'review.comment': 'Kaido killed him',
     'review.signature': {
-      path: '/ocrvs/41db20ff-4084-4e09-8343-f8c962261e32/370dff69-5478-4424-bf74-57fff2eaf865.png',
+      path: '41db20ff-4084-4e09-8343-f8c962261e32/370dff69-5478-4424-bf74-57fff2eaf865.png' as DocumentPath,
       originalFilename: 'signature-review____signature-1755683031251.png',
       type: 'image/png'
     }
@@ -339,7 +339,7 @@ const RequestDeathDeclarationAction = {
   annotation: {
     'review.comment': 'Kaido killed him',
     'review.signature': {
-      path: '/ocrvs/41db20ff-4084-4e09-8343-f8c962261e32/370dff69-5478-4424-bf74-57fff2eaf865.png',
+      path: '41db20ff-4084-4e09-8343-f8c962261e32/370dff69-5478-4424-bf74-57fff2eaf865.png' as DocumentPath,
       originalFilename: 'signature-review____signature-1755683031251.png',
       type: 'image/png'
     }
@@ -393,7 +393,7 @@ const DeathDeclarationAction = {
   annotation: {
     'review.comment': 'Kaido killed him',
     'review.signature': {
-      path: '/ocrvs/41db20ff-4084-4e09-8343-f8c962261e32/370dff69-5478-4424-bf74-57fff2eaf865.png',
+      path: '41db20ff-4084-4e09-8343-f8c962261e32/370dff69-5478-4424-bf74-57fff2eaf865.png' as DocumentPath,
       originalFilename: 'signature-review____signature-1755683031251.png',
       type: 'image/png'
     }
@@ -499,44 +499,44 @@ export const informantNotificationTestData: {
   actionType: ActionType
   eventDocument: EventDocument
 }[] = [
-  {
-    eventType: Event.Birth,
-    actionType: ActionType.NOTIFY,
-    eventDocument: birthNotificationEvent
-  },
-  {
-    eventType: Event.Birth,
-    actionType: ActionType.DECLARE,
-    eventDocument: birthDeclarationEvent
-  },
-  {
-    eventType: Event.Birth,
-    actionType: ActionType.REGISTER,
-    eventDocument: birthRegistrationEvent
-  },
-  {
-    eventType: Event.Birth,
-    actionType: ActionType.REJECT,
-    eventDocument: birthRejectionEvent
-  },
-  {
-    eventType: Event.Death,
-    actionType: ActionType.NOTIFY,
-    eventDocument: deathNotificationEvent
-  },
-  {
-    eventType: Event.Death,
-    actionType: ActionType.DECLARE,
-    eventDocument: deathDeclarationEvent
-  },
-  {
-    eventType: Event.Death,
-    actionType: ActionType.REGISTER,
-    eventDocument: deathRegistrationEvent
-  },
-  {
-    eventType: Event.Death,
-    actionType: ActionType.REJECT,
-    eventDocument: deathRejectionEvent
-  }
-]
+    {
+      eventType: Event.Birth,
+      actionType: ActionType.NOTIFY,
+      eventDocument: birthNotificationEvent
+    },
+    {
+      eventType: Event.Birth,
+      actionType: ActionType.DECLARE,
+      eventDocument: birthDeclarationEvent
+    },
+    {
+      eventType: Event.Birth,
+      actionType: ActionType.REGISTER,
+      eventDocument: birthRegistrationEvent
+    },
+    {
+      eventType: Event.Birth,
+      actionType: ActionType.REJECT,
+      eventDocument: birthRejectionEvent
+    },
+    {
+      eventType: Event.Death,
+      actionType: ActionType.NOTIFY,
+      eventDocument: deathNotificationEvent
+    },
+    {
+      eventType: Event.Death,
+      actionType: ActionType.DECLARE,
+      eventDocument: deathDeclarationEvent
+    },
+    {
+      eventType: Event.Death,
+      actionType: ActionType.REGISTER,
+      eventDocument: deathRegistrationEvent
+    },
+    {
+      eventType: Event.Death,
+      actionType: ActionType.REJECT,
+      eventDocument: deathRejectionEvent
+    }
+  ]

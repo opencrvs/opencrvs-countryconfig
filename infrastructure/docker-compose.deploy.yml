@@ -508,7 +508,6 @@ services:
       - CONFIG_API_URL_INTERNAL=http://config:2021
       - GATEWAY_URL_INTERNAL=http://gateway:7070
       - CONTENT_SECURITY_POLICY_WILDCARD=${CONTENT_SECURITY_POLICY_WILDCARD}
-      - MINIO_URL=https://minio.{{hostname}}
     deploy:
       labels:
         - 'traefik.enable=true'

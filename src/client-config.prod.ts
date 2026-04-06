@@ -12,9 +12,6 @@ import { defineClientConfig } from '@opencrvs/toolkit/application-config'
 import { env } from './environment'
 
 export default defineClientConfig({
-  MINIO_BUCKET: 'ocrvs',
-  MINIO_URL: `https://minio.${env.DOMAIN}/ocrvs/`,
-  MINIO_BASE_URL: `https://minio.${env.DOMAIN}`,
   // Country code in uppercase ALPHA-3 format
   COUNTRY: 'FAR',
   LANGUAGES: ['en', 'fr'],
