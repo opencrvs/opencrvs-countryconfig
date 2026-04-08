@@ -1509,10 +1509,14 @@ integrations.birth,Label for birth,Birth,Naissance
 integrations.childDetails,Label for child details,Child's details,information de l'enfant
 integrations.childDetailsNoPII,Label for child details no PII,Childs Details (No PII),information  de l'enfant (pas de PII)
 integrations.client.type,Label for type of client,Type,Type
+integrations.clientDetails,Label for the client details menu item and dialog title,Client details,Détails du client
 integrations.clientId,Label for client Id,Client ID,ID du client
+integrations.clientName,Heading for the client name field in the details dialog,Client name,Nom du client
 integrations.clientSecret,Label for client secret,Client secret,Secret du client
 integrations.copy,Label for the text Copy,Copy,copie
 integrations.createClient,Label for the button creating client,Create client,Créer un client
+integrations.createdOn,Label showing when an integration was created (no user info),Created {date},Créé le {date}
+integrations.createdOnBy,Label showing when an integration was created and by whom,Created {date} by {user},Créé le {date} par {user}
 integrations.deactivate,Label for deactivate option,Deactivate,Désactiver
 integrations.deactivate.client,Label for deactivate client option,Deactivate client?,Désactiver le client?
 integrations.deactivate.status,Label for deactivate client,Client deactivated,Client désactivé
@@ -1550,6 +1554,7 @@ integrations.pageTitle,Title for integrations page,Integrations,Intégrations
 integrations.recordSearchDescription,Label for  record search description,"A Record search client can perform an advanced search on OpenCRVS data. For more information, visit:","Un client de recherche d'enregistrements peut effectuer une recherche avancée sur les données OpenCRVS. Pour plus d'informations, visitez :"
 integrations.registrationDetailsnNoPII,Label for registration details no PII,Registration Details (No PII),Détails de l'enregistrement (pas de PII)
 integrations.revealKeys,Label for reveal keys option,Reveal Keys,Montrer clés de décodage
+integrations.scopes,Heading for the scopes list in the client details dialog,Scopes,Autorisations
 integrations.shaSecret,Label for SHA secret,SHA secret,SHA Secret
 integrations.type,Labels for integration types,"{type, select, HEALTH {Health integration} NATIONAL_ID {National ID} RECORD_SEARCH {Record search} other {Custom}}","{type, select, HEALTH {Intégration de la santé} NATIONAL_ID {Identité nationale} RECORD_SEARCH {Recherche d'enregistrements} other {Personnalisé}}"
 integrations.uniqueKeyDescription,Label for the unique key description,These unique keys will be required by the client integrating...,Ces clés uniques seront requises par l'interface du système
@@ -1557,11 +1562,6 @@ integrations.updatePermissionsMsg,Label for update permissions message,Permissio
 integrations.webhook.PII,Label for PII,Include PII data,Inclure les données PII
 integrations.webhookDescription,label for webhook client,"A Webhook client can subscribe to be notified upon a birth or death registration following W3C WebSub standards. For more information, visit:","Un client Webhook peut s'abonner pour être notifié lors de l'enregistrement d'une naissance ou d'un décès selon les normes WebSub du W3C. Pour plus d'informations, consultez le site :"
 integrations.webhookPermissionsDescription,Webhook description above permissions,Select the data you wish to be contained within the webhook payload,Sélectionnez les données que vous souhaitez voir figurer dans les données utiles du webhook.
-integrations.createdOnBy,"Label showing when an integration was created and by whom","Created {date} by {user}","Créé le {date} par {user}"
-integrations.createdOn,"Label showing when an integration was created (no user info)","Created {date}","Créé le {date}"
-integrations.clientDetails,"Label for the client details menu item and dialog title","Client details","Détails du client"
-integrations.clientName,"Heading for the client name field in the details dialog","Client name","Nom du client"
-integrations.scopes,"Heading for the scopes list in the client details dialog","Scopes","Autorisations"
 loading.records,Loading indicator while fetching records,Loading records...,Chargement des enregistrements...
 messages.emptyString,Empty string, ,
 misc.confirmPinTitle,The title displayed while creating a PIN,Confirm PIN,Confirmer le  Code PIN
@@ -2142,6 +2142,8 @@ user.profile.auditList.approvedCorrectionAuditAction,Description for record corr
 user.profile.auditList.archived,Description for declaration archived,Archived,Archivé
 user.profile.auditList.assigned,Description for declaration assignment,Assigned,Assigné
 user.profile.auditList.corrected,Description for declaration corrected,Corrected record,dossier corrigé
+user.profile.auditList.created,Description for created audit action,Created,Créé
+user.profile.auditList.download,Description for download audit action,Downloaded record,Fichier téléchargé
 user.profile.auditList.emailAddressChanged,Description for user change email,Email Address changed,L'adresse e-mail a été modifiée
 user.profile.auditList.loggedIn,Description for user logged in,Logged in,Connecté
 user.profile.auditList.loggedOut,Description for user logged out,Logged out,Déconnecté
@@ -2157,6 +2159,7 @@ user.profile.auditList.reInstatedToUpdate,Description for sending registration f
 user.profile.auditList.rejectedCorrectedAuditAction,Description for record correction being rejected,Rejected correction request,Demande de correction rejetée
 user.profile.auditList.requestedCorrectionAuditAction,Description for record correction being requested,Requested correction,Correction demandée
 user.profile.auditList.retrieved,Description for declaration retrieved audit action,Retrieved,Récupéré
+user.profile.auditList.search,Description for search audit action,Searched record,Enregistrement recherché
 user.profile.auditList.sentForApproval,Description for sending registration for approval audit action,Sent for approval,Envoyé pour approbation
 user.profile.auditList.showMore,Label for show more link,Show next {pageSize} of {totalItems},Afficher le prochain {pageSize} de {totalItems
 user.profile.auditList.unAssigned,Description for declaration not assigned to self,Unassigned,Non attribué
@@ -2300,7 +2303,6 @@ workqueues.correctionRequested.title,Title of correction requested workqueue,Pen
 workqueues.dateOfEvent,Label for workqueue column: dateOfEvent,Date of Event,Date de l'événement
 workqueues.draft.title,Title of draft workqueue,Drafts,Brouillons
 workqueues.escalated.title,Title of escalated workqueue,Escalated,Transmis
-workqueues.escalated.title,Title of escalated workqueue,Escalated,Escalade
 workqueues.inExternalValidation.title,Title of pending external validation workqueue,Pending external validation,En attente de validation externe
 workqueues.notifications.title,Title of notifications workqueue,Notifications,Notifications
 workqueues.outbox.title,Title of outbox workqueue,Outbox,Boîte d'envoi
@@ -2314,7 +2316,6 @@ workqueues.pendingValidation.title,Title of pending validation workqueue,Pending
 workqueues.potentialDuplicate.title,Title of potential duplicate workqueue,Potential duplicate,Duplicata potentiel
 workqueues.recent.title,Title of recent workqueue,Recent,Récent
 workqueues.requiresApproval.title,Title of pending approval workqueue,Pending approval,En attente d'approbation
-workqueues.requiresApproval.title,Title of Pending approval workqueue,Pending approval,En attente d'approbation
 workqueues.reviewRequested.title,Title of review requested workqueue,Review requested,Révision demandée
 wq.noRecords.CREATED,No records messages for empty draft tab,No records in progress,Aucun enregistrement en cours
 wq.noRecords.DECLARED,No records messages for ready for review tab,No records ready for review,Aucun document prêt à être examiné
