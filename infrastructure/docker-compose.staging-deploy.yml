@@ -93,6 +93,7 @@ services:
       - jwt-public-key.{{ts}}
     environment:
       - NODE_ENV=production
+      - OPENCRVS_ENVIRONMENT=staging
       - AUTH_URL=http://auth:4040
       - APPLICATION_CONFIG_URL=http://config:2021
       - CONFIRM_REGISTRATION_URL=http://workflow:5050/confirm/registration

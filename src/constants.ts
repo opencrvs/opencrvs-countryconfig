@@ -27,5 +27,6 @@ export const APPLICATION_CONFIG_URL = env.APPLICATION_CONFIG_URL
 export const SENTRY_DSN = env.SENTRY_DSN
 
 export const PRODUCTION = env.isProd
-export const QA_ENV = env.QA_ENV
+export const TWO_FA_ENABLED = env.TWO_FA_ENABLED
+export const OPENCRVS_ENVIRONMENT = env.OPENCRVS_ENVIRONMENT
 export const ANALYTICS_DATABASE_URL = env.ANALYTICS_DATABASE_URL

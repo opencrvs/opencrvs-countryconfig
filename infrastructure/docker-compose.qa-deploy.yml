@@ -32,7 +32,6 @@ services:
     environment:
       - LANGUAGES=en,fr
       - SENTRY_DSN=${SENTRY_DSN:-}
-      - QA_ENV=true
       - NODE_ENV=production
 
   countryconfig:
@@ -42,7 +41,8 @@ services:
       - jwt-public-key.{{ts}}
     environment:
       - NODE_ENV=production
-      - QA_ENV=true
+      - TWO_FA_ENABLED=false
+      - OPENCRVS_ENVIRONMENT=qa
       - AUTH_URL=http://auth:4040
       - APPLICATION_CONFIG_URL=http://config:2021
       - CONFIRM_REGISTRATION_URL=http://workflow:5050/confirm/registration
@@ -68,58 +68,56 @@ services:
     environment:
       - LANGUAGES=en,fr
       - SENTRY_DSN=${SENTRY_DSN:-}
-      - QA_ENV=true
+      - TWO_FA_ENABLED=false
       - NODE_ENV=production
 
   workflow:
     environment:
       - LANGUAGES=en,fr
       - SENTRY_DSN=${SENTRY_DSN:-}
-      - QA_ENV=true
       - NODE_ENV=production
 
   search:
     environment:
       - SENTRY_DSN=${SENTRY_DSN:-}
-      - QA_ENV=true
       - NODE_ENV=production
 
   metrics:
     environment:
       - SENTRY_DSN=${SENTRY_DSN:-}
-      - QA_ENV=true
       - NODE_ENV=production
 
   auth:
     environment:
       - SENTRY_DSN=${SENTRY_DSN:-}
-      - QA_ENV=true
+      - TWO_FA_ENABLED=false
       - NODE_ENV=production
+
+  events:
+    environment:
+      - NODE_ENV=production
+      - TWO_FA_ENABLED=false
 
   user-mgnt:
     environment:
       - SENTRY_DSN=${SENTRY_DSN:-}
-      - QA_ENV=true
       - NODE_ENV=production
+      - DEFAULT_USER_PASSWORD=test
 
   webhooks:
     environment:
       - SENTRY_DSN=${SENTRY_DSN:-}
-      - QA_ENV=true
       - NODE_ENV=production
 
   config:
     environment:
       - SENTRY_DSN=${SENTRY_DSN:-}
-      - QA_ENV=true
       - NODE_ENV=production
 
   documents:
     environment:
-      - QA_ENV=true
       - NODE_ENV=production
 
   scheduler:
     environment:
-      - QA_ENV=true
       - NODE_ENV=production
