@@ -3636,9 +3636,9 @@ kleur@^4.1.5:
   integrity sha512-o+NO+8WrRiQEE4/7nwRJhN1HWpVmJm511pBHUxPLtp0BUISzlBplORYSmTclCnJvQq2tKu/sgl3xVpkc7ZWuQQ==
 
 kysely@^0.28.5:
-  version "0.28.5"
-  resolved "https://registry.yarnpkg.com/kysely/-/kysely-0.28.5.tgz#671d01a5699992f809f605752471a716f3801255"
-  integrity sha512-rlB0I/c6FBDWPcQoDtkxi9zIvpmnV5xoIalfCMSMCa7nuA6VGA3F54TW9mEgX4DVf10sXAWCF5fDbamI/5ZpKA==
+  version "0.28.15"
+  resolved "https://registry.yarnpkg.com/kysely/-/kysely-0.28.15.tgz#29c3db0e92fca6115e0846b9e34c2f79ecd317ec"
+  integrity sha512-r2clcf7HLWvDXaVUEvQymXJY4i3bSOIV3xsL/Upy3ZfSv5HeKsk9tsqbBptLvth5qHEIhxeHTA2jNLyQABkLBA==
 
 leven@^2.1.0:
   version "2.1.0"
