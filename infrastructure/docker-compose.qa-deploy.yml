@@ -93,6 +93,11 @@ services:
       - TWO_FA_ENABLED=false
       - NODE_ENV=production
 
+  events:
+    environment:
+      - NODE_ENV=production
+      - TWO_FA_ENABLED=false
+
   user-mgnt:
     environment:
       - SENTRY_DSN=${SENTRY_DSN:-}
