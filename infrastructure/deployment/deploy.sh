@@ -336,7 +336,6 @@ get_opencrvs_version
 
 export USER_MGNT_MONGODB_PASSWORD=`generate_password`
 export HEARTH_MONGODB_PASSWORD=`generate_password`
-export CONFIG_MONGODB_PASSWORD=`generate_password`
 export METRICS_MONGODB_PASSWORD=`generate_password`
 export PERFORMANCE_MONGODB_PASSWORD=`generate_password`
 export OPENHIM_MONGODB_PASSWORD=`generate_password`

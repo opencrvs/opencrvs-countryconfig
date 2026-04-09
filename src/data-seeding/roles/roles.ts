@@ -165,7 +165,6 @@ export const roles: Role[] = [
       'workqueue[id=recent|pending-feedback-provincinal-registrar|pending-approval|correction-requested]',
       'type=record.read&placeOfEvent=administrativeArea',
       'type=record.reject&placeOfEvent=administrativeArea',
-      'type=record.edit&placeOfEvent=administrativeArea',
       'type=record.register&declaredIn=administrativeArea',
       'type=record.archive&placeOfEvent=administrativeArea',
       'type=record.custom-action&event=birth&customActionTypes=PROVINCIAL_REGISTER_FEEDBACK,REINSTATE_REVOKE_REGISTRATION,ESCALATE&placeOfEvent=administrativeArea',
