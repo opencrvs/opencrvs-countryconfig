@@ -237,7 +237,6 @@ services:
       - MONGODB_ADMIN_PASSWORD=${MONGODB_ADMIN_PASSWORD}
       - USER_MGNT_MONGODB_PASSWORD=${USER_MGNT_MONGODB_PASSWORD}
       - HEARTH_MONGODB_PASSWORD=${HEARTH_MONGODB_PASSWORD}
-      - CONFIG_MONGODB_PASSWORD=${CONFIG_MONGODB_PASSWORD}
       - PERFORMANCE_MONGODB_PASSWORD=${PERFORMANCE_MONGODB_PASSWORD}
       - METRICS_MONGODB_PASSWORD=${METRICS_MONGODB_PASSWORD}
       - OPENHIM_MONGODB_PASSWORD=${OPENHIM_MONGODB_PASSWORD}
@@ -505,7 +504,6 @@ services:
       - COUNTRY_CONFIG_URL_INTERNAL=http://countryconfig:3040
       - LOGIN_URL=https://login.{{hostname}}
       - AUTH_URL_INTERNAL=http://auth:4040
-      - CONFIG_API_URL_INTERNAL=http://config:2021
       - GATEWAY_URL_INTERNAL=http://gateway:7070
       - CONTENT_SECURITY_POLICY_WILDCARD=${CONTENT_SECURITY_POLICY_WILDCARD}
     deploy:
@@ -572,10 +570,7 @@ services:
       - NODE_ENV=production
       - OPENCRVS_ENVIRONMENT=production
       - AUTH_URL=http://auth:4040
-      - APPLICATION_CONFIG_URL=http://config:2021
-      - CONFIRM_REGISTRATION_URL=http://workflow:5050/confirm/registration
       - MONGO_URL=mongodb://mongo1/user-mgnt?replicaSet=rs0
-      - CONFIG_MONGO_URL=mongodb://mongo1/application-config?replicaSet=rs0
       - APN_SERVICE_URL=http://apm-server:8200
       - COUNTRY_CONFIG_URL=https://countryconfig.{{hostname}}
       - LOGIN_URL=https://login.{{hostname}}
@@ -608,7 +603,6 @@ services:
       - COUNTRY_CONFIG_URL_INTERNAL=http://countryconfig:3040
       - CLIENT_APP_URL=https://register.{{hostname}}
       - AUTH_URL_INTERNAL=http://auth:4040
-      - CONFIG_API_URL_INTERNAL=http://config:2021
       - GATEWAY_URL_INTERNAL=http://gateway:7070
       - CONTENT_SECURITY_POLICY_WILDCARD=${CONTENT_SECURITY_POLICY_WILDCARD}
     deploy:
@@ -780,28 +774,6 @@ services:
       options:
         gelf-address: 'udp://127.0.0.1:12201'
         tag: 'gateway'
-  workflow:
-    secrets:
-      - jwt-public-key.{{ts}}
-    environment:
-      - NODE_ENV=production
-      - LANGUAGES=en,fr
-      - SENTRY_DSN=${SENTRY_DSN:-}
-      - APN_SERVICE_URL=http://apm-server:8200
-      - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
-      - REDIS_USERNAME=${WORKFLOW_REDIS_USERNAME}
-      - REDIS_PASSWORD=${WORKFLOW_REDIS_PASSWORD}
-    deploy:
-      labels:
-        - 'traefik.enable=false'
-      replicas: 1
-    networks:
-      - overlay_net
-    logging:
-      driver: gelf
-      options:
-        gelf-address: 'udp://127.0.0.1:12201'
-        tag: 'workflow'
   search:
     secrets:
       - jwt-public-key.{{ts}}
@@ -887,47 +859,10 @@ services:
       options:
         gelf-address: 'udp://127.0.0.1:12201'
         tag: 'documents'
-  config:
-    secrets:
-      - jwt-public-key.{{ts}}
-    environment:
-      - NODE_ENV=production
-      - SENTRY_DSN=${SENTRY_DSN:-}
-      - APN_SERVICE_URL=http://apm-server:8200
-      - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
-      - MONGO_URL=mongodb://config:${CONFIG_MONGODB_PASSWORD}@mongo1/application-config?replicaSet=rs0
-      - LOGIN_URL=https://login.{{hostname}}
-      - CLIENT_APP_URL=https://register.{{hostname}}
-      - DOMAIN={{hostname}}
-    deploy:
-      labels:
-        - 'traefik.enable=true'
-        - 'traefik.http.routers.config.rule=Host(`config.{{hostname}}`)'
-        - 'traefik.http.services.config.loadbalancer.server.port=2021'
-        - 'traefik.http.routers.config.tls=true'
-        - 'traefik.http.routers.config.tls.certresolver=certResolver'
-        - 'traefik.http.routers.config.entrypoints=web,websecure'
-        - 'traefik.docker.network=opencrvs_overlay_net'
-        - 'traefik.http.middlewares.config.headers.customresponseheaders.Pragma=no-cache'
-        - 'traefik.http.middlewares.config.headers.customresponseheaders.Cache-control=no-store'
-        - 'traefik.http.middlewares.config.headers.customresponseheaders.X-Robots-Tag=none'
-        - 'traefik.http.middlewares.config.headers.stsseconds=31536000'
-        - 'traefik.http.middlewares.config.headers.stsincludesubdomains=true'
-        - 'traefik.http.middlewares.config.headers.stspreload=true'
-      replicas: 1
-    networks:
-      - overlay_net
-    logging:
-      driver: gelf
-      options:
-        gelf-address: 'udp://127.0.0.1:12201'
-        tag: 'config'
-
   migration:
     environment:
       - USER_MGNT_MONGO_URL=mongodb://user-mgnt:${USER_MGNT_MONGODB_PASSWORD}@mongo1/user-mgnt?replicaSet=rs0
       - DASHBOARD_MONGO_URL=mongodb://performance:${PERFORMANCE_MONGODB_PASSWORD}@mongo1/performance?replicaSet=rs0
-      - APPLICATION_CONFIG_MONGO_URL=mongodb://config:${CONFIG_MONGODB_PASSWORD}@mongo1/application-config?replicaSet=rs0
       - HEARTH_MONGO_URL=mongodb://hearth:${HEARTH_MONGODB_PASSWORD}@mongo1/hearth-dev?replicaSet=rs0
       - EVENTS_MONGO_URL=mongodb://events:${EVENTS_MONGODB_PASSWORD}@mongo1/events?replicaSet=rs0
       - OPENHIM_MONGO_URL=mongodb://openhim:${OPENHIM_MONGODB_PASSWORD}@mongo1/openhim-dev?replicaSet=rs0
@@ -960,7 +895,6 @@ services:
     environment:
       - USER_MGNT_MONGO_URL=mongodb://user-mgnt:${USER_MGNT_MONGODB_PASSWORD}@mongo1/user-mgnt?replicaSet=rs0
       - DASHBOARD_MONGO_URL=mongodb://performance:${PERFORMANCE_MONGODB_PASSWORD}@mongo1/performance?replicaSet=rs0
-      - APPLICATION_CONFIG_MONGO_URL=mongodb://config:${CONFIG_MONGODB_PASSWORD}@mongo1/application-config?replicaSet=rs0
       - HEARTH_MONGO_URL=mongodb://hearth:${HEARTH_MONGODB_PASSWORD}@mongo1/hearth-dev?replicaSet=rs0
       - EVENTS_MONGO_URL=mongodb://events:${EVENTS_MONGODB_PASSWORD}@mongo1/events?replicaSet=rs0
       - OPENHIM_MONGO_URL=mongodb://openhim:${OPENHIM_MONGODB_PASSWORD}@mongo1/openhim-dev?replicaSet=rs0

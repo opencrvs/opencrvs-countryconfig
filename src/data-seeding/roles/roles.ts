@@ -1,4 +1,3 @@
-import { SCOPES } from '@opencrvs/toolkit/scopes'
 import { MessageDescriptor } from 'react-intl'
 
 type Role = {
@@ -16,13 +15,11 @@ export const roles: Role[] = [
       id: 'userRole.registrationOfficer'
     },
     scopes: [
-      SCOPES.PERFORMANCE_READ,
-      SCOPES.ORGANISATION_READ_LOCATIONS_MY_OFFICE,
-      SCOPES.USER_READ_MY_JURISDICTION,
-      SCOPES.ORGANISATION_READ_LOCATIONS_MY_JURISDICTION,
-      SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES,
-      SCOPES.PERFORMANCE_READ_DASHBOARDS,
-      'workqueue[id=assigned-to-you|recent|requires-completion|in-external-validation|escalated|pending-validation|pending-updates|pending-approval|pending-certification|pending-issuance|correction-requested]',
+      'type=performance.read',
+      'type=organisation.read-locations&accessLevel=administrativeArea',
+      'type=user.read&accessLevel=administrativeArea',
+      'type=performance.read-dashboards',
+      'type=workqueue&ids=assigned-to-you,recent,requires-completion,in-external-validation,escalated,pending-validation,pending-updates,pending-approval,pending-certification,pending-issuance,correction-requested',
       'type=record.search&placeOfEvent=administrativeArea',
       'type=record.create&placeOfEvent=administrativeArea',
       'type=record.read&placeOfEvent=administrativeArea',
@@ -45,14 +42,12 @@ export const roles: Role[] = [
       id: 'userRole.localRegistrar'
     },
     scopes: [
-      SCOPES.PROFILE_ELECTRONIC_SIGNATURE,
-      SCOPES.PERFORMANCE_READ,
-      SCOPES.ORGANISATION_READ_LOCATIONS_MY_OFFICE,
-      SCOPES.ORGANISATION_READ_LOCATIONS_MY_JURISDICTION,
-      SCOPES.USER_READ_MY_JURISDICTION,
-      SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES,
-      SCOPES.PERFORMANCE_READ_DASHBOARDS,
-      'workqueue[id=assigned-to-you|recent|requires-completion|in-external-validation|escalated|potential-duplicate|pending-updates|pending-registration|pending-approval|pending-certification|pending-issuance|correction-requested]',
+      'type=profile.electronic-signature',
+      'type=performance.read',
+      'type=organisation.read-locations&accessLevel=administrativeArea',
+      'type=user.read&accessLevel=administrativeArea',
+      'type=performance.read-dashboards',
+      'type=workqueue&ids=assigned-to-you,recent,requires-completion,in-external-validation,escalated,potential-duplicate,pending-updates,pending-registration,pending-approval,pending-certification,pending-issuance,correction-requested',
       'type=record.search&placeOfEvent=administrativeArea',
       'type=record.create&placeOfEvent=administrativeArea',
       'type=record.read&placeOfEvent=administrativeArea',
@@ -77,12 +72,12 @@ export const roles: Role[] = [
       id: 'userRole.administrator'
     },
     scopes: [
-      SCOPES.ORGANISATION_READ_LOCATIONS_MY_JURISDICTION,
-      SCOPES.USER_CREATE_MY_JURISDICTION,
+      'type=organisation.read-locations&accessLevel=administrativeArea',
+      'type=user.create&accessLevel=administrativeArea',
       'user.create[role=HOSPITAL_CLERK|COMMUNITY_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR|PROVINCIAL_REGISTRAR]',
       'user.edit[role=HOSPITAL_CLERK|COMMUNITY_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR|PROVINCIAL_REGISTRAR]',
-      SCOPES.USER_UPDATE_MY_JURISDICTION,
-      SCOPES.USER_READ_MY_JURISDICTION
+      'type=user.edit&accessLevel=administrativeArea',
+      'type=user.read&accessLevel=administrativeArea'
     ]
   },
   {
@@ -93,17 +88,17 @@ export const roles: Role[] = [
       id: 'userRole.nationalAdministrator'
     },
     scopes: [
-      SCOPES.CONFIG_UPDATE_ALL,
-      SCOPES.ORGANISATION_READ_LOCATIONS,
-      SCOPES.USER_CREATE,
+      'type=config.update-all',
+      'type=organisation.read-locations',
+      'type=user.create',
       'user.create[role=HOSPITAL_CLERK|COMMUNITY_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR|NATIONAL_REGISTRAR|LOCAL_SYSTEM_ADMIN|NATIONAL_SYSTEM_ADMIN|PERFORMANCE_MANAGER|PROVINCIAL_REGISTRAR|EMBASSY_OFFICIAL]',
       'user.edit[role=HOSPITAL_CLERK|COMMUNITY_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR|NATIONAL_REGISTRAR|LOCAL_SYSTEM_ADMIN|NATIONAL_SYSTEM_ADMIN|PERFORMANCE_MANAGER|PROVINCIAL_REGISTRAR|EMBASSY_OFFICIAL]',
-      SCOPES.USER_READ,
-      SCOPES.USER_UPDATE,
-      SCOPES.PERFORMANCE_READ,
-      SCOPES.RECORD_REINDEX,
-      SCOPES.INTEGRATION_CREATE,
-      SCOPES.PERFORMANCE_READ_DASHBOARDS
+      'type=user.read',
+      'type=user.edit',
+      'type=performance.read',
+      'type=record.reindex',
+      'type=integration.create',
+      'type=performance.read-dashboards'
     ]
   },
   {
@@ -114,9 +109,9 @@ export const roles: Role[] = [
       id: 'userRole.operationsManager'
     },
     scopes: [
-      SCOPES.PERFORMANCE_READ,
-      SCOPES.ORGANISATION_READ_LOCATIONS,
-      SCOPES.PERFORMANCE_READ_DASHBOARDS
+      'type=performance.read',
+      'type=organisation.read-locations',
+      'type=performance.read-dashboards'
     ]
   },
   {
@@ -127,13 +122,12 @@ export const roles: Role[] = [
       id: 'userRole.registrarGeneral'
     },
     scopes: [
-      SCOPES.PROFILE_ELECTRONIC_SIGNATURE,
-      SCOPES.PERFORMANCE_READ,
-      SCOPES.ORGANISATION_READ_LOCATIONS,
-      SCOPES.USER_READ,
-      SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES,
+      'type=profile.electronic-signature',
+      'type=performance.read',
+      'type=organisation.read-locations',
+      'type=user.read',
       'type=record.search',
-      'workqueue[id=assigned-to-you|recent|pending-feedback-registrar-general|potential-duplicate|registration-registrar-general]',
+      'type=workqueue&ids=assigned-to-you,recent,pending-feedback-registrar-general,potential-duplicate,registration-registrar-general',
       'type=record.read',
       'type=record.declare',
       'type=record.reject',
@@ -155,14 +149,13 @@ export const roles: Role[] = [
       id: 'userRole.provincialRegistrar'
     },
     scopes: [
-      SCOPES.ORGANISATION_READ_LOCATIONS_MY_JURISDICTION,
-      SCOPES.USER_READ_MY_JURISDICTION,
-      SCOPES.PERFORMANCE_READ,
-      SCOPES.PERFORMANCE_READ_DASHBOARDS,
-      SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES,
-      SCOPES.PROFILE_ELECTRONIC_SIGNATURE,
+      'type=organisation.read-locations&accessLevel=administrativeArea',
+      'type=user.read&accessLevel=administrativeArea',
+      'type=performance.read',
+      'type=performance.read-dashboards',
+      'type=profile.electronic-signature',
       'type=record.search&placeOfEvent=administrativeArea',
-      'workqueue[id=recent|pending-feedback-provincinal-registrar|pending-approval|correction-requested]',
+      'type=workqueue&ids=recent,pending-feedback-provincinal-registrar,pending-approval,correction-requested',
       'type=record.read&placeOfEvent=administrativeArea',
       'type=record.reject&placeOfEvent=administrativeArea',
       'type=record.register&declaredIn=administrativeArea',
@@ -182,9 +175,9 @@ export const roles: Role[] = [
       id: 'userRole.hospitalClerk'
     },
     scopes: [
-      SCOPES.USER_READ_ONLY_MY_AUDIT,
+      'type=user.read-only-my-audit',
       'type=record.search&placeOfEvent=location',
-      'workqueue[id=assigned-to-you|recent|pending-updates]',
+      'type=workqueue&ids=assigned-to-you,recent,pending-updates',
       'type=record.create&placeOfEvent=location',
       'type=record.read&placeOfEvent=location',
       'type=record.declare&placeOfEvent=location',
@@ -201,10 +194,9 @@ export const roles: Role[] = [
       id: 'userRole.communityLeader'
     },
     scopes: [
-      SCOPES.USER_READ_ONLY_MY_AUDIT,
-      SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES,
+      'type=user.read-only-my-audit',
       'type=record.search&placeOfEvent=location',
-      'workqueue[id=assigned-to-you|recent]',
+      'type=workqueue&ids=assigned-to-you,recent',
       'type=record.create&placeOfEvent=location',
       'type=record.read&placeOfEvent=location',
       'type=record.edit&placeOfEvent=location',
@@ -219,9 +211,8 @@ export const roles: Role[] = [
       id: 'userRole.embassyOffical'
     },
     scopes: [
-      SCOPES.USER_READ_ONLY_MY_AUDIT,
-      SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES,
-      'workqueue[id=assigned-to-you|recent|escalated|pending-updates|pending-certification|potential-duplicate]',
+      'type=user.read-only-my-audit',
+      'type=workqueue&ids=assigned-to-you,recent,escalated,pending-updates,pending-certification,potential-duplicate',
       'type=record.search&placeOfEvent=location',
       'type=record.create&placeOfEvent=location',
       'type=record.read&placeOfEvent=location',
