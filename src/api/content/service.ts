@@ -29,53 +29,36 @@ export type CSVRow = { id: string; description: string } & Record<
   string
 >
 
+const TRANSLATIONS_DIR = 'src/translations'
+
 /**
  * Reads translation data for an application.
  *
- * If per-language files exist (e.g. client-en.csv, client-fr.csv) they are
- * merged together and take precedence over the combined file.  This lets
- * country teams maintain one language per file while the application still
- * receives a single merged response.
+ * For the notification service, reads per-language files (e.g. notification-en.csv).
  *
- * Falls back to the original combined CSV (e.g. client.csv) when no
- * per-language files are found.
+ * For client and login, merges core and country per-language files
+ * (e.g. core-en.csv + country-en.csv) so both sets of keys are served together.
  */
 export async function getLanguages(
   application: string
 ): Promise<ILanguageDataResponse> {
-  const translationsDir = 'src/translations'
-  const prefix = `${application}-`
-
-  const perLanguageFiles = existsSync(translationsDir)
-    ? readdirSync(translationsDir)
-        .filter((f) => f.startsWith(prefix) && f.endsWith('.csv'))
-        .map((f) => join(translationsDir, f))
-    : []
-
-  if (perLanguageFiles.length > 0) {
-    return mergePerLanguageFiles(perLanguageFiles)
+  if (application === 'notification') {
+    return readPerLanguageFiles('notification')
   }
 
-  const csvData = await readCSVToJSON<CSVRow[]>(
-    join(translationsDir, `${application}.csv`)
-  )
-  const languages = Object.keys(csvData[0]).filter(
-    (key) => !['id', 'description'].includes(key)
-  )
-
-  return languages.map((lang) => {
-    const messages: IMessageIdentifier = {}
-    csvData.forEach((row) => {
-      messages[row.id] = row[lang]
-    })
-    return { lang, messages }
-  })
+  return readCoreAndCountryFiles()
 }
 
-async function mergePerLanguageFiles(
-  files: string[]
+async function readPerLanguageFiles(
+  prefix: string
 ): Promise<ILanguageDataResponse> {
-  const results = await Promise.all(
+  const files = existsSync(TRANSLATIONS_DIR)
+    ? readdirSync(TRANSLATIONS_DIR)
+        .filter((f) => f.startsWith(`${prefix}-`) && f.endsWith('.csv'))
+        .map((f) => join(TRANSLATIONS_DIR, f))
+    : []
+
+  return Promise.all(
     files.map(async (file) => {
       const rows = await readCSVToJSON<CSVRow[]>(file)
       const lang = Object.keys(rows[0]).find(
@@ -89,5 +72,36 @@ async function mergePerLanguageFiles(
       return { lang, messages }
     })
   )
-  return results
+}
+
+async function readCoreAndCountryFiles(): Promise<ILanguageDataResponse> {
+  const coreFiles = existsSync(TRANSLATIONS_DIR)
+    ? readdirSync(TRANSLATIONS_DIR).filter(
+        (f) => f.startsWith('core-') && f.endsWith('.csv')
+      )
+    : []
+
+  return Promise.all(
+    coreFiles.map(async (coreFile) => {
+      const lang = coreFile.replace('core-', '').replace('.csv', '')
+      const messages: IMessageIdentifier = {}
+
+      const coreRows = await readCSVToJSON<CSVRow[]>(
+        join(TRANSLATIONS_DIR, coreFile)
+      )
+      coreRows.forEach((row) => {
+        messages[row.id] = row[lang]
+      })
+
+      const countryFile = join(TRANSLATIONS_DIR, `country-${lang}.csv`)
+      if (existsSync(countryFile)) {
+        const countryRows = await readCSVToJSON<CSVRow[]>(countryFile)
+        countryRows.forEach((row) => {
+          messages[row.id] = row[lang]
+        })
+      }
+
+      return { lang, messages }
+    })
+  )
 }
