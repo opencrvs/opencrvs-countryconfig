@@ -331,7 +331,8 @@ async function deleteDuplicateKeys(issues: FileIssues[]): Promise<void> {
 function detectLegacyFiles(translationsDir: string): boolean {
   return (
     fs.existsSync(path.join(translationsDir, 'client.csv')) ||
-    fs.existsSync(path.join(translationsDir, 'login.csv'))
+    fs.existsSync(path.join(translationsDir, 'login.csv')) ||
+    fs.existsSync(path.join(translationsDir, 'notification.csv'))
   )
 }
 
@@ -426,6 +427,31 @@ async function migrateLegacyTranslations(
       )
       console.log(
         `  Wrote ${rows.length} ${scope} keys to ${path.basename(filePath)}`
+      )
+    }
+  }
+
+  // Split notification.csv into per-language files
+  const notificationPath = path.join(translationsDir, 'notification.csv')
+  if (fs.existsSync(notificationPath)) {
+    const rows = await readCSVToJSON<CSVRow[]>(notificationPath)
+    const langs = Object.keys(rows[0]).filter(
+      (k) => k !== 'id' && k !== 'description'
+    )
+    for (const lang of langs) {
+      const outPath = path.join(translationsDir, `notification-${lang}.csv`)
+      if (fs.existsSync(outPath)) {
+        console.log(`  Skipping ${path.basename(outPath)} (already exists)`)
+        continue
+      }
+      const langRows = rows.map((r) => ({
+        id: r.id,
+        description: r.description,
+        [lang]: r[lang] ?? ''
+      }))
+      await writeJSONToCSV(outPath, sortBy(langRows, (r) => r.id))
+      console.log(
+        `  Wrote ${langRows.length} keys to ${path.basename(outPath)}`
       )
     }
   }
