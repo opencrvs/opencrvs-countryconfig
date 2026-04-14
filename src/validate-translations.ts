@@ -89,21 +89,46 @@ function extractDescriptorsFromSource(sourceCode: string): MessageDescriptor[] {
       ts.forEachChild(node, visit)
       return
     }
-    const hasId = node.properties.find(
+    const idProp = node.properties.find(
       (p) => ts.isPropertyAssignment(p) && p.name.getText() === 'id'
     )
-    const hasDefaultMessage = node.properties.find(
+    const defaultMessageProp = node.properties.find(
       (p) => ts.isPropertyAssignment(p) && p.name.getText() === 'defaultMessage'
     )
-    if (!(hasId && hasDefaultMessage)) {
+
+    const descriptionProp = node.properties.find(
+      (p) => ts.isPropertyAssignment(p) && p.name.getText() === 'description'
+    )
+
+    if (!(idProp && defaultMessageProp)) {
       ts.forEachChild(node, visit)
       return
     }
+
     try {
-      // eslint-disable-next-line no-new-func
-      matches.push(new Function(`return (${node.getText(sourceFile)});`)())
+      const idNode = (idProp as ts.PropertyAssignment).initializer
+      const msgNode = (defaultMessageProp as ts.PropertyAssignment).initializer
+      const descriptionNode = (descriptionProp as ts.PropertyAssignment)
+        ?.initializer
+
+      const description =
+        descriptionNode && ts.isStringLiteral(descriptionNode)
+          ? descriptionNode.text
+          : undefined
+
+      if (ts.isStringLiteral(idNode) && ts.isStringLiteral(msgNode)) {
+        matches.push({
+          id: idNode.text,
+          defaultMessage: msgNode.text,
+          description: description
+        })
+      } else {
+        console.warn(
+          `Skipping non-literal descriptor : ${node.getText(sourceFile)}`
+        )
+      }
     } catch {
-      // Dynamic identifier — skip
+      console.warn(`Skipping dynamic descriptor : ${node.getText(sourceFile)}`)
     }
     ts.forEachChild(node, visit)
   }
@@ -115,7 +140,7 @@ function extractDescriptorsFromSource(sourceCode: string): MessageDescriptor[] {
 function loadCountrySource(): TranslationSource {
   const srcDir = path.join(__dirname)
   const messages: TranslationSource = {}
-  for (const file of findSourceFiles(srcDir)) {
+  for (const file of findSourceFiles(srcDir).filter((f) => f !== __filename)) {
     const contents = fs.readFileSync(file, 'utf8')
     for (const {
       id,
@@ -623,7 +648,7 @@ export async function checkTranslations(
     if (action === 'migrate')
       await migrateLegacyTranslations(
         translationsDir,
-        languages,
+        await detectLanguagesFromLegacy(translationsDir),
         coreSource,
         countrySource
       )
