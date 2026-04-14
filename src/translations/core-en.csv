@@ -1,6 +1,7 @@
 id,description,en
 action.action,Label for action button in dropdown menu,Action
 action.archive,Label for archive record button in dropdown menu,Archive Record
+action.assign.label,,Assign
 action.assignee,Label for assignee,Assigned to {name} at {officeName}
 action.correct,Label for correct record button in dropdown menu,Correct Record
 action.issue,Label for issue certificate in dropdown menu,Issue certificate
@@ -9,6 +10,7 @@ action.print,Label for print certified copy in dropdown menu,Print certified cop
 action.reinstate,Label for reinstate record button in dropdown menu,Reinstate Record
 action.review.correction,Label for review correction request button in dropdown menu,Review correction request
 action.review.declaration,Label for review record button in dropdown menu,"Review {isDuplicate, select, true{potential duplicate} other{declaration}}"
+action.unassign.label,,Unassign
 action.update,Label for update record button in dropdown menu,Update declaration
 action.view,Label for view button in dropdown menu,View {recordOrDeclaration}
 actionModal.cancel,The label for cancel button of action modal,Cancel
@@ -1657,6 +1659,8 @@ user.profile.auditList.approvedCorrectionAuditAction,Description for record corr
 user.profile.auditList.archived,Description for declaration archived,Archived
 user.profile.auditList.assigned,Description for declaration assignment,Assigned
 user.profile.auditList.corrected,Description for declaration corrected,Corrected Record
+user.profile.auditList.created,Description for created audit action,Created
+user.profile.auditList.download,Description for download audit action,Downloaded record
 user.profile.auditList.emailAddressChanged,Description for user change email,Email Address changed
 user.profile.auditList.loggedIn,Description for user logged in,Logged in
 user.profile.auditList.loggedOut,Description for user logged out,Logged out
@@ -1672,6 +1676,7 @@ user.profile.auditList.reInstatedToUpdate,Description for sending registration f
 user.profile.auditList.rejectedCorrectedAuditAction,Description for record correction being rejected,Rejected correction request
 user.profile.auditList.requestedCorrectionAuditAction,Description for record correction being requested,Requested correction
 user.profile.auditList.retrieved,Description for declaration retrieved audit action,Retrieved
+user.profile.auditList.search,Description for search audit action,Searched record
 user.profile.auditList.sentForApproval,Description for sending registration for approval audit action,Sent for approval
 user.profile.auditList.showMore,Label for show more link,Show next {pageSize} of {totalItems}
 user.profile.auditList.unAssigned,Description for declaration not assigned to self,Unassigned

@@ -1,6 +1,7 @@
 id,description,fr
 action.action,Label for action button in dropdown menu,Action
 action.archive,Label for archive record button in dropdown menu,Déclaration d'archive
+action.assign.label,,Attribuer
 action.assignee,Label for assignee,Attribué à {name} chez {officeName}
 action.correct,Label for correct record button in dropdown menu,Enregistrement correct
 action.issue,Label for issue certificate in dropdown menu,Délivrer un certificat
@@ -9,6 +10,7 @@ action.print,Label for print certified copy in dropdown menu,Imprimer une copie 
 action.reinstate,Label for reinstate record button in dropdown menu,Déclaration de rétablissement
 action.review.correction,Label for review correction request button in dropdown menu,Vérifier la demande de correction
 action.review.declaration,Label for review record button in dropdown menu,"Review {isDuplicate, select, true{doublon potentiel} other{déclaration}}"
+action.unassign.label,,Désassigner
 action.update,Label for update record button in dropdown menu,Mettre à jour la déclaration
 action.view,Label for view button in dropdown menu,"voir {recordOrDeclaration, select, record{enregistrer} other{déclaration}}"
 actionModal.cancel,The label for cancel button of action modal,Annuler
@@ -1652,6 +1654,8 @@ user.profile.auditList.approvedCorrectionAuditAction,Description for record corr
 user.profile.auditList.archived,Description for declaration archived,Archivé
 user.profile.auditList.assigned,Description for declaration assignment,Assigné
 user.profile.auditList.corrected,Description for declaration corrected,dossier corrigé
+user.profile.auditList.created,Description for created audit action,Créé
+user.profile.auditList.download,Description for download audit action,Fichier téléchargé
 user.profile.auditList.emailAddressChanged,Description for user change email,L'adresse e-mail a été modifiée
 user.profile.auditList.loggedIn,Description for user logged in,Connecté
 user.profile.auditList.loggedOut,Description for user logged out,Déconnecté
@@ -1667,6 +1671,7 @@ user.profile.auditList.reInstatedToUpdate,Description for sending registration f
 user.profile.auditList.rejectedCorrectedAuditAction,Description for record correction being rejected,Demande de correction rejetée
 user.profile.auditList.requestedCorrectionAuditAction,Description for record correction being requested,Correction demandée
 user.profile.auditList.retrieved,Description for declaration retrieved audit action,Récupéré
+user.profile.auditList.search,Description for search audit action,Enregistrement recherché
 user.profile.auditList.sentForApproval,Description for sending registration for approval audit action,Envoyé pour approbation
 user.profile.auditList.showMore,Label for show more link,Afficher le prochain {pageSize} de {totalItems
 user.profile.auditList.unAssigned,Description for declaration not assigned to self,Non attribué
