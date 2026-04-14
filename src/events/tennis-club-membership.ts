@@ -573,7 +573,7 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
           label: {
             defaultMessage: 'Recommender 1',
             description: 'This is the label for the field',
-            id: `recommender1.heading.label`
+            id: 'recommender1.heading.label'
           },
           configuration: { styles: { fontVariant: 'h3' } }
         },
@@ -682,7 +682,7 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
           label: {
             defaultMessage: 'Recommender 2',
             description: 'This is the label for the field',
-            id: `recommender2.heading.label`
+            id: 'recommender2.heading.label'
           },
           configuration: { styles: { fontVariant: 'h3' } }
         },
@@ -707,7 +707,7 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
           label: {
             defaultMessage: 'Recommender 3',
             description: 'This is the label for the field',
-            id: `recommender3.heading.label`
+            id: 'recommender3.heading.label'
           },
           configuration: { styles: { fontVariant: 'h3' } }
         },
@@ -732,7 +732,7 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
           label: {
             defaultMessage: 'Recommender 4',
             description: 'This is the label for the field',
-            id: `recommender4.heading.label`
+            id: 'recommender4.heading.label'
           },
           configuration: { styles: { fontVariant: 'h3' } }
         },
@@ -757,7 +757,7 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
           label: {
             defaultMessage: 'Recommender 5',
             description: 'This is the label for the field',
-            id: `recommender5.heading.label`
+            id: 'recommender5.heading.label'
           },
           configuration: { styles: { fontVariant: 'h3' } }
         },

@@ -139,7 +139,7 @@ export const deceased = defineFormPage({
       label: {
         defaultMessage: 'Exact date of birth unknown',
         description: 'This is the label for the field',
-        id: `v2.event.death.action.declare.form.section.deceased.field.age.checkbox.label`
+        id: 'v2.event.death.action.declare.form.section.deceased.field.age.checkbox.label'
       },
       conditionals: [
         {
@@ -153,7 +153,7 @@ export const deceased = defineFormPage({
       type: FieldType.AGE,
       required: true,
       label: {
-        defaultMessage: `Age of deceased (at the time of event)`,
+        defaultMessage: 'Age of deceased (at the time of event)',
         description: 'This is the label for the field',
         id: 'event.death.action.declare.form.section.deceased.field.age.label'
       },
@@ -162,7 +162,7 @@ export const deceased = defineFormPage({
         postfix: {
           defaultMessage: 'years',
           description: 'This is the postfix for age field',
-          id: `v2.event.death.action.declare.form.section.deceased.field.age.postfix`
+          id: 'v2.event.death.action.declare.form.section.deceased.field.age.postfix'
         }
       },
       conditionals: [
@@ -189,18 +189,18 @@ export const deceased = defineFormPage({
       label: {
         defaultMessage: 'Nationality',
         description: 'This is the label for the field',
-        id: `v2.event.death.action.declare.form.section.person.field.nationality.label`
+        id: 'v2.event.death.action.declare.form.section.person.field.nationality.label'
       },
       defaultValue: 'FAR'
     },
     {
-      id: `deceased.idType`,
+      id: 'deceased.idType',
       type: FieldType.SELECT,
       required: true,
       label: {
         defaultMessage: 'Type of ID',
         description: 'This is the label for the field',
-        id: `v2.event.death.action.declare.form.section.person.field.idType.label`
+        id: 'v2.event.death.action.declare.form.section.person.field.idType.label'
       },
       options: idTypeOptions
     },
@@ -211,7 +211,7 @@ export const deceased = defineFormPage({
       label: {
         defaultMessage: 'ID Number',
         description: 'This is the label for the field',
-        id: `v2.event.death.action.declare.form.section.person.field.nid.label`
+        id: 'v2.event.death.action.declare.form.section.person.field.nid.label'
       },
       conditionals: [
         {
@@ -234,29 +234,29 @@ export const deceased = defineFormPage({
       ]
     },
     {
-      id: `deceased.passport`,
+      id: 'deceased.passport',
       type: FieldType.TEXT,
       required: true,
       label: {
         defaultMessage: 'ID Number',
         description: 'This is the label for the field',
-        id: `v2.event.death.action.declare.form.section.person.field.passport.label`
+        id: 'v2.event.death.action.declare.form.section.person.field.passport.label'
       },
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: field(`deceased.idType`).isEqualTo(IdType.PASSPORT)
+          conditional: field('deceased.idType').isEqualTo(IdType.PASSPORT)
         }
       ]
     },
     {
-      id: `deceased.brn`,
+      id: 'deceased.brn',
       type: FieldType.TEXT,
       required: true,
       label: {
         defaultMessage: 'ID Number',
         description: 'This is the label for the field',
-        id: `v2.event.death.action.declare.form.section.person.field.brn.label`
+        id: 'v2.event.death.action.declare.form.section.person.field.brn.label'
       },
       conditionals: [
         {
@@ -274,12 +274,12 @@ export const deceased = defineFormPage({
       label: {
         defaultMessage: 'Marital Status',
         description: 'This is the label for the field',
-        id: `v2.event.death.action.declare.form.section.deceased.field.maritalStatus.label`
+        id: 'v2.event.death.action.declare.form.section.deceased.field.maritalStatus.label'
       },
       options: maritalStatusOptions
     },
     {
-      id: `deceased.numberOfDependants`,
+      id: 'deceased.numberOfDependants',
       type: FieldType.NUMBER,
       required: false,
       label: {
@@ -292,17 +292,17 @@ export const deceased = defineFormPage({
       }
     },
     {
-      id: `deceased.addressDivider`,
+      id: 'deceased.addressDivider',
       type: FieldType.DIVIDER,
       label: emptyMessage
     },
     {
-      id: `deceased.addressHelper`,
+      id: 'deceased.addressHelper',
       type: FieldType.HEADING,
       label: {
         defaultMessage: 'Usual place of residence',
         description: 'This is the label for the field',
-        id: `v2.event.death.action.declare.form.section.deceased.field.addressHelper.label`
+        id: 'v2.event.death.action.declare.form.section.deceased.field.addressHelper.label'
       },
       configuration: {
         styles: { fontVariant: 'h3' }
@@ -315,7 +315,7 @@ export const deceased = defineFormPage({
       ]
     },
     {
-      id: `deceased.address`,
+      id: 'deceased.address',
       type: FieldType.ADDRESS,
       required: true,
       hideLabel: true,
