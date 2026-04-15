@@ -95,6 +95,7 @@ CREATE TABLE IF NOT EXISTS analytics.event_actions (
 
 ALTER TABLE analytics.event_actions ADD COLUMN IF NOT EXISTS custom_action_type TEXT;
 ALTER TABLE analytics.event_actions ALTER COLUMN created_by_role DROP NOT NULL;
+CREATE INDEX IF NOT EXISTS idx_event_actions_event_id ON analytics.event_actions (event_id);
 
 CREATE TABLE IF NOT EXISTS analytics.location_levels (
   id text PRIMARY KEY,

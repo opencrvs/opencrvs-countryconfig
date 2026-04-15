@@ -44,7 +44,6 @@ services:
       - TWO_FA_ENABLED=false
       - OPENCRVS_ENVIRONMENT=qa
       - AUTH_URL=http://auth:4040
-      - CONFIRM_REGISTRATION_URL=http://workflow:5050/confirm/registration
       - MONGO_URL=mongodb://mongo1/user-mgnt?replicaSet=rs0
       - SENTRY_DSN=${SENTRY_DSN:-}
       - SENDER_EMAIL_ADDRESS=${SENDER_EMAIL_ADDRESS}
@@ -68,17 +67,6 @@ services:
       - LANGUAGES=en,fr
       - SENTRY_DSN=${SENTRY_DSN:-}
       - TWO_FA_ENABLED=false
-      - NODE_ENV=production
-
-  workflow:
-    environment:
-      - LANGUAGES=en,fr
-      - SENTRY_DSN=${SENTRY_DSN:-}
-      - NODE_ENV=production
-
-  search:
-    environment:
-      - SENTRY_DSN=${SENTRY_DSN:-}
       - NODE_ENV=production
 
   metrics:

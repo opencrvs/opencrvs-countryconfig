@@ -20,9 +20,6 @@ export const env = cleanEnv(process.env, {
   AUTH_URL: url({ devDefault: 'http://localhost:4040' }),
   COUNTRY_CONFIG_URL: url({ devDefault: 'http://localhost:3040' }),
   SENTRY_DSN: str({ default: undefined }),
-  CONFIRM_REGISTRATION_URL: url({
-    devDefault: 'http://localhost:5050/confirm/registration'
-  }),
   TWO_FA_ENABLED: bool({ default: true }),
   OPENCRVS_ENVIRONMENT: str({ devDefault: 'development' }),
   ANALYTICS_DATABASE_URL: url({
