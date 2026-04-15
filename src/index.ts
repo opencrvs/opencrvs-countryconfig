@@ -229,6 +229,7 @@ export async function createServer() {
       issuer: 'opencrvs:auth-service',
       audience: 'opencrvs:countryconfig-user'
     },
+    // eslint-disable-next-line no-unused-vars
     validate: (payload: any, request: Hapi.Request) => ({
       isValid: true,
       credentials: payload
