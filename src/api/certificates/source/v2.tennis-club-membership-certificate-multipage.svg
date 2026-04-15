@@ -2,68 +2,68 @@
     <g data-page="1">
     <g clip-path="url(#clip0_5_2)">
         <path d="M583 0H0V842H583V0Z" fill="white" />
-        <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+        <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
         font-size="8" letter-spacing="0em">
         <tspan x="62" y="426.352">{{ $lookup $metadata "modifiedAt"}}</tspan>
         </text>
-        <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+        <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
         font-size="8" font-weight="bold" letter-spacing="0em">
         <tspan x="62" y="413.552">Date of certification&#10;</tspan>
         </text>
-        <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+        <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
         font-size="8" letter-spacing="0em">
         <tspan x="62" y="460.352">Imbobo District Office, Chiwala State, Farajaland</tspan>
         </text>
-        <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+        <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
         font-size="8" font-weight="bold" letter-spacing="0em">
         <tspan x="62" y="447.552">Place of certification&#10;</tspan>
         </text>
-        <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+        <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
         font-size="8" letter-spacing="0em">
         <tspan x="62" y="494.104">{{ $lookup $metadata "id" }}</tspan>
         </text>
-        <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+        <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
         font-size="8" font-weight="bold" letter-spacing="0em">
         <tspan x="62" y="482.104">Application ID</tspan>
         </text>
 
         <path d="M309.793 475.396L505.999 476.321" stroke="#CCCCCC" stroke-width="0.782258"
         stroke-dasharray="3.13 1.56" />
-        <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+        <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
         font-size="8" letter-spacing="0em">
         <tspan x="366.248" y="489.656">
             {{ $lookup $metadata "updatedBy.name.fullname"}}
         </tspan>
         </text>
-        <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+        <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
         font-size="8" letter-spacing="0em">
         <tspan x="62" y="359.604">I certify that this certificate is a true copy of the civil registry and is issued by the mandated authority in </tspan>
         </text>
-        <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+        <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
         font-size="8" letter-spacing="0em">
         <tspan x="62" y="372.604">pursuance of civil registration and vital statistics law / J&#x2019;attestation est une copie conforme de l&#39;&#xe9;tat civil. et est </tspan>
         </text>
-        <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+        <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
         font-size="8" letter-spacing="0em">
         <tspan x="62" y="385.604">d&#xe9;livr&#xe9; par l&#39;autorit&#xe9; mandat&#xe9;e conform&#xe9;ment &#xe0; la loi sur l&#39;enregistrement et les statistiques de l&#39;&#xe9;tat civil</tspan>
         </text>
         <path d="M50 700H535" stroke="#C86E00" stroke-width="2" stroke-linecap="round" />
         <path d="M50 184H534" stroke="#C86E00" stroke-width="2" stroke-linecap="round" />
-        <text fill="#C86E00" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+        <text fill="#C86E00" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
         font-size="10" font-weight="bold" letter-spacing="0em">
         <tspan x="215.483" y="199.76">No. {{ $lookup $metadata 'legalStatuses.REGISTERED.registrationNumber' }}</tspan>
         </text>
         <path d="M50 206H534" stroke="#C86E00" stroke-width="2" stroke-linecap="round" />
-        <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+        <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
         font-size="10" font-weight="bold" letter-spacing="0em">
         <tspan x="70" y="229.76">Membership details</tspan>
         </text>
         <path d="M70 233.5H514" stroke="#ECECEC" />
-        <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+        <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
         font-size="8" font-weight="bold" letter-spacing="0em">
         <tspan x="70" y="247.708">1.</tspan>
         </text>
-        <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+        <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
         font-size="8" font-weight="bold" letter-spacing="0em">
         <tspan x="90" y="247.208">Full name</tspan>
         </text>
@@ -72,17 +72,17 @@
         <path d="M514 238H312V250H514V238Z" fill="white" />
         </mask>
         <g mask="url(#mask0_5_2)">
-        <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+        <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
             font-size="8" letter-spacing="0em">
             <tspan x="312" y="247.708">{{ $lookup $declaration "applicant.name.fullname" }}</tspan>
         </text>
         </g>
         <path d="M70 253.5H514" stroke="#ECECEC" />
-        <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+        <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
         font-size="8" font-weight="bold" letter-spacing="0em">
         <tspan x="70" y="267.708">2.</tspan>
         </text>
-        <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+        <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
         font-size="8" font-weight="bold" letter-spacing="0em">
         <tspan x="90" y="267.208">Date of birth&#10;</tspan>
         </text>
@@ -91,18 +91,18 @@
         <path d="M514 258H312V270H514V258Z" fill="white" />
         </mask>
         <g mask="url(#mask1_5_2)">
-        <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+        <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
             font-size="8" letter-spacing="0em">
             <tspan x="312" y="267.708">{{ $lookup $declaration "applicant.dob"  }}</tspan>
         </text>
         </g>
         <path d="M70 273.5H514" stroke="#ECECEC" />
         <path d="M70 273.5H514" stroke="#ECECEC" />
-        <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+        <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
         font-size="8" font-weight="bold" letter-spacing="0em">
         <tspan x="70" y="287.708">3.</tspan>
         </text>
-        <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+        <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
         font-size="8" font-weight="bold" letter-spacing="0em">
         <tspan x="90" y="287.208">Recommender Full name</tspan>
         </text>
@@ -111,7 +111,7 @@
         <path d="M514 278H312V290H514V278Z" fill="white" />
         </mask>
         <g mask="url(#mask2_5_2)">
-        <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+        <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
             font-size="8" letter-spacing="0em">
             <tspan x="312" y="287.708">{{ $lookup $declaration "recommender.name.fullname"  }}</tspan>
         </text>
@@ -186,11 +186,11 @@
         <path
             d="M64.1376 162.445H63.5662V160.017H64.9779V160.486H64.1376V161.037H64.9166V161.507H64.1376V162.445Z"
             fill="#222222" />
-        <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+        <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
             font-size="8" font-weight="bold" letter-spacing="0em">
             <tspan x="114" y="149.208">Farajaland Countryside Tennis Club</tspan>
         </text>
-        <text fill="#C86E00" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+        <text fill="#C86E00" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
             font-size="10" font-weight="bold" letter-spacing="0em">
             <tspan x="114" y="165.76">Farajaland Tennis Club Membership Certificate</tspan>
         </text>
@@ -200,15 +200,15 @@
         <path d="M53 513.5H537V552.5H53V513.5Z" fill="white" />
         </mask>
         <g mask="url(#mask4_5_2)">
-        <text fill="#8D8D8D" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+        <text fill="#8D8D8D" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
             font-size="6" font-weight="bold" letter-spacing="0em">
             <tspan x="53" y="527.656">CAUTION : THERE ARE OFFENCES RELATING TO FALSIFYING OR ALTERING A CERTIFICATE AND USING OR POSSESSING A FALSE CERTIFICATE. A </tspan>
         </text>
-        <text fill="#8D8D8D" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+        <text fill="#8D8D8D" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
             font-size="6" font-weight="bold" letter-spacing="0em">
             <tspan x="53" y="537.656">CERTIFICATE IS NOT PROOF OF IDENTITY / ATTENTION : IL EXISTE DES INFRACTIONS RELATIVES &#xc0; LA FALSIFIATION OU &#xc0; LA MODIFICATION </tspan>
         </text>
-        <text fill="#8D8D8D" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+        <text fill="#8D8D8D" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
             font-size="6" font-weight="bold" letter-spacing="0em">
             <tspan x="53" y="547.656">D&#39;UN CERTIFICAT ET &#xc0; L&#39;UTILISATION OU LA POSSESSION D&#39;UN FAUX CERTIFICAT. UN CERTIFICAT N&#39;EST PAS UNE PREUVE D&#39;IDENTIT&#xc9;</tspan>
         </text>
@@ -223,67 +223,67 @@
     <g data-page="2" transform="translate(0, 842)">
        <g clip-path="url(#clip0_5_2)">
     <path d="M583 0H0V842H583V0Z" fill="white" />
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="8" letter-spacing="0em">
       <tspan x="62" y="426.352">{{ $lookup $metadata "modifiedAt" }}</tspan>
     </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="8" font-weight="bold" letter-spacing="0em">
       <tspan x="62" y="413.552">Date of certification&#10;</tspan>
     </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="8" letter-spacing="0em">
       <tspan x="62" y="460.352">Imbobo District Office, Chiwala State, Farajaland</tspan>
     </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="8" font-weight="bold" letter-spacing="0em">
       <tspan x="62" y="447.552">Place of certification&#10;</tspan>
     </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="8" letter-spacing="0em">
       <tspan x="62" y="494.104">{{ $lookup $metadata "id" }}</tspan>
     </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="8" font-weight="bold" letter-spacing="0em">
       <tspan x="62" y="482.104">Application ID</tspan>
     </text>
     <path d="M309.793 475.396L505.999 476.321" stroke="#CCCCCC" stroke-width="0.782258"
       stroke-dasharray="3.13 1.56" />
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="8" letter-spacing="0em">
       <tspan x="366.248" y="489.656">
         {{ $lookup $metadata "updatedBy.name.fullname"}}
       </tspan>
     </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="8" letter-spacing="0em">
       <tspan x="62" y="359.604">I certify that this certificate is a true copy of the civil registry and is issued by the mandated authority in </tspan>
     </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="8" letter-spacing="0em">
       <tspan x="62" y="372.604">pursuance of civil registration and vital statistics law / J&#x2019;attestation est une copie conforme de l&#39;&#xe9;tat civil. et est </tspan>
     </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="8" letter-spacing="0em">
       <tspan x="62" y="385.604">d&#xe9;livr&#xe9; par l&#39;autorit&#xe9; mandat&#xe9;e conform&#xe9;ment &#xe0; la loi sur l&#39;enregistrement et les statistiques de l&#39;&#xe9;tat civil</tspan>
     </text>
     <path d="M50 700H535" stroke="#C86E00" stroke-width="2" stroke-linecap="round" />
     <path d="M50 184H534" stroke="#C86E00" stroke-width="2" stroke-linecap="round" />
-    <text fill="#C86E00" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="#C86E00" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="10" font-weight="bold" letter-spacing="0em">
       <tspan x="215.483" y="199.76">No. {{ $lookup $metadata 'legalStatuses.REGISTERED.registrationNumber' }}</tspan>
     </text>
     <path d="M50 206H534" stroke="#C86E00" stroke-width="2" stroke-linecap="round" />
-    <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="10" font-weight="bold" letter-spacing="0em">
       <tspan x="70" y="229.76">Membership details</tspan>
     </text>
     <path d="M70 233.5H514" stroke="#ECECEC" />
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="8" font-weight="bold" letter-spacing="0em">
       <tspan x="70" y="247.708">1.</tspan>
     </text>
-    <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="8" font-weight="bold" letter-spacing="0em">
       <tspan x="90" y="247.208">Full name</tspan>
     </text>
@@ -292,17 +292,17 @@
       <path d="M514 238H312V250H514V238Z" fill="white" />
     </mask>
     <g mask="url(#mask0_5_2)">
-      <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+      <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
         font-size="8" letter-spacing="0em">
         <tspan x="312" y="247.708">{{ $lookup $declaration "applicant.name.fullname" }}</tspan>
       </text>
     </g>
     <path d="M70 253.5H514" stroke="#ECECEC" />
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="8" font-weight="bold" letter-spacing="0em">
       <tspan x="70" y="267.708">2.</tspan>
     </text>
-    <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="8" font-weight="bold" letter-spacing="0em">
       <tspan x="90" y="267.208">Date of birth&#10;</tspan>
     </text>
@@ -311,18 +311,18 @@
       <path d="M514 258H312V270H514V258Z" fill="white" />
     </mask>
     <g mask="url(#mask1_5_2)">
-      <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+      <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
         font-size="8" letter-spacing="0em">
         <tspan x="312" y="267.708">{{ $lookup $declaration "applicant.dob"  }}</tspan>
       </text>
     </g>
     <path d="M70 273.5H514" stroke="#ECECEC" />
     <path d="M70 273.5H514" stroke="#ECECEC" />
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="8" font-weight="bold" letter-spacing="0em">
       <tspan x="70" y="287.708">3.</tspan>
     </text>
-    <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="8" font-weight="bold" letter-spacing="0em">
       <tspan x="90" y="287.208">Recommender Full name</tspan>
     </text>
@@ -331,7 +331,7 @@
       <path d="M514 278H312V290H514V278Z" fill="white" />
     </mask>
     <g mask="url(#mask2_5_2)">
-      <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+      <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
         font-size="8" letter-spacing="0em">
         <tspan x="312" y="287.708">{{ $lookup $declaration "recommender.name.fullname"  }}</tspan>
       </text>
@@ -406,11 +406,11 @@
       <path
         d="M64.1376 162.445H63.5662V160.017H64.9779V160.486H64.1376V161.037H64.9166V161.507H64.1376V162.445Z"
         fill="#222222" />
-      <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+      <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
         font-size="8" font-weight="bold" letter-spacing="0em">
         <tspan x="114" y="149.208">Farajaland Countryside Tennis Club</tspan>
       </text>
-      <text fill="#C86E00" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+      <text fill="#C86E00" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
         font-size="10" font-weight="bold" letter-spacing="0em">
         <tspan x="114" y="165.76">Farajaland Tennis Club Membership Certified Certificate</tspan>
       </text>
@@ -420,15 +420,15 @@
       <path d="M53 513.5H537V552.5H53V513.5Z" fill="white" />
     </mask>
     <g mask="url(#mask4_5_2)">
-      <text fill="#8D8D8D" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+      <text fill="#8D8D8D" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
         font-size="6" font-weight="bold" letter-spacing="0em">
         <tspan x="53" y="527.656">CAUTION : THERE ARE OFFENCES RELATING TO FALSIFYING OR ALTERING A CERTIFICATE AND USING OR POSSESSING A FALSE CERTIFICATE. A </tspan>
       </text>
-      <text fill="#8D8D8D" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+      <text fill="#8D8D8D" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
         font-size="6" font-weight="bold" letter-spacing="0em">
         <tspan x="53" y="537.656">CERTIFICATE IS NOT PROOF OF IDENTITY / ATTENTION : IL EXISTE DES INFRACTIONS RELATIVES &#xc0; LA FALSIFIATION OU &#xc0; LA MODIFICATION </tspan>
       </text>
-      <text fill="#8D8D8D" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+      <text fill="#8D8D8D" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
         font-size="6" font-weight="bold" letter-spacing="0em">
         <tspan x="53" y="547.656">D&#39;UN CERTIFICAT ET &#xc0; L&#39;UTILISATION OU LA POSSESSION D&#39;UN FAUX CERTIFICAT. UN CERTIFICAT N&#39;EST PAS UNE PREUVE D&#39;IDENTIT&#xc9;</tspan>
       </text>

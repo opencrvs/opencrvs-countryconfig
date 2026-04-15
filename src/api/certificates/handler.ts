@@ -55,8 +55,8 @@ const notoSansFont: Record<string, FontFamilyTypes> = {
   'Noto Sans': {
     normal: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
     bold: '/api/countryconfig/fonts/NotoSans-Bold.ttf',
-    italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
-    bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
+    italics: '/api/countryconfig/fonts/NotoSans-Italic.ttf',
+    bolditalics: '/api/countryconfig/fonts/NotoSans-BoldItalic.ttf'
   }
 }
 
@@ -65,7 +65,7 @@ const libreBaskervilleFont: Record<string, FontFamilyTypes> = {
     normal: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf',
     bold: '/api/countryconfig/fonts/LibreBaskerville-Bold.ttf',
     italics: '/api/countryconfig/fonts/LibreBaskerville-Italic.ttf',
-    bolditalics: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf'
+    bolditalics: '/api/countryconfig/fonts/LibreBaskerville-BoldItalic.ttf'
   }
 }
 

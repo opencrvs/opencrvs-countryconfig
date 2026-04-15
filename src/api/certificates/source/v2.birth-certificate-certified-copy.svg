@@ -1,43 +1,43 @@
 <svg width="595" height="842" viewBox="0 0 595 842" fill="none" xmlns="http://www.w3.org/2000/svg"
   xmlns:xlink="http://www.w3.org/1999/xlink">
   <rect width="595" height="842" fill="white" />
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" letter-spacing="0px">
     <tspan x="220.625" y="678.552">&#x2028;</tspan>
     <tspan x="61" y="691.352">{{ $lookup $metadata "modifiedAt"}}</tspan>
     <tspan x="61" y="701.352">{{$intlWithParams 'certificates.birth.printedCertificateCount'
       'copiesPrintedForTemplate' ($lookup $metadata "copiesPrintedForTemplate")}}</tspan>
   </text>
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" font-weight="600" letter-spacing="0px">
     <tspan x="61" y="678.552">Date of certification / Date de certification</tspan>
   </text>
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" letter-spacing="0px">
     <tspan x="220.727" y="712.552">&#x2028;</tspan>
     <tspan x="61" y="725.352">{{$lookup $metadata 'updatedAtLocation.name'}}, {{$lookup $metadata 'updatedAtLocation.district'}}, {{$lookup $metadata 'updatedAtLocation.province'}}, {{$lookup $metadata 'updatedAtLocation.country'}}</tspan>
   </text>
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" font-weight="600" letter-spacing="0px">
     <tspan x="61" y="712.552">Place of certification / Lieu de certification</tspan>
   </text>
   <!--<text
-  fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8"
+  fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="8"
   letter-spacing="0.5px">
     <tspan x="61" y="759.104">{{mosipAid}}</tspan>
   </text>
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
   font-size="8" font-weight="600" letter-spacing="0px">
     <tspan x="61" y="747.104">MOSIP Application ID / MOSIP Application ID&#10;</tspan>
   </text>-->
   <path d="M324.42 741L532.999 741.984" stroke="#CCCCCC" stroke-width="0.782258"
     stroke-dasharray="3.13 1.56" />
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" letter-spacing="0px">
     <tspan x="387.936" y="754.656">Certified by: {{ $lookup $metadata "assignedTo.name"}}</tspan>
   </text>
   <g clip-path="url(#clip0_946_2501)">
-    <text fill="#8D8D8D" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="#8D8D8D" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="6" font-weight="600" letter-spacing="0px">
       <tspan x="56" y="793.828">CAUTION : THERE ARE OFFENCES RELATING TO FALSIFYING OR ALTERING A CERTIFICATE AND USING OR POSSESSING A FALSE CERTIFICATE. A</tspan>
       <tspan x="56" y="803.828">CERTIFICATE IS NOT PROOF OF IDENTITY / ATTENTION : IL EXISTE DES INFRACTIONS RELATIVES &#xc0; LA FALSIFIATION OU &#xc0; LA MODIFICATION</tspan>
@@ -45,7 +45,7 @@
     </text>
   </g>
   <path d="M56 780.5H541V779.5H56V780.5Z" fill="#ECECEC" />
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" letter-spacing="0px">
     <tspan x="61" y="628.604">I certify that this certificate is a true copy of the civil registry and is issued by the mandated authority in pursuance</tspan>
     <tspan x="61" y="641.604">of civil registration and vital statistics law / J&#x2019;attestation est une copie conforme de l&#39;&#xe9;tat civil et est d&#xe9;livr&#xe9; par</tspan>
@@ -53,7 +53,7 @@
   </text>
   <path d="M56 610H541" stroke="#038E86" stroke-width="2" stroke-linecap="round" />
   <path d="M56 85H540" stroke="#038E86" stroke-width="2" stroke-linecap="round" />
-  <text fill="#038E86" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="#038E86" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="10" font-weight="bold" letter-spacing="4px">
     <tspan x="221.483" y="99.88">No. {{$lookup $metadata 'legalStatuses.REGISTERED.registrationNumber'}}</tspan>
   </text>
@@ -96,79 +96,79 @@
     <path
       d="M100.922 43.5396L100.927 65.3108C100.927 65.5074 100.819 65.6807 100.66 65.7743L81.7705 76.6774C81.5995 76.7781 81.3934 76.7711 81.2318 76.6774L62.3446 65.7767C62.1642 65.6713 62.0682 65.4793 62.0776 65.285L62.0729 43.5139C62.0729 43.3172 62.1806 43.144 62.3399 43.0503L81.2294 32.1472C81.4028 32.0465 81.6065 32.0536 81.7682 32.1472L100.655 43.048C100.836 43.1533 100.932 43.3453 100.922 43.5396ZM81.4988 37.3728C82.3116 37.3728 83.0495 37.703 83.5812 38.2344C84.113 38.7659 84.4432 39.5034 84.4432 40.3158C84.4432 41.1282 84.113 41.8633 83.5812 42.3971C83.0495 42.9286 82.3116 43.2587 81.4988 43.2587C80.686 43.2587 79.9504 42.9286 79.4164 42.3971C78.8846 41.8657 78.5543 41.1282 78.5543 40.3158C78.5543 39.5034 78.8846 38.7682 79.4164 38.2344L79.4492 38.204C79.9785 37.6913 80.7024 37.3728 81.4988 37.3728ZM82.8199 38.9977C82.4826 38.6605 82.0141 38.4498 81.4988 38.4498C80.9928 38.4498 80.536 38.6488 80.2011 38.9719L80.1777 38.9977C79.8403 39.3348 79.6295 39.803 79.6295 40.3181C79.6295 40.8332 79.8403 41.3014 80.1777 41.6386C80.515 41.9757 80.9835 42.1864 81.4988 42.1864C82.0141 42.1864 82.4826 41.9757 82.8199 41.6386C83.1572 41.3014 83.3681 40.8332 83.3681 40.3181C83.3681 39.803 83.1572 39.3348 82.8199 38.9977ZM63.1504 64.777H99.8519V59.7667H63.1504V64.777ZM98.3808 65.8516H64.6238L69.0534 68.4082H93.9536L98.3808 65.8516ZM87.6383 52.5206L91.2035 58.6921H98.3316L87.6383 52.5206ZM89.962 58.6921L85.9752 51.7878L74.0123 58.6921H89.962ZM73.5181 48.873L77.3597 55.5221L81.199 53.3073L73.5181 48.873ZM76.4297 56.0582L71.8573 48.1402L63.1481 53.1645L63.1504 58.6921H71.8667L76.4297 56.0582ZM63.1481 51.9259L71.7823 46.9438C71.944 46.8502 72.1477 46.8431 72.3211 46.9438L76.7671 49.5098L90.2267 41.7416C90.3884 41.6479 90.5922 41.6409 90.7655 41.7416L99.8495 46.9836V43.8229L81.4988 33.2312L63.1457 43.8229L63.1481 51.9259ZM99.8495 48.2221L91.9695 43.6731L99.8519 57.3178L99.8495 48.2221ZM90.304 42.9356L77.8399 50.1279L82.2718 52.6845L85.9026 50.5891C86.0642 50.4954 86.268 50.4884 86.4414 50.5891L98.8704 57.7626L90.304 42.9356ZM75.3475 72.0418H87.6547L92.089 69.4828H70.9156L75.3475 72.0418ZM85.7925 73.1164H77.2121L81.5011 75.5911L85.7925 73.1164Z"
       fill="#222222" />
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="3.38904" font-weight="800" letter-spacing="0.2em">
       <tspan x="67.334" y="63.5386">FARAJALAND</tspan>
     </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="8" font-weight="bold" letter-spacing="0.2px">
       <tspan x="115" y="49.5161">REPUBLIC OF FARAJALAND / REPUBLIC OF FARAJALAND</tspan>
     </text>
-    <text fill="#038E86" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="#038E86" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="10" font-weight="600" letter-spacing="0px">
       <tspan x="115" y="65.7921">CERTIFIED COPY OF BIRTH RECORD / COPIE CERTIFI&#xc9;E DE L&#39;ACTE DE NAISSANCE</tspan>
     </text>
   </g>
-  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="10" font-weight="bold" letter-spacing="0px">
     <tspan x="65" y="129.88">Child&#x2019;s details / D&#xe9;tails de l&#39;enfant</tspan>
   </text>
   <line x1="65" y1="134.5" x2="533" y2="134.5" stroke="#ECECEC" />
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" font-weight="bold" letter-spacing="0px">
     <tspan x="65" y="148.104">1.</tspan>
   </text>
-  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" font-weight="600" letter-spacing="0px">
     <tspan x="85" y="147.604">Full name / Nom et pr&#xe9;nom</tspan>
   </text>
   <g clip-path="url(#clip2_946_2501)">
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="8" letter-spacing="0px">
       <tspan x="307" y="148.104">{{$lookup $declaration "child.name.fullname"}}</tspan>
     </text>
   </g>
   <line x1="65" y1="154.5" x2="533" y2="154.5" stroke="#ECECEC" />
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" font-weight="bold" letter-spacing="0px">
     <tspan x="65" y="168.104">2.</tspan>
   </text>
-  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" font-weight="600" letter-spacing="0px">
     <tspan x="85" y="167.604">Sex / Sexe</tspan>
   </text>
   <g clip-path="url(#clip3_946_2501)">
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="8" letter-spacing="0px">
       <tspan x="307" y="168.104">{{ $lookup $declaration "child.gender" }}</tspan>
     </text>
   </g>
   <line x1="65" y1="174.5" x2="533" y2="174.5" stroke="#ECECEC" />
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" font-weight="bold" letter-spacing="0px">
     <tspan x="65" y="188.104">3.</tspan>
   </text>
-  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" font-weight="600" letter-spacing="0px">
     <tspan x="85" y="187.604">Date of birth / Date de naissance</tspan>
   </text>
   <g clip-path="url(#clip4_946_2501)">
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="8" letter-spacing="0px">
       <tspan x="307" y="188.104">{{$lookup $declaration "child.dob"}}</tspan>
     </text>
   </g>
   <line x1="65" y1="194.5" x2="533" y2="194.5" stroke="#ECECEC" />
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" font-weight="bold" letter-spacing="0px">
     <tspan x="65" y="208.104">4.</tspan>
   </text>
-  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" font-weight="600" letter-spacing="0px">
     <tspan x="85" y="207.604">Place of birth / Lieu de naissance</tspan>
   </text>
   <g clip-path="url(#clip5_946_2501)">
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="8" letter-spacing="0px">
       {{#ifCond ($lookup $declaration "child.birthLocation") '!==' undefined }}
         <tspan x="307" y="208.104">{{$lookup $declaration 'child.birthLocation.name'}}&#10;</tspan>
@@ -187,35 +187,35 @@
 </text>
   </g>
   <line x1="65" y1="232.5" x2="533" y2="232.5" stroke="#222222" />
-  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="10" font-weight="bold" letter-spacing="0px">
     <tspan x="65" y="247.88">Mother&#x2019;s details / D&#xe9;tails de la m&#xe8;re</tspan>
   </text>
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" font-weight="bold" letter-spacing="0px">
     <tspan x="65" y="266.104">5.</tspan>
   </text>
-  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" font-weight="600" letter-spacing="0px">
     <tspan x="85" y="265.604">Full name / Nom complet</tspan>
   </text>
   <g clip-path="url(#clip6_946_2501)">
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="8" letter-spacing="0px">
       <tspan x="307" y="266.104">{{$lookup $declaration 'mother.name.fullname'}}</tspan>
     </text>
   </g>
   <line x1="65" y1="272.5" x2="533" y2="272.5" stroke="#ECECEC" />
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" font-weight="bold" letter-spacing="0px">
     <tspan x="65" y="286.104">6.</tspan>
   </text>
-  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" font-weight="600" letter-spacing="0px">
     <tspan x="85" y="285.604">Date of birth / Date de naissance</tspan>
   </text>
   <g clip-path="url(#clip7_946_2501)">
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="8" letter-spacing="0px">
       {{#ifCond (lookup $declaration 'mother.dob') '!==' undefined }}
       <tspan x="307" y="286.104">{{$lookup $declaration 'mother.dob'}}</tspan>
@@ -225,16 +225,16 @@
     </text>
   </g>
   <line x1="65" y1="292.5" x2="533" y2="292.5" stroke="#ECECEC" />
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" font-weight="bold" letter-spacing="0px">
     <tspan x="65" y="306.104">7.</tspan>
   </text>
-  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" font-weight="600" letter-spacing="0px">
     <tspan x="85" y="305.604">Resident at / Domicili&#xe9; &#xe0;</tspan>
   </text>
   <g clip-path="url(#clip8_946_2501)">
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="8" letter-spacing="0px">
       {{#ifCond ($lookup $declaration 'mother.name.fullname') '!==' undefined }}
       <tspan x="307" y="306.104">{{ $lookup $declaration 'mother.address.district' }}{{ $lookup $declaration 'mother.address.streetLevelDetails.district2' }}, {{ $lookup $declaration 'mother.address.province' }}{{ $lookup $declaration 'mother.address.streetLevelDetails.state' }}, {{ $lookup $declaration 'mother.address.country' }}</tspan>
@@ -242,65 +242,65 @@
     </text>
   </g>
   <line x1="65" y1="312.5" x2="533" y2="312.5" stroke="#ECECEC" />
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" font-weight="bold" letter-spacing="0px">
     <tspan x="65" y="326.104">8.</tspan>
   </text>
-  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" font-weight="600" letter-spacing="0px">
     <tspan x="85" y="325.604">Nationality / Nationalit&#xe9;</tspan>
   </text>
   <g clip-path="url(#clip9_946_2501)">
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="8" letter-spacing="0px">
       <tspan x="307" y="326.104">{{$lookup $declaration 'mother.nationality'}}</tspan>
     </text>
   </g>
   <line x1="65" y1="332.5" x2="533" y2="332.5" stroke="#ECECEC" />
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" font-weight="bold" letter-spacing="0px">
     <tspan x="65" y="346.104">9.</tspan>
   </text>
-  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" font-weight="600" letter-spacing="0px">
     <tspan x="85" y="345.604">Occupation / Profession</tspan>
   </text>
   <g clip-path="url(#clip10_946_2501)">
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="8" letter-spacing="0px">
       <tspan x="307" y="346.104">{{$lookup $declaration 'mother.occupation'}}</tspan>
     </text>
   </g>
   <line x1="65" y1="358.5" x2="533" y2="358.5" stroke="#222222" />
-  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="10" font-weight="bold" letter-spacing="0px">
     <tspan x="65" y="373.88">Father&#x2019;s details / D&#xe9;tails du p&#xe8;re</tspan>
   </text>
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" font-weight="bold" letter-spacing="0px">
     <tspan x="65" y="392.104">10.</tspan>
   </text>
-  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" font-weight="600" letter-spacing="0px">
     <tspan x="85" y="391.604">Full name / Nom complet</tspan>
   </text>
   <g clip-path="url(#clip11_946_2501)">
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="8" letter-spacing="0px">
       <tspan x="307" y="392.104">{{$lookup $declaration 'father.name.fullname'}}</tspan>
     </text>
   </g>
   <line x1="65" y1="398.5" x2="533" y2="398.5" stroke="#ECECEC" />
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" font-weight="bold" letter-spacing="0px">
     <tspan x="65" y="412.104">11.</tspan>
   </text>
-  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" font-weight="600" letter-spacing="0px">
     <tspan x="85" y="411.604">Date of birth / Date de naissance</tspan>
   </text>
   <g clip-path="url(#clip12_946_2501)">
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="8" letter-spacing="0px">
       {{#ifCond (lookup $declaration 'father.dob') '!==' undefined }}
       <tspan x="307" y="412.104">{{$lookup $declaration 'father.dob'}}</tspan>
@@ -310,16 +310,16 @@
     </text>
   </g>
   <line x1="65" y1="418.5" x2="533" y2="418.5" stroke="#ECECEC" />
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" font-weight="bold" letter-spacing="0px">
     <tspan x="65" y="432.104">12.</tspan>
   </text>
-  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" font-weight="600" letter-spacing="0px">
     <tspan x="85" y="431.604">Resident at / Domicili&#xe9; &#xe0;</tspan>
   </text>
   <g clip-path="url(#clip13_946_2501)">
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="8" letter-spacing="0px">
       {{#ifCond ($lookup $declaration 'father.name.fullname') '!==' undefined }}
         {{#ifCond (lookup $declaration 'father.addressSameAs') '===' 'YES'}}
@@ -331,50 +331,50 @@
     </text>
   </g>
   <line x1="65" y1="438.5" x2="533" y2="438.5" stroke="#ECECEC" />
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" font-weight="bold" letter-spacing="0px">
     <tspan x="65" y="452.104">13.</tspan>
   </text>
-  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" font-weight="600" letter-spacing="0px">
     <tspan x="85" y="451.604">Nationality / Nationalit&#xe9;</tspan>
   </text>
   <g clip-path="url(#clip14_946_2501)">
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="8" letter-spacing="0px">
       <tspan x="307" y="452.104">{{$lookup $declaration 'father.nationality'}}</tspan>
     </text>
   </g>
   <line x1="65" y1="458.5" x2="533" y2="458.5" stroke="#ECECEC" />
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" font-weight="bold" letter-spacing="0px">
     <tspan x="65" y="472.104">14.</tspan>
   </text>
-  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" font-weight="600" letter-spacing="0px">
     <tspan x="85" y="471.604">Occupation / Profession</tspan>
   </text>
   <g clip-path="url(#clip15_946_2501)">
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="8" letter-spacing="0px">
       <tspan x="307" y="472.104">{{$lookup $declaration 'father.occupation'}}</tspan>
     </text>
   </g>
   <line x1="65" y1="484.5" x2="533" y2="484.5" stroke="#222222" />
-  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="10" font-weight="bold" letter-spacing="0px">
     <tspan x="65" y="499.88">Registration details / D&#xe9;tails d&#39;inscription</tspan>
   </text>
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" font-weight="bold" letter-spacing="0px">
     <tspan x="65" y="518.104">15.</tspan>
   </text>
-  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" font-weight="600" letter-spacing="0px">
     <tspan x="85" y="517.604">Informant full name / Informant full name</tspan>
   </text>
   <g clip-path="url(#clip16_946_2501)">
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="8" letter-spacing="0px">
       <!-- NOTE: Since we are using intl-lookup, we need to use informant.relation as actual value
       rather than as stringified one. Hence we opt for native lookup over $lookup  -->
@@ -391,47 +391,47 @@
     </text>
   </g>
   <line x1="65" y1="536.5" x2="533" y2="536.5" stroke="#ECECEC" />
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" font-weight="bold" letter-spacing="0px">
     <tspan x="65" y="550.104">16.</tspan>
   </text>
-  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" font-weight="600" letter-spacing="0px">
     <tspan x="85" y="549.604">Place of registration / Inscrit &#xe0;</tspan>
   </text>
   <g clip-path="url(#clip17_946_2501)">
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="8" letter-spacing="0px">
       <tspan x="307" y="550.104">{{$lookup $metadata "legalStatuses.REGISTERED.createdAtLocation.district"}}, {{$lookup $metadata "legalStatuses.REGISTERED.createdAtLocation.province"}}, {{$lookup $metadata "legalStatuses.REGISTERED.createdAtLocation.country"}}</tspan>
     </text>
   </g>
   <line x1="65" y1="556.5" x2="533" y2="556.5" stroke="#ECECEC" />
   <line x1="65" y1="556.5" x2="533" y2="556.5" stroke="#ECECEC" />
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" font-weight="bold" letter-spacing="0px">
     <tspan x="65" y="570.104">17.</tspan>
   </text>
-  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" font-weight="600" letter-spacing="0px">
     <tspan x="85" y="569.604">Date of registration / Date d&#39;enregistrement</tspan>
   </text>
   <g clip-path="url(#clip18_946_2501)">
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="8" letter-spacing="0px">
       <tspan x="307" y="570.104">{{$lookup $metadata 'createdAt'}}</tspan>
     </text>
   </g>
   <line x1="65" y1="576.5" x2="533" y2="576.5" stroke="#ECECEC" />
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" font-weight="bold" letter-spacing="0px">
     <tspan x="65" y="590.104">18.</tspan>
   </text>
-  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="8" font-weight="600" letter-spacing="0px">
     <tspan x="85" y="589.604">Registered by / Enregistr&#xe9; par</tspan>
   </text>
   <g clip-path="url(#clip19_946_2501)">
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
       font-size="8" letter-spacing="0px">
       <tspan x="307" y="590.104">{{$lookup $metadata 'legalStatuses.REGISTERED.createdBy.name'}}</tspan>
     </text>
