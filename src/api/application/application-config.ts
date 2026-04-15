@@ -1,5 +1,6 @@
 import { countryLogo } from '@countryconfig/api/application/country-logo'
 import { defineApplicationConfig } from '@opencrvs/toolkit/application-config'
+import { FieldType } from '@opencrvs/toolkit/events'
 
 export const applicationConfig = defineApplicationConfig({
   APPLICATION_NAME: 'Farajaland CRS',
@@ -38,6 +39,28 @@ export const applicationConfig = defineApplicationConfig({
   PHONE_NUMBER_PATTERN: '^0(7|9)[0-9]{8}$',
   USER_NOTIFICATION_DELIVERY_METHOD: 'email', // or 'sms', or '' ... You can use 'sms' for WhatsApp
   INFORMANT_NOTIFICATION_DELIVERY_METHOD: 'email', // or 'sms', or '' ... You can use 'sms' for WhatsApp
+  ADDITIONAL_USER_FIELDS: [
+    {
+      id: 'user.staffId',
+      type: FieldType.TEXT,
+      required: true,
+      label: {
+        id: 'user.field.staffId.label',
+        defaultMessage: 'Staff ID',
+        description: 'Label for the staff ID field on user profile'
+      }
+    },
+    {
+      id: 'user.age',
+      type: FieldType.NUMBER,
+      required: false,
+      label: {
+        id: 'user.field.age.label',
+        defaultMessage: 'Age',
+        description: 'Label for the age field on user profile'
+      }
+    }
+  ],
   SEARCH_DEFAULT_CRITERIA: 'TRACKING_ID'
   /*
    * SEARCH_DEFAULT_CRITERIA's value can be one of the following
