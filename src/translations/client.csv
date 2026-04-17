@@ -17,7 +17,6 @@ actionModal.confirm,The label for confirm button of action modal,Confirm,Confirm
 actionModal.description,The description for action modal,The informant will be notified of this decision and a record of this decision will be recorded.,L'informateur sera informé de cette décision et celle-ci sera consignée dans un dossier.
 actions.edit,Edit action label,Edit,Modifier
 actions.notify,Notify action label,Notify,Notifier
-form.section.additionalDetails,Additional details section for user form,Additional details,Détails supplémentaires
 actions.read,Action label for reading a record from the workqueue,Review,Reviser
 advancedSearch.accordion.hide,Label for hide button when accordion is closed,Hide,Cacher
 advancedSearch.accordion.show,Label for show button when accordion is closed,Show,Voir
@@ -1421,6 +1420,7 @@ form.preview.group.label.witness.one.english.name,,Witness One English name,Tém
 form.preview.group.label.witness.two.english.name,,Witness Two English name,Témoin deux nom anglais
 form.review.label.mainContact,,Main contact,Contact principal
 form.section.accountDetails,,Account details,Coordonnées du compte
+form.section.additionalDetails,Additional details section for user form,Additional details,Détails supplémentaires
 form.section.assignedRegistrationOffice,,Assign to a registration office,A quel bureau voulez-vous affecter un nouvel utilisateur ?
 form.section.assignedRegistrationOfficeGroupTitle,,Assigned registration office,Bureau d'enregistrement assigné
 form.section.bride.headOfBrideFamily,,Head of bride's family,Chef de la famille de la mariée
