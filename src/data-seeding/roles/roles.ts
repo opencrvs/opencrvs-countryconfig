@@ -33,7 +33,11 @@ export const roles: Role[] = [
       { type: 'record.request-correction', options: { registeredIn: 'administrativeArea' } },
       { type: 'record.custom-action', options: { event: ['birth'], customActionTypes: ['VALIDATE_DECLARATION', 'ESCALATE'] } },
       { type: 'record.custom-action', options: { event: ['birth'], customActionTypes: ['ISSUE_CERTIFIED_COPY', 'ISSUE_VERIFIABLE_CREDENTIAL'] } },
-      { type: 'record.custom-action', options: { event: ['death'], customActionTypes: ['VALIDATE_DECLARATION'] } }
+      { type: 'record.custom-action', options: { event: ['death'], customActionTypes: ['VALIDATE_DECLARATION'] } },
+      {
+        type: 'dashboard.view',
+        options: { ids: ['registrations', 'completeness', 'registry'] }
+      }
     ])
   },
   {
@@ -66,7 +70,11 @@ export const roles: Role[] = [
       { type: 'record.correct', options: { registeredIn: 'administrativeArea' } },
       { type: 'record.custom-action', options: { event: ['birth'], customActionTypes: ['ESCALATE'], placeOfEvent: 'administrativeArea' } },
       { type: 'record.custom-action', options: { event: ['birth'], customActionTypes: ['ISSUE_CERTIFIED_COPY', 'ISSUE_VERIFIABLE_CREDENTIAL'], registeredIn: 'administrativeArea' } },
-      { type: 'record.unassign-others' }
+      { type: 'record.unassign-others' },
+      {
+        type: 'dashboard.view',
+        options: { ids: ['registrations', 'completeness', 'registry'] }
+      }
     ])
   },
   {
@@ -104,7 +112,11 @@ export const roles: Role[] = [
         { type: 'performance.read' },
         { type: 'record.reindex' },
         { type: 'integration.create' },
-        { type: 'performance.read-dashboards' }
+        { type: 'performance.read-dashboards' },
+        {
+          type: 'dashboard.view',
+          options: { ids: ['registrations', 'completeness', 'registry'] }
+        }
       ]),
       'user.create[role=HOSPITAL_CLERK|COMMUNITY_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR|NATIONAL_REGISTRAR|LOCAL_SYSTEM_ADMIN|NATIONAL_SYSTEM_ADMIN|PERFORMANCE_MANAGER|PROVINCIAL_REGISTRAR|EMBASSY_OFFICIAL]',
       'user.edit[role=HOSPITAL_CLERK|COMMUNITY_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR|NATIONAL_REGISTRAR|LOCAL_SYSTEM_ADMIN|NATIONAL_SYSTEM_ADMIN|PERFORMANCE_MANAGER|PROVINCIAL_REGISTRAR|EMBASSY_OFFICIAL]'
@@ -117,7 +129,15 @@ export const roles: Role[] = [
       description: 'Name for user role Operations Manager',
       id: 'userRole.operationsManager'
     },
-    scopes: defineScopes([{ type: 'performance.read' }, { type: 'organisation.read-locations' }, { type: 'performance.read-dashboards' }])
+    scopes: defineScopes([
+      { type: 'performance.read' },
+      { type: 'organisation.read-locations' },
+      { type: 'performance.read-dashboards' },
+      {
+        type: 'dashboard.view',
+        options: { ids: ['registrations', 'completeness', 'registry'] }
+      }
+    ])
   },
   {
     id: 'NATIONAL_REGISTRAR',
@@ -165,7 +185,11 @@ export const roles: Role[] = [
       { type: 'record.custom-action', options: { event: ['birth', 'death'], customActionTypes: ['APPROVE_DECLARATION'], declaredIn: 'administrativeArea' } },
       { type: 'record.print-certified-copies', options: { registeredIn: 'administrativeArea' } },
       { type: 'record.correct', options: { registeredIn: 'administrativeArea' } },
-      { type: 'record.unassign-others', options: { placeOfEvent: 'administrativeArea' } }
+      { type: 'record.unassign-others', options: { placeOfEvent: 'administrativeArea' } },
+      {
+        type: 'dashboard.view',
+        options: { ids: ['registrations', 'completeness', 'registry'] }
+      }
     ])
   },
   {

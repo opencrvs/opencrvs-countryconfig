@@ -240,7 +240,6 @@ services:
       - PERFORMANCE_MONGODB_PASSWORD=${PERFORMANCE_MONGODB_PASSWORD}
       - METRICS_MONGODB_PASSWORD=${METRICS_MONGODB_PASSWORD}
       - OPENHIM_MONGODB_PASSWORD=${OPENHIM_MONGODB_PASSWORD}
-      - WEBHOOKS_MONGODB_PASSWORD=${WEBHOOKS_MONGODB_PASSWORD}
       - NOTIFICATION_MONGODB_PASSWORD=${NOTIFICATION_MONGODB_PASSWORD}
       - EVENTS_MONGODB_PASSWORD=${EVENTS_MONGODB_PASSWORD}
     networks:
@@ -938,41 +937,6 @@ services:
       - KEEP_ALIVE_SECONDS=10
     networks:
       - overlay_net
-
-  webhooks:
-    secrets:
-      - jwt-public-key.{{ts}}
-    environment:
-      - NODE_ENV=production
-      - SENTRY_DSN=${SENTRY_DSN:-}
-      - APN_SERVICE_URL=http://apm-server:8200
-      - MONGO_URL=mongodb://webhooks:${WEBHOOKS_MONGODB_PASSWORD}@mongo1/webhooks?replicaSet=rs0
-      - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
-      - REDIS_USERNAME=${WEBHOOKS_REDIS_USERNAME}
-      - REDIS_PASSWORD=${WEBHOOKS_REDIS_PASSWORD}
-    deploy:
-      labels:
-        - 'traefik.enable=true'
-        - 'traefik.http.routers.webhooks.rule=Host(`webhooks.{{hostname}}`)'
-        - 'traefik.http.services.webhooks.loadbalancer.server.port=2525'
-        - 'traefik.http.routers.webhooks.tls=true'
-        - 'traefik.http.routers.webhooks.tls.certresolver=certResolver'
-        - 'traefik.http.routers.webhooks.entrypoints=web,websecure'
-        - 'traefik.docker.network=opencrvs_overlay_net'
-        - 'traefik.http.middlewares.webhooks.headers.customresponseheaders.Pragma=no-cache'
-        - 'traefik.http.middlewares.webhooks.headers.customresponseheaders.Cache-control=no-store'
-        - 'traefik.http.middlewares.webhooks.headers.customresponseheaders.X-Robots-Tag=none'
-        - 'traefik.http.middlewares.webhooks.headers.stsseconds=31536000'
-        - 'traefik.http.middlewares.webhooks.headers.stsincludesubdomains=true'
-        - 'traefik.http.middlewares.webhooks.headers.stspreload=true'
-      replicas: 1
-    networks:
-      - overlay_net
-    logging:
-      driver: gelf
-      options:
-        gelf-address: 'udp://127.0.0.1:12201'
-        tag: 'webhooks'
 
   dashboards:
     image: metabase/metabase:v0.56.4

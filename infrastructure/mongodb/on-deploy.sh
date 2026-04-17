@@ -210,28 +210,6 @@ else
 EOF
 fi
 
-WEBHOOKS_USER=$(echo $(checkIfUserExists "webhooks"))
-if [[ $WEBHOOKS_USER != "FOUND" ]]; then
-  echo "webhooks user not found"
-  mongo $(mongo_credentials) --host $HOST <<EOF
-  use webhooks
-  db.createUser({
-    user: 'webhooks',
-    pwd: '$WEBHOOKS_MONGODB_PASSWORD',
-    roles: [{ role: 'readWrite', db: 'webhooks' }]
-  })
-EOF
-else
-  echo "webhooks user exists"
-  mongo $(mongo_credentials) --host $HOST <<EOF
-  use webhooks
-  db.updateUser('webhooks', {
-    pwd: '$WEBHOOKS_MONGODB_PASSWORD',
-    roles: [{ role: 'readWrite', db: 'webhooks' }]
-  })
-EOF
-fi
-
 NOTIFICATION_USER=$(echo $(checkIfUserExists "notification"))
 if [[ $NOTIFICATION_USER != "FOUND" ]]; then
   echo "notification user not found"
