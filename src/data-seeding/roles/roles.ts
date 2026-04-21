@@ -220,12 +220,12 @@ export const roles: Role[] = [
     },
     scopes: defineScopes([
       { type: 'user.read-only-my-audit' },
-      { type: 'record.search', options: { placeOfEvent: 'location' } },
+      { type: 'record.search', options: { placeOfEvent: 'administrativeArea' } },
       { type: 'workqueue', options: { ids: ['assigned-to-you', 'recent'] } },
-      { type: 'record.create', options: { placeOfEvent: 'location' } },
-      { type: 'record.read', options: { placeOfEvent: 'location' } },
-      { type: 'record.edit', options: { placeOfEvent: 'location' } },
-      { type: 'record.notify', options: { placeOfEvent: 'location' } }
+      { type: 'record.create', options: { placeOfEvent: 'administrativeArea' } },
+      { type: 'record.read', options: { placeOfEvent: 'administrativeArea' } },
+      { type: 'record.edit', options: { placeOfEvent: 'administrativeArea' } },
+      { type: 'record.notify', options: { placeOfEvent: 'administrativeArea' } }
     ])
   },
   {
@@ -244,9 +244,9 @@ export const roles: Role[] = [
       { type: 'record.declare', options: { placeOfEvent: 'location' } },
       { type: 'record.edit', options: { placeOfEvent: 'location' } },
       { type: 'record.custom-action', options: { event: ['birth'], customActionTypes: ['ESCALATE'], placeOfEvent: 'location' } },
-      { type: 'record.custom-action', options: { event: ['birth'], customActionTypes: ['ISSUE_CERTIFIED_COPY'], registeredIn: 'location' } },
-      { type: 'record.print-certified-copies', options: { registeredIn: 'location' } },
-      { type: 'record.correct', options: { registeredIn: 'location' } }
+      { type: 'record.custom-action', options: { event: ['birth'], customActionTypes: ['ISSUE_CERTIFIED_COPY'], placeOfEvent: 'location' } },
+      { type: 'record.print-certified-copies', options: { placeOfEvent: 'location' } },
+      { type: 'record.correct', options: { placeOfEvent: 'location' } }
     ])
   }
 ]

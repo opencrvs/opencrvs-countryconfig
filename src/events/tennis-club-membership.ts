@@ -25,11 +25,133 @@ import {
   not,
   defineConditional,
   never,
-  now
+  now,
+  FieldConfig
 } from '@opencrvs/toolkit/events'
 
 import { MAX_NAME_LENGTH } from './birth/validators'
 import { Event } from './utils/types'
+
+function applicantAddressFields() {
+  const isDomesticAddress = field('applicant.address')
+    .get('country')
+    .isEqualTo('FAR')
+  const isInternationalAddress = not(
+    or(
+      field('applicant.address').get('country').isEqualTo('FAR'),
+      field('applicant.address').get('country').isFalsy()
+    )
+  )
+  return [
+    {
+      id: 'applicant.address',
+      type: FieldType.FIELD_GROUP,
+      label: {
+        defaultMessage: "Applicant's address",
+        description: 'This is the label for the field',
+        id: 'event.tennis-club-membership.action.declare.form.section.who.field.address.label'
+      },
+      fields: [
+        {
+          id: 'country',
+          type: FieldType.COUNTRY,
+          defaultValue: 'FAR',
+          label: {
+            defaultMessage: 'Country',
+            description: 'This is the label for the field',
+            id: 'event.tennis-club-membership.action.declare.form.section.who.field.address.country.label'
+          }
+        },
+        {
+          id: 'domestic',
+          type: FieldType.FIELD_GROUP,
+          label: {
+            defaultMessage: '',
+            description: '',
+            id: 'form.field.label.empty'
+          },
+          conditionals: [{ type: 'SHOW', conditional: isDomesticAddress }],
+          fields: [
+            {
+              id: 'province',
+              type: FieldType.ADMINISTRATIVE_AREA,
+              label: {
+                defaultMessage: 'Province',
+                description: 'This is the label for the field',
+                id: 'event.tennis-club-membership.action.declare.form.section.who.field.address.province.label'
+              },
+              defaultValue: user('primaryOfficeId').locationLevel('province'),
+              configuration: {
+                type: 'ADMIN_STRUCTURE'
+              }
+            },
+            {
+              id: 'district',
+              type: FieldType.ADMINISTRATIVE_AREA,
+              label: {
+                defaultMessage: 'District',
+                description: 'This is the label for the field',
+                id: 'event.tennis-club-membership.action.declare.form.section.who.field.address.district.label'
+              },
+              defaultValue: user('primaryOfficeId').locationLevel('district'),
+              parent: field('applicant.address').getByPath([
+                'domestic',
+                'province'
+              ]),
+              configuration: {
+                type: 'ADMIN_STRUCTURE',
+                partOf: field('applicant.address').getByPath([
+                  'domestic',
+                  'province'
+                ])
+              },
+              conditionals: [
+                {
+                  type: ConditionalType.SHOW,
+                  conditional: not(
+                    field('applicant.address')
+                      .getByPath(['domestic', 'province'])
+                      .isFalsy()
+                  )
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: 'international',
+          type: FieldType.FIELD_GROUP,
+          label: {
+            defaultMessage: '',
+            description: '',
+            id: 'form.field.label.empty'
+          },
+          conditionals: [{ type: 'SHOW', conditional: isInternationalAddress }],
+          fields: [
+            {
+              id: 'province',
+              type: FieldType.TEXT,
+              label: {
+                defaultMessage: 'Province',
+                description: 'This is the label for the field',
+                id: 'event.tennis-club-membership.action.declare.form.section.who.field.address.province.label'
+              }
+            },
+            {
+              id: 'district',
+              type: FieldType.TEXT,
+              label: {
+                defaultMessage: 'District',
+                description: 'This is the label for the field',
+                id: 'event.tennis-club-membership.action.declare.form.section.who.field.address.district.label'
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ] satisfies FieldConfig[]
+}
 
 const TENNIS_CLUB_DECLARATION_REVIEW = {
   title: {
@@ -267,6 +389,7 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
             id: 'event.tennis-club-membership.action.declare.form.section.who.field.dob.label'
           }
         },
+        ...applicantAddressFields(),
         {
           id: 'applicant.tob',
           type: FieldType.TIME,

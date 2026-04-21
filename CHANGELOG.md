@@ -36,6 +36,12 @@ The default values for these variables have been added to the `docker-compose.de
 
 - Docker swarm to Kubernetes migration script [#10858](https://github.com/opencrvs/opencrvs-core/issues/10858), [#10787](https://github.com/opencrvs/opencrvs-core/issues/10787)
 
+## 1.9.12
+
+### Improvements
+
+- Create index for analytics.event_actions.event_id field [#12182](https://github.com/opencrvs/opencrvs-core/issues/12182)
+
 ## 1.9.11
 
 ### Improvements
