@@ -8,9 +8,8 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
-import * as Hapi from '@hapi/hapi'
 import { eventConfigs } from '@countryconfig/events'
-import { sendInformantNotification } from '../notification/informantNotification'
+import * as Hapi from '@hapi/hapi'
 import { ActionConfirmationRequest } from '../registration'
 
 export function getEventsHandler(_: Hapi.Request, h: Hapi.ResponseToolkit) {
@@ -31,10 +30,5 @@ export async function onAnyActionHandler(
   request: ActionConfirmationRequest,
   h: Hapi.ResponseToolkit
 ) {
-  const token = request.auth.artifacts.token as string
-  const event = request.payload
-
-  await sendInformantNotification({ event, token })
-
   return h.response().code(200)
 }

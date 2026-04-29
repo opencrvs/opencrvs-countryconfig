@@ -11,72 +11,67 @@
 require('app-module-path').addPath(require('path').join(__dirname))
 require('dotenv').config()
 
-import path from 'path'
-import * as Hapi from '@hapi/hapi'
-import * as Pino from 'hapi-pino'
-import * as JWT from 'hapi-auth-jwt2'
-import * as inert from '@hapi/inert'
-import * as Sentry from 'hapi-sentry'
-import fetch from 'node-fetch'
-import {
-  CLIENT_APP_URL,
-  DOMAIN,
-  LOGIN_URL,
-  SENTRY_DSN,
-  COUNTRY_CONFIG_HOST,
-  COUNTRY_CONFIG_PORT,
-  AUTH_URL,
-  DEFAULT_TIMEOUT,
-  GATEWAY_URL,
-  THIRTY_MINUTES_IN_MILLISECONDS
-} from '@countryconfig/constants'
 import {
   contentHandler,
   countryLogoHandler
 } from '@countryconfig/api/content/handler'
-import decode from 'jwt-decode'
-import { logger } from '@countryconfig/logger'
-import clientConfig from './client-config'
-import clientConfigProd from './client-config.prod'
-import loginConfig from './login-config'
-import loginConfigProd from './login-config.prod'
-import { emailHandler, emailSchema } from './api/notification/handler'
-import { ErrorContext } from 'hapi-auth-jwt2'
 import { mapGeojsonHandler } from '@countryconfig/api/dashboards/handler'
-import { locationsHandler } from './data-seeding/locations/handler'
-import { certificateHandler } from './api/certificates/handler'
-import { rolesHandler } from './data-seeding/roles/handler'
-import { usersHandler } from './data-seeding/employees/handler'
-import { applicationConfigHandler } from './api/application/handler'
-import { handlebarsHandler } from './certificate/handlebars/handler'
-import { fontsHandler } from './api/fonts/handler'
 import {
   getEventsHandler,
-  onAnyActionHandler,
-  onCustomActionHandler
+  onAnyActionHandler
 } from '@countryconfig/api/events/handler'
+import {
+  AUTH_URL,
+  CLIENT_APP_URL,
+  COUNTRY_CONFIG_HOST,
+  COUNTRY_CONFIG_PORT,
+  DEFAULT_TIMEOUT,
+  DOMAIN,
+  GATEWAY_URL,
+  LOGIN_URL,
+  SENTRY_DSN,
+  THIRTY_MINUTES_IN_MILLISECONDS
+} from '@countryconfig/constants'
+import { logger } from '@countryconfig/logger'
+import * as Hapi from '@hapi/hapi'
+import * as inert from '@hapi/inert'
 import {
   ActionDocument,
   ActionStatus,
   ActionType,
   EventDocument
 } from '@opencrvs/toolkit/events'
+import * as JWT from 'hapi-auth-jwt2'
+import { ErrorContext } from 'hapi-auth-jwt2'
+import * as Pino from 'hapi-pino'
+import * as Sentry from 'hapi-sentry'
+import decode from 'jwt-decode'
+import fetch from 'node-fetch'
+import path from 'path'
+import { applicationConfigHandler } from './api/application/handler'
+import { certificateHandler } from './api/certificates/handler'
+import { fontsHandler } from './api/fonts/handler'
+import { emailHandler, emailSchema } from './api/notification/handler'
+import { handlebarsHandler } from './certificate/handlebars/handler'
+import clientConfig from './client-config'
+import clientConfigProd from './client-config.prod'
+import { usersHandler } from './data-seeding/employees/handler'
+import { locationsHandler } from './data-seeding/locations/handler'
+import { rolesHandler } from './data-seeding/roles/handler'
+import loginConfig from './login-config'
+import loginConfigProd from './login-config.prod'
 
-import { onRegisterHandler } from './api/registration'
-import { workqueueconfigHandler } from './api/workqueue/handler'
-import getUserNotificationRoutes from './config/routes/userNotificationRoutes'
+import { createClient } from '@opencrvs/toolkit/api'
 import {
   importAdministrativeAreas,
   importEvent,
-  importEvents,
   importLocations,
   syncLocationLevels,
   syncLocationStatistics
 } from './analytics/analytics'
 import { getClient } from './analytics/postgres'
-import { env } from './environment'
-import { createClient } from '@opencrvs/toolkit/api'
-import { Event } from './events/utils/types'
+import { workqueueconfigHandler } from './api/workqueue/handler'
+import getUserNotificationRoutes from './config/routes/userNotificationRoutes'
 
 export interface ITokenPayload {
   sub: string
@@ -464,32 +459,8 @@ export async function createServer() {
        */
       auth: false
     },
-    handler: async (req, h) => {
-      if (!env.ANALYTICS_DATABASE_URL) {
-        logger.warn(
-          'Skipping reindex, no ANALYTICS_DATABASE_URL environment variable set.'
-        )
-        return h.response().code(200)
-      }
-
-      const batch = req.payload as EventDocument[]
-      const client = getClient()
-
-      try {
-        await client.transaction().execute(async (trx) => {
-          await importEvents(batch, trx)
-        })
-
-        await syncLocations(req)
-
-        logger.info(`Reindexed batch of ${batch.length} events into analytics.`)
-
-        return h.response().code(200)
-      } catch (e) {
-        logger.error(e)
-
-        return h.response({ error: 'Unexpected error' }).code(500)
-      }
+    handler: async (_req, h) => {
+      return h.response().code(200)
     }
   })
 
@@ -506,48 +477,8 @@ export async function createServer() {
 
   server.route({
     method: 'POST',
-    path: `/trigger/events/{event}/actions/${ActionType.CUSTOM}`,
-    handler: onCustomActionHandler,
-    options: {
-      tags: ['api', 'events'],
-      description: 'Receives notifications on event custom action'
-    }
-  })
-
-  server.route({
-    method: 'POST',
     path: '/trigger/events/{event}/actions/{action}',
     handler: onAnyActionHandler,
-    options: {
-      tags: ['api', 'events'],
-      description: 'Receives notifications on event actions'
-    }
-  })
-
-  server.route({
-    method: 'POST',
-    path: `/trigger/events/${Event.TENNIS_CLUB_MEMBERSHIP}/actions/${ActionType.REGISTER}`,
-    handler: onRegisterHandler,
-    options: {
-      tags: ['api', 'events'],
-      description: 'Receives notifications on event actions'
-    }
-  })
-
-  server.route({
-    method: 'POST',
-    path: `/trigger/events/${Event.Birth}/actions/${ActionType.REGISTER}`,
-    handler: onRegisterHandler,
-    options: {
-      tags: ['api', 'events'],
-      description: 'Receives notifications on event actions'
-    }
-  })
-
-  server.route({
-    method: 'POST',
-    path: `/trigger/events/${Event.Death}/actions/${ActionType.REGISTER}`,
-    handler: onRegisterHandler,
     options: {
       tags: ['api', 'events'],
       description: 'Receives notifications on event actions'
