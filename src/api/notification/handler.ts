@@ -29,6 +29,7 @@ import {
 import { LOGIN_URL } from '@countryconfig/constants'
 import { applicationConfig } from '../application/application-config'
 import { NameFieldValue } from '@opencrvs/toolkit/events'
+import { env } from '@countryconfig/environment'
 
 type EmailPayloads = {
   subject: string
@@ -50,9 +51,9 @@ export async function emailHandler(
 ) {
   const payload = request.payload as EmailPayloads
 
-  if (process.env.NODE_ENV !== 'production') {
+  if (env.NOTIFICATIONS_ENABLED !== true) {
     logger.info(
-      `Ignoring email due to NODE_ENV not being 'production'. Params: ${JSON.stringify(
+      `Ignoring email due to NOTIFICATIONS_ENABLED not being true. Params: ${JSON.stringify(
         { ...payload, from: maskEmail(payload.from), to: maskEmail(payload.to) }
       )}`
     )
@@ -165,8 +166,8 @@ export async function notify({
     const subject = 'subject' in variable ? variable.subject : template.subject
     const emailBody = renderTemplate(template, variable)
 
-    if (process.env.NODE_ENV === 'development') {
-      console.log(
+    if (env.NOTIFICATIONS_ENABLED !== true) {
+      logger.debug(
         `Sending email to ${email} with subject: ${subject}, body: ${JSON.stringify(emailBody)}`
       )
       return
