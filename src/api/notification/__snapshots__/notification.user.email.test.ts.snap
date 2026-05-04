@@ -189,6 +189,79 @@ exports[`User notification - Email > change-phone-number 1`] = `
 }
 `;
 
+exports[`User notification - Email > resend-invite 1`] = `
+{
+  "from": "",
+  "html": "<!doctype html>
+<html>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style type="text/css">
+      body {
+        font-family: 'Noto Sans', sans-serif;
+        color: #222;
+        padding: 16px 24px;
+      }
+
+      h1 {
+        font-size: 21px;
+        margin-top: 32px;
+        margin-bottom: 36px;
+        font-weight: 700;
+      }
+
+      p {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 1.8;
+        margin-bottom: 24px;
+      }
+
+      i {
+        color: #666;
+        font-weight: 400;
+        font-size: 16px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <img
+      src="http://localhost:3040/content/country-logo"
+      alt="country_logo"
+      style="max-height: 88px; max-width: 100%"
+    />
+    <h1>Your Farajaland CRS account invitation</h1>
+    <p>Hello John,</p>
+    <p>Your account invitation has been resent. Please use the following credentials to access your account:</p>
+    <p>
+      Username: <strong>j.doe</strong><br />
+      Password: <strong>TempPass123!</strong>
+    </p>
+    <p>
+      Please click the link below to complete your account setup and start using
+      Farajaland CRS.
+    </p>
+
+    <div style="margin-top: 32px; margin-bottom: 32px">
+      <a href="http://localhost:3020/">Complete setup</a>
+    </div>
+    <br />
+    <p>
+      Best regards, <br />
+      Farajaland CRS Team
+    </p>
+  </body>
+</html>
+",
+  "subject": "Your OpenCRVS account invitation",
+  "to": "john.doe@gmail.com",
+}
+`;
+
 exports[`User notification - Email > reset-password 1`] = `
 {
   "from": "",

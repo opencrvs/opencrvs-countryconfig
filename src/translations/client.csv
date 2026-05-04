@@ -2161,6 +2161,7 @@ user.profile.auditList.reInstatedToInReview,Description for sending registration
 user.profile.auditList.reInstatedToUpdate,Description for sending registration from Reinstated to require updates audit action,Reinstated to requires updates,Réintégré pour demander des mises à jour
 user.profile.auditList.rejectedCorrectedAuditAction,Description for record correction being rejected,Rejected correction request,Demande de correction rejetée
 user.profile.auditList.requestedCorrectionAuditAction,Description for record correction being requested,Requested correction,Correction demandée
+user.profile.auditList.resendInvite,Description for resending user invite audit action,Resent invite,Invitation renvoyée
 user.profile.auditList.retrieved,Description for declaration retrieved audit action,Retrieved,Récupéré
 user.profile.auditList.search,Description for search audit action,Searched record,Enregistrement recherché
 user.profile.auditList.sentForApproval,Description for sending registration for approval audit action,Sent for approval,Envoyé pour approbation

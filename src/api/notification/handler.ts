@@ -283,6 +283,15 @@ function convertPayloadToVariable({
         temporaryPassword: payload.temporaryPassword
       }
 
+    case TriggerEvent.RESEND_INVITE:
+      return {
+        firstname,
+        username: payload.username,
+        temporaryPassword: payload.temporaryPassword,
+        completeSetupUrl: LOGIN_URL,
+        loginURL: LOGIN_URL
+      }
+
     case TriggerEvent.TWO_FA:
     case TriggerEvent.CHANGE_EMAIL_ADDRESS:
     case TriggerEvent.CHANGE_PHONE_NUMBER:
