@@ -67,6 +67,13 @@ export const TriggerVariable = {
     firstname: z.string(),
     temporaryPassword: z.string()
   }),
+  [TriggerEvent.RESEND_INVITE]: z.object({
+    firstname: z.string(),
+    username: z.string(),
+    temporaryPassword: z.string(),
+    completeSetupUrl: z.string(),
+    loginURL: z.string()
+  }),
   [TriggerEvent.TWO_FA]: z.object({
     firstname: z.string(),
     code: z.string()
@@ -193,6 +200,12 @@ const templates = {
     template: readOtherTemplate<TriggerVariable['reset-password-by-admin']>(
       'password-reset-by-system-admin'
     )
+  },
+  [TriggerEvent.RESEND_INVITE]: {
+    type: 'resend-invite',
+    subject: 'Your OpenCRVS account invitation',
+    template:
+      readOtherTemplate<TriggerVariable['resend-invite']>('resend-invite')
   },
   [TriggerEvent.RESET_PASSWORD]: {
     type: 'password-reset',

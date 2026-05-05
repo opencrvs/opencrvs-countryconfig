@@ -32,13 +32,53 @@ fire_trigger() {
 fetch_latest_run_since() {
   local token=$1
   local since
+  local response
+  local tmp
+  local json_type
+  local code
+
   since=$(echo "$2" | cut -c1-19)
-  curl -s \
+  tmp=$(mktemp)
+
+  response=$(curl -sS \
     -H "Authorization: Bearer ${token}" \
     -H "Content-Type: application/json" \
-    "${EVENTS_URL%/}/events/reindex" \
-  | jq -c --arg since "$since" \
-    'map(select(.timestamp[0:19] >= $since)) | sort_by(.timestamp) | reverse | .[0] // empty'
+    "${EVENTS_URL%/}/events/reindex" 2>&1) || {
+      echo "ERROR: failed to fetch reindex status:" >&2
+      echo "$response" >&2
+      rm -f "$tmp"
+      return 1
+    }
+
+  printf '%s' "$response" > "$tmp"
+
+  json_type=$(jq -r 'type' "$tmp" 2>/dev/null) || {
+    echo "ERROR: reindex status response is not valid JSON:" >&2
+    cat "$tmp" >&2
+    rm -f "$tmp"
+    return 1
+  }
+
+  if [ "$json_type" != "array" ]; then
+    code=$(jq -r '.code // .data.code // empty' "$tmp")
+
+    if [ "$code" = "UNAUTHORIZED" ]; then
+      echo "WARN: reindex status token expired; refreshing token..." >&2
+      rm -f "$tmp"
+      return 2
+    fi
+
+    echo "ERROR: unexpected reindex status response:" >&2
+    jq -c '.' "$tmp" >&2
+    rm -f "$tmp"
+    return 1
+  fi
+
+  jq -c --arg since "$since" \
+    'map(select(.timestamp[0:19] >= $since)) | sort_by(.timestamp) | reverse | .[0] // empty' \
+    "$tmp"
+
+  rm -f "$tmp"
 }
 
 TRIGGER_TIME=$(date -u +"%Y-%m-%dT%H:%M:%S")
@@ -61,7 +101,26 @@ while true; do
   fi
   polls=$(( ${polls:-0} + 1 ))
 
-  RUN=$(fetch_latest_run_since "$TOKEN" "$TRIGGER_TIME")
+  if RUN=$(fetch_latest_run_since "$TOKEN" "$TRIGGER_TIME"); then
+    :
+  else
+    rc=$?
+
+    if [ "$rc" -eq 2 ]; then
+        echo "  Token expired, refreshing token..."
+        TOKEN=$(get_reindexing_token)
+
+        if RUN=$(fetch_latest_run_since "$TOKEN" "$TRIGGER_TIME"); then
+          :
+        else
+          echo "ERROR: failed to fetch reindex status after refreshing token."
+          exit 1
+        fi
+      else
+        echo "ERROR: failed to fetch reindex status."
+        exit 1
+      fi
+  fi
 
   if [ -z "$RUN" ]; then
     echo "  Waiting for reindex to start... (${polls})"

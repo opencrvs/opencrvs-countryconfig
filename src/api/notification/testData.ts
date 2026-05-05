@@ -73,6 +73,14 @@ export const userNotificationTestData: TriggerEventPayloadPair[] = [
     }
   },
   {
+    event: 'resend-invite',
+    payload: {
+      recipient,
+      username: 'j.doe',
+      temporaryPassword: 'TempPass123!'
+    }
+  },
+  {
     event: TriggerEvent.CHANGE_EMAIL_ADDRESS,
     payload: {
       recipient,

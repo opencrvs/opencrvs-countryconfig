@@ -2068,6 +2068,8 @@ sysAdHome.sendUsernameReminderInviteError,The label for error notification of se
 sysAdHome.sendUsernameReminderInviteModalMessage,Message for send username reminder,The user will receive a username reminder via an {deliveryMethod} sent to {recipient},L'utilisateur recevra un rappel de son nom d'utilisateur par un {deliveryMethod} envoyé à {recipient}.
 sysAdHome.sendUsernameReminderInviteModalTitle,Title for send username reminder,Send username reminder?,Envoyer un rappel de nom d'utilisateur ?
 sysAdHome.sendUsernameReminderInviteSuccess,The label for success notification of send username reminder,Username reminder sent to {name},Rappel de l'identifiant envoyé à {name}
+sysAdHome.toggleActivateStatusSuccess,The label for success notification when toggling user activate status,Updated {name}'s account status to "{status}",Statut du compte de {name} mis à jour en "{status}"
+sysAdHome.toggleActivateStatusError,The label for error notification when toggling user activate status,Failed to update {name}'s account status to "{status}",Échec de la mise à jour du statut du compte de {name} en "{status}"
 sysAdHome.user.audit.comments,The label for form field deactivate comments,Comments: ,Commentaires :
 sysAdHome.user.audit.deactiv.reasonInv,The label for radio option being investigated,Being investigated due to suspicious activity on their account,Fait l'objet d'une enquête en raison d'une activité suspecte sur son compte
 sysAdHome.user.audit.deactiv.reasonNotEmp,The label for radio option not employee,No longer an employee,N'est plus un employé
@@ -2159,6 +2161,7 @@ user.profile.auditList.reInstatedToInReview,Description for sending registration
 user.profile.auditList.reInstatedToUpdate,Description for sending registration from Reinstated to require updates audit action,Reinstated to requires updates,Réintégré pour demander des mises à jour
 user.profile.auditList.rejectedCorrectedAuditAction,Description for record correction being rejected,Rejected correction request,Demande de correction rejetée
 user.profile.auditList.requestedCorrectionAuditAction,Description for record correction being requested,Requested correction,Correction demandée
+user.profile.auditList.resendInvite,Description for resending user invite audit action,Resent invite,Invitation renvoyée
 user.profile.auditList.retrieved,Description for declaration retrieved audit action,Retrieved,Récupéré
 user.profile.auditList.search,Description for search audit action,Searched record,Enregistrement recherché
 user.profile.auditList.sentForApproval,Description for sending registration for approval audit action,Sent for approval,Envoyé pour approbation
