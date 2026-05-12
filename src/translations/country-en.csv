@@ -431,6 +431,10 @@ event.tennis-club-membership.action.declare.form.section.recommender.title,This 
 event.tennis-club-membership.action.declare.form.section.recommender2.fullHonorificName,This is the label for the field,Recommender full honorific name
 event.tennis-club-membership.action.declare.form.section.senior-pass.field.id.label,This is the label for the field,Senior pass ID
 event.tennis-club-membership.action.declare.form.section.senior-pass.title,This is the title of the section,Assign senior pass for applicant
+event.tennis-club-membership.action.declare.form.section.who.field.address.country.label,This is the label for the field,Country
+event.tennis-club-membership.action.declare.form.section.who.field.address.district.label,This is the label for the field,District
+event.tennis-club-membership.action.declare.form.section.who.field.address.label,This is the label for the field,Applicant's address
+event.tennis-club-membership.action.declare.form.section.who.field.address.province.label,This is the label for the field,Province
 event.tennis-club-membership.action.declare.form.section.who.field.dob.error,This is the error message for invalid date,Please enter a valid date
 event.tennis-club-membership.action.declare.form.section.who.field.dob.label,This is the label for the field,Applicant's date of birth
 event.tennis-club-membership.action.declare.form.section.who.field.image.label,This is the label for the field,Applicant's profile picture description
@@ -522,6 +526,7 @@ form.field.label.educationAttainmentISCED1,Option for form field: ISCED1 educati
 form.field.label.educationAttainmentISCED4,Option for form field: ISCED4 education,Secondary
 form.field.label.educationAttainmentISCED5,Option for form field: ISCED5 education,Tertiary
 form.field.label.educationAttainmentNone,Option for form field: no education,No schooling
+form.field.label.empty,,
 form.field.label.healthInstitution,Select item for Health Institution,Health Institution
 form.field.label.iDTypeBRN,Option for form field: Type of ID,Birth Registration Number
 form.field.label.iDTypeBirthCertificate,Option for form field: Type of ID,Birth Certificate

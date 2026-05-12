@@ -933,6 +933,7 @@ form.field.label.uploadFile,text for upload file button,Télécharger
 form.field.label.userAttachmentSection,label for user signature attachment,Signature
 form.field.label.userDevice,User device,Dispositif
 form.field.label.userFirstName,User's English first name,Prénom de l'utilisateur
+form.field.label.userFullName,User's full English name,Nom complet de l'utilisateur
 form.field.label.userSignatureAttachment,Input label for user signature attachment,Signature de l'utilisateur
 form.field.label.userSignatureAttachmentDesc,Description for user signature attachment,"Demandez à l'utilisateur de signer une feuille de papier, puis scannez ou prenez une photo."
 form.field.label.userSignatureAttachmentTitle,Title for user signature attachment,Joindre la signature
@@ -1046,9 +1047,6 @@ integrations.shaSecret,Label for SHA secret,SHA Secret
 integrations.type,Label for integration type using ICU MessageFormat select for all types,"{type, select, HEALTH {Intégration de la santé} NATIONAL_ID {Identité nationale} RECORD_SEARCH {Recherche d'enregistrements} other {Personnalisé}}"
 integrations.uniqueKeyDescription,Label for the unique key description,Ces clés uniques seront requises par l'interface du système
 integrations.updatePermissionsMsg,Label for update permissions message,Mise à jour des permissions avec succès
-integrations.webhook.PII,Label for PII,Inclure les données PII
-integrations.webhookDescription,label for webhook client,"Un client Webhook peut s'abonner pour être notifié lors de l'enregistrement d'une naissance ou d'un décès selon les normes WebSub du W3C. Pour plus d'informations, consultez le site :"
-integrations.webhookPermissionsDescription,Webhook description above permissions,Sélectionnez les données que vous souhaitez voir figurer dans les données utiles du webhook.
 label.error,Generic error message for invalid form nput,Entrée invalide
 login.codeSubmissionError,The error that appears when the user entered sms code is unauthorised,"Désolé, ce code n'a pas fonctionné."
 login.fieldMissing,The error if user doesn't fill all the field,Nom d'utilisateur/mot de passe requis
@@ -1579,6 +1577,8 @@ sysAdHome.sendUsernameReminderInviteError,The label for error notification of se
 sysAdHome.sendUsernameReminderInviteModalMessage,Message for send username reminder,L'utilisateur recevra un rappel de son nom d'utilisateur par un {deliveryMethod} envoyé à {recipient}.
 sysAdHome.sendUsernameReminderInviteModalTitle,Title for send username reminder,Envoyer un rappel de nom d'utilisateur ?
 sysAdHome.sendUsernameReminderInviteSuccess,The label for success notification of send username reminder,Rappel de l'identifiant envoyé à {name}
+sysAdHome.toggleActivateStatusError,The label for error notification when toggling user activate status,"Échec de la mise à jour du statut du compte de {name} en ""{status}"""
+sysAdHome.toggleActivateStatusSuccess,The label for success notification when toggling user activate status,"Statut du compte de {name} mis à jour en ""{status}"""
 sysAdHome.user.audit.comments,The label for form field deactivate comments,Commentaires :
 sysAdHome.user.audit.deactiv.reasonInv,The label for radio option being investigated,Fait l'objet d'une enquête en raison d'une activité suspecte sur son compte
 sysAdHome.user.audit.deactiv.reasonNotEmp,The label for radio option not employee,N'est plus un employé
@@ -1670,6 +1670,7 @@ user.profile.auditList.reInstatedToInReview,Description for sending registration
 user.profile.auditList.reInstatedToUpdate,Description for sending registration from Reinstated to require updates audit action,Réintégré pour demander des mises à jour
 user.profile.auditList.rejectedCorrectedAuditAction,Description for record correction being rejected,Demande de correction rejetée
 user.profile.auditList.requestedCorrectionAuditAction,Description for record correction being requested,Correction demandée
+user.profile.auditList.resendInvite,Description for resending user invite audit action,Invitation renvoyée
 user.profile.auditList.retrieved,Description for declaration retrieved audit action,Récupéré
 user.profile.auditList.search,Description for search audit action,Enregistrement recherché
 user.profile.auditList.sentForApproval,Description for sending registration for approval audit action,Envoyé pour approbation
@@ -1774,8 +1775,6 @@ verifyCertificate.successTitle,title for success alert,Code QR valide
 verifyCertificate.successUrl,title for success alert for url validation,Vérification des URL
 verifyCertificate.timeOut,message when time out after few minute,Délais expirée
 verifyCertificate.toastMessage,Message for the toast when time spend 1 minute,"Après avoir vérifié le certificat, veuillez fermer la fenêtre du navigateur."
-views.idReader.label.manualInput,Label that shows below the divider on the id reader component,Remplissez les champs ci-dessous
-views.idReader.label.or,Label that shows on the divider,Ou
 views.idVerification.banner.actions.reset,,Réinitialiser
 views.idVerification.banner.actions.revoke,,Révoquer
 views.idVerification.banner.authenticated.description,,Cette identité a été authentifiée avec succès avec le système national d'identité de Farajaland.
