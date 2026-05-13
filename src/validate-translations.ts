@@ -75,6 +75,12 @@ function findSourceFiles(dir: string): string[] {
   return results
 }
 
+function getStringValue(node: ts.Expression): string | undefined {
+  if (ts.isStringLiteral(node)) return node.text
+  if (ts.isNoSubstitutionTemplateLiteral(node)) return node.text
+  return undefined
+}
+
 function extractDescriptorsFromSource(sourceCode: string): MessageDescriptor[] {
   const sourceFile = ts.createSourceFile(
     'temp.ts',
@@ -116,19 +122,24 @@ function extractDescriptorsFromSource(sourceCode: string): MessageDescriptor[] {
           ? descriptionNode.text
           : undefined
 
-      if (ts.isStringLiteral(idNode) && ts.isStringLiteral(msgNode)) {
+      const idVal = getStringValue(idNode)
+      const msgVal = getStringValue(msgNode)
+
+      if (idVal !== undefined && msgVal !== undefined) {
         matches.push({
-          id: idNode.text,
-          defaultMessage: msgNode.text,
+          id: idVal,
+          defaultMessage: msgVal,
           description: description
         })
       } else {
         console.warn(
-          `Skipping non-literal descriptor : ${node.getText(sourceFile)}`
+          `Skipping non-literal descriptor : ${node.getText(sourceFile).slice(0, 80)}`
         )
       }
     } catch {
-      console.warn(`Skipping dynamic descriptor : ${node.getText(sourceFile)}`)
+      console.warn(
+        `Skipping dynamic descriptor : ${node.getText(sourceFile).slice(0, 80)}`
+      )
     }
     ts.forEachChild(node, visit)
   }
@@ -509,6 +520,15 @@ export async function checkTranslations(
   const countrySource = loadCountrySource()
   const hasLegacy = detectLegacyFiles(translationsDir)
   let languages = detectLanguages(translationsDir)
+
+  for (const f of fs.readdirSync(translationsDir)) {
+    const m = f.match(/^country-(.+)\.csv$/)
+    if (m && !languages.includes(m[1])) {
+      console.warn(
+        `country-${m[1]}.csv exists but core-${m[1]}.csv does not — language "${m[1]}" will not be validated`
+      )
+    }
+  }
 
   if (languages.length === 0) {
     if (hasLegacy) {
