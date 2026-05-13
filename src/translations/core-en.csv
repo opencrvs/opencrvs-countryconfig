@@ -160,9 +160,7 @@ certificate.parent.details.label.firstNameInEng,Parent first names,First Name(s)
 certificate.parent.details.label.nationality,Parent Nationality,Nationality
 certificate.parent.details.label.number,Parent number,Number
 certificate.parent.details.label.typeOfID,Parent Type of ID,Type of ID
-certificate.receipt.amount,Amount paid for certificate label,"Amount paid:
-
-"
+certificate.receipt.amount,Amount paid for certificate label,Amount paid:
 certificate.receipt.amountDue,The label for due amount,Fee
 certificate.receipt.birthService.after,Amount due on certificate for birth label,Birth registration after {target} days of date of birth
 certificate.receipt.birthService.before,Amount due on certificate for birth label before target days,Birth registration before {target} days of date of birth
@@ -351,8 +349,7 @@ constants.registered.status,A label for registered,Registered
 constants.registeredAt,Label for comparison row registeredAt type,Registered at
 constants.registeredBy,Label for comparison row registeredBy type,Registered by
 constants.registeredInTargetd,A label for Registered in {registrationTargetDays} days,Registered in {registrationTargetDays} days
-constants.registeredWithinTargetd,A label for Registered {registrationTargetDays} within  days of event,"Registered within
-{registrationTargetDays} days of event"
+constants.registeredWithinTargetd,A label for Registered {registrationTargetDays} within  days of event,"Registered within {registrationTargetDays} days of event"
 constants.registrationAgent,The description for REGISTRATION_AGENT role,Registration Agent
 constants.registrationNumber,Label for registered number,Reg no.
 constants.rejected,A label for rejected,rejected
@@ -1062,7 +1059,7 @@ login.resend,Text for button that resends SMS or email verification code,Resend 
 login.resentEMAIL,The message that appears when the resend button is clicked and tells user than code is resent to email,We just resent you another code to {email}
 login.resentSMS,The message that appears when the resend button is clicked and tells user than code is resent to email,We just resent you another code to {number}
 login.stepOneInstruction,The instruction that appears in step one of the form,Please enter your mobile number and password.
-login.stepOneText,The instruction that appears in step one of the login form, 
+login.stepOneText,The instruction that appears in step one of the login form,
 login.stepTwoInstruction.email,The instruction that appears in step two of the form that lets users know that code has been sent to email,A verification code has been sent to your email. ending in {email}. This code will be valid for 10 minutes.
 login.stepTwoInstruction.sms,The instruction that appears in step two of the form that lets users know that code has been sent to phone,A verification code has been sent to your phone. ending in {number}. This code will be valid for 10 minutes.
 login.stepTwoResendTitle,The title that appears in step two of the form after resend button click,Verification code resent
@@ -1182,7 +1179,7 @@ performance.registrationsListTable.locationColumn,Title for location column in t
 performance.registrationsListTable.monthColumn,Title for month column in the table,Month
 performance.registrationsListTable.registrarColumn,Title for registrar column in the table,Registrar
 performance.registrationsListTable.totalRegistrationsColumn,Title for total registrations column in the table,Total Registrations
-performance.reports.appStart.desc,Description for declarations started in performance reports,Total and percentage breakdown of the declarations started by source from 
+performance.reports.appStart.desc,Description for declarations started in performance reports,Total and percentage breakdown of the declarations started by source from
 performance.reports.appStart.fieldAgents,Field agent declarations started title,Field agents
 performance.reports.corrections.other.label,"Label ""Other"" category in corrections",Other
 performance.reports.declarationsStarted.hospitals,Hospitals declarations started title,Hospitals (DHIS2)
@@ -1252,7 +1249,7 @@ print.certificate.deathService,Amount due on certificate for death label,Service
 print.certificate.form.name,The title of review button in list expansion actions,Print
 print.certificate.form.title,The title of review button in list expansion actions,Print certificate
 print.certificate.manualPaymentMethod,The label for select option for manual payment method,Manual
-print.certificate.noLabel,, 
+print.certificate.noLabel,,
 print.certificate.noPayment,The title for no payment section,No payment required
 print.certificate.onlineOnly,Print certificate online only message,Print certificate is an online only action. Please go online to print the certificate
 print.certificate.payment,The title for payment section,Collect payment
@@ -1383,11 +1380,11 @@ register.SelectContactPoint.phoneNoError,Phone no error text,Not a valid mobile 
 register.eventInfo.birth.listItem0,Event info bullet list item for birth,I am here to complete the birth registration declaration for you.
 register.eventInfo.birth.listItem1,Event info bullet list item for birth,"Once I complete the declaration, it will be sent to the registration office for review."
 register.eventInfo.birth.listItem2,Event info bullet list item for birth,Wait for an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.
-register.eventInfo.death.listItem0,Event info bullet list item for death,I am here to complete the death registration declaration for you. 
+register.eventInfo.death.listItem0,Event info bullet list item for death,I am here to complete the death registration declaration for you.
 register.eventInfo.death.listItem1,Event info bullet list item for death,"Once I complete the declaration, it will be sent to the registration office for review."
 register.eventInfo.death.listItem2,Event info bullet list item for death,Wait for an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.
 register.eventInfo.event.title,,"Introduce the {eventType, select, birth{birth} death{death} other{marriage}} registration process to the informant"
-register.eventInfo.marriage.listItem0,Event info bullet list item for marriage,I am here to complete the marriage registration declaration for you. 
+register.eventInfo.marriage.listItem0,Event info bullet list item for marriage,I am here to complete the marriage registration declaration for you.
 register.eventInfo.marriage.listItem1,Event info bullet list item for marriage,"Once I complete the declaration, it will be sent to the registration office for review."
 register.eventInfo.marriage.listItem2,Event info bullet list item for marriage,Wait for an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.
 register.form.modal.desc.deleteDeclarationConfirm,Description for delete declaration confirmation modal,"Are you certain you want to delete this draft declaration form? Please note, this action can't be undone."
@@ -1453,11 +1450,9 @@ resetCredentials.securityQuestion.form.body.subheader,Form body subheader used f
 resetCredentials.success.page.subtitle.email,Subtitle for success page for email,"{forgottenItem, select, username {Check your email for a reminder of your username} password {You can now login with your new password} other {}}"
 resetCredentials.success.page.subtitle.phone,Subtitle for success page for phone,"{forgottenItem, select, username {Check your phone for a reminder of your username} password {You can now login with your new password} other {}}"
 resetCredentials.success.page.title,Title for success page,"{forgottenItem, select, username {Username reminder sent} password {Passowrd reset successful} other {}}"
-review.actions.desc.regConfComp,,"By clicking register, you confirm that the information is correct and has been reviewed by the informant. The informant understands that it will be used to register the {eventType, select, birth {birth declaration} death {death declaration}} and for planning purposes.
-
-By registering this {eventType, select, birth {birth declaration} death {death declaration}}, a {eventType, select, birth {birth} death {death}} certificate will be generated with your signature for issuance."
+review.actions.desc.regConfComp,,"By clicking register, you confirm that the information is correct and has been reviewed by the informant. The informant understands that it will be used to register the {eventType, select, birth {birth declaration} death {death declaration}} and for planning purposes. By registering this {eventType, select, birth {birth declaration} death {death declaration}}, a {eventType, select, birth {birth} death {death}} certificate will be generated with your signature for issuance."
 review.actions.desc.regConfInComp,,Mandatory information is missing. Please add this information so that you can complete the registration process.
-review.actions.description,,By registering you confirm that you have reviewed this declaration and satisfied it fulfils requirements required for registration. 
+review.actions.description,,By registering you confirm that you have reviewed this declaration and satisfied it fulfils requirements required for registration.
 review.actions.description.confirmComplete,Description for review action component when complete declaration,"By sending this declaration for review you confirm that the information has been reviewed by the informant and that they are aware that they will receive an {deliveryMethod} with a tracking ID and details of how to collect the {eventType, select, birth {birth} death {death}} certificate"
 review.actions.description.confirmInComplete,Description for review action component when incomplete declaration,The informant will receive an {deliveryMethod} with a tracking ID that they can use to provide the additional mandatory information required for registration.
 review.actions.description.hasError,Description for review action component when declaration has errors on fields,Please ensure all fields are either empty or have a valid value in them.
@@ -1584,7 +1579,7 @@ sysAdHome.sendUsernameReminderInviteModalTitle,Title for send username reminder,
 sysAdHome.sendUsernameReminderInviteSuccess,The label for success notification of send username reminder,Username reminder sent to {name}
 sysAdHome.toggleActivateStatusError,The label for error notification when toggling user activate status,"Failed to update {name}'s account status to ""{status}"""
 sysAdHome.toggleActivateStatusSuccess,The label for success notification when toggling user activate status,"Updated {name}'s account status to ""{status}"""
-sysAdHome.user.audit.comments,The label for form field deactivate comments,Comments: 
+sysAdHome.user.audit.comments,The label for form field deactivate comments,Comments:
 sysAdHome.user.audit.deactiv.reasonInv,The label for radio option being investigated,Being investigated due to suspicious activity on their account
 sysAdHome.user.audit.deactiv.reasonNotEmp,The label for radio option not employee,No longer an employee
 sysAdHome.user.audit.deactivation.subtitle,The subtitle of user deactivation confirmation modal,This will revoke {name}’s ability to login and access the system. The account can be reactivated at a later date.
@@ -1594,7 +1589,7 @@ sysAdHome.user.audit.reactiv.noLongerInv,The label for radio option no longer in
 sysAdHome.user.audit.reactiv.returned,The label for radio option Returned to role,Returned to their role
 sysAdHome.user.audit.reactivation.subtitle,The subtitle of user reactivation confirmation modal,This will reactivate {name}’s ability to login and access the system.
 sysAdHome.user.audit.reactivation.title,The title of user reactivation confirmation modal,Reactivate {name}?
-sysAdHome.user.audit.reason,The label for form field deactivate reason,Please provide a reason: 
+sysAdHome.user.audit.reason,The label for form field deactivate reason,Please provide a reason:
 sysAdHome.user.audit.reasonOther,The label for radio option other,Other (please provide a reason in the comments)
 sysAdHome.user.deactivate,Label for toggle menu option deactivate,Deactivate
 sysAdHome.user.edit.commonGroupTitle,Common title of form view groups when edit user,Edit user
