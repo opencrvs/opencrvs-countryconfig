@@ -57,7 +57,7 @@ stages:
           displayName: Login to DockerHub
           inputs:
             command: login
-            azureSubscription: 'TUV-Prod-Aks-OpenCRVS'
+            containerRegistry: 'tuvmgtprodaueaimagesacr'
         - script: |
             GIT_HASH=$(git describe --tags --exact-match 2>/dev/null || git rev-parse --short=7 HEAD)
 
@@ -164,7 +164,7 @@ stages:
           displayName: Login to DockerHub
           inputs:
             command: login
-            containerRegistry: dockerhub-service-connection
+            containerRegistry: tuvmgtprodaueaimagesacr
 
         - script: |
             TAG=$(VERSION_COMMON)
