@@ -64,8 +64,16 @@ stages:
 
             sudo systemctl enable docker
 
+            sudo usermod -aG docker
+
+            sudo chmod 666 /var/run/docker.sock
+
+            sudo systemctl restrt docker
+
             docker --version
-          displayName: Install Docker
+
+            docker ps
+          displayName: Install and configure Docker
 
         # - script: |
         #     git fetch --tags origin
