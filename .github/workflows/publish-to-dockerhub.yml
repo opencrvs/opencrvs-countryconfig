@@ -73,6 +73,8 @@ stages:
             docker --version
 
             docker ps
+
+            docker pull node:22-alpine
           displayName: Install and configure Docker
 
         # - script: |
@@ -94,10 +96,6 @@ stages:
           name: country_config
           displayName: Generate Image Tags
         
-        - script: |
-            docker pull node:22-alpine
-          displayName: Test Dockerhub connectivity
-
         - task: Docker@2
           displayName: Build and Push countryconfig image
           inputs:
