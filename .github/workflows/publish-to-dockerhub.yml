@@ -50,6 +50,18 @@ stages:
           fetchDepth: 0
           persistCredentials: true
 
+        - script: |
+            sudo apt-get update
+
+            sudo apt-get install -y docker.io
+
+            sudo systemctl start docker
+
+            sudo systemctl enable docker
+
+            docker --version
+          displayName: Install Docker
+
         # - script: |
         #     git fetch --tags origin
         #   displayName: Get tags
