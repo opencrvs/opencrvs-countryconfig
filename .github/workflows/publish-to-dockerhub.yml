@@ -100,7 +100,7 @@ stages:
           displayName: Build and Push countryconfig image
           inputs:
             command: buildAndPush
-            repository: $(DOCKERHUB_ACCOUNT)/$(DOCKERHUB_REPO)
+            repository: $(DOCKERHUB_REPO)
             Dockerfile: Dockerfile
             buildContext: .
             tags: |
@@ -112,7 +112,7 @@ stages:
           displayName: Build and Push assets image
           inputs:
             command: buildAndPush
-            repository: $(DOCKERHUB_ACCOUNT)/$(DOCKERHUB_REPO)
+            repository: $(DOCKERHUB_REPO)
             Dockerfile: Dockerfile.assets
             buildContext: .
             tags: |
