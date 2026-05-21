@@ -106,6 +106,17 @@ stages:
             tags: |
               $(country_config.VERSION)
 
+        - script: |
+            mkdir -p ~/.docker/cli-plugins
+
+            curl -SL https://github.com/docker/buildx/releases/latest/download/buildx-linux-amd64 \
+              -o ~/.docker/cli-plugins/docker-buildx
+
+            chmod +x ~/.docker/cli-plugins/docker-buildx
+
+            docker buildx version
+          displayName: Install Docker Buildx
+
         - task: Docker@2
           displayName: Build and Push assets image
           env:
