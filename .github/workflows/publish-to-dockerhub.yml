@@ -17,19 +17,8 @@ parameters:
     type: string
     default: develop
 
-  - name: build_arm
-    displayName: Build ARM images
-    type: boolean
-    default: false
-
 variables:
 - group: qa-secrets
-
-- name: DOCKERHUB_ACCOUNT
-  value: $(DOCKERHUB-ACCOUNT)
-
-- name: DOCKERHUB_REPO
-  value: $(DOCKERHUB-REPO)
 
 stages:
 
@@ -100,7 +89,7 @@ stages:
           displayName: Build and Push countryconfig image
           inputs:
             command: buildAndPush
-            repository: $(DOCKERHUB_REPO)
+            repository: $(DOCKERHUB-REPO)
             Dockerfile: Dockerfile
             buildContext: .
             tags: |
@@ -112,7 +101,7 @@ stages:
           displayName: Build and Push assets image
           inputs:
             command: buildAndPush
-            repository: $(DOCKERHUB_REPO)
+            repository: $(DOCKERHUB-REPO)
             Dockerfile: Dockerfile.assets
             buildContext: .
             tags: |
