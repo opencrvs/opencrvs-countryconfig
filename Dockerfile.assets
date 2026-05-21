@@ -5,7 +5,10 @@ WORKDIR /assets
 
 # Copy assets
 # Metabase
-COPY --chmod=755 infrastructure/metabase /assets/metabase
+COPY infrastructure/metabase /assets/metabase
+RUN chmod -R 755 /assets/metabase
+
+# COPY --chmod=755 infrastructure/metabase /assets/metabase
 # Postgres
 COPY --chmod=755 infrastructure/postgres /assets/postgres
 # Elasticsearch re-indexing
