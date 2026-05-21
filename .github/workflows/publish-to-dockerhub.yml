@@ -114,7 +114,11 @@ stages:
 
             chmod +x ~/.docker/cli-plugins/docker-buildx
 
-            docker buildx version
+            export PATH=$HOME/.docker/cli-plugins:$PATH
+
+            docker-buildx version || ~/.docker/cli-plugins/docker-buildx version
+
+            docker version
           displayName: Install Docker Buildx
 
         - task: Docker@2
