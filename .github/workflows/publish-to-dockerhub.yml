@@ -110,8 +110,6 @@ stages:
 
         - task: Docker@2
           displayName: Build and Push assets image
-          env:
-            DOCKER_BUILDKIT: 1
           inputs:
             command: buildAndPush
             repository: $(DOCKERHUB_ACCOUNT)/$(DOCKERHUB_REPO)
