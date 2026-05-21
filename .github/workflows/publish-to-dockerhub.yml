@@ -42,10 +42,10 @@ stages:
   jobs:
 
     # =====================================================
-    # AMD64 BUILD
+    # BUILD
     # =====================================================
-    - job: Build_AMD64
-      displayName: Build AMD64 Image
+    - job: Build
+      displayName: Build Image
 
       pool:
         name: TUV-Prod-Agents
@@ -92,7 +92,7 @@ stages:
             echo "Git Hash: $GIT_HASH"
 
             echo "##vso[task.setvariable variable=VERSION_COMMON;isOutput=true]$GIT_HASH"
-            echo "##vso[task.setvariable variable=VERSION;isOutput=true]${GIT_HASH}-amd64"
+            echo "##vso[task.setvariable variable=VERSION;isOutput=true]${GIT_HASH}"
           name: country_config
           displayName: Generate Image Tags
         
