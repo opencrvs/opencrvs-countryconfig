@@ -15,7 +15,7 @@ parameters:
   - name: branch_name
     displayName: Branch to build from
     type: string
-    default: develop
+    default: v2.0.0-beta
 
 variables:
 - group: qa-secrets
