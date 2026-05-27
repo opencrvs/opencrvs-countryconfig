@@ -28,7 +28,7 @@ login.resend,Text for button that resends SMS or email verification code,"Resend
 login.resentEMAIL,The message that appears when the resend button is clicked and tells user than code is resent to email,Authentication code sent to {email},Nous venons de vous envoyer un autre code à {email}.
 login.resentSMS,The message that appears when the resend button is clicked and tells user than code is resent to email,Authentication code sent to {number},Nous venons de vous envoyer un autre code à {number}.
 login.stepOneInstruction,The instruction that appears in step one of the form,Please enter your username and password.,Veuillez entrer votre nom d'utilisateur et votre mot de passe.
-login.stepOneText,The instruction that appears in step one of the login form,Login to Farajaland CRVS,Connectez-vous à Farajaland CRVS
+login.stepOneText,The instruction that appears in step one of the login form,Login to Tuvalu  CRVS,Connectez-vous à Tuvalu CRVS
 login.stepTwoInstruction.email,The instruction that appears in step two of the form that lets users know that code has been sent to email,An authentication code has been sent to {email}. This code will be valid for 10 minutes,Un code d'authentification a été envoyé à {email}. Ce code sera valable 10 minutes
 login.stepTwoInstruction.sms,The instruction that appears in step two of the form that lets users know that code has been sent to phone,An authentication code has been sent to {number}. This code will be valid for 10 minutes,Un code de vérification a été envoyé à votre téléphone. se terminant par {number}. Ce code sera valide pendant 5 minutes.
 login.stepTwoResendTitle,The title that appears in step two of the form after resend button click,Authentication code resent,Envoi du code de vérification
