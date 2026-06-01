@@ -1,7 +1,7 @@
 <p align="center"> <a href="https://www.opencrvs.org"><img src="https://i.imgur.com/W7ULmox.png" title="source: imgur.com" / style="max-width:100%;"width="72" height="72"></a>
 </p>
-<h3 align="center">Farajaland country configuration repository</h3>
-<p align="center">An example configuration for OpenCRVS using a fictional country called Farajaland.
+<h3 align="center">OpenCRVS country configuration repository</h3>
+<p align="center">An example country configuration for OpenCRVS.
 <br>
 <a href="https://github.com/opencrvs/opencrvs-core/issues">Report an issue</a>  ·  <a href="https://community.opencrvs.org">Join our community</a>  ·  <a href="https://documentation.opencrvs.org">Read our documentation</a>  ·  <a href="https://www.opencrvs.org">www.opencrvs.org</a></p>
 
@@ -10,12 +10,14 @@
 
 - [What is this module for?](#what-is-this-module-for)
 - [How do I run the module alongside the OpenCRVS core?](#how-do-i-run-the-module-alongside-the-opencrvs-core)
-- [What is in the Farajaland configuration module repository?](#what-is-in-the-farajaland-configuration-module-repository)
+- [What is in the country configuration module repository?](#what-is-in-the-country-configuration-module-repository)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 <br>
 <br>
-**This is the fictional country "Farajaland" OpenCRVS country configuration repository for [OpenCRVS](https://github.com/opencrvs/opencrvs-core) You must fork this for your own country.**
+**This is the example OpenCRVS country configuration repository for [OpenCRVS](https://github.com/opencrvs/opencrvs-core). You must fork this for your own country.**
+
+> **Note:** This repository uses a fictional country called **Farajaland** as an example throughout its reference data, seed scripts and content.
 
 <a href="https://documentation.opencrvs.org/setup/3.-installation/3.2-set-up-your-own-country-configuration">Read our documentation</a> to learn how to set up your own country configuration using this repo as an example.
 
@@ -31,7 +33,7 @@ This module also provides a logical location where you may wish to store the cod
 
 1. Ensure that you are running [OpenCRVS Core](https://github.com/opencrvs/opencrvs-core).
 
-**If you successfully ran the `bash setup.sh` script in OpenCRVS Core you already have this module checked out, the dependencies are installed, the Farajaland database is populated and you can just run the following command.**
+**If you successfully ran the `bash setup.sh` script in OpenCRVS Core you already have this module checked out, the dependencies are installed, the database is populated and you can just run the following command.**
 
 2. `yarn dev`
 
@@ -45,14 +47,15 @@ The country configuration includes scripts for managing analytics and metabase d
 
 - `yarn db:clear:all` - Clears all development databases including:
   - PostgreSQL analytics schema and data
-The script is designed to be extended by country implementations to clear additional custom databases as needed.
+    The script is designed to be extended by country implementations to clear additional custom databases as needed.
 
 ### Production Database Management
 
 For deployed environments, analytics data is cleared when the "reset data" pipeline is triggered, which uses the `infrastructure/clear-all-data.sh` script. This script now includes clearing of:
+
 - **Metabase analytics database** - Both the PostgreSQL analytics schema and Metabase H2 configuration database
 
-## What is in the Farajaland configuration module repository?
+## What is in the country configuration module repository?
 
 One of the key dependencies and enablers for OpenCRVS is country configuration and a reference data source. This source is bespoke for every implementing nation. If you would like to create your own country implementation, we recommend that you duplicate this repository and use it as a template. So what does it contain?
 
@@ -62,7 +65,7 @@ One of the key dependencies and enablers for OpenCRVS is country configuration a
 
 - The [src](https://github.com/opencrvs/opencrvs-countryconfig/master/src) folder contains the code required to run the countryconfig microservice apis, configure your registration form and seed your country implementation with reference data. Essentially this repository could be re-written from NodeJS into Java or another language as long as the service provided the same API endpoints and served the same files as listed below. For more information please [read this section of the documentation.](https://documentation.opencrvs.org/setup/3.-installation/3.2-set-up-your-own-country-configuration)
 
-- Postman collections demonstrate how to interoperate with OpenCRVS.  You can build any custom integration into OpenCRVS in this repository if you need to.
+- Postman collections demonstrate how to interoperate with OpenCRVS. You can build any custom integration into OpenCRVS in this repository if you need to.
 
 - The following business critical API and hosted file endpoints:
 
@@ -76,7 +79,7 @@ When the OpenCRVS Core servers start up with un-seeded databases they call the f
 
 2. `GET /users`
 
-- Configures at a minimum, a default National System Admin user for the application.  More users can be created for demonstration purposes or in a batch.  The passwords entered are required to be changed by the user on first login.
+- Configures at a minimum, a default National System Admin user for the application. More users can be created for demonstration purposes or in a batch. The passwords entered are required to be changed by the user on first login.
 
 3. `GET /roles`
 
@@ -88,7 +91,7 @@ When the OpenCRVS Core servers start up with un-seeded databases they call the f
 
 5. `GET /statistics`
 
-- Applies historical population and crude birth rates disaggregated by gender to your administrative structure.  This data ensures that your registration completeness rates are accuratley calculated.
+- Applies historical population and crude birth rates disaggregated by gender to your administrative structure. This data ensures that your registration completeness rates are accuratley calculated.
 
 6. `GET /certificates`
 
@@ -110,11 +113,11 @@ When the OpenCRVS Core servers start up with un-seeded databases they call the f
 
 4. `GET /crude-death-rate` (Deprecation warning!)
 
-- OpenCRVS "metrics" microservice receives a global crude death rate constant from this endpoint in order to calculate death registration completeness rates.  Unlike for crude birth rate, most countries do not have a statistic by administrative area disaggregated by gender for death rate.  This API endpoint can be considered as tehcnical debt and will likely be replaced by a config setting in the `GET /application-config` response.
+- OpenCRVS "metrics" microservice receives a global crude death rate constant from this endpoint in order to calculate death registration completeness rates. Unlike for crude birth rate, most countries do not have a statistic by administrative area disaggregated by gender for death rate. This API endpoint can be considered as tehcnical debt and will likely be replaced by a config setting in the `GET /application-config` response.
 
 5. `POST /event-registration`
 
-- This synchronous API exists as it is the final step before legal registration of an event.  Some countries desire to create multiple identifiers for citizens at the point of registration using external systems. Some countries wish to integrate with another legacy system just before registration.  A synchronous 3rd party system can be integrated at this point. Some countries wish to customise the registration number format.  The registration number can be created at this point. Some countries use sequential numbering for registration numbers.  While it is possible to create that functionality here, we strongly discourage that approach and advise our unique alphanumeric ID format using the Tracking ID. The reason is, under times of high traffic, it is likely that sequential number generation can slow the performance of the service.  In a such a case a queue could be implemented here.
+- This synchronous API exists as it is the final step before legal registration of an event. Some countries desire to create multiple identifiers for citizens at the point of registration using external systems. Some countries wish to integrate with another legacy system just before registration. A synchronous 3rd party system can be integrated at this point. Some countries wish to customise the registration number format. The registration number can be created at this point. Some countries use sequential numbering for registration numbers. While it is possible to create that functionality here, we strongly discourage that approach and advise our unique alphanumeric ID format using the Tracking ID. The reason is, under times of high traffic, it is likely that sequential number generation can slow the performance of the service. In a such a case a queue could be implemented here.
 
 6. `GET /validators.js` & `GET /conditionals.js`
 
