@@ -15,6 +15,11 @@ export const informantMessageDescriptors = {
     description: 'Who is applying for birth registration',
     id: 'register.selectInformant.birthInformantTitle'
   },
+  MOTHER_AND_FATHER: {
+    defaultMessage: 'Mother and Father',
+    description: 'Label for option mother and father',
+    id: 'form.field.label.informantRelation.motherAndFather'
+  },
   MOTHER: {
     defaultMessage: 'Mother',
     description: 'Label for option mother',

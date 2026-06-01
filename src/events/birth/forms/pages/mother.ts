@@ -19,28 +19,62 @@ import {
   field,
   user
 } from '@opencrvs/toolkit/events'
-import { or, not, never } from '@opencrvs/toolkit/conditionals'
+import { or, not, never, defineConditional } from '@opencrvs/toolkit/conditionals'
 import {
   invalidNameValidator,
-  nationalIdValidator,
-  farajalandNameConfig
+  tuvaluNameConfig,
+
 } from '@countryconfig/events/birth/validators'
 import { InformantType } from './informant'
 
 import {
-  IdType,
-  idTypeOptions,
-  educationalAttainmentOptions,
-  maritalStatusOptions,
   emptyMessage,
   defaultStreetAddressConfiguration,
-  getNestedFieldValidators
+  getNestedFieldValidators,
+  BirthIdType,
+  birthIdTypeOptions
 } from '@countryconfig/events/utils'
 
 export const requireMotherDetails = or(
   field('mother.detailsNotAvailable').isFalsy(),
-  field('informant.relation').isEqualTo(InformantType.MOTHER)
+  field('informant.relation').isEqualTo(InformantType.MOTHER),
+  field('informant.relation').isEqualTo(InformantType.MOTHER_AND_FATHER)
 )
+
+const tuvaluMaritalStatusOptions = [
+  {
+    value: 'MARRIED',
+    label: {
+      defaultMessage: 'Married',
+      description: 'Option for marital status: married',
+      id: 'form.field.label.maritalStatusMarried'
+    }
+  },
+  {
+    value: 'SINGLE',
+    label: {
+      defaultMessage: 'Single (never married)',
+      description: 'Option for marital status: single',
+      id: 'form.field.label.maritalStatusSingleNeverMarried'
+    }
+  },
+  {
+    value: 'DIVORCED',
+    label: {
+      defaultMessage: 'Divorced',
+      description: 'Option for marital status: divorced',
+      id: 'form.field.label.maritalStatusDivorced'
+    }
+  },
+  {
+    value: 'WIDOWED',
+    label: {
+      defaultMessage: 'Widowed',
+      description: 'Option for marital status: widowed',
+      id: 'form.field.label.maritalStatusWidowed'
+    }
+  }
+]
 
 export const mother = defineFormPage({
   id: 'mother',
@@ -54,6 +88,7 @@ export const mother = defineFormPage({
     {
       id: 'mother.detailsNotAvailable',
       type: FieldType.CHECKBOX,
+      analytics: true,
       label: {
         defaultMessage: "Mother's details are not available",
         description: 'This is the label for the field',
@@ -63,7 +98,12 @@ export const mother = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: not(
-            field('informant.relation').isEqualTo(InformantType.MOTHER)
+            or(
+              field('informant.relation').isEqualTo(InformantType.MOTHER),
+              field('informant.relation').isEqualTo(
+                InformantType.MOTHER_AND_FATHER
+              )
+            )
           )
         },
         {
@@ -80,14 +120,19 @@ export const mother = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: not(
-            field('informant.relation').isEqualTo(InformantType.MOTHER)
+            or(
+              field('informant.relation').isEqualTo(InformantType.MOTHER),
+              field('informant.relation').isEqualTo(
+                InformantType.MOTHER_AND_FATHER
+              )
+            )
           )
         }
       ]
     },
     {
       id: 'mother.reason',
-      type: FieldType.TEXT,
+      type: FieldType.TEXTAREA,
       required: true,
       label: {
         defaultMessage: 'Reason',
@@ -99,7 +144,214 @@ export const mother = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: and(
             field('mother.detailsNotAvailable').isEqualTo(true),
-            not(field('informant.relation').isEqualTo(InformantType.MOTHER))
+            not(
+              or(
+                field('informant.relation').isEqualTo(InformantType.MOTHER),
+                field('informant.relation').isEqualTo(
+                  InformantType.MOTHER_AND_FATHER
+                )
+              )
+            )
+          )
+        }
+      ]
+    },
+    {
+      id: 'mother.nationality',
+      type: FieldType.COUNTRY,
+      required: true,
+      analytics: true,
+      label: {
+        defaultMessage: 'Nationality',
+        description: 'This is the label for the field',
+        id: 'event.birth.action.declare.form.section.person.field.nationality.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(
+            requireMotherDetails,
+            not(user.hasRole('HOSPITAL_CLERK'))
+          )
+        }
+      ],
+      defaultValue: 'TUV'
+    },
+    {
+      id: 'mother.idType',
+      type: FieldType.SELECT,
+      required: true,
+      analytics: true,
+      label: {
+        defaultMessage: 'Type of ID',
+        description: 'This is the label for the field',
+        id: 'event.birth.action.declare.form.section.person.field.idType.label'
+      },
+      options: birthIdTypeOptions,
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(
+            requireMotherDetails,
+            not(user.hasRole('HOSPITAL_CLERK'))
+          )
+        }
+      ]
+    },
+    {
+      id: 'mother.brnSearch',
+      type: FieldType.SEARCH,
+      label: {
+        defaultMessage: 'Search birth registration number',
+        description: 'Label for the birth registration number search field',
+        id: 'event.birth.action.declare.form.section.mother.field.brnSearch.label'
+      },
+      helperText: {
+        defaultMessage:
+          'Search for an existing birth record. If a match is found, the details below will auto-fill. If no record is found, continue by entering the details manually.',
+        description: 'Helper text for the birth registration number search field',
+        id: 'event.birth.action.declare.form.section.mother.field.brnSearch.helperText'
+      },
+      configuration: {
+        query: {
+          type: 'or',
+          clauses: [
+            {
+              'legalStatuses.REGISTERED.registrationNumber': {
+                term: '{term}',
+                type: 'exact'
+              }
+            }
+          ]
+        },
+        limit: 10,
+        offset: 0,
+        validation: {
+          validator: defineConditional({
+            type: 'string',
+            minLength: 1,
+            description: 'Must be a non-empty value'
+          }),
+          message: {
+            defaultMessage: 'Please enter a birth registration number to search',
+            description: 'Validation message for the birth registration number search field',
+            id: 'event.birth.action.declare.form.section.mother.field.brnSearch.validation'
+          }
+        },
+        indicators: {
+          ok: {
+            defaultMessage: 'Record found',
+            description: 'Indicator shown when a birth record is found',
+            id: 'event.birth.action.declare.form.section.mother.field.brnSearch.indicators.ok'
+          },
+          clearModal: {
+            title: {
+              defaultMessage: 'Clear birth record?',
+              description: 'Title for the clear search confirmation modal',
+              id: 'event.birth.action.declare.form.section.mother.field.brnSearch.indicators.clearModal.title'
+            },
+            description: {
+              defaultMessage:
+                'This will remove the auto-filled details for the mother.',
+              description: 'Description for the clear search confirmation modal',
+              id: 'event.birth.action.declare.form.section.mother.field.brnSearch.indicators.clearModal.description'
+            }
+          }
+        }
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(
+            field('mother.idType').isEqualTo(BirthIdType.BIRTH_CERTIFICATE),
+            requireMotherDetails,
+            not(user.hasRole('HOSPITAL_CLERK'))
+          )
+        },
+        {
+          type: ConditionalType.DISPLAY_ON_REVIEW,
+          conditional: never()
+        }
+      ]
+    },
+    {
+      id: 'mother.brn',
+      type: FieldType.TEXT,
+      required: false,
+      parent: field('mother.brnSearch'),
+      value: field('mother.brnSearch').getByPath([
+        'data',
+        'firstResult',
+        'legalStatuses',
+        'REGISTERED',
+        'registrationNumber'
+      ]),
+      label: {
+        defaultMessage: 'Birth registration number',
+        description: 'Label for the birth registration number text field',
+        id: 'event.birth.action.declare.form.section.mother.field.brn.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(
+            field('mother.idType').isEqualTo(BirthIdType.BIRTH_CERTIFICATE),
+            requireMotherDetails,
+            not(user.hasRole('HOSPITAL_CLERK'))
+          )
+        }
+      ]
+    },
+    {
+      id: 'mother.passport',
+      type: FieldType.TEXT,
+      required: false,
+      label: {
+        defaultMessage: 'ID Number',
+        description: 'This is the label for the field',
+        id: 'event.birth.action.declare.form.section.person.field.passport.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(
+            field('mother.idType').isEqualTo(BirthIdType.PASSPORT),
+            requireMotherDetails,
+            not(user.hasRole('HOSPITAL_CLERK'))
+          )
+        }
+      ]
+    },
+    {
+      id: 'mother.nid',
+      type: FieldType.TEXT,
+      required: false,
+      label: {
+        defaultMessage: 'ID Number',
+        description: 'This is the label for the field',
+        id: 'event.birth.action.declare.form.section.person.field.nid.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(
+            field('mother.idType').isEqualTo(BirthIdType.OTHER),
+            requireMotherDetails,
+            not(user.hasRole('HOSPITAL_CLERK'))
+          )
+        }
+      ]
+    },
+    {
+      id: 'mother.idDivider',
+      type: FieldType.DIVIDER,
+      label: emptyMessage,
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(
+            requireMotherDetails,
+            not(user.hasRole('HOSPITAL_CLERK'))
           )
         }
       ]
@@ -108,13 +360,19 @@ export const mother = defineFormPage({
       id: 'mother.name',
       type: FieldType.NAME,
       required: true,
-      configuration: farajalandNameConfig,
+      configuration: tuvaluNameConfig,
       hideLabel: true,
       label: {
         defaultMessage: "Mother's name",
         description: 'This is the label for the field',
         id: 'event.birth.action.declare.form.section.mother.field.name.label'
       },
+      value: field('mother.brnSearch').getByPath([
+        'data',
+        'firstResult',
+        'declaration',
+        'child.name'
+      ]),
       conditionals: [
         {
           type: ConditionalType.SHOW,
@@ -129,6 +387,12 @@ export const mother = defineFormPage({
       required: true,
       secured: true,
       analytics: true,
+      value: field('mother.brnSearch').getByPath([
+        'data',
+        'firstResult',
+        'declaration',
+        'child.dob'
+      ]),
       validation: [
         {
           message: {
@@ -166,6 +430,7 @@ export const mother = defineFormPage({
     {
       id: 'mother.dobUnknown',
       type: FieldType.CHECKBOX,
+      analytics: true,
       label: {
         defaultMessage: 'Exact date of birth unknown',
         description: 'This is the label for the field',
@@ -188,7 +453,7 @@ export const mother = defineFormPage({
       required: true,
       analytics: true,
       label: {
-        defaultMessage: 'Age of mother (at the time of event)',
+        defaultMessage: 'Age of mother',
         description: 'This is the label for the field',
         id: 'event.birth.action.declare.form.section.mother.field.age.label'
       },
@@ -221,32 +486,33 @@ export const mother = defineFormPage({
       ]
     },
     {
-      id: 'mother.nationality',
-      type: FieldType.COUNTRY,
+      id: 'mother.placeOfBirth',
+      type: FieldType.TEXT,
       required: true,
+      analytics: true,
       label: {
-        defaultMessage: 'Nationality',
-        description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.person.field.nationality.label'
+        defaultMessage: 'Place of birth',
+        description: "Label for mother's place of birth",
+        id: 'event.birth.action.declare.form.section.mother.field.placeOfBirth.label'
       },
       conditionals: [
         {
           type: ConditionalType.SHOW,
           conditional: requireMotherDetails
         }
-      ],
-      defaultValue: 'FAR'
+      ]
     },
     {
-      id: 'mother.idType',
+      id: 'mother.maritalStatus',
       type: FieldType.SELECT,
+      analytics: true,
       required: true,
       label: {
-        defaultMessage: 'Type of ID',
+        defaultMessage: 'Marital status',
         description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.person.field.idType.label'
+        id: 'event.birth.action.declare.form.section.person.field.maritalStatus.label'
       },
-      options: idTypeOptions,
+      options: tuvaluMaritalStatusOptions,
       conditionals: [
         {
           type: ConditionalType.SHOW,
@@ -255,75 +521,100 @@ export const mother = defineFormPage({
       ]
     },
     {
-      id: 'mother.nid',
-      type: FieldType.ID,
+      id: 'mother.dateOfMarriage',
+      type: FieldType.DATE,
       required: true,
+      analytics: true,
       label: {
-        defaultMessage: 'ID Number',
-        description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.person.field.nid.label'
+        defaultMessage: 'Date of marriage',
+        description: 'Label for date of marriage field',
+        id: 'event.birth.action.declare.form.section.mother.field.dateOfMarriage.label'
       },
       conditionals: [
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            field('mother.idType').isEqualTo(IdType.NATIONAL_ID),
-            requireMotherDetails
+            requireMotherDetails,
+            field('mother.maritalStatus').isEqualTo('MARRIED')
           )
+        }
+      ]
+    },
+    {
+      id: 'mother.placeOfMarriage',
+      type: FieldType.TEXT,
+      required: true,
+      analytics: true,
+      label: {
+        defaultMessage: 'Place of marriage',
+        description: 'Label for place of marriage field',
+        id: 'event.birth.action.declare.form.section.mother.field.placeOfMarriage.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(
+            requireMotherDetails,
+            field('mother.maritalStatus').isEqualTo('MARRIED')
+          )
+        }
+      ]
+    },
+    {
+      id: 'mother.childrenHeader',
+      type: FieldType.HEADING,
+      label: {
+        defaultMessage: 'Number of children previously born to the mother',
+        description: 'Header for children count section',
+        id: 'event.birth.action.declare.form.section.mother.field.childrenHeader.label'
+      },
+      configuration: { styles: { fontVariant: 'h3' } },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: requireMotherDetails
+        }
+      ]
+    },
+    {
+      id: 'mother.livingChildren',
+      type: FieldType.NUMBER,
+      analytics: true,
+      required: false,
+      label: {
+        defaultMessage: 'Living',
+        description: 'Label for number of living children',
+        id: 'event.birth.action.declare.form.section.mother.field.livingChildren.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: requireMotherDetails
         }
       ],
-      validation: [
-        nationalIdValidator('mother.nid'),
-        {
-          message: {
-            defaultMessage: 'National id must be unique',
-            description: 'This is the error message for non-unique ID Number',
-            id: 'event.birth.action.declare.form.nid.unique'
-          },
-          validator: and(
-            not(field('mother.nid').isEqualTo(field('father.nid'))),
-            not(field('mother.nid').isEqualTo(field('informant.nid')))
-          )
-        }
-      ]
+      configuration: {
+        min: 0
+      }
     },
     {
-      id: 'mother.passport',
-      type: FieldType.TEXT,
-      required: true,
+      id: 'mother.deceasedChildren',
+      type: FieldType.NUMBER,
+      analytics: true,
+      required: false,
       label: {
-        defaultMessage: 'ID Number',
-        description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.person.field.passport.label'
+        defaultMessage: 'Deceased',
+        description: 'Label for number of deceased children',
+        id: 'event.birth.action.declare.form.section.mother.field.deceasedChildren.label'
       },
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: and(
-            field('mother.idType').isEqualTo(IdType.PASSPORT),
-            requireMotherDetails
-          )
+          conditional: requireMotherDetails
         }
-      ]
-    },
-    {
-      id: 'mother.brn',
-      type: FieldType.TEXT,
-      required: true,
-      label: {
-        defaultMessage: 'ID Number',
-        description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.person.field.brn.label'
-      },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: and(
-            field('mother.idType').isEqualTo(IdType.BIRTH_REGISTRATION_NUMBER),
-            requireMotherDetails
-          )
-        }
-      ]
+      ],
+      configuration: {
+        min: 0
+      }
     },
     {
       id: 'mother.addressDivider1',
@@ -340,7 +631,7 @@ export const mother = defineFormPage({
       id: 'mother.addressHelper',
       type: FieldType.HEADING,
       label: {
-        defaultMessage: 'Usual place of residence',
+        defaultMessage: 'Usual residence',
         description: 'This is the label for the field',
         id: 'event.birth.action.declare.form.section.person.field.addressHelper.label'
       },
@@ -390,7 +681,7 @@ export const mother = defineFormPage({
         )
       ],
       defaultValue: {
-        country: 'FAR',
+        country: 'TUV',
         addressType: AddressType.DOMESTIC,
         administrativeArea: user('administrativeAreaId')
       },
@@ -402,42 +693,6 @@ export const mother = defineFormPage({
       id: 'mother.addressDivider2',
       type: FieldType.DIVIDER,
       label: emptyMessage,
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: requireMotherDetails
-        }
-      ]
-    },
-    {
-      id: 'mother.maritalStatus',
-      type: FieldType.SELECT,
-      analytics: true,
-      required: false,
-      label: {
-        defaultMessage: 'Marital Status',
-        description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.person.field.maritalStatus.label'
-      },
-      options: maritalStatusOptions,
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: requireMotherDetails
-        }
-      ]
-    },
-    {
-      id: 'mother.educationalAttainment',
-      type: FieldType.SELECT,
-      required: false,
-      analytics: true,
-      label: {
-        defaultMessage: 'Level of education',
-        description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.person.field.educationalAttainment.label'
-      },
-      options: educationalAttainmentOptions,
       conditionals: [
         {
           type: ConditionalType.SHOW,
@@ -461,26 +716,6 @@ export const mother = defineFormPage({
           conditional: requireMotherDetails
         }
       ]
-    },
-    {
-      id: 'mother.previousBirths',
-      type: FieldType.NUMBER,
-      analytics: true,
-      required: false,
-      label: {
-        defaultMessage: 'No. of previous births',
-        description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.mother.field.previousBirths.label'
-      },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: requireMotherDetails
-        }
-      ],
-      configuration: {
-        min: 0
-      }
     }
   ]
 })

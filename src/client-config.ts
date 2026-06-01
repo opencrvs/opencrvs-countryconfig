@@ -12,7 +12,7 @@ import { defineClientConfig } from '@opencrvs/toolkit/application-config'
 
 export default defineClientConfig({
   // Country code in uppercase ALPHA-3 format
-  COUNTRY: 'FAR',
+  COUNTRY: 'TUV',
   LANGUAGES: ['en', 'fr'],
   SENTRY: '',
   REGISTER_BACKGROUND: { backgroundColor: '36304E' },

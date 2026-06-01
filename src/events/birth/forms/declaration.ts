@@ -11,6 +11,7 @@
 
 import { defineDeclarationForm, FieldType } from '@opencrvs/toolkit/events'
 import { child } from './pages/child'
+import { nameChanges } from './pages/nameChanges'
 import { informant } from './pages/informant'
 import { introduction } from './pages/introduction'
 import { mother } from './pages/mother'
@@ -55,10 +56,10 @@ export const BIRTH_DECLARATION_REVIEW = {
 
 export const BIRTH_DECLARATION_FORM = defineDeclarationForm({
   label: {
-    defaultMessage: 'Birth decalration form',
+    defaultMessage: 'Birth declaration form',
     id: 'event.birth.action.declare.form.label',
     description: 'This is what this form is referred as in the system'
   },
 
-  pages: [introduction, child, informant, mother, father, documents]
+  pages: [introduction, child, nameChanges, mother, father, informant, documents]
 })

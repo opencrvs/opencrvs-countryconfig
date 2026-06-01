@@ -27,36 +27,54 @@ import { not } from '@opencrvs/toolkit/conditionals'
 import {
   createSelectOptions,
   emptyMessage,
+  BIRTH_DELAYED_REGISTRATION_TARGET_DAYS,
   BIRTH_LATE_REGISTRATION_TARGET_DAYS,
   defaultStreetAddressConfiguration,
   getNestedFieldValidators
 } from '@countryconfig/events/utils'
 import {
-  farajalandNameConfig,
+  tuvaluNameConfig,
   invalidNameValidator
 } from '@countryconfig/events/birth/validators'
 
 const GenderTypes = {
   MALE: 'male',
   FEMALE: 'female',
-  UNKNOWN: 'unknown'
 } as const
 
 const TypeOfBirth = {
   SINGLE: 'SINGLE',
   TWIN: 'TWIN',
   TRIPLET: 'TRIPLET',
-  QUADRUPLET: 'QUADRUPLET',
   HIGHER_MULTIPLE_DELIVERY: 'HIGHER_MULTIPLE_DELIVERY'
 } as const
 
+const BirthOrderTwin = {
+  ELDER: 'ELDER',
+  YOUNGER: 'YOUNGER'
+} as const
+
+const BirthOrderTriplet = {
+  FIRST: 'FIRST',
+  SECOND: 'SECOND',
+  THIRD: 'THIRD'
+} as const
+
+const BirthOrderHigher = {
+  FIRST: 'FIRST',
+  SECOND: 'SECOND',
+  THIRD: 'THIRD',
+  FOURTH: 'FOURTH',
+  FIFTH: 'FIFTH',
+  SIXTH: 'SIXTH',
+  SEVENTH: 'SEVENTH'
+} as const
+
 const AttendantAtBirth = {
-  PHYSICIAN: 'PHYSICIAN',
+  DOCTOR: 'DOCTOR',
   NURSE: 'NURSE',
   MIDWIFE: 'MIDWIFE',
-  OTHER_PARAMEDICAL_PERSONNEL: 'OTHER_PARAMEDICAL_PERSONNEL',
-  LAYPERSON: 'LAYPERSON',
-  TRADITIONAL_BIRTH_ATTENDANT: 'TRADITIONAL_BIRTH_ATTENDANT',
+  OTHER: 'OTHER',
   NONE: 'NONE'
 } as const
 
@@ -76,11 +94,6 @@ const genderMessageDescriptors = {
     defaultMessage: 'Female',
     description: 'Label for option female',
     id: 'form.field.label.sexFemale'
-  },
-  UNKNOWN: {
-    defaultMessage: 'Unknown',
-    description: 'Label for option unknown',
-    id: 'form.field.label.sexUnknown'
   }
 } satisfies Record<keyof typeof GenderTypes, TranslationConfig>
 
@@ -100,11 +113,6 @@ const typeOfBirthMessageDescriptors = {
     description: 'Label for triplet birth',
     id: 'form.field.label.birthTypeTriplet'
   },
-  QUADRUPLET: {
-    defaultMessage: 'Quadruplet',
-    description: 'Label for quadruplet birth',
-    id: 'form.field.label.birthTypeQuadruplet'
-  },
   HIGHER_MULTIPLE_DELIVERY: {
     defaultMessage: 'Higher multiple delivery',
     description: 'Label for higher multiple delivery birth',
@@ -112,11 +120,80 @@ const typeOfBirthMessageDescriptors = {
   }
 } satisfies Record<keyof typeof TypeOfBirth, TranslationConfig>
 
+const birthOrderTwinMessageDescriptors = {
+  ELDER: {
+    defaultMessage: 'Elder of twins',
+    description: 'Label for elder twin birth order',
+    id: 'form.field.label.birthOrderTwinElder'
+  },
+  YOUNGER: {
+    defaultMessage: 'Younger of twins',
+    description: 'Label for younger twin birth order',
+    id: 'form.field.label.birthOrderTwinYounger'
+  }
+} satisfies Record<keyof typeof BirthOrderTwin, TranslationConfig>
+
+const birthOrderTripletMessageDescriptors = {
+  FIRST: {
+    defaultMessage: 'First born',
+    description: 'Label for first born triplet',
+    id: 'form.field.label.birthOrderTripletFirst'
+  },
+  SECOND: {
+    defaultMessage: 'Second born',
+    description: 'Label for second born triplet',
+    id: 'form.field.label.birthOrderTripletSecond'
+  },
+  THIRD: {
+    defaultMessage: 'Third born',
+    description: 'Label for third born triplet',
+    id: 'form.field.label.birthOrderTripletThird'
+  }
+} satisfies Record<keyof typeof BirthOrderTriplet, TranslationConfig>
+
+const birthOrderHigherMessageDescriptors = {
+  FIRST: {
+    defaultMessage: 'First born',
+    description: 'Label for first born higher multiple delivery',
+    id: 'form.field.label.birthOrderHigherFirst'
+  },
+  SECOND: {
+    defaultMessage: 'Second born',
+    description: 'Label for second born higher multiple delivery',
+    id: 'form.field.label.birthOrderHigherSecond'
+  },
+  THIRD: {
+    defaultMessage: 'Third born',
+    description: 'Label for third born higher multiple delivery',
+    id: 'form.field.label.birthOrderHigherThird'
+  },
+  FOURTH: {
+    defaultMessage: 'Fourth born',
+    description: 'Label for fourth born higher multiple delivery',
+    id: 'form.field.label.birthOrderHigherFourth'
+  },
+  FIFTH: {
+    defaultMessage: 'Fifth born',
+    description: 'Label for fifth born higher multiple delivery',
+    id: 'form.field.label.birthOrderHigherFifth'
+  },
+  SIXTH: {
+    defaultMessage: 'Sixth born',
+    description: 'Label for sixth born higher multiple delivery',
+    id: 'form.field.label.birthOrderHigherSixth'
+  },
+  SEVENTH: {
+    defaultMessage: 'Seventh born',
+    description: 'Label for seventh born higher multiple delivery',
+    id: 'form.field.label.birthOrderHigherSeventh'
+  }
+} satisfies Record<keyof typeof BirthOrderHigher, TranslationConfig>
+
 const attendantAtBirthMessageDescriptors = {
-  PHYSICIAN: {
-    defaultMessage: 'Physician',
-    description: 'Label for physician attendant',
-    id: 'form.field.label.attendantAtBirthPhysician'
+  DOCTOR: {
+    defaultMessage: 'Doctor',
+    description: 'Label for doctor attendant',
+    id: 'form.field.label.attendantAtBirthDoctor'
   },
   NURSE: {
     defaultMessage: 'Nurse',
@@ -128,20 +205,10 @@ const attendantAtBirthMessageDescriptors = {
     description: 'Label for midwife attendant',
     id: 'form.field.label.attendantAtBirthMidwife'
   },
-  OTHER_PARAMEDICAL_PERSONNEL: {
-    defaultMessage: 'Other paramedical personnel',
-    description: 'Label for other paramedical personnel',
-    id: 'form.field.label.attendantAtBirthOtherParamedicalPersonnel'
-  },
-  LAYPERSON: {
-    defaultMessage: 'Layperson',
-    description: 'Label for layperson attendant',
-    id: 'form.field.label.attendantAtBirthLayperson'
-  },
-  TRADITIONAL_BIRTH_ATTENDANT: {
-    defaultMessage: 'Traditional birth attendant',
-    description: 'Label for traditional birth attendant',
-    id: 'form.field.label.attendantAtBirthTraditionalBirthAttendant'
+  OTHER: {
+    defaultMessage: 'Other',
+    description: 'Label for other attendant',
+    id: 'form.field.label.attendantAtBirthOther'
   },
   NONE: {
     defaultMessage: 'None',
@@ -162,7 +229,7 @@ export const placeOfBirthMessageDescriptors = {
     id: 'form.field.label.privateHome'
   },
   OTHER: {
-    defaultMessage: 'Other',
+    defaultMessage: 'Other address',
     description: 'Select item for Other location',
     id: 'form.field.label.otherInstitution'
   }
@@ -196,7 +263,7 @@ const placeOfBirthOptions = [
   },
   {
     value: PlaceOfBirth.OTHER,
-    label: placeOfBirthMessageDescriptors.OTHER.defaultMessage,
+    label: placeOfBirthMessageDescriptors.OTHER,
     conditionals: [
       {
         type: ConditionalType.SHOW,
@@ -209,6 +276,21 @@ const placeOfBirthOptions = [
 const typeOfBirthOptions = createSelectOptions(
   TypeOfBirth,
   typeOfBirthMessageDescriptors
+)
+
+const birthOrderTwinOptions = createSelectOptions(
+  BirthOrderTwin,
+  birthOrderTwinMessageDescriptors
+)
+
+const birthOrderTripletOptions = createSelectOptions(
+  BirthOrderTriplet,
+  birthOrderTripletMessageDescriptors
+)
+
+const birthOrderHigherOptions = createSelectOptions(
+  BirthOrderHigher,
+  birthOrderHigherMessageDescriptors
 )
 
 const attendantAtBirthOptions = createSelectOptions(
@@ -229,7 +311,7 @@ export const child = defineFormPage({
       id: 'child.name',
       type: FieldType.NAME,
       required: true,
-      configuration: farajalandNameConfig,
+      configuration: tuvaluNameConfig,
       hideLabel: true,
       label: {
         defaultMessage: "Child's name",
@@ -271,6 +353,43 @@ export const child = defineFormPage({
         description: 'This is the label for the field',
         id: 'event.birth.action.declare.form.section.child.field.dob.label'
       }
+    },
+    {
+      id: 'child.lateRegistrationNotice',
+      type: FieldType.PARAGRAPH,
+      label: {
+        defaultMessage:
+          "Today's date is greater than 6 months after the date of birth. This is a delayed registration.",
+        description:
+          'Paragraph notice shown when registration is more than 6 months after birth',
+        id: 'event.birth.action.declare.form.section.child.field.lateRegistrationNotice.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(
+            field('child.dob').isBefore().now(),
+            not(
+              field('child.dob')
+                .isAfter()
+                .days(BIRTH_DELAYED_REGISTRATION_TARGET_DAYS)
+                .inPast()
+            )
+          )
+        },
+        {
+          type: ConditionalType.DISPLAY_ON_REVIEW,
+          conditional: and(
+            field('child.dob').isBefore().now(),
+            not(
+              field('child.dob')
+                .isAfter()
+                .days(BIRTH_DELAYED_REGISTRATION_TARGET_DAYS)
+                .inPast()
+            )
+          )
+        }
+      ]
     },
     {
       id: 'child.reason',
@@ -378,7 +497,7 @@ export const child = defineFormPage({
       ],
       parent: field('child.placeOfBirth'),
       defaultValue: {
-        country: 'FAR',
+        country: 'TUV',
         addressType: AddressType.DOMESTIC,
         administrativeArea: user('administrativeAreaId')
       },
@@ -426,7 +545,7 @@ export const child = defineFormPage({
       ],
       parent: field('child.placeOfBirth'),
       defaultValue: {
-        country: 'FAR',
+        country: 'TUV',
         addressType: AddressType.DOMESTIC,
         administrativeArea: user('administrativeAreaId')
       },
@@ -464,16 +583,18 @@ export const child = defineFormPage({
       label: emptyMessage
     },
     {
-      id: 'child.attendantAtBirth',
-      type: FieldType.SELECT,
+      id: 'child.timeOfBirth',
       analytics: true,
+      type: FieldType.TIME,
       required: false,
       label: {
-        defaultMessage: 'Attendant at birth',
+        defaultMessage: 'Time of birth',
         description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.child.field.attendantAtBirth.label'
+        id: 'event.birth.action.declare.form.section.child.field.timeOfBirth.label'
       },
-      options: attendantAtBirthOptions
+      configuration: {
+        use12HourFormat: false
+      }
     },
     {
       id: 'child.birthType',
@@ -488,6 +609,64 @@ export const child = defineFormPage({
       options: typeOfBirthOptions
     },
     {
+      id: 'child.birthOrderTwin',
+      type: FieldType.SELECT,
+      required: false,
+      analytics: true,
+      label: {
+        defaultMessage: 'Order of birth (twins)',
+        description: 'This is the label for the birth order field for twins',
+        id: 'event.birth.action.declare.form.section.child.field.birthOrderTwin.label'
+      },
+      options: birthOrderTwinOptions,
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: field('child.birthType').isEqualTo(TypeOfBirth.TWIN)
+        }
+      ]
+    },
+    {
+      id: 'child.birthOrderTriplet',
+      type: FieldType.SELECT,
+      required: false,
+      analytics: true,
+      label: {
+        defaultMessage: 'Order of birth (triplets)',
+        description:
+          'This is the label for the birth order field for triplets',
+        id: 'event.birth.action.declare.form.section.child.field.birthOrderTriplet.label'
+      },
+      options: birthOrderTripletOptions,
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: field('child.birthType').isEqualTo(TypeOfBirth.TRIPLET)
+        }
+      ]
+    },
+    {
+      id: 'child.birthOrderHigher',
+      type: FieldType.SELECT,
+      required: false,
+      analytics: true,
+      label: {
+        defaultMessage: 'Order of birth (higher multiple delivery)',
+        description:
+          'This is the label for the birth order field for higher multiple delivery',
+        id: 'event.birth.action.declare.form.section.child.field.birthOrderHigher.label'
+      },
+      options: birthOrderHigherOptions,
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: field('child.birthType').isEqualTo(
+            TypeOfBirth.HIGHER_MULTIPLE_DELIVERY
+          )
+        }
+      ]
+    },
+    {
       id: 'child.weightAtBirth',
       analytics: true,
       type: FieldType.NUMBER,
@@ -500,12 +679,12 @@ export const child = defineFormPage({
       validation: [
         {
           message: {
-            defaultMessage: 'Must be within 0 and 6',
+            defaultMessage: 'Must be within 0.5 and 6 kg',
             description: 'This is the error message for invalid number range',
             id: 'error.child.weightAtBirth.invalidNumberRange'
           },
           validator: or(
-            field('child.weightAtBirth').isBetween(0, 6),
+            field('child.weightAtBirth').isBetween(0.5, 6),
             field('child.weightAtBirth').isUndefined()
           )
         }
@@ -513,11 +692,82 @@ export const child = defineFormPage({
       configuration: {
         min: 0,
         postfix: {
-          defaultMessage: 'Kilograms (kg)',
+          defaultMessage: 'kg',
           description: 'This is the postfix for the weight field',
           id: 'event.birth.action.declare.form.section.child.field.weightAtBirth.postfix'
         }
       }
+    },
+    {
+      id: 'child.divider3',
+      type: FieldType.DIVIDER,
+      label: emptyMessage
+    },
+    {
+      id: 'child.attendantAtBirth',
+      type: FieldType.SELECT,
+      analytics: true,
+      required: false,
+      label: {
+        defaultMessage: 'Attendant at birth',
+        description: 'This is the label for the field',
+        id: 'event.birth.action.declare.form.section.child.field.attendantAtBirth.label'
+      },
+      options: attendantAtBirthOptions
+    },
+    {
+      id: 'child.attendantOther',
+      type: FieldType.TEXT,
+      required: false,
+      label: {
+        defaultMessage: 'Other (please specify)',
+        description: 'Label for text field when attendant at birth is Other',
+        id: 'event.birth.action.declare.form.section.child.field.attendantOther.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: field('child.attendantAtBirth').isEqualTo(
+            AttendantAtBirth.OTHER
+          )
+        }
+      ]
+    },
+    {
+      id: 'child.attendantFullName',
+      type: FieldType.TEXT,
+      required: false,
+      label: {
+        defaultMessage: 'Attendant full name',
+        description: 'Label for attendant full name field',
+        id: 'event.birth.action.declare.form.section.child.field.attendantFullName.label'
+      }
+    },
+    {
+      id: 'child.divider4',
+      type: FieldType.DIVIDER,
+      label: emptyMessage
+    },
+    {
+      id: 'child.nameChangedAfterRegistration',
+      type: FieldType.CHECKBOX,
+      required: false,
+      analytics: false,
+      defaultValue: false,
+      label: {
+        defaultMessage: 'Name changed after registration (via deed poll)',
+        description:
+          'Checkbox to indicate the child name was changed after registration',
+        id: 'event.birth.action.declare.form.section.child.field.nameChangedAfterRegistration.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.DISPLAY_ON_REVIEW,
+          conditional: field(
+            'child.nameChangedAfterRegistration'
+          ).isEqualTo(true)
+        }
+      ]
     }
   ]
 })
