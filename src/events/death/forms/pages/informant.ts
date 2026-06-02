@@ -421,6 +421,47 @@ export const informant = defineFormPage({
       parent: field('informant.relation')
     },
     {
+      id: 'informant.addressDivider1',
+      type: FieldType.DIVIDER,
+      label: emptyMessage,
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(
+            informantOtherThanSpouse,
+            field('informant.addressSameAs').isEqualTo(YesNoTypes.NO)
+          )
+        }
+      ],
+      parent: field('informant.relation')
+    },
+    {
+      id: 'informant.addressHelper',
+      type: FieldType.HEADING,
+      label: {
+        defaultMessage: 'Usual residence',
+        description: 'This is the label for the field',
+        id: 'event.death.action.declare.form.section.informant.field.addressHelper.label'
+      },
+      configuration: {
+        styles: { fontVariant: 'h3' }
+      },
+      conditionals: [
+        {
+          type: ConditionalType.DISPLAY_ON_REVIEW,
+          conditional: never()
+        },
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(
+            informantOtherThanSpouse,
+            field('informant.addressSameAs').isEqualTo(YesNoTypes.NO)
+          )
+        }
+      ],
+      parent: field('informant.relation')
+    },
+    {
       id: 'informant.addressSameAs',
       type: FieldType.RADIO_GROUP,
       options: yesNoRadioOptions,
@@ -443,47 +484,6 @@ export const informant = defineFormPage({
           )
         }
       ]
-    },
-    {
-      id: 'informant.addressDivider1',
-      type: FieldType.DIVIDER,
-      label: emptyMessage,
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: and(
-            informantOtherThanSpouse,
-            field('informant.addressSameAs').isEqualTo(YesNoTypes.NO)
-          )
-        }
-      ],
-      parent: field('informant.relation')
-    },
-    {
-      id: 'informant.addressHelper',
-      type: FieldType.HEADING,
-      label: {
-        defaultMessage: 'Usual place of residence',
-        description: 'This is the label for the field',
-        id: 'event.death.action.declare.form.section.informant.field.addressHelper.label'
-      },
-      configuration: {
-        styles: { fontVariant: 'h3' }
-      },
-      conditionals: [
-        {
-          type: ConditionalType.DISPLAY_ON_REVIEW,
-          conditional: never()
-        },
-        {
-          type: ConditionalType.SHOW,
-          conditional: and(
-            informantOtherThanSpouse,
-            field('informant.addressSameAs').isEqualTo(YesNoTypes.NO)
-          )
-        }
-      ],
-      parent: field('informant.relation')
     },
     {
       id: 'informant.address',
