@@ -1914,6 +1914,7 @@ event.death.action.declare.form.section.spouse.field.idType.option.passport,Opti
 event.death.action.declare.form.section.spouse.field.idType.option.other,Option for spouse ID type other,Other,Autre
 event.death.action.declare.form.section.spouse.field.brn.label,Label for spouse birth registration number,Birth registration number,Numéro d'enregistrement de naissance
 event.death.action.declare.form.section.spouse.field.otherId.label,Label for spouse other ID number,Other ID number,Autre numéro d'identifiant
+event.death.action.declare.form.section.spouse.field.brn.helperText,Label, Search for a birth record. If found, details will auto-fill. Otherwise, continue with manual entry, 
 form.death.livingChildren.title,Form section title for living children,Living children,Enfants vivants
 event.death.action.declare.form.section.livingChildren.field.numberOfChildren.label,Label for number of living children,Number of living children,Nombre d'enfants vivants
 event.death.action.declare.form.section.livingChildren.field.numberOfChildren.option.1,Option for 1 child,1,1
