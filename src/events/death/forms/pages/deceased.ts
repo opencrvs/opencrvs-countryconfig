@@ -357,7 +357,7 @@ export const deceased = defineFormPage({
       validation: [
         {
           message: {
-            defaultMessage: 'Must be a valid date of birth',
+            defaultMessage: 'Cannot be a future date',
             description: 'This is the error message for invalid date',
             id: 'event.death.action.declare.form.section.deceased.field.dob.error'
           },
