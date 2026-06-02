@@ -16,7 +16,7 @@ import {
   FieldType
 } from '@opencrvs/toolkit/events'
 import {
-  farajalandNameConfig,
+  tuvaluNameConfig,
   invalidNameValidator,
   nationalIdValidator
 } from '@countryconfig/events/birth/validators'
@@ -281,7 +281,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     id: 'collector.OTHER.name',
     type: FieldType.NAME,
     required: true,
-    configuration: farajalandNameConfig,
+    configuration: tuvaluNameConfig,
     hideLabel: true,
     label: {
       defaultMessage: "Collector's name",

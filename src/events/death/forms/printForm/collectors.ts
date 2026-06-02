@@ -111,11 +111,7 @@ export const printCertificateCollectors: FieldConfig[] = [
   },
   ...getFieldConfigForInformant(InformantType.SON),
   ...getFieldConfigForInformant(InformantType.DAUGHTER),
-  ...getFieldConfigForInformant(InformantType.SON_IN_LAW),
-  ...getFieldConfigForInformant(InformantType.DAUGHTER_IN_LAW),
   ...getFieldConfigForInformant(InformantType.MOTHER),
   ...getFieldConfigForInformant(InformantType.FATHER),
-  ...getFieldConfigForInformant(InformantType.GRANDSON),
-  ...getFieldConfigForInformant(InformantType.GRANDDAUGHTER),
   ...getFieldConfigForInformant(InformantType.OTHER)
 ]
