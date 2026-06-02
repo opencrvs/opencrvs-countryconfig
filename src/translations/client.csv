@@ -1814,24 +1814,24 @@ form.section.information.death.registrar.bulletList.label,Guidance: Explaining d
 event.death.action.declare.form.section.event.field.referredToPolice.label,Label for referred to police field,Has this death been referred to the police?,Cette mort a-t-elle été signalée à la police ?
 event.death.action.declare.form.section.event.field.magistrateInquiryRequired.label,Label for magistrate inquiry required field,Is a magistrate's inquiry required?,Une enquête du magistrat est-elle requise ?
 event.death.action.declare.form.section.event.field.magistrateFindingsCause.label,Label for magistrate findings cause field,Magistrate's findings on cause of death,Conclusions du magistrat sur la cause du décès
-event.death.action.declare.form.section.event.field.magistrateFindingsCause.placeholder,Placeholder for magistrate findings cause field,Enter magistrate's findings,Saisir les conclusions du magistrat
+event.death.action.declare.form.section.event.field.magistrateFindingsCause.helperText,Helper text for magistrate findings cause field,Enter magistrate's findings,Saisir les conclusions du magistrat
 event.death.action.declare.form.section.event.field.certifyingMedicalOfficer.label,Label for certifying medical officer field,Name of certifying medical officer,Nom du médecin certificateur
 event.death.action.declare.form.section.event.field.dateLastSeenAlive.label,Label for date last seen alive field,Date last seen alive,Date à laquelle il a été vu vivant pour la dernière fois
-event.death.action.declare.form.section.event.field.dateLastSeenAlive.placeholder,Placeholder for date last seen alive,Enter date,Saisir la date
+event.death.action.declare.form.section.event.field.dateLastSeenAlive.helperText,H elper text for date last seen alive,Enter date,Saisir la date
 event.death.action.declare.form.section.event.field.notPersonallyAttended.label,Label for not personally attended checkbox,Patient was not personally attended by the certifying medical officer,Le patient n'a pas été personnellement pris en charge par le médecin certificateur
 event.death.action.declare.form.section.event.field.causeSection1Heading.label,Label for cause section 1 heading,Section I. Cause of death,Section I. Cause du décès
 event.death.action.declare.form.section.event.field.causeDirectSubheading.label,Label for cause direct subheading,Disease or condition directly leading to death,Maladie ou état morbide ayant directement entraîné le décès
 event.death.action.declare.form.section.event.field.causeA.label,Label for cause A field,Cause A,Cause A
-event.death.action.declare.form.section.event.field.causeA.placeholder,Placeholder for cause A field,Enter direct cause of death,Saisir la cause directe du décès
+event.death.action.declare.form.section.event.field.causeA.helperText,H elper text for cause A field,Enter direct cause of death,Saisir la cause directe du décès
 event.death.action.declare.form.section.event.field.durationA.label,Label for duration A field,Duration A,Durée A
 event.death.action.declare.form.section.event.field.causeB.label,Label for cause B field,Cause B (antecedent),Cause B (antécédent)
-event.death.action.declare.form.section.event.field.causeB.placeholder,Placeholder for cause B field,Enter antecedent cause B,Saisir la cause antécédente B
+event.death.action.declare.form.section.event.field.causeB.helperText,H elper text for cause B field,Enter antecedent cause B,Saisir la cause antécédente B
 event.death.action.declare.form.section.event.field.durationB.label,Label for duration B field,Duration B,Durée B
 event.death.action.declare.form.section.event.field.causeC.label,Label for cause C field,Cause C (antecedent),Cause C (antécédent)
-event.death.action.declare.form.section.event.field.causeC.placeholder,Placeholder for cause C field,Enter antecedent cause C,Saisir la cause antécédente C
+event.death.action.declare.form.section.event.field.causeC.helperText,H elper text for cause C field,Enter antecedent cause C,Saisir la cause antécédente C
 event.death.action.declare.form.section.event.field.durationC.label,Label for duration C field,Duration C,Durée C
 event.death.action.declare.form.section.event.field.causeD.label,Label for cause D field,Cause D (underlying),Cause D (sous-jacente)
-event.death.action.declare.form.section.event.field.causeD.placeholder,Placeholder for cause D field,Enter underlying cause D,Saisir la cause sous-jacente D
+event.death.action.declare.form.section.event.field.causeD.helperText,H elper text for cause D field,Enter underlying cause D,Saisir la cause sous-jacente D
 event.death.action.declare.form.section.event.field.durationD.label,Label for duration D field,Duration D,Durée D
 event.death.action.declare.form.section.event.field.causeSection2Heading.label,Label for cause section 2 heading,Section II. Other significant conditions,Section II. Autres affections importantes
 event.death.action.declare.form.section.event.field.causeOtherSubheading.label,Label for cause other subheading,Other conditions that contributed to death but not related to the disease or condition causing it,Autres affections ayant contribué au décès mais sans rapport avec la maladie ou l'état morbide ayant causé le décès
