@@ -14,6 +14,7 @@ import {
   TranslationConfig,
   ConditionalType,
   and,
+  or,
   FieldType,
   AddressType,
   PageTypes,
@@ -23,24 +24,96 @@ import {
 import { not, never } from '@opencrvs/toolkit/conditionals'
 
 import {
-  IdType,
-  idTypeOptions,
-  maritalStatusOptions,
   createSelectOptions,
   emptyMessage,
   defaultStreetAddressConfiguration,
-  getNestedFieldValidators
+  getNestedFieldValidators,
+  yesNoRadioOptions
 } from '@countryconfig/events/utils'
 import {
-  farajalandNameConfig,
-  invalidNameValidator,
-  nationalIdValidator
+  tuvaluNameConfig,
+  invalidNameValidator
 } from '@countryconfig/events/birth/validators'
 
+// -----------------------------------------------------------------
+// ID types for the death form (Birth certificate / Passport / Other)
+// -----------------------------------------------------------------
+const DeathIdType = {
+  BIRTH_CERTIFICATE: 'BIRTH_CERTIFICATE',
+  PASSPORT: 'PASSPORT',
+  OTHER: 'OTHER'
+} as const
+
+const deathIdTypeMessageDescriptors = {
+  BIRTH_CERTIFICATE: {
+    defaultMessage: 'Birth certificate',
+    description: 'Option for form field: Type of ID',
+    id: 'event.death.action.declare.form.section.deceased.field.idType.option.birthCertificate'
+  },
+  PASSPORT: {
+    defaultMessage: 'Passport',
+    description: 'Option for form field: Type of ID',
+    id: 'event.death.action.declare.form.section.deceased.field.idType.option.passport'
+  },
+  OTHER: {
+    defaultMessage: 'Other',
+    description: 'Option for form field: Type of ID',
+    id: 'event.death.action.declare.form.section.deceased.field.idType.option.other'
+  }
+} satisfies Record<keyof typeof DeathIdType, TranslationConfig>
+
+const deathIdTypeOptions = createSelectOptions(
+  DeathIdType,
+  deathIdTypeMessageDescriptors
+)
+
+// -----------------------------------------------------------------
+// Marital status options (death-specific)
+// -----------------------------------------------------------------
+const deceasedMaritalStatusOptions = [
+  {
+    value: 'MARRIED',
+    label: {
+      defaultMessage: 'Married',
+      description: 'Option for form field: Marital status',
+      id: 'form.field.label.maritalStatusMarried'
+    }
+  },
+  {
+    value: 'SINGLE',
+    label: {
+      defaultMessage: 'Single (never married)',
+      description: 'Option for form field: Marital status',
+      id: 'event.death.action.declare.form.section.deceased.field.maritalStatus.option.single'
+    }
+  },
+  {
+    value: 'DIVORCED',
+    label: {
+      defaultMessage: 'Divorced',
+      description: 'Option for form field: Marital status',
+      id: 'form.field.label.maritalStatusDivorced'
+    }
+  },
+  {
+    value: 'WIDOWED',
+    label: {
+      defaultMessage: 'Widowed',
+      description: 'Option for form field: Marital status',
+      id: 'form.field.label.maritalStatusWidowed'
+    }
+  }
+]
+
+const isMarried = field('deceased.maritalStatus').isEqualTo('MARRIED')
+const notHospitalClerk = not(user.hasRole('HOSPITAL_CLERK'))
+
+// -----------------------------------------------------------------
+// Gender options
+// -----------------------------------------------------------------
 const GenderTypes = {
   MALE: 'male',
-  FEMALE: 'female',
-  UNKNOWN: 'unknown'
+  FEMALE: 'female'
 } as const
 
 const genderMessageDescriptors = {
@@ -53,11 +126,6 @@ const genderMessageDescriptors = {
     defaultMessage: 'Female',
     description: 'Label for option female',
     id: 'form.field.label.sexFemale'
-  },
-  UNKNOWN: {
-    defaultMessage: 'Unknown',
-    description: 'Label for option unknown',
-    id: 'form.field.label.sexUnknown'
   }
 } satisfies Record<keyof typeof GenderTypes, TranslationConfig>
 
@@ -72,10 +140,179 @@ export const deceased = defineFormPage({
     id: 'form.death.deceased.title'
   },
   fields: [
+    // ---- Nationality (hidden from hospital clerks) ----
+    {
+      id: 'deceased.nationality',
+      type: FieldType.COUNTRY,
+      required: true,
+      analytics: true,
+      label: {
+        defaultMessage: 'Nationality',
+        description: 'This is the label for the field',
+        id: 'event.death.action.declare.form.section.deceased.field.nationality.label'
+      },
+      defaultValue: 'TUV',
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: notHospitalClerk
+        }
+      ]
+    },
+    // ---- Form of ID (hidden from hospital clerks) ----
+    {
+      id: 'deceased.idType',
+      type: FieldType.SELECT,
+      required: true,
+      analytics: true,
+      label: {
+        defaultMessage: 'Form of ID',
+        description: 'This is the label for the field',
+        id: 'event.death.action.declare.form.section.deceased.field.idType.label'
+      },
+      options: deathIdTypeOptions,
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: notHospitalClerk
+        }
+      ]
+    },
+    // ---- Birth registration number (shown if Birth certificate, hidden from Health) ----
+    {
+      id: 'deceased.brn',
+      type: FieldType.SEARCH,
+      required: false,
+      label: {
+        defaultMessage: 'Birth registration number',
+        description: 'This is the label for the field',
+        id: 'event.death.action.declare.form.section.deceased.field.brn.label'
+      },
+      helperText: {
+        defaultMessage:
+          'Search for a birth record. If found, details will auto-fill. Otherwise, continue with manual entry.',
+        description: 'Helper text for birth registration number field',
+        id: 'event.death.action.declare.form.section.deceased.field.brn.helperText'
+      },
+      configuration: {
+        query: {
+          type: 'or',
+          clauses: [
+            {
+              'legalStatuses.REGISTERED.registrationNumber': {
+                term: '{term}',
+                type: 'exact'
+              }
+            }
+          ]
+        },
+        limit: 10,
+        offset: 0,
+        validation: {
+          validator: or(
+            field('deceased.brn').matches('^[A-Za-z0-9-]+$'),
+            field('deceased.brn').isFalsy()
+          ),
+          message: {
+            defaultMessage: 'Invalid input',
+            description: 'Error message when generic field is invalid',
+            id: 'error.invalidInput'
+          }
+        }
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(
+            notHospitalClerk,
+            field('deceased.idType').isEqualTo(DeathIdType.BIRTH_CERTIFICATE)
+          )
+        }
+      ]
+    },
+    {
+      id: 'deceased.brnText',
+      type: FieldType.TEXT,
+      required: false,
+      label: {
+        defaultMessage: 'Birth registration number',
+        description: 'This is the label for the field',
+        id: 'event.death.action.declare.form.section.deceased.field.brnText.label'
+      },
+      value: field('deceased.brn').getByPath([
+        'data',
+        'firstResult',
+        'legalStatuses',
+        'REGISTERED',
+        'registrationNumber'
+      ]),
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(
+            notHospitalClerk,
+            field('deceased.idType').isEqualTo(DeathIdType.BIRTH_CERTIFICATE)
+          )
+        }
+      ]
+    },
+    // ---- Passport number (shown if Passport, hidden from Health) ----
+    {
+      id: 'deceased.passport',
+      type: FieldType.TEXT,
+      required: false,
+      label: {
+        defaultMessage: 'Passport number',
+        description: 'This is the label for the field',
+        id: 'event.death.action.declare.form.section.deceased.field.passport.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(
+            notHospitalClerk,
+            field('deceased.idType').isEqualTo(DeathIdType.PASSPORT)
+          )
+        }
+      ]
+    },
+    // ---- Other ID number (shown if Other, hidden from Health) ----
+    {
+      id: 'deceased.otherId',
+      type: FieldType.TEXT,
+      required: false,
+      label: {
+        defaultMessage: 'ID number',
+        description: 'This is the label for the field',
+        id: 'event.death.action.declare.form.section.deceased.field.otherId.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(
+            notHospitalClerk,
+            field('deceased.idType').isEqualTo(DeathIdType.OTHER)
+          )
+        }
+      ]
+    },
+    // ---- Divider ----
+    {
+      id: 'deceased.idDivider',
+      type: FieldType.DIVIDER,
+      label: emptyMessage,
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: notHospitalClerk
+        }
+      ]
+    },
+    // ---- Name ----
     {
       id: 'deceased.name',
       type: FieldType.NAME,
-      configuration: farajalandNameConfig,
+      configuration: tuvaluNameConfig,
       required: true,
       hideLabel: true,
       label: {
@@ -83,27 +320,44 @@ export const deceased = defineFormPage({
         description: 'This is the label for the field',
         id: 'event.death.action.declare.form.section.deceased.field.name.label'
       },
+      value: field('deceased.brn').getByPath([
+        'data',
+        'firstResult',
+        'declaration',
+        'child.name'
+      ]),
       validation: [invalidNameValidator('deceased.name')]
     },
+    // ---- Sex ----
     {
       id: 'deceased.gender',
       type: FieldType.SELECT,
       required: true,
+      analytics: true,
       label: {
         defaultMessage: 'Sex',
         description: 'This is the label for the field',
         id: 'event.death.action.declare.form.section.deceased.field.gender.label'
       },
+      value: field('deceased.brn').getByPath([
+        'data',
+        'firstResult',
+        'declaration',
+        'child.gender'
+      ]),
       options: genderOptions
     },
+    // ---- Date of birth ----
     {
       id: 'deceased.dob',
       type: FieldType.DATE,
       required: true,
+      analytics: true,
+      secured: true,
       validation: [
         {
           message: {
-            defaultMessage: 'Must be a valid Birthdate',
+            defaultMessage: 'Must be a valid date of birth',
             description: 'This is the error message for invalid date',
             id: 'event.death.action.declare.form.section.deceased.field.dob.error'
           },
@@ -126,20 +380,28 @@ export const deceased = defineFormPage({
         description: 'This is the label for the field',
         id: 'event.death.action.declare.form.section.deceased.field.dob.label'
       },
+      value: field('deceased.brn').getByPath([
+        'data',
+        'firstResult',
+        'declaration',
+        'child.dob'
+      ]),
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: not(field(`deceased.dobUnknown`).isEqualTo(true))
+          conditional: not(field('deceased.dobUnknown').isEqualTo(true))
         }
       ]
     },
+    // ---- Exact date of birth unknown ----
     {
-      id: `deceased.dobUnknown`,
+      id: 'deceased.dobUnknown',
       type: FieldType.CHECKBOX,
+      analytics: true,
       label: {
         defaultMessage: 'Exact date of birth unknown',
         description: 'This is the label for the field',
-        id: `v2.event.death.action.declare.form.section.deceased.field.age.checkbox.label`
+        id: 'event.death.action.declare.form.section.deceased.field.dobUnknown.label'
       },
       conditionals: [
         {
@@ -148,12 +410,14 @@ export const deceased = defineFormPage({
         }
       ]
     },
+    // ---- Age of deceased ----
     {
-      id: `deceased.age`,
+      id: 'deceased.age',
       type: FieldType.AGE,
       required: true,
+      analytics: true,
       label: {
-        defaultMessage: `Age of deceased (at the time of event)`,
+        defaultMessage: 'Age of deceased',
         description: 'This is the label for the field',
         id: 'event.death.action.declare.form.section.deceased.field.age.label'
       },
@@ -162,13 +426,19 @@ export const deceased = defineFormPage({
         postfix: {
           defaultMessage: 'years',
           description: 'This is the postfix for age field',
-          id: `v2.event.death.action.declare.form.section.deceased.field.age.postfix`
+          id: 'event.death.action.declare.form.section.deceased.field.age.postfix'
         }
       },
+      value: field('deceased.brn').getByPath([
+        'data',
+        'firstResult',
+        'declaration',
+        'child.age'
+      ]),
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: field(`deceased.dobUnknown`).isEqualTo(true)
+          conditional: field('deceased.dobUnknown').isEqualTo(true)
         }
       ],
       validation: [
@@ -182,127 +452,32 @@ export const deceased = defineFormPage({
         }
       ]
     },
+    // ---- Place of birth ----
     {
-      id: `deceased.nationality`,
-      type: FieldType.COUNTRY,
-      required: true,
-      label: {
-        defaultMessage: 'Nationality',
-        description: 'This is the label for the field',
-        id: `v2.event.death.action.declare.form.section.person.field.nationality.label`
-      },
-      defaultValue: 'FAR'
-    },
-    {
-      id: `deceased.idType`,
-      type: FieldType.SELECT,
-      required: true,
-      label: {
-        defaultMessage: 'Type of ID',
-        description: 'This is the label for the field',
-        id: `v2.event.death.action.declare.form.section.person.field.idType.label`
-      },
-      options: idTypeOptions
-    },
-    {
-      id: 'deceased.nid',
-      type: FieldType.ID,
-      required: true,
-      label: {
-        defaultMessage: 'ID Number',
-        description: 'This is the label for the field',
-        id: `v2.event.death.action.declare.form.section.person.field.nid.label`
-      },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: field('deceased.idType').isEqualTo(IdType.NATIONAL_ID)
-        }
-      ],
-      validation: [
-        nationalIdValidator('deceased.nid'),
-        {
-          message: {
-            defaultMessage: 'National id must be unique',
-            description: 'This is the error message for non-unique ID Number',
-            id: 'event.death.action.declare.form.nid.unique'
-          },
-          validator: and(
-            not(field('deceased.nid').isEqualTo(field('informant.nid')))
-          )
-        }
-      ]
-    },
-    {
-      id: `deceased.passport`,
+      id: 'deceased.placeOfBirth',
       type: FieldType.TEXT,
       required: true,
+      analytics: true,
       label: {
-        defaultMessage: 'ID Number',
+        defaultMessage: 'Place of birth',
         description: 'This is the label for the field',
-        id: `v2.event.death.action.declare.form.section.person.field.passport.label`
-      },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: field(`deceased.idType`).isEqualTo(IdType.PASSPORT)
-        }
-      ]
-    },
-    {
-      id: `deceased.brn`,
-      type: FieldType.TEXT,
-      required: true,
-      label: {
-        defaultMessage: 'ID Number',
-        description: 'This is the label for the field',
-        id: `v2.event.death.action.declare.form.section.person.field.brn.label`
-      },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: field('deceased.idType').isEqualTo(
-            IdType.BIRTH_REGISTRATION_NUMBER
-          )
-        }
-      ]
-    },
-    {
-      id: 'deceased.maritalStatus',
-      type: FieldType.SELECT,
-      required: false,
-      label: {
-        defaultMessage: 'Marital Status',
-        description: 'This is the label for the field',
-        id: `v2.event.death.action.declare.form.section.deceased.field.maritalStatus.label`
-      },
-      options: maritalStatusOptions
-    },
-    {
-      id: `deceased.numberOfDependants`,
-      type: FieldType.NUMBER,
-      required: false,
-      label: {
-        defaultMessage: 'No. of dependants',
-        description: 'This is the label for the field',
-        id: 'event.death.action.declare.form.section.deceased.field.numberOfDependants.label'
-      },
-      configuration: {
-        min: 0
+        id: 'event.death.action.declare.form.section.deceased.field.placeOfBirth.label'
       }
     },
+    // ---- Divider ----
     {
-      id: `deceased.addressDivider`,
+      id: 'deceased.addressDivider',
       type: FieldType.DIVIDER,
       label: emptyMessage
     },
+    // ---- Usual residence heading ----
     {
-      id: `deceased.addressHelper`,
+      id: 'deceased.addressHelper',
       type: FieldType.HEADING,
       label: {
-        defaultMessage: 'Usual place of residence',
+        defaultMessage: 'Usual residence',
         description: 'This is the label for the field',
-        id: `v2.event.death.action.declare.form.section.deceased.field.addressHelper.label`
+        id: 'event.death.action.declare.form.section.deceased.field.addressHelper.label'
       },
       configuration: {
         styles: { fontVariant: 'h3' }
@@ -314,14 +489,16 @@ export const deceased = defineFormPage({
         }
       ]
     },
+    // ---- Usual residence ----
     {
-      id: `deceased.address`,
+      id: 'deceased.address',
       type: FieldType.ADDRESS,
       required: true,
       hideLabel: true,
       secured: true,
+      analytics: true,
       label: {
-        defaultMessage: 'Usual place of residence',
+        defaultMessage: 'Usual residence',
         description: 'This is the label for the field',
         id: 'event.death.action.declare.form.section.deceased.field.address.label'
       },
@@ -340,12 +517,132 @@ export const deceased = defineFormPage({
         )
       ],
       defaultValue: {
-        country: 'FAR',
+        country: 'TUV',
         addressType: AddressType.DOMESTIC,
         administrativeArea: user('administrativeAreaId')
       },
       configuration: {
         streetAddressForm: defaultStreetAddressConfiguration
+      }
+    },
+    // ---- Lived in Tuvalu since birth ----
+    {
+      id: 'deceased.livedInTuvaluSinceBirth',
+      type: FieldType.CHECKBOX,
+      analytics: true,
+      label: {
+        defaultMessage: 'Lived in Tuvalu since birth',
+        description: 'This is the label for the field',
+        id: 'event.death.action.declare.form.section.deceased.field.livedInTuvaluSinceBirth.label'
+      }
+    },
+    // ---- How long lived in Tuvalu ----
+    {
+      id: 'deceased.howLongLivedInTuvalu',
+      type: FieldType.NUMBER,
+      required: false,
+      analytics: true,
+      label: {
+        defaultMessage: 'How long lived in Tuvalu',
+        description: 'This is the label for the field',
+        id: 'event.death.action.declare.form.section.deceased.field.howLongLivedInTuvalu.label'
+      },
+      configuration: {
+        postfix: {
+          defaultMessage: 'years',
+          description: 'Postfix for years',
+          id: 'event.death.action.declare.form.section.deceased.field.howLongLivedInTuvalu.postfix'
+        }
+      }
+    },
+    // ---- Divider ----
+    {
+      id: 'deceased.occupationDivider',
+      type: FieldType.DIVIDER,
+      label: emptyMessage
+    },
+    // ---- Occupation ----
+    {
+      id: 'deceased.occupation',
+      type: FieldType.TEXT,
+      required: false,
+      analytics: true,
+      label: {
+        defaultMessage: 'Occupation',
+        description: 'This is the label for the field',
+        id: 'event.death.action.declare.form.section.deceased.field.occupation.label'
+      }
+    },
+    // ---- Marital status at time of death ----
+    {
+      id: 'deceased.maritalStatus',
+      type: FieldType.SELECT,
+      required: true,
+      analytics: true,
+      label: {
+        defaultMessage: 'Marital status at time of death',
+        description: 'This is the label for the field',
+        id: 'event.death.action.declare.form.section.deceased.field.maritalStatus.label'
+      },
+      options: deceasedMaritalStatusOptions
+    },
+    // ---- Date of marriage (shown if married) ----
+    {
+      id: 'deceased.dateOfMarriage',
+      type: FieldType.DATE,
+      required: false,
+      analytics: true,
+      label: {
+        defaultMessage: 'Date of marriage',
+        description: 'This is the label for the field',
+        id: 'event.death.action.declare.form.section.deceased.field.dateOfMarriage.label'
+      },
+      validation: [
+        {
+          message: {
+            defaultMessage: 'Date of marriage cannot be in the future',
+            description: 'Error message for future date of marriage',
+            id: 'event.death.action.declare.form.section.deceased.field.dateOfMarriage.error'
+          },
+          validator: field('deceased.dateOfMarriage').isBefore().now()
+        }
+      ],
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: isMarried
+        }
+      ]
+    },
+    // ---- Place of marriage (shown if married) ----
+    {
+      id: 'deceased.placeOfMarriage',
+      type: FieldType.TEXT,
+      required: false,
+      analytics: true,
+      label: {
+        defaultMessage: 'Place of marriage',
+        description: 'This is the label for the field',
+        id: 'event.death.action.declare.form.section.deceased.field.placeOfMarriage.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: isMarried
+        }
+      ]
+    },
+    // ---- Did the deceased have any living children? ----
+    {
+      id: 'deceased.hasLivingChildren',
+      type: FieldType.RADIO_GROUP,
+      required: false,
+      analytics: true,
+      options: yesNoRadioOptions,
+      label: {
+        defaultMessage: 'Did the deceased have any living children?',
+        description: 'This is the label for the field',
+        id: 'event.death.action.declare.form.section.deceased.field.hasLivingChildren.label'
       }
     }
   ]
