@@ -1937,49 +1937,64 @@ event.death.action.declare.form.section.livingChildren.field.child.sex.option.fe
 event.death.action.declare.form.section.livingChildren.field.child.age.unit.days,Age unit days,Days,Jours
 event.death.action.declare.form.section.livingChildren.field.child.age.unit.months,Age unit months,Months,Mois
 event.death.action.declare.form.section.livingChildren.field.child.age.unit.years,Age unit years,Years,Années
-event.death.action.declare.form.section.livingChildren.field.child1.fullName.label,Label for child 1 full name,Child 1 full name,Nom complet de l'enfant 1
+event.death.action.declare.form.section.livingChildren.field.child1.header.label,Header for child 1,Child Number 1,Enfant numéro 1
+event.death.action.declare.form.section.livingChildren.field.child1.fullName.label,Label for child 1 full name,Full Name,Nom complet de l'enfant 1
 event.death.action.declare.form.section.livingChildren.field.child1.sex.label,Label for child 1 sex,Sex,Sexe
 event.death.action.declare.form.section.livingChildren.field.child1.age.label,Label for child 1 age,Age,Âge
-event.death.action.declare.form.section.livingChildren.field.child2.fullName.label,Label for child 2 full name,Child 2 full name,Nom complet de l'enfant 2
+event.death.action.declare.form.section.livingChildren.field.child2.header.label,Header for child 2,Child Number 2,Enfant numéro 2
+event.death.action.declare.form.section.livingChildren.field.child2.fullName.label,Label for child 2 full name,Full Name,Nom complet de l'enfant 2
 event.death.action.declare.form.section.livingChildren.field.child2.sex.label,Label for child 2 sex,Sex,Sexe
 event.death.action.declare.form.section.livingChildren.field.child2.age.label,Label for child 2 age,Age,Âge
-event.death.action.declare.form.section.livingChildren.field.child3.fullName.label,Label for child 3 full name,Child 3 full name,Nom complet de l'enfant 3
+event.death.action.declare.form.section.livingChildren.field.child3.header.label,Header for child 3,Child Number 3,Enfant numéro 3
+event.death.action.declare.form.section.livingChildren.field.child3.fullName.label,Label for child 3 full name,Full Name,Nom complet de l'enfant 3
 event.death.action.declare.form.section.livingChildren.field.child3.sex.label,Label for child 3 sex,Sex,Sexe
 event.death.action.declare.form.section.livingChildren.field.child3.age.label,Label for child 3 age,Age,Âge
-event.death.action.declare.form.section.livingChildren.field.child4.fullName.label,Label for child 4 full name,Child 4 full name,Nom complet de l'enfant 4
+event.death.action.declare.form.section.livingChildren.field.child4.header.label,Header for child 4,Child Number 4,Enfant numéro 4
+event.death.action.declare.form.section.livingChildren.field.child4.fullName.label,Label for child 4 full name,Full Name,Nom complet de l'enfant 4
 event.death.action.declare.form.section.livingChildren.field.child4.sex.label,Label for child 4 sex,Sex,Sexe
 event.death.action.declare.form.section.livingChildren.field.child4.age.label,Label for child 4 age,Age,Âge
-event.death.action.declare.form.section.livingChildren.field.child5.fullName.label,Label for child 5 full name,Child 5 full name,Nom complet de l'enfant 5
+event.death.action.declare.form.section.livingChildren.field.child5.header.label,Header for child 5,Child Number 5,Enfant numéro 5
+event.death.action.declare.form.section.livingChildren.field.child5.fullName.label,Label for child 5 full name,Full Name,Nom complet de l'enfant 5
 event.death.action.declare.form.section.livingChildren.field.child5.sex.label,Label for child 5 sex,Sex,Sexe
 event.death.action.declare.form.section.livingChildren.field.child5.age.label,Label for child 5 age,Age,Âge
-event.death.action.declare.form.section.livingChildren.field.child6.fullName.label,Label for child 6 full name,Child 6 full name,Nom complet de l'enfant 6
+event.death.action.declare.form.section.livingChildren.field.child6.header.label,Header for child 6,Child Number 6,Enfant numéro 6
+event.death.action.declare.form.section.livingChildren.field.child6.fullName.label,Label for child 6 full name,Full Name,Nom complet de l'enfant 6
 event.death.action.declare.form.section.livingChildren.field.child6.sex.label,Label for child 6 sex,Sex,Sexe
 event.death.action.declare.form.section.livingChildren.field.child6.age.label,Label for child 6 age,Age,Âge
-event.death.action.declare.form.section.livingChildren.field.child7.fullName.label,Label for child 7 full name,Child 7 full name,Nom complet de l'enfant 7
+event.death.action.declare.form.section.livingChildren.field.child7.header.label,Header for child 7,Child Number 7,Enfant numéro 7
+event.death.action.declare.form.section.livingChildren.field.child7.fullName.label,Label for child 7 full name,Full Name,Nom complet de l'enfant 7
 event.death.action.declare.form.section.livingChildren.field.child7.sex.label,Label for child 7 sex,Sex,Sexe
 event.death.action.declare.form.section.livingChildren.field.child7.age.label,Label for child 7 age,Age,Âge
-event.death.action.declare.form.section.livingChildren.field.child8.fullName.label,Label for child 8 full name,Child 8 full name,Nom complet de l'enfant 8
+event.death.action.declare.form.section.livingChildren.field.child8.header.label,Header for child 8,Child Number 8,Enfant numéro 8
+event.death.action.declare.form.section.livingChildren.field.child8.fullName.label,Label for child 8 full name,Full Name,Nom complet de l'enfant 8
 event.death.action.declare.form.section.livingChildren.field.child8.sex.label,Label for child 8 sex,Sex,Sexe
 event.death.action.declare.form.section.livingChildren.field.child8.age.label,Label for child 8 age,Age,Âge
-event.death.action.declare.form.section.livingChildren.field.child9.fullName.label,Label for child 9 full name,Child 9 full name,Nom complet de l'enfant 9
+event.death.action.declare.form.section.livingChildren.field.child9.header.label,Header for child 9,Child Number 9,Enfant numéro 9
+event.death.action.declare.form.section.livingChildren.field.child9.fullName.label,Label for child 9 full name,Full Name,Nom complet de l'enfant 9
 event.death.action.declare.form.section.livingChildren.field.child9.sex.label,Label for child 9 sex,Sex,Sexe
 event.death.action.declare.form.section.livingChildren.field.child9.age.label,Label for child 9 age,Age,Âge
-event.death.action.declare.form.section.livingChildren.field.child10.fullName.label,Label for child 10 full name,Child 10 full name,Nom complet de l'enfant 10
+event.death.action.declare.form.section.livingChildren.field.child10.header.label,Header for child 10,Child Number 10,Enfant numéro 10
+event.death.action.declare.form.section.livingChildren.field.child10.fullName.label,Label for child 10 full name,Full Name,Nom complet de l'enfant 10
 event.death.action.declare.form.section.livingChildren.field.child10.sex.label,Label for child 10 sex,Sex,Sexe
 event.death.action.declare.form.section.livingChildren.field.child10.age.label,Label for child 10 age,Age,Âge
-event.death.action.declare.form.section.livingChildren.field.child11.fullName.label,Label for child 11 full name,Child 11 full name,Nom complet de l'enfant 11
+event.death.action.declare.form.section.livingChildren.field.child11.header.label,Header for child 11,Child Number 11,Enfant numéro 11
+event.death.action.declare.form.section.livingChildren.field.child11.fullName.label,Label for child 11 full name,Full Name,Nom complet de l'enfant 11
 event.death.action.declare.form.section.livingChildren.field.child11.sex.label,Label for child 11 sex,Sex,Sexe
 event.death.action.declare.form.section.livingChildren.field.child11.age.label,Label for child 11 age,Age,Âge
-event.death.action.declare.form.section.livingChildren.field.child12.fullName.label,Label for child 12 full name,Child 12 full name,Nom complet de l'enfant 12
+event.death.action.declare.form.section.livingChildren.field.child12.header.label,Header for child 12,Child Number 12,Enfant numéro 12
+event.death.action.declare.form.section.livingChildren.field.child12.fullName.label,Label for child 12 full name,Full Name,Nom complet de l'enfant 12
 event.death.action.declare.form.section.livingChildren.field.child12.sex.label,Label for child 12 sex,Sex,Sexe
 event.death.action.declare.form.section.livingChildren.field.child12.age.label,Label for child 12 age,Age,Âge
-event.death.action.declare.form.section.livingChildren.field.child13.fullName.label,Label for child 13 full name,Child 13 full name,Nom complet de l'enfant 13
+event.death.action.declare.form.section.livingChildren.field.child13.header.label,Header for child 13,Child Number 13,Enfant numéro 13
+event.death.action.declare.form.section.livingChildren.field.child13.fullName.label,Label for child 13 full name,Full Name,Nom complet de l'enfant 13
 event.death.action.declare.form.section.livingChildren.field.child13.sex.label,Label for child 13 sex,Sex,Sexe
 event.death.action.declare.form.section.livingChildren.field.child13.age.label,Label for child 13 age,Age,Âge
-event.death.action.declare.form.section.livingChildren.field.child14.fullName.label,Label for child 14 full name,Child 14 full name,Nom complet de l'enfant 14
+event.death.action.declare.form.section.livingChildren.field.child14.header.label,Header for child 14,Child Number 14,Enfant numéro 14
+event.death.action.declare.form.section.livingChildren.field.child14.fullName.label,Label for child 14 full name,Full Name,Nom complet de l'enfant 14
 event.death.action.declare.form.section.livingChildren.field.child14.sex.label,Label for child 14 sex,Sex,Sexe
 event.death.action.declare.form.section.livingChildren.field.child14.age.label,Label for child 14 age,Age,Âge
-event.death.action.declare.form.section.livingChildren.field.child15.fullName.label,Label for child 15 full name,Child 15 full name,Nom complet de l'enfant 15
+event.death.action.declare.form.section.livingChildren.field.child15.header.label,Header for child 15,Child Number 15,Enfant numéro 15
+event.death.action.declare.form.section.livingChildren.field.child15.fullName.label,Label for child 15 full name,Full Name,Nom complet de l'enfant 15
 event.death.action.declare.form.section.livingChildren.field.child15.sex.label,Label for child 15 sex,Sex,Sexe
 event.death.action.declare.form.section.livingChildren.field.child15.age.label,Label for child 15 age,Age,Âge
 event.death.action.declare.form.section.informant.field.idType.option.birthCertificate,Option for informant ID type birth certificate,Birth certificate,Certificat de naissance
