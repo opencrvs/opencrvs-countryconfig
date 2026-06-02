@@ -2021,10 +2021,10 @@ event.death.action.declare.form.section.documents.field.removalOverseasBurial.la
 event.death.action.declare.form.section.documents.field.removalOverseasBurial.option.transferAuthorisation,Option for removal overseas burial transfer authorisation,Transfer authorisation,Autorisation de transfert
 event.death.action.declare.form.section.documents.field.removalOverseasBurial.option.other,Option for removal overseas burial other,Other,Autre
 form.death.icd10.title,Form section title for ICD-10 coding,ICD-10 cause of death coding,Codification ICD-10 de la cause de décès
-event.death.action.declare.form.section.icd10.field.underlyingCauseCode.label,Label for underlying cause ICD-10 code,Underlying cause ICD-10 code,Code CIM-10 de la cause sous-jacente
-event.death.action.declare.form.section.icd10.field.selectedCauseCodes.label,Label for selected cause codes,Selected cause codes,Codes de cause sélectionnés
-event.death.action.declare.form.section.icd10.field.multipleCauseCodes.label,Label for multiple cause codes,Multiple cause codes,Codes de causes multiples
-event.death.action.declare.form.section.icd10.field.irisNotes.label,Label for IRIS notes field,IRIS notes,Notes IRIS
+event.death.action.declare.form.section.icd10.field.underlyingCauseCode.label,Label for underlying cause ICD-10 code,ICD-10 underlying cause of death code,Code CIM-10 de la cause sous-jacente
+event.death.action.declare.form.section.icd10.field.selectedCauseCodes.label,Label for selected cause codes,ICD-10 selected cause codes,Codes de cause sélectionnés
+event.death.action.declare.form.section.icd10.field.multipleCauseCodes.label,Label for multiple cause codes,ICD-10 multiple cause codes,Codes de causes multiples
+event.death.action.declare.form.section.icd10.field.irisNotes.label,Label for IRIS notes field,IRIS coding output notes,Notes IRIS
 recordAudit.noPlaceOfMarriage,Label for place of marriage not availale,No place of marriage,Pas de lieu de mariage
 recordAudit.noStatus,Label for status not available,No status,Pas de statut
 recordAudit.noTrackingId,Label for tracking id not available,No tracking ID,Pas d'identifiant de suivi
