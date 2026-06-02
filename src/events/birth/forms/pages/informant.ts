@@ -23,34 +23,37 @@ import {
 } from '@opencrvs/toolkit/events'
 import { not } from '@opencrvs/toolkit/conditionals'
 import {
-  farajalandNameConfig,
+  tuvaluNameConfig,
   invalidNameValidator,
-  nationalIdValidator
 } from '@countryconfig/events/birth/validators'
 
 import {
-  IdType,
-  idTypeOptions,
+  emptyMessage,
   defaultStreetAddressConfiguration,
   getNestedFieldValidators,
   createSelectOptions,
-  emptyMessage
+  BirthIdType,
+  birthIdTypeOptions
 } from '@countryconfig/events/utils'
 
 export const InformantType = {
+  MOTHER_AND_FATHER: 'MOTHER_AND_FATHER',
   MOTHER: 'MOTHER',
   FATHER: 'FATHER',
-  OTHER: 'OTHER',
   GRANDFATHER: 'GRANDFATHER',
   GRANDMOTHER: 'GRANDMOTHER',
-  BROTHER: 'BROTHER',
-  SISTER: 'SISTER',
-  LEGAL_GUARDIAN: 'LEGAL_GUARDIAN'
+  LEGAL_GUARDIAN: 'LEGAL_GUARDIAN',
+  OTHER: 'OTHER'
 } as const
 export type InformantTypeKey = keyof typeof InformantType
 
 const PHONE_NUMBER_REGEX = '^0(7|9)[0-9]{8}$'
 const informantMessageDescriptors = {
+  MOTHER_AND_FATHER: {
+    defaultMessage: 'Mother and Father',
+    description: 'Label for option mother and father',
+    id: 'form.field.label.informantRelation.motherAndFather'
+  },
   MOTHER: {
     defaultMessage: 'Mother',
     description: 'Label for option mother',
@@ -71,23 +74,13 @@ const informantMessageDescriptors = {
     description: 'Label for option Grandmother',
     id: 'form.field.label.informantRelation.grandmother'
   },
-  BROTHER: {
-    defaultMessage: 'Brother',
-    description: 'Label for option brother',
-    id: 'form.field.label.informantRelation.brother'
-  },
-  SISTER: {
-    defaultMessage: 'Sister',
-    description: 'Label for option Sister',
-    id: 'form.field.label.informantRelation.sister'
-  },
   LEGAL_GUARDIAN: {
     defaultMessage: 'Legal guardian',
     description: 'Label for option Legal Guardian',
     id: 'form.field.label.informantRelation.legalGuardian'
   },
   OTHER: {
-    defaultMessage: 'Someone else',
+    defaultMessage: 'Other (please specify)',
     description: 'Label for option someone else',
     id: 'form.field.label.informantRelation.others'
   }
@@ -101,6 +94,7 @@ const birthInformantTypeOptions = createSelectOptions(
 const informantOtherThanParent = and(
   not(
     field('informant.relation').inArray([
+      InformantType.MOTHER_AND_FATHER,
       InformantType.MOTHER,
       InformantType.FATHER
     ])
@@ -132,10 +126,21 @@ export const informant = defineFormPage({
       id: 'informant.other.relation',
       type: FieldType.TEXT,
       required: true,
+      analytics: true,
       label: {
-        defaultMessage: 'Relationship to child',
+        defaultMessage: 'Relationship to the child',
         description: 'This is the label for the field',
         id: 'event.birth.action.declare.form.section.informant.field.other.relation.label'
+      },
+      helperText: {
+        defaultMessage: 'Please describe relationship to the child',
+        description: 'This is the helper text for the field',
+        id: 'event.birth.action.declare.form.section.informant.field.other.relation.helperText'
+      },
+      placeholder: {
+        defaultMessage: 'Eg. Uncle',
+        description: 'This is the placeholder for the field',
+        id: 'event.birth.action.declare.form.section.informant.field.other.relation.placeholder'
       },
       conditionals: [
         {
@@ -148,10 +153,118 @@ export const informant = defineFormPage({
       parent: field('informant.relation')
     },
     {
+      id: 'informant.nationality',
+      type: FieldType.COUNTRY,
+      required: true,
+      label: {
+        defaultMessage: 'Nationality',
+        description: 'This is the label for the field',
+        id: 'event.birth.action.declare.form.section.person.field.nationality.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: informantOtherThanParent
+        }
+      ],
+      defaultValue: 'TUV',
+      parent: field('informant.relation')
+    },
+    {
+      id: 'informant.idType',
+      type: FieldType.SELECT,
+      required: true,
+      label: {
+        defaultMessage: 'Form of ID',
+        description: 'This is the label for the field',
+        id: 'event.birth.action.declare.form.section.person.field.idType.label'
+      },
+      options: birthIdTypeOptions,
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: informantOtherThanParent
+        }
+      ],
+      parent: field('informant.relation')
+    },
+    {
+      id: 'informant.brn',
+      type: FieldType.TEXT,
+      required: false,
+      label: {
+        defaultMessage: 'Birth registration number',
+        description: 'This is the label for the field',
+        id: 'event.birth.action.declare.form.section.person.field.brn.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(
+            field('informant.idType').isEqualTo(BirthIdType.BIRTH_CERTIFICATE),
+            informantOtherThanParent
+          )
+        }
+      ],
+      parent: field('informant.relation')
+    },
+    {
+      id: 'informant.passport',
+      type: FieldType.TEXT,
+      required: false,
+      label: {
+        defaultMessage: 'Passport number',
+        description: 'This is the label for the field',
+        id: 'event.birth.action.declare.form.section.person.field.passport.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(
+            field('informant.idType').isEqualTo(BirthIdType.PASSPORT),
+            informantOtherThanParent
+          )
+        }
+      ],
+      parent: field('informant.relation')
+    },
+    {
+      id: 'informant.nid',
+      type: FieldType.TEXT,
+      required: false,
+      label: {
+        defaultMessage: 'ID number',
+        description: 'This is the label for the field',
+        id: 'event.birth.action.declare.form.section.person.field.nid.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(
+            field('informant.idType').isEqualTo(BirthIdType.OTHER),
+            informantOtherThanParent
+          )
+        }
+      ],
+      parent: field('informant.relation')
+    },
+    {
+      id: 'informant.addressDivider1',
+      type: FieldType.DIVIDER,
+      label: emptyMessage,
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: informantOtherThanParent
+        }
+      ],
+      parent: field('informant.relation')
+    },
+    {
       id: 'informant.name',
       type: FieldType.NAME,
       required: true,
-      configuration: farajalandNameConfig,
+      configuration: tuvaluNameConfig,
       hideLabel: true,
       label: {
         defaultMessage: "Informant's name",
@@ -170,7 +283,8 @@ export const informant = defineFormPage({
     {
       id: 'informant.dob',
       type: 'DATE',
-      required: true,
+      required: false,
+      analytics: true,
       validation: [
         {
           message: {
@@ -266,130 +380,6 @@ export const informant = defineFormPage({
       parent: field('informant.relation')
     },
     {
-      id: 'informant.nationality',
-      type: FieldType.COUNTRY,
-      required: true,
-      label: {
-        defaultMessage: 'Nationality',
-        description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.person.field.nationality.label'
-      },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: informantOtherThanParent
-        }
-      ],
-      defaultValue: 'FAR',
-      parent: field('informant.relation')
-    },
-    {
-      id: 'informant.idType',
-      type: FieldType.SELECT,
-      required: true,
-      label: {
-        defaultMessage: 'Type of ID',
-        description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.person.field.idType.label'
-      },
-      options: idTypeOptions,
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: informantOtherThanParent
-        }
-      ],
-      parent: field('informant.relation')
-    },
-    {
-      id: 'informant.nid',
-      type: FieldType.ID,
-      required: true,
-      label: {
-        defaultMessage: 'ID Number',
-        description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.person.field.nid.label'
-      },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: and(
-            field('informant.idType').isEqualTo(IdType.NATIONAL_ID),
-            informantOtherThanParent
-          )
-        }
-      ],
-      validation: [
-        nationalIdValidator('informant.nid'),
-        {
-          message: {
-            defaultMessage: 'National id must be unique',
-            description: 'This is the error message for non-unique ID Number',
-            id: 'event.birth.action.declare.form.nid.unique'
-          },
-          validator: and(
-            not(field('informant.nid').isEqualTo(field('mother.nid'))),
-            not(field('informant.nid').isEqualTo(field('father.nid')))
-          )
-        }
-      ],
-      parent: field('informant.relation')
-    },
-    {
-      id: 'informant.passport',
-      type: FieldType.TEXT,
-      required: true,
-      label: {
-        defaultMessage: 'ID Number',
-        description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.person.field.passport.label'
-      },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: and(
-            field('informant.idType').isEqualTo(IdType.PASSPORT),
-            informantOtherThanParent
-          )
-        }
-      ],
-      parent: field('informant.relation')
-    },
-    {
-      id: 'informant.brn',
-      type: FieldType.TEXT,
-      required: true,
-      label: {
-        defaultMessage: 'ID Number',
-        description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.person.field.brn.label'
-      },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: and(
-            field('informant.idType').isEqualTo(
-              IdType.BIRTH_REGISTRATION_NUMBER
-            ),
-            informantOtherThanParent
-          )
-        }
-      ],
-      parent: field('informant.relation')
-    },
-    {
-      id: 'informant.addressDivider1',
-      type: FieldType.DIVIDER,
-      label: emptyMessage,
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: informantOtherThanParent
-        }
-      ],
-      parent: field('informant.relation')
-    },
-    {
       id: 'informant.addressHelper',
       type: FieldType.HEADING,
       label: {
@@ -443,7 +433,7 @@ export const informant = defineFormPage({
         )
       ],
       defaultValue: {
-        country: 'FAR',
+        country: 'TUV',
         addressType: AddressType.DOMESTIC,
         administrativeArea: user('administrativeAreaId')
       },
@@ -463,6 +453,24 @@ export const informant = defineFormPage({
         }
       ],
       parent: field('informant.relation')
+    },
+    {
+      id: 'informant.pointOfContactHeading',
+      type: FieldType.HEADING,
+      label: {
+        defaultMessage: 'Point of contact',
+        description: 'This is the label for the field',
+        id: 'event.birth.action.declare.form.section.informant.field.pointOfContactHeading.label'
+      },
+      configuration: {
+        styles: { fontVariant: 'h3' }
+      },
+      conditionals: [
+        {
+          type: ConditionalType.DISPLAY_ON_REVIEW,
+          conditional: never()
+        }
+      ]
     },
     {
       id: 'informant.phoneNo',
@@ -497,7 +505,7 @@ export const informant = defineFormPage({
       required: true,
       secured: true,
       label: {
-        defaultMessage: 'Email',
+        defaultMessage: 'Email address',
         description: 'This is the label for the field',
         id: 'event.birth.action.declare.form.section.informant.field.email.label'
       },

@@ -35,10 +35,10 @@ import { Event } from './utils/types'
 function applicantAddressFields() {
   const isDomesticAddress = field('applicant.address')
     .get('country')
-    .isEqualTo('FAR')
+    .isEqualTo('TUV')
   const isInternationalAddress = not(
     or(
-      field('applicant.address').get('country').isEqualTo('FAR'),
+      field('applicant.address').get('country').isEqualTo('TUV'),
       field('applicant.address').get('country').isFalsy()
     )
   )
@@ -55,7 +55,7 @@ function applicantAddressFields() {
         {
           id: 'country',
           type: FieldType.COUNTRY,
-          defaultValue: 'FAR',
+          defaultValue: 'TUV',
           label: {
             defaultMessage: 'Country',
             description: 'This is the label for the field',

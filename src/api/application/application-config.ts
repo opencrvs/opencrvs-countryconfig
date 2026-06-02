@@ -2,36 +2,20 @@ import { countryLogo } from '@countryconfig/api/application/country-logo'
 import { defineApplicationConfig } from '@opencrvs/toolkit/application-config'
 
 export const applicationConfig = defineApplicationConfig({
-  APPLICATION_NAME: 'Farajaland CRS',
+  APPLICATION_NAME: 'Tuvalu CRVS',
   COUNTRY_LOGO: countryLogo,
-  SYSTEM_IANA_TIMEZONE: 'Asia/Dhaka', // Default timezone for the country. Basis for date and time calculations during searches.
+  SYSTEM_IANA_TIMEZONE: 'Pacific/Funafuti', // Default timezone for the country. Basis for date and time calculations during searches.
   CURRENCY: {
-    languagesAndCountry: ['en-US'],
-    isoCode: 'USD'
+    languagesAndCountry: ['en-TU'],
+    isoCode: 'TUV'
   },
   ADMIN_STRUCTURE: [
     {
-      id: 'province',
+      id: 'island',
       label: {
-        id: 'field.address.province.label',
-        defaultMessage: 'Province',
-        description: 'Label for province in address'
-      }
-    },
-    {
-      id: 'district',
-      label: {
-        id: 'field.address.district.label',
-        defaultMessage: 'District',
-        description: 'Label for district in address'
-      }
-    },
-    {
-      id: 'village',
-      label: {
-        id: 'field.address.village.label',
-        defaultMessage: 'Village',
-        description: 'Label for village in address'
+        id: 'field.address.island.label',
+        defaultMessage: 'Island',
+        description: 'Label for island in domestic address'
       }
     }
   ],

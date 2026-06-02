@@ -46,10 +46,24 @@ export const nationalIdValidator = (fieldId: string) => ({
   })
 })
 
-export const farajalandNameConfig = {
+export const tuvaluNameConfig = {
   name: {
-    firstname: { required: true },
-    surname: { required: true }
+    firstname: {
+      required: true,
+      label: {
+        defaultMessage: 'Given Name(s)',
+        description: 'Label for the given name field',
+        id: 'event.birth.action.declare.form.section.name.firstname.label'
+      }
+    },
+    surname: {
+      required: true,
+      label: {
+        defaultMessage: 'Surname',
+        description: 'Label for the surname field',
+        id: 'event.birth.action.declare.form.section.name.surname.label'
+      }
+    }
   },
   maxLength: MAX_NAME_LENGTH
 }

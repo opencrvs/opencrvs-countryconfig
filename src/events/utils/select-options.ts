@@ -97,3 +97,34 @@ export const createSelectOptions = <
     value,
     label: messageDescriptors[key as keyof T]
   }))
+
+
+/** ID types used on the birth declaration form for mother, father and informant. */
+export const BirthIdType = {
+  BIRTH_CERTIFICATE: 'BIRTH_CERTIFICATE',
+  PASSPORT: 'PASSPORT',
+  OTHER: 'OTHER'
+} as const
+
+const birthIdTypeMessageDescriptors = {
+  BIRTH_CERTIFICATE: {
+    defaultMessage: 'Birth certificate',
+    description: 'Option for form field: Type of ID – birth certificate',
+    id: 'form.field.label.iDTypeBirthCertificate'
+  },
+  PASSPORT: {
+    defaultMessage: 'Passport',
+    description: 'Option for form field: Type of ID – passport',
+    id: 'form.field.label.iDTypePassport'
+  },
+  OTHER: {
+    defaultMessage: 'Other',
+    description: 'Option for form field: Type of ID – other',
+    id: 'form.field.label.iDTypeOther'
+  }
+} satisfies Record<keyof typeof BirthIdType, TranslationConfig>
+
+export const birthIdTypeOptions = createSelectOptions(
+  BirthIdType,
+  birthIdTypeMessageDescriptors
+)

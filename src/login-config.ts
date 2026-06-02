@@ -13,7 +13,7 @@ import { applicationConfig } from '@countryconfig/api/application/application-co
 
 export default defineLoginConfig({
   // Country code in uppercase ALPHA-3 format
-  COUNTRY: 'FAR',
+  COUNTRY: 'TUV',
   LANGUAGES: ['en', 'fr'],
   LOGIN_BACKGROUND: { backgroundColor: '36304E' },
   SENTRY: '',

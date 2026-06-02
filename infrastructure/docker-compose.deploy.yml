@@ -722,7 +722,7 @@ services:
       - LOGIN_URL=https://login.{{hostname}}
       - CLIENT_APP_URL=https://register.{{hostname}}
       - DOMAIN={{hostname}}
-      - COUNTRY=${COUNTRY:-FAR}
+      - COUNTRY=${COUNTRY:-TUV}
       - REDIS_USERNAME=${GATEWAY_REDIS_USERNAME}
       - REDIS_PASSWORD=${GATEWAY_REDIS_PASSWORD}
     deploy:
