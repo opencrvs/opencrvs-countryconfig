@@ -284,7 +284,7 @@ export const informant = defineFormPage({
       type: FieldType.TEXT,
       required: false,
       label: {
-        defaultMessage: 'ID number',
+        defaultMessage: 'Other ID number',
         description: 'This is the label for the field',
         id: 'event.death.action.declare.form.section.informant.field.otherId.label'
       },
@@ -363,6 +363,88 @@ export const informant = defineFormPage({
       parent: field('informant.relation')
     },
     {
+      id: 'informant.dobUnknown',
+      type: FieldType.CHECKBOX,
+      label: {
+        defaultMessage: 'Exact date of birth unknown',
+        description: 'This is the label for the field',
+        id: 'event.death.action.declare.form.section.informant.field.age.checkbox.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: informantOtherThanSpouse
+        },
+        {
+          type: ConditionalType.DISPLAY_ON_REVIEW,
+          conditional: never()
+        }
+      ],
+      parent: field('informant.relation')
+    },
+    {
+      id: 'informant.age',
+      type: FieldType.AGE,
+      required: false,
+      label: {
+        defaultMessage: 'Age of informant (at the time of event)',
+        description: 'This is the label for the field',
+        id: 'event.death.action.declare.form.section.informant.field.age.label'
+      },
+      configuration: {
+        asOfDate: field('eventDetails.date'),
+        postfix: {
+          defaultMessage: 'years',
+          description: 'This is the postfix for age field',
+          id: 'event.death.action.declare.form.section.informant.field.age.postfix'
+        }
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(
+            field('informant.dobUnknown').isEqualTo(true),
+            informantOtherThanSpouse
+          )
+        }
+      ],
+      validation: [
+        {
+          validator: field('informant.age').asAge().isBetween(12, 120),
+          message: {
+            defaultMessage: 'Age must be between 12 and 120',
+            description: 'Error message for invalid age',
+            id: 'event.action.declare.form.section.person.field.age.error'
+          }
+        }
+      ],
+      parent: field('informant.relation')
+    },
+    {
+      id: 'informant.addressSameAs',
+      type: FieldType.RADIO_GROUP,
+      options: yesNoRadioOptions,
+      required: false,
+      label: {
+        defaultMessage: "Same as deceased's usual place of residence?",
+        description: 'This is the label for the field',
+        id: 'event.death.action.declare.form.section.informant.field.address.addressSameAs.label'
+      },
+      defaultValue: YesNoTypes.YES,
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: informantOtherThanSpouse
+        },
+        {
+          type: ConditionalType.DISPLAY_ON_REVIEW,
+          conditional: field('informant.addressSameAs').isEqualTo(
+            YesNoTypes.YES
+          )
+        }
+      ]
+    },
+    {
       id: 'informant.addressDivider1',
       type: FieldType.DIVIDER,
       label: emptyMessage,
@@ -370,7 +452,8 @@ export const informant = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            informantOtherThanSpouse
+            informantOtherThanSpouse,
+            field('informant.addressSameAs').isEqualTo(YesNoTypes.NO)
           )
         }
       ],
@@ -380,7 +463,7 @@ export const informant = defineFormPage({
       id: 'informant.addressHelper',
       type: FieldType.HEADING,
       label: {
-        defaultMessage: 'Usual residence',
+        defaultMessage: 'Usual place of residence',
         description: 'This is the label for the field',
         id: 'event.death.action.declare.form.section.informant.field.addressHelper.label'
       },
@@ -395,7 +478,8 @@ export const informant = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            informantOtherThanSpouse
+            informantOtherThanSpouse,
+            field('informant.addressSameAs').isEqualTo(YesNoTypes.NO)
           )
         }
       ],
@@ -415,7 +499,8 @@ export const informant = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            informantOtherThanSpouse
+            informantOtherThanSpouse,
+            field('informant.addressSameAs').isEqualTo(YesNoTypes.NO)
           )
         }
       ],
@@ -459,7 +544,7 @@ export const informant = defineFormPage({
       id: 'informant.contactHelper',
       type: FieldType.HEADING,
       label: {
-        defaultMessage: 'Point of contact(Family/Informant)',
+        defaultMessage: 'Point of contact(Next of kin/Informant)',
         description: 'This is the label for the field',
         id: 'event.death.action.declare.form.section.informant.field.contactHelper.label'
       },
@@ -506,7 +591,7 @@ export const informant = defineFormPage({
       required: false,
       secured: true,
       label: {
-        defaultMessage: 'Email address',
+        defaultMessage: 'Email',
         description: 'This is the label for the field',
         id: 'event.death.action.declare.form.section.informant.field.email.label'
       },
