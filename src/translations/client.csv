@@ -1008,23 +1008,26 @@ event.death.action.declare.form.section.event.field.reason.label,This is the lab
 event.death.action.declare.form.section.event.field.sourceCauseDeath.label,This is the label for the field,Source of cause of death,Source de la cause du décès
 event.death.action.declare.form.section.informant.field.address.addressSameAs.label,This is the label for the field,Same as deceased's usual place of residence?,Identique au lieu de résidence habituel du défunt ?
 event.death.action.declare.form.section.informant.field.address.label,This is the label for the field,Usual place of residence,Lieu de résidence habituel
-event.death.action.declare.form.section.informant.field.addressHelper.label,This is the label for the field,Usual place of residence,Lieu de résidence habituel
+event.death.action.declare.form.section.informant.field.addressHelper.label,This is the label for the field,Usual residence,Lieu de résidence habituel
 event.death.action.declare.form.section.informant.field.age.checkbox.label,This is the label for the field,Exact date of birth unknown,Date exacte de naissance inconnue
 event.death.action.declare.form.section.informant.field.age.label,This is the label for the field,Age of informant (at the time of event),Âge de l'informateur (au moment de l'événement)
 event.death.action.declare.form.section.informant.field.age.postfix,This is the postfix for age field,years,ans
 event.death.action.declare.form.section.informant.field.brn.label,This is the label for the field,ID Number,Numéro d'identité
 event.death.action.declare.form.section.informant.field.dob.error,This is the error message for invalid date,Must be a valid Birthdate,Doit être une date de naissance valide
 event.death.action.declare.form.section.informant.field.dob.label,This is the label for the field,Date of birth,Date de naissance
-event.death.action.declare.form.section.informant.field.email.label,This is the label for the field,Email,Email
+event.death.action.declare.form.section.informant.field.email.label,This is the label for the field,Email address,Email
 event.death.action.declare.form.section.informant.field.idType.label,This is the label for the field,Type of ID,Type d'identité
 event.death.action.declare.form.section.informant.field.name.label,This is the label for the field,Informant's name,Nom de l'informateur
 event.death.action.declare.form.section.informant.field.nationality.label,This is the label for the field,Nationality,Nationalité
 event.death.action.declare.form.section.informant.field.nid.label,This is the label for the field,ID Number,Numéro d'identité
 event.death.action.declare.form.section.informant.field.other.relation.label,This is the label for the field,Relationship to deceased,Relation avec le défunt
+event.death.action.declare.form.section.informant.field.other.relation.helperText, Label,Please describe relationship to the deceased, 
+event.death.action.declare.form.section.informant.field.other.relation.placeholder, Label,Eg. Nephew, 
 event.death.action.declare.form.section.informant.field.passport.label,This is the label for the field,ID Number,Numéro d'identité
 event.death.action.declare.form.section.informant.field.phoneNo.error,The error message that appears on phone numbers where the first two characters must be 07 or 09 and length must be 10,Must be a valid 10 digit number that starts with 0(7|9),Doit être un nombre valide de 10 chiffres qui commence par 0(7|9)
 event.death.action.declare.form.section.informant.field.phoneNo.label,This is the label for the field,Phone number,Numéro de téléphone
 event.death.action.declare.form.section.informant.field.relation.label,This is the label for the field,Informant type,Type d'informateur
+event.death.action.declare.form.section.informant.field.contactHelper.label, Label,Point of contact(Family/Informant), 
 event.death.action.declare.form.section.person.field.brn.label,This is the label for the field,ID Number,Numéro d'identité
 event.death.action.declare.form.section.person.field.idType.label,This is the label for the field,Type of ID,Type d'identité
 event.death.action.declare.form.section.person.field.nationality.label,This is the label for the field,Nationality,Nationalité
@@ -2001,7 +2004,7 @@ event.death.action.declare.form.section.informant.field.idType.option.birthCerti
 event.death.action.declare.form.section.informant.field.idType.option.passport,Option for informant ID type passport,Passport,Passeport
 event.death.action.declare.form.section.informant.field.idType.option.other,Option for informant ID type other,Other,Autre
 event.death.action.declare.form.section.informant.field.brn.label,Label for informant birth registration number,Birth registration number,Numéro d'enregistrement de naissance
-event.death.action.declare.form.section.informant.field.otherId.label,Label for informant other ID number,Other ID number,Autre numéro d'identifiant
+event.death.action.declare.form.section.informant.field.otherId.label,Label for informant other ID number,ID number,Numéro d'identifiant
 event.death.action.declare.form.section.documents.field.proofOfDeath.option.policeReport,Option for proof of death police report,Police report,Rapport de police
 event.death.action.declare.form.section.documents.field.proofOfDeath.option.magistrateInquiry,Option for proof of death magistrate inquiry,Magistrate inquiry report,Rapport d'enquête du magistrat
 event.death.action.declare.form.section.documents.field.proofOfDeath.option.medicalCertificate,Option for proof of death medical certificate,Medical certificate,Certificat médical
