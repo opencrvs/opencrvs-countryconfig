@@ -1878,7 +1878,7 @@ event.death.action.declare.form.section.father.field.idType.option.passport,Opti
 event.death.action.declare.form.section.father.field.idType.option.other,Option for father ID type other,Other,Autre
 event.death.action.declare.form.section.father.field.brn.label,Label for father birth registration number,Birth registration number,Numéro d'enregistrement de naissance
 event.death.action.declare.form.section.father.field.passport.label,Label for father passport number,Passport number,Numéro de passeport
-event.death.action.declare.form.section.father.field.otherId.label,Label for father other ID,Other ID number,Autre numéro d'identifiant
+event.death.action.declare.form.section.father.field.otherId.label,Label for father other ID,ID number,Numéro d'identifiant
 event.death.action.declare.form.section.father.field.name.label,Label for father full name,Father's full name,Nom complet du père
 event.death.action.declare.form.section.father.field.dob.label,Label for father date of birth,Date of birth,Date de naissance
 event.death.action.declare.form.section.father.field.dob.error,Error for father date of birth,Must be a valid date in the past,Doit être une date valide dans le passé
@@ -1886,6 +1886,7 @@ event.death.action.declare.form.section.father.field.dobUnknown.label,Label for 
 event.death.action.declare.form.section.father.field.age.label,Label for father age,Age,Âge
 event.death.action.declare.form.section.father.field.placeOfBirth.label,Label for father place of birth,Place of birth,Lieu de naissance
 event.death.action.declare.form.section.father.field.occupation.label,Label for father occupation,Occupation,Profession
+event.death.action.declare.form.section.father.field.brn.helperText, Label for father brn search, Search for a birth record. If found, details will auto-fill. Otherwise, continue with manual entry, 
 form.death.mother.title,Form section title for mother's details,Mother's details,Détails de la mère
 event.death.action.declare.form.section.mother.field.detailsNotAvailable.label,Label for mother details not available,Mother's details are not available,Les informations sur la mère ne sont pas disponibles
 event.death.action.declare.form.section.mother.field.reason.label,Label for reason mother details not available,Reason,Raison
