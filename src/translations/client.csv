@@ -1908,6 +1908,7 @@ event.death.action.declare.form.section.mother.field.dobUnknown.label,Label for 
 event.death.action.declare.form.section.mother.field.age.label,Label for mother age,Age,Âge
 event.death.action.declare.form.section.mother.field.placeOfBirth.label,Label for mother place of birth,Place of birth,Lieu de naissance
 event.death.action.declare.form.section.mother.field.occupation.label,Label for mother occupation,Occupation,Profession
+event.death.action.declare.form.section.deceased.field.brn.helperText, Label, Search for a birth record. If found, details will auto-fill. Otherwise, continue with manual entry, 
 event.death.action.declare.form.section.spouse.field.idType.option.birthCertificate,Option for spouse ID type birth certificate,Birth certificate,Certificat de naissance
 event.death.action.declare.form.section.spouse.field.idType.option.passport,Option for spouse ID type passport,Passport,Passeport
 event.death.action.declare.form.section.spouse.field.idType.option.other,Option for spouse ID type other,Other,Autre
