@@ -9,49 +9,108 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { defineFormPage, FieldType, PageTypes } from '@opencrvs/toolkit/events'
+import {
+  defineFormPage,
+  FieldType,
+  PageTypes,
+  ConditionalType,
+  user
+} from '@opencrvs/toolkit/events'
+import { not } from '@opencrvs/toolkit/conditionals'
 
 export const deathIntroduction = defineFormPage({
   id: 'introduction',
   type: PageTypes.enum.FORM,
   title: {
-    defaultMessage: 'Introduce the death registration process to the informant',
+    defaultMessage: 'Introduction',
     description: 'Event information title for the death',
     id: 'register.eventInfo.death.title'
   },
   fields: [
     {
       type: FieldType.BULLET_LIST,
-      id: 'form.section.information.death.bulletList',
+      id: 'form.section.information.death.healthNotifier.bulletList',
       label: {
-        defaultMessage: 'Death Information',
-        id: 'form.section.information.death.bulletList.label',
-        description: 'Label for the death information bullet list'
+        defaultMessage: 'Guidance: Explaining death notification and next steps to the family',
+        id: 'form.section.information.death.healthNotifier.bulletList.label',
+        description: 'Guidance for health notifiers (hospital clerks)'
       },
-      hideLabel: true,
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: user.hasRole('HOSPITAL_CLERK')
+        }
+      ],
       items: [
         {
-          defaultMessage: 'I am going to help you make a declaration of death.',
-          description: 'Form information for death',
-          id: 'form.section.information.death.bullet1'
+          defaultMessage:
+            'Explain to the family that the hospital or health facility is required to record the medical details of the death, including the cause of death, to support the legal registration process.',
+          description: 'Health notifier guidance bullet 1',
+          id: 'form.section.information.death.healthNotifier.bullet1'
         },
         {
           defaultMessage:
-            'As the legal Informant it is important that all the information provided by you is accurate.',
-          description: 'Form information for death',
-          id: 'form.section.information.death.bullet2'
+            'Explain that this notification does not complete the official registration of the death.',
+          description: 'Health notifier guidance bullet 2',
+          id: 'form.section.information.death.healthNotifier.bullet2'
         },
         {
           defaultMessage:
-            'Once the declaration is processed you will receive an email to tell you when to visit the office to collect the certificate - Take your ID with you.',
-          description: 'Form information for death',
-          id: 'form.section.information.death.bullet3'
+            'Advise the family or authorised informant that they must attend the Civil Registration Office to formally register the death and provide the required information about the deceased and their family.',
+          description: 'Health notifier guidance bullet 3',
+          id: 'form.section.information.death.healthNotifier.bullet3'
         },
         {
           defaultMessage:
-            'Make sure you collect the certificate. A death certificate is critical to support with inheritance claims and to resolve the affairs of the deceased e.g. closing bank accounts and setting loans.',
-          description: 'Form information for death',
-          id: 'form.section.information.death.bullet4'
+            'Explain that once the death is formally registered, the Civil Registration Office can issue a death certificate, which may be needed by the family for future legal, family, inheritance, land, or other official matters.',
+          description: 'Health notifier guidance bullet 4',
+          id: 'form.section.information.death.healthNotifier.bullet4'
+        }
+      ],
+      configuration: {
+        styles: {
+          fontVariant: 'reg16'
+        }
+      }
+    },
+    {
+      type: FieldType.BULLET_LIST,
+      id: 'form.section.information.death.registrar.bulletList',
+      label: {
+        defaultMessage: 'Guidance: Explaining death registration to the informant',
+        id: 'form.section.information.death.registrar.bulletList.label',
+        description: 'Guidance for registration officers'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: not(user.hasRole('HOSPITAL_CLERK'))
+        }
+      ],
+      items: [
+        {
+          defaultMessage:
+            'Explain that you will now complete the formal registration of the death in the official civil registration system.',
+          description: 'Registration officer guidance bullet 1',
+          id: 'form.section.information.death.registrar.bullet1'
+        },
+        {
+          defaultMessage:
+            'Explain that you will need to confirm important details about the deceased, including their identity, family details, date and place of death, and other registration information required by law.',
+          description: 'Registration officer guidance bullet 2',
+          id: 'form.section.information.death.registrar.bullet2'
+        },
+        {
+          defaultMessage:
+            'Confirm the relationship of the informant to the deceased and ensure they are authorised to provide the information.',
+          description: 'Registration officer guidance bullet 3',
+          id: 'form.section.information.death.registrar.bullet3'
+        },
+        {
+          defaultMessage:
+            'Explain that once registration is completed and approved, a death certificate can be issued by the Civil Registration Office and may be needed by the family for future legal, family, inheritance, land, or other official matters.',
+          description: 'Registration officer guidance bullet 4',
+          id: 'form.section.information.death.registrar.bullet4'
         }
       ],
       configuration: {
