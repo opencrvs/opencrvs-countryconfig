@@ -16,6 +16,11 @@ import { deathIntroduction } from './pages/introduction'
 import { documents } from './pages/documents'
 import { spouse } from './pages/spouse'
 import { eventDetails } from './pages/eventDetails'
+import { burial } from './pages/burial'
+import { father } from './pages/father'
+import { mother } from './pages/mother'
+import { livingChildren } from './pages/livingChildren'
+import { icd10 } from './pages/icd10'
 
 export const DEATH_DECLARATION_REVIEW = {
   title: {
@@ -64,8 +69,13 @@ export const DEATH_DECLARATION_FORM = defineDeclarationForm({
     deathIntroduction,
     deceased,
     eventDetails,
-    informant,
+    burial,
+    father,
+    mother,
     spouse,
-    documents
+    livingChildren,
+    informant,
+    documents,
+    icd10
   ]
 })

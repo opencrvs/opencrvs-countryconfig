@@ -9,7 +9,6 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { createSelectOptions } from '@countryconfig/events/utils'
 import {
   ConditionalType,
   defineFormPage,
@@ -17,105 +16,9 @@ import {
   field,
   FieldType,
   ImageMimeType,
-  PageTypes,
-  TranslationConfig
+  PageTypes
 } from '@opencrvs/toolkit/events'
-
-const IdType = {
-  NATIONAL_ID: 'NATIONAL_ID',
-  PASSPORT: 'PASSPORT',
-  BIRTH_CERTIFICATE: 'BIRTH_CERTIFICATE',
-  OTHER: 'OTHER'
-} as const
-
-const idTypeMessageDescriptors = {
-  NATIONAL_ID: {
-    defaultMessage: 'National ID',
-    description: 'Option for form field: Type of ID',
-    id: 'form.field.label.iDTypeNationalID'
-  },
-  PASSPORT: {
-    defaultMessage: 'Passport',
-    description: 'Option for form field: Type of ID',
-    id: 'form.field.label.iDTypePassport'
-  },
-  BIRTH_CERTIFICATE: {
-    defaultMessage: 'Birth Certificate',
-    description: 'Option for form field: Type of ID',
-    id: 'form.field.label.iDTypeBirthCertificate'
-  },
-  OTHER: {
-    defaultMessage: 'Other',
-    description: 'Option for form field: Type of ID',
-    id: 'form.field.label.iDTypeOther'
-  }
-} satisfies Record<keyof typeof IdType, TranslationConfig>
-
-const ProofOfDeathType = {
-  ATTESTED_LETTER_OF_DEATH: 'ATTESTED_LETTER_OF_DEATH',
-  POLICE_CERTIFICATE_OF_DEATH: 'POLICE_CERTIFICATE_OF_DEATH',
-  HOSPITAL_CERTIFICATE_OF_DEATH: 'HOSPITAL_CERTIFICATE_OF_DEATH',
-  CORONERS_REPORT: 'CORONERS_REPORT',
-  BURIAL_RECEIPT: 'BURIAL_RECEIPT',
-  OTHER: 'OTHER'
-} as const
-
-const proofOfDeathMessageDescriptors = {
-  ATTESTED_LETTER_OF_DEATH: {
-    defaultMessage: 'Attested letter of death',
-    description: 'Label for select option Attested Letter of Death',
-    id: 'form.field.label.docTypeLetterOfDeath'
-  },
-  POLICE_CERTIFICATE_OF_DEATH: {
-    defaultMessage: 'Police certificate of death',
-    description: 'Label for select option Police death certificate',
-    id: 'form.field.label.docTypePoliceCertificate'
-  },
-  HOSPITAL_CERTIFICATE_OF_DEATH: {
-    defaultMessage: 'Hospital certificate of death',
-    description: 'Label for select option Hospital certificate of death',
-    id: 'form.field.label.docTypeHospitalDeathCertificate'
-  },
-  CORONERS_REPORT: {
-    defaultMessage: "Coroner's report",
-    description: "Label for select option Coroner's report",
-    id: 'form.field.label.docTypeCoronersReport'
-  },
-  BURIAL_RECEIPT: {
-    defaultMessage: 'Certified copy of burial receipt',
-    description: 'Label for select option Certified Copy of Burial Receipt',
-    id: 'form.field.label.docTypeCopyOfBurialReceipt'
-  },
-  OTHER: {
-    defaultMessage: 'Other',
-    description: 'Option for form field: Type of ID',
-    id: 'form.field.label.docTypeOther'
-  }
-} satisfies Record<keyof typeof ProofOfDeathType, TranslationConfig>
-
-const ProofOfCauseOfDeathType = {
-  VERBAL_AUTOPSY: 'VERBAL_AUTOPSY',
-  MEDICALLY_CERTIFIED: 'MEDICALLY_CERTIFIED',
-  OTHER: 'OTHER'
-} as const
-
-const proofOfCauseOfDeathMessageDescriptors = {
-  VERBAL_AUTOPSY: {
-    defaultMessage: 'Verbal autopsy report',
-    description: 'Option for form field: verbalAutopsy',
-    id: 'form.field.label.verbalAutopsyReport'
-  },
-  MEDICALLY_CERTIFIED: {
-    defaultMessage: 'Medically Certified Cause of Death',
-    description: 'Option for form field: medicallyCertified',
-    id: 'form.field.label.medicallyCertified'
-  },
-  OTHER: {
-    defaultMessage: 'Other',
-    description: 'Option for form field: Other',
-    id: 'form.field.label.docTypeOther'
-  }
-} satisfies Record<keyof typeof ProofOfCauseOfDeathType, TranslationConfig>
+import { not } from '@opencrvs/toolkit/conditionals'
 
 const DEFAULT_FILE_CONFIGURATION = {
   maxFileSize: 5 * 1024 * 1024,
@@ -127,17 +30,114 @@ const DEFAULT_FILE_CONFIGURATION = {
   ]
 }
 
-const idTypeOptions = createSelectOptions(IdType, idTypeMessageDescriptors)
+const proofOfDeathOptions = [
+  {
+    value: 'POLICE_REPORT',
+    label: {
+      defaultMessage: 'Police report',
+      description: 'Option for proof of death: police report',
+      id: 'event.death.action.declare.form.section.documents.field.proofOfDeath.option.policeReport'
+    }
+  },
+  {
+    value: 'MAGISTRATE_INQUIRY_REPORT',
+    label: {
+      defaultMessage: 'Magistrate inquiry report',
+      description: 'Option for proof of death: magistrate inquiry report',
+      id: 'event.death.action.declare.form.section.documents.field.proofOfDeath.option.magistrateInquiry'
+    }
+  },
+  {
+    value: 'MEDICAL_CERTIFICATE',
+    label: {
+      defaultMessage: 'Medical certificate',
+      description: 'Option for proof of death: medical certificate',
+      id: 'event.death.action.declare.form.section.documents.field.proofOfDeath.option.medicalCertificate'
+    }
+  },
+  {
+    value: 'OTHER',
+    label: {
+      defaultMessage: 'Other',
+      description: 'Option for proof of death: other',
+      id: 'event.death.action.declare.form.section.documents.field.proofOfDeath.option.other'
+    }
+  }
+]
 
-const proofOfDeathTypeOptions = createSelectOptions(
-  ProofOfDeathType,
-  proofOfDeathMessageDescriptors
-)
+const proofOfDeceasedIdentityOptions = [
+  {
+    value: 'BIRTH_CERTIFICATE',
+    label: {
+      defaultMessage: 'Birth certificate',
+      description: 'Option for proof of deceased identity: birth certificate',
+      id: 'event.death.action.declare.form.section.documents.field.proofOfDeceasedIdentity.option.birthCertificate'
+    }
+  },
+  {
+    value: 'PASSPORT',
+    label: {
+      defaultMessage: 'Passport',
+      description: 'Option for proof of deceased identity: passport',
+      id: 'event.death.action.declare.form.section.documents.field.proofOfDeceasedIdentity.option.passport'
+    }
+  },
+  {
+    value: 'OTHER',
+    label: {
+      defaultMessage: 'Other',
+      description: 'Option for proof of deceased identity: other',
+      id: 'event.death.action.declare.form.section.documents.field.proofOfDeceasedIdentity.option.other'
+    }
+  }
+]
 
-const proofOfCauseOfDeathTypeOptions = createSelectOptions(
-  ProofOfCauseOfDeathType,
-  proofOfCauseOfDeathMessageDescriptors
-)
+const proofOfInformantIdentityOptions = [
+  {
+    value: 'BIRTH_CERTIFICATE',
+    label: {
+      defaultMessage: 'Birth certificate',
+      description: 'Option for proof of informant identity: birth certificate',
+      id: 'event.death.action.declare.form.section.documents.field.proofOfInformantIdentity.option.birthCertificate'
+    }
+  },
+  {
+    value: 'PASSPORT',
+    label: {
+      defaultMessage: 'Passport',
+      description: 'Option for proof of informant identity: passport',
+      id: 'event.death.action.declare.form.section.documents.field.proofOfInformantIdentity.option.passport'
+    }
+  },
+  {
+    value: 'OTHER',
+    label: {
+      defaultMessage: 'Other',
+      description: 'Option for proof of informant identity: other',
+      id: 'event.death.action.declare.form.section.documents.field.proofOfInformantIdentity.option.other'
+    }
+  }
+]
+
+const overseasBurialDocOptions = [
+  {
+    value: 'TRANSFER_AUTHORISATION',
+    label: {
+      defaultMessage: 'Transfer authorisation',
+      description: 'Option for removal/overseas burial: transfer authorisation',
+      id: 'event.death.action.declare.form.section.documents.field.removalOverseasBurial.option.transferAuthorisation'
+    }
+  },
+  {
+    value: 'OTHER',
+    label: {
+      defaultMessage: 'Other',
+      description: 'Option for removal/overseas burial: other',
+      id: 'event.death.action.declare.form.section.documents.field.removalOverseasBurial.option.other'
+    }
+  }
+]
+
 export const documents = defineFormPage({
   id: 'documents',
   type: PageTypes.enum.FORM,
@@ -156,32 +156,7 @@ export const documents = defineFormPage({
         id: 'form.field.label.proofOfBirth.fileName'
       }
     },
-    {
-      id: 'documents.proofOfDeceased',
-      type: FieldType.FILE_WITH_OPTIONS,
-      uncorrectable: true,
-      required: false,
-      label: {
-        defaultMessage: "Proof of deceased's ID",
-        description: 'This is the label for the field',
-        id: 'event.death.action.declare.form.section.documents.field.proofOfDeceased.label'
-      },
-      configuration: DEFAULT_FILE_CONFIGURATION,
-      options: idTypeOptions
-    },
-    {
-      id: 'documents.proofOfInformant',
-      type: FieldType.FILE_WITH_OPTIONS,
-      required: false,
-      uncorrectable: true,
-      label: {
-        defaultMessage: "Proof of informant's ID",
-        description: 'This is the label for the field',
-        id: 'event.death.action.declare.form.section.documents.field.proofOfInformant.label'
-      },
-      configuration: DEFAULT_FILE_CONFIGURATION,
-      options: idTypeOptions
-    },
+    // ---- Proof of death ----
     {
       id: 'documents.proofOfDeath',
       type: FieldType.FILE_WITH_OPTIONS,
@@ -193,25 +168,54 @@ export const documents = defineFormPage({
         id: 'event.death.action.declare.form.section.documents.field.proofOfDeath.label'
       },
       configuration: DEFAULT_FILE_CONFIGURATION,
-      options: proofOfDeathTypeOptions
+      options: proofOfDeathOptions
     },
+    // ---- Proof of deceased's identity ----
     {
-      id: 'documents.proofOfCauseOfDeath',
+      id: 'documents.proofOfDeceasedIdentity',
       type: FieldType.FILE_WITH_OPTIONS,
       uncorrectable: true,
       required: false,
       label: {
-        defaultMessage: 'Proof of cause of death',
+        defaultMessage: "Proof of deceased's identity",
         description: 'This is the label for the field',
-        id: 'event.death.action.declare.form.section.documents.field.proofOfCauseOfDeath.label'
+        id: 'event.death.action.declare.form.section.documents.field.proofOfDeceasedIdentity.label'
       },
       configuration: DEFAULT_FILE_CONFIGURATION,
-      options: proofOfCauseOfDeathTypeOptions,
+      options: proofOfDeceasedIdentityOptions
+    },
+    // ---- Proof of informant's identity ----
+    {
+      id: 'documents.proofOfInformantIdentity',
+      type: FieldType.FILE_WITH_OPTIONS,
+      required: false,
+      uncorrectable: true,
+      label: {
+        defaultMessage: "Proof of informant's identity",
+        description: 'This is the label for the field',
+        id: 'event.death.action.declare.form.section.documents.field.proofOfInformantIdentity.label'
+      },
+      configuration: DEFAULT_FILE_CONFIGURATION,
+      options: proofOfInformantIdentityOptions
+    },
+    // ---- Removal / overseas burial (shown if burial not in Tuvalu) ----
+    {
+      id: 'documents.removalOverseasBurial',
+      type: FieldType.FILE_WITH_OPTIONS,
+      uncorrectable: true,
+      required: false,
+      label: {
+        defaultMessage: 'Removal or overseas burial documentation',
+        description: 'This is the label for the field',
+        id: 'event.death.action.declare.form.section.documents.field.removalOverseasBurial.label'
+      },
+      configuration: DEFAULT_FILE_CONFIGURATION,
+      options: overseasBurialDocOptions,
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: field('eventDetails.causeOfDeathEstablished').isEqualTo(
-            true
+          conditional: not(
+            field('burial.arrangement').isEqualTo('BURIAL_IN_TUVALU')
           )
         }
       ]
