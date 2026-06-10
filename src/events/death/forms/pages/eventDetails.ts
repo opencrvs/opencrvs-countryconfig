@@ -29,7 +29,8 @@ import {
   DEATH_REGISTRATION_TARGET_DAYS,
   createSelectOptions,
   emptyMessage,
-  yesNoRadioOptions
+  yesNoRadioOptions,
+  hasNonHealthNotifierRole
 } from '@countryconfig/events/utils'
 
 const MannerDeathType = {
@@ -164,7 +165,6 @@ const notNaturalCauses = not(
 const magistrateRequired = field(
   'eventDetails.magistrateInquiryRequired'
 ).isEqualTo('YES')
-const notHospitalClerk = not(user.hasRole('HOSPITAL_CLERK'))
 const notPersonallyAttended = not(
   field('eventDetails.notPersonallyAttended').isEqualTo(true)
 )
@@ -451,7 +451,7 @@ export const eventDetails = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: and(magistrateRequired, notHospitalClerk)
+          conditional: and(magistrateRequired, hasNonHealthNotifierRole)
         }
       ]
     },

@@ -13,10 +13,12 @@ import {
   defineFormPage,
   FieldType,
   PageTypes,
-  ConditionalType,
-  user
+  ConditionalType
 } from '@opencrvs/toolkit/events'
-import { not } from '@opencrvs/toolkit/conditionals'
+import {
+  hasHealthNotifierRole,
+  hasNonHealthNotifierRole
+} from '@countryconfig/events/utils'
 
 export const deathIntroduction = defineFormPage({
   id: 'introduction',
@@ -38,7 +40,7 @@ export const deathIntroduction = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: user.hasRole('HOSPITAL_CLERK')
+          conditional: hasHealthNotifierRole
         }
       ],
       items: [
@@ -84,7 +86,7 @@ export const deathIntroduction = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: not(user.hasRole('HOSPITAL_CLERK'))
+          conditional: hasNonHealthNotifierRole
         }
       ],
       items: [

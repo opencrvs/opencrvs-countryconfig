@@ -33,7 +33,8 @@ import {
   getNestedFieldValidators,
   createSelectOptions,
   BirthIdType,
-  birthIdTypeOptions
+  birthIdTypeOptions,
+  hasNonHealthNotifierRole
 } from '@countryconfig/events/utils'
 
 export const InformantType = {
@@ -164,7 +165,10 @@ export const informant = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: informantOtherThanParent
+          conditional: and(
+            informantOtherThanParent,
+            hasNonHealthNotifierRole
+          )
         }
       ],
       defaultValue: 'TUV',
@@ -183,7 +187,10 @@ export const informant = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: informantOtherThanParent
+          conditional: and(
+            informantOtherThanParent,
+            hasNonHealthNotifierRole
+          )
         }
       ],
       parent: field('informant.relation')
@@ -202,7 +209,8 @@ export const informant = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: and(
             field('informant.idType').isEqualTo(BirthIdType.BIRTH_CERTIFICATE),
-            informantOtherThanParent
+            informantOtherThanParent,
+            hasNonHealthNotifierRole
           )
         }
       ],
@@ -222,7 +230,8 @@ export const informant = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: and(
             field('informant.idType').isEqualTo(BirthIdType.PASSPORT),
-            informantOtherThanParent
+            informantOtherThanParent,
+            hasNonHealthNotifierRole
           )
         }
       ],
@@ -242,7 +251,8 @@ export const informant = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: and(
             field('informant.idType').isEqualTo(BirthIdType.OTHER),
-            informantOtherThanParent
+            informantOtherThanParent,
+            hasNonHealthNotifierRole
           )
         }
       ],
@@ -255,7 +265,10 @@ export const informant = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: informantOtherThanParent
+          conditional: and(
+            informantOtherThanParent,
+            hasNonHealthNotifierRole
+          )
         }
       ],
       parent: field('informant.relation')
@@ -274,7 +287,10 @@ export const informant = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: informantOtherThanParent
+          conditional: and(
+            informantOtherThanParent,
+            hasNonHealthNotifierRole
+          )
         }
       ],
       parent: field('informant.relation'),
@@ -314,7 +330,8 @@ export const informant = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: and(
             not(field('informant.dobUnknown').isEqualTo(true)),
-            informantOtherThanParent
+            informantOtherThanParent,
+            hasNonHealthNotifierRole
           )
         }
       ],
@@ -331,7 +348,10 @@ export const informant = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: informantOtherThanParent
+          conditional: and(
+            informantOtherThanParent,
+            hasNonHealthNotifierRole
+          )
         },
         {
           type: ConditionalType.DISPLAY_ON_REVIEW,
@@ -363,7 +383,8 @@ export const informant = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: and(
             field('informant.dobUnknown').isEqualTo(true),
-            informantOtherThanParent
+            informantOtherThanParent,
+            hasNonHealthNotifierRole
           )
         }
       ],
@@ -397,7 +418,10 @@ export const informant = defineFormPage({
         },
         {
           type: ConditionalType.SHOW,
-          conditional: informantOtherThanParent
+          conditional: and(
+            informantOtherThanParent,
+            hasNonHealthNotifierRole
+          )
         }
       ],
       parent: field('informant.relation')
@@ -415,7 +439,10 @@ export const informant = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: informantOtherThanParent
+          conditional: and(
+            informantOtherThanParent,
+            hasNonHealthNotifierRole
+          )
         }
       ],
       validation: [
@@ -449,7 +476,10 @@ export const informant = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: informantOtherThanParent
+          conditional: and(
+            informantOtherThanParent,
+            hasNonHealthNotifierRole
+          )
         }
       ],
       parent: field('informant.relation')

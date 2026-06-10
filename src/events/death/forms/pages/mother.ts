@@ -28,8 +28,7 @@ import {
 } from '@countryconfig/events/birth/validators'
 import {
   emptyMessage,
-  defaultStreetAddressConfiguration,
-  getNestedFieldValidators
+  hasNonHealthNotifierRole,
 } from '@countryconfig/events/utils'
 
 const DeathMotherIdType = {
@@ -89,7 +88,6 @@ const motherLivingStatusOptions = [
   }
 ]
 
-const notHospitalClerk = not(user.hasRole('HOSPITAL_CLERK'))
 const motherDetailsAvailable = not(
   field('mother.detailsNotAvailable').isEqualTo(true)
 )
@@ -165,7 +163,7 @@ export const mother = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: and(motherDetailsAvailable, notHospitalClerk)
+          conditional: and(motherDetailsAvailable, hasNonHealthNotifierRole)
         }
       ]
     },
@@ -183,7 +181,7 @@ export const mother = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: and(motherDetailsAvailable, notHospitalClerk)
+          conditional: and(motherDetailsAvailable, hasNonHealthNotifierRole)
         }
       ]
     },
@@ -203,7 +201,7 @@ export const mother = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: and(
             motherDetailsAvailable,
-            notHospitalClerk,
+            hasNonHealthNotifierRole,
             notDeceased
           )
         }
@@ -256,7 +254,7 @@ export const mother = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: and(
             motherDetailsAvailable,
-            notHospitalClerk,
+            hasNonHealthNotifierRole,
             notDeceased,
             field('mother.idType').isEqualTo(
               DeathMotherIdType.BIRTH_CERTIFICATE
@@ -286,7 +284,7 @@ export const mother = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: and(
             motherDetailsAvailable,
-            notHospitalClerk,
+            hasNonHealthNotifierRole,
             notDeceased,
             field('mother.idType').isEqualTo(
               DeathMotherIdType.BIRTH_CERTIFICATE
@@ -310,7 +308,7 @@ export const mother = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: and(
             motherDetailsAvailable,
-            notHospitalClerk,
+            hasNonHealthNotifierRole,
             notDeceased,
             field('mother.idType').isEqualTo(DeathMotherIdType.PASSPORT)
           )
@@ -332,7 +330,7 @@ export const mother = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: and(
             motherDetailsAvailable,
-            notHospitalClerk,
+            hasNonHealthNotifierRole,
             notDeceased,
             field('mother.idType').isEqualTo(DeathMotherIdType.OTHER)
           )
@@ -473,7 +471,7 @@ export const mother = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: and(motherDetailsAvailable, notHospitalClerk)
+          conditional: and(motherDetailsAvailable, hasNonHealthNotifierRole)
         }
       ]
     },

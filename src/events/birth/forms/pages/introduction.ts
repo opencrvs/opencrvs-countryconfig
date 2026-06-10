@@ -13,16 +13,18 @@ import {
   ConditionalType,
   defineFormPage,
   FieldType,
-  PageTypes,
-  user
+  PageTypes
 } from '@opencrvs/toolkit/events'
-import { not } from '@opencrvs/toolkit/conditionals'
+import {
+  hasHealthNotifierRole,
+  hasNonHealthNotifierRole
+} from '@countryconfig/events/utils'
 
 export const introduction = defineFormPage({
   id: 'introduction',
   type: PageTypes.enum.FORM,
   title: {
-    defaultMessage: 'Introduce the birth registration process to the informant',
+    defaultMessage: 'Introduction',
     description: 'Event information title for the birth',
     id: 'register.eventInfo.birth.title'
   },
@@ -31,11 +33,10 @@ export const introduction = defineFormPage({
       id: 'introduction.guidance.healthNotifier',
       type: FieldType.BULLET_LIST,
       label: {
-        defaultMessage: 'Health Notifier Guidance',
+        defaultMessage: 'Guidance: Explaining birth notification to parents',
         description: 'Guidance for health notifier roles on birth notification',
         id: 'event.birth.action.declare.form.section.introduction.field.guidance.healthNotifier.label'
       },
-      hideLabel: true,
       items: [
         {
           defaultMessage:
@@ -64,7 +65,7 @@ export const introduction = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: user.hasRole('HOSPITAL_CLERK')
+          conditional: hasHealthNotifierRole
         }
       ]
     },
@@ -72,12 +73,11 @@ export const introduction = defineFormPage({
       id: 'introduction.guidance.registrationOfficer',
       type: FieldType.BULLET_LIST,
       label: {
-        defaultMessage: 'Registration Officer Guidance',
+        defaultMessage: 'Guidance: Explaining birth registration to parents or a qualified informant',
         description:
           'Guidance for registration officers on the birth registration process',
         id: 'event.birth.action.declare.form.section.introduction.field.guidance.registrationOfficer.label'
       },
-      hideLabel: true,
       items: [
         {
           defaultMessage: 'Thank the informant for coming to register the birth.',
@@ -111,7 +111,7 @@ export const introduction = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: not(user.hasRole('HOSPITAL_CLERK'))
+          conditional: hasNonHealthNotifierRole
         }
       ]
     }

@@ -323,7 +323,7 @@ userRole.nationalSystemAdmin,Name for user role National System Admin,National S
 userRole.performanceManager,Name for user role Performance Manager,Performance Manager
 userRole.policeOfficer,Name for user role Police Officer,Police Officer
 userRole.registrationAgent,Name for user role Registration Agent,Registration Agent
-userRole.hospitalClerk,Name for user role Hospital Clerk,Hospital Clerk
+userRole.hospitalClerk,Name for user role Health Notifier,Health Notifier
 validations.isAgeInYearsBetween,The error message that appears when age for the given date is outside the legal age range,Age must be between {min} and {max} years.
 wq.noRecords.draft,No records messages for empty draft tab,No records in my drafts
 ```

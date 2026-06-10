@@ -33,7 +33,8 @@ import {
   YesNoTypes,
   defaultStreetAddressConfiguration,
   getNestedFieldValidators,
-  emptyMessage
+  emptyMessage,
+  hasNonHealthNotifierRole
 } from '@countryconfig/events/utils'
 
 export const InformantType = {
@@ -137,8 +138,6 @@ const informantOtherThanSpouse = and(
   not(field('informant.relation').isFalsy())
 )
 
-const notHospitalClerk = not(user.hasRole('HOSPITAL_CLERK'))
-
 export const informant = defineFormPage({
   id: 'informant',
   type: PageTypes.enum.FORM,
@@ -161,7 +160,7 @@ export const informant = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: notHospitalClerk
+          conditional: hasNonHealthNotifierRole
         }
       ]
     },
@@ -207,7 +206,7 @@ export const informant = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: and(informantOtherThanSpouse, notHospitalClerk)
+          conditional: and(informantOtherThanSpouse, hasNonHealthNotifierRole)
         }
       ],
       defaultValue: 'TUV',
@@ -227,7 +226,7 @@ export const informant = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: and(informantOtherThanSpouse, notHospitalClerk)
+          conditional: and(informantOtherThanSpouse, hasNonHealthNotifierRole)
         }
       ],
       parent: field('informant.relation')
@@ -250,7 +249,7 @@ export const informant = defineFormPage({
               InformantIdType.BIRTH_CERTIFICATE
             ),
             informantOtherThanSpouse,
-            notHospitalClerk
+            hasNonHealthNotifierRole
           )
         }
       ],
@@ -272,7 +271,7 @@ export const informant = defineFormPage({
           conditional: and(
             field('informant.idType').isEqualTo(InformantIdType.PASSPORT),
             informantOtherThanSpouse,
-            notHospitalClerk
+            hasNonHealthNotifierRole
           )
         }
       ],
@@ -294,7 +293,7 @@ export const informant = defineFormPage({
           conditional: and(
             field('informant.idType').isEqualTo(InformantIdType.OTHER),
             informantOtherThanSpouse,
-            notHospitalClerk
+            hasNonHealthNotifierRole
           )
         }
       ],
@@ -307,7 +306,7 @@ export const informant = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: and(informantOtherThanSpouse, notHospitalClerk)
+          conditional: and(informantOtherThanSpouse, hasNonHealthNotifierRole)
         }
       ],
       parent: field('informant.relation')

@@ -28,7 +28,8 @@ import {
   emptyMessage,
   defaultStreetAddressConfiguration,
   getNestedFieldValidators,
-  yesNoRadioOptions
+  yesNoRadioOptions,
+  hasNonHealthNotifierRole
 } from '@countryconfig/events/utils'
 import {
   tuvaluNameConfig,
@@ -106,7 +107,6 @@ const deceasedMaritalStatusOptions = [
 ]
 
 const isMarried = field('deceased.maritalStatus').isEqualTo('MARRIED')
-const notHospitalClerk = not(user.hasRole('HOSPITAL_CLERK'))
 
 // -----------------------------------------------------------------
 // Gender options
@@ -155,7 +155,7 @@ export const deceased = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: notHospitalClerk
+          conditional: hasNonHealthNotifierRole
         }
       ]
     },
@@ -174,7 +174,7 @@ export const deceased = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: notHospitalClerk
+          conditional: hasNonHealthNotifierRole
         }
       ]
     },
@@ -224,7 +224,7 @@ export const deceased = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            notHospitalClerk,
+            hasNonHealthNotifierRole,
             field('deceased.idType').isEqualTo(DeathIdType.BIRTH_CERTIFICATE)
           )
         }
@@ -250,7 +250,7 @@ export const deceased = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            notHospitalClerk,
+            hasNonHealthNotifierRole,
             field('deceased.idType').isEqualTo(DeathIdType.BIRTH_CERTIFICATE)
           )
         }
@@ -270,7 +270,7 @@ export const deceased = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            notHospitalClerk,
+            hasNonHealthNotifierRole,
             field('deceased.idType').isEqualTo(DeathIdType.PASSPORT)
           )
         }
@@ -290,7 +290,7 @@ export const deceased = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            notHospitalClerk,
+            hasNonHealthNotifierRole,
             field('deceased.idType').isEqualTo(DeathIdType.OTHER)
           )
         }
@@ -304,7 +304,7 @@ export const deceased = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: notHospitalClerk
+          conditional: hasNonHealthNotifierRole
         }
       ]
     },

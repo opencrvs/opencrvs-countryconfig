@@ -96,13 +96,15 @@ export const userNotificationTestData: TriggerEventPayloadPair[] = [
   }
 ]
 
+
+
 const CreateAction = {
   id: '596a6a01-5070-4b4d-bed4-949a33212b6e' as unknown as UUID,
   transactionId: 'tmp-0c1a550f-4537-4e15-bde1-649157fd1c52',
   createdByUserType: 'user',
   createdAt: '2025-08-20T03:24:04.815Z',
   createdBy: '68a33795caf0b9e13a86d51f',
-  createdByRole: 'HOSPITAL_CLERK',
+  createdByRole: 'HEALTH_NOTIFIER',
   createdAtLocation: '9e069dda-0d83-4f67-a4f2-9adbf5658e2e' as unknown as UUID,
   declaration: {},
   status: ActionStatus.Accepted,
@@ -115,7 +117,7 @@ const AssignAction = {
   createdByUserType: 'user',
   createdAt: '2025-08-20T03:24:04.815Z',
   createdBy: '68a33795caf0b9e13a86d51f',
-  createdByRole: 'HOSPITAL_CLERK',
+  createdByRole: 'HEALTH_NOTIFIER',
   createdAtLocation: '9e069dda-0d83-4f67-a4f2-9adbf5658e2e' as unknown as UUID,
   declaration: {},
   status: 'Accepted',
@@ -129,7 +131,7 @@ const RequestBirthNotificationAction = {
   createdByUserType: 'user',
   createdAt: '2025-08-20T03:24:49.861Z',
   createdBy: '68a33795caf0b9e13a86d51f',
-  createdByRole: 'HOSPITAL_CLERK',
+  createdByRole: 'HEALTH_NOTIFIER',
   createdAtLocation: '9e069dda-0d83-4f67-a4f2-9adbf5658e2e' as unknown as UUID,
   declaration: {
     'child.name': {
@@ -165,7 +167,7 @@ const RequestBirthDeclarationAction = {
   createdByUserType: 'user',
   createdAt: '2025-08-20T03:24:49.861Z',
   createdBy: '68a33795caf0b9e13a86d51f',
-  createdByRole: 'HOSPITAL_CLERK',
+  createdByRole: 'HEALTH_NOTIFIER',
   createdAtLocation: '9e069dda-0d83-4f67-a4f2-9adbf5658e2e' as unknown as UUID,
   declaration: {
     'child.name': {
@@ -201,7 +203,7 @@ const BirthDeclarationAction = {
   createdByUserType: 'user',
   createdAt: '2025-08-20T03:24:49.861Z',
   createdBy: '68a33795caf0b9e13a86d51f',
-  createdByRole: 'HOSPITAL_CLERK',
+  createdByRole: 'HEALTH_NOTIFIER',
   createdAtLocation: '9e069dda-0d83-4f67-a4f2-9adbf5658e2e' as unknown as UUID,
   declaration: {
     'child.name': {
@@ -237,7 +239,7 @@ const RequestRegistrationAction = {
   createdByUserType: 'user',
   createdAt: '2025-08-20T03:24:49.861Z',
   createdBy: '68a33795caf0b9e13a86d51f',
-  createdByRole: 'HOSPITAL_CLERK',
+  createdByRole: 'HEALTH_NOTIFIER',
   createdAtLocation: '9e069dda-0d83-4f67-a4f2-9adbf5658e2e' as unknown as UUID,
   declaration: {},
   annotation: {},
@@ -251,7 +253,7 @@ const RequestRejectionAction = {
   createdByUserType: 'user',
   createdAt: '2025-08-20T03:24:49.861Z',
   createdBy: '68a33795caf0b9e13a86d51f',
-  createdByRole: 'HOSPITAL_CLERK',
+  createdByRole: 'HEALTH_NOTIFIER',
   createdAtLocation: '9e069dda-0d83-4f67-a4f2-9adbf5658e2e' as unknown as UUID,
   declaration: {},
   annotation: {},
@@ -266,7 +268,7 @@ const RequestDeathNotificationAction = {
   createdByUserType: 'user',
   createdAt: '2025-08-20T09:43:55.734Z',
   createdBy: '68a33796caf0b9e13a86d52f',
-  createdByRole: 'LOCAL_REGISTRAR',
+  createdByRole: 'REGISTRAR',
   createdAtLocation: '9e069dda-0d83-4f67-a4f2-9adbf5658e2e' as unknown as UUID,
   declaration: {
     'spouse.name': {
@@ -308,7 +310,7 @@ const RequestDeathDeclarationAction = {
   createdByUserType: 'user',
   createdAt: '2025-08-20T09:43:55.734Z',
   createdBy: '68a33796caf0b9e13a86d52f',
-  createdByRole: 'LOCAL_REGISTRAR',
+  createdByRole: 'REGISTRAR',
   createdAtLocation: '9e069dda-0d83-4f67-a4f2-9adbf5658e2e' as unknown as UUID,
   declaration: {
     'spouse.age': { age: 41, asOfDateRef: 'eventDetails.date' },
@@ -362,7 +364,7 @@ const DeathDeclarationAction = {
   createdByUserType: 'user',
   createdAt: '2025-08-20T09:43:55.734Z',
   createdBy: '68a33796caf0b9e13a86d52f',
-  createdByRole: 'LOCAL_REGISTRAR',
+  createdByRole: 'REGISTRAR',
   createdAtLocation: '9e069dda-0d83-4f67-a4f2-9adbf5658e2e' as unknown as UUID,
   declaration: {
     'spouse.age': { age: 41, asOfDateRef: 'eventDetails.date' },

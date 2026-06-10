@@ -307,8 +307,8 @@ export const birthEvent = defineConfig({
           id: 'validated',
           operation: 'add',
           conditional: or(
-            user.hasRole('REGISTRATION_AGENT'),
-            user.hasRole('LOCAL_REGISTRAR'),
+            user.hasRole('REGISTRAR_GENERAL'),
+            user.hasRole('REGISTRAR'),
             user.hasRole('EMBASSY_OFFICIAL')
           )
         }

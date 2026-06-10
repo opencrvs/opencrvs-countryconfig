@@ -204,7 +204,7 @@ const TENNIS_CLUB_DECLARATION_REVIEW = {
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            user.hasRole('LOCAL_REGISTRAR'),
+            user.hasRole('REGISTRAR'),
             not(event.hasAction(ActionType.DECLARE)),
             not(event.hasAction(ActionType.NOTIFY))
           )
@@ -230,7 +230,7 @@ const TENNIS_CLUB_DECLARATION_REVIEW = {
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: user.hasRole('HOSPITAL_CLERK')
+          conditional: user.hasRole('HEALTH_NOTIFIER')
         }
       ]
     }
@@ -442,7 +442,7 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
               conditional: or(
                 user.hasRole('SOCIAL_WORKER'),
                 user.hasRole('FIELD_AGENT'),
-                user.hasRole('HOSPITAL_CLERK')
+                user.hasRole('HEALTH_NOTIFIER')
               )
             }
           ]

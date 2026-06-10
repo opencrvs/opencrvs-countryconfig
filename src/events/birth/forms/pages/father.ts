@@ -31,7 +31,8 @@ import {
   defaultStreetAddressConfiguration,
   getNestedFieldValidators,
   BirthIdType,
-  birthIdTypeOptions
+  birthIdTypeOptions,
+  hasNonHealthNotifierRole
 } from '@countryconfig/events/utils'
 
 export const requireFatherDetails = or(
@@ -117,7 +118,7 @@ export const father = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: and(
             requireFatherDetails,
-            not(user.hasRole('HOSPITAL_CLERK'))
+            hasNonHealthNotifierRole
           )
         }
       ],
@@ -139,7 +140,7 @@ export const father = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: and(
             requireFatherDetails,
-            not(user.hasRole('HOSPITAL_CLERK'))
+            hasNonHealthNotifierRole
           )
         }
       ]
@@ -211,7 +212,7 @@ export const father = defineFormPage({
           conditional: and(
             field('father.idType').isEqualTo(BirthIdType.BIRTH_CERTIFICATE),
             requireFatherDetails,
-            not(user.hasRole('HOSPITAL_CLERK'))
+            hasNonHealthNotifierRole
           )
         },
         {
@@ -243,7 +244,7 @@ export const father = defineFormPage({
           conditional: and(
             field('father.idType').isEqualTo(BirthIdType.BIRTH_CERTIFICATE),
             requireFatherDetails,
-            not(user.hasRole('HOSPITAL_CLERK'))
+            hasNonHealthNotifierRole
           )
         }
       ]
@@ -263,7 +264,7 @@ export const father = defineFormPage({
           conditional: and(
             field('father.idType').isEqualTo(BirthIdType.PASSPORT),
             requireFatherDetails,
-            not(user.hasRole('HOSPITAL_CLERK'))
+            hasNonHealthNotifierRole
           )
         }
       ]
@@ -283,7 +284,7 @@ export const father = defineFormPage({
           conditional: and(
             field('father.idType').isEqualTo(BirthIdType.OTHER),
             requireFatherDetails,
-            not(user.hasRole('HOSPITAL_CLERK'))
+            hasNonHealthNotifierRole
           )
         }
       ]
@@ -295,7 +296,7 @@ export const father = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: requireFatherDetails
+          conditional: and(requireFatherDetails, hasNonHealthNotifierRole)
         }
       ]
     },

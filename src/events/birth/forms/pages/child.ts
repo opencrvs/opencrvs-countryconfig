@@ -30,7 +30,8 @@ import {
   BIRTH_DELAYED_REGISTRATION_TARGET_DAYS,
   BIRTH_LATE_REGISTRATION_TARGET_DAYS,
   defaultStreetAddressConfiguration,
-  getNestedFieldValidators
+  getNestedFieldValidators,
+  hasNonHealthNotifierRole
 } from '@countryconfig/events/utils'
 import {
   tuvaluNameConfig,
@@ -241,35 +242,14 @@ const placeOfBirthOptions = [
   {
     value: PlaceOfBirth.HEALTH_FACILITY,
     label: placeOfBirthMessageDescriptors.HEALTH_FACILITY,
-    conditionals: [
-      {
-        type: ConditionalType.SHOW,
-        conditional: and(
-          not(user.hasRole('EMBASSY_OFFICIAL')),
-          not(user.hasRole('COMMUNITY_LEADER'))
-        )
-      }
-    ]
   },
   {
     value: PlaceOfBirth.PRIVATE_HOME,
     label: placeOfBirthMessageDescriptors.PRIVATE_HOME,
-    conditionals: [
-      {
-        type: ConditionalType.SHOW,
-        conditional: not(user.hasRole('HOSPITAL_CLERK'))
-      }
-    ]
   },
   {
     value: PlaceOfBirth.OTHER,
     label: placeOfBirthMessageDescriptors.OTHER,
-    conditionals: [
-      {
-        type: ConditionalType.SHOW,
-        conditional: not(user.hasRole('HOSPITAL_CLERK'))
-      }
-    ]
   }
 ] satisfies SelectOption[]
 
@@ -439,6 +419,7 @@ export const child = defineFormPage({
       type: FieldType.LOCATION,
       required: true,
       secured: true,
+      parent: field('child.placeOfBirth'),
       label: {
         defaultMessage: 'Health Institution',
         description: 'This is the label for the field',
@@ -746,7 +727,13 @@ export const child = defineFormPage({
     {
       id: 'child.divider4',
       type: FieldType.DIVIDER,
-      label: emptyMessage
+      label: emptyMessage,
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: hasNonHealthNotifierRole
+          }
+        ]
     },
     {
       id: 'child.nameChangedAfterRegistration',
@@ -766,6 +753,10 @@ export const child = defineFormPage({
           conditional: field(
             'child.nameChangedAfterRegistration'
           ).isEqualTo(true)
+        },
+        {
+          type: ConditionalType.SHOW,
+          conditional: hasNonHealthNotifierRole
         }
       ]
     }

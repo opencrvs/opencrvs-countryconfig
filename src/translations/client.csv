@@ -325,7 +325,7 @@ constants.last30Days,Label for  preset date range Last 30 days,Last 30 days,30 d
 constants.lastEdited,Label for rejection date in work queue list item,Last edited,Dernière édition
 constants.lastUpdated,Label for Last updated in list item,Last update,Dernière mise à jour
 constants.loadMore,A label for load more,Load more,Charger plus
-constants.localRegistrar,The description for LOCAL_REGISTRAR role,Registrar,Officier d'état civil de district
+constants.localRegistrar,The description for REGISTRAR role,Registrar,Officier d'état civil de district
 constants.location,Label for location,Location,Situation géographique
 constants.male,The duplicates text for male,Male,Homme
 constants.maleOver18,Label for maleOver18,Male Over 18,Homme de plus de 18 ans
@@ -362,7 +362,7 @@ constants.registeredAt,Label for comparison row registeredAt type,Registered at,
 constants.registeredBy,Label for comparison row registeredBy type,Registered by,Enregistré par
 constants.registeredInTargetd,A label for Registered in {registrationTargetDays} days,Registered in {registrationTargetDays} days,Enregistré dans les {registrationTargetDays} jours
 constants.registeredWithinTargetd,A label for Registered {registrationTargetDays} within  days of event,Registered within{lineBreak}{registrationTargetDays} days of event,Enregistré dans un délai de{lineBreak}{registrationTargetDays} jours de l'événement
-constants.registrationAgent,The description for REGISTRATION_AGENT role,Registration Agent,Agent d'enregistrement
+constants.registrationAgent,The description for REGISTRAR_GENERAL role,Registration Agent,Agent d'enregistrement
 constants.registrationNumber,Label for registered number,Reg no.,N° d'enregistrement
 constants.rejected,A label for rejected,rejected,rejeté
 constants.rejectedDays,The title of rejected days of declaration,Rejected {text},Rejeté {text}
@@ -385,7 +385,7 @@ constants.sentOn,Label for rejection date in work queue list item,Sent on,Envoy�
 constants.sent_incomplete,Declaration submitted without completing the required fields,Sent incomplete,Envoyé incomplet
 constants.showMore,Label for show more link,Show next {pageSize},Afficher la page suivante {pageSize}
 constants.skipToMainContent,Label for a keyboard accessibility link which skips to the main content,Skip to main content,Sauter au contenu principal
-constants.socialWorker,The description for Hospital Clerk type,Hospital Clerk,Commis d'hôpital
+constants.socialWorker,The description for Health Notifier type,Health Notifier,Commis d'hôpital
 constants.startedAt,Label for Started At in list item,Started,Initié par
 constants.startedBy,Label for Started by in list item,Started by,Initié par
 constants.stateRegistrar,The description for STATE_REGISTRAR role,State Registrar,Administrateur civil
@@ -829,7 +829,7 @@ event.birth.action.declare.form.section.child.field.gender.label,This is the lab
 event.birth.action.declare.form.section.child.field.name.label,This is the label for the field,Child's name,Nom de l'enfant
 event.birth.action.declare.form.section.child.field.placeOfBirth.label,This is the label for the field,Place of delivery,Lieu de l'accouchement
 event.birth.action.declare.form.section.child.field.weightAtBirth.label,This is the label for the field,Weight at birth,Poids à la naissance
-event.birth.action.declare.form.section.child.field.weightAtBirth.postfix,This is the postfix for the weight field,Kilograms (kg),Kilograms (kg)
+event.birth.action.declare.form.section.child.field.weightAtBirth.postfix,This is the postfix for the weight field,kg,kg
 event.birth.action.declare.form.section.documents.field.proofOfBirth.label,This is the label for the field,Proof of birth,Preuve de naissance
 event.birth.action.declare.form.section.documents.field.proofOfFather.label,This is the label for the field,Proof of father's ID,Identité du père
 event.birth.action.declare.form.section.documents.field.proofOfMother.label,This is the label for the field,Proof of mother's ID,Identité de la mère
@@ -1095,7 +1095,7 @@ event.edit.comment.label,The label for the comment,Comments,Commentaires
 event.edit.declareWithEdits.label,Label for `Declare with edits` in edit action menu,Declare with edits,Déclarer avec modifications
 event.edit.notifyWithEdits.label,Label for `Notify with edits` in edit action menu,Notify with edits,Notifier avec modifications
 event.edit.registerWithEdits.label,Label for `Register with edits` in edit action menu,Register with edits,Enregistrer avec modifications
-event.history.role,Label for the role in event history,"{role, select, LOCAL_REGISTRAR {Registrar} REGISTRATION_AGENT {Registration Officer} HOSPITAL_CLERK {Hospital Official} LOCAL_SYSTEM_ADMIN {Administrator} NATIONAL_REGISTRAR {Registrar General} PERFORMANCE_MANAGER {Operations Manager} NATIONAL_SYSTEM_ADMIN {National Administrator} COMMUNITY_LEADER {Community Leader} PROVINCIAL_REGISTRAR {Provincial Registrar} EMBASSY_OFFICIAL {Embassy Official} other {Unknown}}","{role, select, LOCAL_REGISTRAR {Officier d'état civil local} REGISTRATION_AGENT {Agent d'enregistrement} PERFORMANCE_MANAGER {Responsable des opérations} LOCAL_SYSTEM_ADMIN {Administrateur} NATIONAL_SYSTEM_ADMIN {Administrateur national} NATIONAL_REGISTRAR {Registraire général} HOSPITAL_CLERK {Officiel de l'hôpital} COMMUNITY_LEADER {Responsable communautaire} PROVINCIAL_REGISTRAR {Registraire provincial} EMBASSY_OFFICIAL {Officiel d'ambassade} other {Inconnu}}"
+event.history.role,Label for the role in event history,"{role, select, REGISTRAR {Registrar} REGISTRAR_GENERAL {Registration Officer} ISLAND_REGISTRAR {Island Registrar} HEALTH_NOTIFIER {HEALTH_NOTIFIER} ISLAND_CLINIC_NOTIFIER {Island Clinic Notifier} LOCAL_SYSTEM_ADMIN {Administrator} NATIONAL_REGISTRAR {Registrar General} PERFORMANCE_MANAGER {Operations Manager} NATIONAL_SYSTEM_ADMIN {National Administrator} COMMUNITY_LEADER {Community Leader} PROVINCIAL_REGISTRAR {Provincial Registrar} EMBASSY_OFFICIAL {Embassy Official} other {Unknown}}","{role, select, REGISTRAR {Officier d'état civil local} REGISTRAR_GENERAL {Agent d'enregistrement} ISLAND_REGISTRAR {Registraire insulaire} PERFORMANCE_MANAGER {Responsable des opérations} LOCAL_SYSTEM_ADMIN {Administrateur} NATIONAL_SYSTEM_ADMIN {Administrateur national} NATIONAL_REGISTRAR {Registraire général} HEALTH_NOTIFIER {Officiel de l'hôpital} ISLAND_CLINIC_NOTIFIER {Notificateur de clinique insulaire} COMMUNITY_LEADER {Responsable communautaire} PROVINCIAL_REGISTRAR {Registraire provincial} EMBASSY_OFFICIAL {Officiel d'ambassade} other {Inconnu}}"
 event.history.system,Name for system initiated actions in the event history,System,System
 event.history.systemDefaultName,Fallback for system integration name in the event history,System integration,Intégration système
 event.not.downloaded,Shown when user tries to perform an action on event that is not available,Please ensure the event is first assigned and downloaded to the browser.,Veuillez vous assurer que l'événement est d'abord attribué et téléchargé dans le navigateur.
@@ -2108,7 +2108,7 @@ register.SelectContactPoint.phoneNoError,Phone no error text,Not a valid mobile 
 register.eventInfo.birth.listItem0,,I am here to start the birth registration process for you.,Je suis ici pour remplir la déclaration de naissance pour vous.
 register.eventInfo.birth.listItem1,,You will receive an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.,"Une fois que j'aurai rempli la déclaration, elle sera envoyée au bureau d'enregistrement pour examen."
 register.eventInfo.birth.listItem2,,"Make sure you collect the certificate. A birth certificate is critical for this child, especially to make their life easy later on. It will help to access health services, school examinations and government benefits.",Attendez un SMS vous indiquant quand vous devez vous rendre au bureau pour retirer le certificat - Prenez votre carte d'identité avec vous.
-register.eventInfo.birth.title,Event information title for the birth,Introduce the birth registration process to the informant,Présenter la procédure d'enregistrement des naissances à l'informateur
+register.eventInfo.birth.title,Event information title for the birth,Introduction,Présenter la procédure d'enregistrement des naissances à l'informateur
 register.eventInfo.death.listItem0,,I am here to start the death registration process for you.,Je suis ici pour remplir la déclaration de décès pour vous.
 register.eventInfo.death.listItem1,,You will receive an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.,"Une fois que j'aurai rempli la déclaration, elle sera envoyée au bureau d'enregistrement pour examen."
 register.eventInfo.death.listItem2,,Make sure you collect the certificate. A death certificate is critical to support with inheritance claims and to resolve the affairs of the deceased e.g. closing bank accounts and settling loans.,Attendez un SMS vous indiquant quand vous devez vous rendre au bureau pour retirer le certificat - Prenez votre carte d'identité avec vous.
@@ -2408,10 +2408,15 @@ user.profile.sectionTitle.audit,Title for audit section,History,Historique
 user.profile.startDate,Title for startDate field,Start date,Date de début
 user.profile.userName,Title for userName field,Username,Nom d'utilisateur
 userRole.communityLeader,Name for user role Community Leader,Community Leader,Leader communautaire
+userRole.courtClerk,Name for user role Court Clerk,Court Clerk,Greffier du tribunal
+userRole.deputyRegistrarGeneral,Name for user role Deputy Registrar General,Deputy Registrar General,Registraire general adjoint
 userRole.embassyOffical,Name for the user role Embassy Official,Embassy Official,Officiel d'ambassade
 userRole.fieldAgent,Name for user role Field Agent,Field Agent,Agent de terrain
 userRole.healthcareWorker,Name for user role Healthcare Worker,Healthcare Worker,Personnel de santé
-userRole.hospitalClerk,Name for user role Hospital Clerk,Hospital Official,Officiel de l'hôpital
+userRole.hospitalClerk,Name for user role Health Notifier,HEALTH_NOTIFIER,Officiel de l'hôpital
+userRole.islandClerk,Name for user role Island Clerk,Island Clerk,Greffier insulaire
+userRole.islandClinicNotifier,Name for user role Island Clinic Notifier,Island Clinic Notifier,Notificateur de clinique insulaire
+userRole.islandRegistrar,Name for user role Island Registrar,Island Registrar,Registraire insulaire
 userRole.localRegistrar,Name for user role Registrar,Registrar,Registraire
 userRole.localSystemAdmin,Name for user role Local System Admin,Local System Admin,Administrateur système local
 userRole.nationalRegistrar,Name for user role National Registrar,National Registrar,Registraire national
@@ -2420,6 +2425,8 @@ userRole.performanceManager,Name for user role Performance Manager,Performance M
 userRole.policeOfficer,Name for user role Police Officer,Police Officer,Officier de police
 userRole.provincialRegistrar,Name for user role Provincial Registrar,Provincial Registrar,Registraire provincial
 userRole.registrationAgent,Name for user role Registration Agent,Registration Agent,Agent d'enregistrement
+userRole.assistantRegistrationOfficer,Name for user role Assistant Registration Officer,Assistant Registration Officer,Assistant agent d'enregistrement
+userRole.statisticsOfficer,Name for user role Statistics Officer,Statistics Officer,Agent des statistiques
 userSetup.complete.instruction,Instruction for the setup complete,Login to your account with your username and newly created password,Connectez-vous maintenant à votre compte avec votre nom d'utilisateur et votre mot de passe nouvellement créé.
 userSetup.complete.title,Title for the setup complete page,Account setup complete,Configuration du compte terminée
 userSetup.instruction,User setup review page instruction,Check the details below to confirm your account details are correct,Vérifiez les détails ci-dessous pour confirmer que les détails de votre compte sont corrects. et faites les changements nécessaires pour confirmer que les détails de votre compte sont corrects.
@@ -2525,11 +2532,11 @@ views.idVerification.banner.verified.title,,ID Verified,Id vérifié
 views.qrReader.button,Button to scan QR code,Scan QR code,Scanner le code QR
 views.qrReader.scannerDialogSupportingCopy,Supporting copy for the scanner dialog,Place the Notifier's ID card in front of the camera.,Placez la carte d'identité du notificateur devant la caméra.
 views.qrReader.tutorial.cameraCleanliness,Camera cleanliness tutorial,Ensure your camera is clean and functional.,Assurez-vous que votre appareil photo est propre et fonctionnel.
-event.birth.action.declare.form.section.introduction.field.guidance.healthNotifier.label,Guidance for health notifier roles on birth notification,Health Notifier Guidance,Conseils pour les notificateurs de santé
+event.birth.action.declare.form.section.introduction.field.guidance.healthNotifier.label,Guidance: Explaining birth notification to parents,Health Notifier Guidance,Conseils pour les notificateurs de santé
 event.birth.action.declare.form.section.introduction.field.guidance.healthNotifier.bullet1,Health notifier guidance bullet 1,"Explain to the parent(s) that you are notifying PMH Records and the Civil Registry / BDM Office of their child's birth.","Expliquez aux parent(s) que vous notifiez PMH Records et le Bureau de l'État Civil de la naissance de leur enfant."
 event.birth.action.declare.form.section.introduction.field.guidance.healthNotifier.bullet2,Health notifier guidance bullet 2,"Explain that birth notification starts the registration process, but does not complete official birth registration. Birth registration is important because it creates the child's legal proof of identity and supports access to healthcare, school enrolment, government services, travel documents, and other essential services.","Expliquez que la notification de naissance commence le processus d'enregistrement, mais ne complète pas l'enregistrement officiel de la naissance."
 event.birth.action.declare.form.section.introduction.field.guidance.healthNotifier.bullet3,Health notifier guidance bullet 3,"Advise that a parent or qualified informant must complete the registration with the Civil Registry Office. Remind them to bring identification and let them know that other supporting documents may be requested by CRO. If the parents were not married and the father's details are to be included, both mother and father consent forms will need to be completed.","Conseillez qu'un parent ou un informateur qualifié doit compléter l'enregistrement auprès du Bureau de l'État Civil."
-event.birth.action.declare.form.section.introduction.field.guidance.registrationOfficer.label,Guidance for registration officers on the birth registration process,Registration Officer Guidance,Conseils pour les agents d'enregistrement
+event.birth.action.declare.form.section.introduction.field.guidance.registrationOfficer.label,Guidance: Explaining birth registration to parents or a qualified informant,Registration Officer Guidance,Conseils pour les agents d'enregistrement
 event.birth.action.declare.form.section.introduction.field.guidance.registrationOfficer.bullet1,Registration officer guidance bullet 1,Thank the informant for coming to register the birth.,Remerciez l'informateur d'être venu enregistrer la naissance.
 event.birth.action.declare.form.section.introduction.field.guidance.registrationOfficer.bullet2,Registration officer guidance bullet 2,"Explain that they are the official informant and must provide complete and accurate details about the child, parent(s), place and date of birth, and any required supporting information. Emphasise that this information will form part of the child's legal birth record and may appear on the birth certificate.","Expliquez qu'il est l'informateur officiel et doit fournir des informations complètes et précises sur l'enfant, les parent(s), le lieu et la date de naissance."
 event.birth.action.declare.form.section.introduction.field.guidance.registrationOfficer.bullet3,Registration officer guidance bullet 3,"Explain that birth registration creates legal proof of identity and supports access to healthcare, school enrolment, government services, travel documents, and other essential services.","Expliquez que l'enregistrement de la naissance crée une preuve légale d'identité et facilite l'accès aux services essentiels."

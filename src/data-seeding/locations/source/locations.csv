@@ -1,22 +1,22 @@
 id,name,partOf,locationType
-TUV-001-001,Civil Registration Office,Location/0,CRVS_OFFICE
-TUV-001-003,Princess Margeret Hospital,Location/0,HEALTH_FACILITY
-TUV-002-001,Funafuti Kaupule,Location/TUV-002,CRVS_OFFICE
-TUV-002-002,Tekavatoetoe Health Centre,Location/TUV-002,HEALTH_FACILITY
-TUV-002-003,Lofeagai Health Centre,Location/TUV-002,HEALTH_FACILITY
-TUV-003-001,Nanumea Kaupule,Location/TUV-003,CRVS_OFFICE
-TUV-003-002,Nanumea Community Health Centre,Location/TUV-003,HEALTH_FACILITY
-TUV-004-001,Nanumaga Kaupule,Location/TUV-004,CRVS_OFFICE
-TUV-004-002,Nanumaga Community Health Centre,Location/TUV-004,HEALTH_FACILITY
-TUV-005-001,Niutao Kaupule,Location/TUV-005,CRVS_OFFICE
-TUV-005-002,Niutao Community Health Centre,Location/TUV-005,HEALTH_FACILITY
-TUV-006-001,Nui Kaupule,Location/TUV-006,CRVS_OFFICE
-TUV-006-002,Nui Community Health Centre,Location/TUV-006,HEALTH_FACILITY
-TUV-007-001,Vaitupu Kaupule,Location/TUV-007,CRVS_OFFICE
-TUV-007-002,Vaitupu Community Health Centre,Location/TUV-007,HEALTH_FACILITY
-TUV-008-001,Nukufetau Kaupule,Location/TUV-008,CRVS_OFFICE
-TUV-008-002,Nukufetau Community Health Centre,Location/TUV-008,HEALTH_FACILITY
-TUV-009-001,Nukulaelae Kaupule,Location/TUV-009,CRVS_OFFICE
-TUV-009-002,Nukulaelae Community Health Centre,Location/TUV-009,HEALTH_FACILITY
-TUV-011-001,Niulakita Kaupule,Location/TUV-011,CRVS_OFFICE
-TUV-011-002,Niulakita Health Post,Location/TUV-011,HEALTH_FACILITY
+TUV-RGO,Civil Registration Office,Location/0,CRVS_OFFICE
+TUV-PMH,Princess Margeret Hospital,Location/0,HEALTH_FACILITY
+TUV-001-001,Funafuti Kaupule,Location/TUV-001,CRVS_OFFICE
+TUV-001-002,Tekavatoetoe Health Centre,Location/TUV-001,HEALTH_FACILITY
+TUV-001-003,Lofeagai Health Centre,Location/TUV-001,HEALTH_FACILITY
+TUV-002-001,Nanumea Kaupule,Location/TUV-002,CRVS_OFFICE
+TUV-002-002,Nanumea Community Health Centre,Location/TUV-002,HEALTH_FACILITY
+TUV-003-001,Nanumaga Kaupule,Location/TUV-003,CRVS_OFFICE
+TUV-003-002,Nanumaga Community Health Centre,Location/TUV-003,HEALTH_FACILITY
+TUV-004-001,Niutao Kaupule,Location/TUV-004,CRVS_OFFICE
+TUV-004-002,Niutao Community Health Centre,Location/TUV-004,HEALTH_FACILITY
+TUV-005-001,Nui Kaupule,Location/TUV-005,CRVS_OFFICE
+TUV-005-002,Nui Community Health Centre,Location/TUV-005,HEALTH_FACILITY
+TUV-006-001,Vaitupu Kaupule,Location/TUV-006,CRVS_OFFICE
+TUV-006-002,Vaitupu Community Health Centre,Location/TUV-006,HEALTH_FACILITY
+TUV-007-001,Nukufetau Kaupule,Location/TUV-007,CRVS_OFFICE
+TUV-007-002,Nukufetau Community Health Centre,Location/TUV-007,HEALTH_FACILITY
+TUV-008-001,Nukulaelae Kaupule,Location/TUV-008,CRVS_OFFICE
+TUV-008-002,Nukulaelae Community Health Centre,Location/TUV-008,HEALTH_FACILITY
+TUV-009-001,Niulakita Kaupule,Location/TUV-009,CRVS_OFFICE
+TUV-009-002,Niulakita Health Post,Location/TUV-009,HEALTH_FACILITY
