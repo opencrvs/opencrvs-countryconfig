@@ -26,31 +26,6 @@ export const BIRTH_DECLARATION_REVIEW = {
     description: 'Title of the form to show in review page'
   },
   fields: [
-    {
-      id: 'review.comment',
-      type: FieldType.TEXTAREA,
-      label: {
-        defaultMessage: 'Comment',
-        id: 'event.birth.action.declare.form.review.comment.label',
-        description: 'Label for the comment field in the review section'
-      },
-      required: true
-    },
-    {
-      type: FieldType.SIGNATURE,
-      id: 'review.signature',
-      required: true,
-      label: {
-        defaultMessage: 'Signature of informant',
-        id: 'event.birth.action.declare.form.review.signature.label',
-        description: 'Label for the signature field in the review section'
-      },
-      signaturePromptLabel: {
-        id: 'signature.upload.modal.title',
-        defaultMessage: 'Draw signature',
-        description: 'Title for the modal to draw signature'
-      }
-    }
   ]
 }
 
