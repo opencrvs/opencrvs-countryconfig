@@ -1359,6 +1359,7 @@ form.field.label.maritalStatusNotStated,Option for form field: Marital status,No
 form.field.label.maritalStatusSeparated,Option for form field: Marital status,Separated,Séparé(e)
 form.field.label.maritalStatusSingle,Option for form field: Marital status,Single,Célibataire
 form.field.label.maritalStatusWidowed,Option for form field: Marital status,Widowed,Veuf(ve)
+form.field.label.maritalStatusNotStated,Option for marital status: not stated,Not Stated,Sth
 form.field.label.marriedLastName,,Married last name (if different),Marié Nom de famille (si différent)
 form.field.label.medicallyCertified,,Medically Certified Cause of Death,Cause officielle du décès
 form.field.label.middleName,,Middle name,Deuxième prénom

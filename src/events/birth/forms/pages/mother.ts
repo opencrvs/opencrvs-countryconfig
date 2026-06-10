@@ -74,6 +74,14 @@ const tuvaluMaritalStatusOptions = [
       description: 'Option for marital status: widowed',
       id: 'form.field.label.maritalStatusWidowed'
     }
+  },
+  {
+    value: 'NOT_STATED',
+    label: {
+      defaultMessage: 'Not Stated',
+      description: 'Option for marital status: not stated',
+      id: 'form.field.label.maritalStatusNotStated'
+    }
   }
 ]
 
@@ -522,6 +530,45 @@ export const mother = defineFormPage({
       ]
     },
     {
+      id: 'mother.isMarriedToFather',
+      type: FieldType.RADIO_GROUP,
+      analytics: true,
+      required: false,
+      label: {
+        defaultMessage: 'Is the mother married to the father of the child?',
+        description: 'Label for whether mother is married to father',
+        id: 'event.birth.action.declare.form.section.mother.field.isMarriedToFather.label'
+      },
+      options: [
+        {
+          value: 'Yes',
+          label: {
+            defaultMessage: 'Yes',
+            description: 'Option for yes',
+            id: 'option.yes'
+          }
+        },
+        {
+          value: 'No',
+          label: {
+            defaultMessage: 'No',
+            description: 'Option for no',
+            id: 'option.no'
+          }
+        }
+      ],
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(
+            field('mother.maritalStatus').isEqualTo('MARRIED'),
+            requireMotherDetails
+          )
+        }
+      ],
+      parent: field('mother.maritalStatus')
+    },
+    {
       id: 'mother.dateOfMarriage',
       type: FieldType.DATE,
       required: true,
@@ -536,10 +583,12 @@ export const mother = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: and(
             requireMotherDetails,
-            field('mother.maritalStatus').isEqualTo('MARRIED')
+            field('mother.maritalStatus').isEqualTo('MARRIED'),
+            field('mother.isMarriedToFather').isEqualTo('Yes')
           )
         }
-      ]
+      ],
+      parent: field('mother.isMarriedToFather')
     },
     {
       id: 'mother.placeOfMarriage',
@@ -556,7 +605,24 @@ export const mother = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: and(
             requireMotherDetails,
-            field('mother.maritalStatus').isEqualTo('MARRIED')
+            field('mother.maritalStatus').isEqualTo('MARRIED'),
+            field('mother.isMarriedToFather').isEqualTo('Yes')
+          )
+        }
+      ],
+      parent: field('mother.isMarriedToFather')
+    },
+    {
+      id: 'mother.maritalDetailsDivider',
+      type: FieldType.DIVIDER,
+      label: emptyMessage,
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(
+            requireMotherDetails,
+            field('mother.maritalStatus').isEqualTo('MARRIED'),
+            field('mother.isMarriedToFather').isEqualTo('Yes')
           )
         }
       ]
