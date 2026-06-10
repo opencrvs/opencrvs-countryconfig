@@ -220,7 +220,7 @@ export const father = defineFormPage({
       },
       helperText: {
         defaultMessage:
-          'Search for a birth record. If found, details will auto-fill. Otherwise, continue with manual entry.',
+          'Search for an existing birth record. If a match is found, the details below will auto-fill. If no record is found, continue by entering the details manually.',
         description: 'Helper text for birth registration number field',
         id: 'event.death.action.declare.form.section.father.field.brn.helperText'
       },
