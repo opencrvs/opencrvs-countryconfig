@@ -839,7 +839,7 @@ event.birth.action.declare.form.section.father.field.age.label,This is the label
 event.birth.action.declare.form.section.father.field.name.label,This is the label for the field,Father's name,Nom du père
 event.birth.action.declare.form.section.father.field.reason.label,This is the label for the field,Reason,Raison
 event.birth.action.declare.form.section.father.field.brn.label,Label for the birth registration number text field,Birth registration number,Numéro d'enregistrement de naissance
-event.birth.action.declare.form.section.father.field.brnSearch.helperText,Helper text for the birth registration number search field,Search for an existing birth record. If a match is found, the details below will auto-fill. If no record is found, continue by entering the details manually.,Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement.
+event.birth.action.declare.form.section.father.field.brnSearch.helperText,Helper text for the birth registration number search field,"Search for an existing birth record. If a match is found, the details below will auto-fill. If no record is found, continue by entering the details manually.","Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement."
 event.birth.action.declare.form.section.father.field.brnSearch.indicators.clearModal.description,Description for the clear search confirmation modal,This will remove the auto-filled details for the father.,Cela supprimera les détails remplis automatiquement pour le père.
 event.birth.action.declare.form.section.father.field.brnSearch.indicators.clearModal.title,Title for the clear search confirmation modal,Clear birth record?,Effacer l'acte de naissance ?
 event.birth.action.declare.form.section.father.field.brnSearch.indicators.ok,Indicator shown when a birth record is found,Record found,Enregistrement trouvé
@@ -2415,7 +2415,7 @@ userRole.deputyRegistrarGeneral,Name for user role Deputy Registrar General,Depu
 userRole.embassyOffical,Name for the user role Embassy Official,Embassy Official,Officiel d'ambassade
 userRole.fieldAgent,Name for user role Field Agent,Field Agent,Agent de terrain
 userRole.healthcareWorker,Name for user role Healthcare Worker,Healthcare Worker,Personnel de santé
-userRole.hospitalClerk,Name for user role Health Notifier,HEALTH_NOTIFIER,Officiel de l'hôpital
+userRole.hospitalClerk,Name for user role Health Notifier,Health Notifier,Officiel de l'hôpital
 userRole.islandClerk,Name for user role Island Clerk,Island Clerk,Greffier insulaire
 userRole.islandClinicNotifier,Name for user role Island Clinic Notifier,Island Clinic Notifier,Notificateur de clinique insulaire
 userRole.islandRegistrar,Name for user role Island Registrar,Island Registrar,Registraire insulaire
@@ -2426,7 +2426,9 @@ userRole.nationalSystemAdmin,Name for user role National System Admin,National S
 userRole.performanceManager,Name for user role Performance Manager,Performance Manager,Gestion des performances
 userRole.policeOfficer,Name for user role Police Officer,Police Officer,Officier de police
 userRole.provincialRegistrar,Name for user role Provincial Registrar,Provincial Registrar,Registraire provincial
+userRole.registrarGeneral,Name for user role Registrar General,Registrar General,Registraire général
 userRole.registrationAgent,Name for user role Registration Agent,Registration Agent,Agent d'enregistrement
+userRole.registrationOfficer,Name for user role Registration Officer,Registration Officer,Agent d'enregistrement
 userRole.assistantRegistrationOfficer,Name for user role Assistant Registration Officer,Assistant Registration Officer,Assistant agent d'enregistrement
 userRole.statisticsOfficer,Name for user role Statistics Officer,Statistics Officer,Agent des statistiques
 userSetup.complete.instruction,Instruction for the setup complete,Login to your account with your username and newly created password,Connectez-vous maintenant à votre compte avec votre nom d'utilisateur et votre mot de passe nouvellement créé.
