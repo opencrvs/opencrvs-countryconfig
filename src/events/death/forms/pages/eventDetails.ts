@@ -32,6 +32,7 @@ import {
   yesNoRadioOptions,
   hasNonHealthNotifierRole
 } from '@countryconfig/events/utils'
+import { createCauseOfDeathFields } from './causeOfDeathDetails'
 
 const MannerDeathType = {
   MANNER_NATURAL: 'MANNER_NATURAL',
@@ -103,58 +104,6 @@ const placeOfDeathOptions = createSelectOptions(
   PlaceOfDeath,
   placeOfDeathMessageDescriptors
 )
-
-// Duration unit options for cause of death sections
-const durationUnitOptions = [
-  {
-    value: 'seconds',
-    label: {
-      defaultMessage: 'Seconds',
-      description: 'Unit option: seconds',
-      id: 'event.death.action.declare.form.section.event.field.duration.unit.seconds'
-    }
-  },
-  {
-    value: 'minutes',
-    label: {
-      defaultMessage: 'Minutes',
-      description: 'Unit option: minutes',
-      id: 'event.death.action.declare.form.section.event.field.duration.unit.minutes'
-    }
-  },
-  {
-    value: 'hours',
-    label: {
-      defaultMessage: 'Hours',
-      description: 'Unit option: hours',
-      id: 'event.death.action.declare.form.section.event.field.duration.unit.hours'
-    }
-  },
-  {
-    value: 'days',
-    label: {
-      defaultMessage: 'Days',
-      description: 'Unit option: days',
-      id: 'event.death.action.declare.form.section.event.field.duration.unit.days'
-    }
-  },
-  {
-    value: 'months',
-    label: {
-      defaultMessage: 'Months',
-      description: 'Unit option: months',
-      id: 'event.death.action.declare.form.section.event.field.duration.unit.months'
-    }
-  },
-  {
-    value: 'years',
-    label: {
-      defaultMessage: 'Years',
-      description: 'Unit option: years',
-      id: 'event.death.action.declare.form.section.event.field.duration.unit.years'
-    }
-  }
-]
 
 const medCertEstablished = field(
   'eventDetails.causeOfDeathEstablished'
@@ -535,390 +484,35 @@ export const eventDetails = defineFormPage({
         }
       ]
     },
-    // ---- Divider ----
+    // ---- Cause of death (Section I & II) ----
+    ...createCauseOfDeathFields('A', medCertEstablished),
     {
-      id: 'eventDetails.causeSection1Divider',
+      id: 'eventDetails.causeABDivider',
       type: FieldType.DIVIDER,
       label: emptyMessage,
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: medCertEstablished
-        }
-      ]
+      conditionals: [{ type: ConditionalType.SHOW, conditional: medCertEstablished }]
     },
-    // ---- Section I heading ----
+    ...createCauseOfDeathFields('B', medCertEstablished),
     {
-      id: 'eventDetails.causeSection1Heading',
-      type: FieldType.HEADING,
-      label: {
-        defaultMessage: 'Section I. Cause of death',
-        description: 'Heading for Section I cause of death',
-        id: 'event.death.action.declare.form.section.event.field.causeSection1Heading.label'
-      },
-      configuration: { styles: { fontVariant: 'h3' } },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: medCertEstablished
-        },
-        {
-          type: ConditionalType.DISPLAY_ON_REVIEW,
-          conditional: never()
-        }
-      ]
-    },
-    // ---- Disease or condition directly leading to death (sub heading) ----
-    {
-      id: 'eventDetails.causeDirectSubheading',
-      type: FieldType.HEADING,
-      label: {
-        defaultMessage: 'Disease or condition directly leading to death',
-        description: 'Sub heading for direct cause of death',
-        id: 'event.death.action.declare.form.section.event.field.causeDirectSubheading.label'
-      },
-      configuration: { styles: { fontVariant: 'reg16' } },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: medCertEstablished
-        },
-        {
-          type: ConditionalType.DISPLAY_ON_REVIEW,
-          conditional: never()
-        }
-      ]
-    },
-    // ---- Direct cause ----
-    {
-      id: 'eventDetails.causeA',
-      type: FieldType.TEXT,
-      required: false,
-      analytics: true,
-      label: {
-        defaultMessage: 'Direct cause',
-        description: 'This is the label for the field',
-        id: 'event.death.action.declare.form.section.event.field.causeA.label'
-      },
-      helperText: {
-        defaultMessage:
-          'Please enter the disease or condition directly leading to death',
-        description: 'Helper text for direct cause field',
-        id: 'event.death.action.declare.form.section.event.field.causeA.helperText'
-      },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: medCertEstablished
-        }
-      ]
-    },
-    // ---- Duration A ----
-    {
-      id: 'eventDetails.durationA',
-      type: FieldType.NUMBER_WITH_UNIT,
-      required: false,
-      analytics: true,
-      label: {
-        defaultMessage: 'Duration',
-        description: 'Duration for direct cause',
-        id: 'event.death.action.declare.form.section.event.field.durationA.label'
-      },
-      helperText: {
-        defaultMessage: 'Interval between onset and death',
-        description: 'Helper text for duration field',
-        id: 'event.death.action.declare.form.section.event.field.durationA.helperText'
-      },
-      options: durationUnitOptions,
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: medCertEstablished
-        }
-      ]
-    },
-    // ---- Divider ----
-    {
-      id: 'eventDetails.causeBDivider',
+      id: 'eventDetails.causeBCDivider',
       type: FieldType.DIVIDER,
       label: emptyMessage,
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: medCertEstablished
-        }
-      ]
+      conditionals: [{ type: ConditionalType.SHOW, conditional: medCertEstablished }]
     },
-    // ---- Antecedent cause B ----
+    ...createCauseOfDeathFields('C', medCertEstablished),
     {
-      id: 'eventDetails.causeB',
-      type: FieldType.TEXT,
-      required: false,
-      analytics: true,
-      label: {
-        defaultMessage: 'Antecedent cause B',
-        description: 'This is the label for the field',
-        id: 'event.death.action.declare.form.section.event.field.causeB.label'
-      },
-      helperText: {
-        defaultMessage:
-          'Please enter the condition that gave rise to the above cause (if applicable)',
-        description: 'Helper text for antecedent cause B',
-        id: 'event.death.action.declare.form.section.event.field.causeB.helperText'
-      },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: medCertEstablished
-        }
-      ]
-    },
-    // ---- Duration B ----
-    {
-      id: 'eventDetails.durationB',
-      type: FieldType.NUMBER_WITH_UNIT,
-      required: false,
-      analytics: true,
-      label: {
-        defaultMessage: 'Duration',
-        description: 'Duration for antecedent cause B',
-        id: 'event.death.action.declare.form.section.event.field.durationB.label'
-      },
-      helperText: {
-        defaultMessage: 'Interval between onset and death',
-        description: 'Helper text for duration field',
-        id: 'event.death.action.declare.form.section.event.field.durationB.helperText'
-      },
-      options: durationUnitOptions,
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: medCertEstablished
-        }
-      ]
-    },
-    // ---- Divider ----
-    {
-      id: 'eventDetails.causeCDivider',
+      id: 'eventDetails.causeCDDivider',
       type: FieldType.DIVIDER,
       label: emptyMessage,
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: medCertEstablished
-        }
-      ]
+      conditionals: [{ type: ConditionalType.SHOW, conditional: medCertEstablished }]
     },
-    // ---- Antecedent cause C ----
+    ...createCauseOfDeathFields('D', medCertEstablished),
     {
-      id: 'eventDetails.causeC',
-      type: FieldType.TEXT,
-      required: false,
-      analytics: true,
-      label: {
-        defaultMessage: 'Antecedent cause C',
-        description: 'This is the label for the field',
-        id: 'event.death.action.declare.form.section.event.field.causeC.label'
-      },
-      helperText: {
-        defaultMessage:
-          'Please enter the condition that gave rise to the above cause (if applicable)',
-        description: 'Helper text for antecedent cause C',
-        id: 'event.death.action.declare.form.section.event.field.causeC.helperText'
-      },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: medCertEstablished
-        }
-      ]
-    },
-    // ---- Duration C ----
-    {
-      id: 'eventDetails.durationC',
-      type: FieldType.NUMBER_WITH_UNIT,
-      required: false,
-      analytics: true,
-      label: {
-        defaultMessage: 'Duration',
-        description: 'Duration for antecedent cause C',
-        id: 'event.death.action.declare.form.section.event.field.durationC.label'
-      },
-      helperText: {
-        defaultMessage: 'Interval between onset and death',
-        description: 'Helper text for duration field',
-        id: 'event.death.action.declare.form.section.event.field.durationC.helperText'
-      },
-      options: durationUnitOptions,
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: medCertEstablished
-        }
-      ]
-    },
-    // ---- Divider ----
-    {
-      id: 'eventDetails.causeDDivider',
+      id: 'eventDetails.causeDOtherDivider',
       type: FieldType.DIVIDER,
       label: emptyMessage,
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: medCertEstablished
-        }
-      ]
+      conditionals: [{ type: ConditionalType.SHOW, conditional: medCertEstablished }]
     },
-    // ---- Antecedent cause D ----
-    {
-      id: 'eventDetails.causeD',
-      type: FieldType.TEXT,
-      required: false,
-      analytics: true,
-      label: {
-        defaultMessage: 'Antecedent cause D',
-        description: 'This is the label for the field',
-        id: 'event.death.action.declare.form.section.event.field.causeD.label'
-      },
-      helperText: {
-        defaultMessage:
-          'Please enter the condition that gave rise to the above cause (if applicable)',
-        description: 'Helper text for antecedent cause D',
-        id: 'event.death.action.declare.form.section.event.field.causeD.helperText'
-      },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: medCertEstablished
-        }
-      ]
-    },
-    // ---- Duration D ----
-    {
-      id: 'eventDetails.durationD',
-      type: FieldType.NUMBER_WITH_UNIT,
-      required: false,
-      analytics: true,
-      label: {
-        defaultMessage: 'Duration',
-        description: 'Duration for antecedent cause D',
-        id: 'event.death.action.declare.form.section.event.field.durationD.label'
-      },
-      helperText: {
-        defaultMessage: 'Interval between onset and death',
-        description: 'Helper text for duration field',
-        id: 'event.death.action.declare.form.section.event.field.durationD.helperText'
-      },
-      options: durationUnitOptions,
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: medCertEstablished
-        }
-      ]
-    },
-    // ---- Divider ----
-    {
-      id: 'eventDetails.causeSection2Divider',
-      type: FieldType.DIVIDER,
-      label: emptyMessage,
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: medCertEstablished
-        }
-      ]
-    },
-    // ---- Section II heading ----
-    {
-      id: 'eventDetails.causeSection2Heading',
-      type: FieldType.HEADING,
-      label: {
-        defaultMessage: 'Section II. Other significant conditions',
-        description: 'Heading for Section II other conditions',
-        id: 'event.death.action.declare.form.section.event.field.causeSection2Heading.label'
-      },
-      configuration: { styles: { fontVariant: 'h3' } },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: medCertEstablished
-        },
-        {
-          type: ConditionalType.DISPLAY_ON_REVIEW,
-          conditional: never()
-        }
-      ]
-    },
-    // ---- Other conditions sub heading ----
-    {
-      id: 'eventDetails.causeOtherSubheading',
-      type: FieldType.HEADING,
-      label: {
-        defaultMessage:
-          'Other conditions that contributed to the death but were not part of the main cause',
-        description: 'Sub heading for other significant conditions',
-        id: 'event.death.action.declare.form.section.event.field.causeOtherSubheading.label'
-      },
-      configuration: { styles: { fontVariant: 'reg16' } },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: medCertEstablished
-        },
-        {
-          type: ConditionalType.DISPLAY_ON_REVIEW,
-          conditional: never()
-        }
-      ]
-    },
-    // ---- Other significant conditions ----
-    {
-      id: 'eventDetails.causeOther',
-      type: FieldType.TEXT,
-      required: false,
-      analytics: true,
-      label: {
-        defaultMessage: 'Other significant conditions',
-        description: 'This is the label for the field',
-        id: 'event.death.action.declare.form.section.event.field.causeOther.label'
-      },
-      helperText: {
-        defaultMessage:
-          'Please enter a disease or condition that contributed to the death but did not directly cause it',
-        description: 'Helper text for other significant conditions',
-        id: 'event.death.action.declare.form.section.event.field.causeOther.helperText'
-      },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: medCertEstablished
-        }
-      ]
-    },
-    // ---- Duration Other ----
-    {
-      id: 'eventDetails.durationOther',
-      type: FieldType.NUMBER_WITH_UNIT,
-      required: false,
-      analytics: true,
-      label: {
-        defaultMessage: 'Duration',
-        description: 'Duration for other significant conditions',
-        id: 'event.death.action.declare.form.section.event.field.durationOther.label'
-      },
-      helperText: {
-        defaultMessage: 'Interval between onset and death',
-        description: 'Helper text for duration field',
-        id: 'event.death.action.declare.form.section.event.field.durationOther.helperText'
-      },
-      options: durationUnitOptions,
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: medCertEstablished
-        }
-      ]
-    }
+    ...createCauseOfDeathFields('Other', medCertEstablished)
   ]
 })

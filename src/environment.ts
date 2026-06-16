@@ -26,5 +26,10 @@ export const env = cleanEnv(process.env, {
     devDefault:
       'postgres://events_analytics:analytics_password@localhost:5432/events',
     desc: 'The database URL for reads and writes to `analytics.events`. See `/infrastructure/postgres/setup-analytics.sh` for how the default database is set up for your country.'
-  })
+  }),
+  REFERENCE_DATA_DATABASE_URL: url({
+    devDefault:
+      'postgres://events_reference_data:reference_data_password@localhost:5432/events',
+    desc: 'The database URL for reads and writes to reference data. See `/infrastructure/postgres/setup-reference-data.sh` for how the default database is set up for your country.'
+})
 })
