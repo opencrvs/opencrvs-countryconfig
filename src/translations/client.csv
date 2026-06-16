@@ -245,7 +245,6 @@ constants.cha,The description for CHA type,CHA,CHA
 constants.chairman,The description for CHAIRMAN type,Chairman,Président
 constants.collected,The status label for collected,Collected,Collecté par
 constants.collectedBy,The collected by sec text,Collected by,Collecté par
-constants.collectorDetails,Label for collector details,Collector Details,Information  du collecteur
 constants.comment,Label for rejection comment,Comment,Commentaire
 constants.communityLeader,The description for Community Leader type,Community Leader,Chef de communauté
 constants.countryName,Name of the OpenCRVS implementation country,Farajaland,Farajaland
@@ -303,20 +302,11 @@ constants.healthcareWorker,The description for Healthcare Worker type,Healthcare
 constants.history,History heading,History,Histoire
 constants.humanName,Formatted full name,{firstName} {middleName} {lastName},{firstName} {middleName} {lastName}
 constants.id,ID Label,ID,ID
-constants.idCheckWithoutVerify,Issuance without the confirmation of proof,Continue without proof of ID?,Continuer sans preuve d'identité?
 constants.inReview.status,A label for In Review,In review,En cours de révision
 constants.incomplete.status,A label for Incomplete,Incomplete ,Incomplet
 constants.informant,Informant Label,Informant,Informateur
 constants.informantContactNumber,The title of contact number label,Informant contact number,Numéro de contact de l'informateur
 constants.integrations,Integration title,Integrations,Intégrations
-constants.issueCertificate,Label for issue certificate,Issue Certificate,Certificat de délivrance
-constants.issueConfirmationMessage,Confirmation of issuance,Please confirm that the certificate has been issued to the informant or collector.,Veuillez confirmer que le certificat a été délivré à l'informateur ou au collecteur.
-constants.issueToBride,Issuing to bride,Issue to bride,Délivré à) la mariée
-constants.issueToFather,Issuing to father,Issue to father,Délivré au père
-constants.issueToGroom,Issuing to groom,Issue to groom,délivré au marié
-constants.issueToInformant,Issuance of death to informant,"Issue to informant ({informant, select, MOTHER {Mother} FATHER {Father} GRANDFATHER {Grandfather} GRANDMOTHER {Grandmother} BROTHER {Brother} SISTER {Sister} LEGAL_GUARDIAN {Legal guardian} BRIDE {Bride} GROOM {Groom} HEAD_OF_GROOM_FAMILY {Head of groom's family} HEAD_OF_BRIDE_FAMILY {Head of bride's family} SPOUSE {Spouse} SON {Son} DAUGHTER {Daughter} SON_IN_LAW {Son in law} DAUGHTER_IN_LAW {Daughter in law} GRANDSON {Grandson} GRANDDAUGHTER {Granddaughter} other {{informant}}})","Delivré à l'informateur ({informant, select, MOTHER {Mère} FATHER {Père} GRANDFATHER {Grand-père} GRANDMOTHER {Grand-mère} BROTHER {Frère} SISTER {Sœur} LEGAL_GUARDIAN {Tuteur légal} BRIDE {Mariée} GROOM {Marié} HEAD_OF_GROOM_FAMILY {Chef de la famille du marié} HEAD_OF_BRIDE_FAMILY {Chef de la famille de la mariée} SPOUSE {Conjoint} SON {Fils} DAUGHTER {Fille} SON_IN_LAW {Beau-fils} DAUGHTER_IN_LAW {Belle-fille} GRANDSON {Petit-fils} GRANDDAUGHTER {Petite-fille} other {{informant}}})"
-constants.issueToMother,Issuing to mother,Issue to mother,Délivré à la mère
-constants.issueToSomeoneElse,Issuing to someone else,Issue to someone else,Délivrer à quelqu'un d'autre
 constants.issuedBy,The issued by sec text,Issued by,Délivré par
 constants.label.action,Action Label,Action,Action
 constants.label.date,Date Label,Date,Date
@@ -364,7 +354,6 @@ constants.registeredBy,Label for comparison row registeredBy type,Registered by,
 constants.registeredInTargetd,A label for Registered in {registrationTargetDays} days,Registered in {registrationTargetDays} days,Enregistré dans les {registrationTargetDays} jours
 constants.registeredWithinTargetd,A label for Registered {registrationTargetDays} within  days of event,Registered within{lineBreak}{registrationTargetDays} days of event,Enregistré dans un délai de{lineBreak}{registrationTargetDays} jours de l'événement
 constants.registrationAgent,The description for REGISTRATION_AGENT role,Registration Agent,Agent d'enregistrement
-constants.registrationNumber,Label for registered number,Reg no.,N° d'enregistrement
 constants.rejected,A label for rejected,rejected,rejeté
 constants.rejectedDays,The title of rejected days of declaration,Rejected {text},Rejeté {text}
 constants.relationship,Relationship Label for death,Relationship,Relation
@@ -777,13 +766,11 @@ duplicates.content.registeredBy,Registered by label for duplicates comparison,Re
 duplicates.content.subtitle,Duplicates content subtitle message,"This record was flagged as a potential duplicate of: {trackingIds}. Please review these by clicking on each tracking ID in the tab section to view a side-by-side comparison below, and confirm if this record is a duplicate",Cet enregistrement a été signalé comme un doublon potentiel de : {trackingIds}. Veuillez les examiner en cliquant sur chaque identifiant de suivi dans la section des onglets pour afficher une comparaison côte à côte ci-dessous et confirmer si cet enregistrement est un doublon
 duplicates.content.title,Duplicates content title message,Is {name} ({trackingId}) a duplicate?,Est-ce que {name} ({trackingId}) est un doublon?
 duplicates.review.header,Review page header for duplicates declarations,Potential {event} duplicate review,Potentiel {event} examen de doublon
-duplicates.warning,The warning message shown when a declaration has potential duplicates,Potential duplicate of record {trackingId},Duplicata potentiel de l'enregistrement {trackingId}
 editPageBanner.declaredMessage,The message for the edit page banner,You are editing a record declared by {name} ({role} at {location}),Vous modifiez un dossier déclaré par {name} ({role} à {location})
 editPageBanner.notifiedMessage,The message for the edit page banner,You are editing a record notified by {name} ({role} at {location}),Vous modifiez un dossier déclaré par {name} ({role} à {location})
 email.label.confirmation,Confirmation email address message,A verification code has been sent to {email},Un code de vérification a été envoyé à {email}
 error.child.weightAtBirth.invalidNumberRange,This is the error message for invalid number range,Must be within 0 and 6,Doit être compris entre 0 et 6
 error.code,Error code,401,401
-error.draftFailed,Tips for failed declarations,This is some messaging on advicing the user on what to do... in the event of a failed declaration.,Il s'agit d'un message indiquant à l'utilisateur ce qu'il doit faire... en cas d'échec de la déclaration.
 error.invalidInput,Error message when generic field is invalid,Invalid input,Entrée invalide
 error.invalidName,This is the error message for invalid name,"Input contains invalid characters. Please use only letters (a-z, A-Z), numbers (0-9), hyphens (-) and apostrophes(')","L'entrée contient des caractères non valides. Veuillez n'utiliser que des lettres (a-z, A-Z), des chiffres (0-9), des traits d'union (-) et des apostrophes (')"
 error.occurred,The error message that displays if we want the user to try the action again,An error occurred. Please try again.,Une erreur s'est produite. Veuillez réessayer.
@@ -792,11 +779,9 @@ error.passwordSubmissionError,Error message when password verification fails,Sor
 error.pdf,PDF load Error,Failed to load PDF,Échec du chargement du PDF
 error.required.password,New password required,New password is not valid,Le nouveau mot de passe n'est pas valide
 error.search,The error message shown when a search query fails,An error occurred while searching,Une erreur s'est produite lors de la recherche
-error.searchParamCountError,Error message when the search parameters are less than two,You must select a minimum of 2 search criteria,Vous devez sélectionner un minimum de 2 critères de recherche
 error.somethingWentWrong,Error description,Something went wrong.,Quelque chose s'est mal passé.
 error.title,Error title,Oops!,Oups !
 error.title.unauthorized,Error title unauthorized,Unauthorized!,Non autorisé !
-error.userListError,Error message when user list loads fails,Failed to load users,Impossible de charger les utilisateurs
 error.weAreTryingToFixThisError,Error description,This page could not be found,"Ce n'est pas vous, c'est nous. C'est notre faute."
 errors.notAssigned,User not assigned error toast message,You've been unassigned from the event,Vous avez été désassigné de l'événement
 errors.somethingWentWrong,Error toast message for general errors,Something went wrong. Please try again,Une erreur s'est produite. Veuillez réessayer
@@ -1172,7 +1157,6 @@ field.address.village.label,Label for village in address,Village,Village
 field.name.firstname.label,This is the label for the firstname field,First name(s),Prénom(s)
 field.name.middlename.label,This is the label for the middleName field,Middle name,Deuxième prénom(s)
 field.name.surname.label,This is the label for the surname field,Last name,Nom(s)
-fieldAgentHome.queryError,The text when error ocurred loading rejected declarations,An error occurred while loading declarations,Une erreur s'est produite lors du chargement des déclarations
 file.upload.fileSize.error,Error message when the selected file is too large,File size must be less than {maxSize}mb,La taille du fichier doit être inférieure à {maxSize}M
 file.upload.fileType.error,Error message when the selected file type is not supported,File format not supported. Please attach {types} (max {maxSize}mb),Format de fichier non pris en charge. Veuillez joindre un {types} (max {maxSize}mb)
 flags.builtin.correction-requested.label,Label for flag,Correction requested,Correction demandée
@@ -1760,7 +1744,6 @@ print.certificate.paymentAmount,The label for payment amount subsection,৳ {pay
 print.certificate.paymentInstruction,Description for payment section,"Please collect the payment, print the receipt and hand it over to the payee.","Veuillez encaisser le paiement, imprimer le reçu et le remettre au bénéficiaire."
 print.certificate.paymentMethod,The label for payment method select,Payment method,Mode de paiement
 print.certificate.printReceipt,The label for print receipt button,Print receipt,Imprimer le reçu
-print.certificate.queryError,The error message shown when a query fails,An error occurred while quering for birth registration data,Une erreur s'est produite lors de la recherche de données d'enregistrement des naissances.
 print.certificate.review.description,Certificate review description,Please confirm that the informant has reviewed that the information on the certificate is correct and that it is ready to print.,Veuillez confirmer que l'informateur a vérifié que les informations figurant sur le certificat sont correctes et que celui-ci est prêt à être imprimé.
 print.certificate.review.modal.body.print,Print certificate modal body text,A Pdf of the certificate will open in a new tab for printing. The record will move to the ready-to-issue queue.,Un Pdf du certificat s'ouvrira dans un nouvel onglet que vous pourrez imprimer. Cet enregistrement sera ensuite déplacé vers votre file d'attente de travail prêt à émettre
 print.certificate.review.modal.body.printAndIssue,Print certificate modal body text,This will generate a certified copy of the record for printing.,Ceci générera une copie certifiée du dossier à imprimer.
@@ -1880,7 +1863,6 @@ regHome.validated.registrar.tooltip,Text to display for validated declaration as
 regHome.waitingForExternalValidation,The title of waiting for external validation,Waiting for external validation,En attente d'une validation externe
 regHome.workqueue.downloadDeclarationFailed,Label for declaration downloading failed,Failed to download record. Please try again,Échec du téléchargement de la déclaration. Veuillez réessayer
 register.SelectContactPoint.heading,,Main point of contact,Qui est le point de contact principal pour cette déclaration ?
-register.SelectContactPoint.phoneNoError,Phone no error text,Not a valid mobile number,Numéro de portable non valide
 register.eventInfo.birth.listItem0,,I am here to start the birth registration process for you.,Je suis ici pour remplir la déclaration de naissance pour vous.
 register.eventInfo.birth.listItem1,,You will receive an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.,"Une fois que j'aurai rempli la déclaration, elle sera envoyée au bureau d'enregistrement pour examen."
 register.eventInfo.birth.listItem2,,"Make sure you collect the certificate. A birth certificate is critical for this child, especially to make their life easy later on. It will help to access health services, school examinations and government benefits.",Attendez un SMS vous indiquant quand vous devez vous rendre au bureau pour retirer le certificat - Prenez votre carte d'identité avec vous.
@@ -1949,7 +1931,6 @@ review.actions.description.hasError,Description for review action component when
 review.actions.title.declarationStatus,Title for review action component,"Declaration {completeDeclaration, select, true {complete} other {incomplete}}","Déclaration {completeDeclaration, select, true {complet} other {incomplet}}"
 review.actions.title.registerActionTitle,,Register event,Enregistrer l'événement
 review.annotations.title,Title for the annotations accordion section in review,Annotations,Annotations
-review.birthRegistration.queryError,The error message shown when a query fails,An error occurred while fetching birth registration,Une erreur s'est produite lors de la récupération de l'enregistrement de la naissance
 review.button.approve,Label for Send For Approval button,Send for approval,Envoyer pour approbation
 review.declare.confirmModal.title,The title for review action modal when declaring,Declare event?,Déclarer l'événement?
 review.declare.description.incomplete,The description for declare action when form is complete,The informant will receive an email with a tracking ID that they can use to provide the additional mandatory information required for registration,Cette déclaration sera envoyée au greffier pour être complétée. Veuillez informer l'informateur qu'il devra se présenter au bureau avec les informations manquantes et les documents justificatifs.
@@ -2007,9 +1988,7 @@ search.bookmarkAdvancedSearchModalBody,Modal body for bookmark advacnced search,
 search.bookmarkAdvancedSearchModalTitle,Modal title for bookmark advacnced search,Save search query?,Enregistrer la requête de recherche ?
 search.informantContact,The rejected reason,Informant contact number,Numéro de contact de l'informateur
 search.labels.results.eventRegistrationNumber,Label for event registration number in search result list item,"{event, select, birth {B} death {D} marriage {M} divorce {Divorce } other {A}}RN","{event, select, birth {B} death {D} marriage {M} divorce {Divorce } other {A}}RN"
-search.loadingDeclarations,The text when loading declaration,Loading declarations...,Chargement des déclarations...
 search.locationNotFound,Label for location not found,Location Not Found,Emplacement non trouvé
-search.noDeclarations,The text when there is no declaration to review,No declarations to review,Aucune déclaration à examiner
 search.noRecord,The no record text,"No records {slug, select, draft {in drafts} outbox {require processing} other {{title}}}","Aucun enregistrement {slug, select, draft {dans brouillons} outbox {à traiter} other {{title}}}"
 search.noResult,The no result text,No result,Pas de résultats”
 search.noResultFor,The no result text,No results for ”{param}”,Aucun résultat pour “{param}”
@@ -2023,7 +2002,6 @@ search.results,Results label at the top of the data table component,Results,Rés
 search.searchResultFor,The search result text,Search result for “{param}”,résultat de la recherche pour “{param}”
 search.searchingFor,The searching for text,Searching for “{param}”,Recherche de  “{param}”
 search.totalResultText,The total result text,"{total, plural, =0 {} one {# record found} other {# records found}} ","{total, plural, =0 {} one {# record found} other {# records found}}"
-search.waitingForConnection,The text when there is no connectivity,Reconnect to load declarations,Se reconnecter pour charger les déclarations
 searchField.indicators.clearButton,Clear button text,Clear,Effacer
 searchField.indicators.clearModal.cancel,Cancel button for clear confirmation modal,Cancel,Annuler
 searchField.indicators.clearModal.confirm,Confirm button for clear confirmation modal,Confirm,Confirmer
@@ -2222,45 +2200,7 @@ validate.complete.declaration.action.description,,The informant will receive an 
 validate.complete.declaration.action.title,,Declaration complete,Envoyer pour approbation ou rejeter ?
 validate.declaration.action.modal.description,,This declaration will be sent for approval prior to registration.,Cette déclaration sera envoyée pour approbation avant l'enregistrement.
 validate.declaration.action.modal.title,,Send for approval?,Envoyer pour approbation ?
-validations.bengaliOnlyNameFormat,The error message that appears when a non bengali character is used in a Bengali name,Must contain only Bengali characters,Doit contenir uniquement des caractères bengalis
-validations.blockAlphaNumericDot,The error message that appears when an invalid value is used,"Can contain only block character, number and dot (e.g. C91.5)","Ne peut contenir que des caractères d'imprimerie, des chiffres et des points (par exemple, C91.5)."
-validations.correctionReason,The error message that appears on reason field on correction form,Please provide a reason for this correction,Veuillez fournir une raison pour cette correction
-validations.dateFormat,The error message appears when the given date is not valid,Required for registration. Enter a valid date,Doit être une date valide
-validations.dobEarlierThanDom,The error message appears when the given birth date is later than the given marriage date,Must be earlier than marriage date,Doit être antérieure à la date du mariage
-validations.domLaterThanDob,The error message appears when the given marriage date is earlier than the given birth date,Must be later than birth date,Doit être postérieure à la date de naissance
-validations.duplicateNationalID,Unique Nid validation,National ID must be unique,L'identifiant national doit être unique
-validations.emailAddressFormat,The error message appears when the email addresses are not valid,Must be a valid email address,Doit être une adresse électronique valide
-validations.englishOnlyNameFormat,"The error message that appears when a non English character except numbers, hyphens and underscores is used in an English name","Input contains invalid characters. Please use only letters (a-z, A-Z), numbers (0-9), hyphens (-), apostrophes(') and underscores (_)","L'entrée contient des caractères non valides. Veuillez n'utiliser que des lettres (a-z, A-Z), des chiffres (0-9), des traits d'union (-), des apostrophes (') et des traits de soulignement (_)"
-validations.facilityMustBeSelected,The error message appears when no valid facility is selected,No facility selected,Aucun établissement sélectionné
-validations.greaterThanZero,The error message appears when input is less than or equal to 0,Must be a greater than zero,Doit être supérieur à zéro
-validations.illegalMarriageAge,The error message appears when the birth date is not old enough to register for marriage,Illegal age of marriage,Age illègale pour mariage
-validations.invalidDate,The error message that appears when a date field is invalid,Invalid date field,Champ de date invalide
-validations.isAgeInYearsBetween,The error message that appears when age for the given date is outside the legal age range,Age must be between {min} and {max} years,L'âge doit être compris entre {min} et {max} ans.
-validations.isDateNotAfterDeath,The error message appears when the given date of death is not valid,Date of birth must be before date of death,La date doit être antérieure à la date de décès
-validations.isDateNotBeforeBirth,The error message appears when the given date of death is not valid,Date of death must be after deceased date of birth,La date doit être postérieure à la date de naissance du défunt
-validations.isInformantOfLegalAge,The error message appears when the informant is not old enough to register an event,Informant is not of legal age,L'informateur n'est pas majeur
-validations.isMoVisitAfterDeath,The error message appears when the given date of visit of medical practitioner is after the death date,Medical Practitioner visit date must not be after the date of death,La date de visite du médecin ne doit pas être postérieure à la date du décès.
-validations.isMoVisitBeforeBirth,The error message appears when the given date of visit of medical practitioner is before the birth date of deceased,Medical Practitioner visit date must not be before the birth of deceased,La date de la visite du médecin ne doit pas être antérieure à la naissance du défunt.
-validations.isValidBirthDate,The error message appears when the given birth date is not valid,Must be a valid birth date,Doit être une date de naissance valide
-validations.isValidDateOfDeath,The error message appears when the given date of death is not valid,Must be a valid date of death,Doit être une date de décès valide
-validations.maxLength,The error message that appears on fields with a maximum length,Must not be more than {max} characters,Ne doit pas comporter plus de {max} caractères.
-validations.minLength,The error message that appears on fields with a minimum length,Must be {min} characters or more,Doit comporter {min} caractères ou plus
-validations.nonDecimalPointNumber,The error message that appeards when any decimal point number is used,Can not have any decimal point number,Ne peut pas avoir de nombre à virgule
-validations.notGreaterThan,The error message that appears on numeric fields that exceed a limit,Must not be more than {maxValue},Ne doit pas être supérieur à {maxValue}.
-validations.numberRequired,The error message that appears on fields where the value must be a number,Must be a number,Doit être un nombre
-validations.officeMustBeSelected,The error message appears when no valid office is selected,No office selected,Aucun bureau sélectionné
 validations.phoneNumberFormat,The error message that appears on phone numbers where the first two characters must be a 01 and length must be 11,Must be a valid 10 digit number that starts with 0(7|9),Doit être un nombre valide de  {num} chiffres qui commence par  {start}
-validations.range,The error message that appears when an out of range value is used,Must be within {min} and {max},Doit être compris entre {min} et {max}.
-validations.required,The error message that appears on required fields,Required for registration,Requis pour l'enregistrement
-validations.requiredBasic,The error message that appears on required fields,Required,Requis
-validations.requiredSymbol,A blank error message. Used for highlighting a required field without showing an error,,
-validations.userform.required,The error message that appears on required fields on new user form,Required to register a new user,Requis pour l'enregistrement d'un nouvel utilisateur
-validations.validBirthRegistrationNumber,The error message that appears when an invalid value is used as brn,The Birth Registration Number can only be numeric and must be {validLength} characters long,Le numéro d'enregistrement de la naissance ne peut être que numérique et doit comporter {validLength} caractères.
-validations.validDeathRegistrationNumber,The error message that appears when an invalid value is used as drn,The Death Registration Number can only be alpha numeric and must be {validLength} characters long,Le numéro d'enregistrement du décès ne peut être qu'alphanumérique et doit comporter {validLength} caractères.
-validations.validDrivingLicenseNumber,The error message that appeards when an invalid value is used as driving license number,The Driving License Number can only be alpha numeric and must be {validLength} characters long,Le numéro de permis de conduire ne peut être qu'alphanumérique et doit comporter {longueur valide} caractères.
-validations.validNationalIDLengths,Nid valid lengths,9,9
-validations.validNationalId,The error message that appears when an invalid value is used as nid,The National ID can only be numeric and must be 10 digits long,Le numéro d'identification national ne peut être que numérique et doit avoir une longueur de 9 chiffres.
-validations.validPassportNumber,The error message that appears when an invalid value is used as passport number,The Passport Number can only be alpha numeric and must be {validLength} characters long,Le numéro de passeport ne peut être qu'alphanumérique et doit comporter {validLength} caractères.
 verified,This is the label for the verification field,Verified,Vérifié
 verifyCertificate.brn,Label for Birth Registration Number,BRN,Numéro de régistre de naissance
 verifyCertificate.certifiedAt,Label for date of certification,Date of certification,Date de l'émission du certificat de naissance
