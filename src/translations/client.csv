@@ -766,6 +766,7 @@ duplicates.content.registeredBy,Registered by label for duplicates comparison,Re
 duplicates.content.subtitle,Duplicates content subtitle message,"This record was flagged as a potential duplicate of: {trackingIds}. Please review these by clicking on each tracking ID in the tab section to view a side-by-side comparison below, and confirm if this record is a duplicate",Cet enregistrement a été signalé comme un doublon potentiel de : {trackingIds}. Veuillez les examiner en cliquant sur chaque identifiant de suivi dans la section des onglets pour afficher une comparaison côte à côte ci-dessous et confirmer si cet enregistrement est un doublon
 duplicates.content.title,Duplicates content title message,Is {name} ({trackingId}) a duplicate?,Est-ce que {name} ({trackingId}) est un doublon?
 duplicates.review.header,Review page header for duplicates declarations,Potential {event} duplicate review,Potentiel {event} examen de doublon
+duplicates.warning,The warning message shown when a declaration has potential duplicates,Potential duplicate of record {trackingId},Duplicata potentiel de l'enregistrement {trackingId}
 editPageBanner.declaredMessage,The message for the edit page banner,You are editing a record declared by {name} ({role} at {location}),Vous modifiez un dossier déclaré par {name} ({role} à {location})
 editPageBanner.notifiedMessage,The message for the edit page banner,You are editing a record notified by {name} ({role} at {location}),Vous modifiez un dossier déclaré par {name} ({role} à {location})
 email.label.confirmation,Confirmation email address message,A verification code has been sent to {email},Un code de vérification a été envoyé à {email}
@@ -1055,6 +1056,7 @@ event.death.summary.informant.contact.empty,This is shown when there is no infor
 event.death.summary.informant.contact.label,This is the label for the informant information,Contact,Contact
 event.death.summary.informant.contact.value,This is the contact value of the informant,{informant.phoneNo} {informant.email},{informant.phoneNo} {informant.email}
 event.death.title,This is the title of the summary,{deceased.name.firstname} {deceased.name.surname},{deceased.name.firstname} {deceased.name.surname}
+event.declaration.potentialDuplicateDetected,Notification for potential duplicate declaration. Shown when a potential duplicate is detected after declaring an event.,{trackingId} is a potential duplicate. Record is ready for review.,{trackingId} est un doublon potentiel. L’enregistrement est prêt pour révision.
 event.default.action.certificate.template.type.label,Select certificate template,Type,Taper
 event.default.action.certificate.template.type.notFound,Select certificate template options not found,"No template available for this event, contact Admin","Aucun modèle disponible pour cette event, contactez l’admin"
 event.edit.comment.label,The label for the comment,Comments,Commentaires
@@ -1213,6 +1215,8 @@ form.field.label.causeOfDeathEstablished,,Cause of death has been established,La
 form.field.label.causeOfDeathMethod,,Source of cause of death,Source de la cause du décès
 form.field.label.causeOfDeathProof,,Proof of cause of death,Preuve de la cause du décès
 form.field.label.certificatePrintInAdvance,,Print in advance,Imprimer à l'avance pour les signatures et la collecte
+form.field.label.changeOfficeWarningBody,,Changing this user's office will remove their in-progress drafts. Do you want to continue?,Changer le bureau de cet utilisateur supprimera ses brouillons en cours. Voulez-vous continuer ?
+form.field.label.changeOfficeWarningTitle,,Change office?,Changer de bureau ?
 form.field.label.cityUrbanOption,Label for City,Town,Ville
 form.field.label.confirm,,Yes,Oui
 form.field.label.country,,Country,Pays
@@ -1374,8 +1378,6 @@ form.field.label.state,Label for State,Province,Province
 form.field.label.typeOfId,,Type of ID,Type d'identification
 form.field.label.typeOfMarriage,,Type of marriage,Type de mariage
 form.field.label.updatingUser,,Updating user,Mise à jour de l'utilisateur
-form.field.label.changeOfficeWarningTitle,,Change office?,Changer de bureau ?
-form.field.label.changeOfficeWarningBody,,Changing this user's office will remove their in-progress drafts. Do you want to continue?,Changer le bureau de cet utilisateur supprimera ses brouillons en cours. Voulez-vous continuer ?
 form.field.label.uploadDocForMother,,Mother,Mère
 form.field.label.uploadFile,,Upload,Télécharger
 form.field.label.urban,,Urban,Urbain
@@ -2050,8 +2052,8 @@ sysAdHome.sendUsernameReminderInviteError,The label for error notification of se
 sysAdHome.sendUsernameReminderInviteModalMessage,Message for send username reminder,The user will receive a username reminder via an {deliveryMethod} sent to {recipient},L'utilisateur recevra un rappel de son nom d'utilisateur par un {deliveryMethod} envoyé à {recipient}.
 sysAdHome.sendUsernameReminderInviteModalTitle,Title for send username reminder,Send username reminder?,Envoyer un rappel de nom d'utilisateur ?
 sysAdHome.sendUsernameReminderInviteSuccess,The label for success notification of send username reminder,Username reminder sent to {name},Rappel de l'identifiant envoyé à {name}
-sysAdHome.toggleActivateStatusSuccess,The label for success notification when toggling user activate status,Updated {name}'s account status to "{status}",Statut du compte de {name} mis à jour en "{status}"
-sysAdHome.toggleActivateStatusError,The label for error notification when toggling user activate status,Failed to update {name}'s account status to "{status}",Échec de la mise à jour du statut du compte de {name} en "{status}"
+sysAdHome.toggleActivateStatusError,The label for error notification when toggling user activate status,"Failed to update {name}'s account status to ""{status}""","Échec de la mise à jour du statut du compte de {name} en ""{status}"""
+sysAdHome.toggleActivateStatusSuccess,The label for success notification when toggling user activate status,"Updated {name}'s account status to ""{status}""","Statut du compte de {name} mis à jour en ""{status}"""
 sysAdHome.user.audit.comments,The label for form field deactivate comments,Comments: ,Commentaires :
 sysAdHome.user.audit.deactiv.reasonInv,The label for radio option being investigated,Being investigated due to suspicious activity on their account,Fait l'objet d'une enquête en raison d'une activité suspecte sur son compte
 sysAdHome.user.audit.deactiv.reasonNotEmp,The label for radio option not employee,No longer an employee,N'est plus un employé
@@ -2196,6 +2198,8 @@ userSetup.type.healthSystem,The description for health system type,Health System
 userSetup.type.hospital,The description for HOSPITAL type,Hospital,Hôpital
 userSetup.type.system,The description for system type,System,Système
 userSetup.waiting,The message that displays when the user is waiting for the account to be created,Setting up your account,Configuration de votre compte
+v2.event.record.offline.description,Message shown on the Record page when the user is offline and the record has not been cached locally,This record has not been downloaded yet so it cannot be opened offline. Please reconnect to the internet to view it.,Cet enregistrement n’a pas encore été téléchargé et ne peut donc pas être ouvert hors ligne. Veuillez vous reconnecter à Internet pour le consulter.
+v2.event.record.offline.title,Title shown on the Record page when the user is offline,No connection,Pas de connexion
 validate.complete.declaration.action.description,,The informant will receive an with a registration number that they can use to collect the certificate.,"En envoyant pour approbation, vous confirmez que la déclaration est prête à être approuvée."
 validate.complete.declaration.action.title,,Declaration complete,Envoyer pour approbation ou rejeter ?
 validate.declaration.action.modal.description,,This declaration will be sent for approval prior to registration.,Cette déclaration sera envoyée pour approbation avant l'enregistrement.
@@ -2280,6 +2284,3 @@ wq.noRecords.readyToPrint,No records messages for ready to print tab,No records 
 wq.noRecords.requiresUpdate,No records messages for require updates tab,No records require updates,Aucun document ne nécessite de mise à jour
 wq.noRecords.sentForApproval,No records messages for sent for approval tab,No records sent for approval,Aucun document envoyé pour approbation
 wq.noRecords.sentForReview,No records messages for sent for review tab,No records sent for review,Aucun document envoyé pour examen
-event.declaration.potentialDuplicateDetected,Notification for potential duplicate declaration. Shown when a potential duplicate is detected after declaring an event.,{trackingId} is a potential duplicate. Record is ready for review.,{trackingId} est un doublon potentiel. L’enregistrement est prêt pour révision.
-v2.event.record.offline.title,Title shown on the Record page when the user is offline,No connection,Pas de connexion
-v2.event.record.offline.description,Message shown on the Record page when the user is offline and the record has not been cached locally,This record has not been downloaded yet so it cannot be opened offline. Please reconnect to the internet to view it.,Cet enregistrement n’a pas encore été téléchargé et ne peut donc pas être ouvert hors ligne. Veuillez vous reconnecter à Internet pour le consulter.
