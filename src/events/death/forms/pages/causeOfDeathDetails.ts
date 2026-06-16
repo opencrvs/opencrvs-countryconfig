@@ -80,16 +80,7 @@ const durationOptions = [
 
 export type CauseLetter = 'A' | 'B' | 'C' | 'D' | 'Other'
 
-export const symptomNumber = [
-  'one',
-  'two',
-  'three',
-  'four',
-  'five',
-  'six',
-  'seven',
-  'eight'
-] as const
+export const symptomNumber = ['one'] as const
 
 function getLabelForCause(
   letter: CauseLetter,
