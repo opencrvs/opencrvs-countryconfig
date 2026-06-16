@@ -142,17 +142,6 @@ function createSymptomFields(letter: CauseLetter) {
       }
     }
 
-    if (index > 0) {
-      autocompleteField.conditionals = [
-        {
-          type: ConditionalType.SHOW,
-          conditional: field(
-            `causeOfDeathDetails.causeOfDeath${letter}.add.symptom.button`
-          ).isGreaterThan(index - 1)
-        }
-      ]
-    }
-
     const otherField = {
       id: `${basePath}.other`,
       type: FieldType.TEXTAREA,
