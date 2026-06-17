@@ -301,6 +301,7 @@ constants.healthDivision,The description for HEALTH_DIVISION type,Health Divisio
 constants.healthcareWorker,The description for Healthcare Worker type,Healthcare Worker,Travailleur de la santé
 constants.history,History heading,History,Histoire
 constants.humanName,Formatted full name,{firstName} {middleName} {lastName},{firstName} {middleName} {lastName}
+constants.retryInSeconds,Button label showing remaining seconds before retry is allowed,Retry in {seconds}s,Réessayer dans {seconds}s
 constants.id,ID Label,ID,ID
 constants.idCheckWithoutVerify,Issuance without the confirmation of proof,Continue without proof of ID?,Continuer sans preuve d'identité?
 constants.inReview.status,A label for In Review,In review,En cours de révision
@@ -2090,6 +2091,7 @@ system.user.duplicateMobileError,This error messege shows when user try to input
 system.user.newUser,This text will show to create new user button,New user,Nouvel utilisateur
 system.user.pending,Pill label for pending user,Pending,En attente
 system.user.queryError,The text when error ocurred loading system users,An error occurred while loading system users,Une erreur s'est produite lors du chargement des utilisateurs du système
+system.user.queryRateLimitError,Error text shown when the user list query is rate limited (HTTP 429),Too many requests. Please wait before retrying.,Trop de requêtes. Veuillez patienter avant de réessayer.
 system.user.settings.avatarUpdated,Profile image change message on success,Profile image successfully updated,L'image du profil a été mise à jour avec succès
 system.user.settings.avatarUpdating,Profile image message when uploading,Updating profile image,Mise à jour de l'image du profil
 system.user.settings.emailAddressUpdated,Email change message on success,Email address updated,Adresse e-mail mise à jour
