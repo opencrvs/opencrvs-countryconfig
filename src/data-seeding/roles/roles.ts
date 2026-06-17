@@ -7,192 +7,6 @@ type Role = {
   scopes: EncodedScope[]
 }
 
-// National (root-level) scopes — no placeOfEvent restriction so users at
-// Location/0 offices (TUV-RGO) can see all health facilities countrywide.
-const registrarGeneralScopes = defineScopes([
-  { type: 'profile.electronic-signature' },
-  { type: 'performance.read' },
-  { type: 'organisation.read-locations' },
-  { type: 'user.read' },
-  { type: 'user.search' },
-  { type: 'performance.read-dashboards' },
-  { type: 'workqueue', options: { ids: ['assigned-to-you', 'recent', 'requires-completion', 'in-external-validation', 'escalated', 'pending-validation', 'pending-registration', 'pending-updates', 'pending-approval', 'pending-certification', 'pending-issuance', 'correction-requested'] } },
-  { type: 'record.search' },
-  { type: 'record.create' },
-  { type: 'record.read' },
-  { type: 'record.declare' },
-  { type: 'record.register' },
-  { type: 'record.edit' },
-  { type: 'record.reject' },
-  { type: 'record.archive' },
-  { type: 'record.print-certified-copies' },
-  { type: 'record.request-correction' },
-  { type: 'record.custom-action', options: { event: ['birth'], customActionTypes: ['VALIDATE_DECLARATION', 'ESCALATE'] } },
-  { type: 'record.custom-action', options: { event: ['birth'], customActionTypes: ['REINSTATE_REVOKE_REGISTRATION'] } },
-  { type: 'record.custom-action', options: { event: ['birth'], customActionTypes: ['ISSUE_CERTIFIED_COPY', 'ISSUE_VERIFIABLE_CREDENTIAL'] } },
-  { type: 'record.custom-action', options: { event: ['death'], customActionTypes: ['VALIDATE_DECLARATION'] } },
-  {
-    type: 'dashboard.view',
-    options: { ids: ['registrations', 'completeness', 'registry'] }
-  }
-])
-
-// Island-level scopes — restricted to the user's administrative area.
-// Used by ISLAND_REGISTRAR so they only see their own island's facilities.
-const islandRegistrarScopes = defineScopes([
-  { type: 'profile.electronic-signature' },
-  { type: 'performance.read' },
-  { type: 'organisation.read-locations', options: { accessLevel: 'administrativeArea' } },
-  { type: 'user.read', options: { accessLevel: 'administrativeArea' } },
-  { type: 'user.search', options: { accessLevel: 'administrativeArea' } },
-  { type: 'performance.read-dashboards' },
-  { type: 'workqueue', options: { ids: ['assigned-to-you', 'recent', 'requires-completion', 'in-external-validation', 'escalated', 'pending-validation', 'pending-updates', 'pending-approval'] } },
-  { type: 'record.search', options: { placeOfEvent: 'administrativeArea' } },
-  { type: 'record.create', options: { placeOfEvent: 'administrativeArea' } },
-  { type: 'record.read', options: { placeOfEvent: 'administrativeArea' } },
-  { type: 'record.declare', options: { placeOfEvent: 'administrativeArea' } },
-  { type: 'record.edit', options: { placeOfEvent: 'administrativeArea' } },
-  { type: 'record.reject', options: { placeOfEvent: 'administrativeArea' } },
-  { type: 'record.archive', options: { declaredIn: 'administrativeArea' } },
-  { type: 'record.custom-action', options: { event: ['birth'], customActionTypes: ['VALIDATE_DECLARATION', 'ESCALATE'] } },
-  { type: 'record.custom-action', options: { event: ['birth'], customActionTypes: ['REINSTATE_REVOKE_REGISTRATION'], placeOfEvent: 'administrativeArea' } },
-  { type: 'record.custom-action', options: { event: ['birth'], customActionTypes: ['ISSUE_CERTIFIED_COPY', 'ISSUE_VERIFIABLE_CREDENTIAL'] } },
-  { type: 'record.custom-action', options: { event: ['death'], customActionTypes: ['VALIDATE_DECLARATION'] } },
-  {
-    type: 'dashboard.view',
-    options: { ids: ['registrations', 'completeness', 'registry'] }
-  }
-])
-
-// National validator — based at TUV-RGO (Location/0). Unscoped so the user
-// can see notifications from every health facility nationwide and validate
-// records into the 'validated' state for RG/DRG to register.
-const registrationOfficerScopes = defineScopes([
-  { type: 'organisation.read-locations' },
-  { type: 'user.read' },
-  { type: 'user.search' },
-  { type: 'workqueue', options: { ids: ['assigned-to-you', 'recent', 'requires-completion', 'in-external-validation', 'escalated', 'potential-duplicate', 'pending-validation', 'pending-updates', 'pending-approval', 'pending-certification', 'pending-issuance', 'correction-requested'] } },
-  { type: 'record.search' },
-  { type: 'record.create' },
-  { type: 'record.read' },
-  { type: 'record.declare' },
-  { type: 'record.edit' },
-  { type: 'record.reject' },
-  { type: 'record.review-duplicates' },
-  { type: 'record.print-certified-copies' },
-  { type: 'record.request-correction' },
-  { type: 'record.custom-action', options: { event: ['birth'], customActionTypes: ['VALIDATE_DECLARATION', 'ESCALATE'] } },
-  { type: 'record.custom-action', options: { event: ['birth'], customActionTypes: ['REINSTATE_REVOKE_REGISTRATION'] } },
-  { type: 'record.custom-action', options: { event: ['birth'], customActionTypes: ['ISSUE_CERTIFIED_COPY', 'ISSUE_VERIFIABLE_CREDENTIAL'] } },
-  { type: 'record.custom-action', options: { event: ['death'], customActionTypes: ['VALIDATE_DECLARATION'] } },
-  {
-    type: 'dashboard.view',
-    options: { ids: ['registrations', 'completeness', 'registry'] }
-  }
-])
-
-const deputyRegistrarGeneralScopes = defineScopes([
-  { type: 'profile.electronic-signature' },
-  { type: 'performance.read' },
-  { type: 'organisation.read-locations' },
-  { type: 'user.read' },
-  { type: 'user.search' },
-  { type: 'record.search' },
-  { type: 'workqueue', options: { ids: ['assigned-to-you', 'recent', 'pending-feedback-registrar-general', 'pending-registration', 'pending-certification', 'pending-issuance', 'correction-requested', 'potential-duplicate', 'registration-registrar-general'] } },
-  { type: 'record.read' },
-  { type: 'record.reject' },
-  { type: 'record.archive' },
-  { type: 'record.review-duplicates' },
-  { type: 'record.register' },
-  { type: 'record.print-certified-copies' },
-  { type: 'record.correct' },
-  { type: 'record.custom-action', options: { event: ['birth', 'death'], customActionTypes: ['REGISTRAR_GENERAL_FEEDBACK', 'APPROVE_DECLARATION', 'REVOKE_REGISTRATION', 'REINSTATE_REVOKE_REGISTRATION', 'ISSUE_VERIFIABLE_CREDENTIAL'] } },
-  { type: 'record.unassign-others' }
-])
-
-const assistantRegistrationOfficerScopes = defineScopes([
-  { type: 'organisation.read-locations', options: { accessLevel: 'administrativeArea' } },
-  { type: 'user.read', options: { accessLevel: 'administrativeArea' } },
-  { type: 'user.search', options: { accessLevel: 'administrativeArea' } },
-  { type: 'workqueue', options: { ids: ['assigned-to-you', 'recent', 'requires-completion', 'in-external-validation', 'escalated', 'pending-validation', 'pending-updates', 'pending-approval', 'pending-certification', 'pending-issuance', 'correction-requested'] } },
-  { type: 'record.search', options: { placeOfEvent: 'administrativeArea' } },
-  { type: 'record.create' },
-  { type: 'record.read', options: { placeOfEvent: 'administrativeArea' } },
-  { type: 'record.declare', options: { placeOfEvent: 'administrativeArea' } },
-  { type: 'record.review-duplicates' },
-  { type: 'record.print-certified-copies', options: { registeredIn: 'administrativeArea' } },
-  { type: 'record.request-correction', options: { registeredIn: 'administrativeArea' } },
-  { type: 'record.custom-action', options: { event: ['birth', 'death'], customActionTypes: ['VALIDATE_DECLARATION', 'REINSTATE_REVOKE_REGISTRATION', 'ESCALATE'] } },
-  { type: 'record.custom-action', options: { event: ['birth', 'death'], customActionTypes: ['ISSUE_CERTIFIED_COPY'], registeredIn: 'administrativeArea' } },
-  { type: 'record.unassign-others' },
-  {
-    type: 'dashboard.view',
-    options: { ids: ['registrations', 'completeness', 'registry'] }
-  }
-])
-
-const islandClerkScopes = defineScopes([
-  { type: 'organisation.read-locations', options: { accessLevel: 'administrativeArea' } },
-  { type: 'user.read', options: { accessLevel: 'administrativeArea' } },
-  { type: 'performance.read' },
-  { type: 'workqueue', options: { ids: ['assigned-to-you', 'recent', 'pending-validation', 'pending-updates', 'pending-registration', 'pending-certification', 'pending-issuance', 'correction-requested'] } },
-  { type: 'record.search', options: { placeOfEvent: 'administrativeArea' } },
-  { type: 'record.create', options: { placeOfEvent: 'administrativeArea' } },
-  { type: 'record.read', options: { placeOfEvent: 'administrativeArea' } },
-  { type: 'record.declare', options: { placeOfEvent: 'administrativeArea' } },
-  { type: 'record.reject', options: { placeOfEvent: 'administrativeArea' } },
-  { type: 'record.edit', options: { placeOfEvent: 'administrativeArea' } },
-  { type: 'record.archive', options: { declaredIn: 'administrativeArea' } },
-  { type: 'record.print-certified-copies', options: { registeredIn: 'administrativeArea' } },
-  { type: 'record.request-correction', options: { registeredIn: 'administrativeArea' } },
-  { type: 'record.custom-action', options: { event: ['birth', 'death'], customActionTypes: ['VALIDATE_DECLARATION', 'REINSTATE_REVOKE_REGISTRATION', 'ESCALATE'], placeOfEvent: 'administrativeArea' } },
-  { type: 'record.custom-action', options: { event: ['birth', 'death'], customActionTypes: ['ISSUE_CERTIFIED_COPY', 'ISSUE_VERIFIABLE_CREDENTIAL'], registeredIn: 'administrativeArea' } }
-])
-
-const courtClerkScopes = defineScopes([
-  { type: 'organisation.read-locations', options: { accessLevel: 'administrativeArea' } },
-  { type: 'user.read', options: { accessLevel: 'administrativeArea' } },
-  { type: 'performance.read' },
-  { type: 'workqueue', options: { ids: ['assigned-to-you', 'recent', 'pending-validation', 'pending-updates', 'pending-registration', 'pending-certification', 'pending-issuance', 'correction-requested'] } },
-  { type: 'record.search', options: { placeOfEvent: 'administrativeArea' } },
-  { type: 'record.create', options: { placeOfEvent: 'administrativeArea' } },
-  { type: 'record.read', options: { placeOfEvent: 'administrativeArea' } },
-  { type: 'record.declare', options: { placeOfEvent: 'administrativeArea' } },
-  { type: 'record.reject', options: { placeOfEvent: 'administrativeArea' } },
-  { type: 'record.edit', options: { placeOfEvent: 'administrativeArea' } },
-  { type: 'record.archive', options: { declaredIn: 'administrativeArea' } },
-  { type: 'record.print-certified-copies', options: { registeredIn: 'administrativeArea' } },
-  { type: 'record.request-correction', options: { registeredIn: 'administrativeArea' } },
-  { type: 'record.custom-action', options: { event: ['birth', 'death'], customActionTypes: ['VALIDATE_DECLARATION', 'REINSTATE_REVOKE_REGISTRATION', 'ESCALATE'], placeOfEvent: 'administrativeArea' } },
-  { type: 'record.custom-action', options: { event: ['birth', 'death'], customActionTypes: ['ISSUE_CERTIFIED_COPY', 'ISSUE_VERIFIABLE_CREDENTIAL'], registeredIn: 'administrativeArea' } }
-])
-
-// National health notifier — based at TUV-PMH (Location/0).
-// Unscoped so the user can see and notify records from the national hospital.
-const healthNotifierScopes = defineScopes([
-  { type: 'user.read-only-my-audit' },
-  { type: 'record.search' },
-  { type: 'workqueue', options: { ids: ['assigned-to-you', 'recent', 'pending-updates'] } },
-  { type: 'record.create' },
-  { type: 'record.read' },
-  { type: 'record.notify' },
-  { type: 'record.edit', options: { declaredBy: 'user' } },
-  { type: 'record.print-certified-copies', options: { templates: ['v2.tennis-club-membership-certificate-alpha'] } }
-])
-
-// Island clinic notifier — based at island health facilities (TUV-00X-002).
-// Scoped to administrativeArea so each notifier only sees their own island's records.
-const islandClinicNotifierScopes = defineScopes([
-  { type: 'user.read-only-my-audit' },
-  { type: 'record.search', options: { placeOfEvent: 'administrativeArea' } },
-  { type: 'workqueue', options: { ids: ['assigned-to-you', 'recent', 'pending-updates'] } },
-  { type: 'record.create', options: { placeOfEvent: 'administrativeArea' } },
-  { type: 'record.read', options: { placeOfEvent: 'administrativeArea' } },
-  { type: 'record.notify', options: { placeOfEvent: 'administrativeArea' } },
-  { type: 'record.edit', options: { declaredBy: 'user' } },
-  { type: 'record.print-certified-copies', options: { templates: ['v2.tennis-club-membership-certificate-alpha'] } }
-])
-
 export const roles: Role[] = [
   {
     id: 'REGISTRAR_GENERAL',
@@ -201,7 +15,36 @@ export const roles: Role[] = [
       description: 'Name for user role Registrar General',
       id: 'userRole.registrarGeneral'
     },
-    scopes: registrarGeneralScopes
+    // National (root-level) scopes — no placeOfEvent restriction so users at
+    // Location/0 offices (TUV-RGO) can see all health facilities countrywide.
+    scopes: defineScopes([
+      { type: 'profile.electronic-signature' },
+      { type: 'performance.read' },
+      { type: 'organisation.read-locations' },
+      { type: 'user.read' },
+      { type: 'user.search' },
+      { type: 'performance.read-dashboards' },
+      { type: 'workqueue', options: { ids: ['assigned-to-you', 'recent', 'requires-completion', 'in-external-validation', 'escalated', 'pending-validation', 'pending-registration', 'pending-updates', 'pending-approval', 'pending-certification', 'pending-issuance', 'correction-requested'] } },
+      { type: 'record.search' },
+      { type: 'record.create' },
+      { type: 'record.read' },
+      { type: 'record.declare' },
+      { type: 'record.register' },
+      { type: 'record.edit' },
+      { type: 'record.reject' },
+      { type: 'record.archive' },
+      { type: 'record.print-certified-copies' },
+      { type: 'record.print-certified-copies', options: { templates: ['v2.birth-notification'] } },
+      { type: 'record.request-correction' },
+      { type: 'record.custom-action', options: { event: ['birth'], customActionTypes: ['VALIDATE_DECLARATION', 'ESCALATE'] } },
+      { type: 'record.custom-action', options: { event: ['birth'], customActionTypes: ['REINSTATE_REVOKE_REGISTRATION'] } },
+      { type: 'record.custom-action', options: { event: ['birth'], customActionTypes: ['ISSUE_CERTIFIED_COPY', 'ISSUE_VERIFIABLE_CREDENTIAL'] } },
+      { type: 'record.custom-action', options: { event: ['death'], customActionTypes: ['VALIDATE_DECLARATION'] } },
+      {
+        type: 'dashboard.view',
+        options: { ids: ['registrations', 'completeness', 'registry'] }
+      }
+    ])
   },
   {
     id: 'REGISTRATION_OFFICER',
@@ -210,7 +53,33 @@ export const roles: Role[] = [
       description: 'Name for user role Registration Officer',
       id: 'userRole.registrationOfficer'
     },
-    scopes: registrationOfficerScopes
+    // National validator — based at TUV-RGO (Location/0). Unscoped so the user
+    // can see notifications from every health facility nationwide and validate
+    // records into the 'validated' state for RG/DRG to register.
+    scopes: defineScopes([
+      { type: 'organisation.read-locations' },
+      { type: 'user.read' },
+      { type: 'user.search' },
+      { type: 'workqueue', options: { ids: ['assigned-to-you', 'recent', 'requires-completion', 'in-external-validation', 'escalated', 'potential-duplicate', 'pending-validation', 'pending-updates', 'pending-approval', 'pending-certification', 'pending-issuance', 'correction-requested'] } },
+      { type: 'record.search' },
+      { type: 'record.create' },
+      { type: 'record.read' },
+      { type: 'record.declare' },
+      { type: 'record.edit' },
+      { type: 'record.reject' },
+      { type: 'record.review-duplicates' },
+      { type: 'record.print-certified-copies' },
+      { type: 'record.print-certified-copies', options: { templates: ['v2.birth-notification'] } },
+      { type: 'record.request-correction' },
+      { type: 'record.custom-action', options: { event: ['birth'], customActionTypes: ['VALIDATE_DECLARATION', 'ESCALATE'] } },
+      { type: 'record.custom-action', options: { event: ['birth'], customActionTypes: ['REINSTATE_REVOKE_REGISTRATION'] } },
+      { type: 'record.custom-action', options: { event: ['birth'], customActionTypes: ['ISSUE_CERTIFIED_COPY', 'ISSUE_VERIFIABLE_CREDENTIAL'] } },
+      { type: 'record.custom-action', options: { event: ['death'], customActionTypes: ['VALIDATE_DECLARATION'] } },
+      {
+        type: 'dashboard.view',
+        options: { ids: ['registrations', 'completeness', 'registry'] }
+      }
+    ])
   },
   {
     id: 'ISLAND_REGISTRAR',
@@ -219,7 +88,33 @@ export const roles: Role[] = [
       description: 'Name for user role Island Registrar',
       id: 'userRole.islandRegistrar'
     },
-    scopes: islandRegistrarScopes
+    // Island-level scopes — restricted to the user's administrative area.
+    // Scoped so they only see their own island's facilities.
+    scopes: defineScopes([
+      { type: 'profile.electronic-signature' },
+      { type: 'performance.read' },
+      { type: 'organisation.read-locations', options: { accessLevel: 'administrativeArea' } },
+      { type: 'user.read', options: { accessLevel: 'administrativeArea' } },
+      { type: 'user.search', options: { accessLevel: 'administrativeArea' } },
+      { type: 'performance.read-dashboards' },
+      { type: 'workqueue', options: { ids: ['assigned-to-you', 'recent', 'requires-completion', 'in-external-validation', 'escalated', 'pending-validation', 'pending-updates', 'pending-approval'] } },
+      { type: 'record.search', options: { placeOfEvent: 'administrativeArea' } },
+      { type: 'record.create', options: { placeOfEvent: 'administrativeArea' } },
+      { type: 'record.read', options: { placeOfEvent: 'administrativeArea' } },
+      { type: 'record.declare', options: { placeOfEvent: 'administrativeArea' } },
+      { type: 'record.edit', options: { placeOfEvent: 'administrativeArea' } },
+      { type: 'record.reject', options: { placeOfEvent: 'administrativeArea' } },
+      { type: 'record.archive', options: { declaredIn: 'administrativeArea' } },
+      { type: 'record.custom-action', options: { event: ['birth'], customActionTypes: ['VALIDATE_DECLARATION', 'ESCALATE'] } },
+      { type: 'record.custom-action', options: { event: ['birth'], customActionTypes: ['REINSTATE_REVOKE_REGISTRATION'], placeOfEvent: 'administrativeArea' } },
+      { type: 'record.custom-action', options: { event: ['birth'], customActionTypes: ['ISSUE_CERTIFIED_COPY', 'ISSUE_VERIFIABLE_CREDENTIAL'] } },
+      { type: 'record.custom-action', options: { event: ['death'], customActionTypes: ['VALIDATE_DECLARATION'] } },
+      { type: 'record.print-certified-copies', options: { templates: ['v2.birth-notification'] } },
+      {
+        type: 'dashboard.view',
+        options: { ids: ['registrations', 'completeness', 'registry'] }
+      }
+    ])
   },
   {
     id: 'REGISTRAR',
@@ -249,6 +144,7 @@ export const roles: Role[] = [
       { type: 'record.review-duplicates', options: { placeOfEvent: 'administrativeArea' } },
       { type: 'record.register', options: { placeOfEvent: 'administrativeArea' } },
       { type: 'record.print-certified-copies', options: { registeredIn: 'administrativeArea' } },
+      { type: 'record.print-certified-copies', options: { templates: ['v2.birth-notification'] } },
       { type: 'record.correct', options: { registeredIn: 'administrativeArea' } },
       { type: 'record.custom-action', options: { event: ['birth'], customActionTypes: ['ESCALATE', 'REINSTATE_REVOKE_REGISTRATION'], placeOfEvent: 'administrativeArea' } },
       { type: 'record.custom-action', options: { event: ['birth'], customActionTypes: ['ISSUE_CERTIFIED_COPY', 'ISSUE_VERIFIABLE_CREDENTIAL'], registeredIn: 'administrativeArea' } },
@@ -309,7 +205,25 @@ export const roles: Role[] = [
       description: 'Name for user role Deputy Registrar General',
       id: 'userRole.deputyRegistrarGeneral'
     },
-    scopes: deputyRegistrarGeneralScopes
+    scopes: defineScopes([
+      { type: 'profile.electronic-signature' },
+      { type: 'performance.read' },
+      { type: 'organisation.read-locations' },
+      { type: 'user.read' },
+      { type: 'user.search' },
+      { type: 'record.search' },
+      { type: 'workqueue', options: { ids: ['assigned-to-you', 'recent', 'pending-feedback-registrar-general', 'pending-registration', 'pending-certification', 'pending-issuance', 'correction-requested', 'potential-duplicate', 'registration-registrar-general'] } },
+      { type: 'record.read' },
+      { type: 'record.reject' },
+      { type: 'record.archive' },
+      { type: 'record.review-duplicates' },
+      { type: 'record.register' },
+      { type: 'record.print-certified-copies' },
+      { type: 'record.print-certified-copies', options: { templates: ['v2.birth-notification'] } },
+      { type: 'record.correct' },
+      { type: 'record.custom-action', options: { event: ['birth', 'death'], customActionTypes: ['REGISTRAR_GENERAL_FEEDBACK', 'APPROVE_DECLARATION', 'REVOKE_REGISTRATION', 'REINSTATE_REVOKE_REGISTRATION', 'ISSUE_VERIFIABLE_CREDENTIAL'] } },
+      { type: 'record.unassign-others' }
+    ])
   },
   {
     id: 'PERFORMANCE_MANAGER',
@@ -336,7 +250,27 @@ export const roles: Role[] = [
       description: 'Name for user role Assistant Registration Officer',
       id: 'userRole.assistantRegistrationOfficer'
     },
-    scopes: assistantRegistrationOfficerScopes
+    scopes: defineScopes([
+      { type: 'organisation.read-locations', options: { accessLevel: 'administrativeArea' } },
+      { type: 'user.read', options: { accessLevel: 'administrativeArea' } },
+      { type: 'user.search', options: { accessLevel: 'administrativeArea' } },
+      { type: 'workqueue', options: { ids: ['assigned-to-you', 'recent', 'requires-completion', 'in-external-validation', 'escalated', 'pending-validation', 'pending-updates', 'pending-approval', 'pending-certification', 'pending-issuance', 'correction-requested'] } },
+      { type: 'record.search', options: { placeOfEvent: 'administrativeArea' } },
+      { type: 'record.create' },
+      { type: 'record.read', options: { placeOfEvent: 'administrativeArea' } },
+      { type: 'record.declare', options: { placeOfEvent: 'administrativeArea' } },
+      { type: 'record.review-duplicates' },
+      { type: 'record.print-certified-copies', options: { registeredIn: 'administrativeArea' } },
+      { type: 'record.print-certified-copies', options: { templates: ['v2.birth-notification'] } },
+      { type: 'record.request-correction', options: { registeredIn: 'administrativeArea' } },
+      { type: 'record.custom-action', options: { event: ['birth', 'death'], customActionTypes: ['VALIDATE_DECLARATION', 'REINSTATE_REVOKE_REGISTRATION', 'ESCALATE'] } },
+      { type: 'record.custom-action', options: { event: ['birth', 'death'], customActionTypes: ['ISSUE_CERTIFIED_COPY'], registeredIn: 'administrativeArea' } },
+      { type: 'record.unassign-others' },
+      {
+        type: 'dashboard.view',
+        options: { ids: ['registrations', 'completeness', 'registry'] }
+      }
+    ])
   },
   {
     id: 'NATIONAL_REGISTRAR',
@@ -356,6 +290,7 @@ export const roles: Role[] = [
       { type: 'record.review-duplicates' },
       { type: 'record.register' },
       { type: 'record.print-certified-copies' },
+      { type: 'record.print-certified-copies', options: { templates: ['v2.birth-notification'] } },
       { type: 'record.correct' },
       { type: 'record.custom-action', options: { event: ['birth'], customActionTypes: ['REGISTRAR_GENERAL_FEEDBACK', 'REVOKE_REGISTRATION', 'REINSTATE_REVOKE_REGISTRATION', 'APPROVE_DECLARATION'] } },
       { type: 'record.custom-action', options: { event: ['death'], customActionTypes: ['APPROVE_DECLARATION'] } },
@@ -369,7 +304,24 @@ export const roles: Role[] = [
       description: 'Name for user role Island Clerk',
       id: 'userRole.islandClerk'
     },
-    scopes: islandClerkScopes
+    scopes: defineScopes([
+      { type: 'organisation.read-locations', options: { accessLevel: 'administrativeArea' } },
+      { type: 'user.read', options: { accessLevel: 'administrativeArea' } },
+      { type: 'performance.read' },
+      { type: 'workqueue', options: { ids: ['assigned-to-you', 'recent', 'pending-validation', 'pending-updates', 'pending-registration', 'pending-certification', 'pending-issuance', 'correction-requested'] } },
+      { type: 'record.search', options: { placeOfEvent: 'administrativeArea' } },
+      { type: 'record.create', options: { placeOfEvent: 'administrativeArea' } },
+      { type: 'record.read', options: { placeOfEvent: 'administrativeArea' } },
+      { type: 'record.declare', options: { placeOfEvent: 'administrativeArea' } },
+      { type: 'record.reject', options: { placeOfEvent: 'administrativeArea' } },
+      { type: 'record.edit', options: { placeOfEvent: 'administrativeArea' } },
+      { type: 'record.archive', options: { declaredIn: 'administrativeArea' } },
+      { type: 'record.print-certified-copies', options: { registeredIn: 'administrativeArea' } },
+      { type: 'record.print-certified-copies', options: { templates: ['v2.birth-notification'] } },
+      { type: 'record.request-correction', options: { registeredIn: 'administrativeArea' } },
+      { type: 'record.custom-action', options: { event: ['birth', 'death'], customActionTypes: ['VALIDATE_DECLARATION', 'REINSTATE_REVOKE_REGISTRATION', 'ESCALATE'], placeOfEvent: 'administrativeArea' } },
+      { type: 'record.custom-action', options: { event: ['birth', 'death'], customActionTypes: ['ISSUE_CERTIFIED_COPY', 'ISSUE_VERIFIABLE_CREDENTIAL'], registeredIn: 'administrativeArea' } }
+    ])
   },
   {
     id: 'COURT_CLERK',
@@ -378,7 +330,24 @@ export const roles: Role[] = [
       description: 'Name for user role Court Clerk',
       id: 'userRole.courtClerk'
     },
-    scopes: courtClerkScopes
+    scopes: defineScopes([
+      { type: 'organisation.read-locations', options: { accessLevel: 'administrativeArea' } },
+      { type: 'user.read', options: { accessLevel: 'administrativeArea' } },
+      { type: 'performance.read' },
+      { type: 'workqueue', options: { ids: ['assigned-to-you', 'recent', 'pending-validation', 'pending-updates', 'pending-registration', 'pending-certification', 'pending-issuance', 'correction-requested'] } },
+      { type: 'record.search', options: { placeOfEvent: 'administrativeArea' } },
+      { type: 'record.create', options: { placeOfEvent: 'administrativeArea' } },
+      { type: 'record.read', options: { placeOfEvent: 'administrativeArea' } },
+      { type: 'record.declare', options: { placeOfEvent: 'administrativeArea' } },
+      { type: 'record.reject', options: { placeOfEvent: 'administrativeArea' } },
+      { type: 'record.edit', options: { placeOfEvent: 'administrativeArea' } },
+      { type: 'record.archive', options: { declaredIn: 'administrativeArea' } },
+      { type: 'record.print-certified-copies', options: { registeredIn: 'administrativeArea' } },
+      { type: 'record.print-certified-copies', options: { templates: ['v2.birth-notification'] } },
+      { type: 'record.request-correction', options: { registeredIn: 'administrativeArea' } },
+      { type: 'record.custom-action', options: { event: ['birth', 'death'], customActionTypes: ['VALIDATE_DECLARATION', 'REINSTATE_REVOKE_REGISTRATION', 'ESCALATE'], placeOfEvent: 'administrativeArea' } },
+      { type: 'record.custom-action', options: { event: ['birth', 'death'], customActionTypes: ['ISSUE_CERTIFIED_COPY', 'ISSUE_VERIFIABLE_CREDENTIAL'], registeredIn: 'administrativeArea' } }
+    ])
   },
   {
     id: 'STATISTICS_OFFICER',
@@ -415,6 +384,7 @@ export const roles: Role[] = [
       { type: 'record.custom-action', options: { event: ['birth'], customActionTypes: ['PROVINCIAL_REGISTER_FEEDBACK', 'REINSTATE_REVOKE_REGISTRATION', 'ESCALATE'], placeOfEvent: 'administrativeArea' } },
       { type: 'record.custom-action', options: { event: ['birth', 'death'], customActionTypes: ['APPROVE_DECLARATION'], declaredIn: 'administrativeArea' } },
       { type: 'record.print-certified-copies', options: { registeredIn: 'administrativeArea' } },
+      { type: 'record.print-certified-copies', options: { templates: ['v2.birth-notification'] } },
       { type: 'record.correct', options: { registeredIn: 'administrativeArea' } },
       { type: 'record.unassign-others', options: { placeOfEvent: 'administrativeArea' } },
       {
@@ -430,7 +400,18 @@ export const roles: Role[] = [
       description: 'Name for user role HEALTH_NOTIFIER',
       id: 'userRole.hospitalClerk'
     },
-    scopes: healthNotifierScopes
+    // National health notifier — based at TUV-PMH (Location/0).
+    // Unscoped so the user can see and notify records from the national hospital.
+    scopes: defineScopes([
+      { type: 'user.read-only-my-audit' },
+      { type: 'record.search' },
+      { type: 'workqueue', options: { ids: ['assigned-to-you', 'recent', 'pending-updates'] } },
+      { type: 'record.create' },
+      { type: 'record.read' },
+      { type: 'record.notify' },
+      { type: 'record.edit', options: { declaredBy: 'user' } },
+      { type: 'record.print-certified-copies', options: { templates: ['v2.tennis-club-membership-certificate-alpha', 'v2.birth-notification'] } }
+    ])
   },
   {
     id: 'ISLAND_CLINIC_NOTIFIER',
@@ -439,7 +420,18 @@ export const roles: Role[] = [
       description: 'Name for user role Island Clinic Notifier',
       id: 'userRole.islandClinicNotifier'
     },
-    scopes: islandClinicNotifierScopes
+    // Island clinic notifier — based at island health facilities (TUV-00X-002).
+    // Scoped to administrativeArea so each notifier only sees their own island's records.
+    scopes: defineScopes([
+      { type: 'user.read-only-my-audit' },
+      { type: 'record.search', options: { placeOfEvent: 'administrativeArea' } },
+      { type: 'workqueue', options: { ids: ['assigned-to-you', 'recent', 'pending-updates'] } },
+      { type: 'record.create', options: { placeOfEvent: 'administrativeArea' } },
+      { type: 'record.read', options: { placeOfEvent: 'administrativeArea' } },
+      { type: 'record.notify', options: { placeOfEvent: 'administrativeArea' } },
+      { type: 'record.edit', options: { declaredBy: 'user' } },
+      { type: 'record.print-certified-copies', options: { templates: ['v2.tennis-club-membership-certificate-alpha', 'v2.birth-notification'] } }
+    ])
   },
   {
     id: 'COMMUNITY_LEADER',
