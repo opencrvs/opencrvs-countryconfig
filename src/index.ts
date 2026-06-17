@@ -10,6 +10,7 @@
  */
 require('app-module-path').addPath(require('path').join(__dirname))
 require('dotenv').config()
+import './monitoring'
 
 import StreamArray from 'stream-json/streamers/StreamArray'
 import path from 'path'
