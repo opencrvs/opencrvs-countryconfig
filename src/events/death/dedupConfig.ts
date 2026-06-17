@@ -19,7 +19,6 @@ const deceasedIdNotProvided = field('deceased.idType').strictMatches({
 const deceasedIdMatchesIfGiven = or(
   differentDeceasedIdTypes,
   deceasedIdNotProvided,
-  field('deceased.nid').strictMatches(),
   field('deceased.passport').strictMatches(),
   field('deceased.brn').strictMatches()
 )
