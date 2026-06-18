@@ -87,7 +87,13 @@ const deathInformantTypeOptions = [
       defaultMessage: 'Father',
       description: 'Label for option father',
       id: 'form.field.label.informantRelation.father'
-    }
+    },
+    conditionals: [
+      {
+        type: ConditionalType.SHOW,
+        conditional: not(field('father.detailsNotAvailable').isEqualTo(true))
+      }
+    ]
   },
   {
     value: InformantType.MOTHER,
@@ -95,7 +101,13 @@ const deathInformantTypeOptions = [
       defaultMessage: 'Mother',
       description: 'Label for option mother',
       id: 'form.field.label.informantRelation.mother'
-    }
+    },
+    conditionals: [
+      {
+        type: ConditionalType.SHOW,
+        conditional: not(field('mother.detailsNotAvailable').isEqualTo(true))
+      }
+    ]
   },
   {
     value: InformantType.SPOUSE,
@@ -103,7 +115,16 @@ const deathInformantTypeOptions = [
       defaultMessage: 'Spouse',
       description: 'Label for option spouse',
       id: 'form.field.label.informantRelation.spouse'
-    }
+    },
+    conditionals: [
+      {
+        type: ConditionalType.SHOW,
+        conditional: and(
+          field('deceased.maritalStatus').isEqualTo('MARRIED'),
+          not(field('spouse.detailsNotAvailable').isEqualTo(true))
+        )
+      }
+    ]
   },
   {
     value: InformantType.SON,
@@ -133,8 +154,14 @@ const deathInformantTypeOptions = [
 
 const PHONE_NUMBER_REGEX = '^0(7|9)[0-9]{8}$'
 
-const informantOtherThanSpouse = and(
-  not(field('informant.relation').inArray([InformantType.SPOUSE])),
+const isNotSpecialInformant = and(
+  not(
+    field('informant.relation').inArray([
+      InformantType.SPOUSE,
+      InformantType.MOTHER,
+      InformantType.FATHER
+    ])
+  ),
   not(field('informant.relation').isFalsy())
 )
 
@@ -206,7 +233,7 @@ export const informant = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: and(informantOtherThanSpouse, hasNonHealthNotifierRole)
+          conditional: and(isNotSpecialInformant, hasNonHealthNotifierRole)
         }
       ],
       defaultValue: 'TUV',
@@ -226,7 +253,7 @@ export const informant = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: and(informantOtherThanSpouse, hasNonHealthNotifierRole)
+          conditional: and(isNotSpecialInformant, hasNonHealthNotifierRole)
         }
       ],
       parent: field('informant.relation')
@@ -248,7 +275,7 @@ export const informant = defineFormPage({
             field('informant.idType').isEqualTo(
               InformantIdType.BIRTH_CERTIFICATE
             ),
-            informantOtherThanSpouse,
+            isNotSpecialInformant,
             hasNonHealthNotifierRole
           )
         }
@@ -270,7 +297,7 @@ export const informant = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: and(
             field('informant.idType').isEqualTo(InformantIdType.PASSPORT),
-            informantOtherThanSpouse,
+            isNotSpecialInformant,
             hasNonHealthNotifierRole
           )
         }
@@ -292,7 +319,7 @@ export const informant = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: and(
             field('informant.idType').isEqualTo(InformantIdType.OTHER),
-            informantOtherThanSpouse,
+            isNotSpecialInformant,
             hasNonHealthNotifierRole
           )
         }
@@ -306,7 +333,7 @@ export const informant = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: and(informantOtherThanSpouse, hasNonHealthNotifierRole)
+          conditional: and(isNotSpecialInformant, hasNonHealthNotifierRole)
         }
       ],
       parent: field('informant.relation')
@@ -325,7 +352,7 @@ export const informant = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: informantOtherThanSpouse
+          conditional: isNotSpecialInformant
         }
       ],
       parent: field('informant.relation'),
@@ -355,7 +382,7 @@ export const informant = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: and(
             not(field('informant.dobUnknown').isEqualTo(true)),
-            informantOtherThanSpouse
+            isNotSpecialInformant
           )
         }
       ],
@@ -372,7 +399,7 @@ export const informant = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: informantOtherThanSpouse
+          conditional: isNotSpecialInformant
         },
         {
           type: ConditionalType.DISPLAY_ON_REVIEW,
@@ -403,7 +430,7 @@ export const informant = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: and(
             field('informant.dobUnknown').isEqualTo(true),
-            informantOtherThanSpouse
+            isNotSpecialInformant
           )
         }
       ],
@@ -427,7 +454,7 @@ export const informant = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            informantOtherThanSpouse,
+            isNotSpecialInformant,
             field('informant.addressSameAs').isEqualTo(YesNoTypes.NO)
           )
         }
@@ -453,7 +480,7 @@ export const informant = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            informantOtherThanSpouse,
+            isNotSpecialInformant,
             field('informant.addressSameAs').isEqualTo(YesNoTypes.NO)
           )
         }
@@ -474,7 +501,7 @@ export const informant = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: informantOtherThanSpouse
+          conditional: isNotSpecialInformant
         },
         {
           type: ConditionalType.DISPLAY_ON_REVIEW,
@@ -498,7 +525,7 @@ export const informant = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            informantOtherThanSpouse,
+            isNotSpecialInformant,
             field('informant.addressSameAs').isEqualTo(YesNoTypes.NO)
           )
         }
@@ -534,7 +561,7 @@ export const informant = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: informantOtherThanSpouse
+          conditional: isNotSpecialInformant
         }
       ],
       parent: field('informant.relation')

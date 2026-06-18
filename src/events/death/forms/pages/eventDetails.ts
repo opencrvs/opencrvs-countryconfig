@@ -271,11 +271,8 @@ export const eventDetails = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: or(
-            field('eventDetails.placeOfDeath').isEqualTo(PlaceOfDeath.OTHER),
-            field('eventDetails.placeOfDeath').isEqualTo(
-              PlaceOfDeath.DECEASED_USUAL_RESIDENCE
-            )
+          conditional: field('eventDetails.placeOfDeath').isEqualTo(
+            PlaceOfDeath.OTHER
           )
         }
       ],
