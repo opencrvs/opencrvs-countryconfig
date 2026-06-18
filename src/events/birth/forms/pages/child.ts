@@ -701,7 +701,7 @@ export const child = defineFormPage({
       type: FieldType.TEXT,
       required: false,
       label: {
-        defaultMessage: 'Other (please specify)',
+        defaultMessage: 'Other (please specify attendant)',
         description: 'Label for text field when attendant at birth is Other',
         id: 'event.birth.action.declare.form.section.child.field.attendantOther.label'
       },
@@ -722,7 +722,17 @@ export const child = defineFormPage({
         defaultMessage: 'Attendant full name',
         description: 'Label for attendant full name field',
         id: 'event.birth.action.declare.form.section.child.field.attendantFullName.label'
-      }
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(
+            not(field('child.attendantAtBirth').isEqualTo(AttendantAtBirth.OTHER)), 
+            not(field('child.attendantAtBirth').isEqualTo(AttendantAtBirth.NONE)),
+            not(field('child.attendantAtBirth').isFalsy())
+          )
+        }
+      ]
     },
     {
       id: 'child.divider4',
@@ -731,7 +741,9 @@ export const child = defineFormPage({
         conditionals: [
           {
             type: ConditionalType.SHOW,
-            conditional: hasNonHealthNotifierRole
+            conditional: and(
+              hasNonHealthNotifierRole
+            )
           }
         ]
     },
