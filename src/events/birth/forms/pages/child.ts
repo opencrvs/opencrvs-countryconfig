@@ -321,7 +321,7 @@ export const child = defineFormPage({
       validation: [
         {
           message: {
-            defaultMessage: 'Must be a valid Birthdate',
+            defaultMessage: 'Cannot be a future date',
             description: 'This is the error message for invalid date',
             id: 'event.birth.action.declare.form.section.child.field.dob.error'
           },
@@ -407,7 +407,7 @@ export const child = defineFormPage({
       required: true,
       secured: true,
       label: {
-        defaultMessage: 'Place of delivery',
+        defaultMessage: 'Place of birth',
         description: 'This is the label for the field',
         id: 'event.birth.action.declare.form.section.child.field.placeOfBirth.label'
       },

@@ -117,7 +117,7 @@ export const informant = defineFormPage({
       analytics: true,
       required: true,
       label: {
-        defaultMessage: 'Relationship to child',
+        defaultMessage: 'Informant Type',
         description: 'This is the label for the field',
         id: 'event.birth.action.declare.form.section.informant.field.relation.label'
       },
@@ -404,7 +404,7 @@ export const informant = defineFormPage({
       id: 'informant.addressHelper',
       type: FieldType.HEADING,
       label: {
-        defaultMessage: 'Usual place of residence',
+        defaultMessage: 'Usual residence',
         description: 'This is the label for the field',
         id: 'event.birth.action.declare.form.section.person.field.addressHelper.label'
       },
@@ -432,7 +432,7 @@ export const informant = defineFormPage({
       required: true,
       hideLabel: true,
       label: {
-        defaultMessage: 'Usual place of residence',
+        defaultMessage: 'Usual residence',
         description: 'This is the label for the field',
         id: 'event.birth.action.declare.form.section.person.field.address.label'
       },
@@ -532,7 +532,7 @@ export const informant = defineFormPage({
     {
       id: 'informant.email',
       type: FieldType.EMAIL,
-      required: true,
+      required: false,
       secured: true,
       label: {
         defaultMessage: 'Email address',

@@ -821,25 +821,25 @@ event.birth.action.declare.form.review.comment.label,Label for the comment field
 event.birth.action.declare.form.review.signature.label,Label for the signature field in the review section,Signature of informant,Signature de l'informateur
 event.birth.action.declare.form.review.title,Title of the form to show in review page,"{child.name.firstname, select, __EMPTY__ {{child.name.surname, select, __EMPTY__ {Birth declaration} other {Birth declaration for {child.name.surname}}}} other {{child.name.surname, select, __EMPTY__ {Birth declaration for {child.name.firstname}} other {Birth declaration for {child.name.firstname} {child.name.surname}}}}}","{child.name.firstname, select, __EMPTY__ {{child.name.surname, select, __EMPTY__ {Déclaration de naissance} other {Déclaration de naissance pour {child.name.surname}}}} other {{child.name.surname, select, __EMPTY__ {Déclaration de naissance pour {child.name.firstname}} other {Déclaration de naissance pour {child.name.firstname} {child.name.surname}}}}}"
 event.birth.action.declare.form.section.child.field.attendantAtBirth.label,This is the label for the field,Attendant at birth,Accoucheur(se)
-event.birth.action.declare.form.section.child.field.birthLocation.label,This is the label for the field,Location of birth,Lieu de naissance
+event.birth.action.declare.form.section.child.field.birthLocation.label,This is the label for the field,Health Institution,Lieu de naissance
 event.birth.action.declare.form.section.child.field.birthType.label,This is the label for the field,Type of birth,Type d'accouchement
-event.birth.action.declare.form.section.child.field.dob.error,This is the error message for invalid date,Must be a valid birth date,Doit être une date de naissance valide
+event.birth.action.declare.form.section.child.field.dob.error,This is the error message for invalid date,Cannot be a future date,Doit être une date de naissance valide
 event.birth.action.declare.form.section.child.field.dob.label,This is the label for the field,Date of birth,Date de naissance
 event.birth.action.declare.form.section.child.field.gender.label,This is the label for the field,Sex,Sexe
 event.birth.action.declare.form.section.child.field.name.label,This is the label for the field,Child's name,Nom de l'enfant
-event.birth.action.declare.form.section.child.field.placeOfBirth.label,This is the label for the field,Place of delivery,Lieu de l'accouchement
+event.birth.action.declare.form.section.child.field.placeOfBirth.label,This is the label for the field,Place of birth,Lieu de l'accouchement
 event.birth.action.declare.form.section.child.field.weightAtBirth.label,This is the label for the field,Weight at birth,Poids à la naissance
 event.birth.action.declare.form.section.child.field.weightAtBirth.postfix,This is the postfix for the weight field,kg,kg
-event.birth.action.declare.form.section.documents.field.proofOfBirth.label,This is the label for the field,Proof of birth,Preuve de naissance
-event.birth.action.declare.form.section.documents.field.proofOfFather.label,This is the label for the field,Proof of father's ID,Identité du père
-event.birth.action.declare.form.section.documents.field.proofOfMother.label,This is the label for the field,Proof of mother's ID,Identité de la mère
+event.birth.action.declare.form.section.documents.field.proofOfBirth.label,This is the label for the field,Notification of birth,Notification de naissance
+event.birth.action.declare.form.section.documents.field.proofOfFather.label,This is the label for the field,Proof of father's identity,Preuve d'identité du père
+event.birth.action.declare.form.section.documents.field.proofOfMother.label,This is the label for the field,Proof of mother's identity,Preuve d'identité de la mère
 event.birth.action.declare.form.section.documents.field.proofOther.label,This is the label for the field,Other,Autre
 event.birth.action.declare.form.section.father.field.address.addressSameAs.label,This is the label for the field,Same as mother's usual place of residence?,Identique au lieu de résidence habituel de la mère?
 event.birth.action.declare.form.section.father.field.age.label,This is the label for the field,Age of father,Âge du père
 event.birth.action.declare.form.section.father.field.name.label,This is the label for the field,Father's name,Nom du père
 event.birth.action.declare.form.section.father.field.reason.label,This is the label for the field,Reason,Raison
 event.birth.action.declare.form.section.father.field.brn.label,Label for the birth registration number text field,Birth registration number,Numéro d'enregistrement de naissance
-event.birth.action.declare.form.section.father.field.brnSearch.helperText,Helper text for the birth registration number search field,"Search for an existing birth record. If a match is found, the details below will auto-fill. If no record is found, continue by entering the details manually.","Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement."
+event.birth.action.declare.form.section.father.field.brnSearch.helperText,Helper text for the birth registration number search field,"Search for a birth record. If found, details will auto-fill. Otherwise, continue with manual entry.","Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement."
 event.birth.action.declare.form.section.father.field.brnSearch.indicators.clearModal.description,Description for the clear search confirmation modal,This will remove the auto-filled details for the father.,Cela supprimera les détails remplis automatiquement pour le père.
 event.birth.action.declare.form.section.father.field.brnSearch.indicators.clearModal.title,Title for the clear search confirmation modal,Clear birth record?,Effacer l'acte de naissance ?
 event.birth.action.declare.form.section.father.field.brnSearch.indicators.ok,Indicator shown when a birth record is found,Record found,Enregistrement trouvé
@@ -853,10 +853,10 @@ event.birth.action.declare.form.section.informant.field.other.relation.placehold
 event.birth.action.declare.form.section.informant.field.other.relation.helperText,This is hint text for field,Please describe relationship to the child
 event.birth.action.declare.form.section.informant.field.phoneNo.error,The error message that appears on phone numbers where the first two characters must be a 01 and length must be 11,Must be a valid 10 digit number that starts with 0(7|9),Doit être un nombre valide de  {num} chiffres qui commence par  {start}
 event.birth.action.declare.form.section.informant.field.phoneNo.label,This is the label for the field,Phone number,Numéro de téléphone
-event.birth.action.declare.form.section.informant.field.relation.label,This is the label for the field,Relationship to child,Relation avec l'enfant
+event.birth.action.declare.form.section.informant.field.relation.label,This is the label for the field,Informant Type,Relation avec l'enfant
 event.birth.action.declare.form.section.mother.field.age.label,This is the label for the field,Age of mother,Âge de la mère
 event.birth.action.declare.form.section.mother.field.brn.label,Label for the birth registration number text field,Birth registration number,Numéro d'enregistrement de naissance
-event.birth.action.declare.form.section.mother.field.brnSearch.helperText,Helper text for the birth registration number search field,Search for an existing birth record. If a match is found, the details below will auto-fill. If no record is found, continue by entering the details manually.,Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement.
+event.birth.action.declare.form.section.mother.field.brnSearch.helperText,Helper text for the birth registration number search field,"Search for a birth record. If found, details will auto-fill. Otherwise, continue with manual entry.",Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement.
 event.birth.action.declare.form.section.mother.field.brnSearch.indicators.clearModal.description,Description for the clear search confirmation modal,This will remove the auto-filled details for the mother.,Cela supprimera les détails remplis automatiquement pour la mère.
 event.birth.action.declare.form.section.mother.field.brnSearch.indicators.clearModal.title,Title for the clear search confirmation modal,Clear birth record?,Effacer l'acte de naissance ?
 event.birth.action.declare.form.section.mother.field.brnSearch.indicators.ok,Indicator shown when a birth record is found,Record found,Enregistrement trouvé
@@ -865,7 +865,7 @@ event.birth.action.declare.form.section.mother.field.brnSearch.validation,Valida
 event.birth.action.declare.form.section.mother.field.name.label,This is the label for the field,Mother's name,Nom de la mère
 event.birth.action.declare.form.section.mother.field.previousBirths.label,This is the label for the field,No. of previous births,Nombre de naissances antérieures
 event.birth.action.declare.form.section.mother.field.reason.label,This is the label for the field,Reason,Raison
-event.birth.action.declare.form.section.person.field.address.label,This is the label for the field,Usual place of residence,Lieu de résidence habituel
+event.birth.action.declare.form.section.person.field.address.label,This is the label for the field,Usual residence,Lieu de résidence habituel
 event.birth.action.declare.form.section.person.field.addressHelper.label,This is the label for the field,Usual residence,Adresse du domicile
 event.birth.action.declare.form.section.person.field.age.checkbox.label,This is the label for the field,Exact date of birth unknown,Date de naissance exacte inconnue
 event.birth.action.declare.form.section.person.field.age.postfix,This is the postfix for age field,years,years
@@ -988,7 +988,7 @@ event.death.action.declare.form.section.deceased.field.dob.error,This is the err
 event.death.action.declare.form.section.deceased.field.dob.error.laterThanDeath,This is the error message for date of birth later than date of death,Date of birth must be before the date of death,La date de naissance doit être antérieure à la date de décès
 event.death.action.declare.form.section.deceased.field.dob.label,This is the label for the field,Date of birth,Date de naissance
 event.death.action.declare.form.section.deceased.field.gender.label,This is the label for the field,Sex,Sexe
-event.death.action.declare.form.section.deceased.field.brn.helperText,Helper text for birth registration number field,Search for an existing birth record. If a match is found, the details below will auto-fill. If no record is found, continue by entering the details manually.,Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement.
+event.death.action.declare.form.section.deceased.field.brn.helperText,Helper text for birth registration number field,"Search for a birth record. If found, details will auto-fill. Otherwise, continue with manual entry.",Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement.
 event.death.action.declare.form.section.deceased.field.maritalStatus.label,This is the label for the field,Marital Status,État civil
 event.death.action.declare.form.section.deceased.field.name.label,This is the label for the field,Deceased's name,Nom du défunt
 event.death.action.declare.form.section.deceased.field.numberOfDependants.label,This is the label for the field,No. of dependants,Nombre de personnes à charge
@@ -1890,7 +1890,7 @@ event.death.action.declare.form.section.father.field.dobUnknown.label,Label for 
 event.death.action.declare.form.section.father.field.age.label,Label for father age,Age,Âge
 event.death.action.declare.form.section.father.field.placeOfBirth.label,Label for father place of birth,Place of birth,Lieu de naissance
 event.death.action.declare.form.section.father.field.occupation.label,Label for father occupation,Occupation,Profession
-event.death.action.declare.form.section.father.field.brn.helperText,Helper text for birth registration number field,Search for an existing birth record. If a match is found, the details below will auto-fill. If no record is found, continue by entering the details manually.,Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement.
+event.death.action.declare.form.section.father.field.brn.helperText,Helper text for birth registration number field,"Search for a birth record. If found, details will auto-fill. Otherwise, continue with manual entry.",Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement.
 form.death.mother.title,Form section title for mother's details,Mother's details,Détails de la mère
 event.death.action.declare.form.section.mother.field.detailsNotAvailable.label,Label for mother details not available,Mother's details are not available,Les informations sur la mère ne sont pas disponibles
 event.death.action.declare.form.section.mother.field.reason.label,Label for reason mother details not available,Reason,Raison
@@ -1903,7 +1903,7 @@ event.death.action.declare.form.section.mother.field.idType.option.birthCertific
 event.death.action.declare.form.section.mother.field.idType.option.passport,Option for mother ID type passport,Passport,Passeport
 event.death.action.declare.form.section.mother.field.idType.option.other,Option for mother ID type other,Other,Autre
 event.death.action.declare.form.section.mother.field.brn.label,Label for mother birth registration number,Birth registration number,Numéro d'enregistrement de naissance
-event.death.action.declare.form.section.mother.field.brn.helperText,Helper text for birth registration number field,Search for an existing birth record. If a match is found, the details below will auto-fill. If no record is found, continue by entering the details manually.,Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement.
+event.death.action.declare.form.section.mother.field.brn.helperText,Helper text for birth registration number field,"Search for a birth record. If found, details will auto-fill. Otherwise, continue with manual entry.",Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement.
 event.death.action.declare.form.section.mother.field.passport.label,Label for mother passport number,Passport number,Numéro de passeport
 event.death.action.declare.form.section.mother.field.otherId.label,Label for mother other ID,Other ID number,Autre numéro d'identifiant
 event.death.action.declare.form.section.mother.field.name.label,Label for mother full name,Mother's full name,Nom complet de la mère
@@ -1913,13 +1913,13 @@ event.death.action.declare.form.section.mother.field.dobUnknown.label,Label for 
 event.death.action.declare.form.section.mother.field.age.label,Label for mother age,Age,Âge
 event.death.action.declare.form.section.mother.field.placeOfBirth.label,Label for mother place of birth,Place of birth,Lieu de naissance
 event.death.action.declare.form.section.mother.field.occupation.label,Label for mother occupation,Occupation,Profession
-event.death.action.declare.form.section.deceased.field.brn.helperText,Helper text for birth registration number field,Search for an existing birth record. If a match is found, the details below will auto-fill. If no record is found, continue by entering the details manually.,Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement.
+event.death.action.declare.form.section.deceased.field.brn.helperText,Helper text for birth registration number field,"Search for a birth record. If found, details will auto-fill. Otherwise, continue with manual entry.",Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement.
 event.death.action.declare.form.section.spouse.field.idType.option.birthCertificate,Option for spouse ID type birth certificate,Birth certificate,Certificat de naissance
 event.death.action.declare.form.section.spouse.field.idType.option.passport,Option for spouse ID type passport,Passport,Passeport
 event.death.action.declare.form.section.spouse.field.idType.option.other,Option for spouse ID type other,Other,Autre
 event.death.action.declare.form.section.spouse.field.brn.label,Label for spouse birth registration number,Birth registration number,Numéro d'enregistrement de naissance
 event.death.action.declare.form.section.spouse.field.otherId.label,Label for spouse other ID number,Other ID number,Autre numéro d'identifiant
-event.death.action.declare.form.section.spouse.field.brn.helperText,Helper text for birth registration number field,Search for an existing birth record. If a match is found, the details below will auto-fill. If no record is found, continue by entering the details manually.,Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement.
+event.death.action.declare.form.section.spouse.field.brn.helperText,Helper text for birth registration number field,"Search for a birth record. If found, details will auto-fill. Otherwise, continue with manual entry.",Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement.
 form.death.livingChildren.title,Form section title for living children,Living children,Enfants vivants
 event.death.action.declare.form.section.livingChildren.field.numberOfChildren.label,Label for number of living children,Number of living children,Nombre d'enfants vivants
 event.death.action.declare.form.section.livingChildren.field.numberOfChildren.option.1,Option for 1 child,1,1
@@ -2603,17 +2603,17 @@ event.birth.action.declare.form.section.mother.field.childrenHeader.label,Header
 event.birth.action.declare.form.section.mother.field.livingChildren.label,Label for number of living children field,Living,Nombre d'enfants vivants (y compris cette naissance)
 event.birth.action.declare.form.section.mother.field.deceasedChildren.label,Label for number of deceased children field,Deceased,Nombre d'enfants décédés
 event.birth.action.declare.form.section.father.field.placeOfBirth.label,Label for father place of birth field,Place of birth,Lieu de naissance
-event.birth.action.declare.form.section.documents.field.proofOfInformant.label,Label for proof of informant document field,Proof of informant's ID,Preuve d'identité de l'informateur
-event.birth.action.declare.form.section.documents.field.absenceOfMother.label,Label for absence of mother evidence field,Evidence of mother's absence or inability to appear,Preuve de l'absence ou de l'incapacité de la mère à se présenter
-event.birth.action.declare.form.section.documents.field.absenceOfFather.label,Label for absence of father evidence field,Evidence of father's absence or inability to appear,Preuve de l'absence ou de l'incapacité du père à se présenter
-event.birth.action.declare.form.section.documents.field.proofOfMarriage.label,Label for proof of marriage document field,Proof of marriage,Preuve du mariage
-event.birth.action.declare.form.section.documents.field.consentToAsertainFather.label,Label for consent to ascertain father document field,Consent to ascertain father,Consentement pour établir la paternité
-event.birth.action.declare.form.section.documents.field.delayedRegistrationEvidence.label,Label for delayed registration evidence field,Evidence for delayed registration (6-12 months),Preuve pour enregistrement tardif (6 à 12 mois)
-event.birth.action.declare.form.section.documents.field.lateRegistration.label,Label for late registration document field,Documentation for late registration (over 12 months),Documentation pour enregistrement tardif (plus de 12 mois)
-event.birth.action.declare.form.section.documents.field.registrarAuthorisation.label,Label for registrar authorisation document field,Registrar's authorisation,Autorisation du registraire
+event.birth.action.declare.form.section.documents.field.proofOfInformant.label,Label for proof of informant document field,Proof of informant's identity,Preuve d'identité de l'informateur
+event.birth.action.declare.form.section.documents.field.absenceOfMother.label,Label for absence of mother evidence field,Supporting evidence of mother's absence,Pièce justificative de l'absence de la mère
+event.birth.action.declare.form.section.documents.field.absenceOfFather.label,Label for absence of father evidence field,Supporting evidence of father's absence,Pièce justificative de l'absence du père
+event.birth.action.declare.form.section.documents.field.proofOfMarriage.label,Label for proof of marriage document field,Proof of parent's marriage,Preuve du mariage des parents
+event.birth.action.declare.form.section.documents.field.consentToAsertainFather.label,Label for consent to ascertain father document field,Consent to ascertain father of child,Consentement pour établir la paternité de l'enfant
+event.birth.action.declare.form.section.documents.field.delayedRegistrationEvidence.label,Label for delayed registration evidence field,Supporting evidence for delayed registration,Pièce justificative pour enregistrement tardif
+event.birth.action.declare.form.section.documents.field.lateRegistration.label,Label for late registration document field,Late registration (after 12 months),Enregistrement tardif (après 12 mois)
+event.birth.action.declare.form.section.documents.field.registrarAuthorisation.label,Label for registrar authorisation document field,Registrar-general authorisation,Autorisation du greffier général
 event.birth.action.declare.form.section.documents.field.proofOfNameChange.label,Label for proof of name change document field,Proof of name change,Preuve de la modification du nom
-form.field.label.docTypeBirthNotification,Label for birth notification document type,Birth notification,Notification de naissance
-form.field.label.docTypeMedicalCertificate,Label for medical certificate document type,Medical certificate of birth,Certificat médical de naissance
+form.field.label.docTypeNotificationOfBirth,Label for birth notification document type,Birth notification,Notification de naissance
+form.field.label.docTypeMedicalCertificate,Label for medical certificate document type,Medical certificate,Certificat médical
 form.field.label.docTypeBirthCertificate,Label for birth certificate document type,Birth certificate,Certificat de naissance
 form.field.label.docTypePassportDoc,Label for passport document type,Passport,Passeport
 form.field.label.docTypeAffidavitAbsence,Label for affidavit of absence document type,Affidavit of absence,Déclaration d'absence
@@ -2627,6 +2627,14 @@ form.field.label.docTypeDeedPoll,Label for deed poll document type,Deed poll,Act
 form.field.label.docTypeNativeAdoptionOrder,Label for native adoption order document type,Native adoption order,Ordonnance d'adoption coutumière
 form.field.label.docTypeJusticeOfPeaceStatement,Label for justice of peace statement document type,Statement from Justice of the Peace,Déclaration du juge de paix
 form.field.label.docTypeRegistrarAuthorisationLetter,Label for registrar authorisation letter document type,Registrar's authorisation letter,Lettre d'autorisation du registraire
+form.field.label.docTypeLetterOfConsent,Label for letter of consent document type,Letter of consent,Lettre de consentement
+form.field.label.docTypeMedicalCertificateLetter,Label for medical certificate or letter document type,Medical certificate / letter,Certificat médical / lettre
+form.field.label.docTypeNoticeOfConsentFather,Label for notice of consent from father document type,Notice of consent (father),Avis de consentement (père)
+form.field.label.docTypeNoticeOfConsentMother,Label for notice of consent from mother document type,Notice of consent (mother),Avis de consentement (mère)
+form.field.label.docTypeAffidavit,Label for affidavit document type,Affidavit,Déclaration sous serment
+form.field.label.docTypeLateRegistrationForm,Label for late registration form document type,Late registration form,Formulaire d'enregistrement tardif
+form.field.label.docTypeCourtOrder,Label for court order document type,Court order,Ordonnance du tribunal
+form.field.label.docTypeNativeAdoptionForm,Label for native adoption form document type,Native adoption form,Formulaire d'adoption coutumière
 views.qrReader.tutorial.distance,Distance tutorial,Hold the device steadily 6-12 inches away from the QR code.,Tenez l'appareil régulièrement à 6 à 12 pouces du code QR.
 views.qrReader.tutorial.lightBalance,Light balance tutorial,Ensure the QR code is well-lit and not damaged or blurry.,Assurez-vous que le code QR est bien éclairé et non endommagé ou flou.
 workqueue.late-registration-approval.column.approval-requested,This is the label for the pending approval workqueue column,Approval requested,Approbation demandée

@@ -87,7 +87,7 @@ export const father = defineFormPage({
     {
       id: 'father.reason',
       type: FieldType.TEXTAREA,
-      required: true,
+      required: false,
       label: {
         defaultMessage: 'Reason',
         description: 'This is the label for the field',
@@ -155,7 +155,7 @@ export const father = defineFormPage({
       },
       helperText: {
         defaultMessage:
-          'Search for an existing birth record. If a match is found, the details below will auto-fill. If no record is found, continue by entering the details manually.',
+          'Search for a birth record. If found, details will auto-fill. Otherwise, continue with manual entry. manually.',
         description: 'Helper text for the birth registration number search field',
         id: 'event.birth.action.declare.form.section.father.field.brnSearch.helperText'
       },
@@ -461,7 +461,7 @@ export const father = defineFormPage({
       id: 'father.addressHelper',
       type: FieldType.HEADING,
       label: {
-        defaultMessage: 'Usual place of residence',
+        defaultMessage: 'Usual residence',
         description: 'This is the label for the field',
         id: 'event.birth.action.declare.form.section.person.field.addressHelper.label'
       },
@@ -509,7 +509,7 @@ export const father = defineFormPage({
       hideLabel: true,
       secured: true,
       label: {
-        defaultMessage: 'Usual place of residence',
+        defaultMessage: 'Usual residence',
         description: 'This is the label for the field',
         id: 'event.birth.action.declare.form.section.person.field.address.label'
       },
