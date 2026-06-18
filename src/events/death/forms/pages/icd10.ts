@@ -21,7 +21,7 @@ export const icd10 = defineFormPage({
   id: 'icd10',
   type: PageTypes.enum.FORM,
   title: {
-    defaultMessage: 'ICD-10 cause of death coding',
+    defaultMessage: 'ICD-10 mortality coding',
     description: 'Form section title for ICD-10 coding',
     id: 'form.death.icd10.title'
   },

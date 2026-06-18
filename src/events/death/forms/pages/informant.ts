@@ -310,7 +310,7 @@ export const informant = defineFormPage({
       type: FieldType.TEXT,
       required: false,
       label: {
-        defaultMessage: 'Other ID number',
+        defaultMessage: 'ID number',
         description: 'This is the label for the field',
         id: 'event.death.action.declare.form.section.informant.field.otherId.label'
       },
@@ -413,14 +413,14 @@ export const informant = defineFormPage({
       type: FieldType.AGE,
       required: false,
       label: {
-        defaultMessage: 'Age of informant (at the time of event)',
+        defaultMessage: 'Age of informant',
         description: 'This is the label for the field',
         id: 'event.death.action.declare.form.section.informant.field.age.label'
       },
       configuration: {
         asOfDate: field('eventDetails.date'),
         postfix: {
-          defaultMessage: 'years',
+          defaultMessage: ' years',
           description: 'This is the postfix for age field',
           id: 'event.death.action.declare.form.section.informant.field.age.postfix'
         }

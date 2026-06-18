@@ -142,20 +142,11 @@ export const documents = defineFormPage({
   id: 'documents',
   type: PageTypes.enum.FORM,
   title: {
-    defaultMessage: 'Upload supporting documents',
+    defaultMessage: 'Supporting documents',
     description: 'Form section title for documents',
     id: 'form.section.documents.title'
   },
   fields: [
-    {
-      id: 'documents.helper',
-      type: FieldType.PARAGRAPH,
-      label: {
-        defaultMessage: 'The following documents are required',
-        description: 'The following documents are required',
-        id: 'form.field.label.proofOfBirth.fileName'
-      }
-    },
     // ---- Proof of death ----
     {
       id: 'documents.proofOfDeath',
@@ -163,7 +154,7 @@ export const documents = defineFormPage({
       uncorrectable: true,
       required: false,
       label: {
-        defaultMessage: 'Proof of death of deceased',
+        defaultMessage: 'Proof of death',
         description: 'This is the label for the field',
         id: 'event.death.action.declare.form.section.documents.field.proofOfDeath.label'
       },

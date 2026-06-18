@@ -213,13 +213,13 @@ export const mother = defineFormPage({
       type: FieldType.SEARCH,
       required: false,
       label: {
-        defaultMessage: 'Birth registration number',
+        defaultMessage: 'Birth registration number lookup',
         description: 'This is the label for the field',
         id: 'event.death.action.declare.form.section.mother.field.brn.label'
       },
       helperText: {
         defaultMessage:
-          'Search for an existing birth record. If a match is found, the details below will auto-fill. If no record is found, continue by entering the details manually.',
+          'Search for a birth record. If found, details will auto-fill. Otherwise, continue with manual entry',
         description: 'Helper text for birth registration number field',
         id: 'event.death.action.declare.form.section.mother.field.brn.helperText'
       },
@@ -321,7 +321,7 @@ export const mother = defineFormPage({
       type: FieldType.TEXT,
       required: false,
       label: {
-        defaultMessage: 'Other ID number',
+        defaultMessage: 'ID number',
         description: 'This is the label for the field',
         id: 'event.death.action.declare.form.section.mother.field.otherId.label'
       },
@@ -435,10 +435,10 @@ export const mother = defineFormPage({
     // ---- Age (shown if DOB unknown) ----
     {
       id: 'mother.age',
-      type: FieldType.NUMBER,
+      type: FieldType.AGE,
       required: false,
       label: {
-        defaultMessage: 'Age',
+        defaultMessage: 'Age of mother',
         description: 'This is the label for the field',
         id: 'event.death.action.declare.form.section.mother.field.age.label'
       },
@@ -456,7 +456,15 @@ export const mother = defineFormPage({
             field('mother.dobUnknown').isEqualTo(true)
           )
         }
-      ]
+      ],
+      configuration: {
+        asOfDate: field('eventDetails.date'),
+        postfix: {
+          defaultMessage: 'years',
+          description: 'This is the postfix for age field',
+          id: 'event.death.action.declare.form.section.mother.field.age.postfix'
+        }
+      }
     },
     // ---- Place of birth (hidden from hospital clerks) ----
     {

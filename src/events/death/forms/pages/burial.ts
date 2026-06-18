@@ -115,7 +115,17 @@ export const burial = defineFormPage({
         defaultMessage: 'Date of burial',
         description: 'This is the label for the field',
         id: 'event.death.action.declare.form.section.burial.field.date.label'
-      }
+      },
+      validation: [
+        {
+          message: {
+            defaultMessage: 'Cannot be date in the future',
+            description: 'Error message for future date of burial',
+            id: 'event.death.action.declare.form.section.burial.field.date.error'
+          },
+          validator: field('burial.date').isBefore().now()
+        }
+      ]
     },
     // ---- Where buried heading ----
     {
