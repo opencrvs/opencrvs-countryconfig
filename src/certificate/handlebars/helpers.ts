@@ -14,9 +14,6 @@
  * The client loads it to register any country-specific Handlebars helpers
  * for use in certificate SVG templates.
  *
- * Add custom helpers here as named exports, e.g.:
- *   export function myHelper(...args) { ... }
- *
  * IMPORTANT: Each export must be a factory function that takes { intl } and returns
  * the actual Handlebars helper. This matches the LoadHandlebarHelpersResponse type
  * expected by core:

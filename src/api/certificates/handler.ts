@@ -394,6 +394,31 @@ export async function certificateHandler(
       svgUrl:
         '/api/countryconfig/certificates/v2.death-certificate-certified-copy.svg',
       fonts: libreBaskervilleFont
+    },
+    {
+      id: 'v2.birth-declaration-summary',
+      event: Event.Birth,
+      isV2Template: true,
+      label: {
+        id: 'certificates.birth.declaration.summary',
+        defaultMessage: 'Birth Declaration Summary',
+        description: 'The label for a birth declaration summary'
+      },
+      isDefault: false,
+      fee: {
+        onTime: 0,
+        late: 0,
+        delayed: 0
+      },
+      svgUrl:
+        '/api/countryconfig/certificates/v2.birth-declaration-summary.svg',
+      fonts: notoSansFont,
+      conditionals: [
+        {
+          type: 'SHOW',
+          conditional: event.hasAction(ActionType.DECLARE).minCount(1)
+        }
+      ]
     }
   ]
   return certificateConfigs
