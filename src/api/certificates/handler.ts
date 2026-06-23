@@ -396,13 +396,13 @@ export async function certificateHandler(
       fonts: libreBaskervilleFont
     },
     {
-      id: 'v2.birth-declaration-summary',
+      id: 'v2.birth-statement',
       event: Event.Birth,
       isV2Template: true,
       label: {
-        id: 'certificates.birth.declaration.summary',
-        defaultMessage: 'Birth Declaration Summary',
-        description: 'The label for a birth declaration summary'
+        id: 'certificates.birth.statement',
+        defaultMessage: 'Birth Statement',
+        description: 'The label for a birth statement'
       },
       isDefault: false,
       fee: {
@@ -411,14 +411,8 @@ export async function certificateHandler(
         delayed: 0
       },
       svgUrl:
-        '/api/countryconfig/certificates/v2.birth-declaration-summary.svg',
-      fonts: notoSansFont,
-      conditionals: [
-        {
-          type: 'SHOW',
-          conditional: event.hasAction(ActionType.DECLARE).minCount(1)
-        }
-      ]
+        '/api/countryconfig/certificates/v2.birth-statement.svg',
+      fonts: notoSansFont
     }
   ]
   return certificateConfigs
