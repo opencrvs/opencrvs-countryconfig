@@ -94,29 +94,6 @@ export const Workqueues = defineWorkqueues([
     }
   },
   {
-    slug: 'pending-validation',
-    icon: 'Stamp',
-    name: {
-      id: 'workqueues.pendingValidation.title',
-      defaultMessage: 'Pending validation',
-      description: 'Title of pending validation workqueue'
-    },
-    query: {
-      ...declaredInMyAdminArea,
-      status: { type: 'exact', term: EventStatus.enum.DECLARED },
-      flags: {
-        noneOf: [
-          InherentFlags.REJECTED,
-          'validated',
-          'approval-required-for-late-registration',
-          InherentFlags.POTENTIAL_DUPLICATE
-        ]
-      }
-    },
-    action: { type: ActionType.READ }
-  },
-
-  {
     slug: 'potential-duplicate',
     icon: 'Files',
     name: {
@@ -174,7 +151,6 @@ export const Workqueues = defineWorkqueues([
       ...declaredInMyAdminArea,
       status: { type: 'exact', term: EventStatus.enum.DECLARED },
       flags: {
-        anyOf: ['validated'],
         noneOf: [
           'approval-required-for-late-registration',
           InherentFlags.POTENTIAL_DUPLICATE

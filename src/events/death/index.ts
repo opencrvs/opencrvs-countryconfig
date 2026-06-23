@@ -13,11 +13,6 @@ import {
   ConditionalType,
   defineConfig,
   field,
-  or,
-  user,
-  and,
-  status,
-  not,
   flag,
   InherentFlags
 } from '@opencrvs/toolkit/events'
@@ -173,15 +168,6 @@ export const deathEvent = defineConfig({
   },
   flags: [
     {
-      id: 'validated',
-      label: {
-        id: 'event.birth.flag.validated',
-        defaultMessage: 'Validated',
-        description: 'Flag label for validated'
-      },
-      requiresAction: true
-    },
-    {
       id: 'pending-first-certificate-issuance',
       label: {
         id: 'event.birth.flag.pending-first-certificate-issuance',
@@ -196,7 +182,6 @@ export const deathEvent = defineConfig({
     ActionType.REGISTER,
     ActionType.DECLARE,
     ActionType.EDIT,
-    'VALIDATE_DECLARATION',
     ActionType.MARK_AS_DUPLICATE,
     ActionType.REJECT,
     ActionType.ARCHIVE,
@@ -234,17 +219,7 @@ export const deathEvent = defineConfig({
           id: 'event.death.action.detect-duplicate.label'
         },
         query: dedupConfig
-      },
-      flags: [
-        {
-          id: 'validated',
-          operation: 'add',
-          conditional: or(
-            user.hasRole('REGISTRAR_GENERAL'),
-            user.hasRole('REGISTRAR')
-          )
-        }
-      ]
+      }
     },
     {
       type: ActionType.EDIT,
@@ -254,7 +229,6 @@ export const deathEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'actions.edit'
       },
-      flags: [{ id: 'validated', operation: 'remove' }],
       dialogCopy: {
         notify: {
           id: 'event.death.action.edit.notify.copy',
@@ -274,53 +248,6 @@ export const deathEvent = defineConfig({
             'You are about to register this death event with your edits. Registering this event will create an official civil registration record.',
           description: 'Confirmation text for the register with edits action'
         }
-      }
-    },
-    {
-      type: ActionType.CUSTOM,
-      customActionType: 'VALIDATE_DECLARATION',
-      icon: 'Stamp',
-      label: {
-        defaultMessage: 'Validate',
-        description:
-          'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'event.death.custom.action.validate-declaration.label'
-      },
-      supportingCopy: {
-        defaultMessage:
-          'Approving this declaration confirms it as legally accepted and eligible for registration.',
-        description:
-          'This is the supporting copy for the Validate declaration -action',
-        id: 'event.death.custom.action.validate-declaration.supportingCopy'
-      },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: and(status('DECLARED'), not(flag('validated')))
-        },
-        {
-          type: ConditionalType.ENABLE,
-          conditional: not(flag(InherentFlags.POTENTIAL_DUPLICATE))
-        }
-      ],
-      flags: [{ id: 'validated', operation: 'add' }],
-      form: [
-        {
-          id: 'comments',
-          type: 'TEXTAREA',
-          label: {
-            defaultMessage: 'Comments',
-            description:
-              'This is the label for the comments field for the validate declaration action',
-            id: 'event.death.custom.action.validate-declaration.field.comments.label'
-          }
-        }
-      ],
-      auditHistoryLabel: {
-        defaultMessage: 'Validated',
-        description:
-          'The label to show in audit history for the validate action',
-        id: 'event.death.custom.action.validate-declaration.audit-history-label'
       }
     },
     {
@@ -353,13 +280,12 @@ export const deathEvent = defineConfig({
           'Registering this death event will create an official civil registration record. Please ensure all details are correct before proceeding.'
       },
       flags: [
-        { id: 'validated', operation: 'remove' },
         { id: 'pending-first-certificate-issuance', operation: 'add' }
       ],
       conditionals: [
         {
           type: ConditionalType.ENABLE,
-          conditional: flag('validated')
+          conditional: flag('declared')
         }
       ],
       deduplication: {
