@@ -374,7 +374,7 @@ export async function certificateHandler(
         delayed: 18
       },
       svgUrl: '/api/countryconfig/certificates/v2.death-certificate.svg',
-      fonts: libreBaskervilleFont
+      fonts: notoSansFont
     },
     {
       id: 'v2.death-certified-certificate',
