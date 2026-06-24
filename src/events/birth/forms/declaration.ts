@@ -99,7 +99,7 @@ export const BIRTH_DECLARATION_REVIEW = {
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: and(not(status('DECLARED')), not(status('REGISTERED')), user.hasRole('HEALTH_NOTIFIER'))
+          conditional: and(not(status('DECLARED')), not(status('REGISTERED')), hasNonHealthNotifierRole)
         }
       ]
     },
@@ -115,15 +115,15 @@ export const BIRTH_DECLARATION_REVIEW = {
       configuration: {
         template: 'v2.birth-notification',
         buttonLabel: {
-          defaultMessage: 'Print declaration',
+          defaultMessage: 'Print Notification Receipt',
           id: 'event.birth.action.declare.form.review.alphaPrint.healthNotifier.button.label',
-          description: 'Label for the health notifier print declaration button'
+          description: 'Label for the health notifier print notification receipt button'
         }
       },
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: and(not(status('DECLARED')), not(status('REGISTERED')), user.hasRole('HEALTH_NOTIFIER'))
+          conditional: and(not(status('DECLARED')), not(status('REGISTERED')), hasNonHealthNotifierRole)
         }
       ]
     }
