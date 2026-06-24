@@ -181,13 +181,13 @@ export const spouse = defineFormPage({
       type: FieldType.SEARCH,
       required: false,
       label: {
-        defaultMessage: 'Birth registration number',
+        defaultMessage: 'Birth registration number lookup',
         description: 'This is the label for the field',
         id: 'event.death.action.declare.form.section.spouse.field.brn.label'
       },
       helperText: {
         defaultMessage:
-          'Search for an existing birth record. If a match is found, the details below will auto-fill. If no record is found, continue by entering the details manually.',
+          'Search for a birth record. If found, details will auto-fill. Otherwise, continue with manual entry.',
         description: 'Helper text for birth registration number field',
         id: 'event.death.action.declare.form.section.spouse.field.brn.helperText'
       },
@@ -282,7 +282,7 @@ export const spouse = defineFormPage({
       type: FieldType.TEXT,
       required: false,
       label: {
-        defaultMessage: 'Other ID number',
+        defaultMessage: 'ID number',
         description: 'This is the label for the field',
         id: 'event.death.action.declare.form.section.spouse.field.otherId.label'
       },
@@ -381,14 +381,14 @@ export const spouse = defineFormPage({
       type: FieldType.AGE,
       required: false,
       label: {
-        defaultMessage: 'Age of spouse (at the time of event)',
+        defaultMessage: 'Age of spouse',
         description: 'This is the label for the field',
         id: 'event.death.action.declare.form.section.spouse.field.age.label'
       },
       configuration: {
         asOfDate: field('eventDetails.date'),
         postfix: {
-          defaultMessage: 'years',
+          defaultMessage: ' years',
           description: 'This is the postfix for age field',
           id: 'event.death.action.declare.form.section.spouse.field.age.postfix'
         }

@@ -16,8 +16,12 @@ import {
   defineDeclarationForm,
   FieldType,
   status,
-  user
+  user,
+  DocumentMimeType,
+  field,
+  ImageMimeType,
 } from '@opencrvs/toolkit/events'
+import { emptyMessage, hasNonHealthNotifierRole } from '@countryconfig/events/utils'
 import { child } from './pages/child'
 import { nameChanges } from './pages/nameChanges'
 import { informant } from './pages/informant'
@@ -25,6 +29,16 @@ import { introduction } from './pages/introduction'
 import { mother } from './pages/mother'
 import { father } from './pages/father'
 import { documents } from './pages/documents'
+
+const DEFAULT_FILE_CONFIGURATION = {
+  maxFileSize: 5 * 1024 * 1024,
+  acceptedFileTypes: [
+    ImageMimeType.enum['image/jpeg'],
+    ImageMimeType.enum['image/png'],
+    ImageMimeType.enum['image/jpg'],
+    DocumentMimeType.enum['application/pdf']
+  ]
+}
 
 export const BIRTH_DECLARATION_REVIEW = {
   title: {
@@ -34,6 +48,61 @@ export const BIRTH_DECLARATION_REVIEW = {
     description: 'Title of the form to show in review page'
   },
   fields: [
+    {
+      type: FieldType.PARAGRAPH,
+      id: 'review.alphaPrint.step1.header',
+      label: {
+        defaultMessage:
+          'Step 1: Print the declaration summary for the informant(s) to review and sign.',
+        id: 'event.birth.action.declare.form.review.alphaPrint.step1.header.label',
+        description: 'Label for the alpha print step 1 header in the review section'
+      },
+      configuration: { styles: { hint: true } },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: hasNonHealthNotifierRole
+        }
+      ]
+    },
+    {
+      type: FieldType.PARAGRAPH,
+      id: 'review.alphaPrint.header',
+      label: {
+        defaultMessage: 'Declaration summary',
+        id: 'event.birth.action.declare.form.review.alphaPrint.header.label',
+        description: 'Label for the declaration summary heading in the review section'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: hasNonHealthNotifierRole
+        }
+      ]
+    },
+    {
+      id: 'review.alphaPrint',
+      type: FieldType.ALPHA_PRINT_BUTTON,
+      label: {
+        defaultMessage: 'Declaration summary',
+        id: 'event.birth.action.declare.form.review.alphaPrint.header.label',
+        description: 'Label for the alpha print button in the review section'
+      },
+      configuration: {
+        template: 'v2.birth-declaration-summary',
+        buttonLabel: {
+          defaultMessage: 'Print',
+          id: 'event.birth.action.declare.form.review.alphaPrint.label',
+          description: 'Label for the alpha print button in the review section'
+        }
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(not(status('DECLARED')), not(status('REGISTERED')), user.hasRole('HEALTH_NOTIFIER'))
+        }
+      ]
+    },
     {
       id: 'review.alphaPrint.healthNotifier',
       type: FieldType.ALPHA_PRINT_BUTTON,

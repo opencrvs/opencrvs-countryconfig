@@ -19,8 +19,7 @@ import {
   InherentFlags,
   not,
   or,
-  status,
-  user
+  status
 } from '@opencrvs/toolkit/events'
 import {
   BIRTH_DECLARATION_FORM,
@@ -83,15 +82,6 @@ export const birthEvent = defineConfig({
         id: 'event.birth.flag.escalated-to-registrar-general',
         defaultMessage: 'Escalated to Registrar General',
         description: 'Flag label for escalated to registrar general'
-      },
-      requiresAction: true
-    },
-    {
-      id: 'validated',
-      label: {
-        id: 'event.birth.flag.validated',
-        defaultMessage: 'Validated',
-        description: 'Flag label for validated'
       },
       requiresAction: true
     },
@@ -243,7 +233,6 @@ export const birthEvent = defineConfig({
     ActionType.REGISTER,
     ActionType.DECLARE,
     ActionType.EDIT,
-    'VALIDATE_DECLARATION',
     'APPROVE_DECLARATION',
     ActionType.MARK_AS_DUPLICATE,
     'ESCALATE',
@@ -302,15 +291,6 @@ export const birthEvent = defineConfig({
             ),
             field('child.dob').isBefore().now()
           )
-        },
-        {
-          id: 'validated',
-          operation: 'add',
-          conditional: or(
-            user.hasRole('REGISTRAR_GENERAL'),
-            user.hasRole('REGISTRAR'),
-            user.hasRole('EMBASSY_OFFICIAL')
-          )
         }
       ],
       dialogCopy: {
@@ -343,7 +323,6 @@ export const birthEvent = defineConfig({
         id: 'actions.edit'
       },
       flags: [
-        { id: 'validated', operation: 'remove' },
         { id: 'approval-required-for-late-registration', operation: 'remove' },
         { id: 'escalated-to-provincial-registrar', operation: 'remove' },
         { id: 'escalated-to-registrar-general', operation: 'remove' }
@@ -367,53 +346,6 @@ export const birthEvent = defineConfig({
             'You are about to register this birth event with your edits. Registering this event will create an official civil registration record.',
           description: 'Confirmation text for the register with edits action'
         }
-      }
-    },
-    {
-      type: ActionType.CUSTOM,
-      customActionType: 'VALIDATE_DECLARATION',
-      icon: 'Stamp',
-      label: {
-        defaultMessage: 'Validate',
-        description:
-          'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'event.birth.custom.action.validate-declaration.label'
-      },
-      supportingCopy: {
-        defaultMessage:
-          'Validating this declaration confirms it meets all requirements and is eligible for registration.',
-        description:
-          'This is the supporting copy for the Validate declaration -action',
-        id: 'event.birth.custom.action.validate-declaration.supportingCopy'
-      },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: and(status('DECLARED'), not(flag('validated')))
-        },
-        {
-          type: ConditionalType.ENABLE,
-          conditional: not(flag(InherentFlags.POTENTIAL_DUPLICATE))
-        }
-      ],
-      flags: [{ id: 'validated', operation: 'add' }],
-      form: [
-        {
-          id: 'comments',
-          type: 'TEXTAREA',
-          label: {
-            defaultMessage: 'Comments',
-            description:
-              'This is the label for the comments field for the validate declaration action',
-            id: 'event.birth.custom.action.validate-declaration.field.comments.label'
-          }
-        }
-      ],
-      auditHistoryLabel: {
-        defaultMessage: 'Validated',
-        description:
-          'The label to show in audit history for the validate action',
-        id: 'event.birth.custom.action.validate-declaration.audit-history-label'
       }
     },
     {
@@ -840,8 +772,7 @@ export const birthEvent = defineConfig({
         defaultMessage:
           'Rejecting this declaration will return it to the submitter for updates. Please ensure a valid reason for rejection has been recorded.',
         description: 'The description for reject modal'
-      },
-      flags: [{ id: 'validated', operation: 'remove' }]
+      }
     },
     {
       type: ActionType.REGISTER,
@@ -858,14 +789,12 @@ export const birthEvent = defineConfig({
           "Registering this birth event will create an official civil registration record. Please ensure all details are correct before proceeding.<br></br><br></br><strong>WARNING!</strong>: By clicking 'Register', you confirm that you have reviewed the record alongside supporting documentation in the Record tab. The record will proceed to be <strong>legally registered</strong> via the outbox. Further amends after registration can only be made via a legal correction process."
       },
       flags: [
-        { id: 'validated', operation: 'remove' },
         { id: 'pending-first-certificate-issuance', operation: 'add' }
       ],
       conditionals: [
         {
           type: ConditionalType.ENABLE,
           conditional: and(
-            flag('validated'),
             not(flag('approval-required-for-late-registration')),
             not(flag('escalated-to-provincial-registrar')),
             not(flag('escalated-to-registrar-general'))

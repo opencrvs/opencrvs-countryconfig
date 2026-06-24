@@ -142,7 +142,7 @@ export const mother = defineFormPage({
     {
       id: 'mother.reason',
       type: FieldType.TEXTAREA,
-      required: true,
+      required: false,
       label: {
         defaultMessage: 'Reason',
         description: 'This is the label for the field',
@@ -217,7 +217,7 @@ export const mother = defineFormPage({
       },
       helperText: {
         defaultMessage:
-          'Search for an existing birth record. If a match is found, the details below will auto-fill. If no record is found, continue by entering the details manually.',
+          'Search for a birth record. If found, details will auto-fill. Otherwise, continue with manual entry.',
         description: 'Helper text for the birth registration number search field',
         id: 'event.birth.action.declare.form.section.mother.field.brnSearch.helperText'
       },

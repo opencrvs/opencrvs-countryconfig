@@ -190,7 +190,7 @@ export const deceased = defineFormPage({
       },
       helperText: {
         defaultMessage:
-          'Search for an existing birth record. If a match is found, the details below will auto-fill. If no record is found, continue by entering the details manually.',
+          'Search for a birth record. If found, details will auto-fill. Otherwise, continue with manual entry.',
         description: 'Helper text for birth registration number field',
         id: 'event.death.action.declare.form.section.deceased.field.brn.helperText'
       },
@@ -600,7 +600,7 @@ export const deceased = defineFormPage({
       validation: [
         {
           message: {
-            defaultMessage: 'Date of marriage cannot be in the future',
+            defaultMessage: 'Cannot be date in the future',
             description: 'Error message for future date of marriage',
             id: 'event.death.action.declare.form.section.deceased.field.dateOfMarriage.error'
           },

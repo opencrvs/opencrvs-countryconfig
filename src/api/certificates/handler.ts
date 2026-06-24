@@ -416,7 +416,7 @@ export async function certificateHandler(
         delayed: 18
       },
       svgUrl: '/api/countryconfig/certificates/v2.death-certificate.svg',
-      fonts: libreBaskervilleFont
+      fonts: notoSansFont
     },
     {
       id: 'v2.death-certified-certificate',
@@ -436,6 +436,25 @@ export async function certificateHandler(
       svgUrl:
         '/api/countryconfig/certificates/v2.death-certificate-certified-copy.svg',
       fonts: libreBaskervilleFont
+    },
+    {
+      id: 'v2.birth-statement',
+      event: Event.Birth,
+      isV2Template: true,
+      label: {
+        id: 'certificates.birth.statement',
+        defaultMessage: 'Birth Statement',
+        description: 'The label for a birth statement'
+      },
+      isDefault: false,
+      fee: {
+        onTime: 0,
+        late: 0,
+        delayed: 0
+      },
+      svgUrl:
+        '/api/countryconfig/certificates/v2.birth-statement.svg',
+      fonts: notoSansFont
     }
   ]
   return certificateConfigs

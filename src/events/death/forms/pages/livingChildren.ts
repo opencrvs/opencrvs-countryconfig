@@ -98,7 +98,7 @@ function childFields(n: number) {
     {
       id: `livingChildren.child${n}.fullName`,
       type: FieldType.TEXT,
-      required: true,
+      required: false,
       label: {
         defaultMessage: 'Full Name',
         description: `Full name of child ${n}`,
@@ -109,7 +109,7 @@ function childFields(n: number) {
     {
       id: `livingChildren.child${n}.sex`,
       type: FieldType.SELECT,
-      required: true,
+      required: false,
       label: {
         defaultMessage: 'Sex',
         description: `Sex of child ${n}`,
@@ -143,7 +143,7 @@ export const livingChildren = defineFormPage({
   id: 'livingChildren',
   type: PageTypes.enum.FORM,
   title: {
-    defaultMessage: 'Living children',
+    defaultMessage: 'Living children details',
     description: 'Form section title for living children details',
     id: 'form.death.livingChildren.title'
   },
@@ -153,9 +153,9 @@ export const livingChildren = defineFormPage({
     {
       id: 'livingChildren.numberOfChildren',
       type: FieldType.SELECT,
-      required: true,
+      required: false,
       label: {
-        defaultMessage: 'Number of living children',
+        defaultMessage: 'Number of children (living)',
         description: 'This is the label for the field',
         id: 'event.death.action.declare.form.section.livingChildren.field.numberOfChildren.label'
       },
