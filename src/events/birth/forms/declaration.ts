@@ -9,7 +9,15 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { defineDeclarationForm, FieldType } from '@opencrvs/toolkit/events'
+import {
+  and,
+  not,
+  ConditionalType,
+  defineDeclarationForm,
+  FieldType,
+  status,
+  user
+} from '@opencrvs/toolkit/events'
 import { child } from './pages/child'
 import { nameChanges } from './pages/nameChanges'
 import { informant } from './pages/informant'
@@ -26,6 +34,30 @@ export const BIRTH_DECLARATION_REVIEW = {
     description: 'Title of the form to show in review page'
   },
   fields: [
+    {
+      id: 'review.alphaPrint.healthNotifier',
+      type: FieldType.ALPHA_PRINT_BUTTON,
+      label: {
+        defaultMessage: 'Print declaration',
+        id: 'event.birth.action.declare.form.review.alphaPrint.healthNotifier.label',
+        description:
+          'Label for the health notifier print declaration button in the review section'
+      },
+      configuration: {
+        template: 'v2.birth-notification',
+        buttonLabel: {
+          defaultMessage: 'Print declaration',
+          id: 'event.birth.action.declare.form.review.alphaPrint.healthNotifier.button.label',
+          description: 'Label for the health notifier print declaration button'
+        }
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(not(status('DECLARED')), not(status('REGISTERED')), user.hasRole('HEALTH_NOTIFIER'))
+        }
+      ]
+    }
   ]
 }
 

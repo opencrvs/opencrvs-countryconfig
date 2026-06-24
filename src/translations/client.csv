@@ -969,6 +969,8 @@ event.birth.summary.child.placeOfBirth.label,Label for place of birth,Place of b
 event.birth.summary.informant.contact.empty,This is shown when there is no informant information,No contact details provided,Pas de coordonnées fournies
 event.birth.summary.informant.contact.label,This is the label for the informant information,Contact,Contact
 event.birth.summary.informant.contact.value,This is the contact value of the informant,{informant.phoneNo} {informant.email},{informant.phoneNo} {informant.email}
+event.birth.action.declare.form.review.alphaPrint.healthNotifier.label,Label for the health notifier print declaration button in the review section,Print declaration,Imprimer la déclaration
+event.birth.action.declare.form.review.alphaPrint.healthNotifier.button.label,Label for the health notifier print declaration button,Print declaration,Imprimer la déclaration
 event.birth.title,This is the title of the summary,{child.name.firstname} {child.name.surname},{child.name.firstname} {child.name.surname}
 event.death.action.Read.label,This is shown as the action name anywhere the user can trigger the action from,Read,Lire
 event.death.action.certificate.form.cancel,This is the label for the verification cancellation button,Identity does not match,L'identité ne correspond pas
