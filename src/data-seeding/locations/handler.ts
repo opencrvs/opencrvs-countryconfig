@@ -8,73 +8,49 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
-import {
-  readCSVToJSON,
-  extractStatisticsMap,
-  getStatistics,
-  LocationStatistic
-} from '@countryconfig/utils'
+import { readCSVToJSON } from '@countryconfig/utils'
 import { Request, ResponseToolkit } from '@hapi/hapi'
 
 type HumdataLocation = {
   admin0Pcode: string
   admin0Name_en: string
-  admin0Name_alias?: string
 
   admin1Pcode?: string
   admin1Name_en?: string
-  admin1Name_alias?: string
 
   admin2Pcode?: string
   admin2Name_en?: string
-  admin2Name_alias?: string
 
   admin3Pcode?: string
   admin3Name_en?: string
-  admin3Name_alias?: string
 
   admin4Pcode?: string
   admin4Name_en?: string
-  admin4Name_alias?: string
 }
 
-type Facility = {
+type AdministrativeArea = {
   id: string
   name: string
   partOf: string
-  locationType: 'HEALTH_FACILITY' | 'CRVS_OFFICE'
 }
 
 type Location = {
   id: string
   name: string
-  alias: string
   partOf: string
-  locationType: 'ADMIN_STRUCTURE' | 'HEALTH_FACILITY' | 'CRVS_OFFICE'
-  jurisdictionType?: (typeof JURISDICTION_TYPE)[number]
-  statistics?: LocationStatistic['years']
+  locationType: string
 }
 
-const JURISDICTION_TYPE = [
-  'STATE',
-  'DISTRICT',
-  'LOCATION_LEVEL_3',
-  'LOCATION_LEVEL_4',
-  'LOCATION_LEVEL_5'
-] as const
-
 export async function locationsHandler(_: Request, h: ResponseToolkit) {
-  const [humdataLocations, crvsLocations, statistics] = await Promise.all([
+  const [humdataLocations, locations] = await Promise.all([
     readCSVToJSON<HumdataLocation[]>(
       './src/data-seeding/locations/source/administrative-areas.csv'
     ),
-    readCSVToJSON<Facility[]>(
+    readCSVToJSON<Location[]>(
       './src/data-seeding/locations/source/locations.csv'
-    ),
-    getStatistics()
+    )
   ])
-  const locations = new Map<string, Location>()
-  const statisticsMap = extractStatisticsMap(statistics)
+  const administrativeAreas = new Map<string, AdministrativeArea>()
   humdataLocations.forEach((humdataLocation) => {
     ;([1, 2, 3, 4] as const).forEach((locationLevel) => {
       const id = humdataLocation[`admin${locationLevel}Pcode`]
@@ -88,25 +64,16 @@ export async function locationsHandler(_: Request, h: ResponseToolkit) {
           ? `Location/${humdataLocation[`admin${parentPcode}Pcode`]}`
           : 'Location/0'
 
-        locations.set(id, {
+        administrativeAreas.set(id, {
           id,
           name: humdataLocation[`admin${locationLevel}Name_en`]!,
-          alias: humdataLocation[`admin${locationLevel}Name_alias`]!,
-          partOf,
-          locationType: 'ADMIN_STRUCTURE',
-          jurisdictionType: JURISDICTION_TYPE[depth - 1],
-          statistics: statisticsMap.get(id)?.years
+          partOf
         })
       }
     })
   })
-  crvsLocations.forEach((crvsLocation) => {
-    locations.set(crvsLocation.id, {
-      ...crvsLocation,
-      // We haven't set aliases for the facilities in farajaland
-      // that's why just using the name instead
-      alias: crvsLocation.name
-    })
+  return h.response({
+    administrativeAreas: Array.from(administrativeAreas.values()),
+    locations
   })
-  return h.response(Array.from(locations.values()))
 }

@@ -14,7 +14,8 @@ import {
   ConditionalType,
   event,
   field,
-  TranslationConfig
+  TranslationConfig,
+  user
 } from '@opencrvs/toolkit/events'
 import { createSelectOptions } from '../utils'
 
@@ -101,7 +102,10 @@ export const advancedSearchDeath = [
         options: placeOfDeathOptions
       }).exact(),
       field('eventDetails.deathLocation', {
-        searchCriteriaLabelPrefix: deceasedPrefix
+        searchCriteriaLabelPrefix: deceasedPrefix,
+        allowedLocations: user.jurisdiction(
+          user.scope('record.search').attribute('placeOfEvent')
+        )
       }).exact(),
       field('deceased.address', {
         conditionals: [

@@ -285,5 +285,5 @@
     </clipPath>
   </defs>
   <image width="36" height="36" xlink:href="{{qrCode}}" x="500" y="770"></image>
-  <image width="140" height="70" xlink:href="{{$lookup $metadata 'legalStatuses.REGISTERED.createdBySignature'}}" x="347" y="605"></image>
+  <image width="140" height="70" xlink:href="{{$lookup ($action 'REGISTER') 'createdBySignature'}}" x="347" y="605"></image>
 </svg>

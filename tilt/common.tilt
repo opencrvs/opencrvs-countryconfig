@@ -25,7 +25,6 @@ helm_resource(
 # and Middleware, so we need to add traefik as dependency
 # to all workloads that use them
 traefik_deps = [
-  'auth', 
   'client',
   'countryconfig',
   'events',

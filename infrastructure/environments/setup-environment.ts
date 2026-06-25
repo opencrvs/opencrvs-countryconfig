@@ -620,13 +620,6 @@ const derivedVariables = [
     scope: 'ENVIRONMENT'
   },
   {
-    name: 'AUTH_HOST',
-    valueLabel: 'AUTH_HOST',
-    valueType: 'VARIABLE',
-    type: 'disabled',
-    scope: 'ENVIRONMENT'
-  },
-  {
     name: 'COUNTRY_CONFIG_HOST',
     valueLabel: 'COUNTRY_CONFIG_HOST',
     valueType: 'VARIABLE',
@@ -1341,22 +1334,6 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
       value: ['production', 'staging'].includes(environment) ? 'false' : 'true',
       didExist: findExistingValue(
         'ACTIVATE_USERS',
-        'VARIABLE',
-        'ENVIRONMENT',
-        existingValues
-      ),
-      scope: 'ENVIRONMENT' as const
-    },
-    {
-      type: 'VARIABLE' as const,
-      name: 'AUTH_HOST',
-      value: answerOrExisting(
-        allAnswers.domain,
-        findExistingValue('DOMAIN', 'VARIABLE', 'ENVIRONMENT', existingValues),
-        (val) => `https://auth.${val}`
-      ),
-      didExist: findExistingValue(
-        'AUTH_HOST',
         'VARIABLE',
         'ENVIRONMENT',
         existingValues

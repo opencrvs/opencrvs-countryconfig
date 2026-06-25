@@ -636,47 +636,9 @@ services:
       - APN_SERVICE_URL=http://apm-server:8200
       - CERT_PRIVATE_KEY_PATH=/run/secrets/jwt-private-key.{{ts}}
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
-      - LOGIN_URL=https://login.{{hostname}}
-      - COUNTRY_CONFIG_URL_EXTERNAL=https://countryconfig.{{hostname}}
-      - CLIENT_APP_URL=https://register.{{hostname}}
       - DOMAIN={{hostname}}
       - REDIS_USERNAME=${AUTH_REDIS_USERNAME}
       - REDIS_PASSWORD=${AUTH_REDIS_PASSWORD}
-    deploy:
-      labels:
-        - 'traefik.enable=true'
-        - 'traefik.http.routers.auth.rule=Host(`auth.{{hostname}}`) && !Path(`/internal/reindexing-token`)'
-        - 'traefik.http.services.auth.loadbalancer.server.port=4040'
-        - 'traefik.http.routers.auth.tls=true'
-        - 'traefik.http.routers.auth.tls.certresolver=certResolver'
-        - 'traefik.http.routers.auth.entrypoints=web,websecure'
-        - 'traefik.docker.network=opencrvs_overlay_net'
-        - 'traefik.http.middlewares.auth.headers.customresponseheaders.Pragma=no-cache'
-        - 'traefik.http.middlewares.auth.headers.customresponseheaders.Cache-control=no-store'
-        - 'traefik.http.middlewares.auth.headers.customresponseheaders.X-Robots-Tag=none'
-        - 'traefik.http.middlewares.auth.headers.stsseconds=31536000'
-        - 'traefik.http.middlewares.auth.headers.stsincludesubdomains=true'
-        - 'traefik.http.middlewares.auth.headers.stspreload=true'
-        # Block /internal/reindexing-token from external access (only reachable internally via overlay network)
-        - 'traefik.http.routers.block-auth-reindexing-token.rule=Host(`auth.{{hostname}}`) && Path(`/internal/reindexing-token`)'
-        - 'traefik.http.routers.block-auth-reindexing-token.middlewares=block-internal-routes'
-      replicas: 1
-    networks:
-      - overlay_net
-    logging:
-      driver: gelf
-      options:
-        gelf-address: 'udp://127.0.0.1:12201'
-        tag: 'auth'
-  user-mgnt:
-    secrets:
-      - jwt-public-key.{{ts}}
-    environment:
-      - NODE_ENV=production
-      - SENTRY_DSN=${SENTRY_DSN:-}
-      - APN_SERVICE_URL=http://apm-server:8200
-      - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
-      - MONGO_URL=mongodb://user-mgnt:${USER_MGNT_MONGODB_PASSWORD}@mongo1/user-mgnt?replicaSet=rs0
     deploy:
       labels:
         - 'traefik.enable=false'
@@ -687,7 +649,7 @@ services:
       driver: gelf
       options:
         gelf-address: 'udp://127.0.0.1:12201'
-        tag: 'user-mgnt'
+        tag: 'auth'
   events:
     secrets:
       - jwt-public-key.{{ts}}

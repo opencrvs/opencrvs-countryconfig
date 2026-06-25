@@ -410,7 +410,7 @@ export const spouse = defineFormPage({
       defaultValue: {
         country: 'FAR',
         addressType: AddressType.DOMESTIC,
-        administrativeArea: user('primaryOfficeId').locationLevel('district')
+        administrativeArea: user('administrativeAreaId')
       },
       configuration: {
         streetAddressForm: defaultStreetAddressConfiguration

@@ -10,6 +10,7 @@
  */
 require('app-module-path').addPath(require('path').join(__dirname))
 require('dotenv').config()
+import './monitoring'
 
 import path from 'path'
 import * as Hapi from '@hapi/hapi'
