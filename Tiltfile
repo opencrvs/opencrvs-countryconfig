@@ -3,26 +3,86 @@
 # For more information about variables, please check:
 # https://github.com/opencrvs/infrastructure/blob/develop/Tiltfile
 
-core_images_tag = "develop"
+# OpenCRVS core images tag:
+# For releases it's ok to keeps same as branch_or_tag
+core_images_tag = os.getenv("OPENCRVS_CORE_IMAGE_TAG", "v2.0.0-beta")
+
+# FIXME: Put release version
+core_ref = os.getenv("OPENCRVS_CORE_REF", "release-v2.0.0")
+
 # Build countryconfig image in local registry (use any name and tag you want)
 countryconfig_image_name="opencrvs/ocrvs-countryconfig"
 countryconfig_image_tag="local"
 
-load('ext://git_resource', 'git_checkout')
-if not os.path.exists('../infrastructure'):
-    # FIXME: Replace ocrvs-10672 to develop after testing
-    git_checkout('git@github.com:opencrvs/infrastructure.git#ocrvs-10672', '../infrastructure')
-if not os.path.exists('../infrastructure/tilt/opencrvs.tilt'):
+
+# Internal variable for helm charts checkout
+core_charts_dir = ".opencrvs-core-charts"
+
+core_repo_url = 'https://github.com/opencrvs/opencrvs-core.git'
+
+print("Cloning OpenCRVS Helm charts from {}...".format(core_repo_url))
+local("""
+  rm -rf {core_charts_dir}
+  git clone \
+    --depth 1 \
+    --filter=blob:none \
+    --sparse \
+    --branch {core_ref} \
+    {core_repo_url} \
+    {core_charts_dir}
+
+  cd {core_charts_dir}
+  git sparse-checkout set charts
+""".format(
+  core_ref=core_ref,
+  core_charts_dir=core_charts_dir,
+  core_repo_url=core_repo_url
+))
+
+if not os.path.exists('{core_charts_dir}/charts/dependencies'.format(core_charts_dir=core_charts_dir)) or not os.path.exists('{core_charts_dir}/charts/opencrvs-services'.format(core_charts_dir=core_charts_dir)):
   fail('Something went wrong while cloning infrastructure repository!')
-load('../infrastructure/tilt/opencrvs.tilt', 'setup_opencrvs')
+
+load('./tilt/opencrvs.tilt', 'setup_opencrvs')
 
 # Build countryconfig image
-docker_build(countryconfig_image_name, ".",
-              dockerfile="Dockerfile",
-              network="host")
+docker_build(
+  "{0}:{1}".format(countryconfig_image_name, countryconfig_image_tag), 
+  ".",
+  dockerfile="Dockerfile",
+  network="host",
+  only=[
+    './src',
+    './package.json',
+    './yarn.lock',
+    './tsconfig.json',
+    './start-prod.sh',
+    './Dockerfile'
+  ],
+  live_update=[
+    # Fallback to full rebuild if dependencies change
+    fall_back_on(['package.json', 'yarn.lock', 'Dockerfile']),
+    # Sync source code changes
+    sync('./src', '/usr/src/app/src'),
+    # Sync start script if it changes
+    sync('./start-prod.sh', '/usr/src/app/start-prod.sh'),
+  ]
+)
+
+
+# Build image with postgres and metabase assets
+docker_build("{0}:{1}-assets".format(countryconfig_image_name, countryconfig_image_tag), ".",
+              dockerfile="Dockerfile.assets",
+              network="host",
+              only=[
+                'infrastructure/metabase',
+                'infrastructure/postgres',
+                'infrastructure/deployment',
+                './Dockerfile.assets'
+              ]
+)
 
 setup_opencrvs(
-    infrastructure_path='../infrastructure',
+    opencrvs_chart_repo=core_charts_dir,
     core_images_tag=core_images_tag,
     countryconfig_image_name=countryconfig_image_name,
     countryconfig_image_tag=countryconfig_image_tag,

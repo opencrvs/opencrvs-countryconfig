@@ -10,13 +10,12 @@
  */
 import * as Hapi from '@hapi/hapi'
 import { getLanguages, ILanguage } from '@countryconfig/api/content/service'
-import { getApplicationConfig } from '@countryconfig/utils'
+import { applicationConfig } from '../application/application-config'
 
 export async function countryLogoHandler(
   request: Hapi.Request,
   h: Hapi.ResponseToolkit
 ) {
-  const applicationConfig = await getApplicationConfig()
   const base64Logo = applicationConfig.COUNTRY_LOGO.file
   // Decode the Base64 string into a buffer
   const imageBuffer = Buffer.from(base64Logo.split(',')[1], 'base64')

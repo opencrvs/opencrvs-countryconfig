@@ -113,7 +113,7 @@ export function generateFailureLog({
   return
 }
 
-export async function sendUserNotification<T extends TriggerEvent>(
+async function sendUserNotification<T extends TriggerEvent>(
   event: T,
   payload: TriggerPayload[T]
 ) {
@@ -281,6 +281,15 @@ function convertPayloadToVariable({
       return {
         firstname,
         temporaryPassword: payload.temporaryPassword
+      }
+
+    case TriggerEvent.RESEND_INVITE:
+      return {
+        firstname,
+        username: payload.username,
+        temporaryPassword: payload.temporaryPassword,
+        completeSetupUrl: LOGIN_URL,
+        loginURL: LOGIN_URL
       }
 
     case TriggerEvent.TWO_FA:

@@ -7,6 +7,12 @@ package-lock.json
 # production
 build
 
+
+# NOTE: Only for OpenCRVS Core Team:
+# Sparce checkout from OpenCRVS core
+# Folder introduced in OpenCRVS v2.0 to allow pushing changes to helm charts
+.opencrvs-core-charts
+
 # misc
 .DS_Store
 .env

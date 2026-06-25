@@ -40,7 +40,8 @@ const otherTemplates = {
   retieveUserNameNotification: 'retieveUserNameNotification',
   updateUserNameNotification: 'updateUserNameNotification',
   resetUserPasswordNotification: 'resetUserPasswordNotification',
-  resetUserPasswordByAdminNotification: 'resetUserPasswordByAdminNotification'
+  resetUserPasswordByAdminNotification: 'resetUserPasswordByAdminNotification',
+  resendInviteNotification: 'resendInviteNotification'
 }
 
 export type SMSTemplateType =
@@ -124,12 +125,13 @@ const compileMessages = async (
   return template(variables)
 }
 
-export const TriggerToSMSTemplate = {
+const TriggerToSMSTemplate = {
   ['user-created']: 'userCredentialsNotification',
   ['user-updated']: 'updateUserNameNotification',
   ['username-reminder']: 'retieveUserNameNotification',
   ['reset-password']: 'resetUserPasswordNotification',
   ['reset-password-by-admin']: 'resetUserPasswordByAdminNotification',
+  ['resend-invite']: 'resendInviteNotification',
   ['2fa']: 'authenticationCodeNotification',
   ['all-user-notification']: 'allUserNotification',
   ['change-email-address']: 'authenticationCodeNotification',

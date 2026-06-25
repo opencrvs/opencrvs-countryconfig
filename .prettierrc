@@ -4,5 +4,6 @@
   "useTabs": false,
   "tabWidth": 2,
   "trailingComma": "none",
-  "semi": false
+  "semi": false,
+  "overrides": [{ "files": ["roles.ts"], "options": { "printWidth": 280 } }]
 }

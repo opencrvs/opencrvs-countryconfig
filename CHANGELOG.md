@@ -1,5 +1,45 @@
 # Changelog
 
+## 2.0.0
+
+### Breaking changes
+
+- The following countryconfig endpoints have been removed [#11899](https://github.com/opencrvs/opencrvs-core/issues/11899):
+  - `GET /validators.js`
+  - `GET /conditionals.js`
+  - `GET /dashboards/queries.json`
+  - `GET /forms`
+  - `POST /event-registration`
+  - `POST /tracking-id`
+  - `GET /record-notification`
+- The following countryconfig endpoints have been renamed to sit under the `/config/` namespace:
+  | Old path | New path |
+  |---|---|
+  | `GET /workqueue` | `GET /config/workqueues` |
+  | `GET /application-config` | `GET /config/application` |
+  | `GET /locations` | `GET /config/locations` |
+  | `GET /roles` | `GET /config/roles` |
+  | `GET /users` | `GET /config/users` |
+  | `GET /events` | `GET /config/events` |
+- Switch to docker.io/chumaky/postgres_mongo_fdw:17.6_fdw5.5.2 image to support `mongo_fdw`. This is required for the legacy user migrations to work. It will be switched back to the official postgres image in a future release.
+- A new service `legacy-data-migration` which runs the same migration image but with the `migrate-legacy-data` flag and with the following new environment variables:
+  - EVENTS_SUPERUSER_POSTGRES_URL
+  - MONGO_HOST
+  - MONGO_PORT
+  - MONGO_USERNAME
+  - MONGO_PASSWORD
+  - MONGO_REPLICA_SET
+
+The default values for these variables have been added to the `docker-compose.deploy.yml` file. They should work out of the box for most deployments, but please ensure to set them correctly if you have a custom MongoDB setup.
+
+- The auth service is no longer published on its own `auth.{{hostname}}` subdomain — it is reachable only through the gateway at `gateway.{{hostname}}/auth/*`. The auth Traefik route and the `LOGIN_URL`, `COUNTRY_CONFIG_URL_EXTERNAL`, and `CLIENT_APP_URL` env vars have been removed from the `auth` service, and `AUTH_HOST` is no longer provisioned. Remove the `auth.*` DNS record and TLS certificate from your deployment.
+
+### New features
+
+- V2 certificate SVG templates now use the `$join` helper for location hierarchies, replacing hardcoded comma separators. Empty/undefined levels are automatically filtered, preventing leading or trailing commas.
+- Mother's address in `v2.birth-certificate-certified-copy.svg` now uses the `administrativeHierarchy` convenience variable (`{{$lookup $declaration "mother.address.administrativeHierarchy"}}`) instead of individual fields.
+- Docker swarm to Kubernetes migration script [#10858](https://github.com/opencrvs/opencrvs-core/issues/10858), [#10787](https://github.com/opencrvs/opencrvs-core/issues/10787)
+
 ## 1.9.15 Release Candidate
 
 ## 1.9.14 Release Candidate
@@ -9,7 +49,6 @@
 ### Improvements
 
 - Create index for analytics.event_actions.event_id field [#12182](https://github.com/opencrvs/opencrvs-core/issues/12182)
-
 
 ## 1.9.11
 

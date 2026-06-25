@@ -1,6 +1,6 @@
 {
   "name": "@opencrvs/countryconfig",
-  "version": "1.9.15",
+  "version": "2.0.0",
   "description": "OpenCRVS country configuration for reference data",
   "os": [
     "darwin",
@@ -10,14 +10,8 @@
     "node": "22.x.x"
   },
   "license": "MPL-2.0",
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn precommit"
-    }
-  },
   "scripts": {
     "dev": "yarn start",
-    "precommit": "lint-staged",
     "test": "vitest",
     "test:compilation": "tsc --noEmit",
     "lint": "eslint -c .eslintrc.js",
@@ -50,7 +44,6 @@
     "eslint": "^8.43.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
-    "husky": "1.0.0-rc.13",
     "inquirer": "^9.2.12",
     "js-yaml": "^4.1.0",
     "kleur": "^4.1.5",
@@ -61,15 +54,15 @@
     "pino-pretty": "^11.0.0",
     "prettier": "^3.4.2",
     "react-intl": "^6.4.3",
-    "vite-tsconfig-paths": "^3.5.0",
-    "vitest": "^2.1.2"
+    "vite-tsconfig-paths": "^4.3.2",
+    "vitest": "^2.1.9"
   },
   "dependencies": {
     "@faker-js/faker": "^6.0.0-alpha.5",
     "@hapi/boom": "^9.1.1",
     "@hapi/hapi": "^20.0.1",
     "@hapi/inert": "^6.0.3",
-    "@opencrvs/toolkit": "1.9.15",
+    "@opencrvs/toolkit": "2.0.0",
     "@types/chalk": "^2.2.0",
     "@types/csv2json": "^1.4.0",
     "@types/fhir": "^0.0.30",
@@ -93,18 +86,18 @@
     "elastic-apm-node": "^3.29.0",
     "envalid": "^8.0.0",
     "esbuild": "^0.18.9",
-    "handlebars": "^4.7.7",
+    "handlebars": "^4.7.9",
     "hapi-auth-jwt2": "10.4.0",
     "hapi-pino": "^9.0.0",
     "hapi-sentry": "^3.1.0",
     "joi": "^17.4.0",
     "jwt-decode": "^2.2.0",
-    "kysely": "^0.28.5",
+    "kysely": "^0.28.14",
     "lodash": "^4.18.1",
     "luxon": "^3.7.1",
     "nanoid": "3",
     "node-fetch": "^2.6.1",
-    "nodemailer": "^6.9.8",
+    "nodemailer": "^7.0.11",
     "opener": "^1.5.1",
     "pg": "^8.16.3",
     "pino": "^7.0.0",
@@ -116,7 +109,7 @@
     "tsconfig-paths": "^3.8.0",
     "typescript": "^5.1.6",
     "uuid": "^11.1.0",
-    "zod": "^3.24.1"
+    "zod": "^4.2.1"
   },
   "lint-staged": {
     "src/**/*.{ts,graphql}": [
@@ -130,6 +123,19 @@
     ]
   },
   "resolutions": {
-    "acorn": "^6.4.1"
+    "acorn": "^6.4.1",
+    "braces": "^3.0.3",
+    "cross-spawn": "^7.0.5",
+    "flatted": "^3.4.2",
+    "form-data": "^4.0.4",
+    "jws": "^3.2.3",
+    "minimatch": "^3.1.4",
+    "picomatch": "^2.3.2",
+    "rollup": "^4.59.0",
+    "semver": "^7.5.2",
+    "handlebars": "4.7.9",
+    "lodash": "4.18.1",
+    "@hapi/content": ">=6.0.1",
+    "@trpc/server": ">=11.8.0"
   }
 }

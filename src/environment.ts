@@ -15,22 +15,13 @@ export const env = cleanEnv(process.env, {
   GATEWAY_URL: url({ devDefault: 'http://localhost:7070' }),
   LOGIN_URL: url({ devDefault: 'http://localhost:3020/' }),
   CLIENT_APP_URL: url({ devDefault: 'http://localhost:3000/' }),
-  FHIR_URL: url({ devDefault: 'http://localhost:3447/fhir' }),
   COUNTRY_CONFIG_HOST: str({ default: '0.0.0.0' }),
   COUNTRY_CONFIG_PORT: port({ default: 3040 }),
   AUTH_URL: url({ devDefault: 'http://localhost:4040' }),
   COUNTRY_CONFIG_URL: url({ devDefault: 'http://localhost:3040' }),
-  APPLICATION_CONFIG_URL: url({ devDefault: 'http://localhost:2021/' }),
   SENTRY_DSN: str({ default: undefined }),
-  CHECK_INVALID_TOKEN: bool({
-    default: true,
-    devDefault: false,
-    desc: 'Check if the token has been invalidated in the auth service before it has expired'
-  }),
-  CONFIRM_REGISTRATION_URL: url({
-    devDefault: 'http://localhost:5050/confirm/registration'
-  }),
-  QA_ENV: bool({ default: false }),
+  TWO_FA_ENABLED: bool({ default: true }),
+  OPENCRVS_ENVIRONMENT: str({ devDefault: 'development' }),
   ANALYTICS_DATABASE_URL: url({
     devDefault:
       'postgres://events_analytics:analytics_password@localhost:5432/events',

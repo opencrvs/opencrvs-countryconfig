@@ -620,13 +620,6 @@ const derivedVariables = [
     scope: 'ENVIRONMENT'
   },
   {
-    name: 'AUTH_HOST',
-    valueLabel: 'AUTH_HOST',
-    valueType: 'VARIABLE',
-    type: 'disabled',
-    scope: 'ENVIRONMENT'
-  },
-  {
     name: 'COUNTRY_CONFIG_HOST',
     valueLabel: 'COUNTRY_CONFIG_HOST',
     valueType: 'VARIABLE',
@@ -803,6 +796,18 @@ ALL_QUESTIONS.push(
 const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
 
 ;(async () => {
+  log(kleur.bold().yellow(
+    '\n------------------------------------------------------------------------------\n' +
+    'Welcome to the OpenCRVS environment setup script!\n\n' +
+    'This script is deprecated as of OpenCRVS v2.0:\n' +
+    ' - Users who are using 1.9 and are not yet ready to migrate to Kubernetes\n' +
+    '   should continue using this script.\n' +
+    ' - Users who are using 1.9 and wish to migrate from Swarm to Kubernetes\n' +
+    '   should refer to the migration documentation for guidance.\n' +
+    ' - New users and users who have already migrated to Kubernetes should no longer use this script.\n' +
+    'Please refer to the documentation for setting up environments using the new infrastructure setup.\n' +
+    '------------------------------------------------------------------------------\n'
+  ))
   const { type: environment } = await prompts<string>(
     [
       {
@@ -1329,22 +1334,6 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
       value: ['production', 'staging'].includes(environment) ? 'false' : 'true',
       didExist: findExistingValue(
         'ACTIVATE_USERS',
-        'VARIABLE',
-        'ENVIRONMENT',
-        existingValues
-      ),
-      scope: 'ENVIRONMENT' as const
-    },
-    {
-      type: 'VARIABLE' as const,
-      name: 'AUTH_HOST',
-      value: answerOrExisting(
-        allAnswers.domain,
-        findExistingValue('DOMAIN', 'VARIABLE', 'ENVIRONMENT', existingValues),
-        (val) => `https://auth.${val}`
-      ),
-      didExist: findExistingValue(
-        'AUTH_HOST',
         'VARIABLE',
         'ENVIRONMENT',
         existingValues

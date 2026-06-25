@@ -8,7 +8,6 @@ The following actions currently support action confirmation:
 
 - `ActionType.NOTIFY`
 - `ActionType.DECLARE`
-- `ActionType.VALIDATE`
 - `ActionType.REGISTER`
 - `ActionType.REJECT`
 - `ActionType.ARCHIVE`

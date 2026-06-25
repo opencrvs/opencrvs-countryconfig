@@ -237,12 +237,7 @@ services:
       - MONGODB_ADMIN_PASSWORD=${MONGODB_ADMIN_PASSWORD}
       - USER_MGNT_MONGODB_PASSWORD=${USER_MGNT_MONGODB_PASSWORD}
       - HEARTH_MONGODB_PASSWORD=${HEARTH_MONGODB_PASSWORD}
-      - CONFIG_MONGODB_PASSWORD=${CONFIG_MONGODB_PASSWORD}
       - PERFORMANCE_MONGODB_PASSWORD=${PERFORMANCE_MONGODB_PASSWORD}
-      - METRICS_MONGODB_PASSWORD=${METRICS_MONGODB_PASSWORD}
-      - OPENHIM_MONGODB_PASSWORD=${OPENHIM_MONGODB_PASSWORD}
-      - WEBHOOKS_MONGODB_PASSWORD=${WEBHOOKS_MONGODB_PASSWORD}
-      - NOTIFICATION_MONGODB_PASSWORD=${NOTIFICATION_MONGODB_PASSWORD}
       - EVENTS_MONGODB_PASSWORD=${EVENTS_MONGODB_PASSWORD}
     networks:
       - overlay_net
@@ -253,7 +248,7 @@ services:
         tag: 'mongo-on-update'
   # Configure redis
   redis:
-    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    command: ['redis-server', '/usr/local/etc/redis/redis.conf']
     secrets:
       - source: redis-acl.{{ts}}
         target: /usr/local/etc/redis/users.acl
@@ -502,8 +497,11 @@ services:
     environment:
       - DECLARED_DECLARATION_SEARCH_QUERY_COUNT=100
       - COUNTRY_CONFIG_URL=https://countryconfig.{{hostname}}
+      - COUNTRY_CONFIG_URL_INTERNAL=http://countryconfig:3040
+      - LOGIN_URL=https://login.{{hostname}}
+      - AUTH_URL_INTERNAL=http://auth:4040
+      - GATEWAY_URL_INTERNAL=http://gateway:7070
       - CONTENT_SECURITY_POLICY_WILDCARD=${CONTENT_SECURITY_POLICY_WILDCARD}
-      - MINIO_URL=https://minio.{{hostname}}
     deploy:
       labels:
         - 'traefik.enable=true'
@@ -566,12 +564,9 @@ services:
       replicas: 1
     environment:
       - NODE_ENV=production
-      - FHIR_URL=http://hearth:3447/fhir
+      - OPENCRVS_ENVIRONMENT=production
       - AUTH_URL=http://auth:4040
-      - APPLICATION_CONFIG_URL=http://config:2021
-      - CONFIRM_REGISTRATION_URL=http://workflow:5050/confirm/registration
       - MONGO_URL=mongodb://mongo1/user-mgnt?replicaSet=rs0
-      - CONFIG_MONGO_URL=mongodb://mongo1/application-config?replicaSet=rs0
       - APN_SERVICE_URL=http://apm-server:8200
       - COUNTRY_CONFIG_URL=https://countryconfig.{{hostname}}
       - LOGIN_URL=https://login.{{hostname}}
@@ -601,6 +596,10 @@ services:
   login:
     environment:
       - COUNTRY_CONFIG_URL=https://countryconfig.{{hostname}}
+      - COUNTRY_CONFIG_URL_INTERNAL=http://countryconfig:3040
+      - CLIENT_APP_URL=https://register.{{hostname}}
+      - AUTH_URL_INTERNAL=http://auth:4040
+      - GATEWAY_URL_INTERNAL=http://gateway:7070
       - CONTENT_SECURITY_POLICY_WILDCARD=${CONTENT_SECURITY_POLICY_WILDCARD}
     deploy:
       labels:
@@ -637,48 +636,9 @@ services:
       - APN_SERVICE_URL=http://apm-server:8200
       - CERT_PRIVATE_KEY_PATH=/run/secrets/jwt-private-key.{{ts}}
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
-      - LOGIN_URL=https://login.{{hostname}}
-      - COUNTRY_CONFIG_URL_EXTERNAL=https://countryconfig.{{hostname}}
-      - CLIENT_APP_URL=https://register.{{hostname}}
       - DOMAIN={{hostname}}
       - REDIS_USERNAME=${AUTH_REDIS_USERNAME}
       - REDIS_PASSWORD=${AUTH_REDIS_PASSWORD}
-    deploy:
-      labels:
-        - 'traefik.enable=true'
-        - 'traefik.http.routers.auth.rule=Host(`auth.{{hostname}}`) && !Path(`/internal/reindexing-token`)'
-        - 'traefik.http.services.auth.loadbalancer.server.port=4040'
-        - 'traefik.http.routers.auth.tls=true'
-        - 'traefik.http.routers.auth.tls.certresolver=certResolver'
-        - 'traefik.http.routers.auth.entrypoints=web,websecure'
-        - 'traefik.docker.network=opencrvs_overlay_net'
-        - 'traefik.http.middlewares.auth.headers.customresponseheaders.Pragma=no-cache'
-        - 'traefik.http.middlewares.auth.headers.customresponseheaders.Cache-control=no-store'
-        - 'traefik.http.middlewares.auth.headers.customresponseheaders.X-Robots-Tag=none'
-        - 'traefik.http.middlewares.auth.headers.stsseconds=31536000'
-        - 'traefik.http.middlewares.auth.headers.stsincludesubdomains=true'
-        - 'traefik.http.middlewares.auth.headers.stspreload=true'
-        # Block /internal/reindexing-token from external access (only reachable internally via overlay network)
-        - 'traefik.http.routers.block-auth-reindexing-token.rule=Host(`auth.{{hostname}}`) && Path(`/internal/reindexing-token`)'
-        - 'traefik.http.routers.block-auth-reindexing-token.middlewares=block-internal-routes'
-      replicas: 1
-    networks:
-      - overlay_net
-    logging:
-      driver: gelf
-      options:
-        gelf-address: 'udp://127.0.0.1:12201'
-        tag: 'auth'
-  user-mgnt:
-    secrets:
-      - jwt-public-key.{{ts}}
-    environment:
-      - NODE_ENV=production
-      - SENTRY_DSN=${SENTRY_DSN:-}
-      - APN_SERVICE_URL=http://apm-server:8200
-      - RECORD_SEARCH_QUOTA=2000
-      - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
-      - MONGO_URL=mongodb://user-mgnt:${USER_MGNT_MONGODB_PASSWORD}@mongo1/user-mgnt?replicaSet=rs0
     deploy:
       labels:
         - 'traefik.enable=false'
@@ -689,7 +649,7 @@ services:
       driver: gelf
       options:
         gelf-address: 'udp://127.0.0.1:12201'
-        tag: 'user-mgnt'
+        tag: 'auth'
   events:
     secrets:
       - jwt-public-key.{{ts}}
@@ -700,6 +660,7 @@ services:
       - USER_MGNT_MONGO_URL=mongodb://user-mgnt:${USER_MGNT_MONGODB_PASSWORD}@mongo1/user-mgnt?replicaSet=rs0
       - ES_URL=http://search-user:${ROTATING_SEARCH_ELASTIC_PASSWORD}@elasticsearch:9200
       - EVENTS_POSTGRES_URL=postgres://events_app:${EVENTS_APP_POSTGRES_PASSWORD}@postgres/events
+      - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
     deploy:
       labels:
         - 'traefik.enable=false'
@@ -711,27 +672,6 @@ services:
       options:
         gelf-address: 'udp://127.0.0.1:12201'
         tag: 'events'
-  notification:
-    secrets:
-      - jwt-public-key.{{ts}}
-    environment:
-      - NODE_ENV=production
-      - LANGUAGES=en,fr
-      - SENTRY_DSN=${SENTRY_DSN:-}
-      - APN_SERVICE_URL=http://apm-server:8200
-      - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
-      - MONGO_URL=mongodb://notification:${NOTIFICATION_MONGODB_PASSWORD}@mongo1/notification?replicaSet=rs0
-    deploy:
-      replicas: 1
-      labels:
-        - 'traefik.enable=false'
-    networks:
-      - overlay_net
-    logging:
-      driver: gelf
-      options:
-        gelf-address: 'udp://127.0.0.1:12201'
-        tag: 'notification'
   gateway:
     secrets:
       - jwt-public-key.{{ts}}
@@ -771,91 +711,6 @@ services:
       options:
         gelf-address: 'udp://127.0.0.1:12201'
         tag: 'gateway'
-  workflow:
-    secrets:
-      - jwt-public-key.{{ts}}
-    environment:
-      - NODE_ENV=production
-      - LANGUAGES=en,fr
-      - SENTRY_DSN=${SENTRY_DSN:-}
-      - APN_SERVICE_URL=http://apm-server:8200
-      - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
-      - REDIS_USERNAME=${WORKFLOW_REDIS_USERNAME}
-      - REDIS_PASSWORD=${WORKFLOW_REDIS_PASSWORD}
-    deploy:
-      labels:
-        - 'traefik.enable=false'
-      replicas: 1
-    networks:
-      - overlay_net
-    logging:
-      driver: gelf
-      options:
-        gelf-address: 'udp://127.0.0.1:12201'
-        tag: 'workflow'
-  search:
-    secrets:
-      - jwt-public-key.{{ts}}
-    environment:
-      - NODE_ENV=production
-      - SENTRY_DSN=${SENTRY_DSN:-}
-      - ES_HOST=search-user:${ROTATING_SEARCH_ELASTIC_PASSWORD}@elasticsearch:9200
-      - APN_SERVICE_URL=http://apm-server:8200
-      - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
-      - HEARTH_MONGO_URL=mongodb://hearth:${HEARTH_MONGODB_PASSWORD}@mongo1/hearth-dev?replicaSet=rs0
-    deploy:
-      labels:
-        - 'traefik.enable=false'
-      replicas: 1
-    networks:
-      - overlay_net
-    logging:
-      driver: gelf
-      options:
-        gelf-address: 'udp://127.0.0.1:12201'
-        tag: 'search'
-  metrics:
-    secrets:
-      - jwt-public-key.{{ts}}
-    volumes:
-      - /data/vsexport:/usr/src/app/packages/metrics/src/scripts
-    environment:
-      - NODE_ENV=production
-      - SENTRY_DSN=${SENTRY_DSN:-}
-      - APN_SERVICE_URL=http://apm-server:8200
-      - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
-      - MONGO_URL=mongodb://metrics:${METRICS_MONGODB_PASSWORD}@mongo1/metrics?replicaSet=rs0
-      - HEARTH_MONGO_URL=mongodb://hearth:${HEARTH_MONGODB_PASSWORD}@mongo1/hearth-dev?replicaSet=rs0
-      - DASHBOARD_MONGO_URL=mongodb://performance:${PERFORMANCE_MONGODB_PASSWORD}@mongo1/performance?replicaSet=rs0
-    deploy:
-      placement:
-        constraints:
-          - node.labels.data1 == true
-      labels:
-        - 'traefik.enable=false'
-      replicas: 1
-    networks:
-      - overlay_net
-    logging:
-      driver: gelf
-      options:
-        gelf-address: 'udp://127.0.0.1:12201'
-        tag: 'metrics'
-  scheduler:
-    environment:
-      - NODE_ENV=production
-      - OPENHIM_MONGO_URL=mongodb://openhim:${OPENHIM_MONGODB_PASSWORD}@mongo1/openhim-dev?replicaSet=rs0
-    deploy:
-      replicas: 1
-      labels:
-        - 'traefik.enable=false'
-    networks:
-      - overlay_net
-    logging:
-      driver: gelf
-      options:
-        gelf-address: 'udp://127.0.0.1:12201'
-        tag: 'scheduler'
   documents:
     deploy:
       replicas: 1
@@ -880,50 +735,12 @@ services:
       options:
         gelf-address: 'udp://127.0.0.1:12201'
         tag: 'documents'
-  config:
-    secrets:
-      - jwt-public-key.{{ts}}
-    environment:
-      - NODE_ENV=production
-      - SENTRY_DSN=${SENTRY_DSN:-}
-      - APN_SERVICE_URL=http://apm-server:8200
-      - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
-      - MONGO_URL=mongodb://config:${CONFIG_MONGODB_PASSWORD}@mongo1/application-config?replicaSet=rs0
-      - HEARTH_MONGO_URL=mongodb://hearth:${HEARTH_MONGODB_PASSWORD}@mongo1/hearth-dev?replicaSet=rs0
-      - LOGIN_URL=https://login.{{hostname}}
-      - CLIENT_APP_URL=https://register.{{hostname}}
-      - DOMAIN={{hostname}}
-    deploy:
-      labels:
-        - 'traefik.enable=true'
-        - 'traefik.http.routers.config.rule=Host(`config.{{hostname}}`)'
-        - 'traefik.http.services.config.loadbalancer.server.port=2021'
-        - 'traefik.http.routers.config.tls=true'
-        - 'traefik.http.routers.config.tls.certresolver=certResolver'
-        - 'traefik.http.routers.config.entrypoints=web,websecure'
-        - 'traefik.docker.network=opencrvs_overlay_net'
-        - 'traefik.http.middlewares.config.headers.customresponseheaders.Pragma=no-cache'
-        - 'traefik.http.middlewares.config.headers.customresponseheaders.Cache-control=no-store'
-        - 'traefik.http.middlewares.config.headers.customresponseheaders.X-Robots-Tag=none'
-        - 'traefik.http.middlewares.config.headers.stsseconds=31536000'
-        - 'traefik.http.middlewares.config.headers.stsincludesubdomains=true'
-        - 'traefik.http.middlewares.config.headers.stspreload=true'
-      replicas: 1
-    networks:
-      - overlay_net
-    logging:
-      driver: gelf
-      options:
-        gelf-address: 'udp://127.0.0.1:12201'
-        tag: 'config'
   migration:
     environment:
       - USER_MGNT_MONGO_URL=mongodb://user-mgnt:${USER_MGNT_MONGODB_PASSWORD}@mongo1/user-mgnt?replicaSet=rs0
       - DASHBOARD_MONGO_URL=mongodb://performance:${PERFORMANCE_MONGODB_PASSWORD}@mongo1/performance?replicaSet=rs0
-      - APPLICATION_CONFIG_MONGO_URL=mongodb://config:${CONFIG_MONGODB_PASSWORD}@mongo1/application-config?replicaSet=rs0
       - HEARTH_MONGO_URL=mongodb://hearth:${HEARTH_MONGODB_PASSWORD}@mongo1/hearth-dev?replicaSet=rs0
       - EVENTS_MONGO_URL=mongodb://events:${EVENTS_MONGODB_PASSWORD}@mongo1/events?replicaSet=rs0
-      - OPENHIM_MONGO_URL=mongodb://openhim:${OPENHIM_MONGODB_PASSWORD}@mongo1/openhim-dev?replicaSet=rs0
       - EVENTS_POSTGRES_URL=postgres://events_migrator:${EVENTS_MIGRATOR_POSTGRES_PASSWORD}@postgres/events
       - ES_HOST=search-user:${ROTATING_SEARCH_ELASTIC_PASSWORD}@elasticsearch:9200
       - MINIO_ACCESS_KEY=${MINIO_ROOT_USER}
@@ -945,32 +762,50 @@ services:
       options:
         gelf-address: 'udp://127.0.0.1:12201'
         tag: 'migration'
-  # Configure other dependencies with deployment specifc details
-  hearth:
+
+  legacy-data-migration:
+    image: ghcr.io/opencrvs/ocrvs-migration:${VERSION}
+    command:
+      ['/bin/sh', '-c', '/app/wait && yarn start:prod --migrate-legacy-data']
     environment:
-      - mongodb__url=mongodb://hearth:${HEARTH_MONGODB_PASSWORD}@mongo1/hearth-dev?replicaSet=rs0
-      - logger__level=warn
+      - USER_MGNT_MONGO_URL=mongodb://user-mgnt:${USER_MGNT_MONGODB_PASSWORD}@mongo1/user-mgnt?replicaSet=rs0
+      - DASHBOARD_MONGO_URL=mongodb://performance:${PERFORMANCE_MONGODB_PASSWORD}@mongo1/performance?replicaSet=rs0
+      - HEARTH_MONGO_URL=mongodb://hearth:${HEARTH_MONGODB_PASSWORD}@mongo1/hearth-dev?replicaSet=rs0
+      - EVENTS_MONGO_URL=mongodb://events:${EVENTS_MONGODB_PASSWORD}@mongo1/events?replicaSet=rs0
+      - EVENTS_POSTGRES_URL=postgres://events_migrator:${EVENTS_MIGRATOR_POSTGRES_PASSWORD}@postgres/events
+      - EVENTS_SUPERUSER_POSTGRES_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres/events
+      - ES_HOST=search-user:${ROTATING_SEARCH_ELASTIC_PASSWORD}@elasticsearch:9200
+      - INFLUX_HOST=influxdb
+      - INFLUX_PORT=8086
+      - INFLUX_DB=ocrvs
+      - WAIT_HOSTS=mongo1:27017,influxdb:8086,minio:9000,elasticsearch:9200
+      - MINIO_ACCESS_KEY=${MINIO_ROOT_USER}
+      - MINIO_SECRET_KEY=${MINIO_ROOT_PASSWORD}
+      - MINIO_HOST=minio
+      - MINIO_PORT=9000
+      - MINIO_BUCKET=ocrvs
+      - SUPER_USER_PASSWORD=${SUPER_USER_PASSWORD}
+      - MONGO_HOST=mongo1
+      - MONGO_PORT=27017
+      - MONGO_USERNAME=${MONGODB_ADMIN_USER}
+      - MONGO_PASSWORD=${MONGODB_ADMIN_PASSWORD}
+      - MONGO_REPLICA_SET=rs0
     deploy:
       labels:
         - 'traefik.enable=false'
       replicas: 1
-    secrets:
-      - jwt-public-key.{{ts}}
-    configs:
-      - source: hearth-check-dupe-plugin.{{ts}}
-        target: /src/hearth/lib/plugins/checkDuplicateTask.js
-      - source: hearth-queryparam-extensions-conf.{{ts}}
-        target: /src/hearth/config/queryparam-extensions.json
+      restart_policy:
+        condition: on-failure
     networks:
       - overlay_net
     logging:
       driver: gelf
       options:
         gelf-address: 'udp://127.0.0.1:12201'
-        tag: 'hearth'
+        tag: 'legacy-data-migration'
 
   postgres:
-    image: postgres:17.6
+    image: docker.io/chumaky/postgres_mongo_fdw:17.6_fdw5.5.2
     networks:
       - overlay_net
     restart: unless-stopped
@@ -989,7 +824,7 @@ services:
 
   postgres-on-update:
     image: postgres:17.6
-    command: ["bash", "-c", "bash /on-deploy.sh && bash /setup-analytics.sh"]
+    command: ['bash', '-c', 'bash /on-deploy.sh && bash /setup-analytics.sh']
     configs:
       - source: postgres-on-deploy.{{ts}}
         target: /on-deploy.sh
@@ -1014,41 +849,6 @@ services:
     networks:
       - overlay_net
 
-  webhooks:
-    secrets:
-      - jwt-public-key.{{ts}}
-    environment:
-      - NODE_ENV=production
-      - SENTRY_DSN=${SENTRY_DSN:-}
-      - APN_SERVICE_URL=http://apm-server:8200
-      - MONGO_URL=mongodb://webhooks:${WEBHOOKS_MONGODB_PASSWORD}@mongo1/webhooks?replicaSet=rs0
-      - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
-      - REDIS_USERNAME=${WEBHOOKS_REDIS_USERNAME}
-      - REDIS_PASSWORD=${WEBHOOKS_REDIS_PASSWORD}
-    deploy:
-      labels:
-        - 'traefik.enable=true'
-        - 'traefik.http.routers.webhooks.rule=Host(`webhooks.{{hostname}}`)'
-        - 'traefik.http.services.webhooks.loadbalancer.server.port=2525'
-        - 'traefik.http.routers.webhooks.tls=true'
-        - 'traefik.http.routers.webhooks.tls.certresolver=certResolver'
-        - 'traefik.http.routers.webhooks.entrypoints=web,websecure'
-        - 'traefik.docker.network=opencrvs_overlay_net'
-        - 'traefik.http.middlewares.webhooks.headers.customresponseheaders.Pragma=no-cache'
-        - 'traefik.http.middlewares.webhooks.headers.customresponseheaders.Cache-control=no-store'
-        - 'traefik.http.middlewares.webhooks.headers.customresponseheaders.X-Robots-Tag=none'
-        - 'traefik.http.middlewares.webhooks.headers.stsseconds=31536000'
-        - 'traefik.http.middlewares.webhooks.headers.stsincludesubdomains=true'
-        - 'traefik.http.middlewares.webhooks.headers.stspreload=true'
-      replicas: 1
-    networks:
-      - overlay_net
-    logging:
-      driver: gelf
-      options:
-        gelf-address: 'udp://127.0.0.1:12201'
-        tag: 'webhooks'
-
   dashboards:
     image: metabase/metabase:v0.56.4
     volumes:
@@ -1058,7 +858,7 @@ services:
       - /opt/opencrvs/infrastructure/metabase/initialize-database.sh:/initialize-database.sh
       - /opt/opencrvs/infrastructure/metabase/update-database.sh:/update-database.sh
       - /opt/opencrvs/infrastructure/metabase/environment-configuration.sql:/environment-configuration.sql
-    entrypoint: ["/bin/sh", "/run.sh"]
+    entrypoint: ['/bin/sh', '/run.sh']
     networks:
       - overlay_net
     environment:

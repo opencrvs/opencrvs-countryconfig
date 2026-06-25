@@ -10,8 +10,8 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { Event } from '@countryconfig/form/types/types'
 import { Request, ResponseObject, ResponseToolkit } from '@hapi/hapi'
+import { Event } from '@countryconfig/events/utils'
 import { ActionType, event, never, not } from '@opencrvs/toolkit/events'
 
 type FontFamilyTypes = {

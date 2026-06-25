@@ -8,13 +8,13 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
-import { QA_ENV } from '@countryconfig/constants'
+import { OPENCRVS_ENVIRONMENT } from '@countryconfig/constants'
 import { readCSVToJSON } from '@countryconfig/utils'
 import { Request, ResponseToolkit } from '@hapi/hapi'
 
 export async function usersHandler(_: Request, h: ResponseToolkit) {
   const users: unknown[] = await readCSVToJSON(
-    process.env.NODE_ENV === 'production' && !QA_ENV
+    ['staging', 'production'].includes(OPENCRVS_ENVIRONMENT)
       ? './src/data-seeding/employees/source/prod-employees.csv'
       : './src/data-seeding/employees/source/default-employees.csv'
   )
