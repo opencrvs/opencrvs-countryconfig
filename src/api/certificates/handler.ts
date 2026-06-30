@@ -162,7 +162,7 @@ export async function certificateHandler(
         delayed: 0
       },
       svgUrl: '/api/countryconfig/certificates/v2.birth-notification.svg',
-      fonts: notoSansFont,
+      fonts: robotoFont,
       conditionals: [
         {
           type: 'SHOW',
