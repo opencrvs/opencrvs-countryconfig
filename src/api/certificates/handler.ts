@@ -69,6 +69,15 @@ const libreBaskervilleFont: Record<string, FontFamilyTypes> = {
   }
 }
 
+const robotoFont: Record<string, FontFamilyTypes> = {
+  Roboto: {
+    normal: '/api/countryconfig/fonts/Roboto-Regular.ttf',
+    bold: '/api/countryconfig/fonts/Roboto-Bold.ttf',
+    italics: '/api/countryconfig/fonts/Roboto-Italic.ttf',
+    bolditalics: '/api/countryconfig/fonts/Roboto-BoldItalic.ttf'
+  }
+}
+
 export async function certificateHandler(
   request: Request,
   h: ResponseToolkit
@@ -254,7 +263,7 @@ export async function certificateHandler(
         delayed: 18
       },
       svgUrl: '/api/countryconfig/certificates/v2.birth-certificate.svg',
-      fonts: notoSansFont,
+      fonts: robotoFont,
       conditionals: [
         {
           type: 'SHOW',
@@ -454,7 +463,7 @@ export async function certificateHandler(
       },
       svgUrl:
         '/api/countryconfig/certificates/v2.birth-statement.svg',
-      fonts: notoSansFont
+      fonts: robotoFont
     }
   ]
   return certificateConfigs
