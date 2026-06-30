@@ -83,8 +83,7 @@ export const Workqueues = defineWorkqueues([
       flags: {
         anyOf: [InherentFlags.INCOMPLETE],
         noneOf: [InherentFlags.REJECTED]
-      },
-      updatedAtLocation: { type: 'within', location: user('primaryOfficeId') }
+      }
     },
     action: { type: ActionType.READ },
     emptyMessage: {
