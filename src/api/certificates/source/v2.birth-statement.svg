@@ -496,8 +496,8 @@
 </g>
 <rect x="29.5" y="111" width="536" height="38" rx="2" fill="#F3F3F3"/>
 <text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Roboto" font-size="10" letter-spacing="0px"><tspan x="35.5" y="125.418">This is to certify that the information contained herein is a true extract of the records held within the shared database </tspan><tspan x="35.5" y="141.418">of participating Government of Tuvalu agencies.</tspan></text>
-<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Roboto" font-size="10" font-weight="bold" letter-spacing="0px"><tspan x="29.5" y="176.918">Tracking ID</tspan></text>
-<text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Roboto" font-size="10" letter-spacing="0px"><tspan x="189.5" y="176.918">{{$lookup $metadata 'trackingId'}}</tspan></text>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Roboto" font-size="10" font-weight="bold" letter-spacing="0px"><tspan x="29.5" y="176.918">Registration Number</tspan></text>
+<text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Roboto" font-size="10" letter-spacing="0px"><tspan x="189.5" y="176.918">{{$lookup $metadata 'legalStatuses.REGISTERED.registrationNumber'}}</tspan></text>
 <line x1="29.5" y1="185.8" x2="545.5" y2="185.8" stroke="#A5A5A5" stroke-width="0.4"/>
 <text fill="black" style="white-space: pre" xml:space="preserve" font-family="Roboto" font-size="10" font-weight="bold" letter-spacing="0.7px"><tspan x="29.5" y="208.418">CHILD</tspan></text>
 <line x1="29.5" y1="217.5" x2="545.5" y2="217.5" stroke="black"/>
@@ -542,7 +542,7 @@
 <g clip-path="url(#clip2_103_15948)">
 <line x1="266.5" y1="776.5" x2="545.5" y2="776.5" stroke="#CFD2C6" stroke-dasharray="1.6 1.6"/>
 <text fill="black" style="white-space: pre" xml:space="preserve" font-family="Roboto" font-size="10" font-weight="bold" letter-spacing="0px"><tspan x="266.5" y="794.418">{{$formatEnum ($lookup $metadata 'updatedByUserRole')}}</tspan></text>
-<text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Roboto" font-size="10" letter-spacing="0px"><tspan x="266.5" y="809.918">{{$lookup $metadata 'updatedBy.name.fullname'}}</tspan></text>
+<text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Roboto" font-size="10" letter-spacing="0px"><tspan x="266.5" y="809.918">{{$defaultTo ($lookup $metadata 'legalStatuses.REGISTERED.createdBy.name') '-'}}</tspan></text>
 </g>
 <defs>
 <clipPath id="clip0_103_15948">

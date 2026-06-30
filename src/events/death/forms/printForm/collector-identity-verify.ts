@@ -74,7 +74,6 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
       data: [
         { fieldId: 'informant.relation' },
         { fieldId: 'informant.idType' },
-        { fieldId: 'informant.nid' },
         { fieldId: 'informant.passport' },
         { fieldId: 'informant.brn' },
         { fieldId: 'informant.name' },
