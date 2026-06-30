@@ -12,7 +12,7 @@
 
 import { Request, ResponseObject, ResponseToolkit } from '@hapi/hapi'
 import { Event } from '@countryconfig/events/utils'
-import { ActionType, event, never, not } from '@opencrvs/toolkit/events'
+import { ActionType, event, never, not, status } from '@opencrvs/toolkit/events'
 
 type FontFamilyTypes = {
   normal: string
@@ -66,6 +66,15 @@ const libreBaskervilleFont: Record<string, FontFamilyTypes> = {
     bold: '/api/countryconfig/fonts/LibreBaskerville-Bold.ttf',
     italics: '/api/countryconfig/fonts/LibreBaskerville-Italic.ttf',
     bolditalics: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf'
+  }
+}
+
+const robotoFont: Record<string, FontFamilyTypes> = {
+  Roboto: {
+    normal: '/api/countryconfig/fonts/Roboto-Regular.ttf',
+    bold: '/api/countryconfig/fonts/Roboto-Bold.ttf',
+    italics: '/api/countryconfig/fonts/Roboto-Italic.ttf',
+    bolditalics: '/api/countryconfig/fonts/Roboto-BoldItalic.ttf'
   }
 }
 
@@ -136,6 +145,30 @@ export async function certificateHandler(
       },
       svgUrl: '/api/countryconfig/certificates/birth-registration-receipt.svg',
       fonts: notoSansFont
+    },
+    {
+      id: 'v2.birth-notification',
+      event: Event.Birth,
+      isV2Template: true,
+      label: {
+        id: 'certificates.birth.notification',
+        defaultMessage: 'Birth Notification',
+        description: 'The label for a birth notification'
+      },
+      isDefault: false,
+      fee: {
+        onTime: 0,
+        late: 0,
+        delayed: 0
+      },
+      svgUrl: '/api/countryconfig/certificates/v2.birth-notification.svg',
+      fonts: robotoFont,
+      conditionals: [
+        {
+          type: 'SHOW',
+          conditional: status('NOTIFIED')
+        }
+      ]
     },
     {
       id: 'death-certificate',
@@ -230,7 +263,7 @@ export async function certificateHandler(
         delayed: 18
       },
       svgUrl: '/api/countryconfig/certificates/v2.birth-certificate.svg',
-      fonts: notoSansFont,
+      fonts: robotoFont,
       conditionals: [
         {
           type: 'SHOW',
@@ -266,6 +299,24 @@ export async function certificateHandler(
             .minCount(1)
         }
       ]
+    },
+    {
+      id: 'v2.birth-notification',
+      event: Event.Birth,
+      isV2Template: true,
+      label: {
+        id: 'certificates.birth.notification.receipt',
+        defaultMessage: 'Birth Notification Receipt',
+        description: 'The label for a birth notification receipt'
+      },
+      isDefault: false,
+      fee: {
+        onTime: 0,
+        late: 0,
+        delayed: 0
+      },
+      svgUrl: '/api/countryconfig/certificates/v2.birth-notification.svg',
+      fonts: notoSansFont
     },
     {
       id: 'v2.tennis-club-membership-certificate',
@@ -412,7 +463,7 @@ export async function certificateHandler(
       },
       svgUrl:
         '/api/countryconfig/certificates/v2.birth-statement.svg',
-      fonts: notoSansFont
+      fonts: robotoFont
     }
   ]
   return certificateConfigs

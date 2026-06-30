@@ -10,13 +10,16 @@
  */
 
 import {
+  and,
+  not,
   ConditionalType,
   defineDeclarationForm,
+  FieldType,
+  status,
+  user,
   DocumentMimeType,
   field,
-  FieldType,
   ImageMimeType,
-  not
 } from '@opencrvs/toolkit/events'
 import { emptyMessage, hasNonHealthNotifierRole } from '@countryconfig/events/utils'
 import { child } from './pages/child'
@@ -96,58 +99,31 @@ export const BIRTH_DECLARATION_REVIEW = {
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: hasNonHealthNotifierRole
+          conditional: and(not(status('DECLARED')), not(status('REGISTERED')), hasNonHealthNotifierRole)
         }
       ]
     },
     {
-      id: 'review.alphaPrint.step2.header.divider',
-      type: FieldType.DIVIDER,
-      label: emptyMessage,
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: hasNonHealthNotifierRole
-        }
-      ]
-    },
-    {
-      type: FieldType.PARAGRAPH,
-      id: 'review.alphaPrint.step2.header',
+      id: 'review.alphaPrint.healthNotifier',
+      type: FieldType.ALPHA_PRINT_BUTTON,
       label: {
-        defaultMessage:
-          'Step 2: Upload the signed declaration summary after it has been reviewed and signed by the informant(s).',
-        id: 'event.birth.action.declare.form.review.alphaPrint.step2.header.label',
-        description: 'Label for the alpha print step 2 header in the review section'
-      },
-      configuration: { styles: { hint: true } },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: hasNonHealthNotifierRole
-        }
-      ]
-    },
-    {
-      type: FieldType.FILE,
-      id: 'review.uploadedSignature',
-      uncorrectable: true,
-      required: false,
-      label: {
-        defaultMessage: 'Signed declaration summary',
-        id: 'event.birth.action.declare.form.review.uploadedSignature.header.label',
+        defaultMessage: 'Print declaration',
+        id: 'event.birth.action.declare.form.review.alphaPrint.healthNotifier.label',
         description:
-          'Label for the uploaded signature field in the review section'
+          'Label for the health notifier print declaration button in the review section'
       },
-      configuration: DEFAULT_FILE_CONFIGURATION,
+      configuration: {
+        template: 'v2.birth-notification',
+        buttonLabel: {
+          defaultMessage: 'Print Notification Receipt',
+          id: 'event.birth.action.declare.form.review.alphaPrint.healthNotifier.button.label',
+          description: 'Label for the health notifier print notification receipt button'
+        }
+      },
       conditionals: [
         {
-          type: ConditionalType.ENABLE,
-          conditional: not(field('review.alphaPrint').isFalsy())
-        },
-        {
           type: ConditionalType.SHOW,
-          conditional: hasNonHealthNotifierRole
+          conditional: and(not(status('DECLARED')), not(status('REGISTERED')), hasNonHealthNotifierRole)
         }
       ]
     }
