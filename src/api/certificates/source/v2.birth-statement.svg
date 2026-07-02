@@ -511,7 +511,7 @@
 <text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Roboto" font-size="10" letter-spacing="0px"><tspan x="194.5" y="286.118">{{$lookup $declaration 'child.dob'}}</tspan></text>
 <line x1="29.5" y1="294.35" x2="545.5" y2="294.35" stroke="#A5A5A5" stroke-width="0.3"/>
 <text fill="black" style="white-space: pre" xml:space="preserve" font-family="Roboto" font-size="10" font-weight="bold" letter-spacing="0px"><tspan x="29.5" y="309.718">Place of birth</tspan></text>
-<text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Roboto" font-size="10" letter-spacing="0px"><tspan x="194.5" y="309.718">{{$lookup $declaration 'child.birthLocation.name'}}</tspan></text>
+<text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Roboto" font-size="10" letter-spacing="0px">{{#ifCond ($lookup $declaration 'child.placeOfBirth') '===' 'Health Institution'}}{{{concatAddress ($lookup $declaration 'child.birthLocation') 194.5 309.718 14}}}{{else}}{{#ifCond ($lookup $declaration 'child.placeOfBirth') '===' 'Residential address'}}{{{concatAddress ($lookup $declaration 'child.birthLocation.privateHome') 194.5 309.718 14}}}{{else}}{{{concatAddress ($lookup $declaration 'child.birthLocation.other') 194.5 309.718 14}}}{{/ifCond}}{{/ifCond}}</text>
 <text fill="black" style="white-space: pre" xml:space="preserve" font-family="Roboto" font-size="10" font-weight="bold" letter-spacing="0.7px"><tspan x="29.5" y="336.218">MOTHER</tspan></text>
 <line x1="29.5" y1="345.3" x2="545.5" y2="345.3" stroke="black"/>
 <text fill="black" style="white-space: pre" xml:space="preserve" font-family="Roboto" font-size="10" font-weight="bold" letter-spacing="0px"><tspan x="29.5" y="366.718">Full name</tspan></text>
