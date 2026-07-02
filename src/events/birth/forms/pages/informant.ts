@@ -90,7 +90,48 @@ const informantMessageDescriptors = {
 const birthInformantTypeOptions = createSelectOptions(
   InformantType,
   informantMessageDescriptors
-)
+).map((option) => {
+  if (option.value === InformantType.MOTHER_AND_FATHER) {
+    return {
+      ...option,
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(
+            not(field('mother.detailsNotAvailable').isEqualTo(true)),
+            not(field('father.detailsNotAvailable').isEqualTo(true))
+          )
+        }
+      ]
+    }
+  }
+
+  if (option.value === InformantType.MOTHER) {
+    return {
+      ...option,
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: not(field('mother.detailsNotAvailable').isEqualTo(true))
+        }
+      ]
+    }
+  }
+
+  if (option.value === InformantType.FATHER) {
+    return {
+      ...option,
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: not(field('father.detailsNotAvailable').isEqualTo(true))
+        }
+      ]
+    }
+  }
+
+  return option
+})
 
 const informantOtherThanParent = and(
   not(

@@ -339,7 +339,7 @@ export const child = defineFormPage({
       type: FieldType.PARAGRAPH,
       label: {
         defaultMessage:
-          "Today's date is greater than 6 months after the date of birth. This is a delayed registration.",
+          "Todays date is greater than 6 months. Based on the date of birth.",
         description:
           'Paragraph notice shown when registration is more than 6 months after birth',
         id: 'event.birth.action.declare.form.section.child.field.lateRegistrationNotice.label'

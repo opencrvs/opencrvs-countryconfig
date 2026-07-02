@@ -62,7 +62,8 @@ export const father = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: not(
-            field('informant.relation').isEqualTo(InformantType.FATHER)
+            or(field('informant.relation').isEqualTo(InformantType.FATHER),
+            field('informant.relation').isEqualTo(InformantType.MOTHER_AND_FATHER))
           )
         },
         {
@@ -79,7 +80,8 @@ export const father = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: not(
-            field('informant.relation').isEqualTo(InformantType.FATHER)
+            or(field('informant.relation').isEqualTo(InformantType.FATHER),
+            field('informant.relation').isEqualTo(InformantType.MOTHER_AND_FATHER))
           )
         }
       ]
@@ -484,7 +486,7 @@ export const father = defineFormPage({
       type: FieldType.CHECKBOX,
       analytics: true,
       label: {
-        defaultMessage: "Same as mother's usual place of residence?",
+        defaultMessage: "Same as mother's residence?",
         description: 'This is the label for the field',
         id: 'event.birth.action.declare.form.section.father.field.address.addressSameAs.label'
       },
