@@ -1,0 +1,34 @@
+ingress:
+  ssl_enabled: false
+
+env:
+  OPENCRVS_ENVIRONMENT: development
+
+credentials:
+  super_user_password: password
+
+# OpenCRVS core image tag:
+platform:
+  tag: v2.0.0-beta
+
+countryconfig:
+  image:
+    tag: v1.9.11
+
+# Horizontal Pod Autoscaler (HPA) configuration:
+# Disabled by default for local environment.
+hpa:
+  enabled: false
+
+# Pod Disruption Budget (PDB) configuration:
+# Disabled by default for local environment.
+pdb:
+  enabled: false
+
+# Dashboards is disabled by default to allow easy deployment on Apple Silicon
+# If you are using x86 device, feel free to enable:
+dashboards:
+  enabled: false
+
+# Expose services on Node port
+service_type: NodePort

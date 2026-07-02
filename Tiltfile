@@ -3,30 +3,46 @@
 # For more information about variables, please check:
 # https://github.com/opencrvs/infrastructure/blob/develop/Tiltfile
 
-# Helm charts branch or tag:
-helm_chart_branch_or_tag = "develop"
-
 # OpenCRVS core images tag:
 # For releases it's ok to keeps same as branch_or_tag
-core_images_tag = "develop"
+core_images_tag = os.getenv("OPENCRVS_CORE_IMAGE_TAG", "v2.0.0-beta")
+
+# FIXME: Put release version
+core_ref = os.getenv("OPENCRVS_CORE_REF", "release-v2.0.0")
 
 # Build countryconfig image in local registry (use any name and tag you want)
 countryconfig_image_name="opencrvs/ocrvs-countryconfig"
 countryconfig_image_tag="local"
 
-load('ext://git_resource', 'git_checkout')
 
-charts_repo_url = "git@github.com:opencrvs/opencrvs-helm-charts.git#{}".format(helm_chart_branch_or_tag)
+# Internal variable for helm charts checkout
+core_charts_dir = ".opencrvs-core-charts"
 
-if not os.path.exists('../opencrvs-helm-charts'):
-  print("Cloning OpenCRVS Helm charts from {}...".format(charts_repo_url))
-  git_checkout(charts_repo_url, '../opencrvs-helm-charts')
-else:
-  print("⚠️ Skipping clonning {}, folder {} already exists. Use `git` CLI to update repository".format(charts_repo_url, '../opencrvs-helm-charts'))
-if not os.path.exists('../opencrvs-helm-charts/charts/dependencies') or not os.path.exists('../opencrvs-helm-charts/charts/opencrvs-services'):
+core_repo_url = 'https://github.com/opencrvs/opencrvs-core.git'
+
+print("Cloning OpenCRVS Helm charts from {}...".format(core_repo_url))
+local("""
+  rm -rf {core_charts_dir}
+  git clone \
+    --depth 1 \
+    --filter=blob:none \
+    --sparse \
+    --branch {core_ref} \
+    {core_repo_url} \
+    {core_charts_dir}
+
+  cd {core_charts_dir}
+  git sparse-checkout set charts
+""".format(
+  core_ref=core_ref,
+  core_charts_dir=core_charts_dir,
+  core_repo_url=core_repo_url
+))
+
+if not os.path.exists('{core_charts_dir}/charts/dependencies'.format(core_charts_dir=core_charts_dir)) or not os.path.exists('{core_charts_dir}/charts/opencrvs-services'.format(core_charts_dir=core_charts_dir)):
   fail('Something went wrong while cloning infrastructure repository!')
 
-load('../opencrvs-helm-charts/tilt/opencrvs.tilt', 'setup_opencrvs')
+load('./tilt/opencrvs.tilt', 'setup_opencrvs')
 
 # Build countryconfig image
 docker_build(
@@ -60,12 +76,13 @@ docker_build("{0}:{1}-assets".format(countryconfig_image_name, countryconfig_ima
               only=[
                 'infrastructure/metabase',
                 'infrastructure/postgres',
+                'infrastructure/deployment',
                 './Dockerfile.assets'
               ]
 )
 
 setup_opencrvs(
-    opencrvs_chart_repo='../opencrvs-helm-charts',
+    opencrvs_chart_repo=core_charts_dir,
     core_images_tag=core_images_tag,
     countryconfig_image_name=countryconfig_image_name,
     countryconfig_image_tag=countryconfig_image_tag,

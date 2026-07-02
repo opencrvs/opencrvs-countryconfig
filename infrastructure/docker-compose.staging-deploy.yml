@@ -22,14 +22,6 @@ services:
     deploy:
       replicas: 1
 
-  user-mgnt:
-    environment:
-      - NODE_ENV=production
-      - SENTRY_DSN=${SENTRY_DSN:-}
-      - MONGO_URL=mongodb://user-mgnt:${USER_MGNT_MONGODB_PASSWORD}@mongo1/user-mgnt?replicaSet=rs0
-    deploy:
-      replicas: 1
-
   documents:
     environment:
       - NODE_ENV=production
