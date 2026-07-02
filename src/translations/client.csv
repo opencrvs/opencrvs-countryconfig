@@ -1172,7 +1172,7 @@ event.death.action.declare.form.section.informant.field.age.label,This is the la
 event.death.action.declare.form.section.informant.field.age.postfix,This is the postfix for age field, years, ans
 event.death.action.declare.form.section.informant.field.brn.label,This is the label for the field,ID Number,Numéro d'identité
 event.death.action.declare.form.section.informant.field.brn.label,Label for informant birth registration number,Birth registration number,Numéro d'enregistrement de naissance
-event.death.action.declare.form.section.informant.field.contactHelper.label, Label,Point of contact(Next of kin/Informant), 
+event.death.action.declare.form.section.informant.field.contactHelper.label, Label,Point of contact (Next of kin / Informant), 
 event.death.action.declare.form.section.informant.field.dob.error,This is the error message for invalid date,Must be a valid Birthdate,Doit être une date de naissance valide
 event.death.action.declare.form.section.informant.field.dob.label,This is the label for the field,Date of birth,Date de naissance
 event.death.action.declare.form.section.informant.field.email.label,This is the label for the field,Email address,Email

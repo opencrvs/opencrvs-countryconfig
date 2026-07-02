@@ -570,7 +570,7 @@ export const informant = defineFormPage({
       id: 'informant.contactHelper',
       type: FieldType.HEADING,
       label: {
-        defaultMessage: 'Point of contact(Next of kin/Informant)',
+        defaultMessage: 'Point of contact (Next of kin / Informant)',
         description: 'This is the label for the field',
         id: 'event.death.action.declare.form.section.informant.field.contactHelper.label'
       },
