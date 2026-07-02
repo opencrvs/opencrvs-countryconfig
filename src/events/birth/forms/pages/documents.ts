@@ -9,7 +9,7 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { createSelectOptions } from '@countryconfig/events/utils'
+import { createSelectOptions, hasNonHealthNotifierRole } from '@countryconfig/events/utils'
 import {
   and,
   ConditionalType,
@@ -312,9 +312,6 @@ const nameChangeProofOptions = createSelectOptions(
   nameChangeProofMessageDescriptors
 )
 
-// Hide documents page for health notifiers
-const isNotHealthNotifier = not(user.hasRole('HOSPITAL_CLERK'))
-
 // Mother is in the record but is NOT the informant (i.e., not Mother or Mother and Father)
 const motherIncludedButNotInformant = and(
   requireMotherDetails,
@@ -379,7 +376,7 @@ export const documents = defineFormPage({
     description: 'Form section title for documents',
     id: 'form.section.documents.title'
   },
-  conditional: isNotHealthNotifier,
+  conditional: hasNonHealthNotifierRole,
   fields: [
     {
       id: 'documents.proofOfBirth',

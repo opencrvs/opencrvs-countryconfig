@@ -121,7 +121,13 @@ export const informant = defineFormPage({
         description: 'This is the label for the field',
         id: 'event.birth.action.declare.form.section.informant.field.relation.label'
       },
-      options: birthInformantTypeOptions
+      options: birthInformantTypeOptions,
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: hasNonHealthNotifierRole
+        }
+      ]
     },
     {
       id: 'informant.other.relation',
