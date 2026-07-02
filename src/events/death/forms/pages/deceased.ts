@@ -77,6 +77,76 @@ export const deceased = defineFormPage({
     id: 'form.death.deceased.title'
   },
   fields: [
+    {
+      id: 'deceased.birthRecordSearch',
+      type: FieldType.SEARCH,
+      label: {
+        defaultMessage: 'Search birth record by BRN',
+        description: 'Label for the deceased birth record BRN search field',
+        id: 'v2.event.death.action.declare.form.section.deceased.field.birthRecordSearch.label'
+      },
+      configuration: {
+        query: {
+          type: 'and',
+          clauses: [
+            {
+              'legalStatuses.REGISTERED.registrationNumber': {
+                term: '{term}',
+                type: 'exact'
+              }
+            },
+            {
+              eventType: 'birth'
+            }
+          ]
+        },
+        limit: 10,
+        offset: 0,
+        validation: {
+          validator: defineConditional({
+            type: 'string',
+            pattern: '^[A-Za-z0-9]{12}$',
+            description: 'Must be alpha-numeric and 12 characters long'
+          }),
+          message: {
+            defaultMessage:
+              'Invalid value: Must be alpha-numeric and 12 characters long',
+            description: 'Error message for invalid BRN search value',
+            id: 'v2.event.death.action.declare.form.section.deceased.field.birthRecordSearch.validation.invalid'
+          }
+        },
+        indicators: {
+          ok: {
+            defaultMessage: 'Birth record found',
+            description:
+              'Indicator shown when a matching birth record is found',
+            id: 'v2.event.death.action.declare.form.section.deceased.field.birthRecordSearch.indicators.ok'
+          },
+          clearModal: {
+            title: {
+              defaultMessage: 'Clear birth record?',
+              description: 'Title for the clear confirmation modal',
+              id: 'v2.event.death.action.declare.form.section.deceased.field.birthRecordSearch.clearModal.title'
+            },
+            description: {
+              defaultMessage: 'This will remove the linked birth record.',
+              description: 'Description for the clear confirmation modal',
+              id: 'v2.event.death.action.declare.form.section.deceased.field.birthRecordSearch.clearModal.description'
+            }
+          }
+        }
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: field('deceased.nationality').isEqualTo('FAR')
+        },
+        {
+          type: ConditionalType.DISPLAY_ON_REVIEW,
+          conditional: never()
+        }
+      ]
+    },
     // fields:
     // deceased.verified, deceased.query-params, deceased.verify-nid-http-fetch,
     // deceased.fetch-loader, deceased.id-reader
@@ -259,76 +329,6 @@ export const deceased = defineFormPage({
         id: `v2.event.death.action.declare.form.section.person.field.nationality.label`
       },
       defaultValue: 'FAR'
-    },
-    {
-      id: 'deceased.birthRecordSearch',
-      type: FieldType.SEARCH,
-      label: {
-        defaultMessage: 'Search birth record by BRN',
-        description: 'Label for the deceased birth record BRN search field',
-        id: 'v2.event.death.action.declare.form.section.deceased.field.birthRecordSearch.label'
-      },
-      configuration: {
-        query: {
-          type: 'and',
-          clauses: [
-            {
-              'legalStatuses.REGISTERED.registrationNumber': {
-                term: '{term}',
-                type: 'exact'
-              }
-            },
-            {
-              eventType: 'birth'
-            }
-          ]
-        },
-        limit: 10,
-        offset: 0,
-        validation: {
-          validator: defineConditional({
-            type: 'string',
-            pattern: '^[A-Za-z0-9]{12}$',
-            description: 'Must be alpha-numeric and 12 characters long'
-          }),
-          message: {
-            defaultMessage:
-              'Invalid value: Must be alpha-numeric and 12 characters long',
-            description: 'Error message for invalid BRN search value',
-            id: 'v2.event.death.action.declare.form.section.deceased.field.birthRecordSearch.validation.invalid'
-          }
-        },
-        indicators: {
-          ok: {
-            defaultMessage: 'Birth record found',
-            description:
-              'Indicator shown when a matching birth record is found',
-            id: 'v2.event.death.action.declare.form.section.deceased.field.birthRecordSearch.indicators.ok'
-          },
-          clearModal: {
-            title: {
-              defaultMessage: 'Clear birth record?',
-              description: 'Title for the clear confirmation modal',
-              id: 'v2.event.death.action.declare.form.section.deceased.field.birthRecordSearch.clearModal.title'
-            },
-            description: {
-              defaultMessage: 'This will remove the linked birth record.',
-              description: 'Description for the clear confirmation modal',
-              id: 'v2.event.death.action.declare.form.section.deceased.field.birthRecordSearch.clearModal.description'
-            }
-          }
-        }
-      },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: field('deceased.nationality').isEqualTo('FAR')
-        },
-        {
-          type: ConditionalType.DISPLAY_ON_REVIEW,
-          conditional: never()
-        }
-      ]
     },
     connectToMOSIPIdReader(
       {
