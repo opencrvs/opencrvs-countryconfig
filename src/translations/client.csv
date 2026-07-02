@@ -993,6 +993,11 @@ event.death.action.declare.form.section.deceased.field.dob.label,This is the lab
 event.death.action.declare.form.section.deceased.field.gender.label,This is the label for the field,Sex,Sexe
 event.death.action.declare.form.section.deceased.field.maritalStatus.label,This is the label for the field,Marital Status,État civil
 event.death.action.declare.form.section.deceased.field.name.label,This is the label for the field,Deceased's name,Nom du défunt
+v2.event.death.action.declare.form.section.deceased.field.birthRecordSearch.label,Label for the deceased birth record BRN search field,Search birth record by BRN,Rechercher l'acte de naissance par BRN
+v2.event.death.action.declare.form.section.deceased.field.birthRecordSearch.validation.invalid,Error message for invalid BRN search value,Invalid value: Must be alpha-numeric and 12 characters long,Valeur invalide : doit être alphanumérique et comporter 12 caractères
+v2.event.death.action.declare.form.section.deceased.field.birthRecordSearch.indicators.ok,Indicator shown when a matching birth record is found,Birth record found,Acte de naissance trouvé
+v2.event.death.action.declare.form.section.deceased.field.birthRecordSearch.clearModal.title,Title for the clear confirmation modal,Clear birth record?,Effacer l'acte de naissance ?
+v2.event.death.action.declare.form.section.deceased.field.birthRecordSearch.clearModal.description,Description for the clear confirmation modal,This will remove the linked birth record.,Cela supprimera l'acte de naissance associé.
 event.death.action.declare.form.section.deceased.field.numberOfDependants.label,This is the label for the field,No. of dependants,Nombre de personnes à charge
 event.death.action.declare.form.section.deceased.field.placeOfDeath.label,This is the label for the field,Place of death,Lieu du décès
 event.death.action.declare.form.section.documents.field.proofOfCauseOfDeath.label,This is the label for the field,Proof of cause of death,Preuve de la cause du décès
