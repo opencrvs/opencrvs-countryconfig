@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.0 Release Candidate
+
+### Breaking changes
+
+- Removed InfluxDB from deployment infrastructure (service, backup/restore, provisioning).
+
 ## 2.0.0
 
 ### Breaking changes
