@@ -56,10 +56,11 @@ export async function login(
    */
   skipPin?: boolean
 ) {
-  const token = await getToken(username)
-  expect(token).toBeDefined()
+  const { token, refreshToken } = await getAuthTokens(username)
+  expect(refreshToken).toBeDefined()
 
-  await page.goto(`${CLIENT_URL}?token=${token}`)
+  // Hand off only the refresh token; the client mints the access token from it.
+  await page.goto(`${CLIENT_URL}?refreshToken=${refreshToken}`)
 
   await page.waitForSelector('#pin-input, #appSpinner', { state: 'visible' })
 
@@ -72,7 +73,7 @@ export async function login(
   return token
 }
 
-export async function getToken(
+export async function getAuthTokens(
   username: string,
   password: string = TEST_USER_PASSWORD
 ) {
@@ -104,7 +105,17 @@ export async function getToken(
 
   const verifyBody = await verifyResponse.json()
 
-  return verifyBody.token
+  return {
+    token: verifyBody.token as string,
+    refreshToken: verifyBody.refreshToken as string
+  }
+}
+
+export async function getToken(
+  username: string,
+  password: string = TEST_USER_PASSWORD
+) {
+  return (await getAuthTokens(username, password)).token
 }
 
 export async function getClientToken(client_id: string, client_secret: string) {
