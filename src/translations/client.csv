@@ -823,6 +823,7 @@ event.birth.action.correction.form.section.requester.identity.verify.title,This 
 event.birth.action.declare.form.label,This is what this form is referred as in the system,Birth decalration form,Birth decalration form
 event.birth.action.declare.form.review.alphaPrint.header.label,Label for the declaration summary heading in the review section,Declaration summary,Résumé de déclaration
 event.birth.action.declare.form.review.alphaPrint.label,Label for the alpha print button in the review section,Print,Imprimer
+event.birth.action.declare.form.section.mother.field.isMarriedToFather.label,,"Were the child's mother and father married to each other?","Were the child's mother and father married to each other?"
 event.birth.action.declare.form.review.alphaPrint.step1.header.label,Label for the alpha print step 1 header in the review section,Step 1: Print the declaration summary for the informant(s) to review and sign.,Étape 1 : Imprimez le résumé de déclaration pour que le(s) déclarant(s) le examine(nt) et le signe(nt).
 event.birth.action.declare.form.review.alphaPrint.step2.header.label,Label for the alpha print step 2 header in the review section,Step 2: Upload the signed declaration summary after it has been reviewed and signed by the informant(s).,Étape 2 : Téléchargez le résumé de déclaration signé après qu'il ait été examiné et signé par le(s) déclarant(s).
 event.birth.action.declare.form.review.comment.label,Label for the comment field in the review section,Comment,Commentaire
@@ -903,6 +904,7 @@ event.birth.action.declare.form.section.mother.field.dateOfMarriage.label,Label 
 event.birth.action.declare.form.section.mother.field.deceasedChildren.label,Label for number of deceased children field,Deceased,Nombre d'enfants décédés
 event.birth.action.declare.form.section.mother.field.livingChildren.label,Label for number of living children field,Living,Nombre d'enfants vivants (y compris cette naissance)
 event.birth.action.declare.form.section.mother.field.name.label,This is the label for the field,Mother's name,Nom de la mère
+event.birth.action.declare.form.section.mother.field.passport.label,,Passport Number,Passport Number
 event.birth.action.declare.form.section.mother.field.placeOfBirth.label,Label for mother place of birth field,Place of birth,Lieu de naissance
 event.birth.action.declare.form.section.mother.field.placeOfMarriage.label,Label for mother place of marriage field,Place of marriage,Lieu du mariage
 event.birth.action.declare.form.section.mother.field.previousBirths.label,This is the label for the field,No. of previous births,Nombre de naissances antérieures

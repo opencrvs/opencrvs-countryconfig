@@ -192,7 +192,7 @@ export const mother = defineFormPage({
       required: true,
       analytics: true,
       label: {
-        defaultMessage: 'Type of ID',
+        defaultMessage: 'Form of ID',
         description: 'This is the label for the field',
         id: 'event.birth.action.declare.form.section.person.field.idType.label'
       },
@@ -316,9 +316,9 @@ export const mother = defineFormPage({
       type: FieldType.TEXT,
       required: false,
       label: {
-        defaultMessage: 'ID Number',
+        defaultMessage: 'Passport Number',
         description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.person.field.passport.label'
+        id: 'event.birth.action.declare.form.section.mother.field.passport.label'
       },
       conditionals: [
         {
@@ -459,7 +459,7 @@ export const mother = defineFormPage({
     {
       id: 'mother.age',
       type: FieldType.AGE,
-      required: true,
+      required: false,
       analytics: true,
       label: {
         defaultMessage: 'Age of mother',
@@ -535,7 +535,7 @@ export const mother = defineFormPage({
       analytics: true,
       required: false,
       label: {
-        defaultMessage: 'Is the mother married to the father of the child?',
+        defaultMessage: "Were the child's mother and father married to each other?",
         description: 'Label for whether mother is married to father',
         id: 'event.birth.action.declare.form.section.mother.field.isMarriedToFather.label'
       },
@@ -571,7 +571,7 @@ export const mother = defineFormPage({
     {
       id: 'mother.dateOfMarriage',
       type: FieldType.DATE,
-      required: true,
+      required: false,
       analytics: true,
       label: {
         defaultMessage: 'Date of marriage',
@@ -593,7 +593,7 @@ export const mother = defineFormPage({
     {
       id: 'mother.placeOfMarriage',
       type: FieldType.TEXT,
-      required: true,
+      required: false,
       analytics: true,
       label: {
         defaultMessage: 'Place of marriage',
