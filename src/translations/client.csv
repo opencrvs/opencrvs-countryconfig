@@ -819,6 +819,12 @@ event.birth.action.certificate.form.section.collectPayment.service.label.inBetwe
 event.birth.action.certificate.form.section.requester.printInAdvance.label,This is the label for the print-in-advance of issuance field,Print in advance of issuance,Imprimer avant la délivrance
 event.birth.action.certificate.form.section.verifyIdentity.data.label,Label for identity verification data block,Identity details,Détails de l'identité
 event.birth.action.collect-certificate.label,This is shown as the action name anywhere the user can trigger the action from,Print,Imprimer
+event.birth.action.correction.documents.supportingDocs.courtOrder.label,Label for the court order option,Court Order,Ordonnance du tribunal
+event.birth.action.correction.documents.supportingDocs.letterOfConsent.label,Label for the letter of consent option,Letter of consent,Lettre de consentement
+event.birth.action.correction.documents.supportingDocs.proofOfParriantageOrGuardianship.label,Label for the proof of parriantage or guardianship option,Proof of parriantage or guardianship,Preuve de parenté ou de tutelle
+event.birth.action.correction.documents.supportingDocs.proofOfParentsMarriage.label,Label for the proof of parent's marriage option,Proof of parent's marriage,Preuve du mariage des parents
+event.birth.action.correction.documents.supportingDocs.registrarGeneralOrRegistrationOffice.label,Label for the registrar general / registration office option,Registrar General / Registration Office,Registraire général / Bureau d'enregistrement
+event.birth.action.correction.documents.supportingDocs.statuoryDeclaration.label,Label for the statuory declaration option,Statuory declaration,Déclaration statutaire
 event.birth.action.correction.form.section.requester.identity.verify.title,This is the title of the section,Verify their identity,Vérifier l'identité
 event.birth.action.correction.form.section.details.title,,Correction request,Correction Request
 event.birth.action.correction.reason.option.other.label,,Other (please specify),Other (please specify)
@@ -895,7 +901,7 @@ event.birth.action.declare.form.section.introduction.field.guidance.registration
 event.birth.action.declare.form.section.introduction.field.guidance.registrationOfficer.label,Guidance: Explaining birth registration to parents or a qualified informant,Registration Officer Guidance,Conseils pour les agents d'enregistrement
 event.birth.action.declare.form.section.mother.field.age.label,This is the label for the field,Age of mother,Âge de la mère
 event.birth.action.declare.form.section.mother.field.brn.label,Label for the birth registration number text field,Birth registration number,Numéro d'enregistrement de naissance
-event.birth.action.declare.form.section.mother.field.brnSearch.helperText,Helper text for the birth registration number search field,"Search for a birth record. If found, details will auto-fill. Otherwise, continue with manual entry.",Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement.
+event.birth.action.declare.form.section.mother.field.brnSearch.helperText,Helper text for the birth registration number search field,"Search for a birth record. If found, details will auto-fill. Otherwise, continue with manual entry.","Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement."
 event.birth.action.declare.form.section.mother.field.brnSearch.indicators.clearModal.description,Description for the clear search confirmation modal,This will remove the auto-filled details for the mother.,Cela supprimera les détails remplis automatiquement pour la mère.
 event.birth.action.declare.form.section.mother.field.brnSearch.indicators.clearModal.title,Title for the clear search confirmation modal,Clear birth record?,Effacer l'acte de naissance ?
 event.birth.action.declare.form.section.mother.field.brnSearch.indicators.ok,Indicator shown when a birth record is found,Record found,Enregistrement trouvé
@@ -1075,7 +1081,7 @@ event.death.action.declare.form.section.deceased.field.dob.error,This is the err
 event.death.action.declare.form.section.deceased.field.dob.error.laterThanDeath,This is the error message for date of birth later than date of death,Date of birth must be before the date of death,La date de naissance doit être antérieure à la date de décès
 event.death.action.declare.form.section.deceased.field.dob.label,This is the label for the field,Date of birth,Date de naissance
 event.death.action.declare.form.section.deceased.field.gender.label,This is the label for the field,Sex,Sexe
-event.death.action.declare.form.section.deceased.field.brn.helperText,Helper text for birth registration number field,"Search for a birth record. If found, details will auto-fill. Otherwise, continue with manual entry.",Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement.
+event.death.action.declare.form.section.deceased.field.brn.helperText,Helper text for birth registration number field,"Search for a birth record. If found, details will auto-fill. Otherwise, continue with manual entry.","Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement."
 event.death.action.declare.form.section.deceased.field.maritalStatus.label,This is the label for the field,Marital Status,État civil
 event.death.action.declare.form.section.deceased.field.name.label,This is the label for the field,Deceased's name,Nom du défunt
 event.death.action.declare.form.section.deceased.field.numberOfDependants.label,This is the label for the field,No. of dependants,Nombre de personnes à charge

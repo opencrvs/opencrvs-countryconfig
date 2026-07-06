@@ -184,27 +184,54 @@ export const CORRECTION_FORM = defineActionForm({
           },
           options: [
             {
-              value: 'AFFIDAVIT',
+              value: 'PROOF_OF_PARENTS_MARRIAGE',
               label: {
-                defaultMessage: 'Affidavit',
-                description: 'Label for the affidavit option',
-                id: 'event.birth.action.correction.documents.supportingDocs.affidavit.label'
+                defaultMessage: "Proof of parent's marriage",
+                description:
+                  "Label for the proof of parent's marriage option",
+                id: 'event.birth.action.correction.documents.supportingDocs.proofOfParentsMarriage.label'
               }
             },
             {
-              value: 'COURT_DOCUMENT',
+              value: 'LETTER_OF_CONSENT',
               label: {
-                defaultMessage: 'Court Document',
-                description: 'Label for the court document option',
-                id: 'event.birth.action.correction.documents.supportingDocs.courtDocument.label'
+                defaultMessage: 'Letter of consent',
+                description: 'Label for the letter of consent option',
+                id: 'event.birth.action.correction.documents.supportingDocs.letterOfConsent.label'
               }
             },
             {
-              value: 'OTHER',
+              value: 'STATUORY_DECLARATION',
               label: {
-                defaultMessage: 'Other',
-                description: 'Label for the other option',
-                id: 'event.birth.action.correction.documents.supportingDocs.other.label'
+                defaultMessage: 'Statuory declaration',
+                description: 'Label for the statuory declaration option',
+                id: 'event.birth.action.correction.documents.supportingDocs.statuoryDeclaration.label'
+              }
+            },
+            {
+              value: 'PROOF_OF_PARRIANTAGE_OR_GUARDIANSHIP',
+              label: {
+                defaultMessage: 'Proof of parriantage or guardianship',
+                description:
+                  'Label for the proof of parriantage or guardianship option',
+                id: 'event.birth.action.correction.documents.supportingDocs.proofOfParriantageOrGuardianship.label'
+              }
+            },
+            {
+              value: 'COURT_ORDER',
+              label: {
+                defaultMessage: 'Court Order',
+                description: 'Label for the court order option',
+                id: 'event.birth.action.correction.documents.supportingDocs.courtOrder.label'
+              }
+            },
+            {
+              value: 'REGISTRAR_GENERAL_OR_REGISTRATION_OFFICE',
+              label: {
+                defaultMessage: 'Registrar General / Registration Office',
+                description:
+                  'Label for the registrar general / registration office option',
+                id: 'event.birth.action.correction.documents.supportingDocs.registrarGeneralOrRegistrationOffice.label'
               }
             }
           ]
