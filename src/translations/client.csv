@@ -1081,6 +1081,10 @@ event.death.action.request-correction.label,This is shown as the action name any
 event.death.action.validate.label,This is shown as the action name anywhere the user can trigger the action from,Validate,Valider
 event.death.custom.action.validate-declaration.label,This is shown as the action name anywhere the user can trigger the action from,Validate,Valider
 event.death.custom.action.validate-declaration.label,This is shown as the action name anywhere the user can trigger the action from,Validate,Valider
+event.death.custom.action.attest.label,This is shown as the action name anywhere the user can trigger the action from,Attest,Attester
+event.death.custom.action.attest.supportingCopy,Supporting copy for the attest action,"Attesting confirms this death was reported at your health facility. Once attested, the notification proceeds to the registration office.","En attestant, vous confirmez que ce décès a été signalé dans votre établissement de santé. Une fois attesté, la notification est transmise au bureau d'enregistrement."
+event.death.custom.action.attest.field.comments.label,Label for the comments field on the attest action,Additional comments,Commentaires supplémentaires
+event.death.custom.action.attest.audit-history-label,Audit history label for the attest action,Attested,Attesté
 event.death.label,This is what this event is referred as in the system,Death,Décès
 event.death.summary.eventDetails.date.empty,This is shown when there is no date of death information,No date of death,Aucune date de décès
 event.death.summary.eventDetails.deathLocation.empty,This is shown when there is no death location information,No place of death,Aucun lieu de décès
@@ -2214,6 +2218,7 @@ userRole.administrator,Name for user role Administrator,Administrator,Administra
 userRole.communityLeader,Name for user role Community Leader,Community Leader,Leader communautaire
 userRole.embassyOffical,Name for the user role Embassy Official,Embassy Official,Officiel d'ambassade
 userRole.hospitalClerk,Name for user role Hospital Clerk,Hospital Official,Officiel de l'hôpital
+userRole.healthAdministrator,Name for user role Health Administrator,Health Administrator,Administrateur de santé
 userRole.localRegistrar,Name for user role Registrar,Registrar,Registraire
 userRole.localSystemAdmin,Name for user role Local System Admin,Local System Admin,Administrateur système local
 userRole.nationalAdministrator,Name for user role National Administrator,National Administrator,Administrateur national
@@ -2354,6 +2359,7 @@ workqueues.pendingFeedback.title,Title of pending feedback workqueue,Pending fee
 workqueues.pendingIssuance.title,Title of pending issuance workqueue,Pending issuance,En attente d'émission
 workqueues.pendingRegistration.title,Title of pending registration workqueue,Pending registration,Inscription en attente
 workqueues.pendingUpdates.title,Title of pending updates workqueue,Pending updates,Mises à jour en attente
+workqueues.pendingAttestation.title,Title of pending attestation workqueue,Pending attestation,En attente d'attestation
 workqueues.pendingValidation.title,Title of pending validation workqueue,Pending validation,En attente de validation
 workqueues.potentialDuplicate.title,Title of potential duplicate workqueue,Potential duplicate,Duplicata potentiel
 workqueues.recent.title,Title of recent workqueue,Recent,Récent
