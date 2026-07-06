@@ -448,9 +448,9 @@ export const child = defineFormPage({
       secured: true,
       hideLabel: true,
       label: {
-        defaultMessage: 'Child`s address',
+        defaultMessage: 'Residential address',
         description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.child.field.birthLocation.label'
+        id: 'event.birth.action.declare.form.section.child.field.birthLocation.residence.label'
       },
       conditionals: [
         {
@@ -498,9 +498,9 @@ export const child = defineFormPage({
       secured: true,
       hideLabel: true,
       label: {
-        defaultMessage: 'Child`s address',
+        defaultMessage: 'Other address',
         description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.child.field.birthLocation.label'
+        id: 'event.birth.action.declare.form.section.child.field.birthLocation.other.label'
       },
       conditionals: [
         {
