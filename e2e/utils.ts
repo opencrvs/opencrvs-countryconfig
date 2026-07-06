@@ -105,7 +105,7 @@ export async function selectAction(
 
 const usernameToFullNameMap = {
   'k.cwalya': 'Kalusha Cwalya',
-  'h.admin': 'Hakainde Habazoka',
+  'h.habazoka': 'Hakainde Habazoka',
   'g.phiri': 'Gift Phiri',
   'f.katongo': 'Felix Katongo',
   'm.simbaya': 'Mapalo Simbaya',
