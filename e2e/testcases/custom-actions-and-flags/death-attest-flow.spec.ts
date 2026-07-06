@@ -14,7 +14,8 @@ import {
   continueForm,
   goToSection,
   login,
-  triggerDeclarationAction
+  triggerDeclarationAction,
+  validateActionMenuButton
 } from '../../helpers'
 import { CREDENTIALS } from '../../constants'
 import {
@@ -64,6 +65,28 @@ test('Death notified at a health facility is held for attestation, then reaches 
     await navigateToWorkqueue(page, 'Pending attestation')
     await expect(page.getByRole('button', { name: title })).toBeVisible()
   })
+
+  // @TODO: Waiting for new hospital official edit scope with notifiedBy (instead of declaredBy)
+  await test.step.skip(
+    'While awaiting attestation the record can still be edited and re-notified, but not declared',
+    async () => {
+      await openRecordByTitle(page, title)
+      await ensureAssignedToUser(page, CREDENTIALS.HOSPITAL_OFFICIAL)
+
+      await selectAction(page, 'Edit')
+
+      await page.getByTestId('change-button-deceased.gender').click()
+      await page.getByRole('button', { name: 'Continue' }).click()
+      await page.locator('#deceased____gender').click()
+      await page.getByText('Male', { exact: true }).click()
+      await page.getByRole('button', { name: 'Go to review' }).click()
+
+      await validateActionMenuButton(page, 'Declare with edits', false)
+
+      await triggerDeclarationAction(page, 'Notify with edits')
+      await expect(page.getByText('Farajaland CRS')).toBeVisible()
+    }
+  )
 
   await test.step('Health Administrator sees the record in Pending attestation and attests it', async () => {
     await login(page, CREDENTIALS.HEALTH_ADMINISTRATOR)
