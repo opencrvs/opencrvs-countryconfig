@@ -244,16 +244,16 @@ export const CORRECTION_FORM = defineActionForm({
       requireCompletionToContinue: true,
       title: {
         id: 'event.birth.action.correction.form.section.fees.title',
-        defaultMessage: 'Collect fees',
+        defaultMessage: 'Collect payment',
         description: 'This is the title of the section'
       },
       fields: [
         {
           id: 'fees.amount',
           type: FieldType.NUMBER,
-          required: true,
+          required: false,
           label: {
-            defaultMessage: 'Fee total',
+            defaultMessage: 'Fee collected',
             description: 'Label for the amount field',
             id: 'event.birth.action.correction.fees.amount.label'
           },
@@ -264,6 +264,16 @@ export const CORRECTION_FORM = defineActionForm({
               description: 'Prefix for the amount field',
               id: 'event.birth.action.correction.fees.amount.prefix'
             }
+          }
+        },
+        {
+          id: 'fees.receiptNumber',
+          type: FieldType.TEXT,
+          required: false,
+          label: {
+            defaultMessage: 'Receipt number',
+            description: 'Label for the receipt number field',
+            id: 'event.birth.action.correction.fees.receiptNumber.label'
           }
         }
       ]

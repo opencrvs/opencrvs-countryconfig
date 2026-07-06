@@ -825,7 +825,30 @@ event.birth.action.correction.documents.supportingDocs.proofOfParriantageOrGuard
 event.birth.action.correction.documents.supportingDocs.proofOfParentsMarriage.label,Label for the proof of parent's marriage option,Proof of parent's marriage,Preuve du mariage des parents
 event.birth.action.correction.documents.supportingDocs.registrarGeneralOrRegistrationOffice.label,Label for the registrar general / registration office option,Registrar General / Registration Office,Registraire général / Bureau d'enregistrement
 event.birth.action.correction.documents.supportingDocs.statuoryDeclaration.label,Label for the statuory declaration option,Statuory declaration,Déclaration statutaire
+event.birth.action.correction.documents.supportingDocs.affidavit.label,Label for the affidavit option,Affidavit,Affidavit
+event.birth.action.correction.documents.supportingDocs.courtDocument.label,Label for the court document option,Court Document,Document judiciaire
+event.birth.action.correction.documents.supportingDocs.label,Label for the supporting documents field,Supporting documents,Documents justificatifs
+event.birth.action.correction.documents.supportingDocs.other.label,Label for the other option,Other,Autre
+event.birth.action.correction.fees.amount.label,Label for the amount field,Fee collected,Frais perçus
+event.birth.action.correction.fees.amount.prefix,Prefix for the amount field,$,€
+event.birth.action.correction.fees.receiptNumber.label,Label for the receipt number field,Receipt number,Numéro de reçu
+event.birth.action.correction.form.cancel,This is the label for the verification cancellation button,Identity does not match,L'identité ne correspond pas
+event.birth.action.correction.form.cancel.confirmation.body,This is the body for the verification cancellation modal,"Please be aware that if you proceed, you will be responsible for making a change to this record without the necessary proof of identification","Veuillez noter que si vous continuez, vous serez responsable d'apporter une modification à cet enregistrement sans la preuve d'identification nécessaire."
+event.birth.action.correction.form.cancel.confirmation.title,This is the title for the verification cancellation modal,Correct without proof of ID?,Correction sans preuve d'identité ?
+event.birth.action.correction.form.label,This is the label for the birth correction form,Correct record,Corriger le dossier
+event.birth.action.correction.form.section.details.divider.label,This is the title of the section,,
+event.birth.action.correction.form.section.details.title,This is the title of the section,Correction details,Détails de la correction
+event.birth.action.correction.form.section.fees.title,This is the title of the section,Collect payment,Collecter le paiement
+event.birth.action.correction.form.section.reason.title,This is the title of the section,Reason for correction,Raison de la correction
 event.birth.action.correction.form.section.requester.identity.verify.title,This is the title of the section,Verify their identity,Vérifier l'identité
+event.birth.action.correction.form.section.supporting-documents.title,This is the title of the section,Upload supporting documents,Télécharger les documents justificatifs
+event.birth.action.correction.form.verify,This is the label for the verification button,Verified,Vérifié
+event.birth.action.correction.reason.option.clericalError.label,Label for the clerical error option,Myself or an agent made a mistake (Clerical error),Une erreur a été commise par moi-même ou un agent (Erreur administrative)
+event.birth.action.correction.reason.option.judicialOrder.label,Label for the judicial order option,Requested to do so by the court (Judicial order),Demandé par le tribunal (Ordonnance judiciaire)
+event.birth.action.correction.reason.option.materialError.label,Label for the material error option,Informant provided incorrect information (Material error),L'informateur a fourni des informations incorrectes (Erreur matérielle)
+event.birth.action.correction.reason.option.materialOmission.label,Label for the material omission option,Informant did not provide this information (Material omission),L'informateur n'a pas fourni cette information (Omission matérielle)
+event.birth.action.correction.reason.option.other.label,Label for the other option,Other,Autre
+event.birth.action.correction.reason.other.label,Label for the reason,Specify reason,Préciser la raison
 event.birth.action.correction.form.section.details.title,,Correction request,Correction Request
 event.birth.action.correction.reason.option.other.label,,Other (please specify),Other (please specify)
 event.birth.action.declare.form.label,This is what this form is referred as in the system,Birth decalration form,Birth decalration form
