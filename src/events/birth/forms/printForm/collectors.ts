@@ -64,15 +64,6 @@ const fatherMotherBothDoesNotExist = (informantType: InformantTypeKey) => {
   }
 }
 
-const printInAdvanceOption = {
-  label: {
-    id: 'event.birth.action.certificate.form.section.requester.printInAdvance.label',
-    defaultMessage: 'Print in advance of issuance',
-    description: 'This is the label for the print-in-advance of issuance field'
-  },
-  value: 'PRINT_IN_ADVANCE'
-}
-
 const getFieldConfigForInformant = (informantType: InformantTypeKey) => {
   return [
     {
@@ -82,7 +73,6 @@ const getFieldConfigForInformant = (informantType: InformantTypeKey) => {
         getInformantOption(informantType),
         motherOption,
         otherOption,
-        printInAdvanceOption
       ]
     },
     {
@@ -92,7 +82,6 @@ const getFieldConfigForInformant = (informantType: InformantTypeKey) => {
         getInformantOption(informantType),
         fatherOption,
         otherOption,
-        printInAdvanceOption
       ]
     },
     {
@@ -103,7 +92,6 @@ const getFieldConfigForInformant = (informantType: InformantTypeKey) => {
         fatherOption,
         motherOption,
         otherOption,
-        printInAdvanceOption
       ]
     },
     {
@@ -112,7 +100,6 @@ const getFieldConfigForInformant = (informantType: InformantTypeKey) => {
       options: [
         getInformantOption(informantType),
         otherOption,
-        printInAdvanceOption
       ]
     }
   ]
@@ -180,8 +167,7 @@ export const printCertificateCollectors: FieldConfig[] = [
     conditionals: [onlyMotherExist(InformantType.MOTHER)],
     options: [
       getInformantOption(InformantType.MOTHER),
-      otherOption,
-      printInAdvanceOption
+      otherOption
     ]
   },
   {
@@ -190,8 +176,7 @@ export const printCertificateCollectors: FieldConfig[] = [
     options: [
       getInformantOption(InformantType.MOTHER),
       fatherOption,
-      otherOption,
-      printInAdvanceOption
+      otherOption
     ]
   },
   {
@@ -199,8 +184,7 @@ export const printCertificateCollectors: FieldConfig[] = [
     conditionals: [onlyFatherExist(InformantType.FATHER)],
     options: [
       getInformantOption(InformantType.FATHER),
-      otherOption,
-      printInAdvanceOption
+      otherOption
     ]
   },
   {
@@ -209,8 +193,7 @@ export const printCertificateCollectors: FieldConfig[] = [
     options: [
       getInformantOption(InformantType.FATHER),
       motherOption,
-      otherOption,
-      printInAdvanceOption
+      otherOption
     ]
   },
   ...getFieldConfigForInformant(InformantType.OTHER),
