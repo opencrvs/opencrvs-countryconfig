@@ -93,7 +93,6 @@ test('Death notified at a health facility is held for attestation, then reaches 
 
   await test.step('attestation-required flag is cleared and the record leaves Pending attestation', async () => {
     // The record is no longer awaiting attestation, so it drops out of the Pending attestation workqueue.
-
     await navigateToWorkqueue(page, 'Pending attestation')
     await expect(page.getByRole('button', { name: title })).toBeHidden()
   })
