@@ -820,6 +820,8 @@ event.birth.action.certificate.form.section.requester.printInAdvance.label,This 
 event.birth.action.certificate.form.section.verifyIdentity.data.label,Label for identity verification data block,Identity details,Détails de l'identité
 event.birth.action.collect-certificate.label,This is shown as the action name anywhere the user can trigger the action from,Print,Imprimer
 event.birth.action.correction.form.section.requester.identity.verify.title,This is the title of the section,Verify their identity,Vérifier l'identité
+event.birth.action.correction.form.section.details.title,,Correction request,Correction Request
+event.birth.action.correction.reason.option.other.label,,Other (please specify),Other (please specify)
 event.birth.action.declare.form.label,This is what this form is referred as in the system,Birth decalration form,Birth decalration form
 event.birth.action.declare.form.review.alphaPrint.header.label,Label for the declaration summary heading in the review section,Declaration summary,Résumé de déclaration
 event.birth.action.declare.form.review.alphaPrint.label,Label for the alpha print button in the review section,Print,Imprimer

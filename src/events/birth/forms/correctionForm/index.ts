@@ -23,7 +23,7 @@ export const CORRECTION_FORM = defineActionForm({
       requireCompletionToContinue: true,
       title: {
         id: 'event.birth.action.correction.form.section.details.title',
-        defaultMessage: 'Correction details',
+        defaultMessage: 'Correction request',
         description: 'This is the title of the section'
       },
       fields: [
@@ -92,7 +92,7 @@ export const CORRECTION_FORM = defineActionForm({
             {
               value: 'OTHER',
               label: {
-                defaultMessage: 'Other',
+                defaultMessage: 'Other (please specify)',
                 description: 'Label for the other option',
                 id: 'event.birth.action.correction.reason.option.other.label'
               }

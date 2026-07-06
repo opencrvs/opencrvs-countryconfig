@@ -39,26 +39,10 @@ const commonConfigs = {
 
 const commonOptions = [
   {
-    value: 'CHILD',
-    label: {
-      id: 'event.birth.action.correction.form.requester.type.child',
-      defaultMessage: 'Child',
-      description: 'This is the label for the correction requester field'
-    }
-  },
-  {
-    value: 'LEGAL_GUARDIAN',
-    label: {
-      id: 'event.birth.action.correction.form.requester.type.legalGuardian',
-      defaultMessage: 'Legal Guardian',
-      description: 'This is the label for the correction requester field'
-    }
-  },
-  {
     value: 'ANOTHER_AGENT',
     label: {
       id: 'event.birth.action.correction.form.requester.type.anotherAgent',
-      defaultMessage: 'Another registration agent or field agent',
+      defaultMessage: 'Registrar General / Registration Office',
       description: 'This is the label for the correction requester field'
     }
   },
@@ -66,7 +50,7 @@ const commonOptions = [
     value: 'ME',
     label: {
       id: 'event.birth.action.correction.form.requester.type.me',
-      defaultMessage: 'Me',
+      defaultMessage: 'Person named on the record',
       description: 'This is the label for the correction requester field'
     }
   },
