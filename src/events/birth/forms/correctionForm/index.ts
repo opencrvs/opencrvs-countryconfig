@@ -155,10 +155,10 @@ export const CORRECTION_FORM = defineActionForm({
             },
             body: {
               defaultMessage:
-                'Please be aware that if you proceed, you will be responsible for making a change to this record without the necessary proof of identification',
+                'Please be aware that if you proceed, you will be responsible for this correction without the necessary proof of ID from the requester',
               description:
                 'This is the body for the verification cancellation modal',
-              id: 'event.birth.action.correction.form.cancel.confirmation.body'
+              id: 'correction.corrector.description'
             }
           }
         }

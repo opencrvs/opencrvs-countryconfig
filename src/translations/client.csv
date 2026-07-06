@@ -447,7 +447,7 @@ correction.corrector.birth.note,Birth correction note,Note: In the case that the
 correction.corrector.bride,Label for bride option in certificate correction form,Bride,Mariée
 correction.corrector.child,Label for child option in certificate correction form,Child,Enfant
 correction.corrector.court,Label for court option in certificate correction form,Court,Tribunal
-correction.corrector.description,The description for the dialog when details of the corrector not verified,"Please be aware that if you proceed, you will be responsible for making a change to this record without the necessary proof of identification","Sachez que si vous poursuivez, vous serez responsable de la modification de cet enregistrement sans la preuve d'identification nécessaire"
+correction.corrector.description,The description for the dialog when details of the corrector not verified,"Please be aware that if you proceed, you will be responsible for this correction without the necessary proof of ID from the requester","Sachez que si vous poursuivez, vous serez responsable de la modification de cet enregistrement sans la preuve d'identification nécessaire"
 correction.corrector.error,Error for corrector form,Please select who is requesting a change to the record,Veuillez sélectionner la personne qui corrige le certificat
 correction.corrector.father,Label for father option in certificate correction form,Father,Père
 correction.corrector.groom,Label for groom option in certificate correction form,Groom,Marié
@@ -1009,7 +1009,7 @@ event.death.action.correction.documents.supportingDocs.other.label,Label for the
 event.death.action.correction.fees.amount.label,Label for the amount field,Fee total,Frais totaux
 event.death.action.correction.fees.amount.prefix,Prefix for the amount field,$,€
 event.death.action.correction.form.cancel,This is the label for the verification cancellation button,Identity does not match,L'identité ne correspond pas
-event.death.action.correction.form.cancel.confirmation.body,This is the body for the verification cancellation modal,"Please be aware that if you proceed, you will be responsible for making a change to this record without the necessary proof of identification","Veuillez noter que si vous continuez, vous serez responsable d'apporter une modification à cet enregistrement sans la preuve d'identification nécessaire."
+event.death.action.correction.form.cancel.confirmation.body,This is the body for the verification cancellation modal,"Please be aware that if you proceed, you will be responsible for this correction without the necessary proof of ID from the requester","Veuillez noter que si vous continuez, vous serez responsable d'apporter une modification à cet enregistrement sans la preuve d'identification nécessaire."
 event.death.action.correction.form.cancel.confirmation.title,This is the title for the verification cancellation modal,Correct without proof of ID?,Correction sans preuve d'identité ?
 event.death.action.correction.form.label,This is the label for the death correction form,Correct record,Corriger le dossier
 event.death.action.correction.form.requester.type.daughter,This is the label for the correction requester field,Daughter,Fille
