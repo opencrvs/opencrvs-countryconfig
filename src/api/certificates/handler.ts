@@ -70,7 +70,7 @@ const libreBaskervilleFont: Record<string, FontFamilyTypes> = {
 }
 
 const robotoFont: Record<string, FontFamilyTypes> = {
-  Roboto: {
+  'Roboto': {
     normal: '/api/countryconfig/fonts/Roboto-Regular.ttf',
     bold: '/api/countryconfig/fonts/Roboto-Bold.ttf',
     italics: '/api/countryconfig/fonts/Roboto-Italic.ttf',
@@ -144,7 +144,7 @@ export async function certificateHandler(
         delayed: 18
       },
       svgUrl: '/api/countryconfig/certificates/birth-registration-receipt.svg',
-      fonts: notoSansFont
+      fonts: robotoFont
     },
     {
       id: 'v2.birth-notification',
