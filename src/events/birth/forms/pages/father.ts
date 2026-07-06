@@ -132,7 +132,7 @@ export const father = defineFormPage({
       required: true,
       analytics: true,
       label: {
-        defaultMessage: 'Type of ID',
+        defaultMessage: 'Form of ID',
         description: 'This is the label for the field',
         id: 'event.birth.action.declare.form.section.person.field.idType.label'
       },
@@ -256,7 +256,7 @@ export const father = defineFormPage({
       type: FieldType.TEXT,
       required: false,
       label: {
-        defaultMessage: 'ID Number',
+        defaultMessage: 'Passport Number',
         description: 'This is the label for the field',
         id: 'event.birth.action.declare.form.section.person.field.passport.label'
       },
@@ -397,7 +397,7 @@ export const father = defineFormPage({
       id: 'father.age',
       type: FieldType.AGE,
       analytics: true,
-      required: true,
+      required: false,
       label: {
         defaultMessage: 'Age of father (at the time of event)',
         description: 'This is the label for the field',
