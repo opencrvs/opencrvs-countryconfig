@@ -49,13 +49,12 @@ export const BIRTH_DECLARATION_REVIEW = {
   },
   fields: [
     {
+      id: 'review.step1.hint',
       type: FieldType.PARAGRAPH,
-      id: 'review.alphaPrint.step1.header',
       label: {
-        defaultMessage:
-          'Step 1: Print the declaration summary for the informant(s) to review and sign.',
-        id: 'event.birth.action.declare.form.review.alphaPrint.step1.header.label',
-        description: 'Label for the alpha print step 1 header in the review section'
+        defaultMessage: 'Step 1',
+        description: 'Hint label for step 1 of the review',
+        id: 'event.birth.action.declare.form.review.step1.hint.label'
       },
       configuration: { styles: { hint: true } },
       conditionals: [
@@ -66,12 +65,13 @@ export const BIRTH_DECLARATION_REVIEW = {
       ]
     },
     {
+      id: 'review.step1.description',
       type: FieldType.PARAGRAPH,
-      id: 'review.alphaPrint.header',
       label: {
-        defaultMessage: 'Declaration summary',
-        id: 'event.birth.action.declare.form.review.alphaPrint.header.label',
-        description: 'Label for the declaration summary heading in the review section'
+        defaultMessage:
+          'Print the declaration summary for the informant(s) to review and sign.',
+        description: 'Description for step 1 of the review',
+        id: 'event.birth.action.declare.form.review.step1.description.label'
       },
       conditionals: [
         {
@@ -81,25 +81,102 @@ export const BIRTH_DECLARATION_REVIEW = {
       ]
     },
     {
-      id: 'review.alphaPrint',
+      id: 'review.printButton',
       type: FieldType.ALPHA_PRINT_BUTTON,
       label: {
-        defaultMessage: 'Declaration summary',
-        id: 'event.birth.action.declare.form.review.alphaPrint.header.label',
-        description: 'Label for the alpha print button in the review section'
+        defaultMessage: 'Print declaration summary',
+        description: 'Label for the print declaration summary button',
+        id: 'event.birth.action.declare.form.review.printButton.label'
       },
       configuration: {
-        template: 'v2.birth-declaration-summary',
+        template: 'v2.birth-declaration_summary',
         buttonLabel: {
-          defaultMessage: 'Print',
-          id: 'event.birth.action.declare.form.review.alphaPrint.label',
-          description: 'Label for the alpha print button in the review section'
+          defaultMessage: 'Print declaration summary',
+          description: 'Button label for print declaration summary',
+          id: 'event.birth.action.declare.form.review.printButton.buttonLabel'
         }
       },
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: and(not(status('DECLARED')), not(status('REGISTERED')), hasNonHealthNotifierRole)
+          conditional: hasNonHealthNotifierRole
+        }
+      ]
+    },
+    {
+      id: 'review.step2.hint',
+      type: FieldType.PARAGRAPH,
+      label: {
+        defaultMessage: 'Step 2',
+        description: 'Hint label for step 2 of the review',
+        id: 'event.birth.action.declare.form.review.step2.hint.label'
+      },
+      configuration: { styles: { hint: true } },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: hasNonHealthNotifierRole
+        }
+      ]
+    },
+    {
+      id: 'review.step2.description',
+      type: FieldType.PARAGRAPH,
+      label: {
+        defaultMessage:
+          'Upload the signed declaration summary after it has been reviewed and signed by the informant(s).',
+        description: 'Description for step 2 of the review',
+        id: 'event.birth.action.declare.form.review.step2.description.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: hasNonHealthNotifierRole
+        }
+      ]
+    },
+    {
+      id: 'review.signedDeclaration',
+      type: FieldType.FILE,
+      required: true,
+      uncorrectable: true,
+      label: {
+        defaultMessage: 'Upload signed declaration',
+        description: 'Label for the upload signed declaration field',
+        id: 'event.birth.action.declare.form.review.signedDeclaration.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: hasNonHealthNotifierRole
+        }
+      ]
+    },
+    {
+      id: 'mother.idDivider',
+      type: FieldType.DIVIDER,
+      label: emptyMessage,
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional:
+            hasNonHealthNotifierRole
+        }
+      ]
+    },
+    {
+      id: 'review.alphaPrint.healthNotifier.description',
+      type: FieldType.PARAGRAPH,
+      label: {
+        defaultMessage:
+          'Print the declaration Birth Notification Receipt.',
+        description: 'Description for the health notifier print declaration',
+        id: 'event.birth.action.declare.form.review.alphaPrint.healthNotifier.description.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: hasNonHealthNotifierRole
         }
       ]
     },

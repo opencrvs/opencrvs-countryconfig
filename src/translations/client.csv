@@ -948,6 +948,7 @@ event.birth.action.declare.form.section.person.field.nationality.label,This is t
 event.birth.action.declare.form.section.person.field.nid.label,This is the label for the field,ID number,Numéro d'identification
 event.birth.action.declare.form.section.person.field.occupation.label,This is the label for the field,Occupation,Profession
 event.birth.action.declare.form.section.person.field.passport.label,This is the label for the field,Passport number,Numéro d'identification
+event.birth.action.declare.form.review.alphaPrint.healthNotifier.description.label,,Print the declaration Birth Notification Receipt.,Print the declaration Birth Notification Receipt.
 event.birth.action.declare.label,This is shown as the action name anywhere the user can trigger the action from,Declare,Declare
 event.birth.action.delete.label,Label for delete button in dropdown menu,Delete,Supprimer
 event.birth.action.edit.declare.copy,Description for `Declare with edits` in edit action menu,You are about to redeclare this birth event with your edits. This will permanently update the declaration.,Vous êtes sur le point de redéclarer cet événement avec vos modifications. Cela mettra à jour définitivement la déclaration.
