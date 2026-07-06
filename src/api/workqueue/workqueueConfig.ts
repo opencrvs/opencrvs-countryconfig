@@ -295,5 +295,19 @@ export const Workqueues = defineWorkqueues([
       }
     },
     action: { type: ActionType.READ }
+  },
+  {
+    slug: 'my-submissions',
+    icon: 'FileText',
+    name: {
+      id: 'workqueues.mySubmissions.title',
+      defaultMessage: 'My submissions',
+      description: 'Title of my submissions workqueue'
+    },
+    // Shows all records originally created by the current user, regardless of
+    // their current status. Allows health notifiers to track records they
+    // submitted even after they have been declared or registered by other roles.
+    query: { createdBy: { type: 'exact', term: user('id') } },
+    action: { type: ActionType.READ }
   }
 ])
