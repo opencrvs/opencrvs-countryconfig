@@ -163,6 +163,18 @@ export const eventDetails = defineFormPage({
         id: 'event.death.action.declare.form.section.event.field.date.label'
       }
     },
+    {
+      id: 'eventDetails.dateUnknown',
+      type: FieldType.CHECKBOX,
+      required: false,
+      secured: true,
+      analytics: true,
+      label: {
+        defaultMessage: 'Date of death unknown',
+        description: 'This is the label for the field',
+        id: 'event.death.action.declare.form.section.event.field.dateUnknown.label'
+      }
+    },
     // ---- Time of death ----
     {
       id: 'eventDetails.timeOfDeath',
@@ -354,7 +366,10 @@ export const eventDetails = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: notNaturalCauses
+          conditional: and(
+            notNaturalCauses,
+            not(field('eventDetails.mannerOfDeath').isFalsy())
+          )
         }
       ]
     },
@@ -373,7 +388,10 @@ export const eventDetails = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: notNaturalCauses
+          conditional: and(
+            notNaturalCauses,
+            not(field('eventDetails.mannerOfDeath').isFalsy())
+          )
         }
       ]
     },

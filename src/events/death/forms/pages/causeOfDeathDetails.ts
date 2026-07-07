@@ -127,7 +127,9 @@ function createSymptomFields(letter: CauseLetter) {
     if (index === 0) {
       autocompleteField.helperText = {
         defaultMessage:
-          'Select the condition that most directly led to death, or choose "Other" to enter a diagnosis not listed',
+          letter === 'Other'
+            ? 'Enter a disease of condition that contributed to death but did not directly cause it'
+            : 'Enter the condition that gave rise to the direct cause (if applicable)',
         description: 'This is the label for the field',
         id: `causeOfDeathDetails.causeOfDeath${letter}.symptom.one.helperText`
       }
@@ -136,7 +138,7 @@ function createSymptomFields(letter: CauseLetter) {
     const otherField = {
       id: `${basePath}.other`,
       type: FieldType.TEXTAREA,
-      required: true,
+      required: false,
       analytics: true,
       label: {
         defaultMessage:
