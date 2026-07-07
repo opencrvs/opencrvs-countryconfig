@@ -10,7 +10,6 @@
  */
 
 import {
-  AddressType,
   and,
   ConditionalType,
   defineFormPage,
@@ -19,7 +18,6 @@ import {
   field,
   or,
   PageTypes,
-  user
 } from '@opencrvs/toolkit/events'
 import { not } from '@opencrvs/toolkit/conditionals'
 import {
@@ -29,11 +27,8 @@ import {
 
 import { InformantType } from './informant'
 import {
-  yesNoRadioOptions,
-  YesNoTypes,
-  defaultStreetAddressConfiguration,
-  getNestedFieldValidators,
-  emptyMessage
+  emptyMessage,
+  hasNonHealthNotifierRole
 } from '@countryconfig/events/utils'
 
 const SpouseIdType = {
@@ -73,8 +68,6 @@ const requireSpouseDetails = or(
   field('spouse.detailsNotAvailable').isFalsy(),
   field('informant.relation').isEqualTo(InformantType.SPOUSE)
 )
-
-const notHospitalClerk = not(user.hasRole('HOSPITAL_CLERK'))
 
 export const spouse = defineFormPage({
   id: 'spouse',
@@ -152,7 +145,7 @@ export const spouse = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: and(requireSpouseDetails, notHospitalClerk)
+          conditional: and(requireSpouseDetails, hasNonHealthNotifierRole)
         }
       ],
       defaultValue: 'TUV'
@@ -163,7 +156,7 @@ export const spouse = defineFormPage({
       type: FieldType.SELECT,
       required: true,
       label: {
-        defaultMessage: 'Type of ID',
+        defaultMessage: 'Form of ID',
         description: 'This is the label for the field',
         id: 'event.death.action.declare.form.section.spouse.field.idType.label'
       },
@@ -171,7 +164,7 @@ export const spouse = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: and(requireSpouseDetails, notHospitalClerk)
+          conditional: and(requireSpouseDetails, hasNonHealthNotifierRole)
         }
       ]
     },
@@ -223,7 +216,7 @@ export const spouse = defineFormPage({
           conditional: and(
             field('spouse.idType').isEqualTo(SpouseIdType.BIRTH_CERTIFICATE),
             requireSpouseDetails,
-            notHospitalClerk
+            hasNonHealthNotifierRole
           )
         }
       ]
@@ -250,7 +243,7 @@ export const spouse = defineFormPage({
           conditional: and(
             field('spouse.idType').isEqualTo(SpouseIdType.BIRTH_CERTIFICATE),
             requireSpouseDetails,
-            notHospitalClerk
+            hasNonHealthNotifierRole
           )
         }
       ]
@@ -271,7 +264,7 @@ export const spouse = defineFormPage({
           conditional: and(
             field('spouse.idType').isEqualTo(SpouseIdType.PASSPORT),
             requireSpouseDetails,
-            notHospitalClerk
+            hasNonHealthNotifierRole
           )
         }
       ]
@@ -292,7 +285,7 @@ export const spouse = defineFormPage({
           conditional: and(
             field('spouse.idType').isEqualTo(SpouseIdType.OTHER),
             requireSpouseDetails,
-            notHospitalClerk
+            hasNonHealthNotifierRole
           )
         }
       ]
@@ -431,7 +424,7 @@ export const spouse = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: and(requireSpouseDetails, notHospitalClerk)
+          conditional: and(requireSpouseDetails, hasNonHealthNotifierRole)
         }
       ]
     },

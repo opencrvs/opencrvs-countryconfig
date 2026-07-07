@@ -1347,15 +1347,15 @@ event.death.action.declare.form.section.spouse.field.brn.label,Label for spouse 
 event.death.action.declare.form.section.spouse.field.detailsNotAvailable.label,This is the label for the field,Spouse's details are not available,Les informations du conjoint ne sont pas disponibles
 event.death.action.declare.form.section.spouse.field.dob.error,This is the error message for invalid date,Must be a valid Birthdate,Doit être une date de naissance valide
 event.death.action.declare.form.section.spouse.field.dob.label,This is the label for the field,Date of birth,Date de naissance
-event.death.action.declare.form.section.spouse.field.idType.label,This is the label for the field,Type of ID,Type d'identité
+event.death.action.declare.form.section.spouse.field.idType.label,This is the label for the field,Form of ID,Type d'identité
 event.death.action.declare.form.section.spouse.field.idType.option.birthCertificate,Option for spouse ID type birth certificate,Birth certificate,Certificat de naissance
 event.death.action.declare.form.section.spouse.field.idType.option.other,Option for spouse ID type other,Other,Autre
 event.death.action.declare.form.section.spouse.field.idType.option.passport,Option for spouse ID type passport,Passport,Passeport
 event.death.action.declare.form.section.spouse.field.name.label,This is the label for the field,Spouse's name,Nom du conjoint
 event.death.action.declare.form.section.spouse.field.nationality.label,This is the label for the field,Nationality,Nationalité
 event.death.action.declare.form.section.spouse.field.nid.label,This is the label for the field,ID Number,Numéro d'identité
-event.death.action.declare.form.section.spouse.field.otherId.label,Label for spouse other ID number,Other ID number,Autre numéro d'identifiant
-event.death.action.declare.form.section.spouse.field.passport.label,This is the label for the field,ID Number,Numéro d'identité
+event.death.action.declare.form.section.spouse.field.otherId.label,Label for spouse other ID number,ID number,Autre numéro d'identifiant
+event.death.action.declare.form.section.spouse.field.passport.label,This is the label for the field,Passport Number,Numéro d'identité
 event.death.action.declare.form.section.spouse.field.reason.label,This is the label for the field,Reason,Raison
 event.death.action.declare.label,This is shown as the action name anywhere the user can trigger the action from,Declare,Déclarer
 event.death.action.declare.notify.copy,Confirmation text for the notify action,You are about to formally notify the relevant Registration Office that a death event has occurred. Please confirm that the information provided is accurate before proceeding.,Vous êtes sur le point de notifier officiellement le bureau d'enregistrement concerné qu'un événement de décès s'est produit. Veuillez confirmer que les informations fournies sont exactes avant de continuer.
@@ -2265,7 +2265,6 @@ event.death.action.declare.form.section.spouse.field.idType.option.birthCertific
 event.death.action.declare.form.section.spouse.field.idType.option.passport,Option for spouse ID type passport,Passport,Passeport
 event.death.action.declare.form.section.spouse.field.idType.option.other,Option for spouse ID type other,Other,Autre
 event.death.action.declare.form.section.spouse.field.brn.label,Label for spouse birth registration number lookup,Birth registration number,Numéro d'enregistrement de naissance
-event.death.action.declare.form.section.spouse.field.otherId.label,Label for spouse other ID number,ID number,Autre numéro d'identifiant
 event.death.action.declare.form.section.spouse.field.brn.helperText,Helper text for birth registration number field,"Search for a birth record. If found, details will auto-fill. Otherwise, continue with manual entry.",Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement.
 form.death.livingChildren.title,Form section title for living children details,Living children,Enfants vivants
 event.death.action.declare.form.section.livingChildren.field.numberOfChildren.label,Label for number of children (living),Number of living children,Nombre d'enfants vivants
