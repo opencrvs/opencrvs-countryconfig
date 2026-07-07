@@ -492,7 +492,7 @@
 <path fill-rule="evenodd" clip-rule="evenodd" d="M77.4125 101.354C76.7253 102.534 75.8116 102.796 74.8405 102.658C76.0616 102.432 76.7936 101.925 77.4125 101.354Z" fill="#003108"/>
 </g>
 <text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="11" font-weight="300" letter-spacing="0em"><tspan x="137.813" y="49.2598">GOVERNMENT OF TUVALU</tspan></text>
-<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="15" font-weight="bold" letter-spacing="0.5px"><tspan x="137.813" y="65.627">CERTIFIED COPY OF ENTRY IN THE REGISTER OF BIRTHS</tspan></text>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="14.5" font-weight="bold" letter-spacing="0.5px"><tspan x="137.813" y="65.627">CERTIFIED COPY OF ENTRY IN THE REGISTER OF BIRTHS</tspan></text>
 <text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="12" letter-spacing="0px"><tspan x="137.813" y="84.1016">Civil Registration Act 2025</tspan></text>
 <text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="8" font-weight="300" letter-spacing="0px"><tspan x="137.813" y="95.7344">(SECTION 15)</tspan></text>
 <text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="10" font-weight="bold" letter-spacing="0px"><tspan x="137.813" y="113.918">Registration No. {{$lookup $metadata 'legalStatuses.REGISTERED.registrationNumber'}}</tspan></text>

@@ -88,166 +88,6 @@ export async function certificateHandler(
   }
   const certificateConfigs: ICertificateConfigData[] = [
     {
-      id: 'birth-certificate',
-      event: Event.Birth,
-      label: {
-        id: 'certificates.birth.certificate',
-        defaultMessage: 'Birth Certificate',
-        description: 'The label for a birth certificate'
-      },
-      isDefault: true,
-      fee: {
-        onTime: 5,
-        late: 7,
-        delayed: 15
-      },
-      svgUrl: '/api/countryconfig/certificates/birth-certificate.svg',
-      fonts: libreBaskervilleFont
-    },
-    {
-      id: 'birth-certificate-certified-copy',
-      event: Event.Birth,
-      label: {
-        id: 'certificates.birth.certificate.copy',
-        defaultMessage: 'Birth Certificate certified copy',
-        description: 'The label for a birth certificate'
-      },
-      isDefault: false,
-      fee: {
-        onTime: 8,
-        late: 11.5,
-        delayed: 17
-      },
-      svgUrl:
-        '/api/countryconfig/certificates/birth-certificate-certified-copy.svg',
-      fonts: notoSansFont,
-      conditionals: [
-        {
-          type: 'SHOW',
-          // Show only if original certificate was printed
-          conditional: event.hasAction(ActionType.PRINT_CERTIFICATE).minCount(1)
-        }
-      ]
-    },
-    {
-      id: 'birth-registration-receipt',
-      event: Event.Birth,
-      label: {
-        id: 'certificates.birth.registration.receipt',
-        defaultMessage: 'Birth Registration Receipt',
-        description: 'The label for a birth registration receipt'
-      },
-      isDefault: false,
-      fee: {
-        onTime: 0,
-        late: 12,
-        delayed: 18
-      },
-      svgUrl: '/api/countryconfig/certificates/birth-registration-receipt.svg',
-      fonts: robotoFont
-    },
-    {
-      id: 'v2.birth-notification',
-      event: Event.Birth,
-      isV2Template: true,
-      label: {
-        id: 'certificates.birth.notification',
-        defaultMessage: 'Birth Notification',
-        description: 'The label for a birth notification'
-      },
-      isDefault: false,
-      fee: {
-        onTime: 0,
-        late: 0,
-        delayed: 0
-      },
-      svgUrl: '/api/countryconfig/certificates/v2.birth-notification.svg',
-      fonts: robotoFont,
-      conditionals: [
-        {
-          type: 'SHOW',
-          conditional: status('NOTIFIED')
-        }
-      ]
-    },
-    {
-      id: 'death-certificate',
-      event: Event.Death,
-      label: {
-        id: 'certificates.death.certificate',
-        defaultMessage: 'Death Certificate',
-        description: 'The label for a death certificate'
-      },
-      isDefault: true,
-      fee: {
-        onTime: 3,
-        late: 5.7,
-        delayed: 12
-      },
-      svgUrl: '/api/countryconfig/certificates/death-certificate.svg',
-      fonts: notoSansFont
-    },
-    {
-      id: 'death-certificate-certified-copy',
-      event: Event.Death,
-      label: {
-        id: 'certificates.death.certificate.copy',
-        defaultMessage: 'Death Certificate certified copy',
-        description: 'The label for a death certificate'
-      },
-      isDefault: false,
-      fee: {
-        onTime: 6,
-        late: 9,
-        delayed: 14.5
-      },
-      svgUrl:
-        '/api/countryconfig/certificates/death-certificate-certified-copy.svg',
-      fonts: notoSansFont,
-      conditionals: [
-        {
-          type: 'SHOW',
-          // Show only if original certificate was printed
-          conditional: event.hasAction(ActionType.PRINT_CERTIFICATE).minCount(1)
-        }
-      ]
-    },
-    {
-      id: 'marriage-certificate',
-      event: Event.Marriage,
-      label: {
-        id: 'certificates.marriage.certificate',
-        defaultMessage: 'Marriage Certificate',
-        description: 'The label for a marriage certificate'
-      },
-      isDefault: true,
-      fee: {
-        onTime: 4.4,
-        late: 6,
-        delayed: 13.5
-      },
-      svgUrl: '/api/countryconfig/certificates/marriage-certificate.svg',
-      fonts: notoSansFont
-    },
-    {
-      id: 'marriage-certificate-certified-copy',
-      event: Event.Marriage,
-      label: {
-        id: 'certificates.marriage.certificate.copy',
-        defaultMessage: 'Marriage Certificate certified copy',
-        description: 'The label for a marriage certificate'
-      },
-      isDefault: false,
-      fee: {
-        onTime: 7,
-        late: 10.6,
-        delayed: 18
-      },
-      svgUrl:
-        '/api/countryconfig/certificates/marriage-certificate-certified-copy.svg',
-      fonts: notoSansFont
-    },
-    {
       id: 'v2.birth-certificate',
       event: Event.Birth,
       isV2Template: true,
@@ -263,13 +103,7 @@ export async function certificateHandler(
         delayed: 18
       },
       svgUrl: '/api/countryconfig/certificates/v2.birth-certificate.svg',
-      fonts: robotoFont,
-      conditionals: [
-        {
-          type: 'SHOW',
-          conditional: not(event.hasAction(ActionType.PRINT_CERTIFICATE))
-        }
-      ]
+      fonts: robotoFont
     },
     {
       id: 'v2.birth-certified-certificate',
@@ -316,96 +150,77 @@ export async function certificateHandler(
         delayed: 0
       },
       svgUrl: '/api/countryconfig/certificates/v2.birth-notification.svg',
-      fonts: notoSansFont
-    },
-    {
-      id: 'v2.tennis-club-membership-certificate',
-      event: Event.TENNIS_CLUB_MEMBERSHIP,
-      isV2Template: true,
-      label: {
-        id: 'certificates.tennis-club-membership.certificate.copy',
-        defaultMessage: 'Tennis Club Membership Certificate copy',
-        description: 'The label for a tennis-club-membership certificate'
-      },
-      isDefault: true,
-      fee: {
-        onTime: 7,
-        late: 10.6,
-        delayed: 18
-      },
-      svgUrl:
-        '/api/countryconfig/certificates/v2.tennis-club-membership-certificate.svg',
-      fonts: notoSansFont,
+      fonts: robotoFont,
       conditionals: [
         {
           type: 'SHOW',
-          // Show only for registered events
-          conditional: event.hasAction(ActionType.PRINT_CERTIFICATE).minCount(0)
+          conditional: status('NOTIFIED')
         }
       ]
     },
     {
-      id: 'v2.tennis-club-membership-certified-certificate',
-      event: Event.TENNIS_CLUB_MEMBERSHIP,
+      id: 'v2.birth-statement',
+      event: Event.Birth,
       isV2Template: true,
       label: {
-        id: 'certificates.tennis-club-membership.certificate.certified-copy',
-        defaultMessage: 'Tennis Club Membership Certificate certified copy',
-        description: 'The label for a tennis-club-membership certificate'
+        id: 'certificates.birth.statement',
+        defaultMessage: 'Birth Statement',
+        description: 'The label for a birth statement'
       },
       isDefault: false,
       fee: {
-        onTime: 7,
-        late: 10.6,
-        delayed: 18
+        onTime: 0,
+        late: 0,
+        delayed: 0
       },
-      svgUrl:
-        '/api/countryconfig/certificates/v2.tennis-club-membership-certified-certificate.svg',
-      fonts: notoSansFont
-    },
-    {
-      id: 'v2.tennis-club-membership-certificate-multipage',
-      event: Event.TENNIS_CLUB_MEMBERSHIP,
-      isV2Template: true,
-      label: {
-        id: 'certificates.tennis-club-membership.certificate.multipage',
-        defaultMessage: 'Tennis Club Membership Certificate Multipage',
-        description: 'The label for a tennis club membership certificate'
-      },
-      isDefault: false,
-      fee: {
-        onTime: 7,
-        late: 10.6,
-        delayed: 18
-      },
-      svgUrl:
-        '/api/countryconfig/certificates/v2.tennis-club-membership-certificate-multipage.svg',
-      fonts: libreBaskervilleFont
-    },
-    {
-      id: 'v2.tennis-club-membership-certificate-alpha',
-      event: Event.TENNIS_CLUB_MEMBERSHIP,
-      isV2Template: true,
-      label: {
-        id: 'certificates.tennis-club-membership.certificate.alpha',
-        defaultMessage: 'Tennis Club Membership Certificate Alpha',
-        description:
-          'The label for a tennis club membership certificate for alpha print button testing'
-      },
-      isDefault: false,
-      fee: {
-        onTime: 7,
-        late: 10.6,
-        delayed: 18
-      },
-      svgUrl:
-        '/api/countryconfig/certificates/v2.tennis-club-membership-alpha.svg',
-      fonts: libreBaskervilleFont,
+      svgUrl: '/api/countryconfig/certificates/v2.birth-statement.svg',
+      fonts: robotoFont,
       conditionals: [
         {
           type: 'SHOW',
-          // Never show in print-cert flow
-          conditional: never()
+          conditional: status('DECLARED')
+        }
+      ]
+    },
+    {
+      id: 'death-certificate',
+      event: Event.Death,
+      label: {
+        id: 'certificates.death.certificate',
+        defaultMessage: 'Death Certificate',
+        description: 'The label for a death certificate'
+      },
+      isDefault: true,
+      fee: {
+        onTime: 3,
+        late: 5.7,
+        delayed: 12
+      },
+      svgUrl: '/api/countryconfig/certificates/death-certificate.svg',
+      fonts: notoSansFont
+    },
+    {
+      id: 'death-certificate-certified-copy',
+      event: Event.Death,
+      label: {
+        id: 'certificates.death.certificate.copy',
+        defaultMessage: 'Death Certificate certified copy',
+        description: 'The label for a death certificate'
+      },
+      isDefault: false,
+      fee: {
+        onTime: 6,
+        late: 9,
+        delayed: 14.5
+      },
+      svgUrl:
+        '/api/countryconfig/certificates/death-certificate-certified-copy.svg',
+      fonts: notoSansFont,
+      conditionals: [
+        {
+          type: 'SHOW',
+          // Show only if original certificate was printed
+          conditional: event.hasAction(ActionType.PRINT_CERTIFICATE).minCount(1)
         }
       ]
     },
@@ -447,23 +262,130 @@ export async function certificateHandler(
       fonts: libreBaskervilleFont
     },
     {
-      id: 'v2.birth-statement',
-      event: Event.Birth,
-      isV2Template: true,
+      id: 'marriage-certificate',
+      event: Event.Marriage,
       label: {
-        id: 'certificates.birth.statement',
-        defaultMessage: 'Birth Statement',
-        description: 'The label for a birth statement'
+        id: 'certificates.marriage.certificate',
+        defaultMessage: 'Marriage Certificate',
+        description: 'The label for a marriage certificate'
+      },
+      isDefault: true,
+      fee: {
+        onTime: 4.4,
+        late: 6,
+        delayed: 13.5
+      },
+      svgUrl: '/api/countryconfig/certificates/marriage-certificate.svg',
+      fonts: notoSansFont
+    },
+    {
+      id: 'marriage-certificate-certified-copy',
+      event: Event.Marriage,
+      label: {
+        id: 'certificates.marriage.certificate.copy',
+        defaultMessage: 'Marriage Certificate certified copy',
+        description: 'The label for a marriage certificate'
       },
       isDefault: false,
       fee: {
-        onTime: 0,
-        late: 0,
-        delayed: 0
+        onTime: 7,
+        late: 10.6,
+        delayed: 18
       },
       svgUrl:
-        '/api/countryconfig/certificates/v2.birth-statement.svg',
-      fonts: robotoFont
+        '/api/countryconfig/certificates/marriage-certificate-certified-copy.svg',
+      fonts: notoSansFont
+    },
+    {
+      id: 'v2.tennis-club-membership-certificate',
+      event: Event.TENNIS_CLUB_MEMBERSHIP,
+      isV2Template: true,
+      label: {
+        id: 'certificates.tennis-club-membership.certificate.copy',
+        defaultMessage: 'Tennis Club Membership Certificate copy',
+        description: 'The label for a tennis-club-membership certificate'
+      },
+      isDefault: true,
+      fee: {
+        onTime: 7,
+        late: 10.6,
+        delayed: 18
+      },
+      svgUrl:
+        '/api/countryconfig/certificates/v2.tennis-club-membership-certificate.svg',
+      fonts: notoSansFont,
+      conditionals: [
+        {
+          type: 'SHOW',
+          // Show only for registered events
+          conditional: event.hasAction(ActionType.PRINT_CERTIFICATE).minCount(0)
+        }
+      ]
+    },
+    {
+      id: 'v2.tennis-club-membership-certificate-alpha',
+      event: Event.TENNIS_CLUB_MEMBERSHIP,
+      isV2Template: true,
+      label: {
+        id: 'certificates.tennis-club-membership.certificate.alpha',
+        defaultMessage: 'Tennis Club Membership Certificate Alpha',
+        description:
+          'The label for a tennis club membership certificate for alpha print button testing'
+      },
+      isDefault: false,
+      fee: {
+        onTime: 7,
+        late: 10.6,
+        delayed: 18
+      },
+      svgUrl:
+        '/api/countryconfig/certificates/v2.tennis-club-membership-alpha.svg',
+      fonts: libreBaskervilleFont,
+      conditionals: [
+        {
+          type: 'SHOW',
+          // Never show in print-cert flow
+          conditional: never()
+        }
+      ]
+    },
+    {
+      id: 'v2.tennis-club-membership-certificate-multipage',
+      event: Event.TENNIS_CLUB_MEMBERSHIP,
+      isV2Template: true,
+      label: {
+        id: 'certificates.tennis-club-membership.certificate.multipage',
+        defaultMessage: 'Tennis Club Membership Certificate Multipage',
+        description: 'The label for a tennis club membership certificate'
+      },
+      isDefault: false,
+      fee: {
+        onTime: 7,
+        late: 10.6,
+        delayed: 18
+      },
+      svgUrl:
+        '/api/countryconfig/certificates/v2.tennis-club-membership-certificate-multipage.svg',
+      fonts: libreBaskervilleFont
+    },
+    {
+      id: 'v2.tennis-club-membership-certified-certificate',
+      event: Event.TENNIS_CLUB_MEMBERSHIP,
+      isV2Template: true,
+      label: {
+        id: 'certificates.tennis-club-membership.certificate.certified-copy',
+        defaultMessage: 'Tennis Club Membership Certificate certified copy',
+        description: 'The label for a tennis-club-membership certificate'
+      },
+      isDefault: false,
+      fee: {
+        onTime: 7,
+        late: 10.6,
+        delayed: 18
+      },
+      svgUrl:
+        '/api/countryconfig/certificates/v2.tennis-club-membership-certified-certificate.svg',
+      fonts: notoSansFont
     }
   ]
   return certificateConfigs
