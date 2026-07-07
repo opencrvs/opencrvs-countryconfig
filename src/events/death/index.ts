@@ -12,9 +12,7 @@ import {
   ActionType,
   ConditionalType,
   defineConfig,
-  field,
-  flag,
-  InherentFlags
+  field
 } from '@opencrvs/toolkit/events'
 import {
   DEATH_DECLARATION_REVIEW,
@@ -281,12 +279,6 @@ export const deathEvent = defineConfig({
       },
       flags: [
         { id: 'pending-first-certificate-issuance', operation: 'add' }
-      ],
-      conditionals: [
-        {
-          type: ConditionalType.ENABLE,
-          conditional: flag('declared')
-        }
       ],
       deduplication: {
         id: 'death-deduplication',
