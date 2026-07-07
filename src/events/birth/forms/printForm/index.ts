@@ -10,7 +10,6 @@
  */
 
 import {
-  and,
   ConditionalType,
   defineActionForm,
   field,
@@ -18,10 +17,6 @@ import {
   not,
   PageTypes
 } from '@opencrvs/toolkit/events'
-import {
-  BIRTH_REGISTRATION_TARGET_DAYS,
-  BIRTH_LATE_REGISTRATION_TARGET_DAYS
-} from '@countryconfig/events/utils'
 import { printCertificateCollectors } from './collectors'
 import { printCertificateCollectorOther } from './collector-other'
 import { printCertificateCollectorIdentityVerify } from './collector-identity-verify'
@@ -101,27 +96,13 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
       },
       fields: [
         {
-          id: 'collector.collect.payment.data.afterLateRegistrationTarget',
+          id: 'collector.collect.payment.data',
           type: FieldType.DATA,
           label: {
             defaultMessage: 'Payment details',
             description: 'Title for the data section',
             id: 'event.birth.action.certificate.form.section.collectPayment.data.label'
           },
-          conditionals: [
-            {
-              type: ConditionalType.SHOW,
-              conditional: and(
-                not(
-                  field('child.dob')
-                    .isAfter()
-                    .days(BIRTH_LATE_REGISTRATION_TARGET_DAYS)
-                    .inPast()
-                ),
-                field('child.dob').isBefore().now()
-              )
-            }
-          ],
           configuration: {
             data: [
               {
@@ -132,11 +113,9 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
                   id: 'event.birth.action.certificate.form.section.collectPayment.service.label'
                 },
                 value: {
-                  defaultMessage:
-                    'Birth registration after 365 days of date of birth',
-                  description:
-                    'Birth registration after 365 days of date of birth message',
-                  id: 'event.birth.action.certificate.form.section.collectPayment.service.label.afterLateRegistrationTarget'
+                  defaultMessage: 'Birth Certificate',
+                  description: 'Birth certificate service name',
+                  id: 'event.birth.action.certificate.form.section.collectPayment.service.label.birthCertificate'
                 }
               },
               {
@@ -146,116 +125,64 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
                   description: 'Title for the data entry',
                   id: 'event.birth.action.certificate.form.section.collectPayment.fee.label'
                 },
-                value: '$15.00'
+                value: '$25.00'
               }
             ]
           }
         },
         {
-          id: 'collector.collect.payment.data.inBetweenRegistrationTargets',
-          type: FieldType.DATA,
-          analytics: true,
+          id: 'collector.collect.payment.feeWaived',
+          type: FieldType.CHECKBOX,
+          defaultValue: false,
           label: {
-            defaultMessage: 'Payment details',
-            description: 'Title for the data section',
-            id: 'event.birth.action.certificate.form.section.collectPayment.data.label'
-          },
-          conditionals: [
-            {
-              type: ConditionalType.SHOW,
-              conditional: and(
-                not(
-                  field('child.dob')
-                    .isAfter()
-                    .days(BIRTH_REGISTRATION_TARGET_DAYS)
-                    .inPast()
-                ),
-
-                field('child.dob')
-                  .isAfter()
-                  .days(BIRTH_LATE_REGISTRATION_TARGET_DAYS)
-                  .inPast(),
-                field('child.dob').isBefore().now()
-              )
-            }
-          ],
-          configuration: {
-            data: [
-              {
-                id: 'service',
-                label: {
-                  defaultMessage: 'Service',
-                  description: 'Title for the data entry',
-                  id: 'event.birth.action.certificate.form.section.collectPayment.service.label'
-                },
-                value: {
-                  defaultMessage:
-                    'Birth registration after 30 days but before 365 days of date of birth',
-                  description:
-                    'Birth registration after 30 days but before 365 days of date of birth message',
-                  id: 'event.birth.action.certificate.form.section.collectPayment.service.label.inBetweenRegistrationTargets'
-                }
-              },
-              {
-                id: 'fee',
-                label: {
-                  defaultMessage: 'Fee',
-                  description: 'Title for the data entry',
-                  id: 'event.birth.action.certificate.form.section.collectPayment.fee.label'
-                },
-                value: '$7.00'
-              }
-            ]
+            defaultMessage: 'Payment fee is waived / not collected',
+            description: 'Label for the fee waived checkbox',
+            id: 'event.birth.action.certificate.form.section.collectPayment.feeWaived.label'
           }
         },
         {
-          id: 'collector.collect.payment.data.beforeRegistrationTarget',
-          type: FieldType.DATA,
+          id: 'collector.collect.payment.amountCollected',
+          type: FieldType.NUMBER,
+          required: false,
           label: {
-            defaultMessage: 'Payment details',
-            description: 'Title for the data section',
-            id: 'event.birth.action.certificate.form.section.collectPayment.data.label'
+            defaultMessage: 'Confirm amount collected',
+            description: 'Label for the amount collected field',
+            id: 'event.birth.action.certificate.form.section.collectPayment.amountCollected.label'
+          },
+          configuration: {
+            min: 0,
+            prefix: {
+              defaultMessage: '$',
+              description: 'Prefix for the amount collected field',
+              id: 'event.birth.action.certificate.form.section.collectPayment.amountCollected.prefix'
+            }
           },
           conditionals: [
             {
               type: ConditionalType.SHOW,
-              conditional: and(
-                field('child.dob')
-                  .isAfter()
-                  .days(BIRTH_REGISTRATION_TARGET_DAYS)
-                  .inPast(),
-                field('child.dob').isBefore().now()
+              conditional: not(
+                field('collector.collect.payment.feeWaived').isEqualTo(true)
               )
             }
-          ],
-          configuration: {
-            data: [
-              {
-                id: 'service',
-                label: {
-                  defaultMessage: 'Service',
-                  description: 'Title for the data entry',
-                  id: 'event.birth.action.certificate.form.section.collectPayment.service.label'
-                },
-                value: {
-                  defaultMessage:
-                    'Birth registration before 30 days of date of birth',
-                  description:
-                    'Birth registration before 30 days of date of birth message',
-                  id: 'event.birth.action.certificate.form.section.collectPayment.service.label.beforeRegistrationTarget'
-                }
-              },
-              {
-                id: 'fee',
-                label: {
-                  defaultMessage: 'Fee',
-                  description: 'Title for the data entry',
-                  id: 'event.birth.action.certificate.form.section.collectPayment.fee.label'
-                },
-                value: '$5.00'
-              }
-            ]
-          }
+          ]
+        },
+        {
+          id: 'collector.collect.payment.receiptNumber',
+          type: FieldType.TEXT,
+          required: false,
+          label: {
+            defaultMessage: 'Receipt Number',
+            description: 'Label for the receipt number field',
+            id: 'event.birth.action.certificate.form.section.collectPayment.receiptNumber.label'
+          },
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: not(
+                field('collector.collect.payment.feeWaived').isEqualTo(true)
+              )
+            }
+          ]
         }
       ]
     }
