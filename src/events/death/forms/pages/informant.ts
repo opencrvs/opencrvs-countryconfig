@@ -152,7 +152,7 @@ const deathInformantTypeOptions = [
   }
 ]
 
-const PHONE_NUMBER_REGEX = '^0(7|9)[0-9]{8}$'
+const PHONE_NUMBER_REGEX = '^[0-9]{5}$'
 
 const isNotSpecialInformant = and(
   not(
@@ -245,7 +245,7 @@ export const informant = defineFormPage({
       type: FieldType.SELECT,
       required: true,
       label: {
-        defaultMessage: 'Type of ID',
+        defaultMessage: 'Form of ID',
         description: 'This is the label for the field',
         id: 'event.death.action.declare.form.section.informant.field.idType.label'
       },
@@ -598,9 +598,9 @@ export const informant = defineFormPage({
         {
           message: {
             defaultMessage:
-              'Must be a valid 10 digit number that starts with 0(7|9)',
+              'Must be a valid 5 digit number',
             description:
-              'The error message that appears on phone numbers where the first two characters must be 07 or 09, and length must be 10',
+              'The error message that appears on phone numbers that are not 5 digits',
             id: 'event.death.action.declare.form.section.informant.field.phoneNo.error'
           },
           validator: or(
@@ -608,8 +608,7 @@ export const informant = defineFormPage({
             field('informant.phoneNo').isFalsy()
           )
         }
-      ],
-      parent: field('informant.relation')
+      ]
     },
     {
       id: 'informant.email',
@@ -623,8 +622,7 @@ export const informant = defineFormPage({
       },
       configuration: {
         maxLength: 255
-      },
-      parent: field('informant.relation')
+      }
     }
   ]
 })

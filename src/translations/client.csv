@@ -1214,7 +1214,7 @@ event.death.action.declare.form.section.informant.field.contactHelper.label, Lab
 event.death.action.declare.form.section.informant.field.dob.error,This is the error message for invalid date,Must be a valid Birthdate,Doit être une date de naissance valide
 event.death.action.declare.form.section.informant.field.dob.label,This is the label for the field,Date of birth,Date de naissance
 event.death.action.declare.form.section.informant.field.email.label,This is the label for the field,Email address,Email
-event.death.action.declare.form.section.informant.field.idType.label,This is the label for the field,Type of ID,Type d'identité
+event.death.action.declare.form.section.informant.field.idType.label,This is the label for the field,Form of ID,Type d'identité
 event.death.action.declare.form.section.informant.field.idType.option.birthCertificate,Option for informant ID type birth certificate,Birth certificate,Certificat de naissance
 event.death.action.declare.form.section.informant.field.idType.option.other,Option for informant ID type other,Other,Autre
 event.death.action.declare.form.section.informant.field.idType.option.passport,Option for informant ID type passport,Passport,Passeport
@@ -1225,8 +1225,8 @@ event.death.action.declare.form.section.informant.field.other.relation.helperTex
 event.death.action.declare.form.section.informant.field.other.relation.label,This is the label for the field,Relationship to deceased,Relation avec le défunt
 event.death.action.declare.form.section.informant.field.other.relation.placeholder, Label,Eg. Nephew, 
 event.death.action.declare.form.section.informant.field.otherId.label,Label for informant other ID number,ID number,Numéro d'identifiant
-event.death.action.declare.form.section.informant.field.passport.label,This is the label for the field,ID Number,Numéro d'identité
-event.death.action.declare.form.section.informant.field.phoneNo.error,The error message that appears on phone numbers where the first two characters must be 07 or 09 and length must be 10,Must be a valid 10 digit number that starts with 0(7|9),Doit être un nombre valide de 10 chiffres qui commence par 0(7|9)
+event.death.action.declare.form.section.informant.field.passport.label,This is the label for the field,Passport Number,Numéro d'identité
+event.death.action.declare.form.section.informant.field.phoneNo.error,The error message that appears on phone numbers where the first two characters must be 07 or 09 and length must be 10,Must be a valid 5 digit number,Doit être un nombre valide de 4 chiffres
 event.death.action.declare.form.section.informant.field.phoneNo.label,This is the label for the field,Phone number,Numéro de téléphone
 event.death.action.declare.form.section.informant.field.relation.label,This is the label for the field,Informant type,Type d'informateur
 event.death.action.declare.form.section.livingChildren.field.child.age.unit.days,Age unit days,Days,Jours
