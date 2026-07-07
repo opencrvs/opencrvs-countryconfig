@@ -60,7 +60,7 @@ export const roles: Role[] = [
       { type: 'organisation.read-locations' },
       { type: 'user.read' },
       { type: 'user.search' },
-      { type: 'workqueue', options: { ids: ['assigned-to-you', 'recent', 'requires-completion', 'in-external-validation', 'escalated', 'potential-duplicate', 'pending-validation', 'pending-updates', 'pending-approval', 'pending-certification', 'pending-issuance', 'correction-requested'] } },
+      { type: 'workqueue', options: { ids: ['assigned-to-you', 'recent', 'requires-completion', 'in-external-validation', 'escalated', 'potential-duplicate', 'pending-validation', 'pending-updates', 'pending-approval', 'pending-registration', 'pending-certification', 'pending-issuance', 'correction-requested'] } },
       { type: 'record.search' },
       { type: 'record.create' },
       { type: 'record.read' },
