@@ -1178,13 +1178,13 @@ event.death.action.declare.form.section.event.field.referredToPolice.label,Label
 event.death.action.declare.form.section.event.field.sourceCauseDeath.label,This is the label for the field,Source of cause of death,Source de la cause du décès
 event.death.action.declare.form.section.event.field.timeOfDeath.label,Label for time of death field,Time of death,Heure du décès
 event.death.action.declare.form.section.father.field.age.label,Label for father age,Age,Âge
-event.death.action.declare.form.section.father.field.brn.helperText,Helper text for birth registration number field,"Search for an existing birth record. If a match is found, the details below will auto-fill. If no record is found, continue by entering the details manually.","Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement."
+event.death.action.declare.form.section.father.field.brn.helperText,Helper text for birth registration number field,"Search for a birth record. If found, details will auto-fill. Otherwise, continue with manual entry","Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement."
 event.death.action.declare.form.section.father.field.brn.label,Label for father birth registration number,Birth registration number,Numéro d'enregistrement de naissance
 event.death.action.declare.form.section.father.field.detailsNotAvailable.label,Label for father details not available,Father's details are not available,Les informations sur le père ne sont pas disponibles
 event.death.action.declare.form.section.father.field.dob.error,Error for father date of birth,Must be a valid date in the past,Doit être une date valide dans le passé
 event.death.action.declare.form.section.father.field.dob.label,Label for father date of birth,Date of birth,Date de naissance
 event.death.action.declare.form.section.father.field.dobUnknown.label,Label for father DOB unknown,Exact date of birth unknown,Date de naissance exacte inconnue
-event.death.action.declare.form.section.father.field.idType.label,Label for father ID type,Type of ID,Type d'identifiant
+event.death.action.declare.form.section.father.field.idType.label,Label for father ID type,Form of ID,Type d'identifiant
 event.death.action.declare.form.section.father.field.idType.option.birthCertificate,Option for father ID type birth certificate,Birth certificate,Certificat de naissance
 event.death.action.declare.form.section.father.field.idType.option.other,Option for father ID type other,Other,Autre
 event.death.action.declare.form.section.father.field.idType.option.passport,Option for father ID type passport,Passport,Passeport
@@ -2226,7 +2226,6 @@ event.death.action.declare.form.section.father.field.livingStatus.label,Label fo
 event.death.action.declare.form.section.father.field.livingStatus.option.alive,Option for father living status alive,Alive,Vivant
 event.death.action.declare.form.section.father.field.livingStatus.option.deceased,Option for father living status deceased,Deceased,Décédé
 event.death.action.declare.form.section.father.field.nationality.label,Label for father nationality,Nationality,Nationalité
-event.death.action.declare.form.section.father.field.idType.label,Label for father ID type,Type of ID,Type d'identifiant
 event.death.action.declare.form.section.father.field.idType.option.birthCertificate,Option for father ID type birth certificate,Birth certificate,Certificat de naissance
 event.death.action.declare.form.section.father.field.idType.option.passport,Option for father ID type passport,Passport,Passeport
 event.death.action.declare.form.section.father.field.idType.option.other,Option for father ID type other,Other,Autre
@@ -2240,7 +2239,6 @@ event.death.action.declare.form.section.father.field.dobUnknown.label,Label for 
 event.death.action.declare.form.section.father.field.age.label,Label for father age,Age of father,Âge
 event.death.action.declare.form.section.father.field.placeOfBirth.label,Label for father place of birth,Place of birth,Lieu de naissance
 event.death.action.declare.form.section.father.field.occupation.label,Label for father occupation,Occupation,Profession
-event.death.action.declare.form.section.father.field.brn.helperText,Helper text for birth registration number field,"Search for a birth record. If found, details will auto-fill. Otherwise, continue with manual entry.",Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement.
 form.death.mother.title,Form section title for mother's details,Mother's details,Détails de la mère
 event.death.action.declare.form.section.mother.field.detailsNotAvailable.label,Label for mother details not available,Mother's details are not available,Les informations sur la mère ne sont pas disponibles
 event.death.action.declare.form.section.mother.field.reason.label,Label for reason mother details not available,Reason,Raison

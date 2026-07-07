@@ -192,7 +192,7 @@ export const father = defineFormPage({
       type: FieldType.SELECT,
       required: true,
       label: {
-        defaultMessage: 'Type of ID',
+        defaultMessage: 'Form of ID',
         description: 'This is the label for the field',
         id: 'event.death.action.declare.form.section.father.field.idType.label'
       },
@@ -346,7 +346,11 @@ export const father = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: fatherDetailsAvailable
+          conditional: and(
+            fatherDetailsAvailable,
+            hasNonHealthNotifierRole,
+            notDeceased
+          )
         }
       ]
     },
