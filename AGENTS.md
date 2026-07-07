@@ -2,7 +2,7 @@
 
 Guidance for AI coding agents working in this Node.js repository.
 
-Docs: https://documentation.opencrvs.org & `README.md`.
+Docs: https://github.com/opencrvs/documentation & `README.md`.
 
 ## Security and policy
 
