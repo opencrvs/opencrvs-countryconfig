@@ -3,8 +3,8 @@
   "permissions": {
     "disableBypassPermissionsMode": "disable",
     "deny": [
-      "Read(src/data-seeding/**)",
-      "Edit(src/data-seeding/**)",
+      "Read(src/data-seeding/employees/source/**)",
+      "Edit(src/data-seeding/employees/source/**)",
       "Read(./.env)",
       "Read(./.env.*)",
       "Read(**/.env)",
