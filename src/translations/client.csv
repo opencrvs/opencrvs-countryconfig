@@ -1311,13 +1311,13 @@ event.death.action.declare.form.section.livingChildren.field.numberOfChildren.op
 event.death.action.declare.form.section.livingChildren.field.numberOfChildren.option.8,Option for 8 children,8,8
 event.death.action.declare.form.section.livingChildren.field.numberOfChildren.option.9,Option for 9 children,9,9
 event.death.action.declare.form.section.mother.field.age.label,Label for mother age,Age,Âge
-event.death.action.declare.form.section.mother.field.brn.helperText,Helper text for birth registration number field,"Search for an existing birth record. If a match is found, the details below will auto-fill. If no record is found, continue by entering the details manually.","Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement."
+event.death.action.declare.form.section.mother.field.brn.helperText,Helper text for birth registration number field,"Search for a birth record. If found, details will auto-fill. Otherwise, continue with manual entry","Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement."
 event.death.action.declare.form.section.mother.field.brn.label,Label for mother birth registration number,Birth registration number,Numéro d'enregistrement de naissance
 event.death.action.declare.form.section.mother.field.detailsNotAvailable.label,Label for mother details not available,Mother's details are not available,Les informations sur la mère ne sont pas disponibles
 event.death.action.declare.form.section.mother.field.dob.error,Error for mother date of birth,Must be a valid date in the past,Doit être une date valide dans le passé
 event.death.action.declare.form.section.mother.field.dob.label,Label for mother date of birth,Date of birth,Date de naissance
 event.death.action.declare.form.section.mother.field.dobUnknown.label,Label for mother DOB unknown,Exact date of birth unknown,Date de naissance exacte inconnue
-event.death.action.declare.form.section.mother.field.idType.label,Label for mother ID type,Type of ID,Type d'identifiant
+event.death.action.declare.form.section.mother.field.idType.label,Label for mother ID type,Form of ID,Type d'identifiant
 event.death.action.declare.form.section.mother.field.idType.option.birthCertificate,Option for mother ID type birth certificate,Birth certificate,Certificat de naissance
 event.death.action.declare.form.section.mother.field.idType.option.other,Option for mother ID type other,Other,Autre
 event.death.action.declare.form.section.mother.field.idType.option.passport,Option for mother ID type passport,Passport,Passeport
@@ -2251,7 +2251,6 @@ event.death.action.declare.form.section.mother.field.idType.option.birthCertific
 event.death.action.declare.form.section.mother.field.idType.option.passport,Option for mother ID type passport,Passport,Passeport
 event.death.action.declare.form.section.mother.field.idType.option.other,Option for mother ID type other,Other,Autre
 event.death.action.declare.form.section.mother.field.brn.label,Label for mother birth registration number,Birth registration number lookup,Numéro d'enregistrement de naissance
-event.death.action.declare.form.section.mother.field.brn.helperText,Helper text for birth registration number field,"Search for a birth record. If found, details will auto-fill. Otherwise, continue with manual entry.",Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement.
 event.death.action.declare.form.section.mother.field.passport.label,Label for mother passport number,Passport number,Numéro de passeport
 event.death.action.declare.form.section.mother.field.otherId.label,Label for mother other ID,ID number,Autre numéro d'identifiant
 event.death.action.declare.form.section.mother.field.name.label,Label for mother full name,Mother's full name,Nom complet de la mère
