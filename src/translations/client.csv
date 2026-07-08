@@ -384,6 +384,7 @@ constants.sentForUpdatesOn,Label for rejection date in work queue list item,Sent
 constants.sentForValidation,label for sent for validation,Sent for validation,Envoyé pour validation
 constants.sentOn,Label for rejection date in work queue list item,Sent on,Envoyé le
 constants.sent_incomplete,Declaration submitted without completing the required fields,Sent incomplete,Envoyé incomplet
+constants.sent_incomplete,Declaration submitted without completing the required fields,Sent incomplete,Déclaration soumise sans remplir les champs requis
 constants.showMore,Label for show more link,Show next {pageSize},Afficher la page suivante {pageSize}
 constants.skipToMainContent,Label for a keyboard accessibility link which skips to the main content,Skip to main content,Sauter au contenu principal
 constants.socialWorker,The description for Hospital Clerk type,Hospital Clerk,Commis d'hôpital
@@ -436,6 +437,7 @@ correction.correctionForApprovalDialog.actions.cancel,The cancel button for the 
 correction.correctionForApprovalDialog.actions.send,The send button for the dialog when record correction sent by registration agent for approval,Confirm,Confirmer
 correction.correctionForApprovalDialog.description,The description for the dialog when record correction sent by registration agent for approval,This will initiate a formal correction request for the selected record. Supporting documentation may be required.,Cela initiera une demande officielle de correction pour l'enregistrement sélectionné. Des documents justificatifs peuvent être exigés.
 correction.correctionForApprovalDialog.title,The title for the dialog when record correction sent by registration agent for approval,Request record correction?,Demander une correction de l'enregistrement ?
+correction.correctionForApprovalDialog.title,The title for the dialog when record correction sent by registration agent for approval,Request record correction?,Demander une correction d'enregistrement ?
 correction.correctionReject.description,The description for reject correction modal,Rejecting this correction request will leave the original record unchanged. A reason for rejection should be provided.,Le rejet de cette demande de correction laissera le registre officiel inchangé. Un motif de rejet doit être fourni.
 correction.correctionReject.reason,Correction request rejection reason,Reason for rejection,Motif du rejet
 correction.correctionRequest,Correction request text,Correction request,Demande de correction
@@ -2045,6 +2047,7 @@ serviceWorker.cacheKey.WorkBoxRuntime.error.content,Content shown when WorkBox r
 serviceWorker.cacheKey.WorkBoxRuntime.error.header,Header shown when WorkBox runtime cache key is missing,⚠️ Application Cache Error,⚠️ Erreur du cache de l'application
 settings.account.tile,Account header,Account,Compte
 settings.changeAvatar,Avatar change modal header,Change profile image,Modifier l'image du profil
+settings.changeAvatar.avatarProcessingError,Avatar processing error message,There was an error processing the image. Please try again.,Une erreur s'est produite lors du traitement de l'image. Veuillez réessayer.
 settings.changeAvatar.changeImage,Change image label,Change,Modifier l'image
 settings.changeAvatar.resizeAvatar,Avatar resize and position message,Resize and position the chosen image.,Redimensionnez et positionnez l'image choisie.
 settings.changeLanguage,Change language title,Change language,Changer de langue
