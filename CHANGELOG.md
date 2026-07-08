@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.0 Release Candidate
+
+### Breaking changes
+
+- Removed InfluxDB from deployment infrastructure (service, backup/restore, provisioning).
+
 ## 2.0.0
 
 ### Breaking changes
@@ -39,6 +45,8 @@ The default values for these variables have been added to the `docker-compose.de
 - V2 certificate SVG templates now use the `$join` helper for location hierarchies, replacing hardcoded comma separators. Empty/undefined levels are automatically filtered, preventing leading or trailing commas.
 - Mother's address in `v2.birth-certificate-certified-copy.svg` now uses the `administrativeHierarchy` convenience variable (`{{$lookup $declaration "mother.address.administrativeHierarchy"}}`) instead of individual fields.
 - Docker swarm to Kubernetes migration script [#10858](https://github.com/opencrvs/opencrvs-core/issues/10858), [#10787](https://github.com/opencrvs/opencrvs-core/issues/10787)
+
+## 1.9.15 Release Candidate
 
 ## 1.9.14 Release Candidate
 

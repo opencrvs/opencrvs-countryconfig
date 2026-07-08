@@ -96,3 +96,57 @@ curl --connect-timeout 60 -u elastic:$ELASTICSEARCH_SUPERUSER_PASSWORD "$kibana_
   curl --connect-timeout 60 -X POST -H 'kbn-xsrf: true' -u elastic:$ELASTICSEARCH_SUPERUSER_PASSWORD "http://kibana:5601/api/alerting/rule/$id/_disable"
   curl --connect-timeout 60 -X POST -H 'kbn-xsrf: true' -u elastic:$ELASTICSEARCH_SUPERUSER_PASSWORD "http://kibana:5601/api/alerting/rule/$id/_enable"
 done
+
+
+# Create data view if it doesn't exist:
+# Get data view id for ecs-*
+DATA_VIEW_ID=$(curl -s \
+  -u elastic:$ELASTICSEARCH_SUPERUSER_PASSWORD \
+  "http://kibana:5601/api/data_views" \
+  | jq -r '.data_view[] | select(.title=="ecs-*") | .id')
+
+# Check existance:
+if [ -z "$DATA_VIEW_ID" ]; then
+  echo "Creating data view ecs-*"
+  # Create dataview and get id:
+  DATA_VIEW_ID=$(curl -s \
+    -u elastic:$ELASTICSEARCH_SUPERUSER_PASSWORD \
+    -X POST "http://kibana:5601/api/data_views/data_view" \
+    -H 'kbn-xsrf: true' \
+    -H 'Content-Type: application/json' \
+    -d '{
+      "data_view": {
+        "title": "ecs-*",
+        "name": "OpenCRVS Logs",
+        "timeFieldName": "@timestamp"
+      }
+    }' | jq -r '.data_view.id')
+  echo "Setting default data view to ecs-* for Logs Explorer"
+  curl -s \
+    -u elastic:$ELASTICSEARCH_SUPERUSER_PASSWORD \
+    -X POST "http://kibana:5601/api/data_views/default" \
+    -H 'kbn-xsrf: true' \
+    -H 'Content-Type: application/json' \
+    -d "{\"data_view_id\":\"${DATA_VIEW_ID}\"}"
+  echo "Setting default index to ecs-* for Discover"
+  curl -s \
+    -u elastic:$ELASTICSEARCH_SUPERUSER_PASSWORD \
+    -X POST "http://kibana:5601/api/kibana/settings/defaultIndex" \
+    -H 'kbn-xsrf: true' \
+    -H 'Content-Type: application/json' \
+    -d "{\"value\":\"${DATA_VIEW_ID}\"}"
+  echo "Setup Observability indices"
+  curl -s \
+    -u elastic:$ELASTICSEARCH_SUPERUSER_PASSWORD \
+    -X POST "http://kibana:5601/api/kibana/settings/observability:logSources" \
+    -H 'kbn-xsrf: true' \
+    -H 'Content-Type: application/json' \
+    -d '{
+        "value": [
+           "filebeat-*",
+           "ecs-*"
+        ]
+       }'
+fi
+
+echo "OpenCRVS Logs Data view id: $DATA_VIEW_ID"

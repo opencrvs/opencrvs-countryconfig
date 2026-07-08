@@ -94,6 +94,12 @@ jobs:
 
           # Bump package.json without creating a git tag.
           yarn version --new-version ${{ inputs.version }} --no-git-tag-version
+          # Bump Tiltfile version
+          VERSION=${{ inputs.version }}
+          sed -i -E \
+            -e 's|(core_images_tag = os.getenv\("OPENCRVS_CORE_IMAGE_TAG", )"[^"]+"|\1"v'"$VERSION"'"|' \
+            -e 's|(core_ref = os.getenv\("OPENCRVS_CORE_REF", )"[^"]+"|\1"release/'"$VERSION"'"|' \
+            Tiltfile
           git add .
           git commit -m "chore: update version to ${{ inputs.version }}"
 
@@ -119,7 +125,8 @@ jobs:
       # conflict-resolution commits do not land on the release branch itself.
       - name: Create merge-back branch for develop PR
         run: |
-          MERGEBACK_BRANCH="merge-back/release-${{ inputs.version }}-to-develop"
+          VERSION_NO_DOTS=$(echo "${{ inputs.version }}" | tr -d '.')
+          MERGEBACK_BRANCH="merge-back/release-${VERSION_NO_DOTS}-to-develop"
           if git ls-remote --exit-code --heads origin "$MERGEBACK_BRANCH" > /dev/null 2>&1; then
             echo "Branch $MERGEBACK_BRANCH already exists, skipping."
           else
@@ -143,7 +150,8 @@ jobs:
       - name: Create Pull Requests
         run: |
           PR_BRANCH="release/${{ inputs.version }}"
-          MERGEBACK_BRANCH="merge-back/release-${{ inputs.version }}-to-develop"
+          VERSION_NO_DOTS=$(echo "${{ inputs.version }}" | tr -d '.')
+          MERGEBACK_BRANCH="merge-back/release-${VERSION_NO_DOTS}-to-develop"
           TARGET_BRANCH="${{ steps.get_base_branch.outputs.target_branch }}"
 
           if [ -f .github/TEMPLATES/RELEASE_PR_TEMPLATE.md ]; then
