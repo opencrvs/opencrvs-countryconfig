@@ -852,8 +852,8 @@ event.birth.action.correction.reason.option.clericalError.label,Label for the cl
 event.birth.action.correction.reason.option.judicialOrder.label,Label for the judicial order option,Requested to do so by the court (Judicial order),Demandé par le tribunal (Ordonnance judiciaire)
 event.birth.action.correction.reason.option.materialError.label,Label for the material error option,Informant provided incorrect information (Material error),L'informateur a fourni des informations incorrectes (Erreur matérielle)
 event.birth.action.correction.reason.option.materialOmission.label,Label for the material omission option,Informant did not provide this information (Material omission),L'informateur n'a pas fourni cette information (Omission matérielle)
-event.birth.action.correction.reason.option.other.label,Label for the other option,Other,Autre
-event.birth.action.correction.reason.other.label,Label for the reason,Specify reason,Préciser la raison
+event.birth.action.correction.reason.option.other.label,Label for the other option,Other (please specify),Autre (porfavor specify)
+event.birth.action.correction.reason.other.label,Label for other option input field,Other (please specify),Autre
 event.birth.action.declare.form.label,This is what this form is referred as in the system,Birth decalration form,Birth decalration form
 event.birth.action.declare.form.review.alphaPrint.header.label,Label for the declaration summary heading in the review section,Declaration summary,Résumé de déclaration
 event.birth.action.declare.form.review.alphaPrint.label,Label for the alpha print button in the review section,Print,Imprimer
@@ -1023,7 +1023,7 @@ event.death.action.certificate.form.section.collectPayment.fee.label,Title for t
 event.death.action.certificate.form.section.collectPayment.service.label,Title for the data entry,Service,Service
 event.death.action.certificate.form.section.collectPayment.service.label.afterRegistrationTarget,Death registration after 45 days of date of death message,Death registration after 45 days of date of death,Enregistrement du décès après 45 jours de la date du décès
 event.death.action.certificate.form.section.collectPayment.service.label.beforeRegistrationTarget,Death registration before 45 days of date of death message,Death registration before 45 days of date of death,Enregistrement du décès avant 45 jours de la date du décès
-event.death.action.certificate.form.section.requester.label,This is the label for the field,Requester,Demandeur
+event.death.action.certificate.form.section.requester.label,This is the label for the field,Collecter,Demandeur
 event.death.action.certificate.form.section.requester.other.label,This is the label for the field,Print and issue to someone else,Imprimer et délivrer à quelqu'un d'autre
 event.death.action.certificate.form.section.requester.printInAdvance.label,This is the label for the field,Print in advance,Imprimer à l'avance
 event.death.action.certificate.form.section.requester.spouse.label,This is the label for the field,Print and issue to Spouse,Imprimer et délivrer au conjoint
@@ -1401,7 +1401,7 @@ event.death.summary.informant.contact.label,This is the label for the informant 
 event.death.summary.informant.contact.value,This is the contact value of the informant,{informant.phoneNo} {informant.email},{informant.phoneNo} {informant.email}
 event.death.title,This is the title of the summary,{deceased.name.firstname} {deceased.name.surname},{deceased.name.firstname} {deceased.name.surname}
 event.declaration.potentialDuplicateDetected,Notification for potential duplicate declaration. Shown when a potential duplicate is detected after declaring an event.,{trackingId} is a potential duplicate. Record is ready for review.,{trackingId} est un doublon potentiel. L’enregistrement est prêt pour révision.
-event.default.action.certificate.template.type.label,Select certificate template,Type,Taper
+event.default.action.certificate.template.type.label,Select certificate template,Document Type,Taper
 event.default.action.certificate.template.type.notFound,Select certificate template options not found,"No template available for this event, contact Admin","Aucun modèle disponible pour cette event, contactez l’admin"
 event.edit.comment.label,The label for the comment,Comments,Commentaires
 event.edit.declareWithEdits.label,Label for `Declare with edits` in edit action menu,Declare with edits,Déclarer avec modifications
@@ -2115,6 +2115,7 @@ print.certificate.collector.father,The label for select value when father is the
 print.certificate.collector.form.error,Form level error for collector form,Please select who is collecting the certificate,Veuillez sélectionner la personne qui collecte le certificat
 print.certificate.collector.form.error.template,Form level error for collector form template type,Please select certificate type,Veuillez sélectionner le type de certificat
 print.certificate.collector.idCheck.title,The title for id check component,Verify their identity,Vérifier leur identité
+print.certificate.collector.requesterId.label,Label for collector,Collector,Collector
 print.certificate.collector.idCheckDialog.title,The title for the dialog when details of the collector not verified,Print without proof of ID?,Continuer sans preuve d'identité ?
 print.certificate.collector.informant,The label for select value when informant is the collector of certificate,Informant is collecting,Informateur
 print.certificate.collector.mother,The label for select value when mother is the collector of certificate,Mother is collecting,Mère
