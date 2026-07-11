@@ -43,7 +43,6 @@ export const deathcorrectionRequesterIdentityVerify: FieldConfig[] = [
     configuration: {
       data: [
         { fieldId: 'spouse.idType' },
-        { fieldId: 'spouse.nid' },
         { fieldId: 'spouse.passport' },
         { fieldId: 'spouse.brn' },
         { fieldId: 'spouse.name' },
@@ -61,7 +60,67 @@ export const deathcorrectionRequesterIdentityVerify: FieldConfig[] = [
         type: ConditionalType.SHOW,
         conditional: and(
           field('requester.type').isEqualTo('INFORMANT'),
-          not(field('informant.relation').isEqualTo('SPOUSE'))
+          field('informant.relation').isEqualTo('MOTHER')
+        )
+      }
+    ],
+    label: {
+      defaultMessage: '',
+      description: 'Title for the data section',
+      id: 'event.death.action.correction.form.section.verifyIdentity.data.label'
+    },
+    configuration: {
+      data: [
+        { fieldId: 'mother.idType' },
+        { fieldId: 'mother.passport' },
+        { fieldId: 'mother.brn' },
+        { fieldId: 'mother.name' },
+        { fieldId: 'mother.dob' },
+        { fieldId: 'mother.age' },
+        { fieldId: 'mother.nationality' }
+      ]
+    }
+  },
+  {
+    id: 'requester.identity.verify.data',
+    type: FieldType.DATA,
+    conditionals: [
+      {
+        type: ConditionalType.SHOW,
+        conditional: and(
+          field('requester.type').isEqualTo('INFORMANT'),
+          field('informant.relation').isEqualTo('FATHER')
+        )
+      }
+    ],
+    label: {
+      defaultMessage: '',
+      description: 'Title for the data section',
+      id: 'event.death.action.correction.form.section.verifyIdentity.data.label'
+    },
+    configuration: {
+      data: [
+        { fieldId: 'father.idType' },
+        { fieldId: 'father.passport' },
+        { fieldId: 'father.brn' },
+        { fieldId: 'father.name' },
+        { fieldId: 'father.dob' },
+        { fieldId: 'father.age' },
+        { fieldId: 'father.nationality' }
+      ]
+    }
+  },
+  {
+    id: 'requester.identity.verify.data',
+    type: FieldType.DATA,
+    conditionals: [
+      {
+        type: ConditionalType.SHOW,
+        conditional: and(
+          field('requester.type').isEqualTo('INFORMANT'),
+          not(field('informant.relation').isEqualTo('SPOUSE')),
+          not(field('informant.relation').isEqualTo('MOTHER')),
+          not(field('informant.relation').isEqualTo('FATHER'))
         )
       }
     ],

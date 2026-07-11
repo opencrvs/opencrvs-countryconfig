@@ -487,7 +487,7 @@ correction.summary.feesRequired,Fees required for certificate correction summary
 correction.summary.feesRequiredNegative,Negative label for Fees required for certificate correction summary,No,Non
 correction.summary.feesRequiredPositive,Positive label for Fees required for certificate correction summary,Yes,Oui
 correction.summary.idCheck,ID check header for certificate correction summary,ID check,Contrôle d'identité
-correction.summary.idCheckForCorrection,The title for the dialog when details of the collector not verified for correction,Correct without proof of ID?,Correct sans pièce d'identité ?
+correction.summary.idCheckForCorrection,The title for the dialog when details of the collector not verified for correction,Proceed without proof of ID?,Correct sans pièce d'identité ?
 correction.summary.item,Corrected item table header for certificate correction summary,Item,Point
 correction.summary.office,Office where certificate correction summary was submitted,Office,Bureau
 correction.summary.original,Original value table header for certificate correction summary,Original,Original
@@ -839,7 +839,7 @@ event.birth.action.correction.fees.amount.prefix,Prefix for the amount field,$,�
 event.birth.action.correction.fees.receiptNumber.label,Label for the receipt number field,Receipt number,Numéro de reçu
 event.birth.action.correction.form.cancel,This is the label for the verification cancellation button,Identity does not match,L'identité ne correspond pas
 event.birth.action.correction.form.cancel.confirmation.body,This is the body for the verification cancellation modal,"Please be aware that if you proceed, you will be responsible for making a change to this record without the necessary proof of identification","Veuillez noter que si vous continuez, vous serez responsable d'apporter une modification à cet enregistrement sans la preuve d'identification nécessaire."
-event.birth.action.correction.form.cancel.confirmation.title,This is the title for the verification cancellation modal,Correct without proof of ID?,Correction sans preuve d'identité ?
+event.birth.action.correction.form.cancel.confirmation.title,This is the title for the verification cancellation modal,Proceed without proof of ID?,Correction sans preuve d'identité ?
 event.birth.action.correction.form.label,This is the label for the birth correction form,Correct record,Corriger le dossier
 event.birth.action.correction.form.section.details.divider.label,This is the title of the section,,
 event.birth.action.correction.form.section.details.title,This is the title of the section,Correction details,Détails de la correction
@@ -1039,7 +1039,7 @@ event.death.action.correction.fees.amount.label,Label for the amount field,Fee t
 event.death.action.correction.fees.amount.prefix,Prefix for the amount field,$,€
 event.death.action.correction.form.cancel,This is the label for the verification cancellation button,Identity does not match,L'identité ne correspond pas
 event.death.action.correction.form.cancel.confirmation.body,This is the body for the verification cancellation modal,"Please be aware that if you proceed, you will be responsible for this correction without the necessary proof of ID from the requester","Veuillez noter que si vous continuez, vous serez responsable d'apporter une modification à cet enregistrement sans la preuve d'identification nécessaire."
-event.death.action.correction.form.cancel.confirmation.title,This is the title for the verification cancellation modal,Correct without proof of ID?,Correction sans preuve d'identité ?
+event.death.action.correction.form.cancel.confirmation.title,This is the title for the verification cancellation modal,Proceed without proof of ID?,Correction sans preuve d'identité ?
 event.death.action.correction.form.label,This is the label for the death correction form,Correct record,Corriger le dossier
 event.death.action.correction.form.requester.type.anotherAgent,This is the label for the correction requester field,Registrar general / Registration office,Directeur de l'état civil / Bureau d'enregistrement
 event.death.action.correction.form.requester.type.court,This is the label for the correction requester field,Court,Tribunal
