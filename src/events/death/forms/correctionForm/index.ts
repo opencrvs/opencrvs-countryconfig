@@ -184,19 +184,27 @@ export const DEATH_CORRECTION_FORM = defineActionForm({
           },
           options: [
             {
-              value: 'AFFIDAVIT',
+              value: 'STATUTORY_DECLARATION',
               label: {
-                defaultMessage: 'Affidavit',
-                description: 'Label for the affidavit option',
-                id: 'event.death.action.correction.documents.supportingDocs.affidavit.label'
+                defaultMessage: 'Statutory Declaration',
+                description: 'Label for the statutory declaration option',
+                id: 'event.death.action.correction.documents.supportingDocs.statutoryDeclaration.label'
               }
             },
             {
-              value: 'COURT_DOCUMENT',
+              value: 'COURT_ORDER',
               label: {
-                defaultMessage: 'Court Document',
-                description: 'Label for the court document option',
-                id: 'event.death.action.correction.documents.supportingDocs.courtDocument.label'
+                defaultMessage: 'Court Order',
+                description: 'Label for the court order option',
+                id: 'event.death.action.correction.documents.supportingDocs.courtOrder.label'
+              }
+            },
+            {
+              value: 'AUTHORITY_LETTER',
+              label: {
+                defaultMessage: 'Registrar General / Registration Officer authorization',
+                description: 'Label for the authority letter option',
+                id: 'event.death.action.correction.documents.supportingDocs.authorityLetter.label'
               }
             },
             {

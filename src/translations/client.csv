@@ -1035,6 +1035,9 @@ event.death.action.correction.documents.supportingDocs.affidavit.label,Label for
 event.death.action.correction.documents.supportingDocs.courtDocument.label,Label for the court document option,Court Document,Document judiciaire
 event.death.action.correction.documents.supportingDocs.label,Label for the supporting documents field,Supporting documents,Documents justificatifs
 event.death.action.correction.documents.supportingDocs.other.label,Label for the other option,Other,Autre
+event.death.action.correction.documents.supportingDocs.statutoryDeclaration.label,Label for statutory declaration,Statutory Declaration,Statutory Declaration
+event.death.action.correction.documents.supportingDocs.courtOrder.label,Label for court order,Court Order,Court Order
+event.death.action.correction.documents.supportingDocs.authorityLetter.label,Label for authority letter,Registrar General / Registration Officer authorization,Registrar General / Registration Officer authorization
 event.death.action.correction.fees.amount.label,Label for the amount field,Fee total,Frais totaux
 event.death.action.correction.fees.amount.prefix,Prefix for the amount field,$,€
 event.death.action.correction.form.cancel,This is the label for the verification cancellation button,Identity does not match,L'identité ne correspond pas
