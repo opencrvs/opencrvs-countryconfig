@@ -464,7 +464,7 @@ export const mother = defineFormPage({
       configuration: {
         asOfDate: field('eventDetails.date'),
         postfix: {
-          defaultMessage: 'years',
+          defaultMessage: ' years',
           description: 'This is the postfix for age field',
           id: 'event.death.action.declare.form.section.mother.field.age.postfix'
         }

@@ -1102,7 +1102,8 @@ event.death.action.declare.form.section.deceased.field.addressHelper.label,This 
 event.death.action.declare.form.section.deceased.field.age.checkbox.label,This is the label for the field,Exact date of birth unknown,Date exacte de naissance inconnue
 event.death.action.declare.form.section.deceased.field.age.error,Error message for invalid age,Age must be between 0 and 120,L'auteur doit avoir entre 0 et 120 ans
 event.death.action.declare.form.section.deceased.field.age.label,This is the label for the field,Age of deceased,Âge du défunt
-event.death.action.declare.form.section.deceased.field.age.postfix,This is the postfix for age field,years,ans
+event.death.action.declare.form.section.deceased.field.age.postfix,This is the postfix for age field, years, ans
+event.death.action.declare.form.section.deceased.field.howLongLivedInTuvalu.postfix,this is the postfix for age, years, ans
 event.death.action.declare.form.section.deceased.field.brn.helperText,Helper text for birth registration number field,"Search for an existing birth record. If a match is found, the details below will auto-fill. If no record is found, continue by entering the details manually.","Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement."
 event.death.action.declare.form.section.deceased.field.deathLocation.label,This is the label for the field,Health Institution,Établissement de santé
 event.death.action.declare.form.section.deceased.field.deathLocationOther.label,This is the label for the field,Death location address,Adresse du lieu de décès

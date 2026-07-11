@@ -424,7 +424,7 @@ export const deceased = defineFormPage({
       configuration: {
         asOfDate: field('eventDetails.date'),
         postfix: {
-          defaultMessage: 'years',
+          defaultMessage: ' years',
           description: 'This is the postfix for age field',
           id: 'event.death.action.declare.form.section.deceased.field.age.postfix'
         }
@@ -549,7 +549,7 @@ export const deceased = defineFormPage({
       },
       configuration: {
         postfix: {
-          defaultMessage: 'years',
+          defaultMessage: ' years',
           description: 'Postfix for years',
           id: 'event.death.action.declare.form.section.deceased.field.howLongLivedInTuvalu.postfix'
         }
