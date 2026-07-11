@@ -1041,6 +1041,8 @@ event.death.action.correction.form.cancel,This is the label for the verification
 event.death.action.correction.form.cancel.confirmation.body,This is the body for the verification cancellation modal,"Please be aware that if you proceed, you will be responsible for this correction without the necessary proof of ID from the requester","Veuillez noter que si vous continuez, vous serez responsable d'apporter une modification à cet enregistrement sans la preuve d'identification nécessaire."
 event.death.action.correction.form.cancel.confirmation.title,This is the title for the verification cancellation modal,Correct without proof of ID?,Correction sans preuve d'identité ?
 event.death.action.correction.form.label,This is the label for the death correction form,Correct record,Corriger le dossier
+event.death.action.correction.form.requester.type.anotherAgent,This is the label for the correction requester field,Registrar general / Registration office,Directeur de l'état civil / Bureau d'enregistrement
+event.death.action.correction.form.requester.type.court,This is the label for the correction requester field,Court,Tribunal
 event.death.action.correction.form.requester.type.daughter,This is the label for the correction requester field,Daughter,Fille
 event.death.action.correction.form.requester.type.daughterInLaw,This is the label for the correction requester field,Daughter-in-law,Belle-fille
 event.death.action.correction.form.requester.type.father,This is the label for the correction requester field,Father,Père
@@ -1048,6 +1050,7 @@ event.death.action.correction.form.requester.type.granddaughter,This is the labe
 event.death.action.correction.form.requester.type.grandson,This is the label for the correction requester field,Grandson,Petit-fils
 event.death.action.correction.form.requester.type.mother,This is the label for the correction requester field,Mother,Mère
 event.death.action.correction.form.requester.type.other,This is the label for the correction requester field,Other,Autre
+event.death.action.correction.form.requester.type.someoneElse,This is the label for the correction requester field,Someone else,Quelqu'un d'autre
 event.death.action.correction.form.requester.type.son,This is the label for the correction requester field,Son,Fils
 event.death.action.correction.form.requester.type.sonInLaw,This is the label for the correction requester field,Son-in-law,Gendre
 event.death.action.correction.form.requester.type.spouse,This is the label for the correction requester field,Spouse,Conjoint
@@ -1073,7 +1076,7 @@ event.death.action.correction.reason.option.clericalError.label,Label for the cl
 event.death.action.correction.reason.option.judicialOrder.label,Label for the judicial order option,Requested to do so by the court (Judicial order),Demandé par le tribunal (Ordonnance judiciaire)
 event.death.action.correction.reason.option.materialError.label,Label for the material error option,Informant provided incorrect information (Material error),L'informateur a fourni des informations incorrectes (Erreur matérielle)
 event.death.action.correction.reason.option.materialOmission.label,Label for the material omission option,Informant did not provide this information (Material omission),L'informateur n'a pas fourni cette information (Omission matérielle)
-event.death.action.correction.reason.option.other.label,Label for the other option,Other,Autre
+event.death.action.correction.reason.option.other.label,Label for the other option,Other (please specify),Autre
 event.death.action.correction.reason.other.label,Label for the reason,Specify reason,Préciser la raison
 event.death.action.declare.declare.copy,Confirmation text for the declare action,"You are about to formally declare this death event. Once declared, the record will enter the verification and approval process.","Vous êtes sur le point de déclarer officiellement cet événement de décès. Une fois déclaré, le dossier entrera dans le processus de vérification et d'approbation."
 event.death.action.declare.form.label,This is what this form is referred as in the system,Death declaration form,Formulaire de déclaration de décès
@@ -2686,6 +2689,12 @@ userSetup.type.healthSystem,The description for health system type,Health System
 userSetup.type.hospital,The description for HOSPITAL type,Hospital,Hôpital
 userSetup.type.system,The description for system type,System,Système
 userSetup.waiting,The message that displays when the user is waiting for the account to be created,Setting up your account,Configuration de votre compte
+v2.event.death.action.correction.form.section.requester.informant.daughter.label,This is the label for the field,Informant (Daughter),Informateur (Fille)
+v2.event.death.action.correction.form.section.requester.informant.father.label,This is the label for the field,Informant (Father),Informateur (Père)
+v2.event.death.action.correction.form.section.requester.informant.mother.label,This is the label for the field,Informant (Mother),Informateur (Mère)
+v2.event.death.action.correction.form.section.requester.informant.other.label,This is the label for the field,Informant,Informateur
+v2.event.death.action.correction.form.section.requester.informant.son.label,This is the label for the field,Informant (Son),Informateur (Fils)
+v2.event.death.action.correction.form.section.requester.informant.spouse.label,This is the label for the field,Informant (Spouse),Informateur (Conjoint)
 v2.event.record.offline.description,Message shown on the Record page when the user is offline and the record has not been cached locally,This record has not been downloaded yet so it cannot be opened offline. Please reconnect to the internet to view it.,Cet enregistrement n’a pas encore été téléchargé et ne peut donc pas être ouvert hors ligne. Veuillez vous reconnecter à Internet pour le consulter.
 v2.event.record.offline.title,Title shown on the Record page when the user is offline,No connection,Pas de connexion
 v2.suspense.offline.description,Message shown when a screen cannot load because the user is offline and the data has not been cached locally,"This content has not been downloaded yet, so it cannot be shown offline. It will load automatically once you are back online.",Ce contenu n’a pas encore été téléchargé et ne peut donc pas être affiché hors ligne. Il se chargera automatiquement une fois que vous serez de nouveau en ligne.

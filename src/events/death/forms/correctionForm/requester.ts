@@ -39,23 +39,15 @@ const commonOptions = [
   {
     value: 'ANOTHER_AGENT',
     label: {
-      id: 'event.birth.action.correction.form.requester.type.anotherAgent',
-      defaultMessage: 'Another registration agent or field agent',
-      description: 'This is the label for the correction requester field'
-    }
-  },
-  {
-    value: 'ME',
-    label: {
-      id: 'event.birth.action.correction.form.requester.type.me',
-      defaultMessage: 'Me',
+      id: 'event.death.action.correction.form.requester.type.anotherAgent',
+      defaultMessage: 'Registrar general / Registration office',
       description: 'This is the label for the correction requester field'
     }
   },
   {
     value: 'COURT',
     label: {
-      id: 'event.birth.action.correction.form.requester.type.court',
+      id: 'event.death.action.correction.form.requester.type.court',
       defaultMessage: 'Court',
       description: 'This is the label for the correction requester field'
     }
@@ -63,7 +55,7 @@ const commonOptions = [
   {
     value: 'SOMEONE_ELSE',
     label: {
-      id: 'event.birth.action.correction.form.requester.type.someoneElse',
+      id: 'event.death.action.correction.form.requester.type.someoneElse',
       defaultMessage: 'Someone else',
       description: 'This is the label for the correction requester field'
     }

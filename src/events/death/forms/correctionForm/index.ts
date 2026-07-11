@@ -92,7 +92,7 @@ export const DEATH_CORRECTION_FORM = defineActionForm({
             {
               value: 'OTHER',
               label: {
-                defaultMessage: 'Other',
+                defaultMessage: 'Other (please specify)',
                 description: 'Label for the other option',
                 id: 'event.death.action.correction.reason.option.other.label'
               }
