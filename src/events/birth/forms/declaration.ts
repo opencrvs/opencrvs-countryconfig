@@ -89,7 +89,7 @@ export const BIRTH_DECLARATION_REVIEW = {
         id: 'event.birth.action.declare.form.review.printButton.label'
       },
       configuration: {
-        template: 'v2.birth-declaration_summary',
+        template: 'v2.birth-summary',
         buttonLabel: {
           defaultMessage: 'Print declaration summary',
           description: 'Button label for print declaration summary',

@@ -183,6 +183,24 @@ export async function certificateHandler(
       ]
     },
     {
+      id: 'v2.birth-summary',
+      event: Event.Birth,
+      isV2Template: true,
+      label: {
+        id: 'certificates.birth.summary',
+        defaultMessage: 'Birth Summary',
+        description: 'The label for a birth summary'
+      },
+      isDefault: false,
+      fee: {
+        onTime: 0,
+        late: 0,
+        delayed: 0
+      },
+      svgUrl: '/api/countryconfig/certificates/v2.birth-summary.svg',
+      fonts: notoSansFont
+    },
+    {
       id: 'death-certificate',
       event: Event.Death,
       label: {
