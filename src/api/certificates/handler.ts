@@ -280,6 +280,24 @@ export async function certificateHandler(
       fonts: libreBaskervilleFont
     },
     {
+      id: 'v2.death-summary',
+      event: Event.Death,
+      isV2Template: true,
+      label: {
+        id: 'certificates.death.summary',
+        defaultMessage: 'Death Summary',
+        description: 'The label for a death summary'
+      },
+      isDefault: false,
+      fee: {
+        onTime: 0,
+        late: 0,
+        delayed: 0
+      },
+      svgUrl: '/api/countryconfig/certificates/v2.death-summary.svg',
+      fonts: notoSansFont
+    },
+    {
       id: 'marriage-certificate',
       event: Event.Marriage,
       label: {

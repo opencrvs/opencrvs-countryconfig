@@ -72,7 +72,7 @@ export const DEATH_DECLARATION_REVIEW = {
             id: 'event.death.action.declare.form.review.printButton.label'
           },
           configuration: {
-            template: 'v2.death-declaration_summary',
+            template: 'v2.death-summary',
             buttonLabel: {
               defaultMessage: 'Print declaration summary',
               description: 'Button label for print declaration summary',
