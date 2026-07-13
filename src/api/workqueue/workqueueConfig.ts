@@ -187,10 +187,7 @@ export const Workqueues = defineWorkqueues([
     query: {
       ...createdInMyAdminArea,
       flags: {
-        anyOf: [
-          'escalated-to-registrar-general',
-          'escalated-to-provincial-registrar'
-        ]
+        anyOf: ['escalated-to-registrar-general']
       }
     },
     action: { type: ActionType.READ }
@@ -204,17 +201,6 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of pending feedback workqueue'
     },
     query: { flags: { anyOf: ['escalated-to-registrar-general'] } },
-    action: { type: ActionType.READ }
-  },
-  {
-    slug: 'pending-feedback-provincinal-registrar',
-    icon: 'ChatText',
-    name: {
-      id: 'workqueues.pendingFeedback.title',
-      defaultMessage: 'Pending feedback',
-      description: 'Title of pending feedback workqueue'
-    },
-    query: { flags: { anyOf: ['escalated-to-provincial-registrar'] } },
     action: { type: ActionType.READ }
   },
   {

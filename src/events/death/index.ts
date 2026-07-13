@@ -12,7 +12,10 @@ import {
   ActionType,
   ConditionalType,
   defineConfig,
-  field
+  field,
+  FieldType,
+  flag,
+  not
 } from '@opencrvs/toolkit/events'
 import {
   DEATH_DECLARATION_REVIEW,
@@ -166,6 +169,15 @@ export const deathEvent = defineConfig({
   },
   flags: [
     {
+      id: 'escalated-to-registrar-general',
+      label: {
+        id: 'event.death.flag.escalated-to-registrar-general',
+        defaultMessage: 'Escalated to Registrar General',
+        description: 'Flag label for escalated to registrar general'
+      },
+      requiresAction: true
+    },
+    {
       id: 'pending-first-certificate-issuance',
       label: {
         id: 'event.birth.flag.pending-first-certificate-issuance',
@@ -181,6 +193,8 @@ export const deathEvent = defineConfig({
     ActionType.DECLARE,
     ActionType.EDIT,
     ActionType.MARK_AS_DUPLICATE,
+    'ESCALATE',
+    'REGISTRAR_GENERAL_FEEDBACK',
     ActionType.REJECT,
     ActionType.ARCHIVE,
     ActionType.DELETE,
@@ -280,6 +294,12 @@ export const deathEvent = defineConfig({
       flags: [
         { id: 'pending-first-certificate-issuance', operation: 'add' }
       ],
+      conditionals: [
+        {
+          type: ConditionalType.ENABLE,
+          conditional: not(flag('escalated-to-registrar-general'))
+        }
+      ],
       deduplication: {
         id: 'death-deduplication',
         label: {
@@ -289,6 +309,101 @@ export const deathEvent = defineConfig({
           id: 'event.death.action.detect-duplicate.label'
         },
         query: dedupConfig
+      }
+    },
+    {
+      type: ActionType.CUSTOM,
+      customActionType: 'ESCALATE',
+      icon: 'FileArrowUp',
+      label: {
+        defaultMessage: 'Escalate',
+        description:
+          'This is shown when the escalate action can be triggered from the action from',
+        id: 'event.death.action.escalate.label'
+      },
+      supportingCopy: {
+        defaultMessage:
+          'Escalating this declaration will forward it to the chosen authority for further review and decision.',
+        description: 'This is the confirmation text for the escalate action',
+        id: 'event.death.action.escalate.supportingCopy'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: not(flag('escalated-to-registrar-general'))
+        }
+      ],
+      form: [
+        {
+          id: 'reason',
+          type: FieldType.TEXTAREA,
+          required: true,
+          label: {
+            defaultMessage: 'Reason',
+            description: 'This is the label for reason field',
+            id: 'form.field.label.reasonNotApplying'
+          }
+        }
+      ],
+      flags: [
+        {
+          id: 'escalated-to-registrar-general',
+          operation: 'add'
+        }
+      ],
+      auditHistoryLabel: {
+        defaultMessage: 'Escalated',
+        description:
+          'The label to show in audit history for the escalate action',
+        id: 'event.death.action.escalate.audit-history-label'
+      }
+    },
+    {
+      type: ActionType.CUSTOM,
+      customActionType: 'REGISTRAR_GENERAL_FEEDBACK',
+      icon: 'ChatText',
+      label: {
+        defaultMessage: 'Registrar general feedback',
+        description:
+          'This is shown when the registrar general feedback can be triggered from the action from',
+        id: 'event.death.action.registrar-general-feedback.label'
+      },
+      supportingCopy: {
+        defaultMessage:
+          'Your feedback will be officially recorded and may influence the final decision on the declaration.',
+        description:
+          'This is the confirmation text for the registrar general feedback action',
+        id: 'event.death.action.registrar-general-feedback.supportingCopy'
+      },
+      form: [
+        {
+          id: 'notes',
+          type: 'TEXTAREA',
+          required: true,
+          label: {
+            defaultMessage: 'Comments',
+            description: 'This is the label for the field for a custom action',
+            id: 'event.birth.custom.action.approve.field.notes.label'
+          }
+        }
+      ],
+      flags: [
+        {
+          id: 'escalated-to-registrar-general',
+          operation: 'remove'
+        }
+      ],
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: flag('escalated-to-registrar-general')
+        }
+      ],
+      auditHistoryLabel: {
+        defaultMessage: 'Escalation feedback',
+        description:
+          'The label to show in audit history for the registrar feedback sent action',
+        id: 'event.death.action.registrar-feedback.audit-history-label'
       }
     },
     {

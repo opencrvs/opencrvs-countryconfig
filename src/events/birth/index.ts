@@ -68,15 +68,6 @@ export const birthEvent = defineConfig({
       requiresAction: true
     },
     {
-      id: 'escalated-to-provincial-registrar',
-      label: {
-        id: 'event.birth.flag.escalated-to-provincial-registrar',
-        defaultMessage: 'Escalated to Provincial Registrar',
-        description: 'Flag label for escalated to provincial registrar'
-      },
-      requiresAction: true
-    },
-    {
       id: 'escalated-to-registrar-general',
       label: {
         id: 'event.birth.flag.escalated-to-registrar-general',
@@ -236,7 +227,6 @@ export const birthEvent = defineConfig({
     'APPROVE_DECLARATION',
     ActionType.MARK_AS_DUPLICATE,
     'ESCALATE',
-    'PROVINCIAL_REGISTER_FEEDBACK',
     'REGISTRAR_GENERAL_FEEDBACK',
     ActionType.REJECT,
     ActionType.ARCHIVE,
@@ -324,7 +314,6 @@ export const birthEvent = defineConfig({
       },
       flags: [
         { id: 'approval-required-for-late-registration', operation: 'remove' },
-        { id: 'escalated-to-provincial-registrar', operation: 'remove' },
         { id: 'escalated-to-registrar-general', operation: 'remove' }
       ],
       dialogCopy: {
@@ -493,45 +482,10 @@ export const birthEvent = defineConfig({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: not(
-            or(
-              flag('escalated-to-provincial-registrar'),
-              flag('escalated-to-registrar-general')
-            )
-          )
+          conditional: not(flag('escalated-to-registrar-general'))
         }
       ],
       form: [
-        {
-          id: 'escalate-to',
-          type: FieldType.SELECT,
-          required: true,
-          label: {
-            defaultMessage: 'Escalate to',
-            description: 'This is the label for escalate to field',
-            id: 'event.birth.custom.action.escalate.field.escalate-to.label'
-          },
-          options: [
-            {
-              label: {
-                id: 'event.birth.custom.action.escalate.field.escalate-to.option.officer-in-charge.label',
-                defaultMessage: 'My state provincial registrar',
-                description:
-                  'Option label for provincial registrar in escalate to field'
-              },
-              value: 'PROVINCIAL_REGISTRAR'
-            },
-            {
-              label: {
-                id: 'event.birth.custom.action.escalate.field.escalate-to.option.registrar-general.label',
-                defaultMessage: 'Registrar General',
-                description:
-                  'Option label for registrar general in escalate to field'
-              },
-              value: 'REGISTRAR_GENERAL'
-            }
-          ]
-        },
         {
           id: 'reason',
           type: FieldType.TEXTAREA,
@@ -545,14 +499,8 @@ export const birthEvent = defineConfig({
       ],
       flags: [
         {
-          id: 'escalated-to-provincial-registrar',
-          operation: 'add',
-          conditional: field('escalate-to').isEqualTo('PROVINCIAL_REGISTRAR')
-        },
-        {
           id: 'escalated-to-registrar-general',
-          operation: 'add',
-          conditional: field('escalate-to').isEqualTo('REGISTRAR_GENERAL')
+          operation: 'add'
         }
       ],
       auditHistoryLabel: {
@@ -560,54 +508,6 @@ export const birthEvent = defineConfig({
         description:
           'The label to show in audit history for the escalate action',
         id: 'event.birth.action.escalate.audit-history-label'
-      }
-    },
-    {
-      type: ActionType.CUSTOM,
-      customActionType: 'PROVINCIAL_REGISTER_FEEDBACK',
-      icon: 'ChatText',
-      supportingCopy: {
-        defaultMessage:
-          'Your feedback will be recorded and shared with relevant officers to guide further action on this declaration.',
-        description:
-          'This is the confirmation text for the provincial registrar feedback action',
-        id: 'event.birth.action.provincial-registrar-feedback.supportingCopy'
-      },
-      label: {
-        defaultMessage: 'Provincial registrar feedback',
-        description:
-          'This is shown when the provincial registrar feedback can be triggered from the action from',
-        id: 'event.birth.action.provincial-registrar-feedback.label'
-      },
-      form: [
-        {
-          id: 'notes',
-          type: 'TEXTAREA',
-          required: true,
-          label: {
-            defaultMessage: 'Comments',
-            description: 'This is the label for the field for a custom action',
-            id: 'event.birth.custom.action.approve.field.notes.label'
-          }
-        }
-      ],
-      flags: [
-        {
-          id: 'escalated-to-provincial-registrar',
-          operation: 'remove'
-        }
-      ],
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: flag('escalated-to-provincial-registrar')
-        }
-      ],
-      auditHistoryLabel: {
-        defaultMessage: 'Escalation feedback',
-        description:
-          'The label to show in audit history for the registrar feedback sent action',
-        id: 'event.birth.action.registrar-feedback.audit-history-label'
       }
     },
     {
@@ -685,7 +585,6 @@ export const birthEvent = defineConfig({
         { id: 'revoked', operation: 'add' },
         { id: 'pending-first-certificate-issuance', operation: 'remove' },
         { id: 'escalated-to-registrar-general', operation: 'remove' },
-        { id: 'escalated-to-provincial-registrar', operation: 'remove' },
         {
           id: 'certified-copy-printed-in-advance-of-issuance',
           operation: 'remove'
@@ -794,10 +693,7 @@ export const birthEvent = defineConfig({
       conditionals: [
         {
           type: ConditionalType.ENABLE,
-          conditional: and(
-            not(flag('escalated-to-provincial-registrar')),
-            not(flag('escalated-to-registrar-general'))
-          )
+          conditional: not(flag('escalated-to-registrar-general'))
         }
       ],
       deduplication: {
