@@ -17,6 +17,7 @@ import {
   flag,
   not
 } from '@opencrvs/toolkit/events'
+import { isRegistrarGeneral } from '@countryconfig/events/utils/role-conditionals'
 import {
   DEATH_DECLARATION_REVIEW,
   DEATH_DECLARATION_FORM
@@ -414,6 +415,12 @@ export const deathEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.death.action.collect-certificate.label'
       },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: isRegistrarGeneral
+        }
+      ],
       flags: [
         { id: 'pending-first-certificate-issuance', operation: 'remove' }
       ],

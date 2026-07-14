@@ -636,7 +636,7 @@ export const deceased = defineFormPage({
     {
       id: 'deceased.hasLivingChildren',
       type: FieldType.RADIO_GROUP,
-      required: false,
+      required: true,
       analytics: true,
       options: yesNoRadioOptions,
       label: {

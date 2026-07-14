@@ -35,6 +35,7 @@ import {
   Event,
   BIRTH_LATE_REGISTRATION_TARGET_DAYS
 } from '@countryconfig/events/utils'
+import { isRegistrarGeneral } from '@countryconfig/events/utils/role-conditionals'
 
 export const birthEvent = defineConfig({
   id: Event.Birth,
@@ -718,10 +719,13 @@ export const birthEvent = defineConfig({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: not(
-            or(
-              flag('revoked'),
-              flag('certified-copy-printed-in-advance-of-issuance')
+          conditional: and(
+            isRegistrarGeneral,
+            not(
+              or(
+                flag('revoked'),
+                flag('certified-copy-printed-in-advance-of-issuance')
+              )
             )
           )
         }

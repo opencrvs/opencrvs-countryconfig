@@ -153,14 +153,14 @@ export const BIRTH_DECLARATION_REVIEW = {
       ]
     },
     {
-      id: 'mother.idDivider',
+      id: 'summary.notificationReciept.divider',
       type: FieldType.DIVIDER,
       label: emptyMessage,
       conditionals: [
         {
           type: ConditionalType.SHOW,
           conditional:
-            hasNonHealthNotifierRole
+            and(not(status('DECLARED')), not(status('REGISTERED')), status('NOTIFIED'), hasNonHealthNotifierRole)
         }
       ]
     },
@@ -176,7 +176,7 @@ export const BIRTH_DECLARATION_REVIEW = {
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: hasNonHealthNotifierRole
+          conditional: and(not(status('DECLARED')), not(status('REGISTERED')), status('NOTIFIED'), hasNonHealthNotifierRole)
         }
       ]
     },
@@ -200,7 +200,7 @@ export const BIRTH_DECLARATION_REVIEW = {
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: and(not(status('DECLARED')), not(status('REGISTERED')), hasNonHealthNotifierRole)
+          conditional: and(not(status('DECLARED')), not(status('REGISTERED')), status('NOTIFIED'), hasNonHealthNotifierRole)
         }
       ]
     }

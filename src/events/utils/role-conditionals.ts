@@ -21,3 +21,5 @@ export const hasNonHealthNotifierRole = and(
   not(user.hasRole('HEALTH_NOTIFIER')),
   not(user.hasRole('ISLAND_CLINIC_NOTIFIER'))
 )
+
+export const isRegistrarGeneral = user.hasRole('REGISTRAR_GENERAL')
