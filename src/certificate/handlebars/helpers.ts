@@ -110,7 +110,8 @@ export function $defaultTo() {
  * Wraps a single text value into multiple SVG <tspan> elements.
  * Returns an empty string when the value is absent.
  * Use triple braces {{{$wrapText ...}}} in the SVG template to avoid HTML escaping.
- * Example: {{{$wrapText ($lookup $declaration 'burial.locationDescription') 50 190 301.831 14}}}
+ * If maxLines is provided and the wrapped text exceeds it, the last line is truncated with '...'.
+ * Example: {{{$wrapText ($lookup $declaration 'burial.locationDescription') 50 190 301.831 14 3}}}
  */
 export function $wrapText() {
   return function (
@@ -118,10 +119,15 @@ export function $wrapText() {
     boundary: number,
     x: number,
     y: number,
-    lineHeight: number
+    lineHeight: number,
+    maxLines?: number
   ): string {
     if (text === undefined || text === null || text === '') return ''
-    const lines = wordWrap(String(text), boundary)
+    let lines = wordWrap(String(text), boundary)
+    if (typeof maxLines === 'number' && lines.length > maxLines) {
+      lines = lines.slice(0, maxLines)
+      lines[lines.length - 1] += '...'
+    }
     return insertTspansIntoText(lines, x, y, lineHeight)
   }
 }
@@ -130,7 +136,8 @@ export function $wrapText() {
  * Combines two values with a separator (falling back to '-' for each absent value),
  * wraps the combined string, and returns multiple SVG <tspan> elements.
  * Use triple braces {{{$wrapCombined ...}}} in the SVG template to avoid HTML escaping.
- * Example: {{{$wrapCombined ($lookup $declaration 'deceased.placeOfMarriage') ($lookup $declaration 'deceased.dateOfMarriage') ', ' 50 190 512.831 14}}}
+ * If maxLines is provided and the wrapped text exceeds it, the last line is truncated with '...'.
+ * Example: {{{$wrapCombined ($lookup $declaration 'deceased.placeOfMarriage') ($lookup $declaration 'deceased.dateOfMarriage') ', ' 50 190 512.831 14 3}}}
  */
 export function $wrapCombined() {
   return function (
@@ -140,14 +147,19 @@ export function $wrapCombined() {
     boundary: number,
     x: number,
     y: number,
-    lineHeight: number
+    lineHeight: number,
+    maxLines?: number
   ): string {
     const str1 =
       val1 !== undefined && val1 !== null && val1 !== '' ? String(val1) : '-'
     const str2 =
       val2 !== undefined && val2 !== null && val2 !== '' ? String(val2) : '-'
     const combined = str1 + separator + str2
-    const lines = wordWrap(combined, boundary)
+    let lines = wordWrap(combined, boundary)
+    if (typeof maxLines === 'number' && lines.length > maxLines) {
+      lines = lines.slice(0, maxLines)
+      lines[lines.length - 1] += '...'
+    }
     return insertTspansIntoText(lines, x, y, lineHeight)
   }
 }
@@ -164,5 +176,15 @@ export function $formatEnum() {
       .split('_')
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
       .join(' ')
+  }
+}
+
+/** console.logs available handlebar variables with the handlebar: {{debug}} */
+export function debug(): Handlebars.HelperDelegate {
+  return function (this: any, value: string) {
+    // eslint-disable-next-line no-console
+    console.log(this)
+
+    return value
   }
 }
