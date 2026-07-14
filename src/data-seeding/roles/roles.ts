@@ -35,10 +35,12 @@ export const roles: Role[] = [
       { type: 'record.archive' },
       { type: 'record.print-certified-copies' },
       { type: 'record.correct' },
-      { type: 'record.custom-action', options: { event: ['birth'], customActionTypes: ['VALIDATE_DECLARATION', 'ESCALATE'] } },
+      { type: 'record.review-duplicates'},
+      { type: 'record.unassign-others' },
+      { type: 'record.custom-action', options: { event: ['birth'], customActionTypes: ['REGISTRAR_GENERAL_FEEDBACK'] } },
       { type: 'record.custom-action', options: { event: ['birth'], customActionTypes: ['REINSTATE_REVOKE_REGISTRATION'] } },
       { type: 'record.custom-action', options: { event: ['birth'], customActionTypes: ['ISSUE_CERTIFIED_COPY', 'ISSUE_VERIFIABLE_CREDENTIAL'] } },
-      { type: 'record.custom-action', options: { event: ['death'], customActionTypes: ['VALIDATE_DECLARATION'] } },
+      { type: 'record.custom-action', options: { event: ['death'], customActionTypes: ['REGISTRAR_GENERAL_FEEDBACK'] } },
       {
         type: 'dashboard.view',
         options: { ids: ['registrations', 'completeness', 'registry'] }
@@ -67,12 +69,13 @@ export const roles: Role[] = [
       { type: 'record.edit' },
       { type: 'record.reject' },
       { type: 'record.review-duplicates' },
-      { type: 'record.print-certified-copies', options: { templates: ['v2.birth-notification'] } },
+      { type: 'record.unassign-others' },
+      { type: 'record.print-certified-copies', options: { templates: ['v2.birth-notification','v2.birth-summary', 'v2.death-summary'] } },
       { type: 'record.request-correction' },
       { type: 'record.custom-action', options: { event: ['birth'], customActionTypes: ['VALIDATE_DECLARATION', 'ESCALATE'] } },
       { type: 'record.custom-action', options: { event: ['birth'], customActionTypes: ['REINSTATE_REVOKE_REGISTRATION'] } },
       { type: 'record.custom-action', options: { event: ['birth'], customActionTypes: ['ISSUE_CERTIFIED_COPY', 'ISSUE_VERIFIABLE_CREDENTIAL'] } },
-      { type: 'record.custom-action', options: { event: ['death'], customActionTypes: ['VALIDATE_DECLARATION'] } },
+      { type: 'record.custom-action', options: { event: ['death'], customActionTypes: ['VALIDATE_DECLARATION', 'ESCALATE'] } },
       {
         type: 'dashboard.view',
         options: { ids: ['registrations', 'completeness', 'registry'] }
@@ -407,7 +410,7 @@ export const roles: Role[] = [
       { type: 'record.create' },
       { type: 'record.read' },
       { type: 'record.notify' },
-      { type: 'record.edit', options: { declaredBy: 'user' } },
+      { type: 'record.edit', options: { placeOfEvent: 'location' } },
       { type: 'record.print-certified-copies', options: { templates: ['v2.tennis-club-membership-certificate-alpha', 'v2.birth-notification'] } }
     ])
   },
@@ -427,7 +430,7 @@ export const roles: Role[] = [
       { type: 'record.create', options: { placeOfEvent: 'administrativeArea' } },
       { type: 'record.read', options: { placeOfEvent: 'administrativeArea' } },
       { type: 'record.notify', options: { placeOfEvent: 'administrativeArea' } },
-      { type: 'record.edit', options: { declaredBy: 'user' } },
+      { type: 'record.edit', options: { placeOfEvent: 'administrativeArea' } },
       { type: 'record.print-certified-copies', options: { templates: ['v2.tennis-club-membership-certificate-alpha', 'v2.birth-notification'] } }
     ])
   },

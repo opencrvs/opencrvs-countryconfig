@@ -516,17 +516,17 @@ export const birthEvent = defineConfig({
       customActionType: 'REGISTRAR_GENERAL_FEEDBACK',
       icon: 'ChatText',
       label: {
-        defaultMessage: 'Registrar general feedback',
+        defaultMessage: 'Escalation feedback',
         description:
-          'This is shown when the registrar general feedback can be triggered from the action from',
-        id: 'event.birth.action.registrar-general-feedback.label'
+          'This is shown when the escalation feedback can be triggered from the action from',
+        id: 'event.birth.action.escalation-feedback.label'
       },
       supportingCopy: {
         defaultMessage:
           'Your feedback will be officially recorded and may influence the final decision on the declaration.',
         description:
-          'This is the confirmation text for the registrar general feedback action',
-        id: 'event.birth.action.registrar-general-feedback.supportingCopy'
+          'This is the confirmation text for the escalation feedback action',
+        id: 'event.birth.action.escalation-feedback.supportingCopy'
       },
       form: [
         {
@@ -536,7 +536,7 @@ export const birthEvent = defineConfig({
           label: {
             defaultMessage: 'Comments',
             description: 'This is the label for the field for a custom action',
-            id: 'event.birth.custom.action.approve.field.notes.label'
+            id: 'event.birth.custom.action.escalation-feedback.field.notes.label'
           }
         }
       ],
@@ -555,8 +555,8 @@ export const birthEvent = defineConfig({
       auditHistoryLabel: {
         defaultMessage: 'Escalation feedback',
         description:
-          'The label to show in audit history for the registrar feedback sent action',
-        id: 'event.birth.action.registrar-feedback.audit-history-label'
+          'The label to show in audit history for the escalation feedback action',
+        id: 'event.birth.action.escalation-feedback.audit-history-label'
       }
     },
     {
@@ -750,6 +750,9 @@ export const birthEvent = defineConfig({
           '{child.name.firstname, select, __EMPTY__ {Birth declaration} other {{child.name.surname, select, __EMPTY__ {Birth declaration for {child.name.firstname}} other {Birth declaration for {child.name.firstname} {child.name.surname}}}}}',
         description: 'Title of the form to show in review page'
       },
+      flags: [
+        { id: 'escalated-to-registrar-general', operation: 'remove' }
+      ],
       conditionals: [
         { type: ConditionalType.SHOW, conditional: not(flag('revoked')) }
       ],

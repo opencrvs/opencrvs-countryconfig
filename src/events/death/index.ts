@@ -242,6 +242,9 @@ export const deathEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'actions.edit'
       },
+      flags: [
+        { id: 'escalated-to-registrar-general', operation: 'remove' }
+      ],
       dialogCopy: {
         notify: {
           id: 'event.death.action.edit.notify.copy',
@@ -364,17 +367,17 @@ export const deathEvent = defineConfig({
       customActionType: 'REGISTRAR_GENERAL_FEEDBACK',
       icon: 'ChatText',
       label: {
-        defaultMessage: 'Registrar general feedback',
+        defaultMessage: 'Escalation feedback',
         description:
-          'This is shown when the registrar general feedback can be triggered from the action from',
-        id: 'event.death.action.registrar-general-feedback.label'
+          'This is shown when the escalation feedback can be triggered from the action from',
+        id: 'event.death.action.escalation-feedback.label'
       },
       supportingCopy: {
         defaultMessage:
           'Your feedback will be officially recorded and may influence the final decision on the declaration.',
         description:
-          'This is the confirmation text for the registrar general feedback action',
-        id: 'event.death.action.registrar-general-feedback.supportingCopy'
+          'This is the confirmation text for the escalation feedback action',
+        id: 'event.death.action.escalation-feedback.supportingCopy'
       },
       form: [
         {
@@ -384,7 +387,7 @@ export const deathEvent = defineConfig({
           label: {
             defaultMessage: 'Comments',
             description: 'This is the label for the field for a custom action',
-            id: 'event.birth.custom.action.approve.field.notes.label'
+            id: 'event.death.custom.action.escalation-feedback.field.notes.label'
           }
         }
       ],
@@ -403,8 +406,8 @@ export const deathEvent = defineConfig({
       auditHistoryLabel: {
         defaultMessage: 'Escalation feedback',
         description:
-          'The label to show in audit history for the registrar feedback sent action',
-        id: 'event.death.action.registrar-feedback.audit-history-label'
+          'The label to show in audit history for the escalation feedback action',
+        id: 'event.death.action.escalation-feedback.audit-history-label'
       }
     },
     {
@@ -434,6 +437,9 @@ export const deathEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.death.action.request-correction.label'
       },
+      flags: [
+        { id: 'escalated-to-registrar-general', operation: 'remove' }
+      ],
       correctionForm: DEATH_CORRECTION_FORM
     },
     {

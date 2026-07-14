@@ -186,10 +186,10 @@ certificates.birth.certificate,Birth Certificate,Birth Certificate,Acte de naiss
 certificates.birth.certificate.copy,Birth Certificate Certified Copy,Birth Certificate Certified Copy,Copie certifiée conforme de l'acte de naissance
 certificates.birth.notification,Birth Notification,Birth Notification,Notification de naissance
 certificates.birth.notification.receipt,Birth Notification Receipt,Birth Notification Receipt,Reçu de notification de naissance
-certificates.birth.statement,Birth Statement,Birth Statement,Résumé de déclaration de naissance
-certificates.birth.summary,Birth Summary,Birth Summary,Résumé de naissance
 certificates.birth.printedCertificateCount,Number of printed copies, Copy #{copiesPrintedForTemplate}, Copie #{copiesPrintedForTemplate}
 certificates.birth.registration.receipt,Birth Registration Receipt,Birth Registration Receipt,Reçu d'enregistrement de naissance
+certificates.birth.statement,Birth Statement,Birth Statement,Résumé de déclaration de naissance
+certificates.birth.summary,Birth Summary,Birth Summary,Résumé de naissance
 certificates.death.certificate,Death Certificate,Death Certificate,Certificat de décès
 certificates.death.certificate.copy,Death Certificate Certified Copy,Death Certificate Certified Copy,Copie certifiée conforme du certificat de décès
 certificates.death.summary,Death Summary,Death Summary,Résumé de décès
@@ -812,16 +812,16 @@ event.action.review-correction.label,Label for review correction button in dropd
 event.birth.action.approve.confirmationText,This is the confirmation text for the approve action,Approving this declaration confirms it as legally accepted and eligible for registration.,L'approbation de cette déclaration confirme qu'elle est légalement acceptée et éligible à l'enregistrement.
 event.birth.action.approve.label,This is shown as the action name anywhere the user can trigger the action from,Approve,Approuver
 event.birth.action.archive.label,Label for archive record button in dropdown menu,Archive,Aarchiver
-event.birth.action.certificate.form.section.collectPayment.data.label,Title for the data section,Payment details,Détails du paiement
-event.birth.action.certificate.form.section.collectPayment.fee.label,Title for the data entry,Fee,Frais
 event.birth.action.certificate.form.section.collectPayment.amountCollected.label,Label for the amount collected field,Confirm amount collected,Confirmer le montant collecté
 event.birth.action.certificate.form.section.collectPayment.amountCollected.prefix,Prefix for the amount collected field,$,$
-event.birth.action.certificate.form.section.collectPayment.feeWaived.label,Label for the fee waived checkbox,Late registration fee is waived / not collected,Les frais de paiement sont dispensés / non collectés
+event.birth.action.certificate.form.section.collectPayment.data.label,Title for the data section,Payment details,Détails du paiement
+event.birth.action.certificate.form.section.collectPayment.fee.label,Title for the data entry,Fee,Frais
+event.birth.action.certificate.form.section.collectPayment.feeWaived.label,Label for the fee waived checkbox,Payment fee is waived / not collected,Les frais de paiement sont dispensés / non collectés
 event.birth.action.certificate.form.section.collectPayment.receiptNumber.label,Label for the receipt number field,Receipt Number,Numéro de reçu
 event.birth.action.certificate.form.section.collectPayment.service.label,Title for the data entry,Service,Service
-event.birth.action.certificate.form.section.collectPayment.service.label.birthCertificate,Birth certificate service name,Birth Certificate,Certificat de naissance
 event.birth.action.certificate.form.section.collectPayment.service.label.afterLateRegistrationTarget,Birth registration after 365 days of date of birth,Birth registration after 365 days of date of birth,Enregistrement de naissance après 365 jours de la date de naissance
 event.birth.action.certificate.form.section.collectPayment.service.label.beforeRegistrationTarget,Birth registration before 30 days of date of birth,Birth registration before 30 days of date of birth,Enregistrement de naissance avant 30 jours de la date de naissance
+event.birth.action.certificate.form.section.collectPayment.service.label.birthCertificate,Birth certificate service name,Birth Certificate,Certificat de naissance
 event.birth.action.certificate.form.section.collectPayment.service.label.inBetweenRegistrationTargets,Birth registration after 30 days but before 365 days of date of birth,Birth registration after 30 days but before 365 days of date of birth,Enregistrement de naissance après 30 jours mais avant 365 jours de la date de naissance
 event.birth.action.certificate.form.section.requester.printInAdvance.label,This is the label for the print-in-advance of issuance field,Print in advance of issuance,Imprimer avant la délivrance
 event.birth.action.certificate.form.section.verifyIdentity.data.label,Label for identity verification data block,Identity details,Détails de l'identité
@@ -830,19 +830,19 @@ event.birth.action.correction.documents.proofOfIdentity.birthCertificate.label,L
 event.birth.action.correction.documents.proofOfIdentity.label,Label for the proof of identity field,Proof of identity,Preuve d'identité
 event.birth.action.correction.documents.proofOfIdentity.other.label,Label for the other option,Other,Autre
 event.birth.action.correction.documents.proofOfIdentity.passport.label,Label for the passport option,Passport,Passeport
-event.birth.action.correction.documents.supportingDocs.courtOrder.label,Label for the court order option,Court Order,Ordonnance du tribunal
-event.birth.action.correction.documents.supportingDocs.letterOfConsent.label,Label for the letter of consent option,Letter of consent,Lettre de consentement
-event.birth.action.correction.documents.supportingDocs.proofOfParentageOrGuardianship.label,Label for the proof of parentage or guardianship option,Proof of parentage or guardianship,Preuve de filiation ou de tutelle
-event.birth.action.correction.documents.supportingDocs.proofOfParriantageOrGuardianship.label,Label for the proof of parriantage or guardianship option,Proof of parriantage or guardianship,Preuve de parenté ou de tutelle
-event.birth.action.correction.documents.supportingDocs.proofOfParentsMarriage.label,Label for the proof of parent's marriage option,Proof of parent's marriage,Preuve du mariage des parents
-event.birth.action.correction.documents.supportingDocs.registrarGeneralAuthorisation.label,Label for the registrar general authorisation option,Registrar general / registrar authorisation,Autorisation du registraire général / registraire
-event.birth.action.correction.documents.supportingDocs.registrarGeneralOrRegistrationOffice.label,Label for the registrar general / registration office option,Registrar General / Registration Office,Registraire général / Bureau d'enregistrement
-event.birth.action.correction.documents.supportingDocs.statutoryDeclaration.label,Label for the statutory declaration option,Statutory declaration,Déclaration statutaire
-event.birth.action.correction.documents.supportingDocs.statuoryDeclaration.label,Label for the statuory declaration option,Statuory declaration,Déclaration statutaire
 event.birth.action.correction.documents.supportingDocs.affidavit.label,Label for the affidavit option,Affidavit,Affidavit
 event.birth.action.correction.documents.supportingDocs.courtDocument.label,Label for the court document option,Court Document,Document judiciaire
+event.birth.action.correction.documents.supportingDocs.courtOrder.label,Label for the court order option,Court Order,Ordonnance du tribunal
 event.birth.action.correction.documents.supportingDocs.label,Label for the supporting documents field,Supporting documents,Documents justificatifs
+event.birth.action.correction.documents.supportingDocs.letterOfConsent.label,Label for the letter of consent option,Letter of consent,Lettre de consentement
 event.birth.action.correction.documents.supportingDocs.other.label,Label for the other option,Other,Autre
+event.birth.action.correction.documents.supportingDocs.proofOfParentageOrGuardianship.label,Label for the proof of parentage or guardianship option,Proof of parentage or guardianship,Preuve de filiation ou de tutelle
+event.birth.action.correction.documents.supportingDocs.proofOfParentsMarriage.label,Label for the proof of parent's marriage option,Proof of parent's marriage,Preuve du mariage des parents
+event.birth.action.correction.documents.supportingDocs.proofOfParriantageOrGuardianship.label,Label for the proof of parriantage or guardianship option,Proof of parriantage or guardianship,Preuve de parenté ou de tutelle
+event.birth.action.correction.documents.supportingDocs.registrarGeneralAuthorisation.label,Label for the registrar general authorisation option,Registrar general / registrar authorisation,Autorisation du registraire général / registraire
+event.birth.action.correction.documents.supportingDocs.registrarGeneralOrRegistrationOffice.label,Label for the registrar general / registration office option,Registrar General / Registration Office,Registraire général / Bureau d'enregistrement
+event.birth.action.correction.documents.supportingDocs.statuoryDeclaration.label,Label for the statuory declaration option,Statuory declaration,Déclaration statutaire
+event.birth.action.correction.documents.supportingDocs.statutoryDeclaration.label,Label for the statutory declaration option,Statutory declaration,Déclaration statutaire
 event.birth.action.correction.fees.amount.label,Label for the amount field,Fee collected,Frais perçus
 event.birth.action.correction.fees.amount.prefix,Prefix for the amount field,$,€
 
@@ -864,8 +864,8 @@ event.birth.action.correction.form.section.requester.identity.verify.title,This 
 event.birth.action.correction.form.section.requester.nationality.label,This is the label for the field,Nationality,Nationalité
 event.birth.action.correction.form.section.requester.other.label,This is the label for the field,ID Number,Numéro d'identification
 event.birth.action.correction.form.section.requesterDetails.title,This is the title of the section,Requester's details,Détails du demandeur
-event.birth.action.correction.form.section.supportingDocuments.title,This is the title of the section,Supporting documents,Documents justificatifs
 event.birth.action.correction.form.section.supporting-documents.title,This is the title of the section,Upload supporting documents,Télécharger les documents justificatifs
+event.birth.action.correction.form.section.supportingDocuments.title,This is the title of the section,Supporting documents,Documents justificatifs
 event.birth.action.correction.form.section.verifyIdentity.title,This is the title of the section,Verify their identity,Vérifier leur identité
 event.birth.action.correction.form.verify,This is the label for the verification button,Verified,Vérifié
 event.birth.action.correction.reason.option.clericalError.label,Label for the clerical error option,Myself or an agent made a mistake (Clerical error),Une erreur a été commise par moi-même ou un agent (Erreur administrative)
@@ -876,21 +876,25 @@ event.birth.action.correction.reason.option.other.label,Label for the other opti
 event.birth.action.correction.reason.other.label,Label for other option input field,Other (please specify),Autre
 event.birth.action.declare.form.label,This is what this form is referred as in the system,Birth decalration form,Birth decalration form
 event.birth.action.declare.form.review.alphaPrint.header.label,Label for the declaration summary heading in the review section,Declaration summary,Résumé de déclaration
+event.birth.action.declare.form.review.alphaPrint.healthNotifier.button.label,Label for the health notifier print declaration button,Print Notification Receipt,Imprimer la déclaration
+event.birth.action.declare.form.review.alphaPrint.healthNotifier.description.label,,Print the declaration Birth Notification Receipt.,Print the declaration Birth Notification Receipt.
+event.birth.action.declare.form.review.alphaPrint.healthNotifier.label,Label for the health notifier print declaration button in the review section,Print declaration,Imprimer la déclaration
 event.birth.action.declare.form.review.alphaPrint.label,Label for the alpha print button in the review section,Print,Imprimer
-event.birth.action.declare.form.section.mother.field.isMarriedToFather.label,,Were the child's mother and father married to each other?,Were the child's mother and father married to each other?
 event.birth.action.declare.form.review.alphaPrint.step1.header.label,Label for the alpha print step 1 header in the review section,Step 1: Print the declaration summary for the informant(s) to review and sign.,Étape 1 : Imprimez le résumé de déclaration pour que le(s) déclarant(s) le examine(nt) et le signe(nt).
 event.birth.action.declare.form.review.alphaPrint.step2.header.label,Label for the alpha print step 2 header in the review section,Step 2: Upload the signed declaration summary after it has been reviewed and signed by the informant(s).,Étape 2 : Téléchargez le résumé de déclaration signé après qu'il ait été examiné et signé par le(s) déclarant(s).
 event.birth.action.declare.form.review.comment.label,Label for the comment field in the review section,Comment,Commentaire
 event.birth.action.declare.form.review.signature.label,Label for the signature field in the review section,Signature of informant,Signature de l'informateur
-event.birth.action.declare.form.review.uploadedSignature.header.label,Label for the uploaded signature field in the review section,Signed declaration summary,Résumé de déclaration signé
 event.birth.action.declare.form.review.title,Title of the form to show in review page,"{child.name.firstname, select, __EMPTY__ {{child.name.surname, select, __EMPTY__ {Birth declaration} other {Birth declaration for {child.name.surname}}}} other {{child.name.surname, select, __EMPTY__ {Birth declaration for {child.name.firstname}} other {Birth declaration for {child.name.firstname} {child.name.surname}}}}}","{child.name.firstname, select, __EMPTY__ {{child.name.surname, select, __EMPTY__ {Déclaration de naissance} other {Déclaration de naissance pour {child.name.surname}}}} other {{child.name.surname, select, __EMPTY__ {Déclaration de naissance pour {child.name.firstname}} other {Déclaration de naissance pour {child.name.firstname} {child.name.surname}}}}}"
+event.birth.action.declare.form.review.uploadedSignature.header.label,Label for the uploaded signature field in the review section,Signed declaration summary,Résumé de déclaration signé
 event.birth.action.declare.form.section.child.field.attendantAtBirth.label,This is the label for the field,Attendant at birth,Accoucheur(se)
+event.birth.action.declare.form.section.child.field.attendantFullName.label,Label for attendant full name field,Attendant full name,Nom complet de l'accoucheur
+event.birth.action.declare.form.section.child.field.attendantOther.label,Label for other attendant at birth field,Others (please specify attendant),Veuillez préciser l'accoucheur
+event.birth.action.declare.form.section.child.field.birthLocation.label,This is the label for the field,Health Institution,Lieu de naissance
+event.birth.action.declare.form.section.child.field.birthLocation.other.label,,Other address,Other address 
+event.birth.action.declare.form.section.child.field.birthLocation.residence.label,,Residential address,Residential address
 event.birth.action.declare.form.section.child.field.birthOrderHigher.label,Label for birth order higher multiple field,Birth order (higher multiple),Ordre de naissance (multiple supérieur)
 event.birth.action.declare.form.section.child.field.birthOrderTriplet.label,Label for birth order triplet field,Birth order (triplet),Ordre de naissance (triplet)
 event.birth.action.declare.form.section.child.field.birthOrderTwin.label,Label for birth order twin field,Birth order (twin),Ordre de naissance (jumeau)
-event.birth.action.declare.form.section.child.field.birthLocation.label,This is the label for the field,Health Institution,Lieu de naissance
-event.birth.action.declare.form.section.child.field.birthLocation.residence.label,,Residential address,Residential address
-event.birth.action.declare.form.section.child.field.birthLocation.other.label,,Other address,Other address 
 event.birth.action.declare.form.section.child.field.birthType.label,This is the label for the field,Type of birth,Type d'accouchement
 event.birth.action.declare.form.section.child.field.dob.error,This is the error message for invalid date,Cannot be a future date,Doit être une date de naissance valide
 event.birth.action.declare.form.section.child.field.dob.label,This is the label for the field,Date of birth,Date de naissance
@@ -909,6 +913,8 @@ event.birth.action.declare.form.section.documents.field.delayedRegistrationEvide
 event.birth.action.declare.form.section.documents.field.lateRegistration.label,Label for late registration document field,Documentation for late registration (over 12 months),Documentation pour enregistrement tardif (plus de 12 mois)
 event.birth.action.declare.form.section.documents.field.proofOfBirth.label,This is the label for the field,Notification of birth,Notification de naissance
 event.birth.action.declare.form.section.documents.field.proofOfFather.label,This is the label for the field,Proof of father's identity,Preuve d'identité du père
+event.birth.action.declare.form.section.documents.field.proofOfInformant.label,Label for proof of informant document field,Proof of informant's identity,Preuve d'identité de l'informateur
+event.birth.action.declare.form.section.documents.field.proofOfMarriage.label,Label for proof of marriage document field,Proof of parent's marriage,Preuve du mariage des parents
 event.birth.action.declare.form.section.documents.field.proofOfMother.label,This is the label for the field,Proof of mother's identity,Preuve d'identité de la mère
 event.birth.action.declare.form.section.documents.field.proofOfNameChange.label,Label for proof of name change document field,Proof of name change,Preuve de la modification du nom
 event.birth.action.declare.form.section.documents.field.proofOther.label,This is the label for the field,Other,Autre
@@ -937,6 +943,7 @@ event.birth.action.declare.form.section.informant.field.relation.label,This is t
 event.birth.action.declare.form.section.introduction.field.guidance.healthNotifier.bullet1,Health notifier guidance bullet 1,Explain to the parent(s) that you are notifying PMH Records and the Civil Registry / BDM Office of their child's birth.,Expliquez aux parent(s) que vous notifiez PMH Records et le Bureau de l'État Civil de la naissance de leur enfant.
 event.birth.action.declare.form.section.introduction.field.guidance.healthNotifier.bullet2,Health notifier guidance bullet 2,"Explain that birth notification starts the registration process, but does not complete official birth registration. Birth registration is important because it creates the child's legal proof of identity and supports access to healthcare, school enrolment, government services, travel documents, and other essential services.","Expliquez que la notification de naissance commence le processus d'enregistrement, mais ne complète pas l'enregistrement officiel de la naissance."
 event.birth.action.declare.form.section.introduction.field.guidance.healthNotifier.bullet3,Health notifier guidance bullet 3,"Advise that a parent or qualified informant must complete the registration with the Civil Registry Office. Remind them to bring identification and let them know that other supporting documents may be requested by CRO. If the parents were not married and the father's details are to be included, both mother and father consent forms will need to be completed.",Conseillez qu'un parent ou un informateur qualifié doit compléter l'enregistrement auprès du Bureau de l'État Civil.
+event.birth.action.declare.form.section.introduction.field.guidance.healthNotifier.label,Guidance: Explaining birth notification to parents,Guidance: Explaining birth notification to parents,Conseils pour les notificateurs de santé
 event.birth.action.declare.form.section.introduction.field.guidance.registrationOfficer.bullet1,Registration officer guidance bullet 1,Thank the informant for coming to register the birth.,Remerciez l'informateur d'être venu enregistrer la naissance.
 event.birth.action.declare.form.section.introduction.field.guidance.registrationOfficer.bullet2,Registration officer guidance bullet 2,"Explain that they are the official informant and must provide complete and accurate details about the child, parent(s), place and date of birth, and any required supporting information. Emphasise that this information will form part of the child's legal birth record and may appear on the birth certificate.","Expliquez qu'il est l'informateur officiel et doit fournir des informations complètes et précises sur l'enfant, les parent(s), le lieu et la date de naissance."
 event.birth.action.declare.form.section.introduction.field.guidance.registrationOfficer.bullet3,Registration officer guidance bullet 3,"Explain that birth registration creates legal proof of identity and supports access to healthcare, school enrolment, government services, travel documents, and other essential services.",Expliquez que l'enregistrement de la naissance crée une preuve légale d'identité et facilite l'accès aux services essentiels.
@@ -953,6 +960,7 @@ event.birth.action.declare.form.section.mother.field.brnSearch.validation,Valida
 event.birth.action.declare.form.section.mother.field.childrenHeader.label,Header for children section on mother page,Number of children previously born to the mother,Enfants
 event.birth.action.declare.form.section.mother.field.dateOfMarriage.label,Label for mother date of marriage field,Date of marriage,Date du mariage
 event.birth.action.declare.form.section.mother.field.deceasedChildren.label,Label for number of deceased children field,Deceased,Nombre d'enfants décédés
+event.birth.action.declare.form.section.mother.field.isMarriedToFather.label,,Were the child's mother and father married to each other?,Were the child's mother and father married to each other?
 event.birth.action.declare.form.section.mother.field.livingChildren.label,Label for number of living children field,Living,Nombre d'enfants vivants (y compris cette naissance)
 event.birth.action.declare.form.section.mother.field.name.label,This is the label for the field,Mother's name,Nom de la mère
 event.birth.action.declare.form.section.mother.field.passport.label,,Passport Number,Passport Number
@@ -999,12 +1007,17 @@ event.birth.action.declare.form.section.person.field.nationality.label,This is t
 event.birth.action.declare.form.section.person.field.nid.label,This is the label for the field,ID number,Numéro d'identification
 event.birth.action.declare.form.section.person.field.occupation.label,This is the label for the field,Occupation,Profession
 event.birth.action.declare.form.section.person.field.passport.label,This is the label for the field,Passport number,Numéro d'identification
-event.birth.action.declare.form.review.alphaPrint.healthNotifier.description.label,,Print the declaration Birth Notification Receipt.,Print the declaration Birth Notification Receipt.
 event.birth.action.declare.label,This is shown as the action name anywhere the user can trigger the action from,Declare,Declare
 event.birth.action.delete.label,Label for delete button in dropdown menu,Delete,Supprimer
 event.birth.action.edit.declare.copy,Description for `Declare with edits` in edit action menu,You are about to redeclare this birth event with your edits. This will permanently update the declaration.,Vous êtes sur le point de redéclarer cet événement avec vos modifications. Cela mettra à jour définitivement la déclaration.
 event.birth.action.edit.notify.copy,Description for `Notify with edits` in edit action menu,Are you sure you want to notify this event with these edits?,Êtes-vous sûr de vouloir notifier cet événement avec ces modifications ?
 event.birth.action.edit.register.copy,Description for `Register with edits` in edit action menu,"You are about to register this birth event with your edits. Please ensure all details are correct before proceeding.<br></br><br></br><strong>WARNING!</strong>: By continuing, you confirm that you have reviewed the record alongside supporting documentation. The record will proceed to be <strong>legally registered</strong> via the outbox. Further amends after registration can only be made via a legal correction process.",
+event.birth.action.escalate.audit-history-label,The label to show in audit history for the escalate action,Escalated,Transmis
+event.birth.action.escalate.label,This is shown when the escalate action can be triggered from the action from,Escalate,Escalader
+event.birth.action.escalate.supportingCopy,This is the confirmation text for the escalate action,Escalating this declaration will forward it to the chosen authority for further review and decision.,L'escalade de cette déclaration la transmettra à l'autorité compétente pour un examen et une décision plus approfondis.
+event.birth.action.escalation-feedback.audit-history-label,The label to show in audit history for the escalation feedback action,Escalation feedback,Retour d'escalade
+event.birth.action.escalation-feedback.label,This is shown when the escalation feedback can be triggered from the action from,Escalation feedback,Retour d'escalade
+event.birth.action.escalation-feedback.supportingCopy,This is the confirmation text for the escalation feedback action,Your feedback will be officially recorded and may influence the final decision on the declaration.,Votre retour sera officiellement enregistré et pourra influencer la décision finale concernant la déclaration.
 event.birth.action.form.section.collector.other.field.name.label,This is the label for the name field of OTHER collector,Collector's name,Nom du collecteur
 event.birth.action.issued.audit-history-label,The label to show in audit history for the issued action,Issued,Émis
 event.birth.action.mark-as-duplicate.label,Label for review potential duplicate button in dropdown menu,Review potential duplicates,Examiner les doublons potentiels
@@ -1017,6 +1030,7 @@ event.birth.action.request-correction.label,This is shown as the action name any
 event.birth.action.validate.label,This is shown as the action name anywhere the user can trigger the action from,Validate,Valider
 event.birth.custom.action.approve.field.collector.label,Label for collector field,Collector,le collectionneur
 event.birth.custom.action.approve.field.notes.label,This is the label for the field for a custom action,Comments,Commentaires
+event.birth.custom.action.escalation-feedback.field.notes.label,This is the label for the field for a custom action,Comments,Commentaires
 event.birth.custom.action.validate-declaration.audit-history-label,The label to show in audit history for the validate action,Validated,Validé
 event.birth.custom.action.validate-declaration.field.comments.label,This is the label for the comments field for the validate declaration action,Comments,Commentaires
 event.birth.custom.action.validate-declaration.label,This is shown as the action name anywhere the user can trigger the action from,Validate,Valider
@@ -1029,8 +1043,6 @@ event.birth.summary.child.placeOfBirth.label,Label for place of birth,Place of b
 event.birth.summary.informant.contact.empty,This is shown when there is no informant information,No contact details provided,Pas de coordonnées fournies
 event.birth.summary.informant.contact.label,This is the label for the informant information,Contact,Contact
 event.birth.summary.informant.contact.value,This is the contact value of the informant,{informant.phoneNo} {informant.email},{informant.phoneNo} {informant.email}
-event.birth.action.declare.form.review.alphaPrint.healthNotifier.label,Label for the health notifier print declaration button in the review section,Print declaration,Imprimer la déclaration
-event.birth.action.declare.form.review.alphaPrint.healthNotifier.button.label,Label for the health notifier print declaration button,Print Notification Receipt,Imprimer la déclaration
 event.birth.title,This is the title of the summary,{child.name.firstname} {child.name.surname},{child.name.firstname} {child.name.surname}
 event.death.action.Read.label,This is shown as the action name anywhere the user can trigger the action from,Read,Lire
 event.death.action.certificate.form.cancel,This is the label for the verification cancellation button,Identity does not match,L'identité ne correspond pas
@@ -1057,12 +1069,12 @@ event.death.action.certificate.form.section.who.title,This is the title of the s
 event.death.action.certificate.form.verify,This is the label for the verification button,Verified,Vérifié
 event.death.action.collect-certificate.label,This is shown as the action name anywhere the user can trigger the action from,Print,Imprimer
 event.death.action.correction.documents.supportingDocs.affidavit.label,Label for the affidavit option,Affidavit,Affidavit
+event.death.action.correction.documents.supportingDocs.authorityLetter.label,Label for authority letter,Registrar General / Registration Officer authorization,Registrar General / Registration Officer authorization
 event.death.action.correction.documents.supportingDocs.courtDocument.label,Label for the court document option,Court Document,Document judiciaire
+event.death.action.correction.documents.supportingDocs.courtOrder.label,Label for court order,Court Order,Court Order
 event.death.action.correction.documents.supportingDocs.label,Label for the supporting documents field,Supporting documents,Documents justificatifs
 event.death.action.correction.documents.supportingDocs.other.label,Label for the other option,Other,Autre
 event.death.action.correction.documents.supportingDocs.statutoryDeclaration.label,Label for statutory declaration,Statutory Declaration,Statutory Declaration
-event.death.action.correction.documents.supportingDocs.courtOrder.label,Label for court order,Court Order,Court Order
-event.death.action.correction.documents.supportingDocs.authorityLetter.label,Label for authority letter,Registrar General / Registration Officer authorization,Registrar General / Registration Officer authorization
 event.death.action.correction.fees.amount.label,Label for the amount field,Fee total,Frais totaux
 event.death.action.correction.fees.amount.prefix,Prefix for the amount field,$,€
 event.death.action.correction.form.cancel,This is the label for the verification cancellation button,Identity does not match,L'identité ne correspond pas
@@ -1120,13 +1132,23 @@ event.death.action.declare.form.review.step2.description.label,Description for s
 event.death.action.declare.form.review.step2.hint.label,Hint label for step 2 of the review,Step 2,Étape 2
 event.death.action.declare.form.review.title,Title of the form to show in review page,"{deceased.name.firstname, select, __EMPTY__ {{deceased.name.surname, select, __EMPTY__ {Death declaration} other {Death declaration for {deceased.name.surname}}}} other {{deceased.name.surname, select, __EMPTY__ {Death declaration for {deceased.name.firstname}} other {Death declaration for {deceased.name.firstname} {deceased.name.surname}}}}}","{deceased.name.firstname, select, __EMPTY__ {{deceased.name.surname, select, __EMPTY__ {Déclaration de décès} other {Déclaration de décès de {deceased.name.surname}}}} other {{deceased.name.surname, select, __EMPTY__ {Déclaration de décès de {deceased.name.firstname}} other {Déclaration de décès de {deceased.name.firstname} {deceased.name.surname}}}}}"
 event.death.action.declare.form.section.burial.field.address.label,Label for burial address field,Burial location,Lieu d'inhumation
+event.death.action.declare.form.section.burial.field.address.label,Label for burial address field,Burial location,Lieu d'inhumation
+event.death.action.declare.form.section.burial.field.arrangement.label,Label for burial arrangement field,Burial arrangement,Modalité d'inhumation
 event.death.action.declare.form.section.burial.field.arrangement.label,Label for burial arrangement field,Burial arrangement,Modalité d'inhumation
 event.death.action.declare.form.section.burial.field.arrangement.option.inTuvalu,Option for burial in Tuvalu,Burial in Tuvalu,Inhumation à Tuvalu
+event.death.action.declare.form.section.burial.field.arrangement.option.inTuvalu,Option for burial in Tuvalu,Burial in Tuvalu,Inhumation à Tuvalu
+event.death.action.declare.form.section.burial.field.arrangement.option.other,Option for other burial arrangement,Other,Autre
 event.death.action.declare.form.section.burial.field.arrangement.option.other,Option for other burial arrangement,Other,Autre
 event.death.action.declare.form.section.burial.field.arrangement.option.outsideTuvalu,Option for burial outside Tuvalu,Burial planned outside Tuvalu,Inhumation prévue en dehors de Tuvalu
+event.death.action.declare.form.section.burial.field.arrangement.option.outsideTuvalu,Option for burial outside Tuvalu,Burial planned outside Tuvalu,Inhumation prévue en dehors de Tuvalu
 event.death.action.declare.form.section.burial.field.arrangementOther.label,Label for other burial arrangement field,Specify other burial status,Préciser autre modalité d'inhumation
+event.death.action.declare.form.section.burial.field.arrangementOther.label,Label for other burial arrangement field,Specify other burial status,Préciser autre modalité d'inhumation
+event.death.action.declare.form.section.burial.field.date.error,Label for error message,Cannot be date in futute, Parle voux angles
+event.death.action.declare.form.section.burial.field.date.label,Label for date of burial field,Date of burial,Date d'inhumation
 event.death.action.declare.form.section.burial.field.date.label,Label for date of burial field,Date of burial,Date d'inhumation
 event.death.action.declare.form.section.burial.field.locationDescription.label,Label for burial location description,Burial place or location description,Description du lieu d'inhumation
+event.death.action.declare.form.section.burial.field.locationDescription.label,Label for burial location description,Burial place or location description,Description du lieu d'inhumation
+event.death.action.declare.form.section.burial.field.locationHelper.label,Label for burial location heading,Where buried,Lieu d'inhumation
 event.death.action.declare.form.section.burial.field.locationHelper.label,Label for burial location heading,Where buried,Lieu d'inhumation
 event.death.action.declare.form.section.deceased.field.address.label,This is the label for the field,Usual residence,Lieu de résidence habituel
 event.death.action.declare.form.section.deceased.field.addressHelper.label,This is the label for the field,Usual residence,Lieu de résidence habituel
@@ -1134,15 +1156,17 @@ event.death.action.declare.form.section.deceased.field.age.checkbox.label,This i
 event.death.action.declare.form.section.deceased.field.age.error,Error message for invalid age,Age must be between 0 and 120,L'auteur doit avoir entre 0 et 120 ans
 event.death.action.declare.form.section.deceased.field.age.label,This is the label for the field,Age of deceased,Âge du défunt
 event.death.action.declare.form.section.deceased.field.age.postfix,This is the postfix for age field, years, ans
-event.death.action.declare.form.section.deceased.field.howLongLivedInTuvalu.postfix,this is the postfix for age, years, ans
 event.death.action.declare.form.section.deceased.field.brn.helperText,Helper text for birth registration number field,"Search for an existing birth record. If a match is found, the details below will auto-fill. If no record is found, continue by entering the details manually.","Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement."
+event.death.action.declare.form.section.deceased.field.brn.helperText,Helper text for birth registration number field,"Search for a birth record. If found, details will auto-fill. Otherwise, continue with manual entry.","Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement."
+event.death.action.declare.form.section.deceased.field.brn.helperText,Helper text for birth registration number field,"Search for a birth record. If found, details will auto-fill. Otherwise, continue with manual entry.","Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement."
+event.death.action.declare.form.section.deceased.field.dateOfMarriage.error,Label for error message,Cannot be date in the future, Parle voux angles
 event.death.action.declare.form.section.deceased.field.deathLocation.label,This is the label for the field,Health Institution,Établissement de santé
 event.death.action.declare.form.section.deceased.field.deathLocationOther.label,This is the label for the field,Death location address,Adresse du lieu de décès
 event.death.action.declare.form.section.deceased.field.dob.error,This is the error message for invalid date,Cannot be a future date,Doit être une date de naissance valide
 event.death.action.declare.form.section.deceased.field.dob.error.laterThanDeath,This is the error message for date of birth later than date of death,Date of birth must be before the date of death,La date de naissance doit être antérieure à la date de décès
 event.death.action.declare.form.section.deceased.field.dob.label,This is the label for the field,Date of birth,Date de naissance
 event.death.action.declare.form.section.deceased.field.gender.label,This is the label for the field,Sex,Sexe
-event.death.action.declare.form.section.deceased.field.brn.helperText,Helper text for birth registration number field,"Search for a birth record. If found, details will auto-fill. Otherwise, continue with manual entry.","Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement."
+event.death.action.declare.form.section.deceased.field.howLongLivedInTuvalu.postfix,this is the postfix for age, years, ans
 event.death.action.declare.form.section.deceased.field.maritalStatus.label,This is the label for the field,Marital status at time of death,État civil
 event.death.action.declare.form.section.deceased.field.name.label,This is the label for the field,Deceased's name,Nom du défunt
 event.death.action.declare.form.section.deceased.field.numberOfDependants.label,This is the label for the field,No. of dependants,Nombre de personnes à charge
@@ -1168,66 +1192,117 @@ event.death.action.declare.form.section.documents.field.removalOverseasBurial.op
 event.death.action.declare.form.section.documents.field.removalOverseasBurial.option.transferAuthorisation,Option for removal overseas burial transfer authorisation,Transfer authorisation,Autorisation de transfert
 event.death.action.declare.form.section.event.field.addressHelper.label,This is the label for the field,Place of death,Lieu du décès
 event.death.action.declare.form.section.event.field.causeA.helperText,H elper text for cause A field,Enter direct cause of death,Saisir la cause directe du décès
+event.death.action.declare.form.section.event.field.causeA.helperText,H elper text for cause A field,Enter direct cause of death,Saisir la cause directe du décès
+event.death.action.declare.form.section.event.field.causeA.label,Label for cause A field,Cause A,Cause A
 event.death.action.declare.form.section.event.field.causeA.label,Label for cause A field,Cause A,Cause A
 event.death.action.declare.form.section.event.field.causeB.helperText,H elper text for cause B field,Enter antecedent cause B,Saisir la cause antécédente B
+event.death.action.declare.form.section.event.field.causeB.helperText,H elper text for cause B field,Enter antecedent cause B,Saisir la cause antécédente B
+event.death.action.declare.form.section.event.field.causeB.label,Label for cause B field,Cause B (antecedent),Cause B (antécédent)
 event.death.action.declare.form.section.event.field.causeB.label,Label for cause B field,Cause B (antecedent),Cause B (antécédent)
 event.death.action.declare.form.section.event.field.causeC.helperText,H elper text for cause C field,Enter antecedent cause C,Saisir la cause antécédente C
+event.death.action.declare.form.section.event.field.causeC.helperText,H elper text for cause C field,Enter antecedent cause C,Saisir la cause antécédente C
+event.death.action.declare.form.section.event.field.causeC.label,Label for cause C field,Cause C (antecedent),Cause C (antécédent)
 event.death.action.declare.form.section.event.field.causeC.label,Label for cause C field,Cause C (antecedent),Cause C (antécédent)
 event.death.action.declare.form.section.event.field.causeD.helperText,H elper text for cause D field,Enter underlying cause D,Saisir la cause sous-jacente D
+event.death.action.declare.form.section.event.field.causeD.helperText,H elper text for cause D field,Enter underlying cause D,Saisir la cause sous-jacente D
 event.death.action.declare.form.section.event.field.causeD.label,Label for cause D field,Cause D (underlying),Cause D (sous-jacente)
+event.death.action.declare.form.section.event.field.causeD.label,Label for cause D field,Cause D (underlying),Cause D (sous-jacente)
+event.death.action.declare.form.section.event.field.causeDirectSubheading.label,Label for cause direct subheading,Disease or condition directly leading to death,Maladie ou état morbide ayant directement entraîné le décès
 event.death.action.declare.form.section.event.field.causeDirectSubheading.label,Label for cause direct subheading,Disease or condition directly leading to death,Maladie ou état morbide ayant directement entraîné le décès
 event.death.action.declare.form.section.event.field.causeOfDeath.label,This is the label for the field,Medical certificate of cause of death has been established,La cause du décès a été établie
 event.death.action.declare.form.section.event.field.causeOther.label,Label for cause other field,Other conditions,Autres affections
+event.death.action.declare.form.section.event.field.causeOther.label,Label for cause other field,Other conditions,Autres affections
+event.death.action.declare.form.section.event.field.causeOtherSubheading.label,Label for cause other subheading,Other conditions that contributed to death but not related to the disease or condition causing it,Autres affections ayant contribué au décès mais sans rapport avec la maladie ou l'état morbide ayant causé le décès
 event.death.action.declare.form.section.event.field.causeOtherSubheading.label,Label for cause other subheading,Other conditions that contributed to death but not related to the disease or condition causing it,Autres affections ayant contribué au décès mais sans rapport avec la maladie ou l'état morbide ayant causé le décès
 event.death.action.declare.form.section.event.field.causeSection1Heading.label,Label for cause section 1 heading,Section I. Cause of death,Section I. Cause du décès
+event.death.action.declare.form.section.event.field.causeSection1Heading.label,Label for cause section 1 heading,Section I. Cause of death,Section I. Cause du décès
+event.death.action.declare.form.section.event.field.causeSection2Heading.label,Label for cause section 2 heading,Section II. Other significant conditions,Section II. Autres affections importantes
 event.death.action.declare.form.section.event.field.causeSection2Heading.label,Label for cause section 2 heading,Section II. Other significant conditions,Section II. Autres affections importantes
 event.death.action.declare.form.section.event.field.certifyingMedicalOfficer.label,Label for certifying medical officer field,Full name of certifying medical officer,Nom du médecin certificateur
 event.death.action.declare.form.section.event.field.date.error,This is the error message for invalid date,Must be a valid date,Doit être une date valide
+event.death.action.declare.form.section.event.field.date.error,Error message for invalid date of death,Must be a valid date,Doit être une date valide
 event.death.action.declare.form.section.event.field.date.error.beforeBirth,This is the error message for date of death before date of birth,Date of death must be after the deceased's birth date,La date du décès doit être postérieure à la date de naissance du défunt
+event.death.action.declare.form.section.event.field.date.error.beforeBirth,Error message for date of death before date of birth,Date of death must be after the deceased's birth date,La date du décès doit être postérieure à la date de naissance du défunt
 event.death.action.declare.form.section.event.field.date.label,This is the label for the field,Date of death,Date du décès
 event.death.action.declare.form.section.event.field.dateLastSeenAlive.helperText,H elper text for date last seen alive,Date the deceased was last seen alive by the certifying medical officer,Saisir la date
 event.death.action.declare.form.section.event.field.dateLastSeenAlive.label,Label for date last seen alive field,Date last seen alive,Date à laquelle il a été vu vivant pour la dernière fois
+event.death.action.declare.form.section.event.field.dateLastSeenAlive.label,Label for date last seen alive field,Date last seen alive,Date à laquelle il a été vu vivant pour la dernière fois
 event.death.action.declare.form.section.event.field.description.label,Description of cause of death by lay person or verbal autopsy,Description,Description
 event.death.action.declare.form.section.event.field.duration.unit.days,Duration unit days,Days,Jours
+event.death.action.declare.form.section.event.field.duration.unit.days,Duration unit days,Days,Jours
+event.death.action.declare.form.section.event.field.duration.unit.hours,Duration unit hours,Hours,Heures
 event.death.action.declare.form.section.event.field.duration.unit.hours,Duration unit hours,Hours,Heures
 event.death.action.declare.form.section.event.field.duration.unit.minutes,Duration unit minutes,Minutes,Minutes
+event.death.action.declare.form.section.event.field.duration.unit.minutes,Duration unit minutes,Minutes,Minutes
+event.death.action.declare.form.section.event.field.duration.unit.months,Duration unit months,Months,Mois
 event.death.action.declare.form.section.event.field.duration.unit.months,Duration unit months,Months,Mois
 event.death.action.declare.form.section.event.field.duration.unit.seconds,Duration unit seconds,Seconds,Secondes
+event.death.action.declare.form.section.event.field.duration.unit.seconds,Duration unit seconds,Seconds,Secondes
+event.death.action.declare.form.section.event.field.duration.unit.years,Duration unit years,Years,Années
 event.death.action.declare.form.section.event.field.duration.unit.years,Duration unit years,Years,Années
 event.death.action.declare.form.section.event.field.durationA.label,Label for duration A field,Duration A,Durée A
+event.death.action.declare.form.section.event.field.durationA.label,Label for duration A field,Duration A,Durée A
+event.death.action.declare.form.section.event.field.durationB.label,Label for duration B field,Duration B,Durée B
 event.death.action.declare.form.section.event.field.durationB.label,Label for duration B field,Duration B,Durée B
 event.death.action.declare.form.section.event.field.durationC.label,Label for duration C field,Duration C,Durée C
+event.death.action.declare.form.section.event.field.durationC.label,Label for duration C field,Duration C,Durée C
 event.death.action.declare.form.section.event.field.durationD.label,Label for duration D field,Duration D,Durée D
+event.death.action.declare.form.section.event.field.durationD.label,Label for duration D field,Duration D,Durée D
+event.death.action.declare.form.section.event.field.durationOther.label,Label for duration other field,Duration,Durée
 event.death.action.declare.form.section.event.field.durationOther.label,Label for duration other field,Duration,Durée
 event.death.action.declare.form.section.event.field.magistrateFindingsCause.helperText,Helper text for magistrate findings cause field,Enter the cause of death as stated in the Magistrate's findings,Saisir les conclusions du magistrat
 event.death.action.declare.form.section.event.field.magistrateFindingsCause.label,Label for magistrate findings cause field,Magistrate's findings on cause of death,Conclusions du magistrat sur la cause du décès
+event.death.action.declare.form.section.event.field.magistrateFindingsCause.label,Label for magistrate findings cause field,Magistrate's findings on cause of death,Conclusions du magistrat sur la cause du décès
+event.death.action.declare.form.section.event.field.magistrateInquiryRequired.label,Label for magistrate inquiry required field,Is a magistrate's inquiry required?,Une enquête du magistrat est-elle requise ?
 event.death.action.declare.form.section.event.field.magistrateInquiryRequired.label,Label for magistrate inquiry required field,Is a magistrate's inquiry required?,Une enquête du magistrat est-elle requise ?
 event.death.action.declare.form.section.event.field.manner.label,This is the label for the field,Manner of death,Mode de décès
 event.death.action.declare.form.section.event.field.notPersonallyAttended.label,Label for not personally attended checkbox,Not personally attended,Le patient n'a pas été personnellement pris en charge par le médecin certificateur
 event.death.action.declare.form.section.event.field.reason.label,This is the label for the field,Reason for late registration,Raison de l'inscription tardive
 event.death.action.declare.form.section.event.field.referredToPolice.label,Label for referred to police field,Has this death been referred to the police?,Cette mort a-t-elle été signalée à la police ?
+event.death.action.declare.form.section.event.field.referredToPolice.label,Label for referred to police field,Has this death been referred to the police?,Cette mort a-t-elle été signalée à la police ?
 event.death.action.declare.form.section.event.field.sourceCauseDeath.label,This is the label for the field,Source of cause of death,Source de la cause du décès
 event.death.action.declare.form.section.event.field.timeOfDeath.label,Label for time of death field,Time of death,Heure du décès
+event.death.action.declare.form.section.event.field.timeOfDeath.label,Label for time of death field,Time of death,Heure du décès
 event.death.action.declare.form.section.father.field.age.label,Label for father age,Age,Âge
+event.death.action.declare.form.section.father.field.age.label,Label for father age,Age of father,Âge
+event.death.action.declare.form.section.father.field.age.postfix,label for years postfix, years, years
 event.death.action.declare.form.section.father.field.brn.helperText,Helper text for birth registration number field,"Search for a birth record. If found, details will auto-fill. Otherwise, continue with manual entry","Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement."
 event.death.action.declare.form.section.father.field.brn.label,Label for father birth registration number,Birth registration number,Numéro d'enregistrement de naissance
+event.death.action.declare.form.section.father.field.brn.label,Label for father birth registration number,Birth registration number lookup,Numéro d'enregistrement de naissance
+event.death.action.declare.form.section.father.field.detailsNotAvailable.label,Label for father details not available,Father's details are not available,Les informations sur le père ne sont pas disponibles
 event.death.action.declare.form.section.father.field.detailsNotAvailable.label,Label for father details not available,Father's details are not available,Les informations sur le père ne sont pas disponibles
 event.death.action.declare.form.section.father.field.dob.error,Error for father date of birth,Must be a valid date in the past,Doit être une date valide dans le passé
+event.death.action.declare.form.section.father.field.dob.error,Error for father date of birth,Must be a valid date in the past,Doit être une date valide dans le passé
 event.death.action.declare.form.section.father.field.dob.label,Label for father date of birth,Date of birth,Date de naissance
+event.death.action.declare.form.section.father.field.dob.label,Label for father date of birth,Date of birth,Date de naissance
+event.death.action.declare.form.section.father.field.dobUnknown.label,Label for father DOB unknown,Exact date of birth unknown,Date de naissance exacte inconnue
 event.death.action.declare.form.section.father.field.dobUnknown.label,Label for father DOB unknown,Exact date of birth unknown,Date de naissance exacte inconnue
 event.death.action.declare.form.section.father.field.idType.label,Label for father ID type,Form of ID,Type d'identifiant
 event.death.action.declare.form.section.father.field.idType.option.birthCertificate,Option for father ID type birth certificate,Birth certificate,Certificat de naissance
+event.death.action.declare.form.section.father.field.idType.option.birthCertificate,Option for father ID type birth certificate,Birth certificate,Certificat de naissance
+event.death.action.declare.form.section.father.field.idType.option.other,Option for father ID type other,Other,Autre
 event.death.action.declare.form.section.father.field.idType.option.other,Option for father ID type other,Other,Autre
 event.death.action.declare.form.section.father.field.idType.option.passport,Option for father ID type passport,Passport,Passeport
+event.death.action.declare.form.section.father.field.idType.option.passport,Option for father ID type passport,Passport,Passeport
+event.death.action.declare.form.section.father.field.livingStatus.label,Label for father living status,Living status,Statut de vie
 event.death.action.declare.form.section.father.field.livingStatus.label,Label for father living status,Living status,Statut de vie
 event.death.action.declare.form.section.father.field.livingStatus.option.alive,Option for father living status alive,Alive,Vivant
+event.death.action.declare.form.section.father.field.livingStatus.option.alive,Option for father living status alive,Alive,Vivant
+event.death.action.declare.form.section.father.field.livingStatus.option.deceased,Option for father living status deceased,Deceased,Décédé
 event.death.action.declare.form.section.father.field.livingStatus.option.deceased,Option for father living status deceased,Deceased,Décédé
 event.death.action.declare.form.section.father.field.name.label,Label for father full name,Father's full name,Nom complet du père
+event.death.action.declare.form.section.father.field.name.label,Label for father full name,Father's full name,Nom complet du père
+event.death.action.declare.form.section.father.field.nationality.label,Label for father nationality,Nationality,Nationalité
 event.death.action.declare.form.section.father.field.nationality.label,Label for father nationality,Nationality,Nationalité
 event.death.action.declare.form.section.father.field.occupation.label,Label for father occupation,Occupation,Profession
+event.death.action.declare.form.section.father.field.occupation.label,Label for father occupation,Occupation,Profession
+event.death.action.declare.form.section.father.field.otherId.label,Label for father other ID,ID number,Numéro d'identifiant
 event.death.action.declare.form.section.father.field.otherId.label,Label for father other ID,ID number,Numéro d'identifiant
 event.death.action.declare.form.section.father.field.passport.label,Label for father passport number,Passport number,Numéro de passeport
+event.death.action.declare.form.section.father.field.passport.label,Label for father passport number,Passport number,Numéro de passeport
 event.death.action.declare.form.section.father.field.placeOfBirth.label,Label for father place of birth,Place of birth,Lieu de naissance
+event.death.action.declare.form.section.father.field.placeOfBirth.label,Label for father place of birth,Place of birth,Lieu de naissance
+event.death.action.declare.form.section.father.field.reason.label,Label for reason father details not available,Reason,Raison
 event.death.action.declare.form.section.father.field.reason.label,Label for reason father details not available,Reason,Raison
 event.death.action.declare.form.section.icd10.field.irisNotes.label,Label for IRIS notes field,IRIS coding output notes,Notes IRIS
 event.death.action.declare.form.section.icd10.field.multipleCauseCodes.label,Label for multiple cause codes,ICD-10 multiple cause codes,Codes de causes multiples
@@ -1239,6 +1314,7 @@ event.death.action.declare.form.section.informant.field.addressHelper.label,This
 event.death.action.declare.form.section.informant.field.age.checkbox.label,This is the label for the field,Exact date of birth unknown,Date exacte de naissance inconnue
 event.death.action.declare.form.section.informant.field.age.label,This is the label for the field,Age of informant,Âge de l'informateur
 event.death.action.declare.form.section.informant.field.age.postfix,This is the postfix for age field, years, ans
+event.death.action.declare.form.section.informant.field.brn.label,Label for informant birth registration number,Birth registration number,Numéro d'enregistrement de naissance
 event.death.action.declare.form.section.informant.field.contactHelper.label, Label,Point of contact (Next of kin / Informant), 
 event.death.action.declare.form.section.informant.field.dob.error,This is the error message for invalid date,Must be a valid Birthdate,Doit être une date de naissance valide
 event.death.action.declare.form.section.informant.field.dob.label,This is the label for the field,Date of birth,Date de naissance
@@ -1340,25 +1416,46 @@ event.death.action.declare.form.section.livingChildren.field.numberOfChildren.op
 event.death.action.declare.form.section.livingChildren.field.numberOfChildren.option.8,Option for 8 children,8,8
 event.death.action.declare.form.section.livingChildren.field.numberOfChildren.option.9,Option for 9 children,9,9
 event.death.action.declare.form.section.mother.field.age.label,Label for mother age,Age,Âge
+event.death.action.declare.form.section.mother.field.age.label,Label for mother age,Age,Âge
+event.death.action.declare.form.section.mother.field.age.postfix,label for years postfix, years, years
 event.death.action.declare.form.section.mother.field.brn.helperText,Helper text for birth registration number field,"Search for a birth record. If found, details will auto-fill. Otherwise, continue with manual entry","Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement."
 event.death.action.declare.form.section.mother.field.brn.label,Label for mother birth registration number,Birth registration number,Numéro d'enregistrement de naissance
+event.death.action.declare.form.section.mother.field.brn.label,Label for mother birth registration number,Birth registration number lookup,Numéro d'enregistrement de naissance
+event.death.action.declare.form.section.mother.field.detailsNotAvailable.label,Label for mother details not available,Mother's details are not available,Les informations sur la mère ne sont pas disponibles
 event.death.action.declare.form.section.mother.field.detailsNotAvailable.label,Label for mother details not available,Mother's details are not available,Les informations sur la mère ne sont pas disponibles
 event.death.action.declare.form.section.mother.field.dob.error,Error for mother date of birth,Must be a valid date in the past,Doit être une date valide dans le passé
+event.death.action.declare.form.section.mother.field.dob.error,Error for mother date of birth,Must be a valid date in the past,Doit être une date valide dans le passé
+event.death.action.declare.form.section.mother.field.dob.label,Label for mother date of birth,Date of birth,Date de naissance
 event.death.action.declare.form.section.mother.field.dob.label,Label for mother date of birth,Date of birth,Date de naissance
 event.death.action.declare.form.section.mother.field.dobUnknown.label,Label for mother DOB unknown,Exact date of birth unknown,Date de naissance exacte inconnue
+event.death.action.declare.form.section.mother.field.dobUnknown.label,Label for mother DOB unknown,Exact date of birth unknown,Date de naissance exacte inconnue
 event.death.action.declare.form.section.mother.field.idType.label,Label for mother ID type,Form of ID,Type d'identifiant
+event.death.action.declare.form.section.mother.field.idType.label,Label for mother ID type,Type of ID,Type d'identifiant
+event.death.action.declare.form.section.mother.field.idType.option.birthCertificate,Option for mother ID type birth certificate,Birth certificate,Certificat de naissance
 event.death.action.declare.form.section.mother.field.idType.option.birthCertificate,Option for mother ID type birth certificate,Birth certificate,Certificat de naissance
 event.death.action.declare.form.section.mother.field.idType.option.other,Option for mother ID type other,Other,Autre
+event.death.action.declare.form.section.mother.field.idType.option.other,Option for mother ID type other,Other,Autre
+event.death.action.declare.form.section.mother.field.idType.option.passport,Option for mother ID type passport,Passport,Passeport
 event.death.action.declare.form.section.mother.field.idType.option.passport,Option for mother ID type passport,Passport,Passeport
 event.death.action.declare.form.section.mother.field.livingStatus.label,Label for mother living status,Living status,Statut de vie
+event.death.action.declare.form.section.mother.field.livingStatus.label,Label for mother living status,Living status,Statut de vie
+event.death.action.declare.form.section.mother.field.livingStatus.option.alive,Option for mother living status alive,Alive,Vivant
 event.death.action.declare.form.section.mother.field.livingStatus.option.alive,Option for mother living status alive,Alive,Vivant
 event.death.action.declare.form.section.mother.field.livingStatus.option.deceased,Option for mother living status deceased,Deceased,Décédé
+event.death.action.declare.form.section.mother.field.livingStatus.option.deceased,Option for mother living status deceased,Deceased,Décédé
+event.death.action.declare.form.section.mother.field.name.label,Label for mother full name,Mother's full name,Nom complet de la mère
 event.death.action.declare.form.section.mother.field.name.label,Label for mother full name,Mother's full name,Nom complet de la mère
 event.death.action.declare.form.section.mother.field.nationality.label,Label for mother nationality,Nationality,Nationalité
+event.death.action.declare.form.section.mother.field.nationality.label,Label for mother nationality,Nationality,Nationalité
+event.death.action.declare.form.section.mother.field.occupation.label,Label for mother occupation,Occupation,Profession
 event.death.action.declare.form.section.mother.field.occupation.label,Label for mother occupation,Occupation,Profession
 event.death.action.declare.form.section.mother.field.otherId.label,Label for mother other ID,Other ID number,Autre numéro d'identifiant
+event.death.action.declare.form.section.mother.field.otherId.label,Label for mother other ID,ID number,Autre numéro d'identifiant
+event.death.action.declare.form.section.mother.field.passport.label,Label for mother passport number,Passport number,Numéro de passeport
 event.death.action.declare.form.section.mother.field.passport.label,Label for mother passport number,Passport number,Numéro de passeport
 event.death.action.declare.form.section.mother.field.placeOfBirth.label,Label for mother place of birth,Place of birth,Lieu de naissance
+event.death.action.declare.form.section.mother.field.placeOfBirth.label,Label for mother place of birth,Place of birth,Lieu de naissance
+event.death.action.declare.form.section.mother.field.reason.label,Label for reason mother details not available,Reason,Raison
 event.death.action.declare.form.section.mother.field.reason.label,Label for reason mother details not available,Reason,Raison
 event.death.action.declare.form.section.person.field.brn.label,This is the label for the field,ID Number,Numéro d'identité
 event.death.action.declare.form.section.person.field.idType.label,This is the label for the field,Type of ID,Type d'identité
@@ -1371,12 +1468,17 @@ event.death.action.declare.form.section.spouse.field.addressHelper.label,This is
 event.death.action.declare.form.section.spouse.field.age.checkbox.label,This is the label for the field,Exact date of birth unknown,Date exacte de naissance inconnue
 event.death.action.declare.form.section.spouse.field.age.label,This is the label for the field,Age of spouse,Âge du conjoint
 event.death.action.declare.form.section.spouse.field.age.postfix,This is the postfix for age field, years, ans
+event.death.action.declare.form.section.spouse.field.brn.helperText,Helper text for birth registration number field,"Search for a birth record. If found, details will auto-fill. Otherwise, continue with manual entry.","Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement."
+event.death.action.declare.form.section.spouse.field.brn.label,Label for spouse birth registration number lookup,Birth registration number,Numéro d'enregistrement de naissance
 event.death.action.declare.form.section.spouse.field.detailsNotAvailable.label,This is the label for the field,Spouse's details are not available,Les informations du conjoint ne sont pas disponibles
 event.death.action.declare.form.section.spouse.field.dob.error,This is the error message for invalid date,Must be a valid Birthdate,Doit être une date de naissance valide
 event.death.action.declare.form.section.spouse.field.dob.label,This is the label for the field,Date of birth,Date de naissance
 event.death.action.declare.form.section.spouse.field.idType.label,This is the label for the field,Form of ID,Type d'identité
 event.death.action.declare.form.section.spouse.field.idType.option.birthCertificate,Option for spouse ID type birth certificate,Birth certificate,Certificat de naissance
+event.death.action.declare.form.section.spouse.field.idType.option.birthCertificate,Option for spouse ID type birth certificate,Birth certificate,Certificat de naissance
 event.death.action.declare.form.section.spouse.field.idType.option.other,Option for spouse ID type other,Other,Autre
+event.death.action.declare.form.section.spouse.field.idType.option.other,Option for spouse ID type other,Other,Autre
+event.death.action.declare.form.section.spouse.field.idType.option.passport,Option for spouse ID type passport,Passport,Passeport
 event.death.action.declare.form.section.spouse.field.idType.option.passport,Option for spouse ID type passport,Passport,Passeport
 event.death.action.declare.form.section.spouse.field.name.label,This is the label for the field,Spouse's name,Nom du conjoint
 event.death.action.declare.form.section.spouse.field.nationality.label,This is the label for the field,Nationality,Nationalité
@@ -1393,6 +1495,9 @@ event.death.action.edit.register.copy,Description for `Register with edits` in e
 event.death.action.escalate.audit-history-label,The label to show in audit history for the escalate action,Escalated,Transmis
 event.death.action.escalate.label,This is shown when the escalate action can be triggered from the action from,Escalate,Escalader
 event.death.action.escalate.supportingCopy,This is the confirmation text for the escalate action,Escalating this declaration will forward it to the chosen authority for further review and decision.,L'escalade de cette déclaration la transmettra à l'autorité compétente pour un examen et une décision plus approfondis.
+event.death.action.escalation-feedback.audit-history-label,The label to show in audit history for the escalation feedback action,Escalation feedback,Retour d'escalade
+event.death.action.escalation-feedback.label,This is shown when the escalation feedback can be triggered from the action from,Escalation feedback,Retour d'escalade
+event.death.action.escalation-feedback.supportingCopy,This is the confirmation text for the escalation feedback action,Your feedback will be officially recorded and may influence the final decision on the declaration.,Votre retour sera officiellement enregistré et pourra influencer la décision finale concernant la déclaration.
 event.death.action.form.section.alienNumberDetails.label,Field for entering Alien Number details,Alien Number,Numéro d'étranger
 event.death.action.form.section.brn.label,Field for entering Birth Registration Number,Birth Registration Number,Numéro d'enregistrement de naissance
 event.death.action.form.section.collector.other.field.name.label,This is the label for the name field of OTHER collector,Collector's name,Nom du collecteur
@@ -1421,6 +1526,7 @@ event.death.action.registrar-general-feedback.label,This is shown when the regis
 event.death.action.registrar-general-feedback.supportingCopy,This is the confirmation text for the registrar general feedback action,Your feedback will be officially recorded and may influence the final decision on the declaration.,Votre retour sera officiellement enregistré et pourra influencer la décision finale concernant la déclaration.
 event.death.action.request-correction.label,This is shown as the action name anywhere the user can trigger the action from,Correct record,Corriger l'enregistrement
 event.death.action.validate.label,This is shown as the action name anywhere the user can trigger the action from,Validate,Valider
+event.death.custom.action.escalation-feedback.field.notes.label,This is the label for the field for a custom action,Comments,Commentaires
 event.death.custom.action.validate-declaration.label,This is shown as the action name anywhere the user can trigger the action from,Validate,Valider
 event.death.flag.escalated-to-registrar-general,Flag label for escalated to registrar general,Escalated to Registrar General,Transmis au registraire général
 event.death.label,This is what this event is referred as in the system,Death,Décès
@@ -1551,10 +1657,14 @@ form.customField.label.numberOfDependants,,No. of dependants,Nombre de personnes
 form.customField.label.reasonForLateRegistrationBirth,,Reason for delayed registration,Raison du retard d'inscription
 form.customField.label.reasonForLateRegistrationDeath,,Reason for late registration,Raison de l'inscription tardive
 form.death.burial.title,Form section title for burial details,Burial details,Détails de l'inhumation
+form.death.burial.title,Form section title for burial details,Burial details,Détails de l'inhumation
 form.death.eventDetails.title,Form section title for event details,Event details,Détails de l'événement
+form.death.eventDetails.title,Form section title for event details,Event details,Détails de l'événement
+form.death.father.title,Form section title for father's details,Father's details,Détails du père
 form.death.father.title,Form section title for father's details,Father's details,Détails du père
 form.death.icd10.title,Form section title for ICD-10 coding,ICD-10 cause of death coding,Codification ICD-10 de la cause de décès
 form.death.livingChildren.title,Form section title for living children,Living children,Enfants vivants
+form.death.mother.title,Form section title for mother's details,Mother's details,Détails de la mère
 form.death.mother.title,Form section title for mother's details,Mother's details,Détails de la mère
 form.field.dateRangepicker.checkbox.dateLabel,,{rangeStart} to {rangeEnd},{rangeStart} à {rangeEnd}
 form.field.helpertext.nid,Helper text for nid input field,The National ID can only be numeric and must be 10 digits long,Le numéro d'identification national doit être uniquement numérique et comporter 10 chiffres
@@ -1630,6 +1740,7 @@ form.field.label.deceasedPrimaryAddress,,Usual place of residence,Lieu de résid
 form.field.label.deceasedSecondaryAddress,,Secondary Address,Adresse secondaire
 form.field.label.deny,,No,Non
 form.field.label.district,Label for District,District,District
+form.field.label.docTypeAffidavit,Label for affidavit document type,Affidavit,Déclaration sous serment
 form.field.label.docTypeAffidavitAbsence,Label for affidavit of absence document type,Affidavit of absence,Déclaration d'absence
 form.field.label.docTypeBirthCert,,Birth certificate,Certificat de la naissance
 form.field.label.docTypeBirthCertificate,Label for birth certificate document type,Birth certificate,Certificat de naissance
@@ -1637,17 +1748,25 @@ form.field.label.docTypeBirthNotification,Label for birth notification document 
 form.field.label.docTypeChildBirthProof,,Notification of birth,Notification de la naissance
 form.field.label.docTypeCopyOfBurialReceipt,,Certified copy of burial receipt,Copie certifiée du reçu d'enterrement
 form.field.label.docTypeCoronersReport,,Coroner's report,Rapport du médecin légiste
+form.field.label.docTypeCourtOrder,Label for court order document type,Court order,Ordonnance du tribunal
 form.field.label.docTypeCourtOrderNameChange,Label for court order name change document type,Court order for name change,Ordonnance du tribunal pour changement de nom
 form.field.label.docTypeDeedPoll,Label for deed poll document type,Deed poll,Acte de changement de nom
 form.field.label.docTypeHospitalDeathCertificate,,Hospital certificate of death,Certificat de décès émis par l'hôpital
 form.field.label.docTypeJusticeOfPeaceStatement,Label for justice of peace statement document type,Statement from Justice of the Peace,Déclaration du juge de paix
+form.field.label.docTypeLateRegistrationForm,Label for late registration form document type,Late registration form,Formulaire d'enregistrement tardif
+form.field.label.docTypeLetterOfConsent,Label for letter of consent document type,Letter of consent,Lettre de consentement
 form.field.label.docTypeLetterOfDeath,,Attested letter of death,Lettre de décès attestée
 form.field.label.docTypeMarriageCertificate,Label for marriage certificate document type,Marriage certificate,Certificat de mariage
 form.field.label.docTypeMarriageNotice,,Notice of marriage,Avis de mariage
 form.field.label.docTypeMarriageRegistration,Label for marriage registration document type,Marriage registration,Enregistrement du mariage
 form.field.label.docTypeMedicalCertificate,Label for medical certificate document type,Medical certificate of birth,Certificat médical de naissance
+form.field.label.docTypeMedicalCertificateLetter,Label for medical certificate or letter document type,Medical certificate / letter,Certificat médical / lettre
 form.field.label.docTypeNID,,National ID,Carte d'identité nationale
+form.field.label.docTypeNativeAdoptionForm,Label for native adoption form document type,Native adoption form,Formulaire d'adoption coutumière
 form.field.label.docTypeNativeAdoptionOrder,Label for native adoption order document type,Native adoption order,Ordonnance d'adoption coutumière
+form.field.label.docTypeNoticeOfConsentFather,Label for notice of consent from father document type,Notice of consent (father),Avis de consentement (père)
+form.field.label.docTypeNoticeOfConsentMother,Label for notice of consent from mother document type,Notice of consent (mother),Avis de consentement (mère)
+form.field.label.docTypeNotificationOfBirth,Label for birth notification document type,Birth notification,Notification de naissance
 form.field.label.docTypeOfficialStatement,Label for official statement document type,Official statement,Déclaration officielle
 form.field.label.docTypeOther,,Other,Autre
 form.field.label.docTypePassport,,Passport,Passeport
@@ -1670,9 +1789,8 @@ form.field.label.fileSizeError,,File size must be less than 2MB,La taille du fic
 form.field.label.fileUploadError,,{type} supported image only,{type} format d'images accepté
 form.field.label.firstName,,First name(s),Prénom(s)
 form.field.label.firstNames,,First name(s),Prénom(s)
-form.field.label.givenNames,,Given name(s),Prénom(s)
-form.field.label.surname,,Surname,Nom de famille
 form.field.label.fullHonorificName,,Full Honorific Name,Nom complet avec titre
+form.field.label.givenNames,,Given name(s),Prénom(s)
 form.field.label.healthInstitution,Select item for Health Institution,Health Institution,Institution de santé
 form.field.label.iD,,ID Number,Numéro d'identification
 form.field.label.iDType,,Type of ID,Type d'identification
@@ -1796,6 +1914,7 @@ form.field.label.someoneElse,Other Label,Someone else,Quelqu'un d'autre
 form.field.label.someoneElseCollector,,Print and issue to someone else,Imprimer et remettre à quelqu'un d'autre
 form.field.label.spouseDetailsExist,,Spouse's details are not available,Pas d'information sur le conjoint
 form.field.label.state,Label for State,Province,Province
+form.field.label.surname,,Surname,Nom de famille
 form.field.label.typeOfId,,Type of ID,Type d'identification
 form.field.label.typeOfMarriage,,Type of marriage,Type de mariage
 form.field.label.updatingUser,,Updating user,Mise à jour de l'utilisateur
@@ -1868,7 +1987,9 @@ form.section.information.death.bullet2,,As the legal Informant it is important t
 form.section.information.death.bullet3,,Once the declaration is processed you will receive an email to tell you when to visit the office to collect the certificate - Take your ID with you.,"Une fois la déclaration traitée, vous recevrez un courriel vous indiquant quand vous rendre au bureau pour retirer le certificat - Munissez-vous d'une pièce d'identité."
 form.section.information.death.bullet4,,Make sure you collect the certificate. A death certificate is critical to support with inheritance claims and to resolve the affairs of the deceased e.g. closing bank accounts and setting loans.,"Veillez à récupérer le certificat. Le certificat de décès est essentiel pour les demandes d'héritage et pour régler les affaires de la personne décédée, par exemple la fermeture des comptes bancaires et la mise en place des prêts."
 form.section.information.death.healthNotifier.bulletList.label,Guidance: Explaining death notification and next steps to the family,Guidance: Explaining death notification and next steps to the family,Conseils : Expliquer la notification de décès et les prochaines étapes à la famille
+form.section.information.death.healthNotifier.bulletList.label,Guidance: Explaining death notification and next steps to the family,Guidance: Explaining death notification and next steps to the family,
 form.section.information.death.registrar.bulletList.label,Guidance: Explaining death registration to the informant,Guidance: Explaining death registration to the informant,Conseils : Expliquer l'enregistrement du décès à l'informant
+form.section.information.death.registrar.bulletList.label,Guidance: Explaining death registration to the informant,Guidance: Explaining death registration to the informant,
 form.section.information.name,,Information,Informations
 form.section.label.timePeriodLast30Days,Label for option of time period select: last 30 days,Last 30 days,les 30 derniers jours
 form.section.label.timePeriodLast7Days,Label for option of time period select: last 7 days,Last 7 days,les 7 derniers jours
@@ -1975,6 +2096,7 @@ integrations.updatePermissionsMsg,Label for update permissions message,Permissio
 integrations.webhook.PII,Label for PII,Include PII data,Inclure les données PII
 integrations.webhookDescription,label for webhook client,"A Webhook client can subscribe to be notified upon a birth or death registration following W3C WebSub standards. For more information, visit:","Un client Webhook peut s'abonner pour être notifié lors de l'enregistrement d'une naissance ou d'un décès selon les normes WebSub du W3C. Pour plus d'informations, consultez le site :"
 integrations.webhookPermissionsDescription,Webhook description above permissions,Select the data you wish to be contained within the webhook payload,Sélectionnez les données que vous souhaitez voir figurer dans les données utiles du webhook.
+introduction.guidance.healthNotifier.label,,Guidance: Explaining birth notification to parents,
 loading.records,Loading indicator while fetching records,Loading records...,Chargement des enregistrements...
 messages.emptyString,Empty string, , 
 misc.confirmPinTitle,The title displayed while creating a PIN,Confirm PIN,Confirmer le  Code PIN
@@ -2150,13 +2272,13 @@ print.certificate.collector.father,The label for select value when father is the
 print.certificate.collector.form.error,Form level error for collector form,Please select who is collecting the certificate,Veuillez sélectionner la personne qui collecte le certificat
 print.certificate.collector.form.error.template,Form level error for collector form template type,Please select certificate type,Veuillez sélectionner le type de certificat
 print.certificate.collector.idCheck.title,The title for id check component,Verify their identity,Vérifier leur identité
-print.certificate.collector.requesterId.label,Label for collector,Collector,Collector
 print.certificate.collector.idCheckDialog.title,The title for the dialog when details of the collector not verified,Print without proof of ID?,Continuer sans preuve d'identité ?
 print.certificate.collector.informant,The label for select value when informant is the collector of certificate,Informant is collecting,Informateur
 print.certificate.collector.mother,The label for select value when mother is the collector of certificate,Mother is collecting,Mère
 print.certificate.collector.other,The label for select value when the collector of certificate is other person,Other,Autre
 print.certificate.collector.other.form.error,Form level error for other collector information form,Complete all the mandatory fields,Remplissez tous les champs obligatoires
 print.certificate.collector.other.title,Title for other collector form,Collector details,Quelle est son identité et son nom ?
+print.certificate.collector.requesterId.label,Label for collector,Collector,Collector
 print.certificate.collector.whoToCollect,The label for collector of certificate select,Certify record,Certifier l'enregistrement
 print.certificate.deathService,Amount due on certificate for death label,Service: <strong>Death registration after {service} of D.o.D.</strong><br/>Amount Due:,Service: <strong>Enregistrement du décès après {service} de D.o.D.</strong><br/>Montant dû:
 print.certificate.form.name,The title of review button in list expansion actions,Print,Imprimer
@@ -2211,98 +2333,6 @@ recordAudit.noDateOfMarriage,Label for date of marriage not available,No date of
 recordAudit.noName,Label for name not available,No name provided,Aucun nom n'a été fourni
 recordAudit.noPlaceOfBirth,Label for place of birth not available,No place of birth,Pas de lieu de naissance
 recordAudit.noPlaceOfDeath,Label for place of death not availale,No place of death,Pas de lieu de décès
-form.death.eventDetails.title,Form section title for event details,Event details,Détails de l'événement
-event.death.action.declare.form.section.event.field.date.error,Error message for invalid date of death,Must be a valid date,Doit être une date valide
-event.death.action.declare.form.section.event.field.date.error.beforeBirth,Error message for date of death before date of birth,Date of death must be after the deceased's birth date,La date du décès doit être postérieure à la date de naissance du défunt
-event.death.action.declare.form.section.event.field.timeOfDeath.label,Label for time of death field,Time of death,Heure du décès
-event.death.action.declare.form.section.event.field.duration.unit.seconds,Duration unit seconds,Seconds,Secondes
-event.death.action.declare.form.section.event.field.duration.unit.minutes,Duration unit minutes,Minutes,Minutes
-event.death.action.declare.form.section.event.field.duration.unit.hours,Duration unit hours,Hours,Heures
-event.death.action.declare.form.section.event.field.duration.unit.days,Duration unit days,Days,Jours
-event.death.action.declare.form.section.event.field.duration.unit.months,Duration unit months,Months,Mois
-event.death.action.declare.form.section.event.field.duration.unit.years,Duration unit years,Years,Années
-form.section.information.death.healthNotifier.bulletList.label,Guidance: Explaining death notification and next steps to the family,Guidance: Explaining death notification and next steps to the family
-form.section.information.death.registrar.bulletList.label,Guidance: Explaining death registration to the informant,Guidance: Explaining death registration to the informant
-event.death.action.declare.form.section.event.field.referredToPolice.label,Label for referred to police field,Has this death been referred to the police?,Cette mort a-t-elle été signalée à la police ?
-event.death.action.declare.form.section.event.field.magistrateInquiryRequired.label,Label for magistrate inquiry required field,Is a magistrate's inquiry required?,Une enquête du magistrat est-elle requise ?
-event.death.action.declare.form.section.event.field.magistrateFindingsCause.label,Label for magistrate findings cause field,Magistrate's findings on cause of death,Conclusions du magistrat sur la cause du décès
-event.death.action.declare.form.section.event.field.dateLastSeenAlive.label,Label for date last seen alive field,Date last seen alive,Date à laquelle il a été vu vivant pour la dernière fois
-event.death.action.declare.form.section.event.field.causeSection1Heading.label,Label for cause section 1 heading,Section I. Cause of death,Section I. Cause du décès
-event.death.action.declare.form.section.event.field.causeDirectSubheading.label,Label for cause direct subheading,Disease or condition directly leading to death,Maladie ou état morbide ayant directement entraîné le décès
-event.death.action.declare.form.section.event.field.causeA.label,Label for cause A field,Cause A,Cause A
-event.death.action.declare.form.section.event.field.causeA.helperText,H elper text for cause A field,Enter direct cause of death,Saisir la cause directe du décès
-event.death.action.declare.form.section.event.field.durationA.label,Label for duration A field,Duration A,Durée A
-event.death.action.declare.form.section.event.field.causeB.label,Label for cause B field,Cause B (antecedent),Cause B (antécédent)
-event.death.action.declare.form.section.event.field.causeB.helperText,H elper text for cause B field,Enter antecedent cause B,Saisir la cause antécédente B
-event.death.action.declare.form.section.event.field.durationB.label,Label for duration B field,Duration B,Durée B
-event.death.action.declare.form.section.event.field.causeC.label,Label for cause C field,Cause C (antecedent),Cause C (antécédent)
-event.death.action.declare.form.section.event.field.causeC.helperText,H elper text for cause C field,Enter antecedent cause C,Saisir la cause antécédente C
-event.death.action.declare.form.section.event.field.durationC.label,Label for duration C field,Duration C,Durée C
-event.death.action.declare.form.section.event.field.causeD.label,Label for cause D field,Cause D (underlying),Cause D (sous-jacente)
-event.death.action.declare.form.section.event.field.causeD.helperText,H elper text for cause D field,Enter underlying cause D,Saisir la cause sous-jacente D
-event.death.action.declare.form.section.event.field.durationD.label,Label for duration D field,Duration D,Durée D
-event.death.action.declare.form.section.event.field.causeSection2Heading.label,Label for cause section 2 heading,Section II. Other significant conditions,Section II. Autres affections importantes
-event.death.action.declare.form.section.event.field.causeOtherSubheading.label,Label for cause other subheading,Other conditions that contributed to death but not related to the disease or condition causing it,Autres affections ayant contribué au décès mais sans rapport avec la maladie ou l'état morbide ayant causé le décès
-event.death.action.declare.form.section.event.field.causeOther.label,Label for cause other field,Other conditions,Autres affections
-event.death.action.declare.form.section.event.field.durationOther.label,Label for duration other field,Duration,Durée
-form.death.burial.title,Form section title for burial details,Burial details,Détails de l'inhumation
-event.death.action.declare.form.section.burial.field.arrangement.label,Label for burial arrangement field,Burial arrangement,Modalité d'inhumation
-event.death.action.declare.form.section.burial.field.arrangement.option.inTuvalu,Option for burial in Tuvalu,Burial in Tuvalu,Inhumation à Tuvalu
-event.death.action.declare.form.section.burial.field.arrangement.option.outsideTuvalu,Option for burial outside Tuvalu,Burial planned outside Tuvalu,Inhumation prévue en dehors de Tuvalu
-event.death.action.declare.form.section.burial.field.arrangement.option.other,Option for other burial arrangement,Other,Autre
-event.death.action.declare.form.section.burial.field.arrangementOther.label,Label for other burial arrangement field,Specify other burial status,Préciser autre modalité d'inhumation
-event.death.action.declare.form.section.burial.field.date.label,Label for date of burial field,Date of burial,Date d'inhumation
-event.death.action.declare.form.section.burial.field.locationHelper.label,Label for burial location heading,Where buried,Lieu d'inhumation
-event.death.action.declare.form.section.burial.field.address.label,Label for burial address field,Burial location,Lieu d'inhumation
-event.death.action.declare.form.section.burial.field.locationDescription.label,Label for burial location description,Burial place or location description,Description du lieu d'inhumation
-form.death.father.title,Form section title for father's details,Father's details,Détails du père
-event.death.action.declare.form.section.father.field.detailsNotAvailable.label,Label for father details not available,Father's details are not available,Les informations sur le père ne sont pas disponibles
-event.death.action.declare.form.section.father.field.reason.label,Label for reason father details not available,Reason,Raison
-event.death.action.declare.form.section.father.field.livingStatus.label,Label for father living status,Living status,Statut de vie
-event.death.action.declare.form.section.father.field.livingStatus.option.alive,Option for father living status alive,Alive,Vivant
-event.death.action.declare.form.section.father.field.livingStatus.option.deceased,Option for father living status deceased,Deceased,Décédé
-event.death.action.declare.form.section.father.field.nationality.label,Label for father nationality,Nationality,Nationalité
-event.death.action.declare.form.section.father.field.idType.option.birthCertificate,Option for father ID type birth certificate,Birth certificate,Certificat de naissance
-event.death.action.declare.form.section.father.field.idType.option.passport,Option for father ID type passport,Passport,Passeport
-event.death.action.declare.form.section.father.field.idType.option.other,Option for father ID type other,Other,Autre
-event.death.action.declare.form.section.father.field.brn.label,Label for father birth registration number,Birth registration number lookup,Numéro d'enregistrement de naissance
-event.death.action.declare.form.section.father.field.passport.label,Label for father passport number,Passport number,Numéro de passeport
-event.death.action.declare.form.section.father.field.otherId.label,Label for father other ID,ID number,Numéro d'identifiant
-event.death.action.declare.form.section.father.field.name.label,Label for father full name,Father's full name,Nom complet du père
-event.death.action.declare.form.section.father.field.dob.label,Label for father date of birth,Date of birth,Date de naissance
-event.death.action.declare.form.section.father.field.dob.error,Error for father date of birth,Must be a valid date in the past,Doit être une date valide dans le passé
-event.death.action.declare.form.section.father.field.dobUnknown.label,Label for father DOB unknown,Exact date of birth unknown,Date de naissance exacte inconnue
-event.death.action.declare.form.section.father.field.age.label,Label for father age,Age of father,Âge
-event.death.action.declare.form.section.father.field.placeOfBirth.label,Label for father place of birth,Place of birth,Lieu de naissance
-event.death.action.declare.form.section.father.field.occupation.label,Label for father occupation,Occupation,Profession
-form.death.mother.title,Form section title for mother's details,Mother's details,Détails de la mère
-event.death.action.declare.form.section.mother.field.detailsNotAvailable.label,Label for mother details not available,Mother's details are not available,Les informations sur la mère ne sont pas disponibles
-event.death.action.declare.form.section.mother.field.reason.label,Label for reason mother details not available,Reason,Raison
-event.death.action.declare.form.section.mother.field.livingStatus.label,Label for mother living status,Living status,Statut de vie
-event.death.action.declare.form.section.mother.field.livingStatus.option.alive,Option for mother living status alive,Alive,Vivant
-event.death.action.declare.form.section.mother.field.livingStatus.option.deceased,Option for mother living status deceased,Deceased,Décédé
-event.death.action.declare.form.section.mother.field.nationality.label,Label for mother nationality,Nationality,Nationalité
-event.death.action.declare.form.section.mother.field.idType.label,Label for mother ID type,Type of ID,Type d'identifiant
-event.death.action.declare.form.section.mother.field.idType.option.birthCertificate,Option for mother ID type birth certificate,Birth certificate,Certificat de naissance
-event.death.action.declare.form.section.mother.field.idType.option.passport,Option for mother ID type passport,Passport,Passeport
-event.death.action.declare.form.section.mother.field.idType.option.other,Option for mother ID type other,Other,Autre
-event.death.action.declare.form.section.mother.field.brn.label,Label for mother birth registration number,Birth registration number lookup,Numéro d'enregistrement de naissance
-event.death.action.declare.form.section.mother.field.passport.label,Label for mother passport number,Passport number,Numéro de passeport
-event.death.action.declare.form.section.mother.field.otherId.label,Label for mother other ID,ID number,Autre numéro d'identifiant
-event.death.action.declare.form.section.mother.field.name.label,Label for mother full name,Mother's full name,Nom complet de la mère
-event.death.action.declare.form.section.mother.field.dob.label,Label for mother date of birth,Date of birth,Date de naissance
-event.death.action.declare.form.section.mother.field.dob.error,Error for mother date of birth,Must be a valid date in the past,Doit être une date valide dans le passé
-event.death.action.declare.form.section.mother.field.dobUnknown.label,Label for mother DOB unknown,Exact date of birth unknown,Date de naissance exacte inconnue
-event.death.action.declare.form.section.mother.field.age.label,Label for mother age,Age,Âge
-event.death.action.declare.form.section.mother.field.placeOfBirth.label,Label for mother place of birth,Place of birth,Lieu de naissance
-event.death.action.declare.form.section.mother.field.occupation.label,Label for mother occupation,Occupation,Profession
-event.death.action.declare.form.section.deceased.field.brn.helperText,Helper text for birth registration number field,"Search for a birth record. If found, details will auto-fill. Otherwise, continue with manual entry.",Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement.
-event.death.action.declare.form.section.spouse.field.idType.option.birthCertificate,Option for spouse ID type birth certificate,Birth certificate,Certificat de naissance
-event.death.action.declare.form.section.spouse.field.idType.option.passport,Option for spouse ID type passport,Passport,Passeport
-event.death.action.declare.form.section.spouse.field.idType.option.other,Option for spouse ID type other,Other,Autre
-event.death.action.declare.form.section.spouse.field.brn.label,Label for spouse birth registration number lookup,Birth registration number,Numéro d'enregistrement de naissance
-event.death.action.declare.form.section.spouse.field.brn.helperText,Helper text for birth registration number field,"Search for a birth record. If found, details will auto-fill. Otherwise, continue with manual entry.",Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement.
-event.death.action.declare.form.section.informant.field.brn.label,Label for informant birth registration number,Birth registration number,Numéro d'enregistrement de naissance
 recordAudit.noPlaceOfMarriage,Label for place of marriage not availale,No place of marriage,Pas de lieu de mariage
 recordAudit.noStatus,Label for status not available,No status,Pas de statut
 recordAudit.noTrackingId,Label for tracking id not available,No tracking ID,Pas d'identifiant de suivi
@@ -2824,21 +2854,6 @@ views.idVerification.banner.verified.title,,ID Verified,Id vérifié
 views.qrReader.button,Button to scan QR code,Scan QR code,Scanner le code QR
 views.qrReader.scannerDialogSupportingCopy,Supporting copy for the scanner dialog,Place the Notifier's ID card in front of the camera.,Placez la carte d'identité du notificateur devant la caméra.
 views.qrReader.tutorial.cameraCleanliness,Camera cleanliness tutorial,Ensure your camera is clean and functional.,Assurez-vous que votre appareil photo est propre et fonctionnel.
-event.birth.action.declare.form.section.introduction.field.guidance.healthNotifier.label,Guidance: Explaining birth notification to parents,Guidance: Explaining birth notification to parents,Conseils pour les notificateurs de santé
-introduction.guidance.healthNotifier.label,,Guidance: Explaining birth notification to parents,
-event.birth.action.declare.form.section.child.field.attendantOther.label,Label for other attendant at birth field,Others (please specify attendant),Veuillez préciser l'accoucheur
-event.birth.action.declare.form.section.child.field.attendantFullName.label,Label for attendant full name field,Attendant full name,Nom complet de l'accoucheur
-event.birth.action.declare.form.section.documents.field.proofOfInformant.label,Label for proof of informant document field,Proof of informant's identity,Preuve d'identité de l'informateur
-event.birth.action.declare.form.section.documents.field.proofOfMarriage.label,Label for proof of marriage document field,Proof of parent's marriage,Preuve du mariage des parents
-form.field.label.docTypeNotificationOfBirth,Label for birth notification document type,Birth notification,Notification de naissance
-form.field.label.docTypeLetterOfConsent,Label for letter of consent document type,Letter of consent,Lettre de consentement
-form.field.label.docTypeMedicalCertificateLetter,Label for medical certificate or letter document type,Medical certificate / letter,Certificat médical / lettre
-form.field.label.docTypeNoticeOfConsentFather,Label for notice of consent from father document type,Notice of consent (father),Avis de consentement (père)
-form.field.label.docTypeNoticeOfConsentMother,Label for notice of consent from mother document type,Notice of consent (mother),Avis de consentement (mère)
-form.field.label.docTypeAffidavit,Label for affidavit document type,Affidavit,Déclaration sous serment
-form.field.label.docTypeLateRegistrationForm,Label for late registration form document type,Late registration form,Formulaire d'enregistrement tardif
-form.field.label.docTypeCourtOrder,Label for court order document type,Court order,Ordonnance du tribunal
-form.field.label.docTypeNativeAdoptionForm,Label for native adoption form document type,Native adoption form,Formulaire d'adoption coutumière
 views.qrReader.tutorial.distance,Distance tutorial,Hold the device steadily 6-12 inches away from the QR code.,Tenez l'appareil régulièrement à 6 à 12 pouces du code QR.
 views.qrReader.tutorial.lightBalance,Light balance tutorial,Ensure the QR code is well-lit and not damaged or blurry.,Assurez-vous que le code QR est bien éclairé et non endommagé ou flou.
 workqueue.late-registration-approval.column.approval-requested,This is the label for the pending approval workqueue column,Approval requested,Approbation demandée
@@ -2876,7 +2891,3 @@ wq.noRecords.readyToPrint,No records messages for ready to print tab,No records 
 wq.noRecords.requiresUpdate,No records messages for require updates tab,No records require updates,Aucun document ne nécessite de mise à jour
 wq.noRecords.sentForApproval,No records messages for sent for approval tab,No records sent for approval,Aucun document envoyé pour approbation
 wq.noRecords.sentForReview,No records messages for sent for review tab,No records sent for review,Aucun document envoyé pour examen
-event.death.action.declare.form.section.deceased.field.dateOfMarriage.error,Label for error message,Cannot be date in the future, Parle voux angles
-event.death.action.declare.form.section.burial.field.date.error,Label for error message,Cannot be date in futute, Parle voux angles
-event.death.action.declare.form.section.mother.field.age.postfix,label for years postfix, years, years
-event.death.action.declare.form.section.father.field.age.postfix,label for years postfix, years, years
