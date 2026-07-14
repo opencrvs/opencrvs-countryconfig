@@ -12,7 +12,8 @@ import { MAX_NAME_LENGTH } from '../../validators'
 const RequesterIdType = {
   PASSPORT: 'PASSPORT',
   BIRTH_CERTIFICATE: 'BIRTH_CERTIFICATE',
-  OTHER: 'OTHER'
+  OTHER: 'OTHER',  NONE: 'NONE',
+
 } as const
 
 const requesterIdTypeMessageDescriptors = {
@@ -30,7 +31,12 @@ const requesterIdTypeMessageDescriptors = {
     defaultMessage: 'Other',
     description: 'Option for form field: Type of ID',
     id: 'form.field.label.iDTypeOther'
-  }
+  },
+    NONE: {
+    defaultMessage: 'None',
+    description: 'Option for form field: Type of ID',
+    id: 'form.field.label.iDTypeNone'
+  },
 } satisfies Record<keyof typeof RequesterIdType, TranslationConfig>
 
 const requesterIdTypeOptions = createSelectOptions(
@@ -79,7 +85,7 @@ export const requesterDetailsFields: FieldConfig[] = [
           label: {
             defaultMessage: 'Given name(s)',
             description: 'Label for form field: First names',
-            id: 'form.field.label.firstNames'
+            id: 'form.field.label.givenNames'
           }
         },
         surname: {
@@ -87,7 +93,7 @@ export const requesterDetailsFields: FieldConfig[] = [
           label: {
             defaultMessage: 'Surname',
             description: 'Label for family name text input',
-            id: 'form.field.label.familyName'
+            id: 'form.field.label.surname'
           }
         }
       }
