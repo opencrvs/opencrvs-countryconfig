@@ -30,7 +30,7 @@ export const env = cleanEnv(process.env, {
   CONFIRM_REGISTRATION_URL: url({
     devDefault: 'http://localhost:5050/confirm/registration'
   }),
-  USER_MGMT_URL: url({ devDefault: 'http://localhost:3030' }),
+  USER_MANAGEMENT_URL: url({ devDefault: 'http://localhost:3030' }),
   QA_ENV: bool({ default: false }),
   ANALYTICS_DATABASE_URL: url({
     devDefault:
