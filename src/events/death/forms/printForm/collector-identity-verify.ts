@@ -10,41 +10,36 @@
  */
 
 import {
-  and,
   ConditionalType,
   field,
   FieldConfig,
   FieldType,
-  not,
   or
 } from '@opencrvs/toolkit/events'
 import { InformantType } from '../pages/informant'
 
+const commonLabel = {
+  defaultMessage: '',
+  description: 'Title for the data section',
+  id: 'event.death.action.certificate.form.section.verifyIdentity.data.label'
+}
+
 export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
+  // SPOUSE informant — verify against spouse section data
   {
     id: 'collector.identity.verify.data.spouse',
     type: FieldType.DATA,
     conditionals: [
       {
         type: ConditionalType.SHOW,
-        conditional: or(
-          field('collector.requesterId').isEqualTo(InformantType.SPOUSE),
-          and(
-            field('collector.requesterId').isEqualTo('INFORMANT'),
-            field('informant.relation').isEqualTo(InformantType.SPOUSE)
-          )
-        )
+        conditional: field('collector.requesterId').isEqualTo(InformantType.SPOUSE)
       }
     ],
-    label: {
-      defaultMessage: '',
-      description: 'Title for the data section',
-      id: 'event.death.action.certificate.form.section.verifyIdentity.data.label'
-    },
+    label: commonLabel,
     configuration: {
       data: [
-        { fieldId: 'spouse.passport' },
         { fieldId: 'spouse.brnText' },
+        { fieldId: 'spouse.passport' },
         { fieldId: 'spouse.otherId' },
         { fieldId: 'spouse.name' },
         { fieldId: 'spouse.dob' },
@@ -52,27 +47,69 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
       ]
     }
   },
+  // FATHER informant — verify against father section data
   {
-    id: 'collector.identity.verify.data.other',
+    id: 'collector.identity.verify.data.father',
     type: FieldType.DATA,
     conditionals: [
       {
         type: ConditionalType.SHOW,
-        conditional: and(
-          field('collector.requesterId').isEqualTo('SOMEONE_ELSE'),
-          not(field('informant.relation').isEqualTo(InformantType.SPOUSE))
+        conditional: field('collector.requesterId').isEqualTo(InformantType.FATHER)
+      }
+    ],
+    label: commonLabel,
+    configuration: {
+      data: [
+        { fieldId: 'father.brnText' },
+        { fieldId: 'father.passport' },
+        { fieldId: 'father.otherId' },
+        { fieldId: 'father.name' },
+        { fieldId: 'father.dob' },
+        { fieldId: 'father.nationality' }
+      ]
+    }
+  },
+  // MOTHER informant — verify against mother section data
+  {
+    id: 'collector.identity.verify.data.mother',
+    type: FieldType.DATA,
+    conditionals: [
+      {
+        type: ConditionalType.SHOW,
+        conditional: field('collector.requesterId').isEqualTo(InformantType.MOTHER)
+      }
+    ],
+    label: commonLabel,
+    configuration: {
+      data: [
+        { fieldId: 'mother.brnText' },
+        { fieldId: 'mother.passport' },
+        { fieldId: 'mother.otherId' },
+        { fieldId: 'mother.name' },
+        { fieldId: 'mother.dob' },
+        { fieldId: 'mother.nationality' }
+      ]
+    }
+  },
+  // SON / DAUGHTER / OTHER informant — verify against informant section data
+  {
+    id: 'collector.identity.verify.data.informant',
+    type: FieldType.DATA,
+    conditionals: [
+      {
+        type: ConditionalType.SHOW,
+        conditional: or(
+          field('collector.requesterId').isEqualTo(InformantType.SON),
+          field('collector.requesterId').isEqualTo(InformantType.DAUGHTER),
+          field('collector.requesterId').isEqualTo(InformantType.OTHER)
         )
       }
     ],
-    label: {
-      defaultMessage: '',
-      description: 'Title for the data section',
-      id: 'event.death.action.certificate.form.section.verifyIdentity.data.label'
-    },
+    label: commonLabel,
     configuration: {
       data: [
-        { fieldId: 'informant.passport' },
         { fieldId: 'informant.brn' },
+        { fieldId: 'informant.passport' },
         { fieldId: 'informant.otherId' },
         { fieldId: 'informant.name' },
         { fieldId: 'informant.dob' },

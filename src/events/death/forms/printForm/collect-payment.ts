@@ -50,7 +50,7 @@ export const collectPayment = [
     {
         id: 'collector.collect.payment.amountCollected',
         type: FieldType.NUMBER,
-        required: true,
+        required: false,
         label: {
             defaultMessage: 'Confirm amount collected',
             description: 'Label for the amount collected field',
@@ -76,7 +76,7 @@ export const collectPayment = [
     {
         id: 'collector.collect.payment.receiptNumber',
         type: FieldType.TEXT,
-        required: true,
+        required: false,
         label: {
             defaultMessage: 'Receipt number',
             description: 'Label for the receipt number field',
@@ -94,7 +94,7 @@ export const collectPayment = [
     {
         id: 'collector.collect.payment.feeWaiverReason',
         type: FieldType.TEXT,
-        required: true,
+        required: false,
         label: {
             defaultMessage: 'Reason for fee waiver / non-collection',
             description:

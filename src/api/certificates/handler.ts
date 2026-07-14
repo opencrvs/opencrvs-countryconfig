@@ -127,10 +127,7 @@ export async function certificateHandler(
         {
           type: 'SHOW',
           // Show only after the standard birth certificate has been printed at least once
-          conditional: event
-            .hasAction(ActionType.PRINT_CERTIFICATE)
-            .withTemplate('v2.birth-certificate')
-            .minCount(1)
+          conditional: never()
         }
       ]
     },
@@ -202,7 +199,7 @@ export async function certificateHandler(
       conditionals: [
         {
           type: 'SHOW',
-          conditional: status('DECLARED')
+          conditional: never()
         }
       ]
     },
@@ -244,7 +241,7 @@ export async function certificateHandler(
         {
           type: 'SHOW',
           // Show only if original certificate was printed
-          conditional: event.hasAction(ActionType.PRINT_CERTIFICATE).minCount(1)
+          conditional: never()
         }
       ]
     },
@@ -264,7 +261,7 @@ export async function certificateHandler(
         delayed: 18
       },
       svgUrl: '/api/countryconfig/certificates/v2.death-certificate.svg',
-      fonts: notoSansFont
+      fonts: notoSansFont,
     },
     {
       id: 'v2.death-certified-certificate',
@@ -283,7 +280,14 @@ export async function certificateHandler(
       },
       svgUrl:
         '/api/countryconfig/certificates/v2.death-certificate-certified-copy.svg',
-      fonts: libreBaskervilleFont
+      fonts: libreBaskervilleFont,
+      conditionals: [
+        {
+          type: 'SHOW',
+          // Show only if original certificate was printed
+          conditional: never()
+        }
+      ]
     },
     {
       id: 'v2.death-summary',
@@ -301,7 +305,13 @@ export async function certificateHandler(
         delayed: 0
       },
       svgUrl: '/api/countryconfig/certificates/v2.death-summary.svg',
-      fonts: notoSansFont
+      fonts: notoSansFont,
+      conditionals: [
+        {
+          type: 'SHOW',
+          conditional: never()
+        }
+      ]
     },
     {
       id: 'marriage-certificate',

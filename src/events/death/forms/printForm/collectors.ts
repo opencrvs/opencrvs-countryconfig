@@ -9,17 +9,33 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { FieldConfig, FieldType } from '@opencrvs/toolkit/events'
+import { ConditionalType, field, FieldConfig, FieldType } from '@opencrvs/toolkit/events'
 import { CollectorType } from './collector-other'
+import { InformantType, InformantTypeKey } from '../pages/informant'
 
-const informantOption = {
-  label: {
-    id: 'event.death.action.certificate.form.section.requester.informant.label',
-    defaultMessage:
-      'Print and issue to informant ({informant.name.firstname} {informant.name.surname})',
-    description: 'This is the label for the field'
-  },
-  value: 'INFORMANT'
+const deathInformantLabels: Record<InformantTypeKey, string> = {
+  SPOUSE: 'Spouse',
+  SON: 'Son',
+  DAUGHTER: 'Daughter',
+  FATHER: 'Father',
+  MOTHER: 'Mother',
+  OTHER: 'Other'
+}
+
+const getInformantOption = (informantType: InformantTypeKey) => {
+  const defaultMessage =
+    informantType === InformantType.OTHER
+      ? 'Print and issue to Informant'
+      : `Print and issue to Informant (${deathInformantLabels[informantType]})`
+
+  return {
+    label: {
+      id: `event.death.action.certificate.form.section.requester.informant.${informantType.toLowerCase()}.label`,
+      defaultMessage,
+      description: 'This is the label for the field'
+    },
+    value: InformantType[informantType]
+  }
 }
 
 const otherOption = {
@@ -44,9 +60,18 @@ const commonConfigs = {
   label: requesterLabel
 }
 
-export const printCertificateCollectors: FieldConfig[] = [
-  {
-    ...commonConfigs,
-    options: [informantOption, otherOption]
-  }
-]
+// One SELECT per informant type — shown conditionally based on the declared informant relation.
+// This ensures the label always shows the correct static relation name (e.g. "Informant (Spouse)")
+// rather than trying to interpolate name fields which are not resolved in option labels.
+export const printCertificateCollectors: FieldConfig[] = (
+  Object.keys(InformantType) as InformantTypeKey[]
+).map((informantType) => ({
+  ...commonConfigs,
+  conditionals: [
+    {
+      type: ConditionalType.SHOW,
+      conditional: field('informant.relation').isEqualTo(InformantType[informantType])
+    }
+  ],
+  options: [getInformantOption(informantType), otherOption]
+}))
