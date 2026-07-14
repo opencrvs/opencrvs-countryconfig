@@ -146,7 +146,7 @@ buttons.sendIncomplete,Title for Incomplete submit button,Send for review,Envoye
 buttons.settings,Menu item settings,Settings,Paramètres
 buttons.start,Label of start button,Start,Démarrer
 buttons.status,Label of status button,Status,Statut
-buttons.submitCorrectionRequest,Submit correction request button text,Submit correction request,Soumettre une demande de correction
+buttons.submitCorrectionRequest,Correct record,Correct record,Soumettre une demande de correction
 buttons.unassign,Unassign button label,Unassign,Désaffecter
 buttons.update,The title of update button for draft declaration,Update,Mise à jour
 buttons.upload,Upload buttton,Upload,Télécharger
@@ -439,8 +439,8 @@ correction.correctRecordDialog.description,The description for the dialog when r
 correction.correctRecordDialog.title,The title for the dialog when record correction sent by a registrar,Correct record?,enregistrement correct?
 correction.correctionForApprovalDialog.actions.cancel,The cancel button for the dialog when record correction sent by registration agent for approval,Cancel,Annuler
 correction.correctionForApprovalDialog.actions.send,The send button for the dialog when record correction sent by registration agent for approval,Confirm,Confirmer
-correction.correctionForApprovalDialog.description,The description for the dialog when record correction sent by registration agent for approval,This will initiate a formal correction request for the selected record. Supporting documentation may be required.,Cela initiera une demande officielle de correction pour l'enregistrement sélectionné. Des documents justificatifs peuvent être exigés.
-correction.correctionForApprovalDialog.title,The title for the dialog when record correction sent by registration agent for approval,Request record correction?,Demander une correction de l'enregistrement ?
+correction.correctionForApprovalDialog.description,The description for the dialog when record correction sent by registration agent for approval,"The informant will be notified of this correction and a record of this decision will be recorded.",Cela initiera une demande officielle de correction pour l'enregistrement sélectionné. Des documents justificatifs peuvent être exigés.
+correction.correctionForApprovalDialog.title,The title for the dialog when record correction sent by registration agent for approval,Correct record?,Demander une correction de l'enregistrement ?
 correction.correctionReject.description,The description for reject correction modal,Rejecting this correction request will leave the original record unchanged. A reason for rejection should be provided.,Le rejet de cette demande de correction laissera le registre officiel inchangé. Un motif de rejet doit être fourni.
 correction.correctionReject.reason,Correction request rejection reason,Reason for rejection,Motif du rejet
 correction.correctionRequest,Correction request text,Correction request,Demande de correction
