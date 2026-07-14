@@ -26,7 +26,7 @@ const getInformantOption = (informantType: InformantTypeKey) => {
   const defaultMessage =
     informantType === InformantType.OTHER
       ? 'Print and issue to Informant'
-      : `Print and issue to Informant (${deathInformantLabels[informantType]})`
+      : `Print and issue to Informant`
 
   return {
     label: {
@@ -60,18 +60,22 @@ const commonConfigs = {
   label: requesterLabel
 }
 
-// One SELECT per informant type — shown conditionally based on the declared informant relation.
-// This ensures the label always shows the correct static relation name (e.g. "Informant (Spouse)")
-// rather than trying to interpolate name fields which are not resolved in option labels.
-export const printCertificateCollectors: FieldConfig[] = (
-  Object.keys(InformantType) as InformantTypeKey[]
-).map((informantType) => ({
-  ...commonConfigs,
-  conditionals: [
-    {
-      type: ConditionalType.SHOW,
-      conditional: field('informant.relation').isEqualTo(InformantType[informantType])
-    }
-  ],
-  options: [getInformantOption(informantType), otherOption]
-}))
+// Single SELECT with per-option conditionals — each informant option is shown only when
+// informant.relation matches. Avoids duplicate field IDs across multiple FieldConfig entries.
+export const printCertificateCollectors: FieldConfig[] = [
+  {
+    ...commonConfigs,
+    options: [
+      ...(Object.keys(InformantType) as InformantTypeKey[]).map((informantType) => ({
+        ...getInformantOption(informantType),
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: field('informant.relation').isEqualTo(InformantType[informantType])
+          }
+        ]
+      })),
+      otherOption
+    ]
+  }
+]
