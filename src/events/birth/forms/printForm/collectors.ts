@@ -149,9 +149,9 @@ const otherOption = {
 }
 
 const requesterLabel = {
-  defaultMessage: 'Requester',
+  defaultMessage: 'Collector',
   description: 'This is the label for the field',
-  id: 'event.birth.action.certificate.form.section.requester.label'
+  id: 'event.birth.custom.action.approve.field.collector.label'
 }
 
 const commonConfigs = {
@@ -164,40 +164,6 @@ const commonConfigs = {
 export const printCertificateCollectors: FieldConfig[] = [
   {
     ...commonConfigs,
-    conditionals: [onlyMotherExist(InformantType.MOTHER)],
-    options: [
-      getInformantOption(InformantType.MOTHER),
-      otherOption
-    ]
-  },
-  {
-    ...commonConfigs,
-    conditionals: [fatherMotherBothExist(InformantType.MOTHER)],
-    options: [
-      getInformantOption(InformantType.MOTHER),
-      fatherOption,
-      otherOption
-    ]
-  },
-  {
-    ...commonConfigs,
-    conditionals: [onlyFatherExist(InformantType.FATHER)],
-    options: [
-      getInformantOption(InformantType.FATHER),
-      otherOption
-    ]
-  },
-  {
-    ...commonConfigs,
-    conditionals: [fatherMotherBothExist(InformantType.FATHER)],
-    options: [
-      getInformantOption(InformantType.FATHER),
-      motherOption,
-      otherOption
-    ]
-  },
-  ...getFieldConfigForInformant(InformantType.OTHER),
-  ...getFieldConfigForInformant(InformantType.GRANDFATHER),
-  ...getFieldConfigForInformant(InformantType.GRANDMOTHER),
-  ...getFieldConfigForInformant(InformantType.LEGAL_GUARDIAN)
+    options: [motherOption, fatherOption, otherOption]
+  }
 ]

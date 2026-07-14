@@ -23,16 +23,90 @@ import {
 
 const otherIdType = {
   PASSPORT: 'PASSPORT',
-  DRIVING_LICENSE: 'DRIVING_LICENSE',
-  REFUGEE_NUMBER: 'REFUGEE_NUMBER',
-  ALIEN_NUMBER: 'ALIEN_NUMBER',
+  BIRTH_CERTIFICATE: 'BIRTH_CERTIFICATE',
   OTHER: 'OTHER',
   NO_ID: 'NO_ID',
-  NATIONAL_ID: 'NATIONAL_ID',
-  BIRTH_REGISTRATION_NUMBER: 'BIRTH_REGISTRATION_NUMBER'
 } as const
 
 export const printCertificateCollectorOther: FieldConfig[] = [
+  {
+    id: 'collector.OTHER.relationshipToChild',
+    type: FieldType.TEXT,
+    required: true,
+    label: {
+      defaultMessage: 'Relationship to child',
+      description: 'This is the label for the relationship to child field',
+      id: 'event.birth.action.form.section.relationshipToChild.label'
+    },
+    conditionals: [
+      {
+        type: ConditionalType.SHOW,
+        conditional: field('collector.requesterId').isEqualTo('SOMEONE_ELSE')
+      }
+    ]
+  },
+  {
+    id: 'collector.OTHER.name',
+    type: FieldType.NAME,
+    required: true,
+    configuration: tuvaluNameConfig,
+    hideLabel: true,
+    label: {
+      defaultMessage: "Collector's name",
+      description: 'This is the label for the name field of OTHER collector',
+      id: 'event.birth.action.form.section.collector.other.field.name.label'
+    },
+    conditionals: [
+      {
+        type: ConditionalType.SHOW,
+        conditional: field('collector.requesterId').isEqualTo('SOMEONE_ELSE')
+      }
+    ],
+    validation: [invalidNameValidator('collector.OTHER.name')]
+  },
+  {
+    id: 'collector.OTHER.dob',
+    type: FieldType.DATE,
+    required: true,
+    validation: [
+      {
+        message: {
+          defaultMessage: 'Date cannot be in the future',
+          description: 'This is the error message for invalid date',
+          id: 'validations.noFutureDate'
+        },
+        validator: field('collector.OTHER.dob').isBefore().now()
+      }
+    ],
+    label: {
+      defaultMessage: 'Date of birth',
+      description: 'This is the label for the field',
+      id: 'verifyCertificate.dateOfBirth'
+    },
+    conditionals: [
+      {
+        type: ConditionalType.SHOW,
+        conditional: field('collector.requesterId').isEqualTo('SOMEONE_ELSE')
+      }
+    ]
+  },
+  {
+    id: 'collector.OTHER.nationality',
+    type: FieldType.COUNTRY,
+    required: true,
+    label: {
+      defaultMessage: 'Nationality',
+      description: 'This is the label for the field',
+      id: 'form.field.label.nationality'
+    },
+    conditionals: [
+      {
+        type: ConditionalType.SHOW,
+        conditional: field('collector.requesterId').isEqualTo('SOMEONE_ELSE')
+      }
+    ],
+    defaultValue: 'COK'
+  },
   {
     id: 'collector.OTHER.idType',
     type: FieldType.SELECT,
@@ -57,46 +131,15 @@ export const printCertificateCollectorOther: FieldConfig[] = [
         },
         value: otherIdType.PASSPORT
       },
+
       {
         label: {
-          id: 'event.birth.action.form.section.idType.nid.label',
-          defaultMessage: 'National ID',
-          description: 'Option for selecting National ID as the ID type'
-        },
-        value: otherIdType.NATIONAL_ID
-      },
-      {
-        label: {
-          id: 'event.birth.action.form.section.idType.drivingLicense.label',
-          defaultMessage: 'Drivers License',
-          description: 'Option for selecting Driving License as the ID type'
-        },
-        value: otherIdType.DRIVING_LICENSE
-      },
-      {
-        label: {
-          id: 'event.birth.action.form.section.idType.brn.label',
-          defaultMessage: 'Birth Registration Number',
+          id: 'form.field.label.iDTypeBirthCertificate',
+          defaultMessage: 'Birth certificate',
           description:
-            'Option for selecting Birth Registration Number as the ID type'
+            'Option for selecting Birth Certificate as the ID type'
         },
-        value: otherIdType.BIRTH_REGISTRATION_NUMBER
-      },
-      {
-        label: {
-          id: 'event.birth.action.form.section.idType.refugeeNumber.label',
-          defaultMessage: 'Refugee Number',
-          description: 'Option for selecting Refugee Number as the ID type'
-        },
-        value: otherIdType.REFUGEE_NUMBER
-      },
-      {
-        label: {
-          id: 'event.birth.action.form.section.idType.alienNumber.label',
-          defaultMessage: 'Alien Number',
-          description: 'Option for selecting Alien Number as the ID type'
-        },
-        value: otherIdType.ALIEN_NUMBER
+        value: otherIdType.BIRTH_CERTIFICATE
       },
       {
         label: {
@@ -109,7 +152,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
       {
         label: {
           id: 'event.birth.action.form.section.idType.noId.label',
-          defaultMessage: 'No ID available',
+          defaultMessage: 'None',
           description: 'Option for selecting No ID as the ID type'
         },
         value: otherIdType.NO_ID
@@ -121,9 +164,9 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     type: FieldType.TEXT,
     required: true,
     label: {
-      defaultMessage: 'Passport',
-      description: 'Field for entering Passport details',
-      id: 'event.birth.action.form.section.passportDetails.label'
+      defaultMessage: 'ID Number',
+      description: 'Field for entering ID Number',
+      id: 'event.birth.action.form.section.idNumber.label'
     },
     conditionals: [
       {
@@ -136,118 +179,20 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     ]
   },
   {
-    id: 'collector.nid',
-    type: FieldType.TEXT,
-    required: true,
-    label: {
-      defaultMessage: 'National ID',
-      description: 'Field for entering ID Number',
-      id: 'event.birth.action.form.section.nid.label'
-    },
-    conditionals: [
-      {
-        type: ConditionalType.SHOW,
-        conditional: and(
-          field('collector.requesterId').isEqualTo('SOMEONE_ELSE'),
-          field('collector.OTHER.idType').isEqualTo(otherIdType.NATIONAL_ID)
-        )
-      }
-    ],
-    validation: [nationalIdValidator('collector.nid')]
-  },
-  {
-    id: 'collector.DRIVING-LICENCE.details',
-    type: FieldType.TEXT,
-    required: true,
-    label: {
-      defaultMessage: 'Drivers License',
-      description: 'Field for entering Driving License details',
-      id: 'event.birth.action.form.section.drivingLicenseDetails.label'
-    },
-    conditionals: [
-      {
-        type: ConditionalType.SHOW,
-        conditional: and(
-          field('collector.requesterId').isEqualTo('SOMEONE_ELSE'),
-          field('collector.OTHER.idType').isEqualTo(otherIdType.DRIVING_LICENSE)
-        )
-      }
-    ]
-  },
-  {
     id: 'collector.brn',
     type: FieldType.TEXT,
     required: true,
     label: {
-      defaultMessage: 'Birth Registration Number',
-      description: 'Field for entering Birth Registration Number',
-      id: 'event.birth.action.form.section.brn.label'
+      defaultMessage: 'ID Number',
+      description: 'Field for entering ID Number',
+      id: 'event.birth.action.form.section.idNumber.label'
     },
     conditionals: [
       {
         type: ConditionalType.SHOW,
         conditional: and(
           field('collector.requesterId').isEqualTo('SOMEONE_ELSE'),
-          field('collector.OTHER.idType').isEqualTo(
-            otherIdType.BIRTH_REGISTRATION_NUMBER
-          )
-        )
-      }
-    ]
-  },
-  {
-    id: 'collector.REFUGEE-NUMBER.details',
-    type: FieldType.TEXT,
-    required: true,
-    label: {
-      defaultMessage: 'Refugee Number',
-      description: 'Field for entering Refugee Number details',
-      id: 'event.birth.action.form.section.refugeeNumberDetails.label'
-    },
-    conditionals: [
-      {
-        type: ConditionalType.SHOW,
-        conditional: and(
-          field('collector.requesterId').isEqualTo('SOMEONE_ELSE'),
-          field('collector.OTHER.idType').isEqualTo(otherIdType.REFUGEE_NUMBER)
-        )
-      }
-    ]
-  },
-  {
-    id: 'collector.ALIEN-NUMBER.details',
-    type: FieldType.TEXT,
-    required: true,
-    label: {
-      defaultMessage: 'Alien Number',
-      description: 'Field for entering Alien Number details',
-      id: 'event.birth.action.form.section.alienNumberDetails.label'
-    },
-    conditionals: [
-      {
-        type: ConditionalType.SHOW,
-        conditional: and(
-          field('collector.requesterId').isEqualTo('SOMEONE_ELSE'),
-          field('collector.OTHER.idType').isEqualTo(otherIdType.ALIEN_NUMBER)
-        )
-      }
-    ]
-  },
-  {
-    id: 'collector.OTHER.idTypeOther',
-    type: FieldType.TEXT,
-    required: true,
-    label: {
-      defaultMessage: 'Other type of ID',
-      description: 'Field for entering ID type if "Other" is selected',
-      id: 'event.birth.action.form.section.idTypeOther.label'
-    },
-    conditionals: [
-      {
-        type: ConditionalType.SHOW,
-        conditional: and(
-          field('collector.requesterId').isEqualTo('SOMEONE_ELSE'),
-          field('collector.OTHER.idType').isEqualTo(otherIdType.OTHER)
+          field('collector.OTHER.idType').isEqualTo(otherIdType.BIRTH_CERTIFICATE)
         )
       }
     ]
@@ -258,8 +203,8 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     required: true,
     label: {
       defaultMessage: 'ID Number',
-      description: 'Field for entering ID Number if "Other" is selected',
-      id: 'event.birth.action.form.section.idNumberOther.label'
+      description: 'Field for entering ID Number',
+      id: 'event.birth.action.form.section.idNumber.label'
     },
     conditionals: [
       {
@@ -268,66 +213,6 @@ export const printCertificateCollectorOther: FieldConfig[] = [
           field('collector.requesterId').isEqualTo('SOMEONE_ELSE'),
           field('collector.OTHER.idType').isEqualTo(otherIdType.OTHER)
         )
-      }
-    ]
-  },
-  {
-    id: 'collector.OTHER.name',
-    type: FieldType.NAME,
-    required: true,
-    configuration: tuvaluNameConfig,
-    hideLabel: true,
-    label: {
-      defaultMessage: "Collector's name",
-      description: 'This is the label for the name field of OTHER collector',
-      id: 'event.birth.action.form.section.collector.other.field.name.label'
-    },
-    conditionals: [
-      {
-        type: ConditionalType.SHOW,
-        conditional: field('collector.requesterId').isEqualTo('SOMEONE_ELSE')
-      }
-    ],
-    validation: [invalidNameValidator('collector.OTHER.name')]
-  },
-  {
-    id: 'collector.OTHER.relationshipToChild',
-    type: FieldType.TEXT,
-    required: true,
-    label: {
-      defaultMessage: 'Relationship to child',
-      description: 'This is the label for the relationship to child field',
-      id: 'event.birth.action.form.section.relationshipToChild.label'
-    },
-    conditionals: [
-      {
-        type: ConditionalType.SHOW,
-        conditional: field('collector.requesterId').isEqualTo('SOMEONE_ELSE')
-      }
-    ]
-  },
-  {
-    id: 'collector.OTHER.signedAffidavit',
-    type: FieldType.FILE,
-    required: false,
-    label: {
-      defaultMessage: 'Signed Affidavit (Optional)',
-      description: 'This is the label for uploading a signed affidavit',
-      id: 'event.birth.action.form.section.signedAffidavit.label'
-    },
-    configuration: {
-      maxFileSize: 5 * 1024 * 1024, // 5 MB
-      acceptedFileTypes: ['image/png', 'image/jpg', 'image/jpeg'],
-      fileName: {
-        defaultMessage: 'Signed Affidavit',
-        description: 'This is the label for the file name',
-        id: 'event.birth.action.form.section.signedAffidavit.fileName'
-      }
-    },
-    conditionals: [
-      {
-        type: ConditionalType.SHOW,
-        conditional: field('collector.requesterId').isEqualTo('SOMEONE_ELSE')
       }
     ]
   }

@@ -43,12 +43,11 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
     },
     configuration: {
       data: [
-        { fieldId: 'spouse.idType' },
         { fieldId: 'spouse.passport' },
-        { fieldId: 'spouse.brn' },
+        { fieldId: 'spouse.brnText' },
+        { fieldId: 'spouse.otherId' },
         { fieldId: 'spouse.name' },
         { fieldId: 'spouse.dob' },
-        { fieldId: 'spouse.age' },
         { fieldId: 'spouse.nationality' }
       ]
     }
@@ -60,7 +59,7 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
       {
         type: ConditionalType.SHOW,
         conditional: and(
-          field('collector.requesterId').isEqualTo('INFORMANT'),
+          field('collector.requesterId').isEqualTo('SOMEONE_ELSE'),
           not(field('informant.relation').isEqualTo(InformantType.SPOUSE))
         )
       }
@@ -72,13 +71,11 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
     },
     configuration: {
       data: [
-        { fieldId: 'informant.relation' },
-        { fieldId: 'informant.idType' },
         { fieldId: 'informant.passport' },
         { fieldId: 'informant.brn' },
+        { fieldId: 'informant.otherId' },
         { fieldId: 'informant.name' },
         { fieldId: 'informant.dob' },
-        { fieldId: 'informant.age' },
         { fieldId: 'informant.nationality' }
       ]
     }

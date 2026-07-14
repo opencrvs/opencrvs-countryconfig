@@ -1,14 +1,14 @@
 import {
   and,
-  ConditionalType,
   defineActionForm,
   field,
-  FieldType,
   not,
   PageTypes
 } from '@opencrvs/toolkit/events'
-import { correctionFormRequesters } from './requester'
+import { correctionRequestFields } from './correction-request'
+import { requesterDetailsFields } from './requester-details'
 import { deathcorrectionRequesterIdentityVerify } from './requester-identity-verify'
+import { supportingDocumentsFields } from './supporting-documents'
 
 export const DEATH_CORRECTION_FORM = defineActionForm({
   label: {
@@ -18,117 +18,41 @@ export const DEATH_CORRECTION_FORM = defineActionForm({
   },
   pages: [
     {
-      id: 'details',
+      id: 'correctionRequest',
       type: PageTypes.enum.FORM,
       requireCompletionToContinue: true,
       title: {
-        id: 'event.death.action.correction.form.section.details.title',
-        defaultMessage: 'Correction details',
+        id: 'event.death.action.correction.form.section.correctionRequest.title',
+        defaultMessage: 'Correction request',
         description: 'This is the title of the section'
       },
-      fields: [
-        ...correctionFormRequesters,
-        {
-          id: 'details.divider',
-          type: FieldType.DIVIDER,
-          label: {
-            id: 'event.death.action.correction.form.section.details.divider.label',
-            defaultMessage: '',
-            description: 'This is the title of the section'
-          },
-          conditionals: [
-            {
-              type: ConditionalType.SHOW,
-              conditional: field('requester.type').isEqualTo('SOMEONE_ELSE')
-            }
-          ]
-        },
-        {
-          id: 'reason.option',
-          type: FieldType.SELECT,
-          required: true,
-          label: {
-            id: 'event.death.action.correction.form.section.reason.title',
-            defaultMessage: 'Reason for correction',
-            description: 'This is the title of the section'
-          },
-          options: [
-            {
-              value: 'CLERICAL_ERROR',
-              label: {
-                defaultMessage:
-                  'Myself or an agent made a mistake (Clerical error)',
-                description: 'Label for the clerical error option',
-                id: 'event.death.action.correction.reason.option.clericalError.label'
-              }
-            },
-            {
-              value: 'MATERIAL_ERROR',
-              label: {
-                defaultMessage:
-                  'Informant provided incorrect information (Material error)',
-                description: 'Label for the material error option',
-                id: 'event.death.action.correction.reason.option.materialError.label'
-              }
-            },
-            {
-              value: 'MATERIAL_OMISSION',
-              label: {
-                defaultMessage:
-                  'Informant did not provide this information (Material omission)',
-                description: 'Label for the material omission option',
-                id: 'event.death.action.correction.reason.option.materialOmission.label'
-              }
-            },
-            {
-              value: 'JUDICIAL_ORDER',
-              label: {
-                defaultMessage:
-                  'Requested to do so by the court (Judicial order)',
-                description: 'Label for the judicial order option',
-                id: 'event.death.action.correction.reason.option.judicialOrder.label'
-              }
-            },
-            {
-              value: 'OTHER',
-              label: {
-                defaultMessage: 'Other (please specify)',
-                description: 'Label for the other option',
-                id: 'event.death.action.correction.reason.option.other.label'
-              }
-            }
-          ]
-        },
-        {
-          id: 'reason.other',
-          type: FieldType.TEXT,
-          required: true,
-          label: {
-            defaultMessage: 'Specify reason',
-            description: 'Label for the reason',
-            id: 'event.death.action.correction.reason.other.label'
-          },
-          conditionals: [
-            {
-              type: ConditionalType.SHOW,
-              conditional: field('reason.option').isEqualTo('OTHER')
-            }
-          ]
-        }
-      ]
+      fields: correctionRequestFields
     },
     {
-      id: 'requester.identity.verify',
+      id: 'requesterDetails',
+      type: PageTypes.enum.FORM,
+      requireCompletionToContinue: true,
+      title: {
+        id: 'event.death.action.correction.form.section.requesterDetails.title',
+        defaultMessage: "Requester's details",
+        description: 'This is the title of the section'
+      },
+      conditional: field('requester.type').isEqualTo('SOMEONE_ELSE'),
+      fields: requesterDetailsFields
+    },
+    {
+      id: 'verifyIdentity',
       type: PageTypes.enum.VERIFICATION,
       requireCompletionToContinue: true,
       title: {
-        id: 'event.death.action.correction.form.section.requester.identity.verify.title',
-        defaultMessage: 'Verify ID',
+        id: 'event.death.action.correction.form.section.verifyIdentity.title',
+        defaultMessage: 'Verify their identity',
         description: 'This is the title of the section'
       },
       conditional: and(
         not(field('requester.type').isEqualTo('ANOTHER_AGENT')),
-        not(field('requester.type').isEqualTo('ME'))
+        not(field('requester.type').isEqualTo('COURT')),
+        not(field('requester.type').isEqualTo('SOMEONE_ELSE'))
       ),
       fields: deathcorrectionRequesterIdentityVerify,
       actions: {
@@ -165,89 +89,15 @@ export const DEATH_CORRECTION_FORM = defineActionForm({
       }
     },
     {
-      id: 'documents',
+      id: 'supportingDocuments',
       type: PageTypes.enum.FORM,
       requireCompletionToContinue: true,
       title: {
-        id: 'event.death.action.correction.form.section.supporting-documents.title',
-        defaultMessage: 'Upload supporting documents',
+        id: 'event.death.action.correction.form.section.supportingDocuments.title',
+        defaultMessage: 'Supporting documents',
         description: 'This is the title of the section'
       },
-      fields: [
-        {
-          id: 'documents.supportingDocs',
-          type: FieldType.FILE_WITH_OPTIONS,
-          label: {
-            defaultMessage: 'Supporting documents',
-            description: 'Label for the supporting documents field',
-            id: 'event.death.action.correction.documents.supportingDocs.label'
-          },
-          options: [
-            {
-              value: 'STATUTORY_DECLARATION',
-              label: {
-                defaultMessage: 'Statutory Declaration',
-                description: 'Label for the statutory declaration option',
-                id: 'event.death.action.correction.documents.supportingDocs.statutoryDeclaration.label'
-              }
-            },
-            {
-              value: 'COURT_ORDER',
-              label: {
-                defaultMessage: 'Court Order',
-                description: 'Label for the court order option',
-                id: 'event.death.action.correction.documents.supportingDocs.courtOrder.label'
-              }
-            },
-            {
-              value: 'AUTHORITY_LETTER',
-              label: {
-                defaultMessage: 'Registrar General / Registration Officer authorization',
-                description: 'Label for the authority letter option',
-                id: 'event.death.action.correction.documents.supportingDocs.authorityLetter.label'
-              }
-            },
-            {
-              value: 'OTHER',
-              label: {
-                defaultMessage: 'Other',
-                description: 'Label for the other option',
-                id: 'event.death.action.correction.documents.supportingDocs.other.label'
-              }
-            }
-          ]
-        }
-      ]
+      fields: supportingDocumentsFields
     },
-    {
-      id: 'fees',
-      type: PageTypes.enum.FORM,
-      requireCompletionToContinue: true,
-      title: {
-        id: 'event.death.action.correction.form.section.fees.title',
-        defaultMessage: 'Collect fees',
-        description: 'This is the title of the section'
-      },
-      fields: [
-        {
-          id: 'fees.amount',
-          type: FieldType.NUMBER,
-          required: true,
-          label: {
-            defaultMessage: 'Fee total',
-            description: 'Label for the amount field',
-            id: 'event.death.action.correction.fees.amount.label'
-          },
-          configuration: {
-            min: 0,
-            prefix: {
-              defaultMessage: '$',
-              description: 'Prefix for the amount field',
-              id: 'event.death.action.correction.fees.amount.prefix'
-            }
-          }
-        }
-      ]
-    }
   ]
 })

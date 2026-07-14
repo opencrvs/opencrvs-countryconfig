@@ -37,7 +37,19 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
         defaultMessage: 'Certify record',
         description: 'This is the title of the section'
       },
-      fields: [...printCertificateCollectors, ...printCertificateCollectorOther]
+      fields: [...printCertificateCollectors]
+    },
+    {
+      id: 'CollectorDetails',
+      type: PageTypes.enum.FORM,
+      requireCompletionToContinue: true,
+      title: {
+        id: 'event.birth.action.certificate.form.section.collector.details.title',
+        defaultMessage: 'Collector details',
+        description: 'This is the title of the section'
+      },
+      fields: [...printCertificateCollectorOther],
+      conditional: field('collector.requesterId').isEqualTo('SOMEONE_ELSE')
     },
     {
       id: 'collector.identity.verify',
@@ -131,13 +143,13 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
           }
         },
         {
-          id: 'collector.collect.payment.feeWaived',
+          id: 'collector.collect.payment.lateRegistrationFee',
           type: FieldType.CHECKBOX,
           defaultValue: false,
           label: {
-            defaultMessage: 'Payment fee is waived / not collected',
-            description: 'Label for the fee waived checkbox',
-            id: 'event.birth.action.certificate.form.section.collectPayment.feeWaived.label'
+            defaultMessage: 'Late registration fee is waived / not collected',
+            description: 'Label for the Late registration fee checkbox',
+            id: 'event.birth.action.certificate.form.section.collectPayment.lateRegistrationFee.label'
           }
         },
         {
@@ -161,11 +173,12 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
             {
               type: ConditionalType.SHOW,
               conditional: not(
-                field('collector.collect.payment.feeWaived').isEqualTo(true)
+                field('collector.collect.payment.lateRegistrationFee').isEqualTo(true)
               )
             }
           ]
         },
+
         {
           id: 'collector.collect.payment.receiptNumber',
           type: FieldType.TEXT,
@@ -179,12 +192,29 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
             {
               type: ConditionalType.SHOW,
               conditional: not(
-                field('collector.collect.payment.feeWaived').isEqualTo(true)
+                field('collector.collect.payment.lateRegistrationFee').isEqualTo(true)
               )
             }
           ]
         }
-      ]
-    }
+        ,
+        {
+          id: 'collector.collect.payment.feeWaiverReason',
+          type: FieldType.TEXT,
+          required: false,
+          label: {
+            defaultMessage: 'Reason for fee waiver / non-collection',
+            description: 'Label for the reason for fee waiver / non-collection field',
+            id: 'event.birth.action.certificate.form.section.collectPayment.feeWaiverReason.label'
+          },
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: field('collector.collect.payment.lateRegistrationFee').isEqualTo(true)
+            }
+          ]
+        }
+  ]
+}
   ]
 })

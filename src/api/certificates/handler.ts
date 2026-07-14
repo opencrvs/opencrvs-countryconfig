@@ -44,11 +44,11 @@ export interface ICertificateConfigData {
   svgUrl: string
   fonts?: Record<string, FontFamilyTypes>
   conditionals?:
-    | {
-        type: 'SHOW'
-        conditional: JSONSchema
-      }[]
-    | undefined
+  | {
+    type: 'SHOW'
+    conditional: JSONSchema
+  }[]
+  | undefined
 }
 
 const notoSansFont: Record<string, FontFamilyTypes> = {
@@ -198,7 +198,13 @@ export async function certificateHandler(
         delayed: 0
       },
       svgUrl: '/api/countryconfig/certificates/v2.birth-summary.svg',
-      fonts: notoSansFont
+      fonts: notoSansFont,
+      conditionals: [
+        {
+          type: 'SHOW',
+          conditional: status('DECLARED')
+        }
+      ]
     },
     {
       id: 'death-certificate',

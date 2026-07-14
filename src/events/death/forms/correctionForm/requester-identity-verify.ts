@@ -42,12 +42,10 @@ export const deathcorrectionRequesterIdentityVerify: FieldConfig[] = [
     },
     configuration: {
       data: [
-        { fieldId: 'spouse.idType' },
         { fieldId: 'spouse.passport' },
         { fieldId: 'spouse.brn' },
         { fieldId: 'spouse.name' },
         { fieldId: 'spouse.dob' },
-        { fieldId: 'spouse.age' },
         { fieldId: 'spouse.nationality' }
       ]
     }
@@ -71,12 +69,10 @@ export const deathcorrectionRequesterIdentityVerify: FieldConfig[] = [
     },
     configuration: {
       data: [
-        { fieldId: 'mother.idType' },
         { fieldId: 'mother.passport' },
         { fieldId: 'mother.brn' },
         { fieldId: 'mother.name' },
         { fieldId: 'mother.dob' },
-        { fieldId: 'mother.age' },
         { fieldId: 'mother.nationality' }
       ]
     }
@@ -100,12 +96,10 @@ export const deathcorrectionRequesterIdentityVerify: FieldConfig[] = [
     },
     configuration: {
       data: [
-        { fieldId: 'father.idType' },
         { fieldId: 'father.passport' },
         { fieldId: 'father.brn' },
         { fieldId: 'father.name' },
         { fieldId: 'father.dob' },
-        { fieldId: 'father.age' },
         { fieldId: 'father.nationality' }
       ]
     }
@@ -131,7 +125,6 @@ export const deathcorrectionRequesterIdentityVerify: FieldConfig[] = [
     },
     configuration: {
       data: [
-        { fieldId: 'informant.idType' },
         { fieldId: 'informant.passport' },
         { fieldId: 'informant.brn' },
         { fieldId: 'informant.name' },

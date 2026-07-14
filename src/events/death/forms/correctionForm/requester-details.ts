@@ -1,13 +1,3 @@
-/*
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at https://mozilla.org/MPL/2.0/.
- *
- * OpenCRVS is also distributed under the terms of the Civil Registration
- * & Healthcare Disclaimer located at http://opencrvs.org/license.
- *
- * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
- */
 import {
   and,
   ConditionalType,
@@ -17,63 +7,54 @@ import {
 } from '@opencrvs/toolkit/events'
 import {
   tuvaluNameConfig,
-  invalidNameValidator,
-  nationalIdValidator
+  invalidNameValidator
 } from '@countryconfig/events/birth/validators'
 
-export const CollectorType = {
-  SOMEONE_ELSE: 'SOMEONE_ELSE'
-} as const
-
-const otherIdType = {
+const requesterIdType = {
   PASSPORT: 'PASSPORT',
   BIRTH_CERTIFICATE: 'BIRTH_CERTIFICATE',
   OTHER: 'OTHER',
   NONE: 'NONE'
 } as const
 
-export const printCertificateCollectorOther: FieldConfig[] = [
+export const requesterDetailsFields: FieldConfig[] = [
   {
-    id: 'collector.OTHER.relationshipToDeceased',
+    id: 'requester.relationship',
     type: FieldType.TEXT,
     required: true,
     label: {
+      id: 'event.death.action.correction.form.section.requester.relationship.label',
       defaultMessage: 'Relationship to deceased',
-      description: 'This is the label for the relationship to deceased field',
-      id: 'event.death.action.form.section.relationshipToDeceased.label'
+      description: 'This is the label for the relationship to deceased field'
     },
     conditionals: [
       {
         type: ConditionalType.SHOW,
-        conditional: field('collector.requesterId').isEqualTo(
-          CollectorType.SOMEONE_ELSE
-        )
+        conditional: field('requester.type').isEqualTo('SOMEONE_ELSE')
       }
     ]
   },
   {
-    id: 'collector.OTHER.name',
+    id: 'requester.name',
     type: FieldType.NAME,
     required: true,
     configuration: tuvaluNameConfig,
     hideLabel: true,
     label: {
-      defaultMessage: "Collector's name",
-      description: 'This is the label for the name field of OTHER collector',
-      id: 'event.death.action.form.section.collector.other.field.name.label'
+      id: 'event.death.action.correction.form.section.requester.name.label',
+      defaultMessage: "Requester's name",
+      description: 'This is the label for the name field of OTHER requester'
     },
     conditionals: [
       {
         type: ConditionalType.SHOW,
-        conditional: field('collector.requesterId').isEqualTo(
-          CollectorType.SOMEONE_ELSE
-        )
+        conditional: field('requester.type').isEqualTo('SOMEONE_ELSE')
       }
     ],
-    validation: [invalidNameValidator('collector.OTHER.name')]
+    validation: [invalidNameValidator('requester.name')]
   },
   {
-    id: 'collector.OTHER.dob',
+    id: 'requester.dob',
     type: FieldType.DATE,
     required: true,
     validation: [
@@ -83,7 +64,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
           description: 'This is the error message for invalid date',
           id: 'validations.noFutureDate'
         },
-        validator: field('collector.OTHER.dob').isBefore().now()
+        validator: field('requester.dob').isBefore().now()
       }
     ],
     label: {
@@ -94,14 +75,12 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     conditionals: [
       {
         type: ConditionalType.SHOW,
-        conditional: field('collector.requesterId').isEqualTo(
-          CollectorType.SOMEONE_ELSE
-        )
+        conditional: field('requester.type').isEqualTo('SOMEONE_ELSE')
       }
     ]
   },
   {
-    id: 'collector.OTHER.nationality',
+    id: 'requester.nationality',
     type: FieldType.COUNTRY,
     required: true,
     label: {
@@ -112,28 +91,24 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     conditionals: [
       {
         type: ConditionalType.SHOW,
-        conditional: field('collector.requesterId').isEqualTo(
-          CollectorType.SOMEONE_ELSE
-        )
+        conditional: field('requester.type').isEqualTo('SOMEONE_ELSE')
       }
     ],
     defaultValue: 'COK'
   },
   {
-    id: 'collector.OTHER.idType',
+    id: 'requester.idType',
     type: FieldType.SELECT,
     required: true,
     label: {
       defaultMessage: 'Type of ID',
-      description: 'This is the label for selecting the type of ID',
-      id: 'event.death.action.form.section.idType.label'
+      description: 'This is the label for the field',
+      id: 'event.death.action.correction.form.section.requester.idType.label'
     },
     conditionals: [
       {
         type: ConditionalType.SHOW,
-        conditional: field('collector.requesterId').isEqualTo(
-          CollectorType.SOMEONE_ELSE
-        )
+        conditional: field('requester.type').isEqualTo('SOMEONE_ELSE')
       }
     ],
     options: [
@@ -143,7 +118,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
           defaultMessage: 'Passport',
           description: 'Option for selecting Passport as the ID type'
         },
-        value: otherIdType.PASSPORT
+        value: requesterIdType.PASSPORT
       },
       {
         label: {
@@ -152,7 +127,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
           description:
             'Option for selecting Birth Certificate as the ID type'
         },
-        value: otherIdType.BIRTH_CERTIFICATE
+        value: requesterIdType.BIRTH_CERTIFICATE
       },
       {
         label: {
@@ -160,7 +135,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
           defaultMessage: 'Other',
           description: 'Option for selecting Other as the ID type'
         },
-        value: otherIdType.OTHER
+        value: requesterIdType.OTHER
       },
       {
         label: {
@@ -168,63 +143,65 @@ export const printCertificateCollectorOther: FieldConfig[] = [
           defaultMessage: 'None',
           description: 'Option for selecting No ID as the ID type'
         },
-        value: otherIdType.NONE
+        value: requesterIdType.NONE
       }
     ]
   },
   {
-    id: 'collector.PASSPORT.details',
+    id: 'requester.passport',
     type: FieldType.TEXT,
     required: true,
     label: {
       defaultMessage: 'ID Number',
       description: 'Field for entering ID Number',
-      id: 'event.death.action.form.section.idNumber.label'
+      id: 'event.death.action.correction.form.section.requester.passport.label'
     },
     conditionals: [
       {
         type: ConditionalType.SHOW,
         conditional: and(
-          field('collector.requesterId').isEqualTo(CollectorType.SOMEONE_ELSE),
-          field('collector.OTHER.idType').isEqualTo(otherIdType.PASSPORT)
+          field('requester.type').isEqualTo('SOMEONE_ELSE'),
+          field('requester.idType').isEqualTo(requesterIdType.PASSPORT)
         )
       }
     ]
   },
   {
-    id: 'collector.brn',
+    id: 'requester.brn',
     type: FieldType.TEXT,
     required: true,
     label: {
       defaultMessage: 'ID Number',
       description: 'Field for entering ID Number',
-      id: 'event.death.action.form.section.idNumber.label'
+      id: 'event.death.action.correction.form.section.requester.brn.label'
     },
     conditionals: [
       {
         type: ConditionalType.SHOW,
         conditional: and(
-          field('collector.requesterId').isEqualTo(CollectorType.SOMEONE_ELSE),
-          field('collector.OTHER.idType').isEqualTo(otherIdType.BIRTH_CERTIFICATE)
+          field('requester.type').isEqualTo('SOMEONE_ELSE'),
+          field('requester.idType').isEqualTo(
+            requesterIdType.BIRTH_CERTIFICATE
+          )
         )
       }
     ]
   },
   {
-    id: 'collector.OTHER.idNumberOther',
+    id: 'requester.idNumberOther',
     type: FieldType.TEXT,
     required: true,
     label: {
       defaultMessage: 'ID Number',
       description: 'Field for entering ID Number',
-      id: 'event.death.action.form.section.idNumber.label'
+      id: 'event.death.action.correction.form.section.requester.other.label'
     },
     conditionals: [
       {
         type: ConditionalType.SHOW,
         conditional: and(
-          field('collector.requesterId').isEqualTo(CollectorType.SOMEONE_ELSE),
-          field('collector.OTHER.idType').isEqualTo(otherIdType.OTHER)
+          field('requester.type').isEqualTo('SOMEONE_ELSE'),
+          field('requester.idType').isEqualTo(requesterIdType.OTHER)
         )
       }
     ]

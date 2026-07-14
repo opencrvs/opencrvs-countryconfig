@@ -37,19 +37,17 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
       }
     ],
     label: {
-      defaultMessage: 'Identity details',
+      defaultMessage: '',
       description: 'Title for the data section',
-      id: 'event.birth.action.certificate.form.section.verifyIdentity.data.label'
+      id: ''
     },
     configuration: {
       data: [
-        { fieldId: 'mother.idType' },
-        { fieldId: 'mother.nid' },
         { fieldId: 'mother.passport' },
         { fieldId: 'mother.brn' },
+        { fieldId: 'mother.nid' },
         { fieldId: 'mother.name' },
         { fieldId: 'mother.dob' },
-        { fieldId: 'mother.age' },
         { fieldId: 'mother.nationality' }
       ]
     }
@@ -76,13 +74,11 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
     },
     configuration: {
       data: [
-        { fieldId: 'father.idType' },
-        { fieldId: 'father.nid' },
         { fieldId: 'father.passport' },
         { fieldId: 'father.brn' },
+        { fieldId: 'father.nid' },
         { fieldId: 'father.name' },
         { fieldId: 'father.dob' },
-        { fieldId: 'father.age' },
         { fieldId: 'father.nationality' }
       ]
     }
@@ -94,7 +90,7 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
       {
         type: ConditionalType.SHOW,
         conditional: and(
-          field('collector.requesterId').isEqualTo('INFORMANT'),
+          field('collector.requesterId').isEqualTo('SOMEONE_ELSE'),
           not(field('informant.relation').isEqualTo(InformantType.FATHER)),
           not(field('informant.relation').isEqualTo(InformantType.MOTHER))
         )
@@ -107,14 +103,11 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
     },
     configuration: {
       data: [
-        { fieldId: 'informant.relation' },
-        { fieldId: 'informant.idType' },
-        { fieldId: 'informant.nid' },
         { fieldId: 'informant.passport' },
         { fieldId: 'informant.brn' },
+        { fieldId: 'informant.nid' },
         { fieldId: 'informant.name' },
         { fieldId: 'informant.dob' },
-        { fieldId: 'informant.age' },
         { fieldId: 'informant.nationality' }
       ]
     }

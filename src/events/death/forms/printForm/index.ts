@@ -24,7 +24,7 @@ import { printCertificateCollectorOther } from './collector-other'
 import { printCertificateCollectorIdentityVerify } from './collector-identity-verify'
 
 import { CollectorType } from './collector-other'
-import { DEATH_REGISTRATION_TARGET_DAYS } from '@countryconfig/events/utils'
+import { collectPayment } from './collect-payment'
 
 export const DEATH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
   label: {
@@ -42,7 +42,19 @@ export const DEATH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
         defaultMessage: 'Certify record',
         description: 'This is the title of the section'
       },
-      fields: [...printCertificateCollectors, ...printCertificateCollectorOther]
+      fields: [...printCertificateCollectors]
+    },
+    {
+      id: 'collector details',
+      type: PageTypes.enum.FORM,
+      requireCompletionToContinue: true,
+      title: {
+        id: 'event.death.action.certificate.form.section.who.title',
+        defaultMessage: 'Collector details',
+        description: 'This is the title of the section'
+      },
+      fields: [...printCertificateCollectorOther],
+      conditional: field('collector.requesterId').isEqualTo('SOMEONE_ELSE')
     },
     {
       id: 'collector.identity.verify',
@@ -102,108 +114,7 @@ export const DEATH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
         defaultMessage: 'Collect Payment',
         description: 'This is the title of the section'
       },
-      fields: [
-        {
-          id: 'collector.collect.payment.data.afterRegistrationTarget',
-          type: FieldType.DATA,
-          label: {
-            defaultMessage: 'Payment details',
-            description: 'Title for the data section',
-            id: 'event.death.action.certificate.form.section.collectPayment.data.label'
-          },
-          conditionals: [
-            {
-              type: ConditionalType.SHOW,
-              conditional: and(
-                not(
-                  field('eventDetails.date')
-                    .isAfter()
-                    .days(DEATH_REGISTRATION_TARGET_DAYS)
-                    .inPast()
-                ),
-                field('eventDetails.date').isBefore().now()
-              )
-            }
-          ],
-          configuration: {
-            data: [
-              {
-                id: 'service',
-                label: {
-                  defaultMessage: 'Service',
-                  description: 'Title for the data entry',
-                  id: 'event.death.action.certificate.form.section.collectPayment.service.label'
-                },
-                value: {
-                  defaultMessage:
-                    'Death registration after 45 days of date of death',
-                  description:
-                    'Death registration after 45 days of date of death message',
-                  id: 'event.death.action.certificate.form.section.collectPayment.service.label.afterRegistrationTarget'
-                }
-              },
-              {
-                id: 'fee',
-                label: {
-                  defaultMessage: 'Fee',
-                  description: 'Title for the data entry',
-                  id: 'event.death.action.certificate.form.section.collectPayment.fee.label'
-                },
-                value: '$15.00'
-              }
-            ]
-          }
-        },
-        {
-          id: 'collector.collect.payment.data.beforeRegistrationTarget',
-          type: FieldType.DATA,
-          label: {
-            defaultMessage: 'Payment details',
-            description: 'Title for the data section',
-            id: 'event.death.action.certificate.form.section.collectPayment.data.label'
-          },
-          conditionals: [
-            {
-              type: ConditionalType.SHOW,
-              conditional: and(
-                field('eventDetails.date')
-                  .isAfter()
-                  .days(DEATH_REGISTRATION_TARGET_DAYS)
-                  .inPast(),
-                field('eventDetails.date').isBefore().now()
-              )
-            }
-          ],
-          configuration: {
-            data: [
-              {
-                id: 'service',
-                label: {
-                  defaultMessage: 'Service',
-                  description: 'Title for the data entry',
-                  id: 'event.death.action.certificate.form.section.collectPayment.service.label'
-                },
-                value: {
-                  defaultMessage:
-                    'Death registration before 45 days of date of death',
-                  description:
-                    'Death registration before 45 days of date of death message',
-                  id: 'event.death.action.certificate.form.section.collectPayment.service.label.beforeRegistrationTarget'
-                }
-              },
-              {
-                id: 'fee',
-                label: {
-                  defaultMessage: 'Fee',
-                  description: 'Title for the data entry',
-                  id: 'event.death.action.certificate.form.section.collectPayment.fee.label'
-                },
-                value: '$5.00'
-              }
-            ]
-          }
-        }
-      ]
+      fields: collectPayment
     }
   ]
 })

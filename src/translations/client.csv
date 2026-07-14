@@ -816,7 +816,7 @@ event.birth.action.certificate.form.section.collectPayment.data.label,Title for 
 event.birth.action.certificate.form.section.collectPayment.fee.label,Title for the data entry,Fee,Frais
 event.birth.action.certificate.form.section.collectPayment.amountCollected.label,Label for the amount collected field,Confirm amount collected,Confirmer le montant collecté
 event.birth.action.certificate.form.section.collectPayment.amountCollected.prefix,Prefix for the amount collected field,$,$
-event.birth.action.certificate.form.section.collectPayment.feeWaived.label,Label for the fee waived checkbox,Payment fee is waived / not collected,Les frais de paiement sont dispensés / non collectés
+event.birth.action.certificate.form.section.collectPayment.feeWaived.label,Label for the fee waived checkbox,Late registration fee is waived / not collected,Les frais de paiement sont dispensés / non collectés
 event.birth.action.certificate.form.section.collectPayment.receiptNumber.label,Label for the receipt number field,Receipt Number,Numéro de reçu
 event.birth.action.certificate.form.section.collectPayment.service.label,Title for the data entry,Service,Service
 event.birth.action.certificate.form.section.collectPayment.service.label.birthCertificate,Birth certificate service name,Birth Certificate,Certificat de naissance
@@ -845,9 +845,10 @@ event.birth.action.correction.documents.supportingDocs.label,Label for the suppo
 event.birth.action.correction.documents.supportingDocs.other.label,Label for the other option,Other,Autre
 event.birth.action.correction.fees.amount.label,Label for the amount field,Fee collected,Frais perçus
 event.birth.action.correction.fees.amount.prefix,Prefix for the amount field,$,€
+
 event.birth.action.correction.fees.receiptNumber.label,Label for the receipt number field,Receipt number,Numéro de reçu
 event.birth.action.correction.form.cancel,This is the label for the verification cancellation button,Identity does not match,L'identité ne correspond pas
-event.birth.action.correction.form.cancel.confirmation.body,This is the body for the verification cancellation modal,"Please be aware that if you proceed, you will be responsible for making a change to this record without the necessary proof of identification","Veuillez noter que si vous continuez, vous serez responsable d'apporter une modification à cet enregistrement sans la preuve d'identification nécessaire."
+event.birth.action.correction.form.cancel.confirmation.body,This is the body for the verification cancellation modal,"Please be aware that if you proceed, you will be responsible for this correction without the necessary proof of ID from the requester"
 event.birth.action.correction.form.cancel.confirmation.title,This is the title for the verification cancellation modal,Proceed without proof of ID?,Correction sans preuve d'identité ?
 event.birth.action.correction.form.label,This is the label for the birth correction form,Correct record,Corriger le dossier
 event.birth.action.correction.form.requester.type.child,This is the label for the correction requester field,Person named on the record,Personne nommée dans le dossier
@@ -1038,7 +1039,13 @@ event.death.action.certificate.form.cancel.confirmation.title,This is the title 
 event.death.action.certificate.form.label,This is what this form is referred as in the system,Death certificate collector,Collecteur de certificat de décès
 event.death.action.certificate.form.section.collectPayment.data.label,Title for the data section,Payment details,Détails du paiement
 event.death.action.certificate.form.section.collectPayment.fee.label,Title for the data entry,Fee,Frais
+event.death.action.certificate.form.section.collectPayment.feeWaived.label,Label for the fee waived checkbox,Fee is waived / not collected,Les frais sont annulés / non collectés
+event.death.action.certificate.form.section.collectPayment.amountCollected.label,Label for the amount collected field,Confirm amount collected,Confirmer le montant collecté
+event.death.action.certificate.form.section.collectPayment.amountCollected.prefix,Prefix for the amount collected field,$,$
+event.death.action.certificate.form.section.collectPayment.receiptNumber.label,Label for the receipt number field,Receipt number,Numéro de reçu
+event.death.action.certificate.form.section.collectPayment.feeWaiverReason.label,Label for the reason for fee waiver / non-collection field,Reason for fee waiver / non-collection,Raison de l'annulation / non-collecte des frais
 event.death.action.certificate.form.section.collectPayment.service.label,Title for the data entry,Service,Service
+event.death.action.certificate.form.section.collectPayment.service.label.deathCertificateIssuance,Death registration and certificate issuance service name,Death registration and certificate issuance,Enregistrement du décès et délivrance du certificat
 event.death.action.certificate.form.section.collectPayment.service.label.afterRegistrationTarget,Death registration after 45 days of date of death message,Death registration after 45 days of date of death,Enregistrement du décès après 45 jours de la date du décès
 event.death.action.certificate.form.section.collectPayment.service.label.beforeRegistrationTarget,Death registration before 45 days of date of death message,Death registration before 45 days of date of death,Enregistrement du décès avant 45 jours de la date du décès
 event.death.action.certificate.form.section.requester.label,This is the label for the field,Collecter,Demandeur
