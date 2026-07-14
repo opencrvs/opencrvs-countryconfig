@@ -826,11 +826,18 @@ event.birth.action.certificate.form.section.collectPayment.service.label.inBetwe
 event.birth.action.certificate.form.section.requester.printInAdvance.label,This is the label for the print-in-advance of issuance field,Print in advance of issuance,Imprimer avant la délivrance
 event.birth.action.certificate.form.section.verifyIdentity.data.label,Label for identity verification data block,Identity details,Détails de l'identité
 event.birth.action.collect-certificate.label,This is shown as the action name anywhere the user can trigger the action from,Print,Imprimer
+event.birth.action.correction.documents.proofOfIdentity.birthCertificate.label,Label for the birth certificate option,Birth certificate,Acte de naissance
+event.birth.action.correction.documents.proofOfIdentity.label,Label for the proof of identity field,Proof of identity,Preuve d'identité
+event.birth.action.correction.documents.proofOfIdentity.other.label,Label for the other option,Other,Autre
+event.birth.action.correction.documents.proofOfIdentity.passport.label,Label for the passport option,Passport,Passeport
 event.birth.action.correction.documents.supportingDocs.courtOrder.label,Label for the court order option,Court Order,Ordonnance du tribunal
 event.birth.action.correction.documents.supportingDocs.letterOfConsent.label,Label for the letter of consent option,Letter of consent,Lettre de consentement
+event.birth.action.correction.documents.supportingDocs.proofOfParentageOrGuardianship.label,Label for the proof of parentage or guardianship option,Proof of parentage or guardianship,Preuve de filiation ou de tutelle
 event.birth.action.correction.documents.supportingDocs.proofOfParriantageOrGuardianship.label,Label for the proof of parriantage or guardianship option,Proof of parriantage or guardianship,Preuve de parenté ou de tutelle
 event.birth.action.correction.documents.supportingDocs.proofOfParentsMarriage.label,Label for the proof of parent's marriage option,Proof of parent's marriage,Preuve du mariage des parents
+event.birth.action.correction.documents.supportingDocs.registrarGeneralAuthorisation.label,Label for the registrar general authorisation option,Registrar general / registrar authorisation,Autorisation du registraire général / registraire
 event.birth.action.correction.documents.supportingDocs.registrarGeneralOrRegistrationOffice.label,Label for the registrar general / registration office option,Registrar General / Registration Office,Registraire général / Bureau d'enregistrement
+event.birth.action.correction.documents.supportingDocs.statutoryDeclaration.label,Label for the statutory declaration option,Statutory declaration,Déclaration statutaire
 event.birth.action.correction.documents.supportingDocs.statuoryDeclaration.label,Label for the statuory declaration option,Statuory declaration,Déclaration statutaire
 event.birth.action.correction.documents.supportingDocs.affidavit.label,Label for the affidavit option,Affidavit,Affidavit
 event.birth.action.correction.documents.supportingDocs.courtDocument.label,Label for the court document option,Court Document,Document judiciaire
@@ -843,12 +850,22 @@ event.birth.action.correction.form.cancel,This is the label for the verification
 event.birth.action.correction.form.cancel.confirmation.body,This is the body for the verification cancellation modal,"Please be aware that if you proceed, you will be responsible for making a change to this record without the necessary proof of identification","Veuillez noter que si vous continuez, vous serez responsable d'apporter une modification à cet enregistrement sans la preuve d'identification nécessaire."
 event.birth.action.correction.form.cancel.confirmation.title,This is the title for the verification cancellation modal,Proceed without proof of ID?,Correction sans preuve d'identité ?
 event.birth.action.correction.form.label,This is the label for the birth correction form,Correct record,Corriger le dossier
+event.birth.action.correction.form.requester.type.child,This is the label for the correction requester field,Person named on the record,Personne nommée dans le dossier
+event.birth.action.correction.form.section.collectPayment.title,This is the title of the section,Collect payment,Collecter le paiement
+event.birth.action.correction.form.section.correctionRequest.title,This is the title of the section,Correction request,Demande de correction
 event.birth.action.correction.form.section.details.divider.label,This is the title of the section,,
 event.birth.action.correction.form.section.details.title,This is the title of the section,Correction details,Détails de la correction
 event.birth.action.correction.form.section.fees.title,This is the title of the section,Collect payment,Collecter le paiement
 event.birth.action.correction.form.section.reason.title,This is the title of the section,Reason for correction,Raison de la correction
+event.birth.action.correction.form.section.requester.dob.error,This is the error message for invalid date,Date cannot be in the future,La date ne peut pas être dans le futur
+event.birth.action.correction.form.section.requester.dob.label,This is the label for the field,Date of birth,Date de naissance
 event.birth.action.correction.form.section.requester.identity.verify.title,This is the title of the section,Verify their identity,Vérifier l'identité
+event.birth.action.correction.form.section.requester.nationality.label,This is the label for the field,Nationality,Nationalité
+event.birth.action.correction.form.section.requester.other.label,This is the label for the field,ID Number,Numéro d'identification
+event.birth.action.correction.form.section.requesterDetails.title,This is the title of the section,Requester's details,Détails du demandeur
+event.birth.action.correction.form.section.supportingDocuments.title,This is the title of the section,Supporting documents,Documents justificatifs
 event.birth.action.correction.form.section.supporting-documents.title,This is the title of the section,Upload supporting documents,Télécharger les documents justificatifs
+event.birth.action.correction.form.section.verifyIdentity.title,This is the title of the section,Verify their identity,Vérifier leur identité
 event.birth.action.correction.form.verify,This is the label for the verification button,Verified,Vérifié
 event.birth.action.correction.reason.option.clericalError.label,Label for the clerical error option,Myself or an agent made a mistake (Clerical error),Une erreur a été commise par moi-même ou un agent (Erreur administrative)
 event.birth.action.correction.reason.option.judicialOrder.label,Label for the judicial order option,Requested to do so by the court (Judicial order),Demandé par le tribunal (Ordonnance judiciaire)
