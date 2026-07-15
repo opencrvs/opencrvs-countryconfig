@@ -68,9 +68,6 @@ print_usage_and_exit() {
   echo ""
   echo "If your MongoDB is password protected, an admin user's credentials can be given as environment variables:"
   echo "MONGODB_ADMIN_USER=your_user MONGODB_ADMIN_PASSWORD=your_pass"
-  echo ""
-  echo "If your Elasticsearch is password protected, an admin user's credentials can be given as environment variables:"
-  echo "ELASTICSEARCH_ADMIN_USER=your_user ELASTICSEARCH_ADMIN_PASSWORD=your_pass"
   exit 1
 }
 
@@ -106,7 +103,6 @@ if [ "$IS_LOCAL" = false ]; then
     echo "Error: Argument for the --passphrase is required."
     print_usage_and_exit
   fi
-  # In this example, we load the MONGODB_ADMIN_USER, MONGODB_ADMIN_PASSWORD, ELASTICSEARCH_ADMIN_USER & ELASTICSEARCH_ADMIN_PASSWORD database access secrets from a file.
   # We recommend that the secrets are served via a secure API from a Hardware Security Module
   source /data/secrets/opencrvs.secrets
 else
