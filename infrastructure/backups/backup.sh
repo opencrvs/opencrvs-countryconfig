@@ -191,11 +191,14 @@ docker run --rm \
   postgres:17 \
   bash -c "pg_dump -h postgres -U $POSTGRES_USER -d events -F c -f /backups/events-${LABEL:-$BACKUP_DATE}.dump"
 
+# Backup Minio
+# ---------------------------------------------------------------------------------------------
 echo "Creating a backup for Minio"
-
 LOCAL_MINIO_BACKUP=$ROOT_PATH/backups/minio/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz
 cd $ROOT_PATH/minio && tar -zcvf $LOCAL_MINIO_BACKUP . && cd /
 
+# Backup VSExport
+# ---------------------------------------------------------------------------------------------
 echo "Creating a backup for VSExport"
 
 LOCAL_VSEXPORT_BACKUP=$ROOT_PATH/backups/vsexport/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz
