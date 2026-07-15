@@ -127,8 +127,6 @@ for BACKUP_DIR in $ROOT_PATH/backups/*; do
   fi
 done
 
-mkdir -p $ROOT_PATH/backups/elasticsearch
-mkdir -p $ROOT_PATH/backups/elasticsearch/indices
 mkdir -p $ROOT_PATH/backups/mongo
 mkdir -p $ROOT_PATH/backups/minio
 mkdir -p $ROOT_PATH/backups/vsexport
@@ -167,21 +165,6 @@ mongo_credentials() {
   fi
 }
 
-elasticsearch_host() {
-  if [ ! -z ${ELASTICSEARCH_ADMIN_USER+x} ] || [ ! -z ${ELASTICSEARCH_ADMIN_PASSWORD+x} ]; then
-    echo "$ELASTICSEARCH_ADMIN_USER:$ELASTICSEARCH_ADMIN_PASSWORD@elasticsearch:9200"
-  else
-    echo "elasticsearch:9200"
-  fi
-}
-
-get_target_indices() {
-  docker run --rm --network=$NETWORK appropriate/curl curl -s "http://$(elasticsearch_host)/_cat/indices?h=index" \
-    | grep -E '^(ocrvs-|events_)' \
-    | paste -sd, - \
-    | sed 's/\,$//'
-}
-
 # Today's date is used for filenames if LABEL is not provided
 #-----------------------------------
 BACKUP_DATE=$(date +%Y-%m-%d)
@@ -212,66 +195,6 @@ docker run --rm \
   postgres:17 \
   bash -c "pg_dump -h postgres -U $POSTGRES_USER -d events -F c -f /backups/events-${LABEL:-$BACKUP_DATE}.dump"
 
-#-------------------------------------------------------------------------------------
-
-echo ""
-echo "Delete all currently existing snapshots"
-echo ""
-# Get list of snapshots as a simple array
-snapshots=$(docker run --rm --network="$NETWORK" appropriate/curl \
-  -s "http://$(elasticsearch_host)/_snapshot/ocrvs/_all" | jq -r '.snapshots[].snapshot' || true)
-echo "Found snapshots:"
-echo "$snapshots" | sed 's/^/ - /'
-
-for snap in $snapshots; do
-  echo "Deleting snapshot: $snap"
-  docker run --rm --network="$NETWORK" appropriate/curl \
-    -s -X DELETE -H "Content-Type: application/json;charset=UTF-8" \
-    "http://$(elasticsearch_host)/_snapshot/ocrvs/${snap}?wait_for_completion=true&pretty"
-done
-docker run --rm --network=$NETWORK appropriate/curl curl -sS -X DELETE -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs"
-echo "Waiting for snapshots to be removed"
-sleep 30
-#-------------------------------------------------------------------------------------
-echo ""
-echo "Register backup folder as an Elasticsearch repository for backing up the search data"
-echo ""
-
-create_elasticsearch_snapshot_repository() {
-  OUTPUT=$(docker run --rm --network=$NETWORK appropriate/curl curl -sS -X PUT -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs" -d '{ "type": "fs", "settings": { "location": "/data/backups/elasticsearch", "compress": true }}' 2>/dev/null)
-  while [ "$OUTPUT" != '{"acknowledged":true}' ]; do
-    echo "Failed to register backup folder as an Elasticsearch repository. Trying again in..."
-    sleep 1
-    create_elasticsearch_snapshot_repository
-  done
-}
-
-create_elasticsearch_snapshot_repository
-
-#---------------------------------------------------------------------------------
-
-echo ""
-echo "Backup Elasticsearch as a set of snapshot files into an elasticsearch sub folder"
-echo ""
-
-create_elasticsearch_backup() {
-  indices=$(get_target_indices)
-  echo "List indices for backup: $indices"
-  OUTPUT=""
-  json_payload="{\"indices\": \"${indices}\"}"
-  OUTPUT=$(docker run --rm --network=$NETWORK appropriate/curl curl -sS -X PUT -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs/snapshot_${LABEL:-$BACKUP_DATE}?wait_for_completion=true&pretty" -d "$json_payload" 2>/dev/null) || true
-
-  if echo $OUTPUT | jq -e '.snapshot.state == "SUCCESS"' > /dev/null; then
-    echo "Snapshot state is SUCCESS"
-  else
-    echo $OUTPUT
-    echo "Failed to backup Elasticsearch. Trying again in..."
-    create_elasticsearch_backup
-  fi
-}
-
-create_elasticsearch_backup
-
 echo "Creating a backup for Minio"
 
 LOCAL_MINIO_BACKUP=$ROOT_PATH/backups/minio/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz
@@ -296,8 +219,6 @@ BACKUP_RAW_FILES_DIR=/tmp/backup-${LABEL:-$BACKUP_DATE}/
 mkdir -p $BACKUP_RAW_FILES_DIR
 
 # Copy full directories to the temporary directory
-cp -r $ROOT_PATH/backups/elasticsearch/ $BACKUP_RAW_FILES_DIR/elasticsearch/
-
 mkdir -p $BACKUP_RAW_FILES_DIR/minio/ && cp $ROOT_PATH/backups/minio/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz $BACKUP_RAW_FILES_DIR/minio/
 mkdir -p $BACKUP_RAW_FILES_DIR/vsexport/ && cp $ROOT_PATH/backups/vsexport/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz $BACKUP_RAW_FILES_DIR/vsexport/
 mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/hearth-dev-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/

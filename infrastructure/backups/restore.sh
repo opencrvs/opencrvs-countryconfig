@@ -40,7 +40,6 @@ print_usage_and_exit() {
   echo "This script CLEARS ALL DATA and RESTORES A SPECIFIC DAY'S or label's data. This process is irreversible, so USE WITH CAUTION."
   echo "Script must receive a label parameter to restore data from that specific day in format +%Y-%m-%d i.e. 2019-01-01 or that label"
   echo "The Hearth, Events and User db backup zips you would like to restore from: hearth-dev-{label}.gz, events-{label}.gz, user-mgnt-{label}.gz must exist in /data/backups/mongo/ folder"
-  echo "The Elasticsearch backup folder /data/backups/elasticsearch must exist with all previous snapshots and indices. All files are required"
   echo ""
   echo "If your MongoDB is password protected, an admin user's credentials can be given as environment variables:"
   echo "MONGODB_ADMIN_USER=your_user MONGODB_ADMIN_PASSWORD=your_pass"
@@ -136,9 +135,6 @@ elasticsearch_host() {
 # ------ ELASTICSEARCH -----
 ##
 
-echo "delete any previously created snapshot if any.  This may error on a fresh install with a repository_missing_exception error.  Just ignore it."
-docker run --rm --network=$NETWORK appropriate/curl curl -X DELETE "http://$(elasticsearch_host)/_snapshot/ocrvs"
-
 # Delete all data from elasticsearch
 #-----------------------------------
 approved_words=${ES_INDEX_PREFIXES:-"events_ ocrvs- reindexing_status"}
@@ -158,10 +154,6 @@ for index in ${indices[@]}; do
     esac
   done
 done
-
-echo "Waiting for elasticsearch to restart so that the restore script can find the updated volume."
-docker service update --force --update-parallelism 1 --update-delay 30s opencrvs_elasticsearch
-docker run --rm --network=$NETWORK toschneck/wait-for-it -t 120 elasticsearch:9200 -- echo "Elasticsearch is up"
 
 ##
 # ------ MINIO -------
@@ -254,16 +246,6 @@ fi
 # ------ ELASTICSEARCH -----
 ##
 
-# Register backup folder as an Elasticsearch repository for restoring the search data
-#-------------------------------------------------------------------------------------
-docker run --rm --network=$NETWORK appropriate/curl curl -X PUT -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs" -d '{ "type": "fs", "settings": { "location": "/data/backups/elasticsearch", "compress": true }}'
-sleep 10
-
-# Restore all data from a backup into search
-#-------------------------------------------
-json_payload="{\"indices\": \"ocrvs-*,events_*\", \"include_global_state\": false}"
-docker run --rm --network=$NETWORK appropriate/curl curl -X POST -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs/snapshot_$LABEL/_restore?pretty" -d "$json_payload"
-sleep 10
 echo "Waiting 1 minute to rotate elasticsearch passwords"
 echo
 docker service update --force opencrvs_setup-elasticsearch-users
