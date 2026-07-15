@@ -900,7 +900,7 @@ event.birth.action.declare.form.section.child.field.dob.label,This is the label 
 event.birth.action.declare.form.section.child.field.gender.label,This is the label for the field,Sex,Sexe
 event.birth.action.declare.form.section.child.field.lateRegistrationNotice.label,Notice shown for late registration,This birth is being registered more than 6 months after the date of birth. Please ensure all required supporting documentation for delayed registration is attached.,Cette naissance est enregistrée plus de 6 mois après la date de naissance. Veuillez vous assurer que tous les documents justificatifs requis sont joints.
 event.birth.action.declare.form.section.child.field.name.label,This is the label for the field,Child's name,Nom de l'enfant
-event.birth.action.declare.form.section.child.field.nameChangedAfterRegistration.label,Label for name changed after registration checkbox,Has the child's name been changed since birth registration?,Le nom de l'enfant a-t-il été modifié depuis l'enregistrement de la naissance ?
+event.birth.action.declare.form.section.child.field.nameChangedAfterRegistration.label,Label for name changed after registration checkbox,Name changed after registration (via deed poll),Le nom de l'enfant a-t-il été modifié depuis l'enregistrement de la naissance ?
 event.birth.action.declare.form.section.child.field.placeOfBirth.label,This is the label for the field,Place of delivery,Lieu de l'accouchement
 event.birth.action.declare.form.section.child.field.timeOfBirth.label,Label for time of birth field,Time of birth,Heure de naissance
 event.birth.action.declare.form.section.child.field.weightAtBirth.label,This is the label for the field,Weight at birth,Poids à la naissance
