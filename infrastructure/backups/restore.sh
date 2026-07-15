@@ -43,9 +43,6 @@ print_usage_and_exit() {
   echo ""
   echo "If your MongoDB is password protected, an admin user's credentials can be given as environment variables:"
   echo "MONGODB_ADMIN_USER=your_user MONGODB_ADMIN_PASSWORD=your_pass"
-  echo ""
-  echo "If your Elasticsearch is password protected, an admin user's credentials can be given as environment variables:"
-  echo "ELASTICSEARCH_ADMIN_USER=your_user ELASTICSEARCH_ADMIN_PASSWORD=your_pass"
   exit 1
 }
 
@@ -66,7 +63,7 @@ if [ "$IS_LOCAL" = false ]; then
     echo "Error: Argument for the --replicas is required."
     print_usage_and_exit
   fi
-  # In this example, we load the MONGODB_ADMIN_USER, MONGODB_ADMIN_PASSWORD, ELASTICSEARCH_ADMIN_USER & ELASTICSEARCH_ADMIN_PASSWORD database access secrets from a file.
+  # In this example, we load the MONGODB_ADMIN_USER, MONGODB_ADMIN_PASSWORD, POSTGRES_USER & POSTGRES_PASSWORD database access secrets from a file.
   # We recommend that the secrets are served via a secure API from a Hardware Security Module
   source /data/secrets/opencrvs.secrets
 else
@@ -112,14 +109,6 @@ mongo_credentials() {
   fi
 }
 
-elasticsearch_host() {
-  if [ ! -z ${ELASTICSEARCH_ADMIN_USER+x} ] || [ ! -z ${ELASTICSEARCH_ADMIN_PASSWORD+x} ]; then
-    echo "$ELASTICSEARCH_ADMIN_USER:$ELASTICSEARCH_ADMIN_PASSWORD@elasticsearch:9200"
-  else
-    echo "elasticsearch:9200"
-  fi
-}
-
 #####
 #
 #
@@ -130,30 +119,6 @@ elasticsearch_host() {
 #
 #####
 
-
-##
-# ------ ELASTICSEARCH -----
-##
-
-# Delete all data from elasticsearch
-#-----------------------------------
-approved_words=${ES_INDEX_PREFIXES:-"events_ ocrvs- reindexing_status"}
-indices=$(docker run --rm --network=$NETWORK appropriate/curl curl -sS -XGET "http://$(elasticsearch_host)/_cat/indices?h=index")
-echo "--------------------------"
-echo "🧹 cleanup for indices: $approved_words from $indices"
-echo "--------------------------"
-for index in ${indices[@]}; do
-  for approved in $approved_words; do
-    echo "Checking index $index against approved pattern $approved..."
-    case "$index" in
-    "$approved"*)
-        echo "Delete index $index..."
-        docker run --rm --network=$NETWORK appropriate/curl curl -sS -XDELETE "http://$(elasticsearch_host)/$index"
-        break
-        ;;
-    esac
-  done
-done
 
 ##
 # ------ MINIO -------
@@ -241,16 +206,6 @@ if [ -f "$ROOT_PATH/backups/postgres/events-${LABEL}.dump" ]; then
 else
   echo "PostgreSQL backup not found for label ${LABEL}. Skipping PostgreSQL database restore..."
 fi
-
-##
-# ------ ELASTICSEARCH -----
-##
-
-echo "Waiting 1 minute to rotate elasticsearch passwords"
-echo
-docker service update --force opencrvs_setup-elasticsearch-users
-echo
-sleep 60
 
 ##
 # ------ MINIO -----
