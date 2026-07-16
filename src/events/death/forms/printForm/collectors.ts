@@ -23,10 +23,11 @@ const deathInformantLabels: Record<InformantTypeKey, string> = {
 }
 
 const getInformantOption = (informantType: InformantTypeKey) => {
+  const label = deathInformantLabels[informantType]
   const defaultMessage =
     informantType === InformantType.OTHER
       ? 'Print and issue to Informant'
-      : `Print and issue to Informant`
+      : `Print and issue to Informant (${label})`
 
   return {
     label: {

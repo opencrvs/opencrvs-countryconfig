@@ -689,7 +689,8 @@ export const birthEvent = defineConfig({
           "Registering this birth event will create an official civil registration record. Please ensure all details are correct before proceeding.<br></br><br></br><strong>WARNING!</strong>: By clicking 'Register', you confirm that you have reviewed the record alongside supporting documentation in the Record tab. The record will proceed to be <strong>legally registered</strong> via the outbox. Further amends after registration can only be made via a legal correction process."
       },
       flags: [
-        { id: 'pending-first-certificate-issuance', operation: 'add' }
+        { id: 'pending-first-certificate-issuance', operation: 'add' },
+        { id: 'approval-required-for-late-registration', operation: 'remove' }
       ],
       conditionals: [
         {

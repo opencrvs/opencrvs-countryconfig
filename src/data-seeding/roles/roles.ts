@@ -24,7 +24,7 @@ export const roles: Role[] = [
       { type: 'user.read' },
       { type: 'user.search' },
       { type: 'performance.read-dashboards' },
-      { type: 'workqueue', options: { ids: ['assigned-to-you', 'recent', 'requires-completion', 'in-external-validation', 'escalated', 'pending-validation', 'pending-registration', 'pending-updates', 'pending-approval', 'pending-certification', 'pending-issuance', 'correction-requested'] } },
+      { type: 'workqueue', options: { ids: ['assigned-to-you', 'recent', 'requires-completion', 'in-external-validation', 'escalated','potential-duplicate', 'pending-validation', 'pending-registration', 'pending-updates', 'pending-approval', 'pending-certification', 'pending-issuance', 'correction-requested'] } },
       { type: 'record.search' },
       { type: 'record.create' },
       { type: 'record.read' },
@@ -410,8 +410,8 @@ export const roles: Role[] = [
       { type: 'record.create' },
       { type: 'record.read' },
       { type: 'record.notify' },
-      { type: 'record.edit', options: { placeOfEvent: 'location' } },
-      { type: 'record.print-certified-copies', options: { templates: ['v2.tennis-club-membership-certificate-alpha', 'v2.birth-notification'] } }
+      { type: 'record.edit', options: { placeOfEvent: 'administrativeArea' } },
+      { type: 'record.print-certified-copies', options: { templates: ['v2.birth-notification'] } }
     ])
   },
   {
