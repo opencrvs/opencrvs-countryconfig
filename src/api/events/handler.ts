@@ -18,9 +18,14 @@ export function getEventsHandler(_: Hapi.Request, h: Hapi.ResponseToolkit) {
 }
 
 export async function onCustomActionHandler(
-  _: ActionConfirmationRequest,
+  request: ActionConfirmationRequest,
   h: Hapi.ResponseToolkit
 ) {
+  const token = request.auth.artifacts.token as string
+  const event = request.payload
+
+  await sendInformantNotification({ event, token })
+
   return h.response().code(200)
 }
 

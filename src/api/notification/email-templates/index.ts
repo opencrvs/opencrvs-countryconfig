@@ -145,6 +145,18 @@ export const InformantNotificationVariables = {
     DeclarationCommonVariables.extend({
       name: z.string()
     }),
+  [InformantTemplateType.birthApprovalNotification]:
+    DeclarationCommonVariables.extend({
+      name: z.string()
+    }),
+  [InformantTemplateType.birthRevocationNotification]:
+    DeclarationCommonVariables.extend({
+      name: z.string()
+    }),
+  [InformantTemplateType.birthReinstateNotification]:
+    DeclarationCommonVariables.extend({
+      name: z.string()
+    }),
   [InformantTemplateType.deathInProgressNotification]:
     DeclarationCommonVariables,
   [InformantTemplateType.deathDeclarationNotification]:
@@ -272,6 +284,30 @@ const templates = {
       readBirthTemplate<
         InformantNotificationVariables['birthRejectionNotification']
       >('rejection')
+  },
+  birthApprovalNotification: {
+    type: 'birthApprovalNotification',
+    subject: 'Birth declaration approved',
+    template:
+      readBirthTemplate<
+        InformantNotificationVariables['birthApprovalNotification']
+      >('approval')
+  },
+  birthRevocationNotification: {
+    type: 'birthRevocationNotification',
+    subject: 'Birth registration revoked',
+    template:
+      readBirthTemplate<
+        InformantNotificationVariables['birthRevocationNotification']
+      >('revocation')
+  },
+  birthReinstateNotification: {
+    type: 'birthReinstateNotification',
+    subject: 'Birth registration reinstated',
+    template:
+      readBirthTemplate<
+        InformantNotificationVariables['birthReinstateNotification']
+      >('reinstate')
   },
   deathInProgressNotification: {
     type: 'deathInProgressNotification',

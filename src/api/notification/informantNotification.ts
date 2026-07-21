@@ -185,6 +185,38 @@ async function getNotificationParams(
     }
   }
 
+  if (pendingAction.type === ActionType.CUSTOM) {
+    const customType = (pendingAction as { customActionType?: string })
+      .customActionType
+    if (
+      customType === 'APPROVE_DECLARATION' &&
+      event.type === Event.Birth
+    ) {
+      return {
+        event: InformantTemplateType.birthApprovalNotification,
+        ...params
+      }
+    }
+    if (
+      customType === 'REVOKE_REGISTRATION' &&
+      event.type === Event.Birth
+    ) {
+      return {
+        event: InformantTemplateType.birthRevocationNotification,
+        ...params
+      }
+    }
+    if (
+      customType === 'REINSTATE_REVOKE_REGISTRATION' &&
+      event.type === Event.Birth
+    ) {
+      return {
+        event: InformantTemplateType.birthReinstateNotification,
+        ...params
+      }
+    }
+  }
+
   throw new Error(`Invalid action type "${pendingAction.type}"`)
 }
 
