@@ -28,6 +28,7 @@ import {
 } from '@countryconfig/events/birth/validators'
 import {
   emptyMessage,
+  hasHealthNotifierRole,
   hasNonHealthNotifierRole,
 } from '@countryconfig/events/utils'
 
@@ -243,9 +244,10 @@ export const mother = defineFormPage({
             field('mother.brn').isFalsy()
           ),
           message: {
-            defaultMessage: 'Invalid input',
-            description: 'Error message when generic field is invalid',
-            id: 'error.invalidInput'
+            defaultMessage: 'Birth registration number can only contain letters, numbers and hyphens',
+            description:
+              'Error message shown when mother birth registration number contains unsupported characters',
+            id: 'event.death.action.declare.form.section.mother.field.brn.error'
           }
         }
       },
@@ -512,7 +514,7 @@ export const mother = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: and(motherDetailsAvailable, notDeceased)
+          conditional: and(motherDetailsAvailable, notDeceased, hasHealthNotifierRole)
         }
       ]
     }

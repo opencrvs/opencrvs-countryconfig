@@ -214,9 +214,10 @@ export const deceased = defineFormPage({
             field('deceased.brn').isFalsy()
           ),
           message: {
-            defaultMessage: 'Invalid input',
-            description: 'Error message when generic field is invalid',
-            id: 'error.invalidInput'
+            defaultMessage: 'Only letters, numbers, and hyphens allowed.',
+            description:
+              'Error message shown when deceased birth registration number contains unsupported characters',
+            id: 'event.death.action.declare.form.section.deceased.field.brn.error'
           }
         }
       },
@@ -357,8 +358,8 @@ export const deceased = defineFormPage({
       validation: [
         {
           message: {
-            defaultMessage: 'Cannot be a future date',
-            description: 'This is the error message for invalid date',
+            defaultMessage: 'Date of birth cannot be in the future',
+            description: 'Error message shown when deceased date of birth is in the future',
             id: 'event.death.action.declare.form.section.deceased.field.dob.error'
           },
           validator: field('deceased.dob').isBefore().now()
@@ -505,9 +506,10 @@ export const deceased = defineFormPage({
       validation: [
         {
           message: {
-            defaultMessage: 'Invalid input',
-            description: 'Error message when generic field is invalid',
-            id: 'error.invalidInput'
+            defaultMessage: 'Select a valid usual residence',
+            description:
+              'Error message shown when deceased usual residence is not a valid administrative location',
+            id: 'event.death.action.declare.form.section.deceased.field.address.error'
           },
           validator: field('deceased.address').isValidAdministrativeLeafLevel()
         },
@@ -553,7 +555,13 @@ export const deceased = defineFormPage({
           description: 'Postfix for years',
           id: 'event.death.action.declare.form.section.deceased.field.howLongLivedInTuvalu.postfix'
         }
-      }
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: not(field('deceased.livedInTuvaluSinceBirth').isEqualTo(true))
+        }
+      ]
     },
     // ---- Divider ----
     {
@@ -600,7 +608,7 @@ export const deceased = defineFormPage({
       validation: [
         {
           message: {
-            defaultMessage: 'Cannot be date in the future',
+            defaultMessage: 'Date of marriage cannot be in the future',
             description: 'Error message for future date of marriage',
             id: 'event.death.action.declare.form.section.deceased.field.dateOfMarriage.error'
           },

@@ -156,6 +156,5 @@ export const DEATH_DECLARATION_FORM = defineDeclarationForm({
     livingChildren,
     informant,
     documents,
-    icd10
   ]
 })

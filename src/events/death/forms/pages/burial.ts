@@ -24,7 +24,8 @@ import { not } from '@opencrvs/toolkit/conditionals'
 import {
   defaultStreetAddressConfiguration,
   emptyMessage,
-  getNestedFieldValidators
+  getNestedFieldValidators,
+  hasHealthNotifierRole
 } from '@countryconfig/events/utils'
 
 const BurialArrangementType = {
@@ -72,6 +73,7 @@ export const burial = defineFormPage({
     description: 'Form section title for burial details',
     id: 'form.death.burial.title'
   },
+  conditional: hasHealthNotifierRole,
   fields: [
     // ---- Burial arrangement ----
     {

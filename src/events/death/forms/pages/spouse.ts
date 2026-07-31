@@ -28,6 +28,7 @@ import {
 import { InformantType } from './informant'
 import {
   emptyMessage,
+  hasHealthNotifierRole,
   hasNonHealthNotifierRole
 } from '@countryconfig/events/utils'
 
@@ -204,9 +205,10 @@ export const spouse = defineFormPage({
             field('spouse.brn').isFalsy()
           ),
           message: {
-            defaultMessage: 'Invalid input',
-            description: 'Error message when generic field is invalid',
-            id: 'error.invalidInput'
+            defaultMessage: 'Birth registration number can only contain letters, numbers and hyphens',
+            description:
+              'Error message shown when spouse birth registration number contains unsupported characters',
+            id: 'event.death.action.declare.form.section.spouse.field.brn.error'
           }
         }
       },
@@ -451,7 +453,7 @@ export const spouse = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: requireSpouseDetails
+          conditional: and(requireSpouseDetails,hasHealthNotifierRole)
         }
       ]
     }

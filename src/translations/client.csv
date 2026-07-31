@@ -1225,6 +1225,8 @@ event.death.action.declare.form.section.event.field.causeSection2Heading.label,L
 event.death.action.declare.form.section.event.field.causeSection2Heading.label,Label for cause section 2 heading,Section II. Other significant conditions,Section II. Autres affections importantes
 event.death.action.declare.form.section.event.field.certifyingMedicalOfficer.label,Label for certifying medical officer field,Full name of certifying medical officer,Nom du médecin certificateur
 event.death.action.declare.form.section.event.field.date.error,This is the error message for invalid date,Must be a valid date,Doit être une date valide
+event.death.action.declare.form.section.event.field.date.error.future,,Date of death cannot be in the future,La date du décès ne peut pas être dans le futur
+event.death.action.declare.form.section.deceased.field.deathLocationOther.error,,Select a valid death location address,Sélectionnez une adresse de lieu de décès valide
 event.death.action.declare.form.section.event.field.date.error,Error message for invalid date of death,Must be a valid date,Doit être une date valide
 event.death.action.declare.form.section.event.field.date.error.beforeBirth,This is the error message for date of death before date of birth,Date of death must be after the deceased's birth date,La date du décès doit être postérieure à la date de naissance du défunt
 event.death.action.declare.form.section.event.field.date.error.beforeBirth,Error message for date of death before date of birth,Date of death must be after the deceased's birth date,La date du décès doit être postérieure à la date de naissance du défunt
@@ -1234,6 +1236,7 @@ event.death.action.declare.form.section.event.field.dateLastSeenAlive.label,Labe
 event.death.action.declare.form.section.event.field.dateLastSeenAlive.label,Label for date last seen alive field,Date last seen alive,Date à laquelle il a été vu vivant pour la dernière fois
 event.death.action.declare.form.section.event.field.description.label,Description of cause of death by lay person or verbal autopsy,Description,Description
 event.death.action.declare.form.section.event.field.duration.unit.days,Duration unit days,Days,Jours
+event.death.action.declare.form.section.mother.field.brn.error,,Birth registration number can only contain lettersumbers and hyphens,Le numéro d'enregistrement de naissance ne peut contenir que des lettres des chiffres et des traits d'union
 event.death.action.declare.form.section.event.field.duration.unit.days,Duration unit days,Days,Jours
 event.death.action.declare.form.section.event.field.duration.unit.hours,Duration unit hours,Hours,Heures
 event.death.action.declare.form.section.event.field.duration.unit.hours,Duration unit hours,Hours,Heures

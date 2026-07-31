@@ -137,9 +137,9 @@ export const eventDetails = defineFormPage({
       validation: [
         {
           message: {
-            defaultMessage: 'Must be a valid date',
-            description: 'This is the error message for invalid date',
-            id: 'event.death.action.declare.form.section.event.field.date.error'
+            defaultMessage: 'Date of death cannot be in the future',
+            description: 'Error message shown when date of death is in the future',
+            id: 'event.death.action.declare.form.section.event.field.date.error.future'
           },
           validator: field('eventDetails.date').isBefore().now()
         },
@@ -292,9 +292,10 @@ export const eventDetails = defineFormPage({
       validation: [
         {
           message: {
-            defaultMessage: 'Invalid input',
-            description: 'Error message when generic field is invalid',
-            id: 'error.invalidInput'
+            defaultMessage: 'Select a valid death location address',
+            description:
+              'Error message shown when the death location address is not a valid administrative location',
+            id: 'event.death.action.declare.form.section.deceased.field.deathLocationOther.error'
           },
           validator: field(
             'eventDetails.deathLocationOther'
@@ -528,6 +529,64 @@ export const eventDetails = defineFormPage({
       label: emptyMessage,
       conditionals: [{ type: ConditionalType.SHOW, conditional: medCertEstablished }]
     },
-    ...createCauseOfDeathFields('Other', medCertEstablished)
+    ...createCauseOfDeathFields('Other', medCertEstablished),
+    {
+      id: 'eventDetails.udercauseDOtherDivider',
+      type: FieldType.DIVIDER,
+      label: emptyMessage,
+    },
+    {
+      id: 'eventDetails.uderlyingcaseofdeathjeading',
+      type: FieldType.HEADING,
+      label: {
+        defaultMessage: 'Underlying cause of death',
+        description: 'This is the label for the field',
+        id: 'event.death.action.declare.form.section.event.field.uderlyingcaseofdeathjeading.label'
+      },
+      configuration: { styles: { fontVariant: 'h3' } }
+    },
+    {
+      id: 'eventDetails.codesAvailable',
+      type: FieldType.CHECKBOX,
+      label: {
+        defaultMessage: 'Codes available',
+        description: 'This is the label for the field',
+        id: 'event.death.action.declare.form.section.event.field.codesAvailable.label'
+      },
+    },
+    //Underlying cause code (UCCode)			Freetext			Show if Codes available checked
+    {
+      id: 'eventDetails.underlyingCauseCode',
+      type: FieldType.TEXT,
+      required: false,
+      label: {
+        defaultMessage: 'Underlying cause code (UCCode)',
+        description: 'This is the label for the field',
+        id: 'event.death.action.declare.form.section.event.field.underlyingCauseCode.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: field('eventDetails.codesAvailable').isEqualTo(true)
+        }
+      ]
+    },
+    //Selected Codes			Freetext			Show if Codes available checked
+    {
+      id: 'eventDetails.selectedCodes',
+      type: FieldType.TEXT,
+      required: false,
+      label: {
+        defaultMessage: 'Selected Codes',
+        description: 'This is the label for the field',
+        id: 'event.death.action.declare.form.section.event.field.selectedCodes.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: field('eventDetails.codesAvailable').isEqualTo(true)
+        }
+      ]
+    }
   ]
 })

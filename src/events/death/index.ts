@@ -261,7 +261,7 @@ export const deathEvent = defineConfig({
         register: {
           id: 'event.death.action.edit.register.copy',
           defaultMessage:
-            'You are about to register this death event with your edits. Please ensure all details are correct before proceeding.<br></br><br></br><strong>WARNING!</strong>: By continuing, you confirm that you have reviewed the record alongside supporting documentation. The record will proceed to be <strong>legally registered</strong> via the outbox. Further amends after registration can only be made via a legal correction process.',
+             '<strong>WARNING!</strong>: By clicking "Register", you confirm that you have reviewed the record alongside supporting documentation in the Record tab. The record will proceed to be <strong>legally registered</strong> via the outbox. Further amends after registration can only be made via a legal correction process.',
           description: 'Confirmation text for the register with edits action'
         }
       }
