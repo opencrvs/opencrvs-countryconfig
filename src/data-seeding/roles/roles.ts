@@ -406,7 +406,7 @@ export const roles: Role[] = [
     scopes: defineScopes([
       { type: 'user.read-only-my-audit' },
       { type: 'record.search' },
-      { type: 'workqueue', options: { ids: ['assigned-to-you', 'recent', 'pending-updates', 'my-submissions'] } },
+      { type: 'workqueue', options: { ids: ['assigned-to-you', 'recent', 'pending-updates', 'my-submissions', 'organisation-submissions'] } },
       { type: 'record.create' },
       { type: 'record.read' },
       { type: 'record.notify' },

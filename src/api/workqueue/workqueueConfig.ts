@@ -295,5 +295,19 @@ export const Workqueues = defineWorkqueues([
     // submitted even after they have been declared or registered by other roles.
     query: { createdBy: { type: 'exact', term: user('id') } },
     action: { type: ActionType.READ }
+  },
+  {
+    slug: 'organisation-submissions',
+    icon: 'Buildings',
+    name: {
+      id: 'workqueues.organisationSubmissions.title',
+      defaultMessage: 'Organisation submissions',
+      description: 'Title of organisation submissions workqueue'
+    },
+    // Shows all records created at the user's primary office (e.g. TUV-PMH for
+    // Health Notifiers), regardless of who created them or their current status.
+    // Gives health staff a team-wide view of all records started at their facility.
+    query: { ...createdInMyAdminArea },
+    action: { type: ActionType.READ }
   }
 ])
