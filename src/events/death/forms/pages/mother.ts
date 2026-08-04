@@ -514,7 +514,7 @@ export const mother = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: and(motherDetailsAvailable, notDeceased, hasHealthNotifierRole)
+          conditional: and(motherDetailsAvailable, notDeceased, hasNonHealthNotifierRole)
         }
       ]
     }

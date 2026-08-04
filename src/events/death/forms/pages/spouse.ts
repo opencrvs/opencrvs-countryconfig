@@ -453,7 +453,7 @@ export const spouse = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: and(requireSpouseDetails,hasHealthNotifierRole)
+          conditional: and(requireSpouseDetails,hasNonHealthNotifierRole)
         }
       ]
     }

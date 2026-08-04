@@ -33,7 +33,8 @@ import {
   getNestedFieldValidators,
   BirthIdType,
   birthIdTypeOptions,
-  hasNonHealthNotifierRole
+  hasNonHealthNotifierRole,
+  hasHealthNotifierRole
 } from '@countryconfig/events/utils'
 
 export const requireMotherDetails = or(
@@ -780,7 +781,7 @@ export const mother = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: requireMotherDetails
+          conditional: and(hasHealthNotifierRole, requireMotherDetails)
         }
       ]
     }

@@ -127,9 +127,11 @@ function createSymptomFields(letter: CauseLetter) {
     if (index === 0) {
       autocompleteField.helperText = {
         defaultMessage:
-          letter === 'Other'
-            ? 'Enter a disease of condition that contributed to death but did not directly cause it'
-            : 'Enter the condition that gave rise to the direct cause (if applicable)',
+          letter === 'A'
+            ? 'Please select the disease or condition directly leading to death, or choose "Other" to enter a diagnosis not listed'
+            : letter === 'Other'
+              ? 'Enter a disease of condition that contributed to death but did not directly cause it'
+              : 'Please enter the condition that gave rise to the above cause (if applicable)',
         description: 'This is the label for the field',
         id: `causeOfDeathDetails.causeOfDeath${letter}.symptom.one.helperText`
       }

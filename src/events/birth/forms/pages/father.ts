@@ -32,7 +32,8 @@ import {
   getNestedFieldValidators,
   BirthIdType,
   birthIdTypeOptions,
-  hasNonHealthNotifierRole
+  hasNonHealthNotifierRole,
+  hasHealthNotifierRole
 } from '@countryconfig/events/utils'
 
 export const requireFatherDetails = or(
@@ -63,7 +64,7 @@ export const father = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: not(
             or(field('informant.relation').isEqualTo(InformantType.FATHER),
-            field('informant.relation').isEqualTo(InformantType.MOTHER_AND_FATHER))
+              field('informant.relation').isEqualTo(InformantType.MOTHER_AND_FATHER))
           )
         },
         {
@@ -81,7 +82,7 @@ export const father = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: not(
             or(field('informant.relation').isEqualTo(InformantType.FATHER),
-            field('informant.relation').isEqualTo(InformantType.MOTHER_AND_FATHER))
+              field('informant.relation').isEqualTo(InformantType.MOTHER_AND_FATHER))
           )
         }
       ]
@@ -571,7 +572,7 @@ export const father = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: requireFatherDetails
+          conditional: and(requireFatherDetails, hasHealthNotifierRole)
         }
       ]
     }
