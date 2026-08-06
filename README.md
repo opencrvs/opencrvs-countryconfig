@@ -1,3 +1,5 @@
+Repository is archived. v2.1.0 onwards configuration is forked using @opencrvs/countryconfig package. Helper uses template located under [opencrvs-core](https://github.com/opencrvs/opencrvs-core/tree/develop/packages/countryconfig-template).
+
 <p align="center"> <a href="https://www.opencrvs.org"><img src="https://i.imgur.com/W7ULmox.png" title="source: imgur.com" / style="max-width:100%;"width="72" height="72"></a>
 </p>
 <h1 align="center">Country configuration template repository</h1>
