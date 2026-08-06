@@ -513,7 +513,7 @@ export async function createServer() {
     options: {
       tags: ['api', 'integration'],
       description:
-        'Called by events on startup. Registers integrations in user-mgmt using the provided bootstrap token.'
+        'Called by events on startup. Registers integrations in the events service using the provided bootstrap token.'
     }
   })
 
@@ -568,20 +568,6 @@ export async function createServer() {
   })
 
   server.route(getUserNotificationRoutes())
-
-  server.route({
-    method: 'GET',
-    path: '/triggers/system/ready',
-    handler: (_request, h) => {
-      // Not implemented by default
-      // You can use this endpoint to for instance set up integration clients
-      return h.response().code(501)
-    },
-    options: {
-      tags: ['api', 'triggers'],
-      description: 'System ready endpoint'
-    }
-  })
 
   server.ext({
     type: 'onRequest',
