@@ -211,6 +211,29 @@ export function createCauseOfDeathFields(letter: CauseLetter, showConditional?: 
       },
       configuration: { styles: { fontVariant: 'h3' } }
     },
+    ...(letter === 'A' || letter === 'Other'
+      ? [
+          {
+            id: `${base}.subheading`,
+            type: FieldType.PARAGRAPH,
+            label: {
+              defaultMessage:
+                letter === 'A'
+                  ? 'Disease or condition directly leading to death'
+                  : 'Other conditions that contributed to the death but were not part of the main cause',
+              description:
+                letter === 'A'
+                  ? 'Label for cause direct subheading'
+                  : 'Label for other significant conditions subheading',
+              id:
+                letter === 'A'
+                  ? 'event.death.action.declare.form.section.event.field.causeDirectSubheading.label'
+                  : 'event.death.action.declare.form.section.event.field.causeOtherSubheading.label'
+            },
+            configuration: { styles: { fontVariant: 'h4' } }
+          }
+        ]
+      : []),
     ...createSymptomFields(letter),
     {
       id: `${base}.interval`,
