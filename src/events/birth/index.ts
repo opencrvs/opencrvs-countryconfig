@@ -39,6 +39,7 @@ import { isRegistrarGeneral } from '@countryconfig/events/utils/role-conditional
 
 export const birthEvent = defineConfig({
   id: Event.Birth,
+  analytics: true,
   declaration: BIRTH_DECLARATION_FORM,
   label: {
     defaultMessage: 'Birth',

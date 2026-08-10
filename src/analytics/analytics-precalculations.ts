@@ -1,4 +1,4 @@
-import { differenceInDays } from 'date-fns'
+import { differenceInDays, differenceInYears } from 'date-fns'
 import { ActionDocument, AddressFieldValue } from '@opencrvs/toolkit/events'
 import { COUNTRY_NAMES_BY_CODE } from './countries'
 
@@ -15,12 +15,30 @@ function getCountryPlaceOfBirthResolved(
   const maybeAddress = AddressFieldValue.safeParse(placeOfBirth)
 
   if (!maybeAddress.success) {
-    return 'Farajaland'
+    return 'Tuvalu'
   }
 
   const country = maybeAddress.data.country
 
-  return COUNTRY_NAMES_BY_CODE[country] || 'Farajaland'
+  return COUNTRY_NAMES_BY_CODE[country] || 'Tuvalu'
+}
+
+export function precalculateDeathEvent(
+  action: ActionDocument,
+  declaration: ActionDocument['declaration']
+) {
+  const deathDate = declaration['eventDetails.date']
+  const dob = declaration['deceased.dob']
+
+  if (!deathDate || !dob) return declaration
+
+  return {
+    ...declaration,
+    'deceased.ageAtDeath': differenceInYears(
+      new Date(deathDate as string),
+      new Date(dob as string)
+    )
+  }
 }
 
 export function precalculateBirthEvent(
