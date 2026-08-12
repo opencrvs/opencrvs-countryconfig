@@ -82,7 +82,12 @@ export function concatAddress(): Handlebars.HelperDelegate {
         const lines = wordWrap(addressLines, 50)
         return insertTspansIntoText(lines, x, initialY, lineHeight)
       } else {
-        const addressLines = [value?.name, value?.streetLevelDetails?.village, value?.island, value?.country]
+        const addressLines = [
+          value?.district || value?.name,
+          value?.province,
+          value?.streetLevelDetails?.village,
+          value?.country
+        ]
           .filter(Boolean)
           .join(', ')
         const lines = wordWrap(addressLines, 50)
