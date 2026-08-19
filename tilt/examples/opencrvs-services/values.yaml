@@ -7,14 +7,6 @@ env:
 credentials:
   super_user_password: password
 
-# OpenCRVS core image tag:
-platform:
-  tag: ee35dde
-
-countryconfig:
-  image:
-    tag: develop
-
 # Horizontal Pod Autoscaler (HPA) configuration:
 # Disabled by default for local environment.
 hpa:
