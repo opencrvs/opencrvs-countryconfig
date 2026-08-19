@@ -9,11 +9,11 @@ credentials:
 
 # OpenCRVS core image tag:
 platform:
-  tag: v2.0.0-beta
+  tag: ee35dde
 
 countryconfig:
   image:
-    tag: v1.9.11
+    tag: develop
 
 # Horizontal Pod Autoscaler (HPA) configuration:
 # Disabled by default for local environment.

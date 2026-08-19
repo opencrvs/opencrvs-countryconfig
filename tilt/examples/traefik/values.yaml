@@ -23,12 +23,14 @@ providers:
 service:
   enabled: true
   single: false
-  type: NodePort
+  # OrbStack binds LoadBalancer service ports straight onto 127.0.0.1 on the Mac,
+  # so the "web" entrypoint's exposedPort (80, chart default) becomes reachable
+  # directly at http://opencrvs.localhost - no NodePort/port-forward needed.
+  type: LoadBalancer
 
 ports:
   web:
     port: 8000
     protocol: TCP
-    nodePort: 30080
-
-tlsStore: {}
+    # exposedPort is not set here - it defaults to 80 in the traefik chart,
+    # which is what actually lands on host port 80 under OrbStack.

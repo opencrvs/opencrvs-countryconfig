@@ -18,16 +18,22 @@ traefik_tilt_label = '5.Traefik'
 # Install Traefik GW
 helm_repo('traefik-repo', 'https://traefik.github.io/charts', labels=[traefik_tilt_label])
 helm_resource(
-  'traefik', 'traefik-repo/traefik', namespace='traefik', resource_deps=['traefik-repo'],
-  flags=['--values=./examples/traefik/values.yaml'])
-
+    'traefik',
+    'traefik-repo/traefik',
+    namespace='traefik',
+    resource_deps=['traefik-repo'],
+    flags=[
+        '--version=39.0.0',
+        '--values=./examples/traefik/values.yaml',
+        '--create-namespace',
+    ],
+)
 # OpenCRVS application has traefik CRDs IngressRoute
 # and Middleware, so we need to add traefik as dependency
 # to all workloads that use them
 traefik_deps = [
   'client',
   'countryconfig',
-  'events',
   'gateway',
   'login',
   'minio'
@@ -54,7 +60,6 @@ k8s_resource(
 tilt_label = '4.Dependencies'
 dependencies = [
   'elasticsearch',
-  'mongodb',
   'minio',
   'redis',
   'postgres',
@@ -78,7 +83,6 @@ opensrvs_predeploy_jobs = [
   # 'elasticsearch-on-deploy',
   'data-migration',
   'data-migration-analytics',
-  'data-migration-legacy',
 ]
 
 opensrvs_services = [
@@ -89,7 +93,6 @@ opensrvs_services = [
   'events',
   'gateway',
   'login',
-  'user-mgnt'
 ]
 
 opensrvs_postdeploy_jobs = [
