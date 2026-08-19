@@ -24,3 +24,14 @@ dashboards:
 
 # Expose services on Node port
 service_type: NodePort
+
+data_seed:
+  env:
+    ACTIVATE_USERS: 'true'
+
+auth:
+  env:
+    TWO_FA_ENABLED: 'false'
+events:
+  env:
+    TWO_FA_ENABLED: 'false'
