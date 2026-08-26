@@ -107,13 +107,16 @@ export const mother = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: not(
-            or(
-              field('informant.relation').isEqualTo(InformantType.MOTHER),
-              field('informant.relation').isEqualTo(
-                InformantType.MOTHER_AND_FATHER
+          conditional: and(
+            not(
+              or(
+                field('informant.relation').isEqualTo(InformantType.MOTHER),
+                field('informant.relation').isEqualTo(
+                  InformantType.MOTHER_AND_FATHER
+                )
               )
-            )
+            ),
+            hasNonHealthNotifierRole
           )
         },
         {
@@ -129,13 +132,16 @@ export const mother = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: not(
-            or(
-              field('informant.relation').isEqualTo(InformantType.MOTHER),
-              field('informant.relation').isEqualTo(
-                InformantType.MOTHER_AND_FATHER
+          conditional: and(
+            not(
+              or(
+                field('informant.relation').isEqualTo(InformantType.MOTHER),
+                field('informant.relation').isEqualTo(
+                  InformantType.MOTHER_AND_FATHER
+                )
               )
-            )
+            ),
+            hasNonHealthNotifierRole
           )
         }
       ]
@@ -563,7 +569,8 @@ export const mother = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: and(
             field('mother.maritalStatus').isEqualTo('MARRIED'),
-            requireMotherDetails
+            requireMotherDetails,
+            hasNonHealthNotifierRole
           )
         }
       ],
@@ -585,7 +592,8 @@ export const mother = defineFormPage({
           conditional: and(
             requireMotherDetails,
             field('mother.maritalStatus').isEqualTo('MARRIED'),
-            field('mother.isMarriedToFather').isEqualTo('Yes')
+            field('mother.isMarriedToFather').isEqualTo('Yes'),
+            hasNonHealthNotifierRole
           )
         }
       ],
@@ -607,7 +615,8 @@ export const mother = defineFormPage({
           conditional: and(
             requireMotherDetails,
             field('mother.maritalStatus').isEqualTo('MARRIED'),
-            field('mother.isMarriedToFather').isEqualTo('Yes')
+            field('mother.isMarriedToFather').isEqualTo('Yes'),
+            hasNonHealthNotifierRole
           )
         }
       ],
