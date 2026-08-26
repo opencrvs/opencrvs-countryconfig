@@ -1041,7 +1041,7 @@ event.birth.summary.child.placeOfBirth.empty,Label for place of birth not availa
 event.birth.summary.child.placeOfBirth.label,Label for place of birth,Place of birth,Lieu de naissance
 event.birth.summary.informant.contact.empty,This is shown when there is no informant information,No contact details provided,Pas de coordonnées fournies
 event.birth.summary.informant.contact.label,This is the label for the informant information,Contact,Contact
-event.birth.summary.informant.contact.value,This is the contact value of the informant,{informant.phoneNo} {informant.email},{informant.phoneNo} {informant.email}
+event.birth.summary.informant.contact.value,This is the contact value of the informant,"{informant.phoneNo, select, __EMPTY__ {{informant.email, select, __EMPTY__ {} other {{informant.email}}}} other {{informant.phoneNo}{informant.email, select, __EMPTY__ {} other { | {informant.email}}}}}","{informant.phoneNo, select, __EMPTY__ {{informant.email, select, __EMPTY__ {} other {{informant.email}}}} other {{informant.phoneNo}{informant.email, select, __EMPTY__ {} other { | {informant.email}}}}}"
 event.birth.title,This is the title of the summary,{child.name.firstname} {child.name.surname},{child.name.firstname} {child.name.surname}
 event.death.action.Read.label,This is shown as the action name anywhere the user can trigger the action from,Read,Lire
 event.death.action.certificate.form.cancel,This is the label for the verification cancellation button,Identity does not match,L'identité ne correspond pas
@@ -1545,7 +1545,7 @@ event.death.summary.eventDetails.placeOfDeath.empty,This is shown when there is 
 event.death.summary.eventDetails.placeOfDeath.label,Label for place of death,Place of death,Lieu de décès
 event.death.summary.informant.contact.empty,This is shown when there is no informant information,No contact details provided,Aucun contact fourni
 event.death.summary.informant.contact.label,This is the label for the informant information,Contact,Contact
-event.death.summary.informant.contact.value,This is the contact value of the informant,{informant.phoneNo} {informant.email},{informant.phoneNo} {informant.email}
+event.death.summary.informant.contact.value,This is the contact value of the informant,"{informant.phoneNo, select, __EMPTY__ {{informant.email, select, __EMPTY__ {} other {{informant.email}}}} other {{informant.phoneNo}{informant.email, select, __EMPTY__ {} other { | {informant.email}}}}}","{informant.phoneNo, select, __EMPTY__ {{informant.email, select, __EMPTY__ {} other {{informant.email}}}} other {{informant.phoneNo}{informant.email, select, __EMPTY__ {} other { | {informant.email}}}}}"
 event.death.title,This is the title of the summary,{deceased.name.firstname} {deceased.name.surname},{deceased.name.firstname} {deceased.name.surname}
 event.declaration.potentialDuplicateDetected,Notification for potential duplicate declaration. Shown when a potential duplicate is detected after declaring an event.,{trackingId} is a potential duplicate. Record is ready for review.,{trackingId} est un doublon potentiel. L’enregistrement est prêt pour révision.
 event.default.action.certificate.template.type.label,Select certificate template,Document Type,Taper
@@ -1832,7 +1832,7 @@ form.field.label.informantRelation.groomAndBride,Label for option Groom & Bride,
 form.field.label.informantRelation.legalGuardian,Label for option Legal Guardian,Legal guardian,Tuteur légal
 form.field.label.informantRelation.mother,Label for option mother,Mother,Mère
 form.field.label.informantRelation.motherAndFather,Label for option mother and father,Mother and Father,Mère et père
-form.field.label.informantRelation.others,Label for option someone else,Other(please specify),Quelqu'un d'autre
+form.field.label.informantRelation.others,Label for option someone else,Other (please specify),Quelqu'un d'autre
 form.field.label.informantRelation.sister,Label for option Sister,Sister,Sœur
 form.field.label.informantRelation.son,Label for option Son,Son,Fils
 form.field.label.informantRelation.sonInLaw,Label for option Son in law,Son in law,Fils par alliance
@@ -2872,7 +2872,8 @@ workqueues.dateOfEvent,Label for workqueue column: dateOfEvent,Date of Event,Dat
 workqueues.draft.title,Title of draft workqueue,Drafts,Brouillons
 workqueues.escalated.title,Title of escalated workqueue,Escalated,Transmis
 workqueues.inExternalValidation.title,Title of pending external validation workqueue,Pending external validation,En attente de validation externe
-workqueues.mySubmissions.title,Title of my submissions workqueue,My submissions,Mes soumissions
+workqueues.mySubmissions.title,Title of my submissions workqueue,My notifications,Mes soumissions
+workqueues.organisationSubmissions.title,Title of organisation submissions,Health notifications,Health notifications
 workqueues.notifications.title,Title of notifications workqueue,Notifications,Notifications
 workqueues.outbox.title,Title of outbox workqueue,Outbox,Boîte d'envoi
 workqueues.pendingCertification.emptyMessage,Empty message for pending certification workqueue,No pending certification records,Aucun dossier de certification en attente

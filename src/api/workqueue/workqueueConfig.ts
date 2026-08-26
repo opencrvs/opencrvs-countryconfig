@@ -287,7 +287,7 @@ export const Workqueues = defineWorkqueues([
     icon: 'FileText',
     name: {
       id: 'workqueues.mySubmissions.title',
-      defaultMessage: 'My submissions',
+      defaultMessage: 'My notifications',
       description: 'Title of my submissions workqueue'
     },
     // Shows all records originally created by the current user, regardless of
@@ -301,7 +301,7 @@ export const Workqueues = defineWorkqueues([
     icon: 'Buildings',
     name: {
       id: 'workqueues.organisationSubmissions.title',
-      defaultMessage: 'Organisation submissions',
+      defaultMessage: 'Health notifications',
       description: 'Title of organisation submissions workqueue'
     },
     // Shows all records created at the user's primary office (e.g. TUV-PMH for

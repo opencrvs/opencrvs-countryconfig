@@ -214,7 +214,8 @@ export const birthEvent = defineConfig({
           id: 'event.birth.summary.informant.contact.label'
         },
         value: {
-          defaultMessage: '{informant.phoneNo} {informant.email}',
+          defaultMessage:
+            '{informant.phoneNo, select, __EMPTY__ {{informant.email, select, __EMPTY__ {} other {{informant.email}}}} other {{informant.phoneNo}{informant.email, select, __EMPTY__ {} other { | {informant.email}}}}}',
           description: 'This is the contact value of the informant',
           id: 'event.birth.summary.informant.contact.value'
         }
