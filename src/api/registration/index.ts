@@ -13,16 +13,34 @@ import { generateRegistrationNumber } from './registrationNumber'
 import { createClient } from '@opencrvs/toolkit/api'
 import {
   ActionInput,
+  ActionType,
+  aggregateActionDeclarations,
+  deepMerge,
   EventDocument,
   getPendingAction
 } from '@opencrvs/toolkit/events'
 import { GATEWAY_URL } from '@countryconfig/constants'
 import { v4 as uuidv4 } from 'uuid'
 import { sendInformantNotification } from '../notification/informantNotification'
+import { logger } from '@countryconfig/logger'
+import { Event } from '@countryconfig/events/utils'
+import { readCSVToJSON } from '@countryconfig/utils'
+import { deriveEffectiveRegistrationPlaceId as deriveEffectiveRegistrationPlaceIdFromLocations } from './locationMapper'
+import { resolveRegistrationLocationPrefix } from './registrationNumber'
 
 export interface ActionConfirmationRequest extends Hapi.Request {
   payload: EventDocument
 }
+
+type SeedLocation = {
+  id: string
+  name: string
+  partOf: string
+  locationType: string
+}
+
+let locationsCache: SeedLocation[] = []
+let locationsCacheReady = false
 
 /* eslint-disable no-unused-vars */
 
@@ -58,35 +76,141 @@ export async function onRegisterHandler(
   const event = request.payload
   const eventId = event.id
   const action = getPendingAction(event.actions)
+  const registrationLocationId =
+    getDeclaredLocationId(event) ?? normalizeLocationId(action?.createdAtLocation)
 
-  // OPTION 1: Immediate acceptance (HTTP 200)
-  // Return HTTP 200 with a registration number to immediately accept the registration action.
-  // This is the default implementation that automatically generates and assigns a registration number.
+  await ensureLocationsCache()
 
-  const registrationNumber = generateRegistrationNumber()
+  const locationPrefix = resolveRegistrationLocationPrefix(
+    registrationLocationId,
+    locationsCache
+  )
+
+  if (!locationPrefix) {
+    logger.warn(
+      {
+        eventId,
+        eventType: event.type,
+        registrationLocationId
+      },
+      'Falling back to default registration number prefix'
+    )
+  }
+
+  const registrationNumber = generateRegistrationNumber({
+    eventType: event.type,
+    registrationLocationId,
+    locations: locationsCache,
+    locationPrefix
+  })
+
+  if (event.type === Event.Birth) {
+    // Defer acceptance so the declaration patch (effective date/place) can be written atomically.
+    acceptBirthRegistration({ token, eventId, action, event, registrationNumber }).catch(
+      (err) => logger.error(err)
+    )
+    return h.response().code(202)
+  }
 
   await sendInformantNotification({ event, token, registrationNumber })
 
   return h.response({ registrationNumber }).code(200)
+}
 
-  // OPTION 2: Immediate rejection (HTTP 400)
-  // To reject the registration immediately, uncomment the following:
-  //
-  // return h.response({ reason: 'Rejection reason here' }).code(400)
+async function acceptBirthRegistration({
+  token,
+  eventId,
+  action,
+  event,
+  registrationNumber
+}: {
+  token: string
+  eventId: string
+  action: ReturnType<typeof getPendingAction>
+  event: EventDocument
+  registrationNumber: string
+}) {
+  const url = new URL('events', GATEWAY_URL).toString()
+  const client = createClient(url, `Bearer ${token}`)
 
-  // OPTION 3: Deferred decision (HTTP 202)
-  // To implement an asynchronous workflow where the decision is made later:
-  // 1. Store the token, eventId, actionId, and action details in your system
-  // 2. Return HTTP 202 to place the action in 'Requested' state
-  // 3. Later call client.event.actions.register.accept.mutate() or client.event.actions.register.reject.mutate()
-  //
-  // Below is example of how to defer the confirmation, accepting it after a 10 second delay
-  // To defer the confirmation, uncomment the following:
-  //
-  // setTimeout(() => {
-  //   acceptRequestedRegistration(token, eventId, actionId, action)
-  // }, 10000)
-  // return h.response().code(202)
+  const currentDeclaration = deepMerge(
+    aggregateActionDeclarations(event),
+    action?.declaration ?? {}
+  )
+  const existingEffectiveRegistrationDate =
+    currentDeclaration['child.effectiveRegistrationDate']
+  const existingEffectiveRegistrationPlaceId =
+    currentDeclaration['child.effectiveRegistrationPlaceId']
+  const derivedEffectiveRegistrationPlaceId =
+    await deriveEffectiveRegistrationPlaceIdFromSeedData(currentDeclaration)
+
+  const declarationPatch: Record<string, unknown> = {
+    'child.effectiveRegistrationDate':
+      existingEffectiveRegistrationDate ??
+      new Date().toISOString().split('T')[0]
+  }
+
+  const effectiveRegistrationPlaceId =
+    derivedEffectiveRegistrationPlaceId ??
+    existingEffectiveRegistrationPlaceId ??
+    action?.createdAtLocation
+
+  if (effectiveRegistrationPlaceId) {
+    declarationPatch['child.effectiveRegistrationPlaceId'] =
+      effectiveRegistrationPlaceId
+  }
+
+  await client.event.actions.register.accept.mutate({
+    type: 'REGISTER' as const,
+    transactionId: uuidv4(),
+    eventId,
+    actionId: action?.id as string,
+    registrationNumber,
+    declaration: { ...(action?.declaration ?? {}), ...declarationPatch }
+  })
+
+  await sendInformantNotification({ event, token, registrationNumber })
+}
+
+async function deriveEffectiveRegistrationPlaceIdFromSeedData(
+  declaration: Record<string, unknown>
+) {
+  try {
+    await ensureLocationsCache()
+    return deriveEffectiveRegistrationPlaceIdFromLocations(
+      declaration,
+      locationsCache
+    )
+  } catch (error) {
+    logger.warn(
+      { error },
+      'Could not derive effective registration place from birth location'
+    )
+    return undefined
+  }
+}
+
+function getDeclaredLocationId(event: EventDocument) {
+  return normalizeLocationId(
+    event.actions.find((action) => action.type === ActionType.DECLARE)
+      ?.createdAtLocation
+  )
+}
+
+function normalizeLocationId(locationId: string | null | undefined) {
+  return locationId ?? undefined
+}
+
+async function ensureLocationsCache() {
+  if (locationsCacheReady) {
+    return
+  }
+
+  locationsCache = await readCSVToJSON<SeedLocation[]>(
+    './src/data-seeding/locations/source/locations.csv'
+  )
+
+  locationsCacheReady = true
 }
 
 /**
