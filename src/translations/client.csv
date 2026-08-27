@@ -897,7 +897,10 @@ event.birth.action.declare.form.section.child.field.birthOrderTwin.label,Label f
 event.birth.action.declare.form.section.child.field.birthType.label,This is the label for the field,Type of birth,Type d'accouchement
 event.birth.action.declare.form.section.child.field.dob.error,This is the error message for invalid date,Cannot be a future date,Doit être une date de naissance valide
 event.birth.action.declare.form.section.child.field.dob.label,This is the label for the field,Date of birth,Date de naissance
+event.birth.action.declare.form.section.child.field.effectiveRegistrationDate.error,Error shown when the registration date is in the future,Cannot be a future date,Ne peut pas être une date future
+event.birth.action.declare.form.section.child.field.effectiveRegistrationDate.label,Manual registration date for legacy records,Date of registration,Date d'enregistrement
 event.birth.action.declare.form.section.child.field.gender.label,This is the label for the field,Sex,Sexe
+event.birth.action.declare.form.section.child.field.isLegacyRecord.label,Checkbox indicating this record has a manual registration date and place,Legacy registration,Enregistrement hérité
 event.birth.action.declare.form.section.child.field.lateRegistrationNotice.label,Notice shown for late registration,This birth is being registered more than 6 months after the date of birth. Please ensure all required supporting documentation for delayed registration is attached.,Cette naissance est enregistrée plus de 6 mois après la date de naissance. Veuillez vous assurer que tous les documents justificatifs requis sont joints.
 event.birth.action.declare.form.section.child.field.name.label,This is the label for the field,Child's name,Nom de l'enfant
 event.birth.action.declare.form.section.child.field.nameChangedAfterRegistration.label,Label for name changed after registration checkbox,Name changed after registration (via deed poll),Le nom de l'enfant a-t-il été modifié depuis l'enregistrement de la naissance ?
@@ -1166,6 +1169,7 @@ event.death.action.declare.form.section.deceased.field.brn.helperText,Helper tex
 event.death.action.declare.form.section.deceased.field.brn.helperText,Helper text for birth registration number field,"Search for a birth record. If found, details will auto-fill. Otherwise, continue with manual entry.","Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement."
 event.death.action.declare.form.section.deceased.field.dateOfMarriage.error,Label for error message,Cannot be date in the future, Parle voux angles
 event.death.action.declare.form.section.deceased.field.deathLocation.label,This is the label for the field,Health Institution,Établissement de santé
+event.death.action.declare.form.section.deceased.field.deathLocationOther.error,,Select a valid death location address,Sélectionnez une adresse de lieu de décès valide
 event.death.action.declare.form.section.deceased.field.deathLocationOther.label,This is the label for the field,Death location address,Adresse du lieu de décès
 event.death.action.declare.form.section.deceased.field.dob.error,This is the error message for invalid date,Cannot be a future date,Doit être une date de naissance valide
 event.death.action.declare.form.section.deceased.field.dob.error.laterThanDeath,This is the error message for date of birth later than date of death,Date of birth must be before the date of death,La date de naissance doit être antérieure à la date de décès
@@ -1225,18 +1229,16 @@ event.death.action.declare.form.section.event.field.causeSection2Heading.label,L
 event.death.action.declare.form.section.event.field.causeSection2Heading.label,Label for cause section 2 heading,Section II. Other significant conditions,Section II. Autres affections importantes
 event.death.action.declare.form.section.event.field.certifyingMedicalOfficer.label,Label for certifying medical officer field,Full name of certifying medical officer,Nom du médecin certificateur
 event.death.action.declare.form.section.event.field.date.error,This is the error message for invalid date,Must be a valid date,Doit être une date valide
-event.death.action.declare.form.section.event.field.date.error.future,,Date of death cannot be in the future,La date du décès ne peut pas être dans le futur
-event.death.action.declare.form.section.deceased.field.deathLocationOther.error,,Select a valid death location address,Sélectionnez une adresse de lieu de décès valide
 event.death.action.declare.form.section.event.field.date.error,Error message for invalid date of death,Must be a valid date,Doit être une date valide
 event.death.action.declare.form.section.event.field.date.error.beforeBirth,This is the error message for date of death before date of birth,Date of death must be after the deceased's birth date,La date du décès doit être postérieure à la date de naissance du défunt
 event.death.action.declare.form.section.event.field.date.error.beforeBirth,Error message for date of death before date of birth,Date of death must be after the deceased's birth date,La date du décès doit être postérieure à la date de naissance du défunt
+event.death.action.declare.form.section.event.field.date.error.future,,Date of death cannot be in the future,La date du décès ne peut pas être dans le futur
 event.death.action.declare.form.section.event.field.date.label,This is the label for the field,Date of death,Date du décès
 event.death.action.declare.form.section.event.field.dateLastSeenAlive.helperText,H elper text for date last seen alive,Date the deceased was last seen alive by the certifying medical officer,Saisir la date
 event.death.action.declare.form.section.event.field.dateLastSeenAlive.label,Label for date last seen alive field,Date last seen alive,Date à laquelle il a été vu vivant pour la dernière fois
 event.death.action.declare.form.section.event.field.dateLastSeenAlive.label,Label for date last seen alive field,Date last seen alive,Date à laquelle il a été vu vivant pour la dernière fois
 event.death.action.declare.form.section.event.field.description.label,Description of cause of death by lay person or verbal autopsy,Description,Description
 event.death.action.declare.form.section.event.field.duration.unit.days,Duration unit days,Days,Jours
-event.death.action.declare.form.section.mother.field.brn.error,,Birth registration number can only contain lettersumbers and hyphens,Le numéro d'enregistrement de naissance ne peut contenir que des lettres des chiffres et des traits d'union
 event.death.action.declare.form.section.event.field.duration.unit.days,Duration unit days,Days,Jours
 event.death.action.declare.form.section.event.field.duration.unit.hours,Duration unit hours,Hours,Heures
 event.death.action.declare.form.section.event.field.duration.unit.hours,Duration unit hours,Hours,Heures
@@ -1426,6 +1428,7 @@ event.death.action.declare.form.section.livingChildren.field.numberOfChildren.op
 event.death.action.declare.form.section.mother.field.age.label,Label for mother age,Age,Âge
 event.death.action.declare.form.section.mother.field.age.label,Label for mother age,Age,Âge
 event.death.action.declare.form.section.mother.field.age.postfix,label for years postfix, years, years
+event.death.action.declare.form.section.mother.field.brn.error,,Birth registration number can only contain lettersumbers and hyphens,Le numéro d'enregistrement de naissance ne peut contenir que des lettres des chiffres et des traits d'union
 event.death.action.declare.form.section.mother.field.brn.helperText,Helper text for birth registration number field,"Search for a birth record. If found, details will auto-fill. Otherwise, continue with manual entry","Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement."
 event.death.action.declare.form.section.mother.field.brn.label,Label for mother birth registration number,Birth registration number,Numéro d'enregistrement de naissance
 event.death.action.declare.form.section.mother.field.brn.label,Label for mother birth registration number,Birth registration number lookup,Numéro d'enregistrement de naissance

@@ -31,7 +31,7 @@ import {
   BIRTH_LATE_REGISTRATION_TARGET_DAYS,
   defaultStreetAddressConfiguration,
   getNestedFieldValidators,
-  hasNonHealthNotifierRole
+  hasNonHealthNotifierRole,
 } from '@countryconfig/events/utils'
 import {
   tuvaluNameConfig,
@@ -769,6 +769,74 @@ export const child = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: hasNonHealthNotifierRole
+        }
+      ]
+    },
+    {
+      id: 'child.legacyRegistrationDivider',
+      type: FieldType.DIVIDER,
+      label: emptyMessage,
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: hasNonHealthNotifierRole
+        }
+      ]
+    },
+    {
+      id: 'child.isLegacyRecord',
+      type: FieldType.CHECKBOX,
+      required: false,
+      analytics: false,
+      defaultValue: false,
+      label: {
+        defaultMessage: 'Legacy registration',
+        description:
+          'Checkbox indicating this record has a manual registration date and place',
+        id: 'event.birth.action.declare.form.section.child.field.isLegacyRecord.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.DISPLAY_ON_REVIEW,
+          conditional: field('child.isLegacyRecord').isEqualTo(true)
+        },
+        {
+          type: ConditionalType.SHOW,
+          conditional: hasNonHealthNotifierRole
+        }
+      ]
+    },
+    {
+      id: 'child.effectiveRegistrationDate',
+      type: FieldType.DATE,
+      required: true,
+      analytics: true,
+      label: {
+        defaultMessage: 'Date of registration',
+        description: 'Manual registration date for legacy records',
+        id: 'event.birth.action.declare.form.section.child.field.effectiveRegistrationDate.label'
+      },
+      validation: [
+        {
+          message: {
+            defaultMessage: 'Cannot be a future date',
+            description: 'Error shown when the registration date is in the future',
+            id: 'event.birth.action.declare.form.section.child.field.effectiveRegistrationDate.error'
+          },
+          validator: field('child.effectiveRegistrationDate').isBefore().now()
+        }
+      ],
+      conditionals: [
+        {
+          type: ConditionalType.DISPLAY_ON_REVIEW,
+          conditional: field('child.isLegacyRecord').isEqualTo(true)
+        },
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(
+            hasNonHealthNotifierRole,
+            field('child.isLegacyRecord').isEqualTo(true)
+          )
         }
       ]
     }

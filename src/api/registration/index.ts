@@ -113,7 +113,6 @@ export async function onRegisterHandler(
   }
 
   await sendInformantNotification({ event, token, registrationNumber })
-
   return h.response({ registrationNumber }).code(200)
 }
 
