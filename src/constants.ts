@@ -29,3 +29,4 @@ export const PRODUCTION = env.isProd
 export const TWO_FA_ENABLED = env.TWO_FA_ENABLED
 export const OPENCRVS_ENVIRONMENT = env.OPENCRVS_ENVIRONMENT
 export const ANALYTICS_DATABASE_URL = env.ANALYTICS_DATABASE_URL
+export const EVENTS_URL = env.EVENTS_URL
