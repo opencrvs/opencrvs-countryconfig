@@ -1,4 +1,12 @@
-Repository is archived. v2.1.0 onwards configuration is forked using @opencrvs/countryconfig package. Helper uses template located under [opencrvs-core](https://github.com/opencrvs/opencrvs-core/tree/develop/packages/countryconfig-template).
+> **This repository is archived.**
+>
+> From v2.1.0 onwards, a country configuration is no longer created by forking this repository. Scaffold one instead with:
+>
+> ```
+> npm create @opencrvs/countryconfig <project-name>
+> ```
+>
+> That command runs the [`@opencrvs/create-countryconfig`](https://www.npmjs.com/package/@opencrvs/create-countryconfig) package, which copies the template at [`packages/countryconfig-template`](https://github.com/opencrvs/opencrvs-core/tree/develop/packages/countryconfig-template) in `opencrvs-core`.
 
 <p align="center"> <a href="https://www.opencrvs.org"><img src="https://i.imgur.com/W7ULmox.png" title="source: imgur.com" / style="max-width:100%;"width="72" height="72"></a>
 </p>
