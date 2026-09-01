@@ -123,55 +123,19 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      # An older-channel release merges into the next unreleased patch of the
-      # channel master tracks, which may not have been initialised in this repo
-      # yet. Cut it from master and initialise it exactly as this workflow would
-      # have — same version bump, same CHANGELOG section — so the merge-back PR
-      # has somewhere to land and a later init-release run for that version
-      # finds a branch it does not have to fix up by hand.
-      - name: Ensure the target release branch exists
+      # The target release branch must already exist. This workflow never cuts
+      # the next channel's release branch: that release writes its own version
+      # bump and CHANGELOG, and a placeholder here would make its own
+      # init-release run skip them. Fail now, before anything is created.
+      - name: Verify the target release branch exists
         if: steps.get_base_branch.outputs.release_pr == 'false'
         run: |
           TARGET_BRANCH="${{ steps.get_base_branch.outputs.target_branch }}"
-          TARGET_VERSION="${TARGET_BRANCH#release/}"
-          BASE_BRANCH="${{ steps.get_base_branch.outputs.base_branch }}"
-
-          if git ls-remote --exit-code --heads origin "$TARGET_BRANCH" > /dev/null 2>&1; then
-            echo "$TARGET_BRANCH already exists."
-            exit 0
+          if ! git ls-remote --exit-code --heads origin "$TARGET_BRANCH" > /dev/null 2>&1; then
+            echo "::error::$TARGET_BRANCH does not exist in this repository. Initialise ${TARGET_BRANCH#release/} here first, or re-run with the target_branch input set explicitly."
+            exit 1
           fi
-
-          echo "$TARGET_BRANCH does not exist yet — cutting it from master and initialising it as $TARGET_VERSION."
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          git fetch --no-tags --quiet origin master
-          git checkout -b "$TARGET_BRANCH" origin/master
-
-          # The same bump the release branch itself would get, so a later
-          # init-release run for $TARGET_VERSION finds exactly the branch it
-          # would have created.
-          yarn version --new-version "$TARGET_VERSION" --no-git-tag-version
-          git add .
-          git commit -m "chore: update version to $TARGET_VERSION"
-
-          sed -i '1,2d' CHANGELOG.md
-          cp CHANGELOG.md COPY_CHANGELOG.md
-          {
-            echo "# Changelog"
-            echo ""
-            echo "## $TARGET_VERSION Release Candidate"
-            echo ""
-            cat COPY_CHANGELOG.md
-          } > CHANGELOG.md
-          rm COPY_CHANGELOG.md
-          git add CHANGELOG.md
-          git commit -m "docs: update changelog for $TARGET_VERSION release candidate"
-
-          git push origin "$TARGET_BRANCH"
-
-          # Put the checkout back where the steps below expect it.
-          git checkout "$BASE_BRANCH"
+          echo "$TARGET_BRANCH exists."
 
       - name: Check if release branch already exists
         id: check_branch
