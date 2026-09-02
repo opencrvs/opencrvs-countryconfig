@@ -40,14 +40,16 @@ local("""
 if not os.path.exists('{core_charts_dir}/charts/dependencies'.format(core_charts_dir=core_charts_dir)) or not os.path.exists('{core_charts_dir}/charts/opencrvs-services'.format(core_charts_dir=core_charts_dir)):
   fail('Something went wrong while cloning infrastructure repository!')
 
+load('ext://restart_process', 'docker_build_with_restart')
 load('./tilt/opencrvs.tilt', 'setup_opencrvs')
 
 # Build countryconfig image
-docker_build(
+docker_build_with_restart(
   "{0}:{1}".format(countryconfig_image_name, countryconfig_image_tag), 
   ".",
   dockerfile="Dockerfile",
   network="host",
+  entrypoint=["pnpm", "start:prod"],
   only=[
     './src',
     './package.json',
