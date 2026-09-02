@@ -40,31 +40,32 @@ local("""
 if not os.path.exists('{core_charts_dir}/charts/dependencies'.format(core_charts_dir=core_charts_dir)) or not os.path.exists('{core_charts_dir}/charts/opencrvs-services'.format(core_charts_dir=core_charts_dir)):
   fail('Something went wrong while cloning infrastructure repository!')
 
-load('ext://restart_process', 'docker_build_with_restart')
 load('./tilt/opencrvs.tilt', 'setup_opencrvs')
 
 # Build countryconfig image
-docker_build_with_restart(
+docker_build(
   "{0}:{1}".format(countryconfig_image_name, countryconfig_image_tag), 
   ".",
   dockerfile="Dockerfile",
   network="host",
-  entrypoint=["pnpm", "start:prod"],
+  # Same as `yarn start`, minus `yarn setup-analytics` (not needed/available in this build context)
+  entrypoint=["yarn", "start:dev"],
   only=[
     './src',
+    './typings',
     './package.json',
     './yarn.lock',
     './tsconfig.json',
-    './start-prod.sh',
     './Dockerfile'
   ],
   live_update=[
     # Fallback to full rebuild if dependencies change
     fall_back_on(['package.json', 'yarn.lock', 'Dockerfile']),
-    # Sync source code changes
+    # Sync source code changes; nodemon (run via start:dev) picks up the change and restarts the process
     sync('./src', '/usr/src/app/src'),
-    # Sync start script if it changes
-    sync('./start-prod.sh', '/usr/src/app/start-prod.sh'),
+    # tsconfig.json's "include" pulls in typings/ for type-checking (ts-node without
+    # --transpile-only), so it has to be present in the container too
+    sync('./typings', '/usr/src/app/typings'),
   ]
 )
 

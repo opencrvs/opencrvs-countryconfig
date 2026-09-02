@@ -2,9 +2,12 @@ FROM node:22.22.3-alpine AS deps
 WORKDIR /usr/src/app
 ENV NPM_CONFIG_LOGLEVEL=warn
 
-# Install dependencies
+# Install dependencies, including devDependencies (nodemon) needed for local
+# hot-reloading via Tilt. The final image still only ever runs `yarn start:prod`
+# unless overridden (as Tilt does), so the extra devDependencies are unused weight,
+# not a behaviour change.
 COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile --production
+RUN yarn install --frozen-lockfile
 
 FROM node:22-alpine AS runner
 WORKDIR /usr/src/app
@@ -16,6 +19,7 @@ COPY --from=deps /usr/src/app/node_modules ./node_modules
 # Copy application files
 COPY package.json yarn.lock tsconfig.json ./
 COPY src ./src
+COPY typings ./typings
 
 EXPOSE 3040
 
