@@ -48,8 +48,7 @@ docker_build(
   ".",
   dockerfile="Dockerfile",
   network="host",
-  # Same as `yarn start`, minus `yarn setup-analytics` (not needed/available in this build context)
-  entrypoint=["yarn", "start:dev"],
+  entrypoint=["yarn", "start:tilt"],
   only=[
     './src',
     './typings',
@@ -61,10 +60,9 @@ docker_build(
   live_update=[
     # Fallback to full rebuild if dependencies change
     fall_back_on(['package.json', 'yarn.lock', 'Dockerfile']),
-    # Sync source code changes; nodemon (run via start:dev) picks up the change and restarts the process
+    # Sync source code changes
     sync('./src', '/usr/src/app/src'),
-    # tsconfig.json's "include" pulls in typings/ for type-checking (ts-node without
-    # --transpile-only), so it has to be present in the container too
+    # tsconfig.json's "include" pulls in typings/ for type-checking
     sync('./typings', '/usr/src/app/typings'),
   ]
 )
