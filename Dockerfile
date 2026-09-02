@@ -3,9 +3,7 @@ WORKDIR /usr/src/app
 ENV NPM_CONFIG_LOGLEVEL=warn
 
 # Install dependencies, including devDependencies (nodemon) needed for local
-# hot-reloading via Tilt. The final image still only ever runs `yarn start:prod`
-# unless overridden (as Tilt does), so the extra devDependencies are unused weight,
-# not a behaviour change.
+# hot-reloading via Tilt.
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
 
