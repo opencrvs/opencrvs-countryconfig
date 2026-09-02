@@ -1,0 +1,70 @@
+<svg width="595" height="843" viewBox="0 0 595 843" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="595" height="843" fill="white"/>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="16" font-weight="700" letter-spacing="0px"><tspan x="32.75" y="40">Stillbirth declaration summary</tspan></text>
+<rect x="32.75" y="60.25" width="529.5" height="113" rx="4.75" stroke="#B5B5B5" stroke-width="0.5"/>
+<path d="M36.5 60.25H558.5C560.571 60.25 562.25 61.9289 562.25 64V81.75H32.75V64C32.75 61.9289 34.4289 60.25 36.5 60.25Z" fill="#F4F4F4"/>
+<path d="M36.5 60.25H558.5C560.571 60.25 562.25 61.9289 562.25 64V81.75H32.75V64C32.75 61.9289 34.4289 60.25 36.5 60.25Z" stroke="#B5B5B5" stroke-width="0.5"/>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="600" letter-spacing="0px"><tspan x="40.5" y="74.686">Event details</tspan></text>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="600" letter-spacing="0px"><tspan x="40.5" y="94.186">Date of delivery</tspan></text>
+<text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" letter-spacing="0px"><tspan x="200.5" y="94.186">{{$defaultTo ($lookup $declaration 'eventDetails.dateOfDelivery') '-'}}</tspan></text>
+<line x1="32.5" y1="99.75" x2="562.5" y2="99.75" stroke="#B5B5B5" stroke-width="0.5"/>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="600" letter-spacing="0px"><tspan x="40.5" y="112.186">Sex</tspan></text>
+<text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" letter-spacing="0px"><tspan x="200.5" y="112.186">{{$defaultTo ($lookup $declaration 'eventDetails.sex') '-'}}</tspan></text>
+<line x1="32.5" y1="117.75" x2="562.5" y2="117.75" stroke="#B5B5B5" stroke-width="0.5"/>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="600" letter-spacing="0px"><tspan x="40.5" y="130.186">Gestational age</tspan></text>
+<text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" letter-spacing="0px"><tspan x="200.5" y="130.186">{{$defaultTo ($lookup $declaration 'eventDetails.gestationalAgeWeeks') '-'}} weeks</tspan></text>
+<line x1="32.5" y1="135.75" x2="562.5" y2="135.75" stroke="#B5B5B5" stroke-width="0.5"/>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="600" letter-spacing="0px"><tspan x="40.5" y="148.186">Place of delivery</tspan></text>
+<text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" letter-spacing="0px"><tspan x="200.5" y="148.186">{{#ifCond ($lookup $declaration 'eventDetails.placeOfDelivery') '===' 'HEALTH_FACILITY'}}{{{concatAddress ($lookup $declaration 'eventDetails.deliveryLocation') 200.5 148.186 14}}}{{else}}{{#ifCond ($lookup $declaration 'eventDetails.placeOfDelivery') '===' 'PRIVATE_HOME'}}{{{concatAddress ($lookup $declaration 'eventDetails.deliveryLocation.privateHome') 200.5 148.186 14}}}{{else}}{{{concatAddress ($lookup $declaration 'eventDetails.deliveryLocation.other') 200.5 148.186 14}}}{{/ifCond}}{{/ifCond}}</tspan></text>
+<rect x="32.75" y="187.75" width="529.5" height="131" rx="4.75" stroke="#B5B5B5" stroke-width="0.5"/>
+<path d="M36.5 187.75H558.5C560.571 187.75 562.25 189.429 562.25 191.5V209.25H32.75V191.5C32.75 189.429 34.4289 187.75 36.5 187.75Z" fill="#F4F4F4"/>
+<path d="M36.5 187.75H558.5C560.571 187.75 562.25 189.429 562.25 191.5V209.25H32.75V191.5C32.75 189.429 34.4289 187.75 36.5 187.75Z" stroke="#B5B5B5" stroke-width="0.5"/>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="600" letter-spacing="0px"><tspan x="40.5" y="202.686">Mother&#x2019;s details</tspan></text>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="600" letter-spacing="0px"><tspan x="40.5" y="222.186">Full name</tspan></text>
+<text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" letter-spacing="0px"><tspan x="200.5" y="222.186">{{$defaultTo ($lookup $declaration 'mother.name.fullname') '-'}}</tspan></text>
+<line x1="32.5" y1="227.75" x2="562.5" y2="227.75" stroke="#B5B5B5" stroke-width="0.5"/>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="600" letter-spacing="0px"><tspan x="40.5" y="240.186">Date of birth</tspan></text>
+<text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" letter-spacing="0px"><tspan x="200.5" y="240.186">{{$defaultTo ($lookup $declaration 'mother.dob') '-'}}</tspan></text>
+<line x1="32.5" y1="245.75" x2="562.5" y2="245.75" stroke="#B5B5B5" stroke-width="0.5"/>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="600" letter-spacing="0px"><tspan x="40.5" y="258.186">Nationality</tspan></text>
+<text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" letter-spacing="0px"><tspan x="200.5" y="258.186">{{$defaultTo ($lookup $declaration 'mother.nationality') '-'}}</tspan></text>
+<line x1="32.5" y1="263.75" x2="562.5" y2="263.75" stroke="#B5B5B5" stroke-width="0.5"/>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="600" letter-spacing="0px"><tspan x="40.5" y="276.186">Marital status</tspan></text>
+<text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" letter-spacing="0px"><tspan x="200.5" y="276.186">{{$defaultTo ($lookup $declaration 'mother.maritalStatus') '-'}}</tspan></text>
+<line x1="32.5" y1="281.75" x2="562.5" y2="281.75" stroke="#B5B5B5" stroke-width="0.5"/>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="600" letter-spacing="0px"><tspan x="40.5" y="294.186">Place of birth</tspan></text>
+<text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" letter-spacing="0px"><tspan x="200.5" y="294.186">{{$defaultTo ($lookup $declaration 'mother.placeOfBirth') '-'}}</tspan></text>
+<line x1="32.5" y1="299.75" x2="562.5" y2="299.75" stroke="#B5B5B5" stroke-width="0.5"/>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="600" letter-spacing="0px"><tspan x="40.5" y="312.186">Usual residence</tspan></text>
+<text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" letter-spacing="0px"><tspan x="200.5" y="312.186">{{$defaultTo ($lookup $declaration 'mother.address.administrativeHierarchy') '-'}}</tspan></text>
+<rect x="32.75" y="328.75" width="529.5" height="95" rx="4.75" stroke="#B5B5B5" stroke-width="0.5"/>
+<path d="M36.5 328.75H558.5C560.571 328.75 562.25 330.429 562.25 332.5V350.25H32.75V332.5C32.75 330.429 34.4289 328.75 36.5 328.75Z" fill="#F4F4F4"/>
+<path d="M36.5 328.75H558.5C560.571 328.75 562.25 330.429 562.25 332.5V350.25H32.75V332.5C32.75 330.429 34.4289 328.75 36.5 328.75Z" stroke="#B5B5B5" stroke-width="0.5"/>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="600" letter-spacing="0px"><tspan x="40.5" y="343.686">Father&#x2019;s details</tspan></text>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="600" letter-spacing="0px"><tspan x="40.5" y="363.186">Full name</tspan></text>
+<text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" letter-spacing="0px"><tspan x="200.5" y="363.186">{{$defaultTo ($lookup $declaration 'father.name.fullname') '-'}}</tspan></text>
+<line x1="32.5" y1="368.75" x2="562.5" y2="368.75" stroke="#B5B5B5" stroke-width="0.5"/>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="600" letter-spacing="0px"><tspan x="40.5" y="381.186">Date of birth</tspan></text>
+<text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" letter-spacing="0px"><tspan x="200.5" y="381.186">{{$defaultTo ($lookup $declaration 'father.dob') '-'}}</tspan></text>
+<line x1="32.5" y1="386.75" x2="562.5" y2="386.75" stroke="#B5B5B5" stroke-width="0.5"/>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="600" letter-spacing="0px"><tspan x="40.5" y="399.186">Nationality</tspan></text>
+<text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" letter-spacing="0px"><tspan x="200.5" y="399.186">{{$defaultTo ($lookup $declaration 'father.nationality') '-'}}</tspan></text>
+<line x1="32.5" y1="404.75" x2="562.5" y2="404.75" stroke="#B5B5B5" stroke-width="0.5"/>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="600" letter-spacing="0px"><tspan x="40.5" y="417.186">Place of birth</tspan></text>
+<text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" letter-spacing="0px"><tspan x="200.5" y="417.186">{{$defaultTo ($lookup $declaration 'father.placeOfBirth') '-'}}</tspan></text>
+<rect x="32.75" y="433.75" width="529.5" height="95" rx="4.75" stroke="#B5B5B5" stroke-width="0.5"/>
+<path d="M36.5 433.75H558.5C560.571 433.75 562.25 435.429 562.25 437.5V455.25H32.75V437.5C32.75 435.429 34.4289 433.75 36.5 433.75Z" fill="#F4F4F4"/>
+<path d="M36.5 433.75H558.5C560.571 433.75 562.25 435.429 562.25 437.5V455.25H32.75V437.5C32.75 435.429 34.4289 433.75 36.5 433.75Z" stroke="#B5B5B5" stroke-width="0.5"/>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="600" letter-spacing="0px"><tspan x="40.5" y="448.686">Informant&#x2019;s details</tspan></text>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="600" letter-spacing="0px"><tspan x="40.5" y="468.186">Relationship to child</tspan></text>
+<text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" letter-spacing="0px"><tspan x="200.5" y="468.186">{{$defaultTo ($lookup $declaration 'informant.relation') '-'}}</tspan></text>
+<line x1="32.5" y1="473.75" x2="562.5" y2="473.75" stroke="#B5B5B5" stroke-width="0.5"/>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="600" letter-spacing="0px"><tspan x="40.5" y="486.186">Full name</tspan></text>
+<text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" letter-spacing="0px"><tspan x="200.5" y="486.186">{{$defaultTo ($lookup $declaration 'informant.name.fullname') '-'}}</tspan></text>
+<line x1="32.5" y1="491.75" x2="562.5" y2="491.75" stroke="#B5B5B5" stroke-width="0.5"/>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="600" letter-spacing="0px"><tspan x="40.5" y="504.186">Phone number</tspan></text>
+<text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" letter-spacing="0px"><tspan x="200.5" y="504.186">{{$defaultTo ($lookup $declaration 'informant.phoneNo') '-'}}</tspan></text>
+<line x1="32.5" y1="509.75" x2="562.5" y2="509.75" stroke="#B5B5B5" stroke-width="0.5"/>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="600" letter-spacing="0px"><tspan x="40.5" y="522.186">Email</tspan></text>
+<text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" letter-spacing="0px"><tspan x="200.5" y="522.186">{{$defaultTo ($lookup $declaration 'informant.email') '-'}}</tspan></text>
+</svg>

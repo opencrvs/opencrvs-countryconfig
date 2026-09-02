@@ -558,6 +558,16 @@ export async function createServer() {
   })
 
   server.route({
+    method: 'POST',
+    path: `/trigger/events/${Event.Stillbirth}/actions/${ActionType.REGISTER}`,
+    handler: onRegisterHandler,
+    options: {
+      tags: ['api', 'events'],
+      description: 'Receives notifications on event actions'
+    }
+  })
+
+  server.route({
     method: 'GET',
     path: '/causes-of-death',
     handler: causeOfDeathSearchHandler,

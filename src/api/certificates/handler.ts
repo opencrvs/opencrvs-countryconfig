@@ -314,6 +314,48 @@ export async function certificateHandler(
       ]
     },
     {
+      id: 'v2.stillbirth-certificate',
+      event: Event.Stillbirth,
+      isV2Template: true,
+      label: {
+        id: 'certificates.stillbirth.certificate',
+        defaultMessage: 'Stillbirth Certificate',
+        description: 'The label for a stillbirth certificate'
+      },
+      isDefault: true,
+      fee: {
+        onTime: 0,
+        late: 0,
+        delayed: 0
+      },
+      svgUrl: '/api/countryconfig/certificates/v2.stillbirth-certificate.svg',
+      fonts: notoSansFont
+    },
+    {
+      id: 'v2.stillbirth-summary',
+      event: Event.Stillbirth,
+      isV2Template: true,
+      label: {
+        id: 'certificates.stillbirth.summary',
+        defaultMessage: 'Stillbirth Summary',
+        description: 'The label for a stillbirth summary'
+      },
+      isDefault: false,
+      fee: {
+        onTime: 0,
+        late: 0,
+        delayed: 0
+      },
+      svgUrl: '/api/countryconfig/certificates/v2.stillbirth-summary.svg',
+      fonts: notoSansFont,
+      conditionals: [
+        {
+          type: 'SHOW',
+          conditional: never()
+        }
+      ]
+    },
+    {
       id: 'marriage-certificate',
       event: Event.Marriage,
       label: {

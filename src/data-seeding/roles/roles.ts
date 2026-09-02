@@ -70,7 +70,7 @@ export const roles: Role[] = [
       { type: 'record.reject' },
       { type: 'record.review-duplicates' },
       { type: 'record.unassign-others' },
-      { type: 'record.print-certified-copies', options: { templates: ['v2.birth-notification','v2.birth-summary', 'v2.death-summary'] } },
+      { type: 'record.print-certified-copies', options: { templates: ['v2.birth-notification','v2.birth-summary', 'v2.death-summary', 'v2.stillbirth-summary'] } },
       { type: 'record.request-correction' },
       { type: 'record.custom-action', options: { event: ['birth'], customActionTypes: ['VALIDATE_DECLARATION', 'ESCALATE'] } },
       { type: 'record.custom-action', options: { event: ['birth'], customActionTypes: ['REINSTATE_REVOKE_REGISTRATION'] } },

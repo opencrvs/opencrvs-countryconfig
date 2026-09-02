@@ -195,6 +195,8 @@ certificates.death.certificate.copy,Death Certificate Certified Copy,Death Certi
 certificates.death.summary,Death Summary,Death Summary,Résumé de décès
 certificates.marriage.certificate,Marriage Certificate,Marriage Certificate,Acte de mariage
 certificates.marriage.certificate.copy,Marriage Certificate Certified Copy,Marriage Certificate Certified Copy,Copie certifiée conforme de l'acte de mariage
+certificates.stillbirth.certificate,The label for a stillbirth certificate,Stillbirth Certificate,Certificat de mortinaissance
+certificates.stillbirth.summary,The label for a stillbirth summary,Stillbirth Summary,Résumé de mortinaissance
 changeEmail.validation.msg,Phone number validation message,Must be a valid email address,Doit être une adresse e-mail valide
 changeModal.continue,The label for continue button of change modal,Continue,Continuer
 changeModal.description,The description for change modal,A record will be created of any changes you make,Un enregistrement sera créé pour toute modification que vous apporterez
@@ -1561,6 +1563,190 @@ event.history.role,Label for the role in event history,"{role, select, REGISTRAR
 event.history.system,Name for system initiated actions in the event history,System,System
 event.history.systemDefaultName,Fallback for system integration name in the event history,System integration,Intégration système
 event.not.downloaded,Shown when user tries to perform an action on event that is not available,Please ensure the event is first assigned and downloaded to the browser.,Veuillez vous assurer que l'événement est d'abord attribué et téléchargé dans le navigateur.
+event.stillbirth.action.Read.label,This is shown as the action name anywhere the user can trigger the action from,Read,Lire
+event.stillbirth.action.certificate.form.cancel,This is the label for the verification cancellation button,Identity does not match,L'identité ne correspond pas
+event.stillbirth.action.certificate.form.cancel.confirmation.body,This is the body for the verification cancellation modal,"Please be aware that if you proceed, you will be responsible for issuing a certificate without the necessary proof of ID from the collector","Veuillez noter que si vous continuez, vous serez responsable de la délivrance d'un certificat sans la preuve d'identité nécessaire du destinataire"
+event.stillbirth.action.certificate.form.cancel.confirmation.title,This is the title for the verification cancellation modal,Print without proof of ID?,Imprimer sans preuve d'identité ?
+event.stillbirth.action.certificate.form.label,This is what this form is referred as in the system,Stillbirth certificate collector,Collecteur de certificat de mortinaissance
+event.stillbirth.action.certificate.form.section.requester.informant.label,This is the label for the field,Print and issue informant,Imprimer et remettre à l'informateur
+event.stillbirth.action.certificate.form.section.requester.label,This is the label for the field,Requester,Demandeur
+event.stillbirth.action.certificate.form.section.requester.printInAdvance.label,This is the label for the field,Print in advance,Imprimer à l'avance
+event.stillbirth.action.certificate.form.section.verifyIdentity.data.label,Title for the data section,Informant details,Détails de l'informateur
+event.stillbirth.action.certificate.form.section.verifyIdentity.data.subtitle,Subtitle for the data section,Please verify the informant's identity,Veuillez vérifier l'identité de l'informateur
+event.stillbirth.action.certificate.form.section.who.title,This is the title of the section,Certify record,Certifier l'enregistrement
+event.stillbirth.action.certificate.form.verify,This is the label for the verification button,Verified,Vérifié
+event.stillbirth.action.collect-certificate.label,This is shown as the action name anywhere the user can trigger the action from,Print certificate,Imprimer le certificat
+event.stillbirth.action.correction.documents.proofOfIdentity.birthCertificate.label,Label for the birth certificate option,Birth certificate,Acte de naissance
+event.stillbirth.action.correction.documents.proofOfIdentity.label,Label for the proof of identity field,Proof of identity,Preuve d'identité
+event.stillbirth.action.correction.documents.proofOfIdentity.other.label,Label for the other option,Other,Autre
+event.stillbirth.action.correction.documents.proofOfIdentity.passport.label,Label for the passport option,Passport,Passeport
+event.stillbirth.action.correction.documents.supportingDocs.courtOrder.label,Label for the court order option,Court order,Ordonnance du tribunal
+event.stillbirth.action.correction.documents.supportingDocs.label,Label for the supporting documents field,Supporting documents,Documents justificatifs
+event.stillbirth.action.correction.documents.supportingDocs.other.label,Label for the other option,Other,Autre
+event.stillbirth.action.correction.documents.supportingDocs.registrarGeneralAuthorisation.label,Label for the registrar general authorisation option,Registrar general / registrar authorisation,Autorisation du directeur de l'état civil / du registraire
+event.stillbirth.action.correction.documents.supportingDocs.statutoryDeclaration.label,Label for the statutory declaration option,Statutory declaration,Déclaration statutaire
+event.stillbirth.action.correction.form.cancel,This is the label for the verification cancellation button,Identity does not match,L'identité ne correspond pas
+event.stillbirth.action.correction.form.cancel.confirmation.body,This is the body for the verification cancellation modal,"Please be aware that if you proceed, you will be responsible for this correction without the necessary proof of ID from the requester","Veuillez noter que si vous continuez, vous serez responsable de cette correction sans la preuve d'identité nécessaire du demandeur"
+event.stillbirth.action.correction.form.cancel.confirmation.title,This is the title for the verification cancellation modal,Proceed without proof of ID?,Correction sans preuve d'identité ?
+event.stillbirth.action.correction.form.requester.type.court,This is the label for the correction requester field,Court,Tribunal
+event.stillbirth.action.correction.form.requester.type.father,This is the label for the correction requester field,Father,Père
+event.stillbirth.action.correction.form.requester.type.mother,This is the label for the correction requester field,Mother,Mère
+event.stillbirth.action.correction.form.requester.type.recordSubject,This is the label for the correction requester field,Person named on the record,Personne nommée dans le dossier
+event.stillbirth.action.correction.form.requester.type.registrar,This is the label for the correction requester field,Registrar / Registration office,Directeur de l'état civil / Bureau d'enregistrement
+event.stillbirth.action.correction.form.requester.type.someoneElse,This is the label for the correction requester field,Someone else,Quelqu'un d'autre
+event.stillbirth.action.correction.form.section.correctionRequest.title,This is the title of the section,Correction request,Demande de correction
+event.stillbirth.action.correction.form.section.reason.title,This is the title of the section,Reason for correction,Motif de la correction
+event.stillbirth.action.correction.form.section.requester.dob.error,This is the error message for invalid date,Date cannot be in the future,La date ne peut pas être dans le futur
+event.stillbirth.action.correction.form.section.requester.dob.label,This is the label for the field,Date of birth,Date de naissance
+event.stillbirth.action.correction.form.section.requester.idNumber.label,This is the label for the field,ID number,Numéro d'identification
+event.stillbirth.action.correction.form.section.requester.idType.label,This is the label for the field,Type of ID,Type d'identité
+event.stillbirth.action.correction.form.section.requester.label,This is the label for the field,Requester,Demandeur
+event.stillbirth.action.correction.form.section.requester.name.label,This is the label for the field,Name,Nom
+event.stillbirth.action.correction.form.section.requester.nationality.label,This is the label for the field,Nationality,Nationalité
+event.stillbirth.action.correction.form.section.requester.relationship.label,This is the label for the field,Relationship to child,Relation avec l'enfant
+event.stillbirth.action.correction.form.section.requesterDetails.title,This is the title of the section,Requester's details,Détails du demandeur
+event.stillbirth.action.correction.form.section.supportingDocuments.title,This is the title of the section,Supporting documents,Documents justificatifs
+event.stillbirth.action.correction.form.section.verifyIdentity.data.label,Title for the data section,,
+event.stillbirth.action.correction.form.section.verifyIdentity.title,This is the title of the section,Verify their identity,Vérifier leur identité
+event.stillbirth.action.correction.form.verify,This is the label for the verification button,Verified,Vérifié
+event.stillbirth.action.correction.reason.option.clericalError.label,Label for the clerical error option,Myself or an agent made a mistake (Clerical error),Une erreur a été commise par moi-même ou un agent (Erreur administrative)
+event.stillbirth.action.correction.reason.option.judicialOrder.label,Label for the judicial order option,Requested to do so by the court (Judicial order),Demandé par le tribunal (Ordonnance judiciaire)
+event.stillbirth.action.correction.reason.option.materialError.label,Label for the material error option,Informant provided incorrect information (Material error),L'informateur a fourni des informations incorrectes (Erreur matérielle)
+event.stillbirth.action.correction.reason.option.materialOmission.label,Label for the material omission option,Informant did not provide this information (Material omission),L'informateur n'a pas fourni cette information (Omission matérielle)
+event.stillbirth.action.correction.reason.option.other.label,Label for the other option,Other (please specify),Autre (veuillez préciser)
+event.stillbirth.action.correction.reason.other.label,Label for the reason,Other reason (please specify),Autre motif (veuillez préciser)
+event.stillbirth.action.declare.declare.copy,Confirmation text for the declare action,"You are about to formally declare this stillbirth event. Once declared, the record will enter the verification and approval process.","Vous êtes sur le point de déclarer officiellement cet événement de mortinaissance. Une fois déclaré, le dossier entrera dans le processus de vérification et d'approbation."
+event.stillbirth.action.declare.form.label,This is what this form is referred as in the system,Stillbirth declaration form,Formulaire de déclaration de mortinaissance
+event.stillbirth.action.declare.form.review.printButton.buttonLabel,Button label for print declaration summary,Print declaration summary,Imprimer le résumé de la déclaration
+event.stillbirth.action.declare.form.review.printButton.label,Label for the print declaration summary button,Print declaration summary,Imprimer le résumé de la déclaration
+event.stillbirth.action.declare.form.review.signedDeclaration.label,Label for the upload signed declaration field,Upload signed declaration,Téléverser la déclaration signée
+event.stillbirth.action.declare.form.review.step1.description.label,Description for step 1 of the review,Print the declaration summary for the informant(s) to review and sign.,Imprimez le résumé de la déclaration afin que l'informateur ou les informateurs puissent le vérifier et le signer.
+event.stillbirth.action.declare.form.review.step1.hint.label,Hint label for step 1 of the review,Step 1,Étape 1
+event.stillbirth.action.declare.form.review.step2.description.label,Description for step 2 of the review,Upload the signed declaration summary after it has been reviewed and signed by the informant(s).,Téléversez le résumé de la déclaration signé après qu'il ait été vérifié et signé par l'informateur ou les informateurs.
+event.stillbirth.action.declare.form.review.step2.hint.label,Hint label for step 2 of the review,Step 2,Étape 2
+event.stillbirth.action.declare.form.review.title,Title of the form to show in review page,Stillbirth declaration,Déclaration de mortinaissance
+event.stillbirth.action.declare.form.section.documents.field.medicalCertificate.label,This is the label for the field,Medical certificate - foetal death,Certificat médical - décès fœtal
+event.stillbirth.action.declare.form.section.documents.field.medicalCertificate.option.coronersOrder,Option for medical certificate - foetal death,Coroner's order,Ordonnance du coroner
+event.stillbirth.action.declare.form.section.documents.field.medicalCertificate.option.medicalOfficerCertificate,Option for medical certificate - foetal death,Certificate by medical officer,Certificat délivré par un médecin
+event.stillbirth.action.declare.form.section.documents.field.medicalCertificate.option.statutoryDeclaration,Option for medical certificate - foetal death,Statutory declaration,Déclaration solennelle
+event.stillbirth.action.declare.form.section.documents.field.proofOfFather.label,This is the label for the field,Proof of father's identity,Preuve d'identité du père
+event.stillbirth.action.declare.form.section.documents.field.proofOfInformant.label,This is the label for the field,Proof of informant's identity,Preuve d'identité de l'informateur
+event.stillbirth.action.declare.form.section.documents.field.proofOfMother.label,This is the label for the field,Proof of mother's identity,Preuve d'identité de la mère
+event.stillbirth.action.declare.form.section.documents.title,Form section title for documents,Upload supporting documents,Téléverser les documents justificatifs
+event.stillbirth.action.declare.form.section.eventDetails.field.attendantAtBirth.label,This is the label for the field,Attendant at birth,Personne ayant assisté l'accouchement
+event.stillbirth.action.declare.form.section.eventDetails.field.attendantName.label,This is the label for the field,Attendant's full name,Nom complet de la personne ayant assisté l'accouchement
+event.stillbirth.action.declare.form.section.eventDetails.field.attendantOther.label,Label for text field when attendant at birth is Other,Other (please specify),Autre (veuillez préciser)
+event.stillbirth.action.declare.form.section.eventDetails.field.birthOrderHigher.label,This is the label for the birth order field for higher multiple delivery,Order of births (higher multiple delivery),Rang de naissance (grossesse multiple supérieure)
+event.stillbirth.action.declare.form.section.eventDetails.field.birthOrderTriplet.label,This is the label for the birth order field for triplets,Order of birth (triplets),Rang de naissance (triplés)
+event.stillbirth.action.declare.form.section.eventDetails.field.birthOrderTwin.label,This is the label for the birth order field for twins,Order of birth (twins),Rang de naissance (jumeaux)
+event.stillbirth.action.declare.form.section.eventDetails.field.birthType.label,This is the label for the field,Type of birth,Type de naissance
+event.stillbirth.action.declare.form.section.eventDetails.field.dateOfDelivery.error,This is the error message for invalid date,Cannot be a future date,Ne peut pas être une date future
+event.stillbirth.action.declare.form.section.eventDetails.field.dateOfDelivery.label,This is the label for the field,Date of delivery,Date de l'accouchement
+event.stillbirth.action.declare.form.section.eventDetails.field.deliveryLocation.label,This is the label for the field,Health Institution,Établissement de santé
+event.stillbirth.action.declare.form.section.eventDetails.field.deliveryLocation.other.label,This is the label for the field,Other address,Autre adresse
+event.stillbirth.action.declare.form.section.eventDetails.field.deliveryLocation.residence.label,This is the label for the field,Residential address,Adresse de résidence
+event.stillbirth.action.declare.form.section.eventDetails.field.gestationalAgeWeeks.helperText,Helper text for gestational age field,Enter the number of completed weeks of pregnancy at the time of delivery. Late foetal death is defined as 28 weeks or more.,Saisissez le nombre de semaines complètes de grossesse au moment de l'accouchement. Un décès fœtal tardif est défini comme survenant à 28 semaines ou plus.
+event.stillbirth.action.declare.form.section.eventDetails.field.gestationalAgeWeeks.label,This is the label for the field,Gestational age at delivery (completed weeks),Âge gestationnel à l'accouchement (semaines complètes)
+event.stillbirth.action.declare.form.section.eventDetails.field.gestationalAgeWeeks.placeholder,Placeholder for gestational age field,weeks,semaines
+event.stillbirth.action.declare.form.section.eventDetails.field.gestationalAgeWeeks.postfix,Postfix for the gestational age field,weeks,semaines
+event.stillbirth.action.declare.form.section.eventDetails.field.placeOfDelivery.label,This is the label for the field,Place of delivery,Lieu de l'accouchement
+event.stillbirth.action.declare.form.section.eventDetails.field.sex.label,This is the label for the field,Sex,Sexe
+event.stillbirth.action.declare.form.section.eventDetails.field.wasBornAlive.helperText,Helper text for was born alive field,"Select 'Yes' if the baby showed any signs of life after delivery (breathing, heartbeat, crying, or movement), even briefly.","Sélectionnez « Oui » si le bébé a montré des signes de vie après l'accouchement (respiration, battements de cœur, pleurs ou mouvements), même brièvement."
+event.stillbirth.action.declare.form.section.eventDetails.field.wasBornAlive.label,This is the label for the field,Was the baby ever born alive?,Le bébé a-t-il déjà montré des signes de vie ?
+event.stillbirth.action.declare.form.section.eventDetails.field.wasBornAlive.option.no,Option: baby was not born alive,No,Non
+event.stillbirth.action.declare.form.section.eventDetails.field.wasBornAlive.option.yes,Option: baby was born alive,Yes,Oui
+event.stillbirth.action.declare.form.section.eventDetails.field.wasBornAliveWarning.label,Warning shown when the baby was born alive,"This case cannot be registered as a stillbirth event. If the baby showed any signs of life, this must be registered as a Live Birth, and if the child passed away, a Death Registration must be completed.","Ce cas ne peut pas être enregistré comme une mortinaissance. Si le bébé a montré des signes de vie, il doit être enregistré comme une naissance vivante, et si l'enfant est décédé par la suite, un enregistrement de décès doit être effectué."
+event.stillbirth.action.declare.form.section.eventDetails.title,Form section title for stillbirth event details,Event details,Détails de l'évènement
+event.stillbirth.action.declare.form.section.father.field.address.label,This is the label for the field,Father's residential address,Adresse de résidence du père
+event.stillbirth.action.declare.form.section.father.field.age.label,This is the label for the field,Age in years,Âge en années
+event.stillbirth.action.declare.form.section.father.field.detailsNotAvailable.label,This is the label for the field,Father's details are not available,Les détails du père ne sont pas disponibles
+event.stillbirth.action.declare.form.section.father.field.dob.error,This is the error message for invalid date,Must not be a future date,Ne doit pas être une date future
+event.stillbirth.action.declare.form.section.father.field.dob.label,This is the label for the field,Date of birth,Date de naissance
+event.stillbirth.action.declare.form.section.father.field.dobUnknown.label,This is the label for the field,Exact date unknown,Date exacte inconnue
+event.stillbirth.action.declare.form.section.father.field.idNumber.label,This is the label for the field,ID number,Numéro de pièce d'identité
+event.stillbirth.action.declare.form.section.father.field.idType.label,This is the label for the field,Type of ID,Type de pièce d'identité
+event.stillbirth.action.declare.form.section.father.field.name.label,This is the label for the field,Father's full name,Nom complet du père
+event.stillbirth.action.declare.form.section.father.field.nationality.label,This is the label for the field,Nationality,Nationalité
+event.stillbirth.action.declare.form.section.father.field.occupation.label,This is the label for the field,Occupation,Profession
+event.stillbirth.action.declare.form.section.father.field.placeOfBirth.label,This is the label for the field,Place of birth,Lieu de naissance
+event.stillbirth.action.declare.form.section.father.field.reason.label,Reason why the father's details are not available,Reason,Raison
+event.stillbirth.action.declare.form.section.father.field.residenceHelper.label,This is the label for the field,Residence,Résidence
+event.stillbirth.action.declare.form.section.father.field.sameAsMotherResidence.label,This is the label for the field,Same as mother's residence,Identique à la résidence de la mère
+event.stillbirth.action.declare.form.section.father.title,Form section title for father's details,Father's details,Détails du père
+event.stillbirth.action.declare.form.section.informant.field.address.label,This is the label for the field,Informant's residential address,Adresse de résidence de l'informateur
+event.stillbirth.action.declare.form.section.informant.field.age.label,This is the label for the field,Age in years,Âge en années
+event.stillbirth.action.declare.form.section.informant.field.contactHelper.label,This is the label for the field,Point of contact,Point de contact
+event.stillbirth.action.declare.form.section.informant.field.dob.label,This is the label for the field,Date of birth,Date de naissance
+event.stillbirth.action.declare.form.section.informant.field.dobUnknown.label,This is the label for the field,Exact date of birth unknown,Date de naissance exacte inconnue
+event.stillbirth.action.declare.form.section.informant.field.email.label,This is the label for the field,Email,Courriel
+event.stillbirth.action.declare.form.section.informant.field.idNumber.label,This is the label for the field,ID number,Numéro de pièce d'identité
+event.stillbirth.action.declare.form.section.informant.field.idType.label,This is the label for the field,Type of ID,Type de pièce d'identité
+event.stillbirth.action.declare.form.section.informant.field.name.label,This is the label for the field,Informant's full name,Nom complet de l'informateur
+event.stillbirth.action.declare.form.section.informant.field.nationality.label,This is the label for the field,Nationality,Nationalité
+event.stillbirth.action.declare.form.section.informant.field.occupation.label,This is the label for the field,Occupation,Profession
+event.stillbirth.action.declare.form.section.informant.field.other.relation.helperText,"Helper text for informant relation when ""Other"" is selected",Please specify relationship to child,Veuillez préciser le lien avec l'enfant
+event.stillbirth.action.declare.form.section.informant.field.other.relation.label,This is the label for the field,Relationship to child,Lien avec l'enfant
+event.stillbirth.action.declare.form.section.informant.field.phoneNo.label,This is the label for the field,Phone number,Numéro de téléphone
+event.stillbirth.action.declare.form.section.informant.field.relation.label,This is the label for the field,Informant type,Type d'informateur
+event.stillbirth.action.declare.form.section.informant.field.residenceHelper.label,This is the label for the field,Residence,Résidence
+event.stillbirth.action.declare.form.section.informant.title,Form section title for informant's details,Informant's details,Détails de l'informateur
+event.stillbirth.action.declare.form.section.introduction.field.guidance.bullet1,Stillbirth guidance bullet 1,Explain to the parent(s) that you are required to notify the Civil Registry Office of the stillbirth.,Expliquez aux parents que vous êtes tenu de notifier le Bureau de l'état civil de la mortinaissance.
+event.stillbirth.action.declare.form.section.introduction.field.guidance.bullet2,Stillbirth guidance bullet 2,"Explain that under the Civil Registration Act 2025, a stillbirth means a baby born with no signs of life at or after 28 weeks gestation.","Expliquez qu'en vertu de la loi sur l'état civil de 2025, une mortinaissance désigne un bébé né sans signe de vie à partir de 28 semaines de grossesse ou après."
+event.stillbirth.action.declare.form.section.introduction.field.guidance.bullet3,Stillbirth guidance bullet 3,Explain that stillbirth registration is required by law and creates an official civil record. It also helps health and civil registration agencies understand pregnancy outcomes and improve care.,Expliquez que l'enregistrement des mortinaissances est requis par la loi et crée un dossier civil officiel. Cela aide également les organismes de santé et d'état civil à mieux comprendre l'issue des grossesses et à améliorer les soins.
+event.stillbirth.action.declare.form.section.introduction.field.guidance.bullet4,Stillbirth guidance bullet 4,"Let the parent(s) or qualified informant know that the health team will collect the required details for the notification and registration process. If all required information can be submitted by the health team, they will not need to visit the Civil Registry Office. If any information is missing or CRO needs to confirm details, they may be asked to attend or may be contacted directly.","Informez les parents ou l'informateur qualifié que l'équipe de santé recueillera les renseignements nécessaires à la notification et à l'enregistrement. Si toutes les informations requises peuvent être fournies par l'équipe de santé, ils n'auront pas besoin de se rendre au Bureau de l'état civil. Si des informations manquent ou si le Bureau de l'état civil doit confirmer certains détails, ils pourront être invités à se présenter ou être contactés directement."
+event.stillbirth.action.declare.form.section.introduction.field.guidance.label,Guidance for explaining stillbirth notification to the family,Guidance: Explaining stillbirth notification to family,Directives : expliquer la notification de mortinaissance à la famille
+event.stillbirth.action.declare.form.section.mother.field.address.label,This is the label for the field,Usual place of residence,Lieu de résidence habituel
+event.stillbirth.action.declare.form.section.mother.field.addressHelper.label,This is the label for the field,Usual residence,Résidence habituelle
+event.stillbirth.action.declare.form.section.mother.field.age.error,Error message for invalid age,Age must be between 12 and 120,L'âge doit être compris entre 12 et 120 ans
+event.stillbirth.action.declare.form.section.mother.field.age.label,This is the label for the field,Age of mother,Âge de la mère
+event.stillbirth.action.declare.form.section.mother.field.age.postfix,This is the postfix for age field,years,ans
+event.stillbirth.action.declare.form.section.mother.field.brn.label,Label for the birth registration number text field,Birth registration number,Numéro d'enregistrement de naissance
+event.stillbirth.action.declare.form.section.mother.field.brnSearch.helperText,Helper text for birth registration number field,"Search for a birth record. If found, details will auto-fill. Otherwise, continue with manual entry","Recherchez un dossier de naissance. S'il est trouvé, les détails seront automatiquement renseignés. Sinon, continuez avec une saisie manuelle"
+event.stillbirth.action.declare.form.section.mother.field.brnSearch.label,Label for the birth registration number search field,Birth registration number lookup,Recherche du numéro d'enregistrement de naissance
+event.stillbirth.action.declare.form.section.mother.field.brnSearch.validation,Validation message for the birth registration number search field,Please enter a birth registration number to search,Veuillez saisir un numéro d'enregistrement de naissance pour effectuer la recherche
+event.stillbirth.action.declare.form.section.mother.field.detailsNotAvailable.label,This is the label for the field,Mother's details are not available,Les détails de la mère ne sont pas disponibles
+event.stillbirth.action.declare.form.section.mother.field.dob.afterDelivery,This is the error message for a birth date after the date of delivery,Birth date must be before delivery date,La date de naissance doit précéder la date de l'accouchement
+event.stillbirth.action.declare.form.section.mother.field.dob.error,This is the error message for invalid date,Must not be a future date,Ne doit pas être une date future
+event.stillbirth.action.declare.form.section.mother.field.dob.label,This is the label for the field,Date of birth,Date de naissance
+event.stillbirth.action.declare.form.section.mother.field.dobUnknown.label,This is the label for the field,Exact date of birth unknown,Date de naissance exacte inconnue
+event.stillbirth.action.declare.form.section.mother.field.idNumber.label,This is the label for the field,ID number,Numéro de pièce d'identité
+event.stillbirth.action.declare.form.section.mother.field.idType.label,This is the label for the field,Type of ID,Type de pièce d'identité
+event.stillbirth.action.declare.form.section.mother.field.maritalStatus.label,This is the label for the field,Marital status,Statut matrimonial
+event.stillbirth.action.declare.form.section.mother.field.name.label,This is the label for the field,Mother's name,Nom complet de la mère
+event.stillbirth.action.declare.form.section.mother.field.nationality.label,This is the label for the field,Nationality,Nationalité
+event.stillbirth.action.declare.form.section.mother.field.occupation.label,This is the label for the field,Occupation,Profession
+event.stillbirth.action.declare.form.section.mother.field.passport.label,This is the label for the field,Passport number,Numéro de passeport
+event.stillbirth.action.declare.form.section.mother.field.placeOfBirth.label,This is the label for the field,Place of birth,Lieu de naissance
+event.stillbirth.action.declare.form.section.mother.field.reason.label,Reason why the mother's details are not available,Reason,Raison
+event.stillbirth.action.declare.form.section.mother.title,Form section title for mother's details,Mother's details,Détails de la mère
+event.stillbirth.action.declare.label,This is shown as the action name anywhere the user can trigger the action from,Declare,Déclarer
+event.stillbirth.action.declare.notify.copy,Confirmation text for the notify action,You are about to formally notify the relevant Registration Office that a stillbirth event has occurred. Please confirm that the information provided is accurate before proceeding.,Vous êtes sur le point de notifier officiellement le bureau d'enregistrement concerné qu'un événement de mortinaissance s'est produit. Veuillez confirmer que les informations fournies sont exactes avant de continuer.
+event.stillbirth.action.declare.register.copy,Confirmation text for the register action,"<strong>WARNING!</strong>: By clicking ""Register"", you confirm that you have reviewed the record alongside supporting documentation in the Record tab. The record will proceed to be <strong>legally registered</strong> via the outbox. Further amends after registration can only be made via a legal correction process.","<strong>ATTENTION</strong> ! En cliquant sur « Enregistrer », vous confirmez avoir examiné le dossier ainsi que les documents justificatifs dans l'onglet « Enregistrement ». Le dossier sera ensuite <strong>légalement enregistré</strong> via la boîte d'envoi. Toute modification ultérieure ne pourra être effectuée que par le biais d'une procédure légale de correction."
+event.stillbirth.action.detect-duplicate.label,This is shown as the action name anywhere the user can trigger the action from,Detect duplicate,Détecter les doublons
+event.stillbirth.action.print.verifyIdentity,This is the title of the section,Verify their identity,Vérifier leur identité
+event.stillbirth.action.register.label,This is shown as the action name anywhere the user can trigger the action from,Register,Enregistrer
+event.stillbirth.action.register.supportingCopy,Confirmation text for the register action,Registering this stillbirth event will create an official civil registration record. Please ensure all details are correct before proceeding.,L'enregistrement de cet événement de mortinaissance créera un dossier officiel de l'état civil. Veuillez vous assurer que tous les détails sont corrects avant de continuer.
+event.stillbirth.action.reject.label,This is shown as the action name anywhere the user can trigger the action from,Reject,Rejeter
+event.stillbirth.action.request-correction.label,This is shown as the action name anywhere the user can trigger the action from,Request correction,Demander une correction
+event.stillbirth.action.requestCorrection.form.section.corrector,This is the title of the section,Correction requester,Demandeur de la correction
+event.stillbirth.action.requestCorrection.form.section.reason,This is the title of the section,Reason for correction,Raison de la correction
+event.stillbirth.action.requestCorrection.form.section.verify,This is the title of the section,Verify their identity,Vérifier leur identité
+event.stillbirth.action.requestCorrection.label,This is shown as the action name anywhere the user can trigger the action from,Request correction,Demander une correction
+event.stillbirth.error.invalidEmail,This is the error message for invalid email,Must be a valid email address,Doit être une adresse courriel valide
+event.stillbirth.error.invalidGestationalAge,Error message for invalid gestational age range,Gestational age must be between 28 and 45 completed weeks. This case cannot be registered as a stillbirth event.,L'âge gestationnel doit être compris entre 28 et 45 semaines complètes. Ce cas ne peut pas être enregistré comme une mortinaissance.
+event.stillbirth.error.invalidIdNumber,This is the error message for an invalid ID number,"ID number can only contain letters, numbers and the separators ""/"" and ""-""","Le numéro de pièce d'identité ne peut contenir que des lettres, des chiffres et les séparateurs « / » et « - »"
+event.stillbirth.error.invalidPhoneNumber,This is the error message for invalid phone number,Must be a valid phone number,Doit être un numéro de téléphone valide
+event.stillbirth.fallbackTitle,This is a fallback title if actual title resolves to empty string,No name provided,Aucun nom fourni
+event.stillbirth.label,This is what this event is referred as in the system,Stillbirth,Mortinaissance
+event.stillbirth.search.father,The title of Father's details accordion,Father's details,Détails du père
+event.stillbirth.search.mother,The title of Mother's details accordion,Mother's details,Détails de la mère
+event.stillbirth.summary.eventDetails.dateOfDelivery.empty,This is shown when there is no event information,No date of delivery,Aucune date d'accouchement
+event.stillbirth.summary.eventDetails.placeOfDelivery.empty,This is shown when there is no place of delivery information,No place of delivery,Aucun lieu d'accouchement
+event.stillbirth.summary.eventDetails.placeOfDelivery.label,Label for place of delivery,Place of delivery,Lieu de l'accouchement
+event.stillbirth.summary.informant.contact.empty,This is shown when there is no informant information,No contact details provided,Aucune coordonnée fournie
+event.stillbirth.summary.informant.contact.label,This is the label for the informant information,Contact,Contact
+event.stillbirth.summary.informant.contact.value,This is the contact value of the informant,"{informant.phoneNo, select, __EMPTY__ {{informant.email, select, __EMPTY__ {} other {{informant.email}}}} other {{informant.phoneNo}{informant.email, select, __EMPTY__ {} other { | {informant.email}}}}}","{informant.phoneNo, select, __EMPTY__ {{informant.email, select, __EMPTY__ {} other {{informant.email}}}} other {{informant.phoneNo}{informant.email, select, __EMPTY__ {} other { | {informant.email}}}}}"
+event.stillbirth.title,This is the title of the summary,"{father.name.firstname, select, __EMPTY__ {Stillbirth declaration} other {{father.name.surname, select, __EMPTY__ {Stillbirth declaration for {father.name.firstname}} other {Stillbirth declaration for {father.name.firstname} {father.name.surname}}}}}","{father.name.firstname, select, __EMPTY__ {Déclaration de mortinaissance} other {{father.name.surname, select, __EMPTY__ {Déclaration de mortinaissance pour {father.name.firstname}} other {Déclaration de mortinaissance pour {father.name.firstname} {father.name.surname}}}}}"
 event.summary.assignedTo.empty,Not assigned message,Not assigned,Non assigné
 event.summary.assignedTo.label,Assigned to label,Assigned to,Assigné à
 event.summary.assignedTo.value,Assigned to value,{event.assignedTo},{event.assignedTo}
@@ -1867,6 +2053,7 @@ form.field.label.mannerOfDeathNatural,,Natural causes,Cause naturelle
 form.field.label.mannerOfDeathSuicide,,Suicide,Suicide
 form.field.label.mannerOfDeathUndetermined,,Manner undetermined,Manière indéterminée
 form.field.label.maritalStatus,,Marital status,Statut matrimonial
+form.field.label.maritalStatusDefacto,Option for form field: Marital status,Defacto,Union libre
 form.field.label.maritalStatusDivorced,Option for form field: Marital status,Divorced,Divorcé(e)
 form.field.label.maritalStatusMarried,Option for form field: Marital status,Married,Marié(e)
 form.field.label.maritalStatusNotStated,Option for form field: Marital status,Not stated,Non déclaré
@@ -2442,6 +2629,7 @@ register.eventInfo.event.title,,"Introduce the {eventType, select, birth{birth} 
 register.eventInfo.marriage.listItem0,,I am here to complete the marriage registration declaration for you. ,Je suis ici pour remplir la déclaration d'enregistrement du mariage pour vous.
 register.eventInfo.marriage.listItem1,,"Once I complete the declaration, it will be sent to the registration office for review.","Une fois que j'aurai complété la déclaration, elle sera envoyée au bureau d'enregistrement pour examen."
 register.eventInfo.marriage.listItem2,,Wait for an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.,Attendez un SMS vous indiquant quand vous rendre au bureau pour retirer le certificat - Prenez votre pièce d'identité avec vous
+register.eventInfo.stillbirth.title,Event information title for the stillbirth,Introduction,Introduction
 register.form.modal.desc.deleteDeclarationConfirm,Description for delete declaration confirmation modal,"Are you certain you want to delete this draft declaration form? Please note, this action cant be undone.",Êtes-vous certain de vouloir supprimer ce projet de formulaire de déclaration? Veuillez noter que cette action ne peut pas être annulée.
 register.form.modal.desc.exitWithoutSavingDeclarationConfirm,Description for exit declaration without saving confirmation modal,You have unsaved changes on your declaration form. Are you sure you want to exit without saving?,Vous avez des modifications non enregistrées sur votre formulaire de déclaration. Voulez-vous vraiment quitter sans enregistrer ?
 register.form.modal.desc.exitWithoutSavingModalForCorrection,Description for exit declaration without saving confirmation modal for correct record,Are you sure you want to exit? Any corrections you have made will not be saved.,Êtes-vous sûr de vouloir quitter ? Les corrections que vous avez apportées ne seront pas sauvegardées.
@@ -2605,6 +2793,8 @@ settings.user.label.nameBN,,Bengali name,Nom en bengali
 settings.user.label.nameEN,,Full name,Nom anglais
 settings.verifyPhone,Verify phone number title,Verify phone number,Vérifier le numéro de téléphone
 signature.upload.modal.title,Title for the signature upload modal,Upload Signature,Télécharger la signature
+stillbirth.search.criteria.label.prefix.father,Father prefix,Father's,Du père
+stillbirth.search.criteria.label.prefix.informant,Informant prefix,Informant's,De l'informateur
 sysAdHome.config,The title of config tab,Config,Config
 sysAdHome.devices,The title of devices tab,Devices,Appareils
 sysAdHome.network,The title of network tab,Network,Réseau

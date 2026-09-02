@@ -1,0 +1,58 @@
+<svg width="595" height="842" viewBox="0 0 595 842" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="595" height="842" fill="white"/>
+<rect x="20" y="22.5" width="555" height="797" stroke="black"/>
+<rect x="32" y="34.5" width="531" height="773" stroke="black" stroke-width="0.5"/>
+<text fill="black" style="white-space: pre" xml:space="preserve" text-anchor="middle" font-family="Noto Sans" font-size="9.5" letter-spacing="1px"><tspan x="297.5" y="66">TUVALU</tspan></text>
+<text fill="black" style="white-space: pre" xml:space="preserve" text-anchor="middle" font-family="Noto Sans" font-size="20" font-weight="700" letter-spacing="0.5px"><tspan x="297.5" y="98">CERTIFICATE OF STILLBIRTH</tspan></text>
+<text fill="#444444" style="white-space: pre" xml:space="preserve" text-anchor="middle" font-family="Noto Sans" font-size="9.5" letter-spacing="0px"><tspan x="297.5" y="118">Issued under the Civil Registration Act 2025</tspan></text>
+<line x1="60" y1="136.5" x2="535" y2="136.5" stroke="#B5B5B5" stroke-width="0.5"/>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="600" letter-spacing="0px"><tspan x="60" y="158">Registration number</tspan></text>
+<text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" letter-spacing="0px"><tspan x="260" y="158">{{$lookup $metadata 'legalStatuses.REGISTERED.registrationNumber'}}</tspan></text>
+<line x1="60" y1="170" x2="535" y2="170" stroke="#B5B5B5" stroke-width="0.5"/>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="700" letter-spacing="0px"><tspan x="60" y="196">Event details</tspan></text>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="600" letter-spacing="0px"><tspan x="60" y="216">Date of delivery</tspan></text>
+<text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" letter-spacing="0px"><tspan x="260" y="216">{{$defaultTo ($lookup $declaration 'eventDetails.dateOfDelivery') '-'}}</tspan></text>
+<line x1="60" y1="228" x2="535" y2="228" stroke="#B5B5B5" stroke-width="0.5"/>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="600" letter-spacing="0px"><tspan x="60" y="248">Sex</tspan></text>
+<text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" letter-spacing="0px"><tspan x="260" y="248">{{$defaultTo ($lookup $declaration 'eventDetails.sex') '-'}}</tspan></text>
+<line x1="60" y1="260" x2="535" y2="260" stroke="#B5B5B5" stroke-width="0.5"/>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="600" letter-spacing="0px"><tspan x="60" y="280">Gestational age</tspan></text>
+<text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" letter-spacing="0px"><tspan x="260" y="280">{{$defaultTo ($lookup $declaration 'eventDetails.gestationalAgeWeeks') '-'}} weeks</tspan></text>
+<line x1="60" y1="292" x2="535" y2="292" stroke="#B5B5B5" stroke-width="0.5"/>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="600" letter-spacing="0px"><tspan x="60" y="312">Place of delivery</tspan></text>
+<text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" letter-spacing="0px"><tspan x="260" y="312">{{#ifCond ($lookup $declaration 'eventDetails.placeOfDelivery') '===' 'HEALTH_FACILITY'}}{{{concatAddress ($lookup $declaration 'eventDetails.deliveryLocation') 260 312 14}}}{{else}}{{#ifCond ($lookup $declaration 'eventDetails.placeOfDelivery') '===' 'PRIVATE_HOME'}}{{{concatAddress ($lookup $declaration 'eventDetails.deliveryLocation.privateHome') 260 312 14}}}{{else}}{{{concatAddress ($lookup $declaration 'eventDetails.deliveryLocation.other') 260 312 14}}}{{/ifCond}}{{/ifCond}}</tspan></text>
+<line x1="60" y1="338" x2="535" y2="338" stroke="#B5B5B5" stroke-width="0.5"/>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="700" letter-spacing="0px"><tspan x="60" y="360">Mother&#x2019;s details</tspan></text>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="600" letter-spacing="0px"><tspan x="60" y="380">Full name</tspan></text>
+<text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" letter-spacing="0px"><tspan x="260" y="380">{{$defaultTo ($lookup $declaration 'mother.name.fullname') '-'}}</tspan></text>
+<line x1="60" y1="392" x2="535" y2="392" stroke="#B5B5B5" stroke-width="0.5"/>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="600" letter-spacing="0px"><tspan x="60" y="412">Date of birth</tspan></text>
+<text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" letter-spacing="0px"><tspan x="260" y="412">{{$defaultTo ($lookup $declaration 'mother.dob') '-'}}</tspan></text>
+<line x1="60" y1="424" x2="535" y2="424" stroke="#B5B5B5" stroke-width="0.5"/>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="600" letter-spacing="0px"><tspan x="60" y="444">Nationality</tspan></text>
+<text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" letter-spacing="0px"><tspan x="260" y="444">{{$defaultTo ($lookup $declaration 'mother.nationality') '-'}}</tspan></text>
+<line x1="60" y1="456" x2="535" y2="456" stroke="#B5B5B5" stroke-width="0.5"/>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="600" letter-spacing="0px"><tspan x="60" y="476">Marital status</tspan></text>
+<text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" letter-spacing="0px"><tspan x="260" y="476">{{$defaultTo ($lookup $declaration 'mother.maritalStatus') '-'}}</tspan></text>
+<line x1="60" y1="488" x2="535" y2="488" stroke="#B5B5B5" stroke-width="0.5"/>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="600" letter-spacing="0px"><tspan x="60" y="508">Usual residence</tspan></text>
+<text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" letter-spacing="0px"><tspan x="260" y="508">{{$defaultTo ($lookup $declaration 'mother.address.administrativeHierarchy') '-'}}</tspan></text>
+<line x1="60" y1="520" x2="535" y2="520" stroke="#B5B5B5" stroke-width="0.5"/>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="700" letter-spacing="0px"><tspan x="60" y="542">Father&#x2019;s details</tspan></text>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="600" letter-spacing="0px"><tspan x="60" y="562">Full name</tspan></text>
+<text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" letter-spacing="0px"><tspan x="260" y="562">{{$defaultTo ($lookup $declaration 'father.name.fullname') '-'}}</tspan></text>
+<line x1="60" y1="574" x2="535" y2="574" stroke="#B5B5B5" stroke-width="0.5"/>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="600" letter-spacing="0px"><tspan x="60" y="594">Nationality</tspan></text>
+<text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" letter-spacing="0px"><tspan x="260" y="594">{{$defaultTo ($lookup $declaration 'father.nationality') '-'}}</tspan></text>
+<line x1="60" y1="606" x2="535" y2="606" stroke="#B5B5B5" stroke-width="0.5"/>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="700" letter-spacing="0px"><tspan x="60" y="628">Informant&#x2019;s details</tspan></text>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" font-weight="600" letter-spacing="0px"><tspan x="60" y="648">Relationship to child</tspan></text>
+<text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="9.5" letter-spacing="0px"><tspan x="260" y="648">{{$defaultTo ($lookup $declaration 'informant.relation') '-'}}</tspan></text>
+<line x1="60" y1="660" x2="535" y2="660" stroke="#B5B5B5" stroke-width="0.5"/>
+<line x1="60" y1="680" x2="230" y2="680" stroke="black" stroke-width="0.5"/>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="8.5" letter-spacing="0px"><tspan x="60" y="694">Registrar: {{$defaultTo ($lookup $metadata 'legalStatuses.REGISTERED.createdBy.name') '-'}}</tspan></text>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="8.5" letter-spacing="0px"><tspan x="60" y="708">Office of registration: {{$defaultTo ($lookup $metadata 'legalStatuses.REGISTERED.createdAtLocation.name') '-'}}</tspan></text>
+<line x1="335" y1="680" x2="505" y2="680" stroke="black" stroke-width="0.5"/>
+<text fill="black" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="8.5" letter-spacing="0px"><tspan x="335" y="694">Date of registration</tspan></text>
+<text fill="#222222" style="white-space: pre" xml:space="preserve" font-family="Noto Sans" font-size="8.5" letter-spacing="0px"><tspan x="335" y="708">{{$defaultTo ($lookup $metadata 'createdAt') '-'}}</tspan></text>
+</svg>
