@@ -64,7 +64,7 @@ export const advancedSearchBirth = [
       id: 'advancedSearch.form.registrationDetails'
     },
     fields: [
-      field('child.effectiveRegistrationDate', {
+      field('introduction.effectiveRegistrationDate', {
         conditionals: [],
         validations: []
       }).range(),
