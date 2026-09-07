@@ -137,14 +137,14 @@ async function acceptBirthRegistration({
     action?.declaration ?? {}
   )
   const existingEffectiveRegistrationDate =
-    currentDeclaration['child.effectiveRegistrationDate']
+    currentDeclaration['introduction.effectiveRegistrationDate']
   const existingEffectiveRegistrationPlaceId =
     currentDeclaration['child.effectiveRegistrationPlaceId']
   const derivedEffectiveRegistrationPlaceId =
     await deriveEffectiveRegistrationPlaceIdFromSeedData(currentDeclaration)
 
   const declarationPatch: Record<string, unknown> = {
-    'child.effectiveRegistrationDate':
+    'introduction.effectiveRegistrationDate':
       existingEffectiveRegistrationDate ??
       new Date().toISOString().split('T')[0]
   }

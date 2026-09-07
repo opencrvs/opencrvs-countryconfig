@@ -10,12 +10,16 @@
  */
 
 import {
+  and,
   ConditionalType,
   defineFormPage,
   FieldType,
-  PageTypes
+  PageTypes,
+  field
 } from '@opencrvs/toolkit/events'
+import { defineConditional, never } from '@opencrvs/toolkit/conditionals'
 import {
+  emptyMessage,
   hasHealthNotifierRole,
   hasNonHealthNotifierRole
 } from '@countryconfig/events/utils'
@@ -73,14 +77,16 @@ export const introduction = defineFormPage({
       id: 'introduction.guidance.registrationOfficer',
       type: FieldType.BULLET_LIST,
       label: {
-        defaultMessage: 'Guidance: Explaining birth registration to parents or a qualified informant',
+        defaultMessage:
+          'Guidance: Explaining birth registration to parents or a qualified informant',
         description:
           'Guidance for registration officers on the birth registration process',
         id: 'event.birth.action.declare.form.section.introduction.field.guidance.registrationOfficer.label'
       },
       items: [
         {
-          defaultMessage: 'Thank the informant for coming to register the birth.',
+          defaultMessage:
+            'Thank the informant for coming to register the birth.',
           description: 'Registration officer guidance bullet 1',
           id: 'event.birth.action.declare.form.section.introduction.field.guidance.registrationOfficer.bullet1'
         },
@@ -112,6 +118,220 @@ export const introduction = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: hasNonHealthNotifierRole
+        }
+      ]
+    },
+    {
+      id: 'introduction.legacyRegistrationDivider',
+      type: FieldType.DIVIDER,
+      label: emptyMessage,
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: hasNonHealthNotifierRole
+        }
+      ]
+    },
+    {
+      id: 'introduction.isLegacyRecord',
+      type: FieldType.CHECKBOX,
+      required: false,
+      analytics: false,
+      defaultValue: false,
+      label: {
+        defaultMessage: 'Legacy record re-entry?',
+        description: 'Checkbox indicating this is a legacy record re-entry',
+        id: 'event.birth.action.declare.form.section.introduction.field.isLegacyRecord.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.DISPLAY_ON_REVIEW,
+          conditional: field('introduction.isLegacyRecord').isEqualTo(true)
+        },
+        {
+          type: ConditionalType.SHOW,
+          conditional: hasNonHealthNotifierRole
+        }
+      ]
+    },
+    {
+      id: 'introduction.effectiveRegistrationDate',
+      type: FieldType.DATE,
+      required: true,
+      analytics: true,
+      label: {
+        defaultMessage: 'Date of registration',
+        description: 'Manual registration date for legacy records',
+        id: 'event.birth.action.declare.form.section.introduction.field.effectiveRegistrationDate.label'
+      },
+      validation: [
+        {
+          message: {
+            defaultMessage: 'Cannot be a future date',
+            description:
+              'Error shown when the registration date is in the future',
+            id: 'event.birth.action.declare.form.section.introduction.field.effectiveRegistrationDate.error'
+          },
+          validator: field('introduction.effectiveRegistrationDate')
+            .isBefore()
+            .now()
+        }
+      ],
+      conditionals: [
+        {
+          type: ConditionalType.DISPLAY_ON_REVIEW,
+          conditional: field('introduction.isLegacyRecord').isEqualTo(true)
+        },
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(
+            hasNonHealthNotifierRole,
+            field('introduction.isLegacyRecord').isEqualTo(true)
+          )
+        }
+      ]
+    },
+    {
+      id: 'introduction.adoptionOrderDivider',
+      type: FieldType.DIVIDER,
+      label: emptyMessage,
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: hasNonHealthNotifierRole
+        }
+      ]
+    },
+    {
+      id: 'introduction.isBirthAfterAdoptionOrder',
+      type: FieldType.CHECKBOX,
+      required: false,
+      analytics: false,
+      defaultValue: false,
+      label: {
+        defaultMessage: 'Birth record created after adoption order',
+        description:
+          'Checkbox indicating the birth record is being created after an adoption order',
+        id: 'event.birth.action.declare.form.section.introduction.field.isBirthAfterAdoptionOrder.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.DISPLAY_ON_REVIEW,
+          conditional: field(
+            'introduction.isBirthAfterAdoptionOrder'
+          ).isEqualTo(true)
+        },
+        {
+          type: ConditionalType.SHOW,
+          conditional: hasNonHealthNotifierRole
+        }
+      ]
+    },
+    {
+      id: 'introduction.adoptionOrderSearch',
+      type: FieldType.SEARCH,
+      required: false,
+      label: {
+        defaultMessage: 'Adoption order lookup',
+        description: 'Label for the adoption order lookup search field',
+        id: 'event.birth.action.declare.form.section.introduction.field.adoptionOrderSearch.label'
+      },
+      helperText: {
+        defaultMessage:
+          'Search for an adoption record. If found, details will auto-fill. Otherwise, continue with manual entry.',
+        description: 'Helper text for the adoption order lookup search field',
+        id: 'event.birth.action.declare.form.section.introduction.field.adoptionOrderSearch.helperText'
+      },
+      configuration: {
+        query: {
+          type: 'or',
+          clauses: [
+            {
+              data: {
+                declaration: {
+                  'introduction.adoptionOrderNumber': {
+                    term: '{term}',
+                    type: 'exact'
+                  }
+                }
+              }
+            }
+          ]
+        },
+        limit: 10,
+        offset: 0,
+        validation: {
+          validator: defineConditional({
+            type: 'string',
+            minLength: 1,
+            description: 'Must be a non-empty value'
+          }),
+          message: {
+            defaultMessage: 'Please enter an adoption order number to search',
+            description:
+              'Validation message for the adoption order lookup search field',
+            id: 'event.birth.action.declare.form.section.introduction.field.adoptionOrderSearch.validation'
+          }
+        },
+        indicators: {
+          ok: {
+            defaultMessage: 'Adoption record found',
+            description: 'Indicator shown when an adoption record is found',
+            id: 'event.birth.action.declare.form.section.introduction.field.adoptionOrderSearch.indicators.ok'
+          },
+          clearModal: {
+            title: {
+              defaultMessage: 'Clear adoption record?',
+              description: 'Title for the clear search confirmation modal',
+              id: 'event.birth.action.declare.form.section.introduction.field.adoptionOrderSearch.indicators.clearModal.title'
+            },
+            description: {
+              defaultMessage:
+                'This will remove the auto-filled adoption order number.',
+              description:
+                'Description for the clear search confirmation modal',
+              id: 'event.birth.action.declare.form.section.introduction.field.adoptionOrderSearch.indicators.clearModal.description'
+            }
+          }
+        }
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(
+            hasNonHealthNotifierRole,
+            field('introduction.isBirthAfterAdoptionOrder').isEqualTo(true)
+          )
+        },
+        {
+          type: ConditionalType.DISPLAY_ON_REVIEW,
+          conditional: never()
+        }
+      ]
+    },
+    {
+      id: 'introduction.adoptionOrderNumber',
+      type: FieldType.TEXT,
+      required: false,
+      parent: field('introduction.adoptionOrderSearch'),
+      value: field('introduction.adoptionOrderSearch').getByPath([
+        'data',
+        'firstResult',
+        'declaration',
+        'introduction.adoptionOrderNumber'
+      ]),
+      label: {
+        defaultMessage: 'Adoption order number',
+        description: 'Label for the adoption order number field',
+        id: 'event.birth.action.declare.form.section.introduction.field.adoptionOrderNumber.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(
+            hasNonHealthNotifierRole,
+            field('introduction.isBirthAfterAdoptionOrder').isEqualTo(true)
+          )
         }
       ]
     }
