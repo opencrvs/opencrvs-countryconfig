@@ -20,7 +20,6 @@
 ;(function initClientConfig() {
   const scheme = window.location.protocol // "http:" or "https:"
   const hostname = '{{hostname}}' // Replaced dynamically
-  const sentry = '{{sentry}}' // Replaced dynamically
 
   window.config = {
     API_GATEWAY_URL: `${scheme}//gateway.${hostname}/`,
@@ -34,7 +33,6 @@
     // Country code in uppercase ALPHA-3 format
     COUNTRY: 'FAR',
     LANGUAGES: 'en,fr',
-    SENTRY: sentry,
     DASHBOARDS: [
       {
         id: 'registrations',
