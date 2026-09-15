@@ -1,5 +1,21 @@
 # Changelog
 
+## 2.0.3 Release Candidate
+
+## 2.0.2
+
+## 1.9.18
+
+### Bug fixes
+
+- Minio DockerHub image has been deprecated. Replace minio/mc image with quay.io/minio/mc [#13797](https://github.com/opencrvs/opencrvs-core/issues/13797)
+
+## 1.9.17
+
+### Breaking changes
+
+- Sentry has been removed from OpenCRVS core, so this configuration no longer wires it up. `SENTRY_DSN` is gone from `src/environment.ts`, the `hapi-sentry` plugin, the `{{sentry}}` substitution in `start-prod.sh`, the `SENTRY` field in the client and login browser configs, and every `docker-compose*.yml`. Any `SENTRY_DSN` still set in your environment is ignored. Crash reporting is no longer built in — deployments that relied on Sentry for alerting should put their own error tracking in place. [#13460](https://github.com/opencrvs/opencrvs-core/issues/13460)
+
 ## 2.0.1 Release
 
 ### Security fixes
