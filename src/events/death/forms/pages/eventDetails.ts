@@ -191,7 +191,7 @@ export const eventDetails = defineFormPage({
     {
       id: 'eventDetails.reasonForLateRegistration',
       type: FieldType.TEXT,
-      required: true,
+      required: false,
       label: {
         defaultMessage: 'Reason for late registration',
         description: 'This is the label for the field',

@@ -16,7 +16,12 @@ export default defineLoginConfig({
   // Country code in uppercase ALPHA-3 format
   COUNTRY: 'TUV',
   LANGUAGES: ['en', 'fr'],
-  LOGIN_BACKGROUND: { backgroundColor: '36304E' },
+  LOGIN_BACKGROUND: {
+    backgroundColor: '36304E',
+    backgroundImage:
+      '/api/countryconfig/static/images/tuvalu-login-background.jpg',
+    imageFit: 'FILL'
+  },
   SENTRY: env.SENTRY_DSN ?? '',
   USER_NOTIFICATION_DELIVERY_METHOD:
     applicationConfig.USER_NOTIFICATION_DELIVERY_METHOD,
