@@ -11,14 +11,12 @@ services:
     environment:
       - NODE_ENV=production
       - LANGUAGES=en,fr
-      - SENTRY_DSN=${SENTRY_DSN:-}
     deploy:
       replicas: 1
 
   auth:
     environment:
       - NODE_ENV=production
-      - SENTRY_DSN=${SENTRY_DSN:-}
     deploy:
       replicas: 1
 
@@ -35,7 +33,6 @@ services:
       - NODE_ENV=production
       - OPENCRVS_ENVIRONMENT=staging
       - AUTH_URL=http://auth:4040
-      - SENTRY_DSN=${SENTRY_DSN:-}
       - SENDER_EMAIL_ADDRESS=${SENDER_EMAIL_ADDRESS}
       - ALERT_EMAIL=${ALERT_EMAIL}
       - SMTP_HOST=${SMTP_HOST}
