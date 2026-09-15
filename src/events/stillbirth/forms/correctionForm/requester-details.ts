@@ -22,6 +22,7 @@ import {
   tuvaluNameConfig,
   invalidNameValidator
 } from '@countryconfig/events/birth/validators'
+import { idNumberValidator } from '@countryconfig/events/stillbirth/validators'
 
 const RequesterIdType = {
   PASSPORT: 'PASSPORT',
@@ -140,6 +141,7 @@ export const requesterDetailsFields: FieldConfig[] = [
       description: 'This is the label for the field',
       id: 'event.stillbirth.action.correction.form.section.requester.idNumber.label'
     },
+    validation: [idNumberValidator('requester.idNumber')],
     conditionals: [
       {
         type: ConditionalType.SHOW,

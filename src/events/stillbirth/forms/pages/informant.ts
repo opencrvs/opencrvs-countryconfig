@@ -86,12 +86,12 @@ export const informant = defineFormPage({
       type: FieldType.TEXT,
       required: true,
       label: {
-        defaultMessage: 'Relationship to child',
+        defaultMessage: 'Relationship to the family',
         description: 'This is the label for the field',
         id: 'event.stillbirth.action.declare.form.section.informant.field.other.relation.label'
       },
       helperText: {
-        defaultMessage: 'Please specify relationship to child',
+        defaultMessage: 'Please specify relationship to the family',
         description:
           'Helper text for informant relation when "Other" is selected',
         id: 'event.stillbirth.action.declare.form.section.informant.field.other.relation.helperText'

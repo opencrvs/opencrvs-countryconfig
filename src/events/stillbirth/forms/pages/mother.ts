@@ -387,6 +387,49 @@ export const mother = defineFormPage({
       ]
     },
     {
+      id: 'mother.childrenHeader',
+      type: FieldType.HEADING,
+      label: {
+        defaultMessage: 'Number of children previously born to the mother',
+        description: 'Header for children count section',
+        id: 'event.stillbirth.action.declare.form.section.mother.field.childrenHeader.label'
+      },
+      configuration: { styles: { fontVariant: 'h3' } },
+      conditionals: [
+        { type: ConditionalType.SHOW, conditional: requireMotherDetails }
+      ]
+    },
+    {
+      id: 'mother.livingChildren',
+      type: FieldType.NUMBER,
+      analytics: true,
+      required: false,
+      label: {
+        defaultMessage: 'Living',
+        description: 'Label for number of living children',
+        id: 'event.stillbirth.action.declare.form.section.mother.field.livingChildren.label'
+      },
+      conditionals: [
+        { type: ConditionalType.SHOW, conditional: requireMotherDetails }
+      ],
+      configuration: { min: 0 }
+    },
+    {
+      id: 'mother.deceasedChildren',
+      type: FieldType.NUMBER,
+      analytics: true,
+      required: false,
+      label: {
+        defaultMessage: 'Deceased',
+        description: 'Label for number of deceased children',
+        id: 'event.stillbirth.action.declare.form.section.mother.field.deceasedChildren.label'
+      },
+      conditionals: [
+        { type: ConditionalType.SHOW, conditional: requireMotherDetails }
+      ],
+      configuration: { min: 0 }
+    },
+    {
       id: 'mother.addressDivider',
       type: FieldType.DIVIDER,
       label: emptyMessage,
