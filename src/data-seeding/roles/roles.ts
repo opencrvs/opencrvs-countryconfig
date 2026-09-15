@@ -66,6 +66,7 @@ export const roles: Role[] = [
       { type: 'record.create' },
       { type: 'record.read' },
       { type: 'record.declare' },
+      { type: 'record.register' },
       { type: 'record.edit' },
       { type: 'record.reject' },
       { type: 'record.review-duplicates' },
