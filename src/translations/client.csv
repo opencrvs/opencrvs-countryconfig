@@ -1164,6 +1164,7 @@ event.death.action.declare.form.section.burial.field.arrangement.option.outsideT
 event.death.action.declare.form.section.burial.field.arrangementOther.label,Label for other burial arrangement field,Specify other burial status,Préciser autre modalité d'inhumation
 event.death.action.declare.form.section.burial.field.arrangementOther.label,Label for other burial arrangement field,Specify other burial status,Préciser autre modalité d'inhumation
 event.death.action.declare.form.section.burial.field.date.error,Label for error message,Cannot be date in futute, Parle voux angles
+event.death.action.declare.form.section.burial.field.dateBeforeDeath.error, Error message for date of burial before date of death, Cannot be before Date of death, Cannot be before Date of death
 event.death.action.declare.form.section.burial.field.date.label,Label for date of burial field,Date of burial,Date d'inhumation
 event.death.action.declare.form.section.burial.field.date.label,Label for date of burial field,Date of burial,Date d'inhumation
 event.death.action.declare.form.section.burial.field.locationDescription.label,Label for burial location description,Burial place or location description,Description du lieu d'inhumation

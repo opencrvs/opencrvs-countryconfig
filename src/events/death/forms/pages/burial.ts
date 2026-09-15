@@ -111,7 +111,7 @@ export const burial = defineFormPage({
     {
       id: 'burial.date',
       type: FieldType.DATE,
-      required: true,
+      required: false,
       analytics: true,
       label: {
         defaultMessage: 'Date of burial',
@@ -126,6 +126,14 @@ export const burial = defineFormPage({
             id: 'event.death.action.declare.form.section.burial.field.date.error'
           },
           validator: field('burial.date').isBefore().now()
+        },
+        {
+          message: {
+            defaultMessage: 'Cannot be before Date of death',
+            description: 'Error message for date of burial before date of death',
+            id: 'event.death.action.declare.form.section.burial.field.dateBeforeDeath.error'
+          },
+          validator: field('burial.date').isAfter().date(field('eventDetails.date'))
         }
       ]
     },
