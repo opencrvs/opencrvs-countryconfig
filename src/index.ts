@@ -50,6 +50,7 @@ import { rolesHandler } from './data-seeding/roles/handler'
 import { usersHandler } from './data-seeding/employees/handler'
 import { applicationConfigHandler } from './api/application/handler'
 import { handlebarsHandler } from './certificate/handlebars/handler'
+import { systemReadyHandler } from './api/integration/handler'
 import { fontsHandler } from './api/fonts/handler'
 import {
   getEventsHandler,
@@ -506,6 +507,17 @@ export async function createServer() {
   })
 
   server.route({
+    method: 'GET',
+    path: '/triggers/system/ready',
+    handler: systemReadyHandler,
+    options: {
+      tags: ['api', 'integration'],
+      description:
+        'Called by events on startup. Registers integrations in the events service using the provided bootstrap token.'
+    }
+  })
+
+  server.route({
     method: 'POST',
     path: `/trigger/events/{event}/actions/${ActionType.CUSTOM}`,
     handler: onCustomActionHandler,
@@ -556,20 +568,6 @@ export async function createServer() {
   })
 
   server.route(getUserNotificationRoutes())
-
-  server.route({
-    method: 'GET',
-    path: '/triggers/system/ready',
-    handler: (_request, h) => {
-      // Not implemented by default
-      // You can use this endpoint to for instance set up integration clients
-      return h.response().code(501)
-    },
-    options: {
-      tags: ['api', 'triggers'],
-      description: 'System ready endpoint'
-    }
-  })
 
   server.ext({
     type: 'onRequest',
