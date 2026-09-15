@@ -10,16 +10,39 @@
  */
 
 import {
+  ActionType,
+  and,
   ConditionalType,
   defineActionForm,
+  event,
   field,
   FieldType,
   not,
+  or,
   PageTypes
 } from '@opencrvs/toolkit/events'
 import { printCertificateCollectors } from './collectors'
 import { printCertificateCollectorOther } from './collector-other'
 import { printCertificateCollectorIdentityVerify } from './collector-identity-verify'
+
+const isSubsequentCertificateIssuance = event
+  .hasAction(ActionType.PRINT_CERTIFICATE)
+  .minCount(1)
+const isFirstCertificateIssuance = not(isSubsequentCertificateIssuance)
+const isPostSixMonthRegistration = and(
+  field('child.dob').isBefore().now(),
+  not(field('child.dob').isAfter().days(180).inPast())
+)
+const isLegacyRecord = field('introduction.isLegacyRecord').isEqualTo(true)
+const requiresBirthRegistrationFee = and(
+  isFirstCertificateIssuance,
+  or(isPostSixMonthRegistration, isLegacyRecord)
+)
+const requiresCertificateIssuanceFee = isSubsequentCertificateIssuance
+const requiresPayment = or(
+  requiresBirthRegistrationFee,
+  requiresCertificateIssuanceFee
+)
 
 export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
   label: {
@@ -108,7 +131,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
       },
       fields: [
         {
-          id: 'collector.collect.payment.data',
+          id: 'collector.collect.payment.freeData',
           type: FieldType.DATA,
           label: {
             defaultMessage: 'Payment details',
@@ -125,9 +148,9 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
                   id: 'event.birth.action.certificate.form.section.collectPayment.service.label'
                 },
                 value: {
-                  defaultMessage: 'Birth Certificate',
-                  description: 'Birth certificate service name',
-                  id: 'event.birth.action.certificate.form.section.collectPayment.service.label.birthCertificate'
+                  defaultMessage: 'First birth certificate issuance',
+                  description: 'Free first birth certificate service name',
+                  id: 'event.birth.action.certificate.form.section.collectPayment.service.label.firstIssuance'
                 }
               },
               {
@@ -137,25 +160,119 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
                   description: 'Title for the data entry',
                   id: 'event.birth.action.certificate.form.section.collectPayment.fee.label'
                 },
-                value: '$25.00'
+                value: 'Nil'
               }
             ]
-          }
+          },
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: and(
+                isFirstCertificateIssuance,
+                not(or(isPostSixMonthRegistration, isLegacyRecord))
+              )
+            }
+          ]
         },
         {
-          id: 'collector.collect.payment.lateRegistrationFee',
+          id: 'collector.collect.payment.registrationFeeData',
+          type: FieldType.DATA,
+          label: {
+            defaultMessage: 'Payment details',
+            description: 'Title for the data section',
+            id: 'event.birth.action.certificate.form.section.collectPayment.registrationFeeData.label'
+          },
+          configuration: {
+            data: [
+              {
+                id: 'service',
+                label: {
+                  defaultMessage: 'Service',
+                  description: 'Title for the data entry',
+                  id: 'event.birth.action.certificate.form.section.collectPayment.service.label'
+                },
+                value: {
+                  defaultMessage: 'Late or legacy birth registration',
+                  description: 'Late or legacy birth registration service name',
+                  id: 'event.birth.action.certificate.form.section.collectPayment.service.label.lateOrLegacyRegistration'
+                }
+              },
+              {
+                id: 'fee',
+                label: {
+                  defaultMessage: 'Fee',
+                  description: 'Title for the data entry',
+                  id: 'event.birth.action.certificate.form.section.collectPayment.fee.label'
+                },
+                value: '$10.00'
+              }
+            ]
+          },
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: requiresBirthRegistrationFee
+            }
+          ]
+        },
+        {
+          id: 'collector.collect.payment.subsequentIssuanceData',
+          type: FieldType.DATA,
+          label: {
+            defaultMessage: 'Payment details',
+            description: 'Title for the data section',
+            id: 'event.birth.action.certificate.form.section.collectPayment.subsequentIssuanceData.label'
+          },
+          configuration: {
+            data: [
+              {
+                id: 'service',
+                label: {
+                  defaultMessage: 'Service',
+                  description: 'Title for the data entry',
+                  id: 'event.birth.action.certificate.form.section.collectPayment.service.label'
+                },
+                value: {
+                  defaultMessage: 'Subsequent birth certificate issuance',
+                  description: 'Subsequent birth certificate service name',
+                  id: 'event.birth.action.certificate.form.section.collectPayment.service.label.subsequentIssuance'
+                }
+              },
+              {
+                id: 'fee',
+                label: {
+                  defaultMessage: 'Fee',
+                  description: 'Title for the data entry',
+                  id: 'event.birth.action.certificate.form.section.collectPayment.fee.label'
+                },
+                value: '$10.00'
+              }
+            ]
+          },
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: requiresCertificateIssuanceFee
+            }
+          ]
+        },
+        {
+          id: 'collector.collect.payment.feeWaived',
           type: FieldType.CHECKBOX,
           defaultValue: false,
           label: {
-            defaultMessage: 'Late registration fee is waived / not collected',
-            description: 'Label for the Late registration fee checkbox',
-            id: 'event.birth.action.certificate.form.section.collectPayment.lateRegistrationFee.label'
-          }
+            defaultMessage: 'Fee is waived / not collected',
+            description: 'Label for the fee waiver checkbox',
+            id: 'event.birth.action.certificate.form.section.collectPayment.feeWaived.label'
+          },
+          conditionals: [
+            { type: ConditionalType.SHOW, conditional: requiresPayment }
+          ]
         },
         {
           id: 'collector.collect.payment.amountCollected',
           type: FieldType.NUMBER,
-          required: false,
+          required: true,
           label: {
             defaultMessage: 'Confirm amount collected',
             description: 'Label for the amount collected field',
@@ -172,17 +289,19 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
           conditionals: [
             {
               type: ConditionalType.SHOW,
-              conditional: not(
-                field('collector.collect.payment.lateRegistrationFee').isEqualTo(true)
+              conditional: and(
+                requiresPayment,
+                not(
+                  field('collector.collect.payment.feeWaived').isEqualTo(true)
+                )
               )
             }
           ]
         },
-
         {
           id: 'collector.collect.payment.receiptNumber',
           type: FieldType.TEXT,
-          required: false,
+          required: true,
           label: {
             defaultMessage: 'Receipt Number',
             description: 'Label for the receipt number field',
@@ -191,30 +310,36 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
           conditionals: [
             {
               type: ConditionalType.SHOW,
-              conditional: not(
-                field('collector.collect.payment.lateRegistrationFee').isEqualTo(true)
+              conditional: and(
+                requiresPayment,
+                not(
+                  field('collector.collect.payment.feeWaived').isEqualTo(true)
+                )
               )
             }
           ]
-        }
-        ,
+        },
         {
           id: 'collector.collect.payment.feeWaiverReason',
           type: FieldType.TEXT,
-          required: false,
+          required: true,
           label: {
             defaultMessage: 'Reason for fee waiver / non-collection',
-            description: 'Label for the reason for fee waiver / non-collection field',
+            description: 'Label for the reason for fee waiver field',
             id: 'event.birth.action.certificate.form.section.collectPayment.feeWaiverReason.label'
           },
           conditionals: [
             {
               type: ConditionalType.SHOW,
-              conditional: field('collector.collect.payment.lateRegistrationFee').isEqualTo(true)
+              conditional: and(
+                requiresPayment,
+                field('collector.collect.payment.feeWaived').isEqualTo(true)
+              )
             }
-          ]
+          ],
+          configuration: { maxLength: 500 }
         }
-  ]
-}
+      ]
+    }
   ]
 })

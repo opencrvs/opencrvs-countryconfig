@@ -9,7 +9,6 @@ import { correctionRequestFields } from './correction-request'
 import { requesterDetailsFields } from './requester-details'
 import { correctionRequesterIdentityVerify } from './requester-identity-verify'
 import { supportingDocumentsFields } from './supporting-documents'
-import { collectPaymentFields } from './collect-payment'
 
 export const CORRECTION_FORM = defineActionForm({
   label: {
@@ -99,17 +98,6 @@ export const CORRECTION_FORM = defineActionForm({
         description: 'This is the title of the section'
       },
       fields: supportingDocumentsFields
-    },
-    {
-      id: 'collectPayment',
-      type: PageTypes.enum.FORM,
-      requireCompletionToContinue: true,
-      title: {
-        id: 'event.birth.action.correction.form.section.collectPayment.title',
-        defaultMessage: 'Collect payment',
-        description: 'This is the title of the section'
-      },
-      fields: collectPaymentFields
     }
   ]
 })

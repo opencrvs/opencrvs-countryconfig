@@ -44,11 +44,11 @@ export interface ICertificateConfigData {
   svgUrl: string
   fonts?: Record<string, FontFamilyTypes>
   conditionals?:
-  | {
-    type: 'SHOW'
-    conditional: JSONSchema
-  }[]
-  | undefined
+    | {
+        type: 'SHOW'
+        conditional: JSONSchema
+      }[]
+    | undefined
 }
 
 const notoSansFont: Record<string, FontFamilyTypes> = {
@@ -70,7 +70,7 @@ const libreBaskervilleFont: Record<string, FontFamilyTypes> = {
 }
 
 const robotoFont: Record<string, FontFamilyTypes> = {
-  'Roboto': {
+  Roboto: {
     normal: '/api/countryconfig/fonts/Roboto-Regular.ttf',
     bold: '/api/countryconfig/fonts/Roboto-Bold.ttf',
     italics: '/api/countryconfig/fonts/Roboto-Italic.ttf',
@@ -98,9 +98,9 @@ export async function certificateHandler(
       },
       isDefault: true,
       fee: {
-        onTime: 7,
-        late: 10.6,
-        delayed: 18
+        onTime: 0,
+        late: 10,
+        delayed: 10
       },
       svgUrl: '/api/countryconfig/certificates/v2.birth-certificate.svg',
       fonts: robotoFont
@@ -116,9 +116,9 @@ export async function certificateHandler(
       },
       isDefault: false,
       fee: {
-        onTime: 7,
-        late: 10.6,
-        delayed: 18
+        onTime: 10,
+        late: 10,
+        delayed: 10
       },
       svgUrl:
         '/api/countryconfig/certificates/v2.birth-certificate-certified-copy.svg',
@@ -256,12 +256,12 @@ export async function certificateHandler(
       },
       isDefault: true,
       fee: {
-        onTime: 7,
-        late: 10.6,
-        delayed: 18
+        onTime: 10,
+        late: 10,
+        delayed: 10
       },
       svgUrl: '/api/countryconfig/certificates/v2.death-certificate.svg',
-      fonts: notoSansFont,
+      fonts: notoSansFont
     },
     {
       id: 'v2.death-certified-certificate',
@@ -274,9 +274,9 @@ export async function certificateHandler(
       },
       isDefault: false,
       fee: {
-        onTime: 7,
-        late: 10.6,
-        delayed: 18
+        onTime: 10,
+        late: 10,
+        delayed: 10
       },
       svgUrl:
         '/api/countryconfig/certificates/v2.death-certificate-certified-copy.svg',
