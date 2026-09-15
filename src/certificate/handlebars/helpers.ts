@@ -58,6 +58,14 @@ function insertTspansIntoText(
   return svgString
 }
 
+function formatEnumLabel(value: unknown): string {
+  if (value === undefined || value === null || value === '') return '-'
+  return String(value)
+    .split('_')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ')
+}
+
 export function concatAddress(): Handlebars.HelperDelegate {
   return function (
     this: any,
@@ -176,11 +184,64 @@ export function $wrapCombined() {
  */
 export function $formatEnum() {
   return function (value: unknown): string {
-    if (value === undefined || value === null || value === '') return '-'
-    return String(value)
-      .split('_')
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(' ')
+    return formatEnumLabel(value)
+  }
+}
+
+/**
+ * Concatenates living children names and ages into a single wrapped text block.
+ * Skips children with no fullName, formats each as "Name (Age Unit)".
+ * Children are joined with ' | | ' divider. If the combined string exceeds maxLength,
+ * it is truncated with '...' appended.
+ * Use triple braces {{{$wrapLivingChildren ...}}} in the SVG template to avoid HTML escaping.
+ * Example: {{{$wrapLivingChildren $declaration 200 50 230 565.231 14 6}}}
+ */
+export function $wrapLivingChildren() {
+  return function (
+    declaration: any,
+    maxLength: number,
+    boundary: number,
+    x: number,
+    y: number,
+    lineHeight: number,
+    maxLines?: number
+  ): string {
+    if (!declaration || !declaration.livingChildren) return ''
+    
+    const details: string[] = []
+    
+    // Loop through children 1-15
+    for (let i = 1; i <= 15; i++) {
+      const child = declaration.livingChildren[`child${i}`]
+      if (!child || !child.fullName) continue
+      
+      // Build detail string: "Name" or "Name (Age Unit)"
+      let detail = child.fullName
+      if (child.age && child.age.numericValue !== undefined && child.age.numericValue !== null) {
+        const ageUnit = formatEnumLabel(child.age.unit)
+        detail += ` (${child.age.numericValue} ${ageUnit})`
+      }
+      details.push(detail)
+    }
+    
+    if (details.length === 0) return ''
+    
+    // Join with " | | " divider
+    let combinedString = details.join(' | | ')
+    
+    // Truncate if exceeds maxLength
+    if (combinedString.length > maxLength) {
+      combinedString = combinedString.slice(0, maxLength) + '...'
+    }
+    
+    // Word-wrap and format into tspans
+    let lines = wordWrap(combinedString, boundary)
+    if (typeof maxLines === 'number' && lines.length > maxLines) {
+      lines = lines.slice(0, maxLines)
+      lines[lines.length - 1] += '...'
+    }
+    
+    return insertTspansIntoText(lines, x, y, lineHeight)
   }
 }
 
