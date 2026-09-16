@@ -107,8 +107,41 @@ export async function onRegisterHandler(
 
   if (event.type === Event.Birth) {
     // Defer acceptance so the declaration patch (effective date/place) can be written atomically.
-    acceptBirthRegistration({ token, eventId, action, event, registrationNumber }).catch(
-      (err) => logger.error(err)
+    acceptBirthRegistration({ token, eventId, action, event, registrationNumber }).then(
+      () =>
+        sendInformantNotification({ event, token, registrationNumber }).catch(
+          (error) =>
+            logger.error(
+              { error, eventId, eventType: event.type },
+              'Failed to send birth registration notification'
+            )
+        ),
+      async (error) => {
+        const actionId = action?.id
+
+        logger.error(
+          { error, eventId, actionId, eventType: event.type },
+          'Failed to accept requested birth registration'
+        )
+
+        if (!actionId) {
+          return
+        }
+
+        try {
+          await rejectRequestedRegistration(token, eventId, actionId)
+        } catch (rejectionError) {
+          logger.error(
+            {
+              error: rejectionError,
+              eventId,
+              actionId,
+              eventType: event.type
+            },
+            'Failed to reject requested birth registration after acceptance failure'
+          )
+        }
+      }
     )
     return h.response().code(202)
   }
@@ -194,22 +227,12 @@ async function acceptBirthRegistration({
     currentDeclaration['child.effectiveRegistrationPlaceId']
   const derivedEffectiveRegistrationPlaceId =
     await deriveEffectiveRegistrationPlaceIdFromSeedData(currentDeclaration)
-
-  const declarationPatch: Record<string, unknown> = {
-    'introduction.effectiveRegistrationDate':
-      existingEffectiveRegistrationDate ??
-      new Date().toISOString().split('T')[0]
-  }
-
-  const effectiveRegistrationPlaceId =
-    derivedEffectiveRegistrationPlaceId ??
-    existingEffectiveRegistrationPlaceId ??
-    action?.createdAtLocation
-
-  if (effectiveRegistrationPlaceId) {
-    declarationPatch['child.effectiveRegistrationPlaceId'] =
-      effectiveRegistrationPlaceId
-  }
+  const declarationPatch = buildBirthRegistrationDeclarationPatch({
+    existingEffectiveRegistrationDate,
+    existingEffectiveRegistrationPlaceId,
+    derivedEffectiveRegistrationPlaceId,
+    registrationLocationId: action?.createdAtLocation
+  })
 
   await client.event.actions.register.accept.mutate({
     type: 'REGISTER' as const,
@@ -219,8 +242,37 @@ async function acceptBirthRegistration({
     registrationNumber,
     declaration: { ...(action?.declaration ?? {}), ...declarationPatch }
   })
+}
 
-  await sendInformantNotification({ event, token, registrationNumber })
+export function buildBirthRegistrationDeclarationPatch({
+  existingEffectiveRegistrationDate,
+  existingEffectiveRegistrationPlaceId,
+  derivedEffectiveRegistrationPlaceId,
+  registrationLocationId,
+  currentDate = new Date()
+}: {
+  existingEffectiveRegistrationDate: unknown
+  existingEffectiveRegistrationPlaceId: unknown
+  derivedEffectiveRegistrationPlaceId: string | undefined
+  registrationLocationId: string | null | undefined
+  currentDate?: Date
+}) {
+  const declarationPatch: Record<string, unknown> = {
+    'introduction.effectiveRegistrationDate':
+      existingEffectiveRegistrationDate ??
+      currentDate.toISOString().split('T')[0]
+  }
+  const effectiveRegistrationPlaceId =
+    derivedEffectiveRegistrationPlaceId ??
+    existingEffectiveRegistrationPlaceId ??
+    registrationLocationId
+
+  if (effectiveRegistrationPlaceId) {
+    declarationPatch['child.effectiveRegistrationPlaceId'] =
+      effectiveRegistrationPlaceId
+  }
+
+  return declarationPatch
 }
 
 async function deriveEffectiveRegistrationPlaceIdFromSeedData(

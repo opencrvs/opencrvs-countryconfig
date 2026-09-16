@@ -192,8 +192,8 @@ export const deathEvent = defineConfig({
   ],
   actionOrder: [
     ActionType.ASSIGN,
-    ActionType.REGISTER,
     ActionType.DECLARE,
+    ActionType.REGISTER,
     ActionType.EDIT,
     ActionType.MARK_AS_DUPLICATE,
     'ESCALATE',

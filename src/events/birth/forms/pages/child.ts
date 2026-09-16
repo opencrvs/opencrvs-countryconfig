@@ -559,6 +559,18 @@ export const child = defineFormPage({
       ]
     },
     {
+      id: 'child.effectiveRegistrationPlaceId',
+      type: FieldType.ALPHA_HIDDEN,
+      required: false,
+      analytics: true,
+      label: {
+        defaultMessage: 'Effective registration place',
+        description:
+          'Server-populated CRVS office derived from the place of birth',
+        id: 'event.birth.action.declare.form.section.child.field.effectiveRegistrationPlaceId.label'
+      }
+    },
+    {
       id: 'child.divider2',
       type: FieldType.DIVIDER,
       label: emptyMessage

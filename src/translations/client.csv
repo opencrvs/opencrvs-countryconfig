@@ -903,6 +903,7 @@ event.birth.action.declare.form.section.child.field.birthOrderTwin.label,Label f
 event.birth.action.declare.form.section.child.field.birthType.label,This is the label for the field,Type of birth,Type d'accouchement
 event.birth.action.declare.form.section.child.field.dob.error,This is the error message for invalid date,Cannot be a future date,Doit être une date de naissance valide
 event.birth.action.declare.form.section.child.field.dob.label,This is the label for the field,Date of birth,Date de naissance
+event.birth.action.declare.form.section.child.field.effectiveRegistrationPlaceId.label,Server-populated CRVS office derived from the place of birth,Effective registration place,Lieu d'enregistrement effectif
 event.birth.action.declare.form.section.child.field.gender.label,This is the label for the field,Sex,Sexe
 event.birth.action.declare.form.section.child.field.lateRegistrationNotice.label,Notice shown for late registration,This birth is being registered more than 6 months after the date of birth. Please ensure all required supporting documentation for delayed registration is attached.,Cette naissance est enregistrée plus de 6 mois après la date de naissance. Veuillez vous assurer que tous les documents justificatifs requis sont joints.
 event.birth.action.declare.form.section.child.field.name.label,This is the label for the field,Child's name,Nom de l'enfant

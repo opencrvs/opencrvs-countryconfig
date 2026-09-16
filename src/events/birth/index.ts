@@ -224,8 +224,8 @@ export const birthEvent = defineConfig({
   },
   actionOrder: [
     ActionType.ASSIGN,
-    ActionType.REGISTER,
     ActionType.DECLARE,
+    ActionType.REGISTER,
     ActionType.EDIT,
     'APPROVE_DECLARATION',
     ActionType.MARK_AS_DUPLICATE,
