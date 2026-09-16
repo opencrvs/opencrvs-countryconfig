@@ -20,6 +20,8 @@ actions.notify,Notify action label,Notify,Notifier
 actions.read,Action label for reading a record from the workqueue,Review,Reviser
 advancedSearch.accordion.hide,Label for hide button when accordion is closed,Hide,Cacher
 advancedSearch.accordion.show,Label for show button when accordion is closed,Show,Voir
+advancedSearch.form.brideDetails,Title of Bride details search group,Bride details,Bride details
+advancedSearch.form.bridegroomDetails,Title of Bridegroom details search group,Bridegroom details,Bridegroom details
 advancedSearch.form.childDetails,The title of Child details accordion,Child details,information de l'enfant
 advancedSearch.form.dateOfRegistration,Label for input date of registration,Date of registration,Date d'enregistrement
 advancedSearch.form.deceasedDetails,The title of Deceased details accordion,Deceased details,information du défunt
@@ -824,9 +826,9 @@ event.birth.action.certificate.form.section.collectPayment.service.label,Title f
 event.birth.action.certificate.form.section.collectPayment.service.label.afterLateRegistrationTarget,Birth registration after 365 days of date of birth,Birth registration after 365 days of date of birth,Enregistrement de naissance après 365 jours de la date de naissance
 event.birth.action.certificate.form.section.collectPayment.service.label.beforeRegistrationTarget,Birth registration before 30 days of date of birth,Birth registration before 30 days of date of birth,Enregistrement de naissance avant 30 jours de la date de naissance
 event.birth.action.certificate.form.section.collectPayment.service.label.birthCertificate,First birth certificate service name,First birth certificate issuance,Première délivrance du certificat de naissance
+event.birth.action.certificate.form.section.collectPayment.service.label.inBetweenRegistrationTargets,Birth registration after 30 days but before 365 days of date of birth,Birth registration after 30 days but before 365 days of date of birth,Enregistrement de naissance après 30 jours mais avant 365 jours de la date de naissance
 event.birth.action.certificate.form.section.collectPayment.service.label.lateOrLegacyRegistration,Birth registration fee for late or legacy records,Late or legacy birth registration,Enregistrement tardif ou ancien d'une naissance
 event.birth.action.certificate.form.section.collectPayment.service.label.subsequentCertificate,Subsequent birth certificate service name,Subsequent birth certificate issuance,Délivrance ultérieure du certificat de naissance
-event.birth.action.certificate.form.section.collectPayment.service.label.inBetweenRegistrationTargets,Birth registration after 30 days but before 365 days of date of birth,Birth registration after 30 days but before 365 days of date of birth,Enregistrement de naissance après 30 jours mais avant 365 jours de la date de naissance
 event.birth.action.certificate.form.section.requester.printInAdvance.label,This is the label for the print-in-advance of issuance field,Print in advance of issuance,Imprimer avant la délivrance
 event.birth.action.certificate.form.section.verifyIdentity.data.label,Label for identity verification data block,Identity details,Détails de l'identité
 event.birth.action.collect-certificate.label,This is shown as the action name anywhere the user can trigger the action from,Print,Imprimer
@@ -1164,9 +1166,9 @@ event.death.action.declare.form.section.burial.field.arrangement.option.outsideT
 event.death.action.declare.form.section.burial.field.arrangementOther.label,Label for other burial arrangement field,Specify other burial status,Préciser autre modalité d'inhumation
 event.death.action.declare.form.section.burial.field.arrangementOther.label,Label for other burial arrangement field,Specify other burial status,Préciser autre modalité d'inhumation
 event.death.action.declare.form.section.burial.field.date.error,Label for error message,Cannot be date in futute, Parle voux angles
+event.death.action.declare.form.section.burial.field.date.label,Label for date of burial field,Date of burial,Date d'inhumation
+event.death.action.declare.form.section.burial.field.date.label,Label for date of burial field,Date of burial,Date d'inhumation
 event.death.action.declare.form.section.burial.field.dateBeforeDeath.error, Error message for date of burial before date of death, Cannot be before Date of death, Cannot be before Date of death
-event.death.action.declare.form.section.burial.field.date.label,Label for date of burial field,Date of burial,Date d'inhumation
-event.death.action.declare.form.section.burial.field.date.label,Label for date of burial field,Date of burial,Date d'inhumation
 event.death.action.declare.form.section.burial.field.locationDescription.label,Label for burial location description,Burial place or location description,Description du lieu d'inhumation
 event.death.action.declare.form.section.burial.field.locationDescription.label,Label for burial location description,Burial place or location description,Description du lieu d'inhumation
 event.death.action.declare.form.section.burial.field.locationHelper.label,Label for burial location heading,Where buried,Lieu d'inhumation
@@ -1573,6 +1575,101 @@ event.edit.registerWithEdits.label,Label for `Register with edits` in edit actio
 event.history.role,Label for the role in event history,"{role, select, REGISTRAR {Registrar} REGISTRAR_GENERAL {Registrar General} ISLAND_REGISTRAR {Island Registrar} HEALTH_NOTIFIER {Health Notifier} REGISTRATION_OFFICER {Registration Officer} ISLAND_CLINIC_NOTIFIER {Island Clinic Notifier} LOCAL_SYSTEM_ADMIN {Administrator} NATIONAL_REGISTRAR {Registrar General} PERFORMANCE_MANAGER {Operations Manager} NATIONAL_SYSTEM_ADMIN {National Administrator} COMMUNITY_LEADER {Community Leader} PROVINCIAL_REGISTRAR {Provincial Registrar} EMBASSY_OFFICIAL {Embassy Official} other {Unknown}}","{role, select, REGISTRAR {Officier d'état civil local} REGISTRAR_GENERAL {Agent d'enregistrement} ISLAND_REGISTRAR {Registraire insulaire} PERFORMANCE_MANAGER {Responsable des opérations} LOCAL_SYSTEM_ADMIN {Administrateur} NATIONAL_SYSTEM_ADMIN {Administrateur national} NATIONAL_REGISTRAR {Registraire général} HEALTH_NOTIFIER {Officiel de l'hôpital} ISLAND_CLINIC_NOTIFIER {Notificateur de clinique insulaire} COMMUNITY_LEADER {Responsable communautaire} PROVINCIAL_REGISTRAR {Registraire provincial} EMBASSY_OFFICIAL {Officiel d'ambassade} other {Inconnu}}"
 event.history.system,Name for system initiated actions in the event history,System,System
 event.history.systemDefaultName,Fallback for system integration name in the event history,System integration,Intégration système
+event.marriageNotice.action.Declare.label,This is shown as the action name anywhere the user can trigger the action from,Declare,Déclarer
+event.marriageNotice.action.Read.label,This is shown as the action name anywhere the user can trigger the action from,Read,Lire
+event.marriageNotice.action.declare.form.label,This is what this form is referred to as in the system,Marriage Notice declaration form,Formulaire de déclaration d'avis de mariage
+event.marriageNotice.action.declare.form.review.comment.label,Label for the review comment field,Comment,Commentaire
+event.marriageNotice.action.declare.form.review.title,Title of the review page for the Marriage Notice event,"{brideGroom.name.firstname, select, __EMPTY__ {Marriage Notice declaration} other {{brideGroom.name.surname, select, __EMPTY__ {Marriage Notice declaration for {brideGroom.name.firstname}} other {Marriage Notice declaration for {brideGroom.name.firstname} {brideGroom.name.surname}}}}}","{brideGroom.name.firstname, select, __EMPTY__ {Déclaration d'avis de mariage} other {{brideGroom.name.surname, select, __EMPTY__ {Déclaration d'avis de mariage pour {brideGroom.name.firstname}} other {Déclaration d'avis de mariage pour {brideGroom.name.firstname} {brideGroom.name.surname}}}}}"
+event.marriageNotice.action.declare.form.section.bride.field.address.label,Label for bride address,Usual residence,Usual residence
+event.marriageNotice.action.declare.form.section.bride.field.conjugalStatus.label,Label for bride conjugal status field,Conjugal status,Statut conjugal
+event.marriageNotice.action.declare.form.section.bride.field.dateOfDeathOfFormerHusband.error,Validation message for former husband death date,Date must be before today,Date must be before today
+event.marriageNotice.action.declare.form.section.bride.field.dateOfDeathOfFormerHusband.label,Label for bride former husband death date,Date of death of former husband,Date of death of former husband
+event.marriageNotice.action.declare.form.section.bride.field.dateOfDecreeAbsolute.error,Validation message for decree absolute date,Date must be before today,Date must be before today
+event.marriageNotice.action.declare.form.section.bride.field.dateOfDecreeAbsolute.label,Label for bride decree absolute date,Date of decree absolute,Date of decree absolute
+event.marriageNotice.action.declare.form.section.bride.field.dob.error,Validation message for bride age,Date of birth must be before today and indicate an age of at least 16 years,Date of birth must be before today and indicate an age of at least 16 years
+event.marriageNotice.action.declare.form.section.bride.field.dob.label,Label for bride date of birth field,Date of birth,Date de naissance
+event.marriageNotice.action.declare.form.section.bride.field.fatherName.label,Label for bride father name,Father's name,Father's name
+event.marriageNotice.action.declare.form.section.bride.field.fatherOccupation.label,Label for bride father occupation,Father's occupation,Father's occupation
+event.marriageNotice.action.declare.form.section.bride.field.motherMaidenSurname.label,Label for bride mother maiden surname,Mother's maiden surname,Mother's maiden surname
+event.marriageNotice.action.declare.form.section.bride.field.motherName.label,Label for bride mother name,Mother's name,Mother's name
+event.marriageNotice.action.declare.form.section.bride.field.motherOccupation.label,Label for bride mother occupation,Mother's occupation,Mother's occupation
+event.marriageNotice.action.declare.form.section.bride.field.name.label,Label for bride name field,Bride name,Nom de la mariée
+event.marriageNotice.action.declare.form.section.bride.field.occupation.label,Label for bride occupation field,Occupation,Profession
+event.marriageNotice.action.declare.form.section.bride.field.placeOfBirth.label,Label for bride place of birth,Place of birth,Place of birth
+event.marriageNotice.action.declare.form.section.bride.name.firstname.label,Label for the given name field,Given Name(s),Prénom(s)
+event.marriageNotice.action.declare.form.section.bride.name.surname.label,Label for the surname field,Surname,Nom de famille
+event.marriageNotice.action.declare.form.section.bride.title,Title for bride details page,Bride details,Détails de la mariée
+event.marriageNotice.action.declare.form.section.brideGroom.name.firstname.label,Label for given name field,Given Name(s),Prénom(s)
+event.marriageNotice.action.declare.form.section.brideGroom.name.surname.label,Label for surname field,Surname,Nom de famille
+event.marriageNotice.action.declare.form.section.bridegroom.field.address.label,Label for bridegroom address,Usual residence,Usual residence
+event.marriageNotice.action.declare.form.section.bridegroom.field.conjugalStatus.label,Label for bridegroom conjugal status field,Conjugal status,Statut conjugal
+event.marriageNotice.action.declare.form.section.bridegroom.field.dateDeathFormerWife.error,Validation message for former wife death date,Date must be before today,Date must be before today
+event.marriageNotice.action.declare.form.section.bridegroom.field.dateDeathFormerWife.label,Label for bridegroom former wife death date,Date of death of former wife,Date of death of former wife
+event.marriageNotice.action.declare.form.section.bridegroom.field.dateDecreeAbsolute.error,Validation message for bridegroom decree absolute date,Date must be before today,Date must be before today
+event.marriageNotice.action.declare.form.section.bridegroom.field.dateDecreeAbsolute.label,Label for bridegroom decree absolute date,Date of decree absolute,Date of decree absolute
+event.marriageNotice.action.declare.form.section.bridegroom.field.dob.error,Validation message for bridegroom age,Date of birth must be before today and indicate an age of at least 16 years,Date of birth must be before today and indicate an age of at least 16 years
+event.marriageNotice.action.declare.form.section.bridegroom.field.dob.label,Label for bridegroom date of birth field,Date of birth,Date de naissance
+event.marriageNotice.action.declare.form.section.bridegroom.field.fatherFullName.label,Label for bridegroom father name,Father's full name,Father's full name
+event.marriageNotice.action.declare.form.section.bridegroom.field.fatherOccupation.label,Label for bridegroom father occupation,Father's occupation,Father's occupation
+event.marriageNotice.action.declare.form.section.bridegroom.field.motherFullName.label,Label for bridegroom mother name,Mother's full name,Mother's full name
+event.marriageNotice.action.declare.form.section.bridegroom.field.motherMaidenSurname.label,Label for bridegroom mother maiden surname,Mother's maiden surname,Mother's maiden surname
+event.marriageNotice.action.declare.form.section.bridegroom.field.motherOccupation.label,Label for bridegroom mother occupation,Mother's occupation,Mother's occupation
+event.marriageNotice.action.declare.form.section.bridegroom.field.name.label,Label for bridegroom name field,Bridegroom name,Nom du marié
+event.marriageNotice.action.declare.form.section.bridegroom.field.occupation.label,Label for bridegroom occupation field,Occupation,Profession
+event.marriageNotice.action.declare.form.section.bridegroom.field.placeOfBirth.label,Label for bridegroom place of birth,Place of birth,Place of birth
+event.marriageNotice.action.declare.form.section.bridegroom.title,Title for bridegroom details page,Bridegroom details,Détails du marié
+event.marriageNotice.action.declare.form.section.collect.amountCollected.label,Label for amount collected,Amount collected,Amount collected
+event.marriageNotice.action.declare.form.section.collect.amountCollected.prefix,Currency prefix for amount collected,$,$
+event.marriageNotice.action.declare.form.section.collect.fee.label,Label for the base fee,Fee,Fee
+event.marriageNotice.action.declare.form.section.collect.feeDetails.label,Heading for Marriage Notice fee details,Fee details,Fee details
+event.marriageNotice.action.declare.form.section.collect.feeWaived.label,Label for fee waiver checkbox,Fee is waived / not collected,Fee is waived / not collected
+event.marriageNotice.action.declare.form.section.collect.receiptNumber.label,Label for fee receipt number,Receipt number,Receipt number
+event.marriageNotice.action.declare.form.section.collect.service.label,Label for the fee service,Service,Service
+event.marriageNotice.action.declare.form.section.collect.service.value,Name of the service being paid for,Marriage Notice,Marriage Notice
+event.marriageNotice.action.declare.form.section.collect.title,Title for the Marriage Notice fee collection page,Collect Marriage Notice fee,Collect Marriage Notice fee
+event.marriageNotice.action.declare.form.section.collect.waiverReason.label,Label for fee waiver reason,Reason for fee waiver / non-collection,Reason for fee waiver / non-collection
+event.marriageNotice.action.declare.form.section.documents.field.brideParentalConsent.label,Supporting document: Bride parental consent,Bride parental consent,Bride parental consent
+event.marriageNotice.action.declare.form.section.documents.field.brideProofOfDeathFormerSpouse.label,Supporting document: Bride proof of death of former spouse,Bride proof of death of former spouse,Bride proof of death of former spouse
+event.marriageNotice.action.declare.form.section.documents.field.brideProofOfDissolution.label,Supporting document: Bride proof of dissolution,Bride proof of dissolution,Bride proof of dissolution
+event.marriageNotice.action.declare.form.section.documents.field.bridegroomParentalConsent.label,Supporting document: Bridegroom parental consent,Bridegroom parental consent,Bridegroom parental consent
+event.marriageNotice.action.declare.form.section.documents.field.bridegroomProofOfDeathFormerSpouse.label,Supporting document: Bridegroom proof of death of former spouse,Bridegroom proof of death of former spouse,Bridegroom proof of death of former spouse
+event.marriageNotice.action.declare.form.section.documents.field.bridegroomProofOfDissolution.label,Supporting document: Bridegroom proof of dissolution,Bridegroom proof of dissolution,Bridegroom proof of dissolution
+event.marriageNotice.action.declare.form.section.documents.field.intentionAndCapacityToMarry.label,Supporting document: Intention and capacity to marry,Intention and capacity to marry,Intention and capacity to marry
+event.marriageNotice.action.declare.form.section.documents.field.proofOfBrideIdentity.label,Supporting document: Proof of bride identity,Proof of bride identity,Proof of bride identity
+event.marriageNotice.action.declare.form.section.documents.field.proofOfBridegroomIdentity.label,Supporting document: Proof of bridegroom identity,Proof of bridegroom identity,Proof of bridegroom identity
+event.marriageNotice.action.declare.form.section.documents.field.waiverOfThreeDayNotice.label,Supporting document: Waiver of three-day notice,Waiver of three-day notice,Waiver of three-day notice
+event.marriageNotice.action.declare.form.section.documents.title,Title for Marriage Notice supporting documents,Supporting documents,Supporting documents
+event.marriageNotice.action.declare.form.section.informantDetails.field.email.label,Label for the informant email field,Email,Email
+event.marriageNotice.action.declare.form.section.informantDetails.field.phoneNumber.error,Error shown for invalid informant phone numbers,Must be a valid 5 digit number,Must be a valid 5 digit number
+event.marriageNotice.action.declare.form.section.informantDetails.field.phoneNumber.label,Label for the informant phone number field,Phone number,Téléphone
+event.marriageNotice.action.declare.form.section.informantDetails.field.pointOfContactHeading.label,Heading for informant contact fields,Point of contact,Point of contact
+event.marriageNotice.action.declare.form.section.informantDetails.title,Title for the informant details page,Informant details,Détails de l'informateur
+event.marriageNotice.action.declare.form.section.noticeOfIntendedMarriageDetails.field.dateOfMarriage.error,Validation message for the marriage date order,Date of marriage must be after the date of notice lodgement,Date of marriage must be after the date of notice lodgement
+event.marriageNotice.action.declare.form.section.noticeOfIntendedMarriageDetails.field.dateOfMarriage.label,Label for the marriage date field,Date of marriage,Date du mariage
+event.marriageNotice.action.declare.form.section.noticeOfIntendedMarriageDetails.field.dateOfNoticeLodgement.error,Validation message for a future notice lodgement date,Date of notice lodgement cannot be in the future,Date of notice lodgement cannot be in the future
+event.marriageNotice.action.declare.form.section.noticeOfIntendedMarriageDetails.field.dateOfNoticeLodgement.label,Label for the notice lodgement date field,Date of notice lodgement,Date de dépôt de l'avis
+event.marriageNotice.action.declare.form.section.noticeOfIntendedMarriageDetails.field.denomination.label,Label for the officiating denomination field,Denomination,Denomination
+event.marriageNotice.action.declare.form.section.noticeOfIntendedMarriageDetails.field.expiryDate.label,Label for the expiry date field,Expiry date,Date d'expiration
+event.marriageNotice.action.declare.form.section.noticeOfIntendedMarriageDetails.field.location.label,Label for the location field,Location,Emplacement
+event.marriageNotice.action.declare.form.section.noticeOfIntendedMarriageDetails.field.marriageCelebrant.label,Label for the marriage celebrant field,Marriage celebrant,Marriage celebrant
+event.marriageNotice.action.declare.form.section.noticeOfIntendedMarriageDetails.field.officiantType.label,Label for the officiant type field,Officiant type,Type d'officiant
+event.marriageNotice.action.declare.form.section.noticeOfIntendedMarriageDetails.field.officiatingMinister.label,Label for the officiating minister field,Officiating minister,Officiating minister
+event.marriageNotice.action.declare.form.section.noticeOfIntendedMarriageDetails.field.placeOfMarriage.label,Label for the place of marriage address field,Place of marriage,Place of marriage
+event.marriageNotice.action.declare.form.section.noticeOfIntendedMarriageDetails.field.registrar.label,Label for the registrar field,Registrar,Registrar
+event.marriageNotice.action.declare.form.section.noticeOfIntendedMarriageDetails.field.venueName.label,Label for the venue name field,Venue name,Nom du lieu
+event.marriageNotice.action.declare.form.section.noticeOfIntendedMarriageDetails.title,Title for notice of intended marriage details page,Notice of intended marriage details,Détails de l'avis d'intention de mariage
+event.marriageNotice.action.detect-duplicate.label,Label for Marriage Notice duplicate detection,Detect duplicate,Detect duplicate
+event.marriageNotice.action.register.detect-duplicate.label,Label for Marriage Notice registration duplicate detection,Detect duplicate,Detect duplicate
+event.marriageNotice.action.register.label,Label for the Marriage Notice registration action,Register,Register
+event.marriageNotice.fallbackTitle,This is a fallback title if actual title resolves to empty string,No names provided,Aucun nom fourni
+event.marriageNotice.label,This is what this event is referred to as in the system,Marriage Notice,Avis de mariage
+event.marriageNotice.summary.informant.contact.empty,This is shown when there is no informant information,No contact details provided,Pas de coordonnées fournies
+event.marriageNotice.summary.informant.contact.label,This is the label for the informant information,Contact,Contact
+event.marriageNotice.summary.informant.contact.value,This is the contact value of the informant,"{informantDetails.phoneNumber, select, __EMPTY__ {{informantDetails.email, select, __EMPTY__ {} other {{informantDetails.email}}}} other {{informantDetails.phoneNumber}{informantDetails.email, select, __EMPTY__ {} other { | {informantDetails.email}}}}}","{informantDetails.phoneNumber, select, __EMPTY__ {{informantDetails.email, select, __EMPTY__ {} other {{informantDetails.email}}}} other {{informantDetails.phoneNumber}{informantDetails.email, select, __EMPTY__ {} other { | {informantDetails.email}}}}}"
+event.marriageNotice.summary.noticeOfIntendedMarriageDetails.dateOfMarriage.empty,This is shown when there is no marriage date information,No date of marriage,Pas de date de mariage
+event.marriageNotice.summary.noticeOfIntendedMarriageDetails.venueName.empty,This is shown when there is no venue information,No venue provided,Aucun lieu fourni
+event.marriageNotice.summary.noticeOfIntendedMarriageDetails.venueName.label,Label for the venue summary field,Venue,Lieu
+event.marriageNotice.title,This is the title of the summary,"{brideGroom.name.firstname, select, __EMPTY__ {Marriage Notice} other {{brideGroom.name.surname, select, __EMPTY__ {Marriage Notice for {brideGroom.name.firstname}} other {Marriage Notice for {brideGroom.name.firstname} {brideGroom.name.surname}}}}}","{brideGroom.name.firstname, select, __EMPTY__ {Avis de mariage} other {{brideGroom.name.surname, select, __EMPTY__ {Avis de mariage pour {brideGroom.name.firstname}} other {Avis de mariage pour {brideGroom.name.firstname} {brideGroom.name.surname}}}}}"
 event.not.downloaded,Shown when user tries to perform an action on event that is not available,Please ensure the event is first assigned and downloaded to the browser.,Veuillez vous assurer que l'événement est d'abord attribué et téléchargé dans le navigateur.
 event.stillbirth.action.Read.label,This is shown as the action name anywhere the user can trigger the action from,Read,Lire
 event.stillbirth.action.certificate.form.cancel,This is the label for the verification cancellation button,Identity does not match,L'identité ne correspond pas
@@ -1716,6 +1813,7 @@ event.stillbirth.action.declare.form.section.mother.field.brnSearch.helperText,H
 event.stillbirth.action.declare.form.section.mother.field.brnSearch.label,Label for the birth registration number search field,Birth registration number lookup,Recherche du numéro d'enregistrement de naissance
 event.stillbirth.action.declare.form.section.mother.field.brnSearch.validation,Validation message for the birth registration number search field,Please enter a birth registration number to search,Veuillez saisir un numéro d'enregistrement de naissance pour effectuer la recherche
 event.stillbirth.action.declare.form.section.mother.field.childrenHeader.label,Header for children count section,Number of children previously born to the mother,Nombre d'enfants précédemment nés de la mère
+event.stillbirth.action.declare.form.section.mother.field.deceasedChildren.label,Label for number of deceased children,Deceased,Enfants décédés
 event.stillbirth.action.declare.form.section.mother.field.detailsNotAvailable.label,This is the label for the field,Mother's details are not available,Les détails de la mère ne sont pas disponibles
 event.stillbirth.action.declare.form.section.mother.field.dob.afterDelivery,This is the error message for a birth date after the date of delivery,Birth date must be before delivery date,La date de naissance doit précéder la date de l'accouchement
 event.stillbirth.action.declare.form.section.mother.field.dob.error,This is the error message for invalid date,Must not be a future date,Ne doit pas être une date future
@@ -1731,7 +1829,6 @@ event.stillbirth.action.declare.form.section.mother.field.occupation.label,This 
 event.stillbirth.action.declare.form.section.mother.field.passport.label,This is the label for the field,Passport number,Numéro de passeport
 event.stillbirth.action.declare.form.section.mother.field.placeOfBirth.label,This is the label for the field,Place of birth,Lieu de naissance
 event.stillbirth.action.declare.form.section.mother.field.reason.label,Reason why the mother's details are not available,Reason,Raison
-event.stillbirth.action.declare.form.section.mother.field.deceasedChildren.label,Label for number of deceased children,Deceased,Enfants décédés
 event.stillbirth.action.declare.form.section.mother.title,Form section title for mother's details,Mother's details,Détails de la mère
 event.stillbirth.action.declare.label,This is shown as the action name anywhere the user can trigger the action from,Declare,Déclarer
 event.stillbirth.action.declare.notify.copy,Confirmation text for the notify action,You are about to formally notify the relevant Registration Office that a stillbirth event has occurred. Please confirm that the information provided is accurate before proceeding.,Vous êtes sur le point de notifier officiellement le bureau d'enregistrement concerné qu'un événement de mortinaissance s'est produit. Veuillez confirmer que les informations fournies sont exactes avant de continuer.
@@ -1939,18 +2036,32 @@ form.field.label.changeOfficeWarningBody,,Changing this user's office will remov
 form.field.label.changeOfficeWarningTitle,,Change office?,Changer de bureau ?
 form.field.label.cityUrbanOption,Label for City,Town,Ville
 form.field.label.confirm,,Yes,Oui
+form.field.label.conjugalStatusBachelor,Label for bachelor conjugal status,Bachelor,Célibataire
+form.field.label.conjugalStatusDivorced,Label for divorced conjugal status,Divorced,Divorcé
+form.field.label.conjugalStatusDivorcedBride,Label for divorced conjugal status,Divorced,Divorcée
+form.field.label.conjugalStatusSpinster,Label for spinster conjugal status,Spinster,Célibataire
+form.field.label.conjugalStatusWidow,Label for widow conjugal status,Widow,Veuve
+form.field.label.conjugalStatusWidower,Label for widower conjugal status,Widower,Veuf
+form.field.label.consentParentsBride,Marriage intention document option,Parents' consent for bride,Parents' consent for bride
+form.field.label.consentParentsBridegroom,Marriage intention document option,Parents' consent for bridegroom,Parents' consent for bridegroom
 form.field.label.country,,Country,Pays
+form.field.label.courtOrder,Parental consent document option,Court order,Court order
 form.field.label.creatingNewUser,,Creating new user,Créer un nouvel utilisateur
 form.field.label.dateOfBirth,,Date of birth,Date de naissance
 form.field.label.dateOfMarriage,,Date of marriage,Date du mariage
+form.field.label.deathCertificateFormerSpouse,Former spouse death document option,Death certificate of former spouse,Death certificate of former spouse
 form.field.label.deathDescription,,Description,Description
 form.field.label.deceasedDeathProof,,Proof of death of deceased,Preuve du décès du défunt
 form.field.label.deceasedDocumentParagraph,,The following documents are required,"Pour l'enregistrement d'un décès, les documents suivants sont requis :"
 form.field.label.deceasedIDProof,,Proof of deceased's ID,Preuve de l'identité de la personne décédée
 form.field.label.deceasedPrimaryAddress,,Usual place of residence,Lieu de résidence habituel
 form.field.label.deceasedSecondaryAddress,,Secondary Address,Adresse secondaire
+form.field.label.denominationCatholic,Label for Catholic denomination option,Catholic,Catholic
+form.field.label.denominationOther,Label for other denomination option,Other,Other
+form.field.label.denominationProtestant,Label for Protestant denomination option,Protestant,Protestant
 form.field.label.deny,,No,Non
 form.field.label.district,Label for District,District,District
+form.field.label.divorceCertificate,Dissolution document option,Divorce certificate,Divorce certificate
 form.field.label.docTypeAffidavit,Label for affidavit document type,Affidavit,Déclaration sous serment
 form.field.label.docTypeAffidavitAbsence,Label for affidavit of absence document type,Affidavit of absence,Déclaration d'absence
 form.field.label.docTypeBirthCert,,Birth certificate,Certificat de la naissance
@@ -2075,6 +2186,10 @@ form.field.label.maritalStatusSeparated,Option for form field: Marital status,Se
 form.field.label.maritalStatusSingle,Option for form field: Marital status,Single,Célibataire
 form.field.label.maritalStatusSingleNeverMarried,Option for form field: Marital status single never married,Single (never married),Célibataire (jamais marié(e))
 form.field.label.maritalStatusWidowed,Option for form field: Marital status,Widowed,Veuf(ve)
+form.field.label.marriageCelebrant,Label for marriage celebrant option,Marriage celebrant,Marriage celebrant
+form.field.label.marriageNoticeBirthCertificate,Identity document option,Birth certificate,Birth certificate
+form.field.label.marriageNoticeOtherIdentity,Identity document option,Other,Other
+form.field.label.marriageNoticePassport,Identity document option,Passport,Passport
 form.field.label.marriedLastName,,Married last name (if different),Marié Nom de famille (si différent)
 form.field.label.medicallyCertified,,Medically Certified Cause of Death,Cause officielle du décès
 form.field.label.middleName,,Middle name,Deuxième prénom
@@ -2084,11 +2199,21 @@ form.field.label.multipleBirth,,No. of previous births,Nombre de naissances ant�
 form.field.label.nameChangeSourceDeedPoll,Option for source of name change: deed poll,Deed poll,Acte de changement de nom
 form.field.label.nameChangeSourceNativeAdoption,Option for source of name change: native adoption,Native adoption,Adoption coutumière
 form.field.label.nationality,,Nationality,Nationalité
+form.field.label.noticeOfIntendedMarriage,Marriage intention document option,Notice of intended marriage,Notice of intended marriage
 form.field.label.occupation,,Occupation,Profession
+form.field.label.officiantTypeMarriageCelebrant,Label for celebration officiant option,Marriage celebrant,Célébrant du mariage
+form.field.label.officiantTypeMinister,Label for minister officiant option,Minister,Ministre
+form.field.label.officiantTypeRegistrar,Label for registrar officiant option,Registrar,Registraire
+form.field.label.officiatingMinister,Label for minister option,Minister,Minister
 form.field.label.optionalLabel,,Optional,Facultatif
 form.field.label.otherBirthSupportingDocuments,,Other,Autre
+form.field.label.otherDissolution,Dissolution document option,Other,Other
+form.field.label.otherFormerSpouseDeath,Former spouse death document option,Other,Other
 form.field.label.otherInstitution,Select item for Other location,Other address,Autre
 form.field.label.otherOption,,Other,Autre
+form.field.label.otherParentalConsent,Parental consent document option,Other,Other
+form.field.label.otherWaiver,Three-day notice waiver option,Other,Other
+form.field.label.parentalConsentForm,Parental consent document option,Parental consent form,Parental consent form
 form.field.label.phoneNumber,,Phone number,Numéro de téléphone
 form.field.label.physician,,Physician,Médecin
 form.field.label.placeOfBirth,,Location,Lieu
@@ -2109,6 +2234,7 @@ form.field.label.proofOfInformantsID,,Proof of informant's ID,Identité de l'inf
 form.field.label.proofOfMarriageNotice,,Notice of intention to marriage,Déclaration d'intention de mariage
 form.field.label.proofOfMothersID,,Proof of mother's ID,Identité de la mère
 form.field.label.reasonNotApplying,,Reason,Motif de la mère
+form.field.label.registrar,Label for registrar option,Registrar,Registrar
 form.field.label.registrationName,,Registration Name,nom d'enregistrement
 form.field.label.registrationOffice,,Registration Office,Bureau d'enregistrement
 form.field.label.relationOtherFamilyMember,Label for other family member relation,Other family member,Autre membre de la famille
@@ -2126,6 +2252,7 @@ form.field.label.someoneElse,Other Label,Someone else,Quelqu'un d'autre
 form.field.label.someoneElseCollector,,Print and issue to someone else,Imprimer et remettre à quelqu'un d'autre
 form.field.label.spouseDetailsExist,,Spouse's details are not available,Pas d'information sur le conjoint
 form.field.label.state,Label for State,Province,Province
+form.field.label.statutoryDeclaration,Marriage intention document option,Statutory declaration,Statutory declaration
 form.field.label.surname,,Surname,Nom de famille
 form.field.label.typeOfId,,Type of ID,Type d'identification
 form.field.label.typeOfMarriage,,Type of marriage,Type de mariage
@@ -2143,6 +2270,7 @@ form.field.label.userSignatureAttachmentTitle,,Upload signature,Joindre la signa
 form.field.label.userSurname,,User's surname,Nom de famille de l'utilisateur
 form.field.label.verbalAutopsy,,Verbal autopsy,Autopsie verbale
 form.field.label.verbalAutopsyReport,,Verbal autopsy report,Rapport d'autopsie verbal
+form.field.label.waiverAuthorization,Three-day notice waiver option,Waiver authorization,Waiver authorization
 form.field.label.weightAtBirth,,Weight at birth,Poids à la naissance
 form.field.nidNotVerified,,Authenticate,Authentifier
 form.field.nidNotVerifiedReviewSection,,Unauthenticated,Non authentifié
@@ -2316,6 +2444,8 @@ integrations.webhookDescription,label for webhook client,"A Webhook client can s
 integrations.webhookPermissionsDescription,Webhook description above permissions,Select the data you wish to be contained within the webhook payload,Sélectionnez les données que vous souhaitez voir figurer dans les données utiles du webhook.
 introduction.guidance.healthNotifier.label,,Guidance: Explaining birth notification to parents,
 loading.records,Loading indicator while fetching records,Loading records...,Chargement des enregistrements...
+marriageNotice.search.criteria.label.prefix.bride,Bride's search criteria prefix,Bride's,Bride's
+marriageNotice.search.criteria.label.prefix.bridegroom,Bridegroom's search criteria prefix,Bridegroom's,Bridegroom's
 messages.emptyString,Empty string, , 
 misc.confirmPinTitle,The title displayed while creating a PIN,Confirm PIN,Confirmer le  Code PIN
 misc.createDescription,The description displayed while creating a PIN,Choose a PIN that doesn't have 4 repeating digits or sequential numbers,Choisissez un code PIN qui ne comporte pas 4 chiffres répétitifs ou des numéros séquentiels.
@@ -3113,3 +3243,59 @@ wq.noRecords.readyToPrint,No records messages for ready to print tab,No records 
 wq.noRecords.requiresUpdate,No records messages for require updates tab,No records require updates,Aucun document ne nécessite de mise à jour
 wq.noRecords.sentForApproval,No records messages for sent for approval tab,No records sent for approval,Aucun document envoyé pour approbation
 wq.noRecords.sentForReview,No records messages for sent for review tab,No records sent for review,Aucun document envoyé pour examen
+event.marriageNotice.action.correction.documents.affidavit,Correction document,Affidavit,Affidavit
+event.marriageNotice.action.correction.documents.birthCertificate,Identity document,Birth certificate,Acte de naissance
+event.marriageNotice.action.correction.documents.courtOrder,Correction document,Court order,Ordonnance du tribunal
+event.marriageNotice.action.correction.documents.identity,Identity document supporting the correction request,Proof of identity,Preuve d'identité
+event.marriageNotice.action.correction.documents.otherIdentity,Identity document,Other,Autre
+event.marriageNotice.action.correction.documents.otherSupporting,Correction document,Other,Autre
+event.marriageNotice.action.correction.documents.passport,Identity document,Passport, passeport
+event.marriageNotice.action.correction.documents.supporting,Documents supporting the correction request,Supporting documents,Documents justificatifs
+event.marriageNotice.action.correction.form.cancel,Identity verification cancellation action,Identity does not match,L'identité ne correspond pas
+event.marriageNotice.action.correction.form.cancel.body,Identity cancellation confirmation body,Please be aware that you will be responsible for this correction without proof of ID from the requester.,Veuillez noter que vous serez responsable de cette correction sans preuve d'identité du demandeur.
+event.marriageNotice.action.correction.form.cancel.title,Identity cancellation confirmation title,Proceed without proof of ID ?,Continuer sans preuve d'identité ?
+event.marriageNotice.action.correction.form.documents.title,Supporting documents section,Supporting documents,Documents justificatifs
+event.marriageNotice.action.correction.form.identity.title,Identity verification section,Verify their identity,Vérifier son identité
+event.marriageNotice.action.correction.form.label,Marriage Notice correction request form,Request correction,Demander une correction
+event.marriageNotice.action.correction.form.request.title,Correction request section,Correction request,Demande de correction
+event.marriageNotice.action.correction.form.requester.title,Requester details section,Requester's details,Détails du demandeur
+event.marriageNotice.action.correction.form.verify,Identity verified action,Verified,Vérifié
+event.marriageNotice.action.correction.identity.label,Identity details for the correction requester,Identity details,Détails de l'identité
+event.marriageNotice.action.correction.reason.clerical,Correction reason,Clerical error,Erreur matérielle
+event.marriageNotice.action.correction.reason.court,Correction reason,Requested by the court,Demande du tribunal
+event.marriageNotice.action.correction.reason.label,Reason for the correction request,Reason for correction,Raison de la correction
+event.marriageNotice.action.correction.reason.material,Correction reason,Informant provided incorrect information,L'informant a fourni des informations incorrectes
+event.marriageNotice.action.correction.reason.omission,Correction reason,Informant omitted information,L'informant a omis des informations
+event.marriageNotice.action.correction.reason.other,Correction reason,Other,Autre
+event.marriageNotice.action.correction.reason.otherDetails,Additional correction reason,Other reason,Autre raison
+event.marriageNotice.action.correction.requester.agent,Registration agent requester,Registrar / registration office,Bureau d'état civil / bureau d'enregistrement
+event.marriageNotice.action.correction.requester.bride,Bride requester,Bride,Mariée
+event.marriageNotice.action.correction.requester.court,Court requester,Court,Tribunal
+event.marriageNotice.action.correction.requester.groom,Bridegroom requester,Bridegroom,Marié
+event.marriageNotice.action.correction.requester.informant,Informant requester,Informant,Informant
+event.marriageNotice.action.correction.requester.label,Person requesting the correction,Requester,Demandeur
+event.marriageNotice.action.correction.requester.name,Name of someone else requesting the correction,Requester name,Nom du demandeur
+event.marriageNotice.action.correction.requester.other,Other requester,Someone else,Autre personne
+event.marriageNotice.action.correction.requester.relationship,Relationship of the requester to the couple,Relationship to the couple,Lien avec le couple
+event.marriageNotice.action.print.cancel,Identity verification cancellation action,Identity does not match,L'identité ne correspond pas
+event.marriageNotice.action.print.cancel.body,Identity cancellation confirmation body,Please be aware that you will be responsible for issuing a certificate without proof of ID from the recipient.,Veuillez noter que vous serez responsable de la délivrance du certificat sans preuve d'identité du destinataire.
+event.marriageNotice.action.print.cancel.title,Identity cancellation confirmation title,Print without proof of ID ?,Imprimer sans preuve d'identité ?
+event.marriageNotice.action.print.collector.bride,Certificate recipient,Bride,Mariée
+event.marriageNotice.action.print.collector.groom,Certificate recipient,Bridegroom,Marié
+event.marriageNotice.action.print.collector.informant,Certificate recipient,Informant,Informant
+event.marriageNotice.action.print.collector.idNumber,Identification number of the certificate recipient,ID number,Numéro d'identification
+event.marriageNotice.action.print.collector.label,Person receiving the Marriage Notice certificate,Certificate recipient,Destinataire du certificat
+event.marriageNotice.action.print.collector.name,Name of the certificate recipient,Collector's name,Nom du destinataire
+event.marriageNotice.action.print.collector.other,Certificate recipient,Someone else,Autre personne
+event.marriageNotice.action.print.collector.relationship,Relationship of the certificate recipient to the couple,Relationship to the couple,Lien avec le couple
+event.marriageNotice.action.print.collector.title,Certificate recipient section,Certify record,Certifier l'enregistrement
+event.marriageNotice.action.print.collectorDetails.title,Other collector details section,Collector details,Détails du destinataire
+event.marriageNotice.action.print.form.label,Marriage Notice certificate collection form,Marriage Notice certificate collector,Collecteur du certificat de mariage
+event.marriageNotice.action.print.identity.label,Identity details for the certificate recipient,Identity details,Détails de l'identité
+event.marriageNotice.action.print.identity.title,Identity verification section,Verify their identity,Vérifier son identité
+event.marriageNotice.action.print.label,Label for the Marriage Notice certificate printing action,Print,Imprimer
+event.marriageNotice.action.print.payment.amount,Certificate printing fee collected,Amount collected,Montant collecté
+event.marriageNotice.action.print.payment.receipt,Receipt number for the certificate fee,Receipt number,Numéro de reçu
+event.marriageNotice.action.print.payment.title,Certificate payment section,Collect payment,Collecter le paiement
+event.marriageNotice.action.print.verify,Identity verified action,Verified,Vérifié
+event.marriageNotice.action.requestCorrection.label,Label for the Marriage Notice correction action,Request correction,Demander une correction

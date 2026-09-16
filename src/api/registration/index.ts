@@ -27,6 +27,7 @@ import { Event } from '@countryconfig/events/utils'
 import { readCSVToJSON } from '@countryconfig/utils'
 import { deriveEffectiveRegistrationPlaceId as deriveEffectiveRegistrationPlaceIdFromLocations } from './locationMapper'
 import { resolveRegistrationLocationPrefix } from './registrationNumber'
+import { calculateMarriageNoticeExpiryDate } from '../events/marriageNoticeExpiry'
 
 export interface ActionConfirmationRequest extends Hapi.Request {
   payload: EventDocument
@@ -112,8 +113,59 @@ export async function onRegisterHandler(
     return h.response().code(202)
   }
 
+  if (event.type === Event.MarriageNotice) {
+    acceptMarriageNoticeRegistration({
+      token,
+      eventId,
+      action,
+      event,
+      registrationNumber
+    }).catch((err) => logger.error(err))
+    return h.response().code(202)
+  }
+
   await sendInformantNotification({ event, token, registrationNumber })
   return h.response({ registrationNumber }).code(200)
+}
+
+async function acceptMarriageNoticeRegistration({
+  token,
+  eventId,
+  action,
+  event,
+  registrationNumber
+}: {
+  token: string
+  eventId: string
+  action: ReturnType<typeof getPendingAction>
+  event: EventDocument
+  registrationNumber: string
+}) {
+  const url = new URL('events', GATEWAY_URL).toString()
+  const client = createClient(url, `Bearer ${token}`)
+  const currentDeclaration = deepMerge(
+    aggregateActionDeclarations(event),
+    action?.declaration ?? {}
+  )
+  const expiryDate = calculateMarriageNoticeExpiryDate(
+    currentDeclaration['noticeOfIntendedMarriageDetails.dateOfNoticeLodgement']
+  )
+
+  await client.event.actions.register.accept.mutate({
+    type: 'REGISTER' as const,
+    transactionId: uuidv4(),
+    eventId,
+    actionId: action?.id as string,
+    registrationNumber,
+    declaration: {
+      ...(action?.declaration ?? {}),
+      ...(expiryDate
+        ? { 'noticeOfIntendedMarriageDetails.expiryDate': expiryDate }
+        : {})
+    }
+  })
+
+  await sendInformantNotification({ event, token, registrationNumber })
 }
 
 async function acceptBirthRegistration({

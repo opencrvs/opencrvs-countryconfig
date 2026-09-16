@@ -33,6 +33,7 @@ const DEFAULT_EVENT_CODE = 'GN'
 const EVENT_TYPE_MAP: Record<string, string> = {
   birth: 'BR',
   death: 'DR',
+  'marriage-notice': 'MN',
   'tennis-club-membership': 'TC'
 }
 const ADMIN_AREA_PREFIX_MAP: Record<string, string> = {

@@ -84,6 +84,17 @@ describe('generateRegistrationNumber', () => {
     ).toBe('TV00TC2026AB12')
   })
 
+  it('uses the Marriage Notice event code for the new notice event', () => {
+    expect(
+      generateRegistrationNumber({
+        eventType: 'marriage-notice',
+        registrationLocationId: 'TUV-009-001',
+        locations,
+        issuedAt: new Date('2026-01-15T00:00:00.000Z')
+      })
+    ).toBe('TV09MN2026AB12')
+  })
+
   it('falls back to the generic event code for unknown events', () => {
     expect(
       generateRegistrationNumber({
