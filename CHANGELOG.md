@@ -4,7 +4,7 @@
 
 ### Bug fixes
 
-- Corrected the country translations. The `countries.KGZ` row carried the wrong country's name and there was no `countries.LAO` row, so one country could not be selected in any country dropdown. [#11954](https://github.com/opencrvs/opencrvs-core/issues/11954)
+- Corrected the country translations; one country could not be selected at all. [#11954](https://github.com/opencrvs/opencrvs-core/issues/11954)
 
 ## 2.0.2
 
