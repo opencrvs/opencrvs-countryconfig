@@ -905,7 +905,7 @@ event.birth.action.declare.form.section.child.field.dob.error,This is the error 
 event.birth.action.declare.form.section.child.field.dob.label,This is the label for the field,Date of birth,Date de naissance
 event.birth.action.declare.form.section.child.field.effectiveRegistrationPlaceId.label,Server-populated CRVS office derived from the place of birth,Effective registration place,Lieu d'enregistrement effectif
 event.birth.action.declare.form.section.child.field.gender.label,This is the label for the field,Sex,Sexe
-event.birth.action.declare.form.section.child.field.lateRegistrationNotice.label,Notice shown for late registration,This birth is being registered more than 6 months after the date of birth. Please ensure all required supporting documentation for delayed registration is attached.,Cette naissance est enregistrée plus de 6 mois après la date de naissance. Veuillez vous assurer que tous les documents justificatifs requis sont joints.
+event.birth.action.declare.form.section.child.field.lateRegistrationNotice.label,Notice shown for late registration,Todays date is greater than 6 months. Based on the date of birth.,Todays date is greater than 6 months. Based on the date of birth.
 event.birth.action.declare.form.section.child.field.name.label,This is the label for the field,Child's name,Nom de l'enfant
 event.birth.action.declare.form.section.child.field.nameChangedAfterRegistration.label,Label for name changed after registration checkbox,Name changed after registration (via deed poll),Le nom de l'enfant a-t-il été modifié depuis l'enregistrement de la naissance ?
 event.birth.action.declare.form.section.child.field.placeOfBirth.label,This is the label for the field,Place of delivery,Lieu de l'accouchement
@@ -1279,17 +1279,14 @@ event.death.action.declare.form.section.event.field.durationOther.label,Label fo
 event.death.action.declare.form.section.event.field.magistrateFindingsCause.helperText,Helper text for magistrate findings cause field,Enter the cause of death as stated in the Magistrate's findings,Saisir les conclusions du magistrat
 event.death.action.declare.form.section.event.field.magistrateFindingsCause.label,Label for magistrate findings cause field,Magistrate's findings on cause of death,Conclusions du magistrat sur la cause du décès
 event.death.action.declare.form.section.event.field.magistrateFindingsCause.label,Label for magistrate findings cause field,Magistrate's findings on cause of death,Conclusions du magistrat sur la cause du décès
-event.death.action.declare.form.section.event.field.magistrateInquiryRequired.label,Label for magistrate inquiry required field,Is a magistrate's inquiry required?,Une enquête du magistrat est-elle requise ?
-event.death.action.declare.form.section.event.field.magistrateInquiryRequired.label,Label for magistrate inquiry required field,Is a magistrate's inquiry required?,Une enquête du magistrat est-elle requise ?
+event.death.action.declare.form.section.event.field.magistrateInquiryRequired.label,Label for magistrate inquiry required field,Was a magistrate's inquiry required?,Une enquête du magistrat est-elle requise ?
 event.death.action.declare.form.section.event.field.manner.label,This is the label for the field,Manner of death,Mode de décès
 event.death.action.declare.form.section.event.field.notPersonallyAttended.label,Label for not personally attended checkbox,Not personally attended,Le patient n'a pas été personnellement pris en charge par le médecin certificateur
 event.death.action.declare.form.section.event.field.reason.label,This is the label for the field,Reason for late registration,Raison de l'inscription tardive
-event.death.action.declare.form.section.event.field.referredToPolice.label,Label for referred to police field,Has this death been referred to the police?,Cette mort a-t-elle été signalée à la police ?
-event.death.action.declare.form.section.event.field.referredToPolice.label,Label for referred to police field,Has this death been referred to the police?,Cette mort a-t-elle été signalée à la police ?
+event.death.action.declare.form.section.event.field.referredToPolice.label,Label for referred to police field,Was this case referred to the police?,Cette mort a-t-elle été signalée à la police ?
 event.death.action.declare.form.section.event.field.sourceCauseDeath.label,This is the label for the field,Source of cause of death,Source de la cause du décès
 event.death.action.declare.form.section.event.field.timeOfDeath.label,Label for time of death field,Time of death,Heure du décès
 event.death.action.declare.form.section.event.field.timeOfDeath.label,Label for time of death field,Time of death,Heure du décès
-event.death.action.declare.form.section.father.field.age.label,Label for father age,Age,Âge
 event.death.action.declare.form.section.father.field.age.label,Label for father age,Age of father,Âge
 event.death.action.declare.form.section.father.field.age.postfix,label for years postfix, years, years
 event.death.action.declare.form.section.father.field.brn.helperText,Helper text for birth registration number field,"Search for a birth record. If found, details will auto-fill. Otherwise, continue with manual entry","Recherchez un acte de naissance existant. Si une correspondance est trouvée, les détails ci-dessous seront remplis automatiquement. Si aucun enregistrement n'est trouvé, continuez en saisissant les détails manuellement."

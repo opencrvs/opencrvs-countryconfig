@@ -204,7 +204,7 @@ export function createCauseOfDeathFields(letter: CauseLetter, showConditional?: 
       label: {
         defaultMessage:
           letter === 'Other'
-            ? 'Part II: Other significant conditions'
+            ? 'Section II: Other significant conditions'
             : `${letter}. Cause of death`,
         description: 'This is the label for the field',
         id: `${base}.label`
