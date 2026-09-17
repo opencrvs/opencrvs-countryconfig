@@ -283,6 +283,54 @@ export const Workqueues = defineWorkqueues([
     action: { type: ActionType.READ }
   },
   {
+    slug: 'registered-births-last-12-months',
+    icon: 'Certified',
+    name: {
+      id: 'workqueues.registeredBirthsLast12Months.title',
+      defaultMessage: 'Registered Births (last 12 months)',
+      description: 'Title of registered births last 12 months workqueue'
+    },
+    query: {
+      ...registeredInMyAdminArea,
+      eventType: 'birth',
+      status: { type: 'exact', term: EventStatus.enum.REGISTERED },
+      'legalStatuses.REGISTERED.createdAt': {
+        type: 'timePeriod',
+        term: 'last365Days'
+      }
+    },
+    action: { type: ActionType.READ },
+    emptyMessage: {
+      id: 'workqueues.registeredBirthsLast12Months.emptyMessage',
+      defaultMessage: 'No registered births in the last 12 months',
+      description: 'Empty message for registered births last 12 months workqueue'
+    }
+  },
+  {
+    slug: 'registered-deaths-last-12-months',
+    icon: 'Certified',
+    name: {
+      id: 'workqueues.registeredDeathsLast12Months.title',
+      defaultMessage: 'Registered Deaths (last 12 months)',
+      description: 'Title of registered deaths last 12 months workqueue'
+    },
+    query: {
+      ...registeredInMyAdminArea,
+      eventType: 'death',
+      status: { type: 'exact', term: EventStatus.enum.REGISTERED },
+      'legalStatuses.REGISTERED.createdAt': {
+        type: 'timePeriod',
+        term: 'last365Days'
+      }
+    },
+    action: { type: ActionType.READ },
+    emptyMessage: {
+      id: 'workqueues.registeredDeathsLast12Months.emptyMessage',
+      defaultMessage: 'No registered deaths in the last 12 months',
+      description: 'Empty message for registered deaths last 12 months workqueue'
+    }
+  },
+  {
     slug: 'my-submissions',
     icon: 'FileText',
     name: {

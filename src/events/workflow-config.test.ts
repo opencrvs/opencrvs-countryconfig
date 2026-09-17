@@ -46,11 +46,20 @@ describe('birth and death workflow configuration', () => {
     expect(getWorkqueueIds('HEALTH_NOTIFIER')).toEqual(
       expect.arrayContaining(['my-submissions', 'organisation-submissions'])
     )
-    expect(getWorkqueueIds('ASSISTANT_REGISTRATION_OFFICER')).toContain(
-      'requires-completion'
+    expect(getWorkqueueIds('ASSISTANT_REGISTRATION_OFFICER')).toEqual(
+      expect.arrayContaining([
+        'requires-completion',
+        'pending-registration',
+        'registered-births-last-12-months',
+        'registered-deaths-last-12-months'
+      ])
     )
-    expect(getWorkqueueIds('REGISTRATION_OFFICER')).toContain(
-      'pending-registration'
+    expect(getWorkqueueIds('REGISTRATION_OFFICER')).toEqual(
+      expect.arrayContaining([
+        'pending-registration',
+        'registered-births-last-12-months',
+        'registered-deaths-last-12-months'
+      ])
     )
 
     const configuredWorkqueues = Workqueues.map(({ slug }) => slug)
@@ -59,9 +68,39 @@ describe('birth and death workflow configuration', () => {
         'my-submissions',
         'organisation-submissions',
         'requires-completion',
-        'pending-registration'
+        'pending-registration',
+        'registered-births-last-12-months',
+        'registered-deaths-last-12-months'
       ])
     )
+  })
+
+  it.each([
+    ['registered-births-last-12-months', 'birth'],
+    ['registered-deaths-last-12-months', 'death']
+  ])('configures %s as an area-scoped registered-record queue', (slug, eventType) => {
+    const workqueue = Workqueues.find((queue) => queue.slug === slug)
+
+    expect(workqueue).toMatchObject({
+      query: {
+        type: 'and',
+        clauses: [
+          {
+            eventType,
+            status: { type: 'exact', term: 'REGISTERED' },
+            'legalStatuses.REGISTERED.createdAt': {
+              type: 'timePeriod',
+              term: 'last365Days'
+            },
+            'legalStatuses.REGISTERED.createdAtLocation': {
+              type: 'within',
+              location: { $userField: 'primaryOfficeId' }
+            }
+          }
+        ]
+      },
+      action: { type: ActionType.READ }
+    })
   })
 
   it.each([

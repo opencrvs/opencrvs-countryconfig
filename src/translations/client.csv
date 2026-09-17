@@ -1570,11 +1570,45 @@ event.edit.comment.label,The label for the comment,Comments,Commentaires
 event.edit.declareWithEdits.label,Label for `Declare with edits` in edit action menu,Declare with edits,Déclarer avec modifications
 event.edit.notifyWithEdits.label,Label for `Notify with edits` in edit action menu,Notify with edits,Notifier avec modifications
 event.edit.registerWithEdits.label,Label for `Register with edits` in edit action menu,Register with edits,Enregistrer avec modifications
-event.history.role,Label for the role in event history,"{role, select, REGISTRAR {Registrar} REGISTRAR_GENERAL {Registrar General} ISLAND_REGISTRAR {Island Registrar} HEALTH_NOTIFIER {Health Notifier} REGISTRATION_OFFICER {Registration Officer} ISLAND_CLINIC_NOTIFIER {Island Clinic Notifier} LOCAL_SYSTEM_ADMIN {Administrator} NATIONAL_REGISTRAR {Registrar General} PERFORMANCE_MANAGER {Operations Manager} NATIONAL_SYSTEM_ADMIN {National Administrator} COMMUNITY_LEADER {Community Leader} PROVINCIAL_REGISTRAR {Provincial Registrar} EMBASSY_OFFICIAL {Embassy Official} other {Unknown}}","{role, select, REGISTRAR {Officier d'état civil local} REGISTRAR_GENERAL {Agent d'enregistrement} ISLAND_REGISTRAR {Registraire insulaire} PERFORMANCE_MANAGER {Responsable des opérations} LOCAL_SYSTEM_ADMIN {Administrateur} NATIONAL_SYSTEM_ADMIN {Administrateur national} NATIONAL_REGISTRAR {Registraire général} HEALTH_NOTIFIER {Officiel de l'hôpital} ISLAND_CLINIC_NOTIFIER {Notificateur de clinique insulaire} COMMUNITY_LEADER {Responsable communautaire} PROVINCIAL_REGISTRAR {Registraire provincial} EMBASSY_OFFICIAL {Officiel d'ambassade} other {Inconnu}}"
+event.history.role,Label for the role in event history,"{role, select, REGISTRAR {Registrar} REGISTRAR_GENERAL {Registrar General} ISLAND_REGISTRAR {Island Registrar} HEALTH_NOTIFIER {Health Notifier} REGISTRATION_OFFICER {Registration Officer} ASSISTANT_REGISTRATION_OFFICER {Assistant Registration Officer} ISLAND_CLINIC_NOTIFIER {Island Clinic Notifier} LOCAL_SYSTEM_ADMIN {Administrator} NATIONAL_REGISTRAR {Registrar General} PERFORMANCE_MANAGER {Operations Manager} NATIONAL_SYSTEM_ADMIN {National Administrator} COMMUNITY_LEADER {Community Leader} PROVINCIAL_REGISTRAR {Provincial Registrar} EMBASSY_OFFICIAL {Embassy Official} other {Unknown}}","{role, select, REGISTRAR {Officier d'état civil local} REGISTRAR_GENERAL {Agent d'enregistrement} ISLAND_REGISTRAR {Registraire insulaire} PERFORMANCE_MANAGER {Responsable des opérations} LOCAL_SYSTEM_ADMIN {Administrateur} NATIONAL_SYSTEM_ADMIN {Administrateur national} NATIONAL_REGISTRAR {Registraire général} HEALTH_NOTIFIER {Officiel de l'hôpital} ISLAND_CLINIC_NOTIFIER {Notificateur de clinique insulaire} COMMUNITY_LEADER {Responsable communautaire} PROVINCIAL_REGISTRAR {Registraire provincial} EMBASSY_OFFICIAL {Officiel d'ambassade} other {Inconnu}} ASSISTANT_REGISTRATION_OFFICER {Assistant Registration Officer}"
 event.history.system,Name for system initiated actions in the event history,System,System
 event.history.systemDefaultName,Fallback for system integration name in the event history,System integration,Intégration système
 event.marriageNotice.action.Declare.label,This is shown as the action name anywhere the user can trigger the action from,Declare,Déclarer
 event.marriageNotice.action.Read.label,This is shown as the action name anywhere the user can trigger the action from,Read,Lire
+event.marriageNotice.action.correction.documents.affidavit,Correction document,Affidavit,Affidavit
+event.marriageNotice.action.correction.documents.birthCertificate,Identity document,Birth certificate,Acte de naissance
+event.marriageNotice.action.correction.documents.courtOrder,Correction document,Court order,Ordonnance du tribunal
+event.marriageNotice.action.correction.documents.identity,Identity document supporting the correction request,Proof of identity,Preuve d'identité
+event.marriageNotice.action.correction.documents.otherIdentity,Identity document,Other,Autre
+event.marriageNotice.action.correction.documents.otherSupporting,Correction document,Other,Autre
+event.marriageNotice.action.correction.documents.passport,Identity document,Passport, passeport
+event.marriageNotice.action.correction.documents.supporting,Documents supporting the correction request,Supporting documents,Documents justificatifs
+event.marriageNotice.action.correction.form.cancel,Identity verification cancellation action,Identity does not match,L'identité ne correspond pas
+event.marriageNotice.action.correction.form.cancel.body,Identity cancellation confirmation body,Please be aware that you will be responsible for this correction without proof of ID from the requester.,Veuillez noter que vous serez responsable de cette correction sans preuve d'identité du demandeur.
+event.marriageNotice.action.correction.form.cancel.title,Identity cancellation confirmation title,Proceed without proof of ID ?,Continuer sans preuve d'identité ?
+event.marriageNotice.action.correction.form.documents.title,Supporting documents section,Supporting documents,Documents justificatifs
+event.marriageNotice.action.correction.form.identity.title,Identity verification section,Verify their identity,Vérifier son identité
+event.marriageNotice.action.correction.form.label,Marriage Notice correction request form,Request correction,Demander une correction
+event.marriageNotice.action.correction.form.request.title,Correction request section,Correction request,Demande de correction
+event.marriageNotice.action.correction.form.requester.title,Requester details section,Requester's details,Détails du demandeur
+event.marriageNotice.action.correction.form.verify,Identity verified action,Verified,Vérifié
+event.marriageNotice.action.correction.identity.label,Identity details for the correction requester,Identity details,Détails de l'identité
+event.marriageNotice.action.correction.reason.clerical,Correction reason,Clerical error,Erreur matérielle
+event.marriageNotice.action.correction.reason.court,Correction reason,Requested by the court,Demande du tribunal
+event.marriageNotice.action.correction.reason.label,Reason for the correction request,Reason for correction,Raison de la correction
+event.marriageNotice.action.correction.reason.material,Correction reason,Informant provided incorrect information,L'informant a fourni des informations incorrectes
+event.marriageNotice.action.correction.reason.omission,Correction reason,Informant omitted information,L'informant a omis des informations
+event.marriageNotice.action.correction.reason.other,Correction reason,Other,Autre
+event.marriageNotice.action.correction.reason.otherDetails,Additional correction reason,Other reason,Autre raison
+event.marriageNotice.action.correction.requester.agent,Registration agent requester,Registrar / registration office,Bureau d'état civil / bureau d'enregistrement
+event.marriageNotice.action.correction.requester.bride,Bride requester,Bride,Mariée
+event.marriageNotice.action.correction.requester.court,Court requester,Court,Tribunal
+event.marriageNotice.action.correction.requester.groom,Bridegroom requester,Bridegroom,Marié
+event.marriageNotice.action.correction.requester.informant,Informant requester,Informant,Informant
+event.marriageNotice.action.correction.requester.label,Person requesting the correction,Requester,Demandeur
+event.marriageNotice.action.correction.requester.name,Name of someone else requesting the correction,Requester name,Nom du demandeur
+event.marriageNotice.action.correction.requester.other,Other requester,Someone else,Autre personne
+event.marriageNotice.action.correction.requester.relationship,Relationship of the requester to the couple,Relationship to the couple,Lien avec le couple
 event.marriageNotice.action.declare.form.label,This is what this form is referred to as in the system,Marriage Notice declaration form,Formulaire de déclaration d'avis de mariage
 event.marriageNotice.action.declare.form.review.comment.label,Label for the review comment field,Comment,Commentaire
 event.marriageNotice.action.declare.form.review.title,Title of the review page for the Marriage Notice event,"{brideGroom.name.firstname, select, __EMPTY__ {Marriage Notice declaration} other {{brideGroom.name.surname, select, __EMPTY__ {Marriage Notice declaration for {brideGroom.name.firstname}} other {Marriage Notice declaration for {brideGroom.name.firstname} {brideGroom.name.surname}}}}}","{brideGroom.name.firstname, select, __EMPTY__ {Déclaration d'avis de mariage} other {{brideGroom.name.surname, select, __EMPTY__ {Déclaration d'avis de mariage pour {brideGroom.name.firstname}} other {Déclaration d'avis de mariage pour {brideGroom.name.firstname} {brideGroom.name.surname}}}}}"
@@ -1657,8 +1691,30 @@ event.marriageNotice.action.declare.form.section.noticeOfIntendedMarriageDetails
 event.marriageNotice.action.declare.form.section.noticeOfIntendedMarriageDetails.field.venueName.label,Label for the venue name field,Venue name,Nom du lieu
 event.marriageNotice.action.declare.form.section.noticeOfIntendedMarriageDetails.title,Title for notice of intended marriage details page,Notice of intended marriage details,Détails de l'avis d'intention de mariage
 event.marriageNotice.action.detect-duplicate.label,Label for Marriage Notice duplicate detection,Detect duplicate,Detect duplicate
+event.marriageNotice.action.print.cancel,Identity verification cancellation action,Identity does not match,L'identité ne correspond pas
+event.marriageNotice.action.print.cancel.body,Identity cancellation confirmation body,Please be aware that you will be responsible for issuing a certificate without proof of ID from the recipient.,Veuillez noter que vous serez responsable de la délivrance du certificat sans preuve d'identité du destinataire.
+event.marriageNotice.action.print.cancel.title,Identity cancellation confirmation title,Print without proof of ID ?,Imprimer sans preuve d'identité ?
+event.marriageNotice.action.print.collector.bride,Certificate recipient,Bride,Mariée
+event.marriageNotice.action.print.collector.groom,Certificate recipient,Bridegroom,Marié
+event.marriageNotice.action.print.collector.idNumber,Identification number of the certificate recipient,ID number,Numéro d'identification
+event.marriageNotice.action.print.collector.informant,Certificate recipient,Informant,Informant
+event.marriageNotice.action.print.collector.label,Person receiving the Marriage Notice certificate,Certificate recipient,Destinataire du certificat
+event.marriageNotice.action.print.collector.name,Name of the certificate recipient,Collector's name,Nom du destinataire
+event.marriageNotice.action.print.collector.other,Certificate recipient,Someone else,Autre personne
+event.marriageNotice.action.print.collector.relationship,Relationship of the certificate recipient to the couple,Relationship to the couple,Lien avec le couple
+event.marriageNotice.action.print.collector.title,Certificate recipient section,Certify record,Certifier l'enregistrement
+event.marriageNotice.action.print.collectorDetails.title,Other collector details section,Collector details,Détails du destinataire
+event.marriageNotice.action.print.form.label,Marriage Notice certificate collection form,Marriage Notice certificate collector,Collecteur du certificat de mariage
+event.marriageNotice.action.print.identity.label,Identity details for the certificate recipient,Identity details,Détails de l'identité
+event.marriageNotice.action.print.identity.title,Identity verification section,Verify their identity,Vérifier son identité
+event.marriageNotice.action.print.label,Label for the Marriage Notice certificate printing action,Print,Imprimer
+event.marriageNotice.action.print.payment.amount,Certificate printing fee collected,Amount collected,Montant collecté
+event.marriageNotice.action.print.payment.receipt,Receipt number for the certificate fee,Receipt number,Numéro de reçu
+event.marriageNotice.action.print.payment.title,Certificate payment section,Collect payment,Collecter le paiement
+event.marriageNotice.action.print.verify,Identity verified action,Verified,Vérifié
 event.marriageNotice.action.register.detect-duplicate.label,Label for Marriage Notice registration duplicate detection,Detect duplicate,Detect duplicate
 event.marriageNotice.action.register.label,Label for the Marriage Notice registration action,Register,Register
+event.marriageNotice.action.requestCorrection.label,Label for the Marriage Notice correction action,Request correction,Demander une correction
 event.marriageNotice.fallbackTitle,This is a fallback title if actual title resolves to empty string,No names provided,Aucun nom fourni
 event.marriageNotice.label,This is what this event is referred to as in the system,Marriage Notice,Avis de mariage
 event.marriageNotice.summary.informant.contact.empty,This is shown when there is no informant information,No contact details provided,Pas de coordonnées fournies
@@ -3226,6 +3282,10 @@ workqueues.pendingUpdates.title,Title of pending updates workqueue,Pending updat
 workqueues.pendingValidation.title,Title of pending validation workqueue,Pending validation,En attente de validation
 workqueues.potentialDuplicate.title,Title of potential duplicate workqueue,Potential duplicate,Duplicata potentiel
 workqueues.recent.title,Title of recent workqueue,Recent,Récent
+workqueues.registeredBirthsLast12Months.emptyMessage,Empty message for registered births last 12 months workqueue,No registered births in the last 12 months,Aucune naissance enregistrée au cours des 12 derniers mois
+workqueues.registeredBirthsLast12Months.title,Title of registered births last 12 months workqueue,Registered Births (last 12 months),Naissances enregistrées (12 derniers mois)
+workqueues.registeredDeathsLast12Months.emptyMessage,Empty message for registered deaths last 12 months workqueue,No registered deaths in the last 12 months,Aucun décès enregistré au cours des 12 derniers mois
+workqueues.registeredDeathsLast12Months.title,Title of registered deaths last 12 months workqueue,Registered Deaths (last 12 months),Décès enregistrés (12 derniers mois)
 workqueues.requiresApproval.title,Title of pending approval workqueue,Pending approval,En attente d'approbation
 workqueues.reviewRequested.title,Title of review requested workqueue,Review requested,Révision demandée
 wq.noRecords.CREATED,No records messages for empty draft tab,No records in progress,Aucun enregistrement en cours
@@ -3241,59 +3301,3 @@ wq.noRecords.readyToPrint,No records messages for ready to print tab,No records 
 wq.noRecords.requiresUpdate,No records messages for require updates tab,No records require updates,Aucun document ne nécessite de mise à jour
 wq.noRecords.sentForApproval,No records messages for sent for approval tab,No records sent for approval,Aucun document envoyé pour approbation
 wq.noRecords.sentForReview,No records messages for sent for review tab,No records sent for review,Aucun document envoyé pour examen
-event.marriageNotice.action.correction.documents.affidavit,Correction document,Affidavit,Affidavit
-event.marriageNotice.action.correction.documents.birthCertificate,Identity document,Birth certificate,Acte de naissance
-event.marriageNotice.action.correction.documents.courtOrder,Correction document,Court order,Ordonnance du tribunal
-event.marriageNotice.action.correction.documents.identity,Identity document supporting the correction request,Proof of identity,Preuve d'identité
-event.marriageNotice.action.correction.documents.otherIdentity,Identity document,Other,Autre
-event.marriageNotice.action.correction.documents.otherSupporting,Correction document,Other,Autre
-event.marriageNotice.action.correction.documents.passport,Identity document,Passport, passeport
-event.marriageNotice.action.correction.documents.supporting,Documents supporting the correction request,Supporting documents,Documents justificatifs
-event.marriageNotice.action.correction.form.cancel,Identity verification cancellation action,Identity does not match,L'identité ne correspond pas
-event.marriageNotice.action.correction.form.cancel.body,Identity cancellation confirmation body,Please be aware that you will be responsible for this correction without proof of ID from the requester.,Veuillez noter que vous serez responsable de cette correction sans preuve d'identité du demandeur.
-event.marriageNotice.action.correction.form.cancel.title,Identity cancellation confirmation title,Proceed without proof of ID ?,Continuer sans preuve d'identité ?
-event.marriageNotice.action.correction.form.documents.title,Supporting documents section,Supporting documents,Documents justificatifs
-event.marriageNotice.action.correction.form.identity.title,Identity verification section,Verify their identity,Vérifier son identité
-event.marriageNotice.action.correction.form.label,Marriage Notice correction request form,Request correction,Demander une correction
-event.marriageNotice.action.correction.form.request.title,Correction request section,Correction request,Demande de correction
-event.marriageNotice.action.correction.form.requester.title,Requester details section,Requester's details,Détails du demandeur
-event.marriageNotice.action.correction.form.verify,Identity verified action,Verified,Vérifié
-event.marriageNotice.action.correction.identity.label,Identity details for the correction requester,Identity details,Détails de l'identité
-event.marriageNotice.action.correction.reason.clerical,Correction reason,Clerical error,Erreur matérielle
-event.marriageNotice.action.correction.reason.court,Correction reason,Requested by the court,Demande du tribunal
-event.marriageNotice.action.correction.reason.label,Reason for the correction request,Reason for correction,Raison de la correction
-event.marriageNotice.action.correction.reason.material,Correction reason,Informant provided incorrect information,L'informant a fourni des informations incorrectes
-event.marriageNotice.action.correction.reason.omission,Correction reason,Informant omitted information,L'informant a omis des informations
-event.marriageNotice.action.correction.reason.other,Correction reason,Other,Autre
-event.marriageNotice.action.correction.reason.otherDetails,Additional correction reason,Other reason,Autre raison
-event.marriageNotice.action.correction.requester.agent,Registration agent requester,Registrar / registration office,Bureau d'état civil / bureau d'enregistrement
-event.marriageNotice.action.correction.requester.bride,Bride requester,Bride,Mariée
-event.marriageNotice.action.correction.requester.court,Court requester,Court,Tribunal
-event.marriageNotice.action.correction.requester.groom,Bridegroom requester,Bridegroom,Marié
-event.marriageNotice.action.correction.requester.informant,Informant requester,Informant,Informant
-event.marriageNotice.action.correction.requester.label,Person requesting the correction,Requester,Demandeur
-event.marriageNotice.action.correction.requester.name,Name of someone else requesting the correction,Requester name,Nom du demandeur
-event.marriageNotice.action.correction.requester.other,Other requester,Someone else,Autre personne
-event.marriageNotice.action.correction.requester.relationship,Relationship of the requester to the couple,Relationship to the couple,Lien avec le couple
-event.marriageNotice.action.print.cancel,Identity verification cancellation action,Identity does not match,L'identité ne correspond pas
-event.marriageNotice.action.print.cancel.body,Identity cancellation confirmation body,Please be aware that you will be responsible for issuing a certificate without proof of ID from the recipient.,Veuillez noter que vous serez responsable de la délivrance du certificat sans preuve d'identité du destinataire.
-event.marriageNotice.action.print.cancel.title,Identity cancellation confirmation title,Print without proof of ID ?,Imprimer sans preuve d'identité ?
-event.marriageNotice.action.print.collector.bride,Certificate recipient,Bride,Mariée
-event.marriageNotice.action.print.collector.groom,Certificate recipient,Bridegroom,Marié
-event.marriageNotice.action.print.collector.informant,Certificate recipient,Informant,Informant
-event.marriageNotice.action.print.collector.idNumber,Identification number of the certificate recipient,ID number,Numéro d'identification
-event.marriageNotice.action.print.collector.label,Person receiving the Marriage Notice certificate,Certificate recipient,Destinataire du certificat
-event.marriageNotice.action.print.collector.name,Name of the certificate recipient,Collector's name,Nom du destinataire
-event.marriageNotice.action.print.collector.other,Certificate recipient,Someone else,Autre personne
-event.marriageNotice.action.print.collector.relationship,Relationship of the certificate recipient to the couple,Relationship to the couple,Lien avec le couple
-event.marriageNotice.action.print.collector.title,Certificate recipient section,Certify record,Certifier l'enregistrement
-event.marriageNotice.action.print.collectorDetails.title,Other collector details section,Collector details,Détails du destinataire
-event.marriageNotice.action.print.form.label,Marriage Notice certificate collection form,Marriage Notice certificate collector,Collecteur du certificat de mariage
-event.marriageNotice.action.print.identity.label,Identity details for the certificate recipient,Identity details,Détails de l'identité
-event.marriageNotice.action.print.identity.title,Identity verification section,Verify their identity,Vérifier son identité
-event.marriageNotice.action.print.label,Label for the Marriage Notice certificate printing action,Print,Imprimer
-event.marriageNotice.action.print.payment.amount,Certificate printing fee collected,Amount collected,Montant collecté
-event.marriageNotice.action.print.payment.receipt,Receipt number for the certificate fee,Receipt number,Numéro de reçu
-event.marriageNotice.action.print.payment.title,Certificate payment section,Collect payment,Collecter le paiement
-event.marriageNotice.action.print.verify,Identity verified action,Verified,Vérifié
-event.marriageNotice.action.requestCorrection.label,Label for the Marriage Notice correction action,Request correction,Demander une correction
