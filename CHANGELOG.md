@@ -2,6 +2,10 @@
 
 ## 2.0.3 Release Candidate
 
+### Bug fixes
+
+- Corrected the country translations. `Turkey` is now `Türkiye` and `The former Yugoslav Republic of Macedonia` is now `North Macedonia`. The `countries.KGZ` row held the Lao name and there was no `countries.LAO` row, so Kyrgyzstan could not be selected in any country dropdown. [#11954](https://github.com/opencrvs/opencrvs-core/issues/11954)
+
 ## 2.0.2
 
 ## 1.9.18
