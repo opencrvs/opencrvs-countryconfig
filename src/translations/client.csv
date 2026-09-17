@@ -1764,7 +1764,7 @@ event.stillbirth.action.declare.form.section.eventDetails.field.wasBornAlive.opt
 event.stillbirth.action.declare.form.section.eventDetails.field.wasBornAliveWarning.label,Warning shown when the baby was born alive,"This case cannot be registered as a stillbirth event. If the baby showed any signs of life, this must be registered as a Live Birth, and if the child passed away, a Death Registration must be completed.","Ce cas ne peut pas être enregistré comme une mortinaissance. Si le bébé a montré des signes de vie, il doit être enregistré comme une naissance vivante, et si l'enfant est décédé par la suite, un enregistrement de décès doit être effectué."
 event.stillbirth.action.declare.form.section.eventDetails.title,Form section title for stillbirth event details,Event details,Détails de l'évènement
 event.stillbirth.action.declare.form.section.father.field.address.label,This is the label for the field,Father's residential address,Adresse de résidence du père
-event.stillbirth.action.declare.form.section.father.field.age.label,This is the label for the field,Age in years,Âge en années
+event.stillbirth.action.declare.form.section.father.field.age.label,This is the label for the field,Age of father,Âge en années
 event.stillbirth.action.declare.form.section.father.field.detailsNotAvailable.label,This is the label for the field,Father's details are not available,Les détails du père ne sont pas disponibles
 event.stillbirth.action.declare.form.section.father.field.dob.error,This is the error message for invalid date,Must not be a future date,Ne doit pas être une date future
 event.stillbirth.action.declare.form.section.father.field.dob.label,This is the label for the field,Date of birth,Date de naissance

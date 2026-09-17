@@ -80,7 +80,8 @@ export const father = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: field('father.detailsNotAvailable').isEqualTo(true)
         }
-      ]
+      ],
+      parent: field('father.detailsNotAvailable')
     },
     {
       id: 'father.detailsDivider',
@@ -93,6 +94,7 @@ export const father = defineFormPage({
     {
       id: 'father.name',
       type: FieldType.NAME,
+      parent: field('father.detailsNotAvailable'),
       required: true,
       hideLabel: true,
       configuration: tuvaluNameConfig,
@@ -109,6 +111,7 @@ export const father = defineFormPage({
     {
       id: 'father.dob',
       type: FieldType.DATE,
+      parent: field('father.detailsNotAvailable'),
       required: true,
       secured: true,
       label: {
@@ -139,6 +142,7 @@ export const father = defineFormPage({
     {
       id: 'father.dobUnknown',
       type: FieldType.CHECKBOX,
+      parent: field('father.detailsNotAvailable'),
       label: {
         defaultMessage: 'Exact date unknown',
         description: 'This is the label for the field',
@@ -155,9 +159,10 @@ export const father = defineFormPage({
     {
       id: 'father.age',
       type: FieldType.NUMBER,
+      parent: field('father.detailsNotAvailable'),
       required: false,
       label: {
-        defaultMessage: 'Age in years',
+        defaultMessage: 'Age of father',
         description: 'This is the label for the field',
         id: 'event.stillbirth.action.declare.form.section.father.field.age.label'
       },
@@ -175,6 +180,7 @@ export const father = defineFormPage({
     {
       id: 'father.placeOfBirth',
       type: FieldType.TEXT,
+      parent: field('father.detailsNotAvailable'),
       required: true,
       label: {
         defaultMessage: 'Place of birth',
@@ -188,6 +194,7 @@ export const father = defineFormPage({
     {
       id: 'father.nationality',
       type: FieldType.COUNTRY,
+      parent: field('father.detailsNotAvailable'),
       required: true,
       label: {
         defaultMessage: 'Nationality',
@@ -202,6 +209,7 @@ export const father = defineFormPage({
     {
       id: 'father.idType',
       type: FieldType.SELECT,
+      parent: field('father.detailsNotAvailable'),
       required: true,
       label: {
         defaultMessage: 'Type of ID',
@@ -216,6 +224,7 @@ export const father = defineFormPage({
     {
       id: 'father.idNumber',
       type: FieldType.TEXT,
+      parent: field('father.detailsNotAvailable'),
       required: false,
       label: {
         defaultMessage: 'ID number',
@@ -262,6 +271,7 @@ export const father = defineFormPage({
     {
       id: 'father.sameAsMotherResidence',
       type: FieldType.CHECKBOX,
+      parent: field('father.detailsNotAvailable'),
       label: {
         defaultMessage: "Same as mother's residence",
         description: 'This is the label for the field',
@@ -274,6 +284,7 @@ export const father = defineFormPage({
     {
       id: 'father.address',
       type: FieldType.ADDRESS,
+      parent: field('father.detailsNotAvailable'),
       required: true,
       secured: true,
       hideLabel: true,
@@ -323,6 +334,7 @@ export const father = defineFormPage({
     {
       id: 'father.occupation',
       type: FieldType.TEXT,
+      parent: field('father.detailsNotAvailable'),
       required: false,
       label: {
         defaultMessage: 'Occupation',

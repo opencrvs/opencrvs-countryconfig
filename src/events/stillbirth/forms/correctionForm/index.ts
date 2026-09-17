@@ -8,7 +8,13 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
-import { defineActionForm, field, PageTypes } from '@opencrvs/toolkit/events'
+import {
+  and,
+  defineActionForm,
+  field,
+  not,
+  PageTypes
+} from '@opencrvs/toolkit/events'
 import { correctionRequestFields } from './correction-request'
 import { requesterDetailsFields } from './requester-details'
 import { correctionRequesterIdentityVerify } from './requester-identity-verify'
@@ -56,7 +62,10 @@ export const STILLBIRTH_CORRECTION_FORM = defineActionForm({
         defaultMessage: 'Verify their identity',
         description: 'This is the title of the section'
       },
-      conditional: isSomeoneElse,
+      conditional: and(
+        not(field('requester.type').isEqualTo('REGISTRAR')),
+        not(field('requester.type').isEqualTo('COURT'))
+      ),
       fields: correctionRequesterIdentityVerify,
       actions: {
         verify: {

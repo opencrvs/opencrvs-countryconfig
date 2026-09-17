@@ -45,6 +45,8 @@ export const InformantType = {
   OTHER: 'OTHER'
 } as const
 
+const PHONE_NUMBER_REGEX = '^[0-9]{5}$'
+
 const informantTypeOptions = [
   { value: InformantType.MOTHER, label: informantMessageDescriptors.MOTHER },
   { value: InformantType.FATHER, label: informantMessageDescriptors.FATHER },
@@ -323,23 +325,20 @@ export const informant = defineFormPage({
         id: 'event.stillbirth.action.declare.form.section.informant.field.phoneNo.label'
       },
       validation: [
-        {
-          message: {
-            defaultMessage: 'Must be a valid phone number',
-            description: 'This is the error message for invalid phone number',
-            id: 'event.stillbirth.error.invalidPhoneNumber'
-          },
-          validator: or(
-            defineFormConditional({
-              type: 'object',
-              properties: {
-                'informant.phoneNo': { type: 'string', pattern: '^[0-9]+$' }
+              {
+                message: {
+                  defaultMessage:
+                    'Must be a valid 5 digit number',
+                  description:
+                    'The error message that appears on phone numbers that are not 5 digits',
+                  id: 'event.birth.action.declare.form.section.informant.field.phoneNo.error'
+                },
+                validator: or(
+                  field('informant.phoneNo').matches(PHONE_NUMBER_REGEX),
+                  field('informant.phoneNo').isFalsy()
+                )
               }
-            }),
-            field('informant.phoneNo').isFalsy()
-          )
-        }
-      ]
+            ]
     },
     {
       id: 'informant.email',

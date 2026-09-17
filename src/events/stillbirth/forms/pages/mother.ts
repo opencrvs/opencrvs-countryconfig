@@ -82,7 +82,8 @@ export const mother = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: field('mother.detailsNotAvailable').isEqualTo(true)
         }
-      ]
+      ],
+      parent: field('mother.detailsNotAvailable')
     },
     {
       id: 'mother.detailsDivider',
@@ -95,6 +96,7 @@ export const mother = defineFormPage({
     {
       id: 'mother.name',
       type: FieldType.NAME,
+      parent: field('mother.detailsNotAvailable'),
       required: true,
       hideLabel: true,
       analytics: true,
@@ -112,6 +114,7 @@ export const mother = defineFormPage({
     {
       id: 'mother.dob',
       type: FieldType.DATE,
+      parent: field('mother.detailsNotAvailable'),
       required: true,
       secured: true,
       analytics: true,
@@ -154,6 +157,7 @@ export const mother = defineFormPage({
     {
       id: 'mother.dobUnknown',
       type: FieldType.CHECKBOX,
+      parent: field('mother.detailsNotAvailable'),
       label: {
         defaultMessage: 'Exact date of birth unknown',
         description: 'This is the label for the field',
@@ -167,6 +171,7 @@ export const mother = defineFormPage({
     {
       id: 'mother.age',
       type: FieldType.AGE,
+      parent: field('mother.detailsNotAvailable'),
       required: false,
       analytics: true,
       label: {
@@ -213,6 +218,7 @@ export const mother = defineFormPage({
     {
       id: 'mother.nationality',
       type: FieldType.COUNTRY,
+      parent: field('mother.detailsNotAvailable'),
       required: true,
       analytics: true,
       label: {
@@ -228,6 +234,7 @@ export const mother = defineFormPage({
     {
       id: 'mother.idType',
       type: FieldType.SELECT,
+      parent: field('mother.detailsNotAvailable'),
       required: true,
       label: {
         defaultMessage: 'Type of ID',
@@ -242,6 +249,7 @@ export const mother = defineFormPage({
     {
       id: 'mother.brnSearch',
       type: FieldType.SEARCH,
+      parent: field('mother.detailsNotAvailable'),
       label: {
         defaultMessage: 'Birth registration number lookup',
         description: 'Label for the birth registration number search field',
@@ -297,7 +305,7 @@ export const mother = defineFormPage({
       id: 'mother.brn',
       type: FieldType.TEXT,
       required: false,
-      parent: field('mother.brnSearch'),
+      parent: [field('mother.detailsNotAvailable'), field('mother.brnSearch')],
       value: field('mother.brnSearch').getByPath([
         'data',
         'firstResult',
@@ -323,6 +331,7 @@ export const mother = defineFormPage({
     {
       id: 'mother.passport',
       type: FieldType.TEXT,
+      parent: field('mother.detailsNotAvailable'),
       required: false,
       label: {
         defaultMessage: 'Passport number',
@@ -342,6 +351,7 @@ export const mother = defineFormPage({
     {
       id: 'mother.idNumber',
       type: FieldType.TEXT,
+      parent: field('mother.detailsNotAvailable'),
       required: false,
       label: {
         defaultMessage: 'ID number',
@@ -362,6 +372,7 @@ export const mother = defineFormPage({
     {
       id: 'mother.maritalStatus',
       type: FieldType.SELECT,
+      parent: field('mother.detailsNotAvailable'),
       required: true,
       label: {
         defaultMessage: 'Marital status',
@@ -376,6 +387,7 @@ export const mother = defineFormPage({
     {
       id: 'mother.placeOfBirth',
       type: FieldType.TEXT,
+      parent: field('mother.detailsNotAvailable'),
       required: true,
       label: {
         defaultMessage: 'Place of birth',
@@ -402,6 +414,7 @@ export const mother = defineFormPage({
     {
       id: 'mother.livingChildren',
       type: FieldType.NUMBER,
+      parent: field('mother.detailsNotAvailable'),
       analytics: true,
       required: false,
       label: {
@@ -417,6 +430,7 @@ export const mother = defineFormPage({
     {
       id: 'mother.deceasedChildren',
       type: FieldType.NUMBER,
+      parent: field('mother.detailsNotAvailable'),
       analytics: true,
       required: false,
       label: {
@@ -454,6 +468,7 @@ export const mother = defineFormPage({
     {
       id: 'mother.address',
       type: FieldType.ADDRESS,
+      parent: field('mother.detailsNotAvailable'),
       required: true,
       secured: true,
       hideLabel: true,
@@ -497,6 +512,7 @@ export const mother = defineFormPage({
     {
       id: 'mother.occupation',
       type: FieldType.TEXT,
+      parent: field('mother.detailsNotAvailable'),
       required: false,
       label: {
         defaultMessage: 'Occupation',
