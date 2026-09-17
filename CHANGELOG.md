@@ -4,7 +4,7 @@
 
 ### Bug fixes
 
-- Corrected the country translations. Country names now follow the current [UN M49](https://unstats.un.org/unsd/methodology/m49/overview/) standard forms in English and French. The `countries.KGZ` row also carried the wrong country's name and there was no `countries.LAO` row at all, so one country could not be selected in any country dropdown; both rows are now correct. [#11954](https://github.com/opencrvs/opencrvs-core/issues/11954)
+- Corrected the country translations. The `countries.KGZ` row carried the wrong country's name and there was no `countries.LAO` row, so one country could not be selected in any country dropdown. [#11954](https://github.com/opencrvs/opencrvs-core/issues/11954)
 
 ## 2.0.2
 
