@@ -13,27 +13,27 @@ import { TranslationConfig } from '@opencrvs/toolkit/events'
 import { createSelectOptions } from '../utils'
 
 export const IdType = {
-  NATIONAL_ID: 'NATIONAL_ID',
   PASSPORT: 'PASSPORT',
-  BIRTH_REGISTRATION_NUMBER: 'BIRTH_REGISTRATION_NUMBER',
+  BIRTH_CERTIFICATE: 'BIRTH_CERTIFICATE',
+  OTHER: 'OTHER',
   NONE: 'NONE'
 } as const
 
 const idTypeMessageDescriptors = {
-  NATIONAL_ID: {
-    defaultMessage: 'National ID',
-    description: 'Option for form field: Type of ID',
-    id: 'form.field.label.iDTypeNationalID'
-  },
   PASSPORT: {
     defaultMessage: 'Passport',
     description: 'Option for form field: Type of ID',
     id: 'form.field.label.iDTypePassport'
   },
-  BIRTH_REGISTRATION_NUMBER: {
-    defaultMessage: 'Birth Registration Number',
+  BIRTH_CERTIFICATE: {
+    defaultMessage: 'Birth Certificate',
     description: 'Option for form field: Type of ID',
-    id: 'form.field.label.iDTypeBRN'
+    id: 'form.field.label.iDTypeBC'
+  },
+  OTHER: {
+    defaultMessage: 'Other',
+    description: 'Option for form field: Type of ID',
+    id: 'form.field.label.iDTypeOther'
   },
   NONE: {
     defaultMessage: 'None',

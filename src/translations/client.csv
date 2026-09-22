@@ -772,6 +772,8 @@ countries.ZWE,,Zimbabwe,Zimbabwe
 dashboard.completenessTitle,Completeness title,Completeness Dashboard,Tableau de bord de complétude
 dashboard.registrationsTitle,Registrations title,Registrations Dashboard,Tableau de bord des enregistrements
 dashboard.registryTitle,Registry title,Registry,Registre
+divorce.search.criteria.label.prefix.husband,Wife prefix,Wife's,Wife's
+divorce.search.criteria.label.prefix.wife,Wife prefix,Wife's,Wife's
 duplicates.button.markAsDuplicate,Mark as duplicate button text,Mark as duplicate,Marquer comme duplicata
 duplicates.button.notDuplicate,Not a duplicate button text,Not a duplicate,Pas un duplicata
 duplicates.compare.supportingDocuments,Supporting documents header for duplicates comparison,Supporting documents,Documents justificatifs
@@ -813,6 +815,183 @@ event.action.declare.form.section.person.field.age.error,Error message for inval
 event.action.notAvailableForEvent,Shown when user tries to perform an action that is not available for the event,The action you're trying to perform is not available for this event anymore,L'action que vous essayez d'effectuer n'est plus disponible pour cet événement
 event.action.outbox-retry.label,Label for retry button for outbox,Retry,Réessayer
 event.action.review-correction.label,Label for review correction button in dropdown menu,Review correction request,Revoir la demande de correction
+event.adoption.action.correction.documents.proofOfIdentity.birthCertificate.label,Label for the birth certificate option,Birth certificate,Proof of identity
+event.adoption.action.correction.documents.proofOfIdentity.label,Label for the proof of identity field,Proof of identity,Proof of identity
+event.adoption.action.correction.documents.proofOfIdentity.other.label,Label for the other option,Other,Proof of identity
+event.adoption.action.correction.documents.proofOfIdentity.passport.label,Label for the passport option,Passport,Proof of identity
+event.adoption.action.correction.documents.supportingDocs.courtOrder.label,Label for the court order option,Court order,Birth certificate
+event.adoption.action.correction.documents.supportingDocs.label,Label for the supporting documents field,Supporting documents,Proof of identity
+event.adoption.action.correction.documents.supportingDocs.other.label,Label for the other option,Other,Supporting documents
+event.adoption.action.correction.documents.supportingDocs.registrarGeneralAuthorisation.label,Label for the registrar general authorisation option,Registrar general / registrar authorisation,Other
+event.adoption.action.correction.documents.supportingDocs.updatedAdoptionOrder.label,Label for the updated adoption order option,Updated adoption order,Passport
+event.adoption.action.correction.fees.amount.label,Label for the amount field,Fee collected,Fee collected
+event.adoption.action.correction.fees.amount.prefix,Prefix for the amount field,$,Fee collected
+event.adoption.action.correction.fees.receiptNumber.label,Label for the receipt number field,Receipt number,Fee collected
+event.adoption.action.correction.form.cancel,This is the label for the verification cancellation button,Identity does not match,Requester's details
+event.adoption.action.correction.form.cancel.confirmation.body,This is the body for the verification cancellation modal,"Please be aware that if you proceed, you will be responsible for this correction without the necessary proof of ID from the requester",Verify their identity
+event.adoption.action.correction.form.cancel.confirmation.title,This is the title for the verification cancellation modal,Proceed without proof of ID?,Requester's details
+event.adoption.action.correction.form.label,This is the label for the adoption correction form,Correct record,Correct record
+event.adoption.action.correction.form.requester.type.court,This is the label for the correction requester field,Registrar / Registration office,Requester
+event.adoption.action.correction.form.requester.type.registrar,This is the label for the field,Requester,Requester
+event.adoption.action.correction.form.requester.type.someoneElse,This is the label for the correction requester field,Court,Requester
+event.adoption.action.correction.form.section.collectPayment.title,This is the title of the section,Supporting documents,Identity does not match
+event.adoption.action.correction.form.section.correctionRequest.title,This is the label for the adoption correction form,Correct record,Correct record
+event.adoption.action.correction.form.section.reason.title,This is the label for the correction requester field,Someone else,Requester
+event.adoption.action.correction.form.section.requester.brn.label,This is the label for the field,ID Number,Nationality
+event.adoption.action.correction.form.section.requester.dob.error,This is the error message for invalid date,Date cannot be in the future,Name
+event.adoption.action.correction.form.section.requester.dob.label,Label for family name text input,Surname,Relationship to child
+event.adoption.action.correction.form.section.requester.idType.label,This is the label for the field,Type of ID,Surname
+event.adoption.action.correction.form.section.requester.label,This is the label for the field,Requester,Requester
+event.adoption.action.correction.form.section.requester.name.firstname.label,Label for form field: Given names,Given name(s),Relationship to child
+event.adoption.action.correction.form.section.requester.name.label,This is the label for the field,Relationship to child,Relationship to child
+event.adoption.action.correction.form.section.requester.name.surname.label,Label for family name text input,Surname,Relationship to child
+event.adoption.action.correction.form.section.requester.nationality.label,This is the error message for invalid date,Date cannot be in the future,Name
+event.adoption.action.correction.form.section.requester.other.label,This is the label for the field,ID Number,Type of ID
+event.adoption.action.correction.form.section.requester.passport.label,This is the label for the field,ID Number,Date of birth
+event.adoption.action.correction.form.section.requester.relationship.label,This is the label for the field,Relationship to child,Relationship to child
+event.adoption.action.correction.form.section.requesterDetails.title,This is the title of the section,Correction request,Correct record
+event.adoption.action.correction.form.section.supportingDocuments.title,This is the body for the verification cancellation modal,"Please be aware that if you proceed, you will be responsible for this correction without the necessary proof of ID from the requester",Verified
+event.adoption.action.correction.form.section.verifyIdentity.data.label,Title for the data section,label,label
+event.adoption.action.correction.form.section.verifyIdentity.title,This is the title of the section,Requester's details,Correct record
+event.adoption.action.correction.form.verify,This is the label for the verification button,Verified,Correction request
+event.adoption.action.correction.label,This is shown as the action name anywhere the user can trigger the action from,Correct record,Declare
+event.adoption.action.correction.reason.option.clericalError.label,Label for the clerical error option,Myself or an agent made a mistake (Clerical error),Requester
+event.adoption.action.correction.reason.option.judicialOrder.label,Label for the judicial order option,Requested to do so by the court (Judicial order),Reason for correction
+event.adoption.action.correction.reason.option.materialError.label,Label for the material error option,Informant provided incorrect information (Material error),Registrar / Registration office
+event.adoption.action.correction.reason.option.materialOmission.label,Label for the material omission option,Informant did not provide this information (Material omission),Court
+event.adoption.action.correction.reason.option.other.label,Label for the other option,Other (please specify),Reason for correction
+event.adoption.action.correction.reason.other.label,Label for the reason,Other reason (please specify),Informant provided incorrect information (Material error)
+event.adoption.action.declare.form.label,Title of the form to show in review page,Adoption declaration form,{child.name.firstname} {child.name.surname}
+event.adoption.action.declare.form.review.title,Title of the form to show in review page,{child.name.firstname} {child.name.surname},{child.name.firstname} {child.name.surname}
+event.adoption.action.declare.form.section.adoptionOrder.title,Form section title for adoption order details,Adoption order details,Adoption order details
+event.adoption.action.declare.form.section.adoptiveFather.field.age.label,Age in years of adoptive father,Age in years,Must be a valid date in the past
+event.adoption.action.declare.form.section.adoptiveFather.field.detailsUnavailable.label,Checkbox to indicate adoptive father details are not available,Adoptive father's details are not available,Passport
+event.adoption.action.declare.form.section.adoptiveFather.field.dob.error.label,This is the error message for invalid date,Must be a valid date in the past,Given name(s)
+event.adoption.action.declare.form.section.adoptiveFather.field.dob.label,Date of birth of adoptive father,Date of birth,Given name(s)
+event.adoption.action.declare.form.section.adoptiveFather.field.dobUnknown.label,DOB exact date unknown for adoptive father,Exact date unknown,Date of birth
+event.adoption.action.declare.form.section.adoptiveFather.field.idType.label,Type of ID for adoptive father,Type of ID,Place of birth
+event.adoption.action.declare.form.section.adoptiveFather.field.idTypeId.label,ID number for adoptive father,ID number,Type of ID
+event.adoption.action.declare.form.section.adoptiveFather.field.idTypeOther.label,Other ID type description for adoptive father,Other,Nationality
+event.adoption.action.declare.form.section.adoptiveFather.field.nationality.label,Nationality of adoptive father,Nationality, years
+event.adoption.action.declare.form.section.adoptiveFather.field.occupation.label,Occupation of adoptive father,Occupation,Usual residence
+event.adoption.action.declare.form.section.adoptiveFather.field.placeOfBirth.label,Place of birth of adoptive father,Place of birth,Age in years
+event.adoption.action.declare.form.section.adoptiveFather.field.residence.label,Residence of adoptive father,Usual residence,Usual residence
+event.adoption.action.declare.form.section.adoptiveFather.field.residenceHeader.label,Residence heading for adoptive father,Usual residence,ID number
+event.adoption.action.declare.form.section.adoptiveFather.field.unavailableReason.label,Reason why adoptive father details are not available,Reason,Other
+event.adoption.action.declare.form.section.adoptiveFather.header,Form section title for adoptive father details,Adoptive father's details,Passport
+event.adoption.action.declare.form.section.adoptiveMother.field.address.label,Residence of adoptive mother,Usual residence,Usual residence
+event.adoption.action.declare.form.section.adoptiveMother.field.age.label,Age in years of adoptive mother,Age in years,Must be a valid date in the past
+event.adoption.action.declare.form.section.adoptiveMother.field.detailsUnavailable.label,Checkbox to indicate adoptive mother details are not available,Adoptive mother's details are not available,Passport
+event.adoption.action.declare.form.section.adoptiveMother.field.dob.label,Date of birth of adoptive mother,Date of birth,Given name(s)
+event.adoption.action.declare.form.section.adoptiveMother.field.dobUnknown.label,DOB exact date unknown for adoptive mother,Exact date unknown,Date of birth
+event.adoption.action.declare.form.section.adoptiveMother.field.idNumber.label,ID number for adoptive mother,ID number,Type of ID
+event.adoption.action.declare.form.section.adoptiveMother.field.idType.label,Type of ID for adoptive mother,Type of ID,Place of birth
+event.adoption.action.declare.form.section.adoptiveMother.field.idTypeOther.label,Other ID type description for adoptive mother,Other,Nationality
+event.adoption.action.declare.form.section.adoptiveMother.field.maidenName.label,Maiden surname of adoptive mother,Maiden surname, years
+event.adoption.action.declare.form.section.adoptiveMother.field.maritalStatus.label,Marital status of adoptive mother,Marital Status,Age in years
+event.adoption.action.declare.form.section.adoptiveMother.field.name.label,This is the label for the field,Mother's name,Given name(s)
+event.adoption.action.declare.form.section.adoptiveMother.field.nationality.label,Nationality of adoptive mother,Nationality,Maiden surname
+event.adoption.action.declare.form.section.adoptiveMother.field.occupation.label,Occupation of adoptive mother,Occupation,Invalid input
+event.adoption.action.declare.form.section.adoptiveMother.field.placeOfBirth.label,Place of birth of adoptive mother,Place of birth,Marital Status
+event.adoption.action.declare.form.section.adoptiveMother.field.reason.label,Reason why adoptive mother details are not available,Reason,Other
+event.adoption.action.declare.form.section.adoptiveMother.header,Form section title for adoptive mother details,Adoptive mother's details,Divorced
+event.adoption.action.declare.form.section.child.field.birthLocation.label,This is the label for the field,Place Of Birth,Must be a valid Birthdate
+event.adoption.action.declare.form.section.child.field.brn.label,This is the label for the field,Birth Registration Number,Invalid input
+event.adoption.action.declare.form.section.child.field.brnSearch.helperText,Label for birth helperText,"Hint: Search for an existing birth record. If a match is found, the details below will auto-fill. If no record is found, continue by entering the details manually.",Male
+event.adoption.action.declare.form.section.child.field.brnSearch.label,Label for birth record search,Search for a birth record,Male
+event.adoption.action.declare.form.section.child.field.brnSearch.placeholder,Placeholder for birth record search,"Search for an existing birth record. If a match is found, the details below will auto-fill. If no record is found, continue by entering the details manually.",Unknown
+event.adoption.action.declare.form.section.child.field.dob.error,This is the error message for invalid date,Must be a valid Birthdate,Given name(s)
+event.adoption.action.declare.form.section.child.field.dob.label,This is the label for the field,Date of birth,Given name(s)
+event.adoption.action.declare.form.section.child.field.gender.label,This is the label for the field,Sex,Given name(s)
+event.adoption.action.declare.form.section.child.field.name.label,This is the label for the field,Given name(s),Birth Registration Number
+event.adoption.action.declare.form.section.child.field.newName.label,This is the label for the field,Child's New Name,Yes
+event.adoption.action.declare.form.section.consenter.title,Form section title for consenter,Consent from Natural Parent(s) or Legal Guardian(s),Consent from Natural Parent(s) or Legal Guardian(s)
+event.adoption.action.declare.form.section.cp1.field.name.label,This is the label for the field,Given name(s),Consenting party 1
+event.adoption.action.declare.form.section.cp2.field.name.label,This is the label for the field,Given name(s),Consenting party 2
+event.adoption.action.declare.form.section.father.field.name.label,This is the label for the field,Adoptive Father name,Given name(s)
+event.adoption.action.declare.form.section.informant.field.address.label,Label for informant place of residence,Place of residence,Type of ID
+event.adoption.action.declare.form.section.informant.field.addressHelper.label,This is the label for the field,Place of residence, years
+event.adoption.action.declare.form.section.informant.field.age.label,Label for informant age in years,Age in years,Surname
+event.adoption.action.declare.form.section.informant.field.dob.label,Label for informant date of birth,Date of birth,Given name(s)
+event.adoption.action.declare.form.section.informant.field.dobUnknown.label,Label for informant exact date unknown checkbox,Exact date unknown,Given name(s)
+event.adoption.action.declare.form.section.informant.field.email.label,Label for informant email,Email,Point of contact
+event.adoption.action.declare.form.section.informant.field.idNumber.label,Label for informant ID number,ID number,Exact date unknown
+event.adoption.action.declare.form.section.informant.field.idOther.label,Label for informant other ID,Other,Age in years
+event.adoption.action.declare.form.section.informant.field.idType.label,Label for informant type of ID,Type of ID,Date of birth
+event.adoption.action.declare.form.section.informant.field.informantType.label,Label for informant type,Informant type,Adoptive Mother
+event.adoption.action.declare.form.section.informant.field.informantTypeOther.helperText,Helper text for other informant type field,Please describe relationship to the child,Legal guardian
+event.adoption.action.declare.form.section.informant.field.informantTypeOther.label,Label for other informant type,Relationship to the child,Other (please specify)
+event.adoption.action.declare.form.section.informant.field.name.firstname.label,Label for informant given name(s),Given name(s),Informant type
+event.adoption.action.declare.form.section.informant.field.name.label,Label for informant name field,Informant Name,Please describe relationship to the child
+event.adoption.action.declare.form.section.informant.field.name.surname.label,Label for informant surname,Surname,Relationship to the child
+event.adoption.action.declare.form.section.informant.field.phone.error,The error message that appears on phone numbers where length must be 5,Must be a valid 5 digit number,Place of residence
+event.adoption.action.declare.form.section.informant.field.phone.label,Label for informant phone number,Phone number,Place of residence
+event.adoption.action.declare.form.section.informant.field.pointOfcontactHelper.label,This is the label for the field,Point of contact,Place of residence
+event.adoption.action.declare.form.section.informant.title,Form section title for informant,Informant Details,Adoptive Mother
+event.adoption.action.declare.label,This is shown as the action name anywhere the user can trigger the action from,Declare,Adoption
+event.adoption.action.detect-duplicate.label,This is shown as the action name anywhere the user can trigger the action from,Detect duplicate,{child.name.firstname} {child.name.surname}
+event.adoption.action.read.label,This is shown as the action name anywhere the user can trigger the action from,Read,Adoption
+event.adoption.action.register.label,This is shown as the action name anywhere the user can trigger the action from,Register,Date of birth
+event.adoption.adoptionOrder.e1.number.label,Adoption order or case reference number,Adoption order number,Adoption order details
+event.adoption.adoptionOrder.e2.issuingAuthority.label,Court or competent authority that issued the adoption order,Issuing court / authority,Adoption order details
+event.adoption.adoptionOrder.e3.date.error,Date when the adoption order was issued,Must be a date in the past,Adoption order number
+event.adoption.adoptionOrder.e3.date.label,Date when the adoption order was issued,Date of order,Adoption order details
+event.adoption.adoptionOrder.e4.changeName.label,Radio group to determine if child’s legal name changes,Does the adoption order change the child's legal name?,"High Court of the Cook Islands, Rarotonga"
+event.adoption.adoptionOrder.e5.childNewGivenNames.label,Child's new legal given names as per order,Child's new legal given name(s),Must be a date in the past
+event.adoption.adoptionOrder.e6.childNewSurname.label,Child's new legal surname as per order,Child's new legal surname,Does the adoption order change the child's legal name?
+event.adoption.adoptiveMother.c4.dob.error,This is the error message for invalid date,Must be a valid date in the past,Given name(s)
+event.adoption.adoptiveMother.residence.header,Residence heading for adoptive mother,Usual residence,ID number
+event.adoption.child.birthLocation.healthInstitution,Option for health institution,Health Institution,Date of birth
+event.adoption.child.birthLocation.otherAddress,Option for other address,Other address,Sex
+event.adoption.child.birthLocation.residentialAddress,Option for residential address,Residential address,Sex
+event.adoption.child.brnSearch.validation.error,Error message for invalid BRN search,Invalid input,Child's Birth Details
+event.adoption.consenter.b1.label,Checkbox when consent is not provided or waived,Consent not provided / consent waived by court order,Consent from Natural Parent(s) or Legal Guardian(s)
+event.adoption.consenter.b2.label,Select number of consenting parties,Number of consenting parties,Consent from Natural Parent(s) or Legal Guardian(s)
+event.adoption.consenter.b2.opt.1,Select number of consenting parties,1,Consent from Natural Parent(s) or Legal Guardian(s)
+event.adoption.consenter.b2.opt.2,Option for number of consenters,2,2
+event.adoption.consenter.cp1.age.label,Age in years of consenting party 1,Age in years,Date of birth
+event.adoption.consenter.cp1.dob.label,Date of birth of consenting party 1,Date of birth,Father (Birth)
+event.adoption.consenter.cp1.dobUnknown.label,Checkbox for exact date unknown,Exact date unknown,Date of birth
+event.adoption.consenter.cp1.header,Section header for consenting party 1,Consenting party 1,Number of consenting parties
+event.adoption.consenter.cp1.occupation.label,Occupation of consenting party 1,Occupation,Usual residence
+event.adoption.consenter.cp1.relationship.label,Relationship of consenting party 1 to the child,Relationship to child,Given name(s)
+event.adoption.consenter.cp1.relationshipSpecify.label,Specify relationship of consenting party 1,Specify relationship,Relationship to child
+event.adoption.consenter.cp1.res.header,Residence heading for consenting party 1,Usual residence,Age in years
+event.adoption.consenter.cp1.residence.label,Residence address for consenting party 1,Usual residence,Usual residence
+event.adoption.consenter.cp2.age.label,Age in years of consenting party 2,Age in years,Must be a valid Birthdate
+event.adoption.consenter.cp2.dob.label,Date of birth of consenting party 2,Date of birth,Other (please specify)
+event.adoption.consenter.cp2.dobUnknown.label,Checkbox for exact date unknown,Exact date unknown,Date of birth
+event.adoption.consenter.cp2.header,Section header for consenting party 2,Consenting party 2,Occupation
+event.adoption.consenter.cp2.occupation.label,Occupation of consenting party 2,Occupation,Invalid input
+event.adoption.consenter.cp2.relationship.label,Relationship of consenting party 2 to the child,Relationship to child,Given name(s)
+event.adoption.consenter.cp2.relationshipSpecify.label,Specify relationship of consenting party 2,Specify relationship,Relationship to child
+event.adoption.consenter.cp2.res.header,Residence heading for consenting party 2,Usual residence,Age in years
+event.adoption.consenter.cp2.residence.label,Residence address for consenting party 2,Usual residence,Usual residence
+event.adoption.consenter.relationship.father,Relationship option for consenter,Father (Birth),Père (naissance)
+event.adoption.consenter.relationship.mother,Relationship of consenting party 2 to the child,Mother (Birth),Given name(s)
+event.adoption.consenter.relationship.other,Relationship option for consenter,Other (please specify),Autre (veuillez préciser)
+event.adoption.fallbackTitle,This is the title of the summary,{child.name.firstname} {child.name.surname},Adoption
+event.adoption.form.documents.adoptionOrder.label,Label for uploading adoption order,Adoption order,Other
+event.adoption.form.documents.adoptionOrder.option.label,Option label for adoption order,Adoption order,Proof of marital status of adoptive parents
+event.adoption.form.documents.childBirthCertificate.label,Label for uploading child birth certificate,Child's birth certificate (existing/original record),Supporting documents
+event.adoption.form.documents.childBirthCertificate.option.label,Option label for birth certificate,Birth certificate,Supporting documents
+event.adoption.form.documents.consentForm.label,Label for uploading consent form,Consent form from birth parents / guardian,Supporting documents
+event.adoption.form.documents.consentForm.option.label,Option label for consent form,Consent form,Child's birth certificate (existing/original record)
+event.adoption.form.documents.maritalStatusProof.label,Label for uploading marital status proof,Proof of marital status of adoptive parents,Proof of adoptive mother's identity
+event.adoption.form.documents.maritalStatusProof.option.marriageCertificate,Option for marriage certificate,Marriage certificate,Birth Certificate
+event.adoption.form.documents.other.option.label,Option label for Other certificate,Other,Supporting documents
+event.adoption.form.documents.proofOfAdoptiveFather.label,Label for uploading adoptive father identity proof,Proof of adoptive father's identity,Other
+event.adoption.form.documents.proofOfAdoptiveFather.option.birthCertificate,Option for birth certificate,Birth Certificate,Consent form from birth parents / guardian
+event.adoption.form.documents.proofOfAdoptiveFather.option.other,Option for other identity proof,Other,Consent form
+event.adoption.form.documents.proofOfAdoptiveFather.option.passport,Option for passport,Passport,Consent form
+event.adoption.form.documents.proofOfAdoptiveMother.label,Label for uploading adoptive mother identity proof,Proof of adoptive mother's identity,Proof of adoptive father's identity
+event.adoption.form.documents.proofOfAdoptiveMother.option.birthCertificate,Option for birth certificate,Birth Certificate,Birth Certificate
+event.adoption.form.documents.proofOfAdoptiveMother.option.other,Option for other identity proof,Other,Other
+event.adoption.form.documents.proofOfAdoptiveMother.option.passport,Option for passport,Passport,Passport
+event.adoption.form.documents.title,Form section title for documents,Supporting documents,Supporting documents
+event.adoption.label,This is what this event is referred as in the system,Adoption,Adoption
+event.adoption.summary.child.dob.empty,This is shown when there is no child information,Date of birth,Adoption
+event.adoption.title,This is the title of the summary,{child.name.firstname} {child.name.surname},Adoption
 event.birth.action.approve.confirmationText,This is the confirmation text for the approve action,Approving this declaration confirms it as legally accepted and eligible for registration.,L'approbation de cette déclaration confirme qu'elle est légalement acceptée et éligible à l'enregistrement.
 event.birth.action.approve.label,This is shown as the action name anywhere the user can trigger the action from,Approve,Approuver
 event.birth.action.archive.label,Label for archive record button in dropdown menu,Archive,Aarchiver
@@ -829,9 +1008,13 @@ event.birth.action.certificate.form.section.collectPayment.service.label.birthCe
 event.birth.action.certificate.form.section.collectPayment.service.label.inBetweenRegistrationTargets,Birth registration after 30 days but before 365 days of date of birth,Birth registration after 30 days but before 365 days of date of birth,Enregistrement de naissance après 30 jours mais avant 365 jours de la date de naissance
 event.birth.action.certificate.form.section.collectPayment.service.label.lateOrLegacyRegistration,Birth registration fee for late or legacy records,Late or legacy birth registration,Enregistrement tardif ou ancien d'une naissance
 event.birth.action.certificate.form.section.collectPayment.service.label.subsequentCertificate,Subsequent birth certificate service name,Subsequent birth certificate issuance,Délivrance ultérieure du certificat de naissance
+event.birth.action.certificate.form.section.requester.father.label,This is the label for the field,Print and issue to Father,Print and issue to Father
+event.birth.action.certificate.form.section.requester.label,This is the label for the field,Requester,Print and issue to Father
+event.birth.action.certificate.form.section.requester.mother.label,This is the label for the field,Print and issue to Father,Print and issue to Father
+event.birth.action.certificate.form.section.requester.other.label,This is the label for the field,Print and issue to Mother,Print and issue to Father
 event.birth.action.certificate.form.section.requester.printInAdvance.label,This is the label for the print-in-advance of issuance field,Print in advance of issuance,Imprimer avant la délivrance
-event.birth.action.certificate.form.section.verifyIdentity.data.label,Label for identity verification data block,Identity details,Détails de l'identité
-event.birth.action.collect-certificate.label,This is shown as the action name anywhere the user can trigger the action from,Print,Imprimer
+event.birth.action.certificate.form.section.verifyIdentity.data.label,Title for the data section,,Détails de l'identité
+event.birth.action.collect-certificate.label,This is shown as the action name anywhere the user can trigger the action from,Print certificate,Imprimer
 event.birth.action.correction.documents.proofOfIdentity.birthCertificate.label,Label for the birth certificate option,Birth certificate,Acte de naissance
 event.birth.action.correction.documents.proofOfIdentity.label,Label for the proof of identity field,Proof of identity,Preuve d'identité
 event.birth.action.correction.documents.proofOfIdentity.other.label,Label for the other option,Other,Autre
@@ -856,21 +1039,36 @@ event.birth.action.correction.form.cancel,This is the label for the verification
 event.birth.action.correction.form.cancel.confirmation.body,This is the body for the verification cancellation modal,"Please be aware that if you proceed, you will be responsible for this correction without the necessary proof of ID from the requester","Veuillez noter que si vous continuez, vous serez responsable de cette correction sans la preuve d'identité nécessaire du demandeur"
 event.birth.action.correction.form.cancel.confirmation.title,This is the title for the verification cancellation modal,Proceed without proof of ID?,Correction sans preuve d'identité ?
 event.birth.action.correction.form.label,This is the label for the birth correction form,Correct record,Corriger le dossier
-event.birth.action.correction.form.requester.type.child,This is the label for the correction requester field,Person named on the record,Personne nommée dans le dossier
+event.birth.action.correction.form.requester.type.child,This is the label for the field,Mother,Personne nommée dans le dossier
+event.birth.action.correction.form.requester.type.court,This is the label for the correction requester field,Me,Mother
+event.birth.action.correction.form.requester.type.legalGuardian,This is the label for the correction requester field,Child,Father
+event.birth.action.correction.form.requester.type.me,This is the label for the correction requester field,Another registration agent or field agent,Father
+event.birth.action.correction.form.requester.type.someoneElse,This is the label for the correction requester field,Court,Mother
 event.birth.action.correction.form.section.collectPayment.title,This is the title of the section,Collect payment,Collecter le paiement
 event.birth.action.correction.form.section.correctionRequest.title,This is the title of the section,Correction request,Demande de correction
 event.birth.action.correction.form.section.details.divider.label,This is the title of the section,,
 event.birth.action.correction.form.section.details.title,This is the title of the section,Correction details,Détails de la correction
 event.birth.action.correction.form.section.fees.title,This is the title of the section,Collect payment,Collecter le paiement
 event.birth.action.correction.form.section.reason.title,This is the title of the section,Reason for correction,Raison de la correction
+event.birth.action.correction.form.section.requester.brn.label,This is the label for the field,ID Number,ID Number
 event.birth.action.correction.form.section.requester.dob.error,This is the error message for invalid date,Date cannot be in the future,La date ne peut pas être dans le futur
 event.birth.action.correction.form.section.requester.dob.label,This is the label for the field,Date of birth,Date de naissance
+event.birth.action.correction.form.section.requester.father.label,This is the label for the field,Father,Father
+event.birth.action.correction.form.section.requester.idType.label,This is the label for the field,Type of ID,Someone else
 event.birth.action.correction.form.section.requester.identity.verify.title,This is the title of the section,Verify their identity,Vérifier l'identité
+event.birth.action.correction.form.section.requester.label,This is the label for the field,Requester,Another registration agent or field agent
+event.birth.action.correction.form.section.requester.mother.label,This is the label for the field,Father,Father
+event.birth.action.correction.form.section.requester.name.label,This is the label for the field,ID Number,ID Number
 event.birth.action.correction.form.section.requester.nationality.label,This is the label for the field,Nationality,Nationalité
+event.birth.action.correction.form.section.requester.nid.label,This is the label for the field,ID Number,Requester
 event.birth.action.correction.form.section.requester.other.label,This is the label for the field,ID Number,Numéro d'identification
+event.birth.action.correction.form.section.requester.passport.label,This is the label for the field,ID Number,Type of ID
+event.birth.action.correction.form.section.requester.relationship.label,This is the label for the field,Name,ID Number
+event.birth.action.correction.form.section.requester.relationship.placeholder,This is the placeholder for the field,eg. Grandmother,ID Number
 event.birth.action.correction.form.section.requesterDetails.title,This is the title of the section,Requester's details,Détails du demandeur
 event.birth.action.correction.form.section.supporting-documents.title,This is the title of the section,Upload supporting documents,Télécharger les documents justificatifs
 event.birth.action.correction.form.section.supportingDocuments.title,This is the title of the section,Supporting documents,Documents justificatifs
+event.birth.action.correction.form.section.verifyIdentity.data.label,Title for the data section,,label
 event.birth.action.correction.form.section.verifyIdentity.title,This is the title of the section,Verify their identity,Vérifier leur identité
 event.birth.action.correction.form.verify,This is the label for the verification button,Verified,Vérifié
 event.birth.action.correction.reason.option.clericalError.label,Label for the clerical error option,Myself or an agent made a mistake (Clerical error),Une erreur a été commise par moi-même ou un agent (Erreur administrative)
@@ -889,7 +1087,7 @@ event.birth.action.declare.form.review.alphaPrint.step1.header.label,Label for t
 event.birth.action.declare.form.review.alphaPrint.step2.header.label,Label for the alpha print step 2 header in the review section,Step 2: Upload the signed declaration summary after it has been reviewed and signed by the informant(s).,Étape 2 : Téléchargez le résumé de déclaration signé après qu'il ait été examiné et signé par le(s) déclarant(s).
 event.birth.action.declare.form.review.comment.label,Label for the comment field in the review section,Comment,Commentaire
 event.birth.action.declare.form.review.signature.label,Label for the signature field in the review section,Signature of informant,Signature de l'informateur
-event.birth.action.declare.form.review.title,Title of the form to show in review page,"{child.name.firstname, select, __EMPTY__ {{child.name.surname, select, __EMPTY__ {Birth declaration} other {Birth declaration for {child.name.surname}}}} other {{child.name.surname, select, __EMPTY__ {Birth declaration for {child.name.firstname}} other {Birth declaration for {child.name.firstname} {child.name.surname}}}}}","{child.name.firstname, select, __EMPTY__ {{child.name.surname, select, __EMPTY__ {Déclaration de naissance} other {Déclaration de naissance pour {child.name.surname}}}} other {{child.name.surname, select, __EMPTY__ {Déclaration de naissance pour {child.name.firstname}} other {Déclaration de naissance pour {child.name.firstname} {child.name.surname}}}}}"
+event.birth.action.declare.form.review.title,This is shown as the action name anywhere the user can trigger the action from,Print certificate,"{child.name.firstname, select, __EMPTY__ {{child.name.surname, select, __EMPTY__ {Déclaration de naissance} other {Déclaration de naissance pour {child.name.surname}}}} other {{child.name.surname, select, __EMPTY__ {Déclaration de naissance pour {child.name.firstname}} other {Déclaration de naissance pour {child.name.firstname} {child.name.surname}}}}}"
 event.birth.action.declare.form.review.uploadedSignature.header.label,Label for the uploaded signature field in the review section,Signed declaration summary,Résumé de déclaration signé
 event.birth.action.declare.form.section.child.field.attendantAtBirth.label,This is the label for the field,Attendant at birth,Accoucheur(se)
 event.birth.action.declare.form.section.child.field.attendantFullName.label,Label for attendant full name field,Attendant full name,Nom complet de l'accoucheur
@@ -1035,7 +1233,27 @@ event.birth.action.escalate.supportingCopy,This is the confirmation text for the
 event.birth.action.escalation-feedback.audit-history-label,The label to show in audit history for the escalation feedback action,Escalation feedback,Retour d'escalade
 event.birth.action.escalation-feedback.label,This is shown when the escalation feedback can be triggered from the action from,Escalation feedback,Retour d'escalade
 event.birth.action.escalation-feedback.supportingCopy,This is the confirmation text for the escalation feedback action,Your feedback will be officially recorded and may influence the final decision on the declaration.,Votre retour sera officiellement enregistré et pourra influencer la décision finale concernant la déclaration.
+event.birth.action.form.section.alienNumberDetails.label,Field for entering Alien Number details,Alien Number,Birth Registration Number
+event.birth.action.form.section.brn.label,Field for entering Birth Registration Number,Birth Registration Number,National ID
 event.birth.action.form.section.collector.other.field.name.label,This is the label for the name field of OTHER collector,Collector's name,Nom du collecteur
+event.birth.action.form.section.drivingLicenseDetails.label,Field for entering Driving License details,Drivers License,No ID available
+event.birth.action.form.section.idNumberOther.label,"Field for entering ID Number if ""Other"" is selected",ID Number,Alien Number
+event.birth.action.form.section.idType.alienNumber.label,Option for selecting Refugee Number as the ID type,Refugee Number,Passport
+event.birth.action.form.section.idType.brn.label,Option for selecting Driving License as the ID type,Drivers License,Type of ID
+event.birth.action.form.section.idType.drivingLicense.label,Option for selecting National ID as the ID type,National ID,Type of ID
+event.birth.action.form.section.idType.label,This is the label for selecting the type of ID,Type of ID,Type of ID
+event.birth.action.form.section.idType.nid.label,Option for selecting Passport as the ID type,Passport,Type of ID
+event.birth.action.form.section.idType.noId.label,Option for selecting Other as the ID type,Other,Drivers License
+event.birth.action.form.section.idType.other.label,Option for selecting Alien Number as the ID type,Alien Number,National ID
+event.birth.action.form.section.idType.passport.label,This is the label for selecting the type of ID,Type of ID,Type of ID
+event.birth.action.form.section.idType.refugeeNumber.label,Option for selecting Birth Registration Number as the ID type,Birth Registration Number,Type of ID
+event.birth.action.form.section.idTypeOther.label,"Field for entering ID type if ""Other"" is selected",Other type of ID,Refugee Number
+event.birth.action.form.section.nid.label,Field for entering ID Number,National ID,Alien Number
+event.birth.action.form.section.passportDetails.label,Field for entering Passport details,Passport,Birth Registration Number
+event.birth.action.form.section.refugeeNumberDetails.label,Field for entering Refugee Number details,Refugee Number,Drivers License
+event.birth.action.form.section.relationshipToChild.label,This is the label for the relationship to child field,Relationship to child,ID Number
+event.birth.action.form.section.signedAffidavit.fileName,This is the label for the file name,Signed Affidavit,Collector's name
+event.birth.action.form.section.signedAffidavit.label,This is the label for uploading a signed affidavit,Signed Affidavit (Optional),Collector's name
 event.birth.action.issued.audit-history-label,The label to show in audit history for the issued action,Issued,Émis
 event.birth.action.mark-as-duplicate.label,Label for review potential duplicate button in dropdown menu,Review potential duplicates,Examiner les doublons potentiels
 event.birth.action.print-notification.label,This is shown as the action name anywhere the user can trigger the action from,Print Notification,Imprimer la notification
@@ -1566,6 +1784,132 @@ event.death.title,This is the title of the summary,{deceased.name.firstname} {de
 event.declaration.potentialDuplicateDetected,Notification for potential duplicate declaration. Shown when a potential duplicate is detected after declaring an event.,{trackingId} is a potential duplicate. Record is ready for review.,{trackingId} est un doublon potentiel. L’enregistrement est prêt pour révision.
 event.default.action.certificate.template.type.label,Select certificate template,Document Type,Taper
 event.default.action.certificate.template.type.notFound,Select certificate template options not found,"No template available for this event, contact Admin","Aucun modèle disponible pour cette event, contactez l’admin"
+event.divorce.action.certificate.form.cancel,This is the label for the verification cancellation button,Identity does not match,Certify record
+event.divorce.action.certificate.form.cancel.confirmation.body,This is the body for the verification cancellation modal,"Please be aware that if you proceed, you will be responsible for issuing a certificate without the necessary proof of ID from the collector",Verify their identity
+event.divorce.action.certificate.form.cancel.confirmation.title,This is the title for the verification cancellation modal,Proceed without proof of ID?,Collector details
+event.divorce.action.certificate.form.label,This is what this form is referred as in the system,Divorce certificate collector,Divorce certificate collector
+event.divorce.action.certificate.form.section.collectPayment.feeCollected.label,Fee amount collected,Fee collected,Identity does not match
+event.divorce.action.certificate.form.section.collectPayment.feeCollected.placeholder,Placeholder for fee collected field,Enter fee amount,Proceed without proof of ID?
+event.divorce.action.certificate.form.section.collectPayment.receiptNumber.label,Receipt number for the payment,Receipt number,Collect Payment
+event.divorce.action.certificate.form.section.collectPayment.receiptNumber.placeholder,Placeholder for receipt number field,Enter receipt number,Collect Payment
+event.divorce.action.certificate.form.section.collector.label,Label for the collector selection field,Collector,Collector
+event.divorce.action.certificate.form.section.collector.option.husband.label,Label for the collector selection field,Collector,Collector
+event.divorce.action.certificate.form.section.collector.option.other.label,Collector option for wife,Print and issue to wife,Collector
+event.divorce.action.certificate.form.section.collector.option.wife.label,Collector option for husband,Print and issue to husband,Collector
+event.divorce.action.certificate.form.section.verifyIdentity.data.label,Title for the data section,Identity details,Identity details
+event.divorce.action.certificate.form.section.who.title,This is what this form is referred as in the system,Divorce certificate collector,Divorce certificate collector
+event.divorce.action.certificate.form.section.who.title.2,This is the title of the section,Certify record,Divorce certificate collector
+event.divorce.action.certificate.form.verify,This is the label for the verification button,Verified,Divorce certificate collector
+event.divorce.action.collect-certificate.label,This is shown as the action name anywhere the user can trigger the action from,Print certificate,Declare
+event.divorce.action.correction.documents.supportingDocs.degreeAbsoluteOrFinalDivorceOrder.label,Label for the degree absolute or final divorce order option,Degree absolute / final divorce order,Supporting documents
+event.divorce.action.correction.documents.supportingDocs.label,Label for the supporting documents field,Supporting documents,Proof of identity
+event.divorce.action.correction.documents.supportingDocs.other.label,Label for the other option,Other,Particulars of marriage for registration
+event.divorce.action.correction.documents.supportingDocs.particularsOfMarriageForRegistration.label,Label for the particulars of marriage for registration option,Particulars of marriage for registration,Other
+event.divorce.action.correction.documents.supportingDocs.proofOfBrideIdentity.label,Label for the proof of bride identity option,Proof of Bride's identity,Birth certificate
+event.divorce.action.correction.documents.supportingDocs.proofOfBridegroomIdentity.label,Label for the proof of bridegroom identity option,Proof of Bridegroom's identity,Passport
+event.divorce.action.correction.documents.supportingDocs.registrarGeneralAuthorisation.label,Label for the registrar general authorisation option,Registrar general / registrar authorisation,Proof of Bride's identity
+event.divorce.action.correction.documents.supportingDocs.statutoryDeclaration.label,Label for the statutory declaration option,Statutory declaration,Proof of Bridegroom's identity
+event.divorce.action.correction.fees.amount.label,Label for the amount field,Fee collected,Fee collected
+event.divorce.action.correction.fees.amount.prefix,Prefix for the amount field,$,Fee collected
+event.divorce.action.correction.fees.receiptNumber.label,Label for the receipt number field,Receipt number,Fee collected
+event.divorce.action.correction.form.cancel,This is the label for the verification cancellation button,Identity does not match,Correction request
+event.divorce.action.correction.form.cancel.confirmation.body,This is the body for the verification cancellation modal,"Please be aware that if you proceed, you will be responsible for this correction without the necessary proof of ID from the requester",Verify their identity
+event.divorce.action.correction.form.cancel.confirmation.title,This is the title for the verification cancellation modal,Proceed without proof of ID?,Requester's details
+event.divorce.action.correction.form.label,This is the label for the divorce correction form,Correct record,Correct record
+event.divorce.action.correction.form.requester.type.registrar,This is the label for the field,Wife,Husband
+event.divorce.action.correction.form.requester.type.someoneElse,This is the label for the correction requester field,Registrar / Registration office,Husband
+event.divorce.action.correction.form.section.collectPayment.title,This is the title of the section,Supporting documents,Proceed without proof of ID?
+event.divorce.action.correction.form.section.correctionRequest.title,This is the label for the divorce correction form,Correct record,Correct record
+event.divorce.action.correction.form.section.reason.title,This is the label for the field,Requester,Husband
+event.divorce.action.correction.form.section.requester.brn.label,This is the label for the field,ID Number,Nationality
+event.divorce.action.correction.form.section.requester.dob.error,This is the error message for invalid date,Date cannot be in the future,Name
+event.divorce.action.correction.form.section.requester.dob.label,Label for family name text input,Surname,Relationship to divorcing party
+event.divorce.action.correction.form.section.requester.husband.label,This is the label for the field,Husband,Husband
+event.divorce.action.correction.form.section.requester.idType.label,This is the label for the field,Type of ID,Date of birth
+event.divorce.action.correction.form.section.requester.label,This is the label for the field,Requester,Husband
+event.divorce.action.correction.form.section.requester.name.label,This is the label for the field,Relationship to divorcing party,Relationship to divorcing party
+event.divorce.action.correction.form.section.requester.nationality.label,This is the error message for invalid date,Date cannot be in the future,Given name(s)
+event.divorce.action.correction.form.section.requester.other.label,This is the label for the field,ID Number,ID Number
+event.divorce.action.correction.form.section.requester.passport.label,This is the label for the field,ID Number,Date cannot be in the future
+event.divorce.action.correction.form.section.requester.wife.label,This is the label for the field,Husband,Husband
+event.divorce.action.correction.form.section.requesterDetails.title,This is the title of the section,Correction request,Correct record
+event.divorce.action.correction.form.section.supportingDocuments.title,This is the body for the verification cancellation modal,"Please be aware that if you proceed, you will be responsible for this correction without the necessary proof of ID from the requester",Verified
+event.divorce.action.correction.form.section.verifyIdentity.data.label,Title for the data section,Identity details,Identity details
+event.divorce.action.correction.form.section.verifyIdentity.title,This is the title of the section,Requester's details,Correct record
+event.divorce.action.correction.form.verify,This is the label for the verification button,Verified,Correct record
+event.divorce.action.correction.reason.option.clericalError.label,Label for the clerical error option,Myself or an agent made a mistake (Clerical error),Wife
+event.divorce.action.correction.reason.option.materialError.label,Label for the material error option,Informant provided incorrect information (Material error),Registrar / Registration office
+event.divorce.action.correction.reason.option.materialOmission.label,Label for the material omission option,Informant did not provide this information (Material omission),Requester
+event.divorce.action.correction.reason.option.other.label,Label for the other option,Other (please specify),Reason for correction
+event.divorce.action.correction.reason.other.label,Label for the reason,Other reason (please specify),Reason for correction
+event.divorce.action.declare.form.label,Label for the comment field in the review section,Divorce declaration form,"{marriageDetails.bridegroomGivenNames.firstname, select, __EMPTY__ {Divorce declaration} other {{marriageDetails.brideName.firstname, select, __EMPTY__ {Divorce declaration for {marriageDetails.bridegroomGivenNames.firstname}} other {Divorce declaration for {marriageDetails.bridegroomGivenNames.surname} and {marriageDetails.brideName.surname}}}}}"
+event.divorce.action.declare.form.review.comment.label,Title of the form to show in review page,Comment,"{marriageDetails.bridegroomGivenNames.firstname, select, __EMPTY__ {Divorce declaration} other {{marriageDetails.brideName.firstname, select, __EMPTY__ {Divorce declaration for {marriageDetails.bridegroomGivenNames.firstname}} other {Divorce declaration for {marriageDetails.bridegroomGivenNames.surname} and {marriageDetails.brideName.surname}}}}}"
+event.divorce.action.declare.form.review.title,This is shown as the action name anywhere the user can trigger the action from,Print certificate,Detect duplicate
+event.divorce.action.declare.form.section.applicationDetails.field.applicantParty.label,Label for selecting applicant party,Which party is the applicant?,Divorce application details
+event.divorce.action.declare.form.section.applicationDetails.field.applicantParty.option.husband,Option for husband as applicant,Husband,Type of divorce application
+event.divorce.action.declare.form.section.applicationDetails.field.applicantParty.option.wife,Option for wife as applicant,Wife,Joint application (both parties)
+event.divorce.action.declare.form.section.applicationDetails.field.typeOfApplication.label,Label for type of divorce application,Type of divorce application,Divorce application details
+event.divorce.action.declare.form.section.applicationDetails.field.typeOfApplication.option.joint,Option for joint divorce application,Joint application (both parties),Divorce application details
+event.divorce.action.declare.form.section.applicationDetails.field.typeOfApplication.option.sole,Option for sole divorce application,Sole application (by one party),Divorce application details
+event.divorce.action.declare.form.section.applicationDetails.title,Form section title for divorce application,Divorce application details,Divorce application details
+event.divorce.action.declare.form.section.divorceOrderDetails.field.issuingAuthority.label,Label for issuing court or authority,Issuing court / authority,"High Court of the Cook Islands, Rarotonga"
+event.divorce.action.declare.form.section.divorceOrderDetails.field.orderDate.label,Label for date of divorce order,Date of divorce order,Divorce order details
+event.divorce.action.declare.form.section.divorceOrderDetails.field.orderNumber.label,Label for divorce order number,Divorce order number,"High Court of the Cook Islands, Rarotonga"
+event.divorce.action.declare.form.section.divorceOrderDetails.title,Form section title for divorce order details,Divorce order details,"High Court of the Cook Islands, Rarotonga"
+event.divorce.action.declare.form.section.documents.field.divorceOrder.label,Label for uploading divorce order,Divorce order documents,Other
+event.divorce.action.declare.form.section.documents.field.divorceOrder.option.divorceOrder,Divorce order option,Divorce order,Proof of husband's identity
+event.divorce.action.declare.form.section.documents.field.divorceOrder.option.other,Other documents option,Other,Proof of wife's identity
+event.divorce.action.declare.form.section.documents.field.husbandsIdentity.label,Label for uploading husband's identity,Proof of husband's identity,Supporting documents
+event.divorce.action.declare.form.section.documents.field.marriageCertificate.label,Label for uploading marriage certificate,Proof of marriage,Passport
+event.divorce.action.declare.form.section.documents.field.marriageCertificate.option.marriageCertificate,Marriage certificate option,Marriage certificate,Passport
+event.divorce.action.declare.form.section.documents.field.marriageCertificate.option.other,Other documents option,Other,Other
+event.divorce.action.declare.form.section.documents.field.wifesIdentity.label,Label for uploading proof of wife's identity ,Proof of wife's identity,Marriage certificate
+event.divorce.action.declare.form.section.documents.title,Form section title for documents,Supporting documents,Passport
+event.divorce.action.declare.form.section.marriageDetails.field.brideFormerHusbandDeathDate.label,Label for bride former husband death date,Date of death of former husband,Date of Decree Absolute
+event.divorce.action.declare.form.section.marriageDetails.field.bridegroomConjugalStatus.label,Label for bride conjugal status,Conjugal status at time of marriage,Place of birth
+event.divorce.action.declare.form.section.marriageDetails.field.bridegroomDecreeAbsoluteDate.label,Label for bride decree absolute date,Date of Decree Absolute,Occupation
+event.divorce.action.declare.form.section.marriageDetails.field.bridegroomFormerWifeDeathDate.label,Label for bridegroom former wife death date,Date of death of former wife,Date of Decree Absolute
+event.divorce.action.declare.form.section.marriageDetails.field.bridegroomGivenNames.label,Label for bridegroom given names,Given name(s),Place of marriage
+event.divorce.action.declare.form.section.marriageDetails.field.dateOfMarriage.error,This is the error message for invalid date,Must be a valid date of marriage,Marriage Registration Number
+event.divorce.action.declare.form.section.marriageDetails.field.dateOfMarriage.label,Label for date of marriage,Date of marriage,Marriage Registration Number
+event.divorce.action.declare.form.section.marriageDetails.field.h1.label,This is the label for the field,Husband's details,Date of marriage
+event.divorce.action.declare.form.section.marriageDetails.field.h4.label,This is the label for the field,Wife's details,Usual residence
+event.divorce.action.declare.form.section.marriageDetails.field.marriageRegistrationSearch.label,Error message when no results found,No marriage record found with this registration number,Search
+event.divorce.action.declare.form.section.marriageDetails.field.marriageRegistrationSearch.loading,Loading message while searching,Searching for marriage record...,Enter marriage registration number
+event.divorce.action.declare.form.section.marriageDetails.field.marriageRegistrationSearch.noResults,Error message when no results found,No marriage record found with this registration number,Enter marriage registration number
+event.divorce.action.declare.form.section.marriageDetails.field.marriageRegistrationSearch.placeholder,Placeholder for marriage registration number search field,Enter marriage registration number,Marriage Registration Details
+event.divorce.action.declare.form.section.marriageDetails.field.marriageRegistrationSearch.search,Button text for search,Search,"Search for an existing marriage registration record. If a match is found, the details below will auto-fill. If no record is found, continue by entering the details manually."
+event.divorce.action.declare.form.section.marriageDetails.field.marriageRegistrationSearch.validation,Validation error message for Marriage registration field,Please enter a Marriage registration number,"Search for an existing marriage registration record. If a match is found, the details below will auto-fill. If no record is found, continue by entering the details manually."
+event.divorce.action.declare.form.section.marriageDetails.field.placeOfMarriage.label,Label for place of marriage,Place of marriage,Marriage Registration Number
+event.divorce.action.declare.form.section.marriageDetails.field.registrationHint.label,Hint text for marriage registration search field,"Search for an existing marriage registration record. If a match is found, the details below will auto-fill. If no record is found, continue by entering the details manually.",Spinster
+event.divorce.action.declare.form.section.marriageDetails.title,Form section title for marriage details,Marriage Registration Details,Bachelor
+event.divorce.action.declare.label,This is shown as the action name anywhere the user can trigger the action from,Declare,Requested by
+event.divorce.action.detect-duplicate.label,This is shown as the action name anywhere the user can trigger the action from,Detect duplicate,Reason for correction
+event.divorce.action.form.section.collector.other.field.name.label,This is the label for the name field of OTHER collector,Collector's name,Relationship to divorcing party
+event.divorce.action.form.section.divorcingParty.label,This is the label for the relationship to divorcing party field,Relationship to divorcing party,Relationship to divorcing party
+event.divorce.action.form.section.idType.label,This is the label for selecting the type of ID,Type of ID,Date cannot be in the future
+event.divorce.action.form.section.relationshipToDivorcingParty.label,This is the label for the field,Relationship to divorcing party,Relationship to divorcing party
+event.divorce.action.print.collectPayment,This is the body for the verification cancellation modal,"Please be aware that if you proceed, you will be responsible for issuing a certificate without the necessary proof of ID from the collector",Verified
+event.divorce.action.print.verifyIdentity,This is the title of the section,Collector details,Divorce certificate collector
+event.divorce.action.read.label,This is shown as the action name anywhere the user can trigger the action from,Read,Requested on
+event.divorce.action.register.label,This is shown as the action name anywhere the user can trigger the action from,Register,Supporting documents
+event.divorce.fallbackTitle,This is the title of the summary,"{marriageDetails.bridegroomGivenNames.firstname, select, __EMPTY__ {Divorce declaration} other {{marriageDetails.brideName.firstname, select, __EMPTY__ {Divorce declaration for {marriageDetails.bridegroomGivenNames.surname}} other {{marriageDetails.bridegroomGivenNames.surname} and {marriageDetails.brideName.surname}}}}}",Divorce
+event.divorce.label,This is what this event is referred as in the system,Divorce,Divorce
+event.divorce.summary.informant.contact.empty,Shown when informant contact details are missing,No contact details provided,Date of marriage
+event.divorce.summary.informant.contact.label,Label for informant contact information,Contact,No names provided
+event.divorce.summary.informant.contact.value,Shows phone and/or email of the informant,"{informantDetails.phoneNumber, select, __EMPTY__ {{informantDetails.email}} other {{informantDetails.phoneNumber}{informantDetails.email, select, __EMPTY__ {} other { and {informantDetails.email}}}}}",Date of marriage
+event.divorce.summary.marriageDetails.dateOfMarriage.label,Date on which the marriage took place,Date of marriage,Divorce
+event.divorce.summary.marriageDetails.marriageRegistrationNumber.label,Marriage registration number,Marriage registration number,Divorce
+event.divorce.summary.marriageDetails.placeOfMarriage.empty,Shown when place of marriage is missing,-,No names provided
+event.divorce.summary.marriageDetails.placeOfMarriage.label,Location where the marriage occurred,Place of marriage,"{marriageDetails.bridegroomGivenNames.firstname, select, __EMPTY__ {Divorce declaration} other {{marriageDetails.brideName.firstname, select, __EMPTY__ {Divorce declaration for {marriageDetails.bridegroomGivenNames.surname}} other {{marriageDetails.bridegroomGivenNames.surname} and {marriageDetails.brideName.surname}}}}}"
+event.divorce.summary.office.label,Location name of the office,Office,-
+event.divorce.summary.reasonForCorrection.label,Reason provided for correction request,Reason for correction,No contact details provided
+event.divorce.summary.requestedBy.label,Name of individual who requested the correction,Requested by,"{informantDetails.phoneNumber, select, __EMPTY__ {{informantDetails.email}} other {{informantDetails.phoneNumber}{informantDetails.email, select, __EMPTY__ {} other { and {informantDetails.email}}}}}"
+event.divorce.summary.requestedOn.label,Date the correction was submitted,Requested on,Contact
+event.divorce.summary.submittedBy.label,User role name who submitted correction,Submitted by,Place of marriage
+event.divorce.summary.supportingDocuments.label,Documents attached for correction verification,Supporting documents,Submitted by
+event.divorce.summary.typeOfCorrection.label,Type or category of correction,Type of correction,Submitted by
+event.divorce.title,This is the title of the summary,"{marriageDetails.bridegroomGivenNames.firstname, select, __EMPTY__ {Divorce declaration} other {{marriageDetails.brideName.firstname, select, __EMPTY__ {Divorce declaration for {marriageDetails.bridegroomGivenNames.surname}} other {{marriageDetails.bridegroomGivenNames.surname} and {marriageDetails.brideName.surname}}}}}",Divorce
 event.edit.comment.label,The label for the comment,Comments,Commentaires
 event.edit.declareWithEdits.label,Label for `Declare with edits` in edit action menu,Declare with edits,Déclarer avec modifications
 event.edit.notifyWithEdits.label,Label for `Notify with edits` in edit action menu,Notify with edits,Notifier avec modifications
@@ -1573,6 +1917,14 @@ event.edit.registerWithEdits.label,Label for `Register with edits` in edit actio
 event.history.role,Label for the role in event history,"{role, select, REGISTRAR {Registrar} REGISTRAR_GENERAL {Registrar General} ISLAND_REGISTRAR {Island Registrar} HEALTH_NOTIFIER {Health Notifier} REGISTRATION_OFFICER {Registration Officer} ASSISTANT_REGISTRATION_OFFICER {Assistant Registration Officer} ISLAND_CLINIC_NOTIFIER {Island Clinic Notifier} LOCAL_SYSTEM_ADMIN {Administrator} NATIONAL_REGISTRAR {Registrar General} PERFORMANCE_MANAGER {Operations Manager} NATIONAL_SYSTEM_ADMIN {National Administrator} COMMUNITY_LEADER {Community Leader} PROVINCIAL_REGISTRAR {Provincial Registrar} EMBASSY_OFFICIAL {Embassy Official} other {Unknown}}","{role, select, REGISTRAR {Officier d'état civil local} REGISTRAR_GENERAL {Agent d'enregistrement} ISLAND_REGISTRAR {Registraire insulaire} PERFORMANCE_MANAGER {Responsable des opérations} LOCAL_SYSTEM_ADMIN {Administrateur} NATIONAL_SYSTEM_ADMIN {Administrateur national} NATIONAL_REGISTRAR {Registraire général} HEALTH_NOTIFIER {Officiel de l'hôpital} ISLAND_CLINIC_NOTIFIER {Notificateur de clinique insulaire} COMMUNITY_LEADER {Responsable communautaire} PROVINCIAL_REGISTRAR {Registraire provincial} EMBASSY_OFFICIAL {Officiel d'ambassade} other {Inconnu}} ASSISTANT_REGISTRATION_OFFICER {Assistant Registration Officer}"
 event.history.system,Name for system initiated actions in the event history,System,System
 event.history.systemDefaultName,Fallback for system integration name in the event history,System integration,Intégration système
+event.marriage.action.correction.form.requester.type.couple,This is the label for the field,Bride,Bridegroom
+event.marriage.action.correction.form.requester.type.marriageOfficiant,This is the label for the correction requester field,Couple,Bridegroom
+event.marriage.action.correction.form.requester.type.registrar,This is the label for the correction requester field,Marriage officiant,Bridegroom
+event.marriage.action.correction.form.requester.type.someoneElse,This is the label for the correction requester field,Registrar / Registration office,Bridegroom
+event.marriageLicense.action.correction.documents.proofOfIdentityGeneral.birthCertificate.label,Label for the birth certificate option,Birth certificate,Proof of identity
+event.marriageLicense.action.correction.documents.proofOfIdentityGeneral.label,Label for the general proof of identity field,Proof of identity,Proof of identity
+event.marriageLicense.action.correction.documents.proofOfIdentityGeneral.other.label,Label for the other option,Other,Proof of identity
+event.marriageLicense.action.correction.documents.proofOfIdentityGeneral.passport.label,Label for the passport option,Passport,Proof of identity
 event.marriageNotice.action.Declare.label,This is shown as the action name anywhere the user can trigger the action from,Declare,Déclarer
 event.marriageNotice.action.Read.label,This is shown as the action name anywhere the user can trigger the action from,Read,Lire
 event.marriageNotice.action.correction.documents.affidavit,Correction document,Affidavit,Affidavit
@@ -1724,6 +2076,335 @@ event.marriageNotice.summary.noticeOfIntendedMarriageDetails.dateOfMarriage.empt
 event.marriageNotice.summary.noticeOfIntendedMarriageDetails.venueName.empty,This is shown when there is no venue information,No venue provided,Aucun lieu fourni
 event.marriageNotice.summary.noticeOfIntendedMarriageDetails.venueName.label,Label for the venue summary field,Venue,Lieu
 event.marriageNotice.title,This is the title of the summary,"{brideGroom.name.firstname, select, __EMPTY__ {Marriage Notice} other {{brideGroom.name.surname, select, __EMPTY__ {Marriage Notice for {brideGroom.name.firstname}} other {Marriage Notice for {brideGroom.name.firstname} {brideGroom.name.surname}}}}}","{brideGroom.name.firstname, select, __EMPTY__ {Avis de mariage} other {{brideGroom.name.surname, select, __EMPTY__ {Avis de mariage pour {brideGroom.name.firstname}} other {Avis de mariage pour {brideGroom.name.firstname} {brideGroom.name.surname}}}}}"
+event.marriageRegistration.action.Read.label,This is shown as the action name anywhere the user can trigger the action from,Read,Requested on
+event.marriageRegistration.action.certificate.form.cancel,This is the label for the verification cancellation button,Identity does not match,Certify record
+event.marriageRegistration.action.certificate.form.cancel.confirmation.body,This is the body for the verification cancellation modal,"Please be aware that if you proceed, you will be responsible for issuing a certificate without the necessary proof of ID from the collector",Verify their identity
+event.marriageRegistration.action.certificate.form.cancel.confirmation.title,This is the title for the verification cancellation modal,Proceed without proof of ID?,Collector details
+event.marriageRegistration.action.certificate.form.label,This is what this form is referred as in the system,Marriage registration certificate collector,Marriage registration certificate collector
+event.marriageRegistration.action.certificate.form.section.collectPayment.feeCollected.label,Fee amount collected,Fee collected,Identity does not match
+event.marriageRegistration.action.certificate.form.section.collectPayment.feeCollected.placeholder,Placeholder for fee collected field,Enter fee amount,Proceed without proof of ID?
+event.marriageRegistration.action.certificate.form.section.collectPayment.receiptNumber.label,Receipt number for the payment,Receipt number,"Please be aware that if you proceed, you will be responsible for issuing a certificate without the necessary proof of ID from the collector"
+event.marriageRegistration.action.certificate.form.section.collectPayment.receiptNumber.placeholder,Placeholder for receipt number field,Enter receipt number,Collect Payment
+event.marriageRegistration.action.certificate.form.section.collector.label,Label for the collector selection field,Collector,Collector
+event.marriageRegistration.action.certificate.form.section.collector.option.bride.label,Collector option for bridegroom,Print and issue to bridegroom,Collector
+event.marriageRegistration.action.certificate.form.section.collector.option.bridegroom.label,Marriage certificate document option,Marriage certificate,Collector
+event.marriageRegistration.action.certificate.form.section.collector.option.couple.label,Collector option for bride,Print and issue to bride,Collector
+event.marriageRegistration.action.certificate.form.section.collector.option.officiant.label,Collector option for both bride and groom,Print and issue to couple,Collector
+event.marriageRegistration.action.certificate.form.section.collector.option.other.label,Collector option for marriage officiant,Print and issue to marriage officiant,Marriage certificate
+event.marriageRegistration.action.certificate.form.section.documentType.option.certificate.label,Label for the collector selection field,Collector,Collector
+event.marriageRegistration.action.certificate.form.section.verifyIdentity.data.label,Title for the data section,Identity details,Identity details
+event.marriageRegistration.action.certificate.form.section.who.title,This is what this form is referred as in the system,Marriage registration certificate collector,Marriage registration certificate collector
+event.marriageRegistration.action.certificate.form.section.who.title.2,This is the title of the section,Certify record,Marriage registration certificate collector
+event.marriageRegistration.action.certificate.form.verify,This is the label for the verification button,Verified,Marriage registration certificate collector
+event.marriageRegistration.action.collect-certificate.label,This is shown as the action name anywhere the user can trigger the action from,Print certificate,Declare
+event.marriageRegistration.action.correction.documents.supportingDocs.degreeAbsolute.label,Label for the degree absolute or final divorce order option,Degree absolute / final divorce order,Supporting documents
+event.marriageRegistration.action.correction.documents.supportingDocs.label,Label for the supporting documents field,Supporting documents,Proof of identity
+event.marriageRegistration.action.correction.documents.supportingDocs.other.label,Label for the other option,Other,Particulars of marriage for registration
+event.marriageRegistration.action.correction.documents.supportingDocs.particularsOfMarriage.label,Label for the particulars of marriage option,Particulars of marriage for registration,Other
+event.marriageRegistration.action.correction.documents.supportingDocs.proofOfBrideIdentity.label,Label for the proof of bride identity option,Proof of Bride's identity,Birth certificate
+event.marriageRegistration.action.correction.documents.supportingDocs.proofOfBridegroomIdentity.label,Label for the proof of bridegroom identity option,Proof of Bridegroom's identity,Passport
+event.marriageRegistration.action.correction.documents.supportingDocs.registrarGeneralAuthorisation.label,Label for the registrar general authorisation option,Registrar general / registrar authorisation,Proof of Bride's identity
+event.marriageRegistration.action.correction.documents.supportingDocs.statutoryDeclaration.label,Label for the statutory declaration option,Statutory declaration,Proof of Bridegroom's identity
+event.marriageRegistration.action.correction.fees.amount.label,Label for the amount field,Fee collected,Fee collected
+event.marriageRegistration.action.correction.fees.amount.prefix,Prefix for the amount field,$,Fee collected
+event.marriageRegistration.action.correction.fees.receiptNumber.label,Label for the receipt number field,Receipt number,Fee collected
+event.marriageRegistration.action.correction.form.cancel,This is the label for the verification cancellation button,Identity does not match,Correction request
+event.marriageRegistration.action.correction.form.cancel.confirmation.body,This is the body for the verification cancellation modal,"Please be aware that if you proceed, you will be responsible for this correction without the necessary proof of ID from the requester",Verify their identity
+event.marriageRegistration.action.correction.form.cancel.confirmation.title,This is the title for the verification cancellation modal,Proceed without proof of ID?,Requester's details
+event.marriageRegistration.action.correction.form.label,This is the label for the marriageRegistration correction form,Correct record,Correct record
+event.marriageRegistration.action.correction.form.requester.type.anotherAgent,This is the label for the correction requester field,Person named on the record,Father
+event.marriageRegistration.action.correction.form.requester.type.child,This is the label for the field,Mother,Father
+event.marriageRegistration.action.correction.form.requester.type.court,This is the label for the correction requester field,Registrar / Registration office,Father
+event.marriageRegistration.action.correction.form.requester.type.me,This is the label for the correction requester field,Registrar / Registration office,Father
+event.marriageRegistration.action.correction.form.requester.type.someoneElse,This is the label for the correction requester field,Court,Mother
+event.marriageRegistration.action.correction.form.section.collectPayment.title,This is the title of the section,Supporting documents,Identity does not match
+event.marriageRegistration.action.correction.form.section.correctionRequest.title,This is the label for the marriageRegistration correction form,Correct record,Correct record
+event.marriageRegistration.action.correction.form.section.reason.title,This is the label for the field,Requester,Bride
+event.marriageRegistration.action.correction.form.section.requester.bride.label,This is the label for the field,Bridegroom,Bridegroom
+event.marriageRegistration.action.correction.form.section.requester.bridegroom.label,This is the label for the field,Bridegroom,Bridegroom
+event.marriageRegistration.action.correction.form.section.requester.brn.label,This is the label for the field,ID Number,Type of ID
+event.marriageRegistration.action.correction.form.section.requester.dob.error,This is the error message for invalid date,Date cannot be in the future,Relationship to child
+event.marriageRegistration.action.correction.form.section.requester.dob.label,Label for family name text input,Surname,Relationship to child
+event.marriageRegistration.action.correction.form.section.requester.father.label,This is the label for the field,Father,Father
+event.marriageRegistration.action.correction.form.section.requester.idType.label,This is the label for the field,Type of ID,Court
+event.marriageRegistration.action.correction.form.section.requester.label,This is the label for the field,Requester,Registrar / Registration office
+event.marriageRegistration.action.correction.form.section.requester.mother.label,This is the label for the field,Father,Father
+event.marriageRegistration.action.correction.form.section.requester.name.label,This is the label for the field,Relationship to couple,ID Number
+event.marriageRegistration.action.correction.form.section.requester.nationality.label,This is the error message for invalid date,Date cannot be in the future,Name
+event.marriageRegistration.action.correction.form.section.requester.other.label,This is the label for the field,ID Number,ID Number
+event.marriageRegistration.action.correction.form.section.requester.passport.label,This is the label for the field,ID Number,Requester
+event.marriageRegistration.action.correction.form.section.requester.relationship.label,This is the label for the field,ID Number,ID Number
+event.marriageRegistration.action.correction.form.section.requester.relationship.placeholder,This is the placeholder for the field,eg. Grandmother,ID Number
+event.marriageRegistration.action.correction.form.section.requesterDetails.title,This is the title of the section,Correction request,Correct record
+event.marriageRegistration.action.correction.form.section.supportingDocuments.title,This is the body for the verification cancellation modal,"Please be aware that if you proceed, you will be responsible for this correction without the necessary proof of ID from the requester",Verified
+event.marriageRegistration.action.correction.form.section.verifyIdentity.data.label,Title for the data section,label,label
+event.marriageRegistration.action.correction.form.section.verifyIdentity.title,This is the title of the section,Requester's details,Correct record
+event.marriageRegistration.action.correction.form.verify,This is the label for the verification button,Verified,Correct record
+event.marriageRegistration.action.correction.reason.option.clericalError.label,Label for the clerical error option,Myself or an agent made a mistake (Clerical error),Marriage officiant
+event.marriageRegistration.action.correction.reason.option.materialError.label,Label for the material error option,Informant provided incorrect information (Material error),Someone else
+event.marriageRegistration.action.correction.reason.option.materialOmission.label,Label for the material omission option,Informant did not provide this information (Material omission),Requester
+event.marriageRegistration.action.correction.reason.option.other.label,Label for the other option,Other (please specify),Reason for correction
+event.marriageRegistration.action.correction.reason.other.label,Label for the reason,Other reason (please specify),Myself or an agent made a mistake (Clerical error)
+event.marriageRegistration.action.declare.form.label,Label for the comment field in the review section,Marriage registration form,"{marriageDetails.officiantFullName, select, __EMPTY__ {Marriage registration} other {{marriageDetails.name.surname, select, __EMPTY__ {Marriage registration for {marriageDetails.officiantFullName}} other {Marriage registration for {marriageDetails.officiantFullName} {marriageDetails.name.surname}}}}}"
+event.marriageRegistration.action.declare.form.marriageDetails.bride.field.address.label,Label for residence address field,Place of residence,Date of death of former husband
+event.marriageRegistration.action.declare.form.marriageDetails.bride.field.conjugalStatus.label,Label for conjugal status select field,Conjugal status,Place of birth
+event.marriageRegistration.action.declare.form.marriageDetails.bride.field.conjugalStatus.option.divorced,Option for conjugal status divorced,Divorced,Spinster
+event.marriageRegistration.action.declare.form.marriageDetails.bride.field.conjugalStatus.option.spinster,Option for conjugal status spinster,Spinster,Spinster
+event.marriageRegistration.action.declare.form.marriageDetails.bride.field.conjugalStatus.option.widow,Option for conjugal status widow,Widow,Spinster
+event.marriageRegistration.action.declare.form.marriageDetails.bride.field.dateOfBirth.error,Error shown if DOB is in the future,Must be a valid date before today,Surname
+event.marriageRegistration.action.declare.form.marriageDetails.bride.field.dateOfBirth.label,Label for date of birth field,Date of birth,Given name(s)
+event.marriageRegistration.action.declare.form.marriageDetails.bride.field.dateOfDeathFormerHusband.label,Label for date of death of former husband field,Date of death of former husband,Date of decree absolute
+event.marriageRegistration.action.declare.form.marriageDetails.bride.field.dateOfDecreeAbsolute.label,Label for date of decree absolute field,Date of decree absolute,Occupation
+event.marriageRegistration.action.declare.form.marriageDetails.bride.field.firstname.label,Label for given name(s),Given name(s),Bride's details
+event.marriageRegistration.action.declare.form.marriageDetails.bride.field.header.label,Header label for bride details section,Bride's details,Usual residence
+event.marriageRegistration.action.declare.form.marriageDetails.bride.field.name.label,Hidden main label for name field,Bride name,Bride's details
+event.marriageRegistration.action.declare.form.marriageDetails.bride.field.occupation.label,Label for occupation field,Occupation,Must be 16 years of age or over
+event.marriageRegistration.action.declare.form.marriageDetails.bride.field.placeOfBirth.label,Label for place of birth field,Place of birth,Date of birth
+event.marriageRegistration.action.declare.form.marriageDetails.bride.field.residenceHeader.label,Header label for residence section,Usual residence,Date of death of former husband
+event.marriageRegistration.action.declare.form.marriageDetails.bride.field.surname.label,Label for surname field,Surname,Bride's details
+event.marriageRegistration.action.declare.form.marriageDetails.bridegroom.field.address.label,Label for residence address field,Place of residence,Date cannot be in the future
+event.marriageRegistration.action.declare.form.marriageDetails.bridegroom.field.conjugalStatus.label,Label for conjugal status select field,Conjugal status,Place of birth
+event.marriageRegistration.action.declare.form.marriageDetails.bridegroom.field.conjugalStatus.option.bachelor,Option for conjugal status bachelor,Bachelor,Spinster
+event.marriageRegistration.action.declare.form.marriageDetails.bridegroom.field.conjugalStatus.option.divorced,Option for conjugal status divorced,Divorced,Spinster
+event.marriageRegistration.action.declare.form.marriageDetails.bridegroom.field.conjugalStatus.option.widower,Option for conjugal status widower,Widower,Spinster
+event.marriageRegistration.action.declare.form.marriageDetails.bridegroom.field.dateOfBirth.error,Error shown if DOB is in the future,Must be a valid date before today,Surname
+event.marriageRegistration.action.declare.form.marriageDetails.bridegroom.field.dateOfBirth.label,Label for date of birth field,Date of birth,Given name(s)
+event.marriageRegistration.action.declare.form.marriageDetails.bridegroom.field.dateOfDeathFormerWife.label,Label for date of death of former wife field,Date of death of former wife,Date of decree absolute
+event.marriageRegistration.action.declare.form.marriageDetails.bridegroom.field.dateOfDecreeAbsolute.label,Label for date of decree absolute field,Date of decree absolute,Occupation
+event.marriageRegistration.action.declare.form.marriageDetails.bridegroom.field.firstname.label,Label for given name(s),Given name(s),Affiliation / Organisation
+event.marriageRegistration.action.declare.form.marriageDetails.bridegroom.field.header.label,Header label for bridegroom details,Bridegroom's details,Officiant name
+event.marriageRegistration.action.declare.form.marriageDetails.bridegroom.field.name.label,Hidden main label for name field,Bridegroom name,Bridegroom's details
+event.marriageRegistration.action.declare.form.marriageDetails.bridegroom.field.occupation.label,Label for occupation field,Occupation,Must be 16 years of age or over
+event.marriageRegistration.action.declare.form.marriageDetails.bridegroom.field.placeOfBirth.label,Label for place of birth field,Place of birth,Date of birth
+event.marriageRegistration.action.declare.form.marriageDetails.bridegroom.field.residenceHeader.label,Header for residence section,Usual residence,Date of death of former wife
+event.marriageRegistration.action.declare.form.marriageDetails.bridegroom.field.surname.label,Label for surname field,Surname,Bridegroom's details
+event.marriageRegistration.action.declare.form.marriageDetails.field.address.label,Address field for place of marriage,Place of marriage (Full address),Date of marriage
+event.marriageRegistration.action.declare.form.marriageDetails.field.dateOfMarriage.label,Label for date of marriage field,Date of marriage,Marriage registration
+event.marriageRegistration.action.declare.form.marriageDetails.field.expiryDate.Error,Error when expiry date is more than 3 months from date of lodgement,Date cannot be more than 3 months from date of lodgement,Marriage licence number
+event.marriageRegistration.action.declare.form.marriageDetails.field.expiryDate.label,Label for marriage licence expiry field,Marriage licence expiry,Marriage licence number
+event.marriageRegistration.action.declare.form.marriageDetails.field.expiryDate.pastError,Error when expiry date is in the past,Date cannot be in the past,Marriage licence number
+event.marriageRegistration.action.declare.form.marriageDetails.field.licenceHint.label,Hint text for marriage licence search field,"Search for an existing marriage record. If a match is found, the details below will auto-fill. If no record is found, continue by entering the details manually.",Minister
+event.marriageRegistration.action.declare.form.marriageDetails.field.licenceNumber.label,Error message when no results found,No marriage record found with this registration number,Search
+event.marriageRegistration.action.declare.form.marriageDetails.field.licenceNumber.loading,Loading message while searching,Searching for marriage record...,Enter marriage licence number
+event.marriageRegistration.action.declare.form.marriageDetails.field.licenceNumber.noResults,Error message when no results found,No marriage record found with this registration number,Enter marriage licence number
+event.marriageRegistration.action.declare.form.marriageDetails.field.licenceNumber.placeholder,Placeholder for licence number search field,Enter marriage licence number,Registrar
+event.marriageRegistration.action.declare.form.marriageDetails.field.licenceNumber.search,Button text for search,Search,"Search for an existing marriage record. If a match is found, the details below will auto-fill. If no record is found, continue by entering the details manually."
+event.marriageRegistration.action.declare.form.marriageDetails.field.licenceNumber.validation,Validation error message for Marriage registration field,Please enter a Marriage registration number,Marriage details
+event.marriageRegistration.action.declare.form.marriageDetails.field.officiantAffiliation.label,Label for officiant affiliation or organisation field,Affiliation / Organisation,Officiant type
+event.marriageRegistration.action.declare.form.marriageDetails.field.officiantFullName.label,Label for officiant full name field,Officiant name,Officiant details
+event.marriageRegistration.action.declare.form.marriageDetails.field.officiantHeader.label,Header label for officiant details section,Officiant details,Venue / Church name
+event.marriageRegistration.action.declare.form.marriageDetails.field.officiantType.label,Label for officiant type select field,Officiant type,Venue / Church name
+event.marriageRegistration.action.declare.form.marriageDetails.field.officiantType.option.marriageCelebrant,Option for officiant type marriage celebrant,Marriage Celebrant,Widow
+event.marriageRegistration.action.declare.form.marriageDetails.field.officiantType.option.minister,Option for officiant type minister,Minister,Divorced
+event.marriageRegistration.action.declare.form.marriageDetails.field.officiantType.option.registrar,Option for officiant type registrar,Registrar,Bachelor
+event.marriageRegistration.action.declare.form.marriageDetails.field.placeHeader.label,Header label for place of marriage section,Place of marriage,Date of marriage
+event.marriageRegistration.action.declare.form.marriageDetails.field.venueName.label,Label for venue or church name field,Venue / Church name,Place of marriage (Full address)
+event.marriageRegistration.action.declare.form.marriageDetails.title,Form section title for marriage details,Marriage details,Divorced
+event.marriageRegistration.action.declare.form.review.title,This is shown as the action name anywhere the user can trigger the action from,Print certificate,Detect duplicate
+event.marriageRegistration.action.declare.form.section.informantDetails.field.divider.2.label,Divider for informant details,label,label
+event.marriageRegistration.action.declare.form.section.informantDetails.field.email.label,Label for informant email field,Email,Phone number
+event.marriageRegistration.action.declare.form.section.informantDetails.field.informantType.label,Label for informant type select field,Informant type,Officiant
+event.marriageRegistration.action.declare.form.section.informantDetails.field.informantType.option.bride,Option for informant type bride,Bride,Officiant
+event.marriageRegistration.action.declare.form.section.informantDetails.field.informantType.option.bridegroom,Option for informant type bridegroom,Bridegroom,Officiant
+event.marriageRegistration.action.declare.form.section.informantDetails.field.informantType.option.officiant,Option for informant type officiant,Officiant,Officiant
+event.marriageRegistration.action.declare.form.section.informantDetails.field.informantType.option.someoneElse,Option for informant type someone else on behalf of the officiant,Someone else on behalf of the Officiant,Officiant
+event.marriageRegistration.action.declare.form.section.informantDetails.field.name.label,Label for informant full name field,Full name,Relationship to officiant or couple
+event.marriageRegistration.action.declare.form.section.informantDetails.field.phoneNumber.error,The error message that appears on phone numbers where length must be 5,Must be a valid 5 digit number,error
+event.marriageRegistration.action.declare.form.section.informantDetails.field.phoneNumber.label,Label for informant phone number field,Phone number,Full name
+event.marriageRegistration.action.declare.form.section.informantDetails.field.pointOfContactHeader.label,Header for point of contact section,Point of contact,Given name(s)
+event.marriageRegistration.action.declare.form.section.informantDetails.field.relationshipToOfficiantOrCouple.label,Label for relationship to officiant or couple field,Relationship to officiant or couple,Someone else on behalf of the Officiant
+event.marriageRegistration.action.declare.form.section.informantDetails.title,Form section title for informant details,Informant's details,Officiant
+event.marriageRegistration.action.declare.form.section.supportingDocuments.field.authorisationLetter.label,Label for authorisation letter upload field,Authorisation letter to return marriage documents,Supporting documents
+event.marriageRegistration.action.declare.form.section.supportingDocuments.field.authorisationLetter.option.authorisationLetter,Option for authorisation letter document,Authorisation letter from officiant,Particulars of Marriage for Registration
+event.marriageRegistration.action.declare.form.section.supportingDocuments.field.authorisationLetter.option.other,Option for other document type,Other,Particulars of Marriage for Registration
+event.marriageRegistration.action.declare.form.section.supportingDocuments.field.marriageRegisterForm.label,Label for marriage register form upload field,Marriage register form,Other
+event.marriageRegistration.action.declare.form.section.supportingDocuments.field.marriageRegisterForm.option.other,Option for other document type,Other,Particulars of Marriage for Registration
+event.marriageRegistration.action.declare.form.section.supportingDocuments.field.marriageRegisterForm.option.registerForm,Option for marriage register form document,Particulars of Marriage for Registration,Particulars of Marriage for Registration
+event.marriageRegistration.action.declare.form.section.supportingDocuments.title,Form section title for supporting documents,Supporting documents,Authorisation letter from officiant
+event.marriageRegistration.action.declare.label,This is shown as the action name anywhere the user can trigger the action from,Declare,Requested by
+event.marriageRegistration.action.detect-duplicate.label,This is shown as the action name anywhere the user can trigger the action from,Detect duplicate,Type of correction
+event.marriageRegistration.action.form.section.collector.other.field.name.label,This is the label for the name field of OTHER collector,Collector's name,Relationship to couple
+event.marriageRegistration.action.form.section.idType.label,This is the label for selecting the type of ID,Type of ID,Date cannot be in the future
+event.marriageRegistration.action.form.section.relationshipToCouple.label,This is the label for the relationship to couple field,Relationship to couple,Relationship to couple
+event.marriageRegistration.action.print.collectPayment,This is the body for the verification cancellation modal,"Please be aware that if you proceed, you will be responsible for issuing a certificate without the necessary proof of ID from the collector",Verified
+event.marriageRegistration.action.print.verifyIdentity,This is the title of the section,Collector details,Marriage registration certificate collector
+event.marriageRegistration.action.register.label,This is shown as the action name anywhere the user can trigger the action from,Register,Supporting documents
+event.marriageRegistration.label,This is what this event is referred as in the system,Marriage registration,Marriage registration
+event.marriageRegistration.registration.action.declare.form.review.comment.label,Title of the form to show in review page,Comment,"{marriageDetails.officiantFullName, select, __EMPTY__ {Marriage registration} other {{marriageDetails.name.surname, select, __EMPTY__ {Marriage registration for {marriageDetails.officiantFullName}} other {Marriage registration for {marriageDetails.officiantFullName} {marriageDetails.name.surname}}}}}"
+event.marriageRegistration.summary.fallbackTitle,This is the title of the summary,"{marriageDetails.brideName.firstname, select, __EMPTY__ {Marriage Licence} other {{marriageDetails.brideName.surname, select, __EMPTY__ {Marriage Licence for {marriageDetails.brideName.surname} and {marriageDetails.bridegroomName.surname}} other {Marriage Licence for {marriageDetails.bridegroomName.surname} and {marriageDetails.brideName.surname}}}}}",Marriage registration
+event.marriageRegistration.summary.informant.contact.empty,Shown when informant contact details are missing,No contact details provided,Place of marriage
+event.marriageRegistration.summary.informant.contact.label,Label for informant contact information,Contact,No name provided
+event.marriageRegistration.summary.informant.contact.value,Shows phone and/or email of the informant,"{informantDetails.phoneNumber, select, __EMPTY__ {{informantDetails.email}} other {{informantDetails.phoneNumber}{informantDetails.email, select, __EMPTY__ {} other { and {informantDetails.email}}}}}",Date of marriage
+event.marriageRegistration.summary.marriageDetails.address.empty,Shown when place of marriage is missing,-,"{marriageDetails.brideName.firstname, select, __EMPTY__ {Marriage Licence} other {{marriageDetails.brideName.surname, select, __EMPTY__ {Marriage Licence for {marriageDetails.brideName.surname} and {marriageDetails.bridegroomName.surname}} other {Marriage Licence for {marriageDetails.bridegroomName.surname} and {marriageDetails.brideName.surname}}}}}"
+event.marriageRegistration.summary.marriageDetails.address.label,Address or location where the marriage occurred,Place of marriage,Marriage registration
+event.marriageRegistration.summary.office.label,Location name of the office,Office,-
+event.marriageRegistration.summary.reasonForCorrection.label,Reason provided for correction request,Reason for correction,No contact details provided
+event.marriageRegistration.summary.requestedBy.label,Name of individual who requested the correction,Requested by,"{informantDetails.phoneNumber, select, __EMPTY__ {{informantDetails.email}} other {{informantDetails.phoneNumber}{informantDetails.email, select, __EMPTY__ {} other { and {informantDetails.email}}}}}"
+event.marriageRegistration.summary.requestedOn.label,Date the correction was submitted,Requested on,Contact
+event.marriageRegistration.summary.submittedBy.label,User role name who submitted correction,Submitted by,Place of marriage
+event.marriageRegistration.summary.supportingDocuments.label,Documents attached for correction verification,Supporting documents,Office
+event.marriageRegistration.summary.title,This is the title of the summary,"{marriageDetails.brideName.firstname, select, __EMPTY__ {Marriage Licence} other {{marriageDetails.brideName.surname, select, __EMPTY__ {Marriage Licence for {marriageDetails.brideName.surname} and {marriageDetails.bridegroomName.surname}} other {Marriage Licence for {marriageDetails.bridegroomName.surname} and {marriageDetails.brideName.surname}}}}}",Marriage registration
+event.marriageRegistration.summary.typeOfCorrection.label,Type or category of correction,Type of correction,Submitted by
+event.nameChange.action.certificate.form.cancel,This is the label for the verification cancellation button,Identity does not match,Name Change certificate collector
+event.nameChange.action.certificate.form.cancel.confirmation.body,This is the body for the verification cancellation modal,"Please be aware that if you proceed, you will be responsible for issuing a certificate without the necessary proof of ID from the collector",Verify their identity
+event.nameChange.action.certificate.form.cancel.confirmation.title,This is the title for the verification cancellation modal,Print without proof of ID?,Certify record
+event.nameChange.action.certificate.form.label,This is what this form is referred as in the system,Name Change certificate collector,Name Change certificate collector
+event.nameChange.action.certificate.form.section.collectPayment.data.label,Title for the data section,Payment details,Identity does not match
+event.nameChange.action.certificate.form.section.collectPayment.fee.label,Title for the data entry,Fee,Payment details
+event.nameChange.action.certificate.form.section.collectPayment.service.label,Title for the data entry,Service,Collect Payment
+event.nameChange.action.certificate.form.section.collectPayment.service.label.afterLateRegistrationTarget,Birth registration after 365 days of date of birth message,Birth registration after 365 days of date of birth,Collect Payment
+event.nameChange.action.certificate.form.section.collectPayment.service.label.beforeRegistrationTarget,Name change registration before 30 days of date of birth message,Name change registration before 30 days of date of birth,Payment details
+event.nameChange.action.certificate.form.section.collectPayment.service.label.inBetweenRegistrationTargets,Birth registration after 30 days but before 365 days of date of birth message,Name change registration after 30 days but before 365 days of date of birth,Payment details
+event.nameChange.action.certificate.form.section.who.title,This is what this form is referred as in the system,Name Change certificate collector,Name Change certificate collector
+event.nameChange.action.certificate.form.verify,This is the label for the verification button,Verified,Name Change certificate collector
+event.nameChange.action.correction.documents.proofOfIdentity.birthCertificate.label,Label for the birth certificate option,Birth certificate,Proof of identity
+event.nameChange.action.correction.documents.proofOfIdentity.label,Label for the proof of identity field,Proof of identity,Proof of identity
+event.nameChange.action.correction.documents.proofOfIdentity.other.label,Label for the other option,Other,Proof of identity
+event.nameChange.action.correction.documents.proofOfIdentity.passport.label,Label for the passport option,Passport,Proof of identity
+event.nameChange.action.correction.documents.supportingDocs.courtOrder.label,Label for the court order option,Court order,Supporting documents
+event.nameChange.action.correction.documents.supportingDocs.label,Label for the supporting documents field,Supporting documents,Proof of identity
+event.nameChange.action.correction.documents.supportingDocs.marriageCertificate.label,Label for the marriage certificate option,Marriage certificate,Supporting documents
+event.nameChange.action.correction.documents.supportingDocs.other.label,Label for the other option,Other,Signed deed poll
+event.nameChange.action.correction.documents.supportingDocs.personalStatement.label,Label for the personal statement option,Personal statement,Birth certificate
+event.nameChange.action.correction.documents.supportingDocs.signedDeedPoll.label,Label for the signed deed poll option,Signed deed poll,Passport
+event.nameChange.action.correction.documents.supportingDocs.statutoryDeclaration.label,Label for the statutory declaration option,Statutory declaration,Other
+event.nameChange.action.correction.fees.amount.label,Label for the amount field,Fee collected,Fee collected
+event.nameChange.action.correction.fees.amount.prefix,Prefix for the amount field,$,Fee collected
+event.nameChange.action.correction.fees.receiptNumber.label,Label for the receipt number field,Receipt number,Fee collected
+event.nameChange.action.correction.form.cancel,This is the label for the verification cancellation button,Identity does not match,Requester's details
+event.nameChange.action.correction.form.cancel.confirmation.body,This is the body for the verification cancellation modal,"Please be aware that if you proceed, you will be responsible for this correction without the necessary proof of ID from the requester",Verified
+event.nameChange.action.correction.form.cancel.confirmation.title,This is the title for the verification cancellation modal,Proceed without proof of ID,Verify their identity
+event.nameChange.action.correction.form.label,This is the label for the name change correction form,Correct record,Correct record
+event.nameChange.action.correction.form.requester.type.anotherAgent,This is the label for the correction requester field,Legal Guardian,Father
+event.nameChange.action.correction.form.requester.type.court,This is the label for the correction requester field,Registrar / Registration office,Person whose name is being changed
+event.nameChange.action.correction.form.requester.type.registrar,This is the label for the field,Father,Person whose name is being changed
+event.nameChange.action.correction.form.requester.type.someoneElse,This is the label for the correction requester field,Court,Person whose name is being changed
+event.nameChange.action.correction.form.section.collectPayment.title,This is the title of the section,Supporting documents,Identity does not match
+event.nameChange.action.correction.form.section.correctionRequest.title,This is the label for the name change correction form,Correct record,Correct record
+event.nameChange.action.correction.form.section.reason.title,This is the label for the field,Requester,Mother
+event.nameChange.action.correction.form.section.requester.brn.label,This is the label for the field,ID Number,Nationality
+event.nameChange.action.correction.form.section.requester.dob.error,This is the error message for invalid date,Date cannot be in the future,Name
+event.nameChange.action.correction.form.section.requester.dob.label,Label for family name text input,Surname,Relationship to person whose name is being changed
+event.nameChange.action.correction.form.section.requester.father.label,This is the label for the field,Mother,Person whose name is being changed
+event.nameChange.action.correction.form.section.requester.idType.label,This is the label for the field,Type of ID,Date of birth
+event.nameChange.action.correction.form.section.requester.label,This is the label for the field,Requester,Person whose name is being changed
+event.nameChange.action.correction.form.section.requester.mother.label,This is the label for the field,Person whose name is being changed,Person whose name is being changed
+event.nameChange.action.correction.form.section.requester.name.label,This is the label for the field,Relationship to person whose name is being changed,Relationship to person whose name is being changed
+event.nameChange.action.correction.form.section.requester.nationality.label,This is the error message for invalid date,Date cannot be in the future,Given name(s)
+event.nameChange.action.correction.form.section.requester.other.label,This is the label for the field,ID Number,ID Number
+event.nameChange.action.correction.form.section.requester.passport.label,This is the label for the field,ID Number,Date cannot be in the future
+event.nameChange.action.correction.form.section.requester.personWhoseNameIsBeingChanged.label,This is the label for the field,Person whose name is being changed,Person whose name is being changed
+event.nameChange.action.correction.form.section.requester.relationship.label,This is the label for the field,Relationship to person whose name is being changed,Relationship to person whose name is being changed
+event.nameChange.action.correction.form.section.requesterDetails.title,This is the title of the section,Correction request,Correct record
+event.nameChange.action.correction.form.section.supportingDocuments.title,This is the body for the verification cancellation modal,"Please be aware that if you proceed, you will be responsible for this correction without the necessary proof of ID from the requester",Verified
+event.nameChange.action.correction.form.section.verifyIdentity.data.label,Title for the data section,label,label
+event.nameChange.action.correction.form.section.verifyIdentity.title,This is the title of the section,Requester's details,Correct record
+event.nameChange.action.correction.form.verify,This is the label for the verification button,Verified,Correction request
+event.nameChange.action.correction.reason.option.clericalError.label,Label for the clerical error option,Myself or an agent made a mistake (Clerical error),Registrar / Registration office
+event.nameChange.action.correction.reason.option.judicialOrder.label,Label for the judicial order option,Requested to do so by the court (Judicial order),Reason for correction
+event.nameChange.action.correction.reason.option.materialError.label,Label for the material error option,Informant provided incorrect information (Material error),Court
+event.nameChange.action.correction.reason.option.materialOmission.label,Label for the material omission option,Informant did not provide this information (Material omission),Requester
+event.nameChange.action.correction.reason.option.other.label,Label for the other option,Other (please specify),Reason for correction
+event.nameChange.action.correction.reason.other.label,Label for the reason,Other reason (please specify),Informant provided incorrect information (Material error)
+event.nameChange.action.declare.form.label,Title of the form to show in review page,Name change declaration form,"{subjects.name.firstname, select, __EMPTY__ {Name Change declaration} other {{subjects.name.surname, select, __EMPTY__ {Name Change declaration for {subjects.name.firstname}} other {Name change declaration for {subjects.name.firstname} {subjects.name.surname}}}}}"
+event.nameChange.action.declare.form.review.alphaPrint.buttonLabel,Label for the alpha print button in the review section,Print declaration summary,Step 1
+event.nameChange.action.declare.form.review.alphaPrint.header.label,Label for step 1 header in the review section,Print the deed poll declaration summary for the informant(s) to review and sign.,Review
+event.nameChange.action.declare.form.review.alphaPrint.label,Label for the alpha print button header in the review section,Deed poll declaration summary,Step 1
+event.nameChange.action.declare.form.review.alphaPrint.step1.header.label,Form section title for review,Step 1,Review
+event.nameChange.action.declare.form.review.alphaPrint.step2.header.label,Label for the print button,Step 2,Deed poll declaration summary
+event.nameChange.action.declare.form.review.title,Title of the form to show in review page,"{subjects.name.firstname, select, __EMPTY__ {Name Change declaration} other {{subjects.name.surname, select, __EMPTY__ {Name Change declaration for {subjects.name.firstname}} other {Name change declaration for {subjects.name.firstname} {subjects.name.surname}}}}}","{subjects.name.firstname, select, __EMPTY__ {Name Change declaration} other {{subjects.name.surname, select, __EMPTY__ {Name Change declaration for {subjects.name.firstname}} other {Name change declaration for {subjects.name.firstname} {subjects.name.surname}}}}}"
+event.nameChange.action.declare.form.review.uploadedSignature.buttonLabel,Label for the uploaded signature field in the review section,Upload signed declaration,Step 2
+event.nameChange.action.declare.form.review.uploadedSignature.label,Label for step 2 header in the review section,Upload the signed deed poll declaration summary after it has been reviewed and signed by the informant(s).,Print declaration summary
+event.nameChange.action.declare.form.section.documents.field.nameChangeApplication.label,Label for uploading name change application,Name change application,Proof of parentage or guardianship
+event.nameChange.action.declare.form.section.documents.field.originalBirthEntry.label,Label for uploading record of original birth entry,Record of original birth entry,Supporting documents
+event.nameChange.action.declare.form.section.documents.field.proofOfInformantIdentity.label,Label for uploading proof of informant's identity,Proof of informant's identity,Record of original birth entry
+event.nameChange.action.declare.form.section.documents.field.proofOfParentage.label,Label for uploading proof of parentage or guardianship,Proof of parentage or guardianship,Proof of identity – Person whose name is being changed
+event.nameChange.action.declare.form.section.documents.field.proofOfSubjectIdentity.label,Label for uploading proof of identity for person whose name is being changed,Proof of identity – Person whose name is being changed,Supporting documents
+event.nameChange.action.declare.form.section.documents.title,Form section title for documents,Supporting documents,Supporting documents
+event.nameChange.action.declare.form.section.feeCollection.field.amountCollected.label,Label for amount collected field,Confirm amount collected,Fee
+event.nameChange.action.declare.form.section.feeCollection.field.amountCollected.prefix,Dollar sign prefix,$,$75
+event.nameChange.action.declare.form.section.feeCollection.field.feeWaived.label,Label for fee waiver checkbox,Fee is waived / not collected,Fee
+event.nameChange.action.declare.form.section.feeCollection.field.receiptNumber.label,Label for receipt number field,Receipt number,Fee is waived / not collected
+event.nameChange.action.declare.form.section.feeCollection.field.serviceLessThan4Description.label,Name change (deed poll): Up to 3 years of age,Name change (deed poll): Up to 3 years of age,Collect fee
+event.nameChange.action.declare.form.section.feeCollection.field.serviceLessThan4Fee.label,$40,$40,Name change (deed poll): Up to 3 years of age
+event.nameChange.action.declare.form.section.feeCollection.field.serviceMoreThan4Description.label,Name change (deed poll): 4 years of age and over,Name change (deed poll): 4 years of age and over,$40
+event.nameChange.action.declare.form.section.feeCollection.field.serviceMoreThan4Fee.label,$75,$75,Name change (deed poll): 4 years of age and over
+event.nameChange.action.declare.form.section.feeCollection.field.waiverReason.label,Label for waiver reason field,Reason for fee waiver / non-collection,Confirm amount collected
+event.nameChange.action.declare.form.section.feeCollection.title,Form section title for fee collection,Collect fee,Collect fee
+event.nameChange.action.declare.form.section.informant.field.address.label,Label for address field,Residence,Usual residence
+event.nameChange.action.declare.form.section.informant.field.addressHelper.label,Heading for usual residence section,Usual residence,ID number
+event.nameChange.action.declare.form.section.informant.field.age.label,Label for informant age in years,Age in years,[ ] Exact date unknown
+event.nameChange.action.declare.form.section.informant.field.age.postfix,Postfix for age in years, years,Date cannot be in the future
+event.nameChange.action.declare.form.section.informant.field.bc.label,Label for informant ID number,ID number,Type of ID
+event.nameChange.action.declare.form.section.informant.field.dob.error,Error message for invalid date,Date cannot be in the future,Given name(s)
+event.nameChange.action.declare.form.section.informant.field.dob.label,Label for informant date of birth,Date of birth,Given name(s)
+event.nameChange.action.declare.form.section.informant.field.dobUnknown.label,Label for informant exact date unknown checkbox,[ ] Exact date unknown,Date of birth
+event.nameChange.action.declare.form.section.informant.field.email.label,Label for informant email,Email,Point of contact
+event.nameChange.action.declare.form.section.informant.field.firstname.label,Label for informant given name(s),Given name(s),Relationship to the person whose name is being changed
+event.nameChange.action.declare.form.section.informant.field.idOther.label,Label for informant other ID,ID number,ID number
+event.nameChange.action.declare.form.section.informant.field.idType.label,Label for informant type of ID,Type of ID,[ ] Exact date unknown
+event.nameChange.action.declare.form.section.informant.field.informantType.label,Label for informant type,Informant type,Mother and Father
+event.nameChange.action.declare.form.section.informant.field.name.label,Label for informant name field,Informant name,Given name(s)
+event.nameChange.action.declare.form.section.informant.field.passport.label,Label for informant ID number,ID number, years
+event.nameChange.action.declare.form.section.informant.field.phone.label,Label for informant phone number,Phone number,Invalid input
+event.nameChange.action.declare.form.section.informant.field.pointOfcontactHelper.label,Heading for point of contact section,Point of contact,Residence
+event.nameChange.action.declare.form.section.informant.field.relationship.helperText,Helper text for relationship field,Please describe relationship to the person whose name is being changed,Informant type
+event.nameChange.action.declare.form.section.informant.field.relationship.label,Label for relationship field,Relationship to the person whose name is being changed,Informant type
+event.nameChange.action.declare.form.section.informant.field.surname.label,Label for informant surname,Surname,Please describe relationship to the person whose name is being changed
+event.nameChange.action.declare.form.section.informant.title,Form section title for informant,Informant's details,Mother
+event.nameChange.action.declare.form.section.newName.field.firstname.label,Label for new given name(s),New Given name(s),New name details
+event.nameChange.action.declare.form.section.newName.field.reason.label,Label for reason for name change,Reason for name change (optional),New name details
+event.nameChange.action.declare.form.section.newName.field.surname.label,Label for new surname,New Surname,New name details
+event.nameChange.action.declare.form.section.reviewAndSign.title,Form section title for review,Review,Review
+event.nameChange.action.declare.form.section.subjects.field.address.label,Label for address field,Residence,Date of birth
+event.nameChange.action.declare.form.section.subjects.field.addressHelper.label,Heading for usual residence section,Usual residence,Subject name
+event.nameChange.action.declare.form.section.subjects.field.brn.label,Label for birth registration number field,Birth registration number,Details as recorded in original birth entry
+event.nameChange.action.declare.form.section.subjects.field.brn.loading,Loading message while searching,Searching for birth record...,Birth registration number
+event.nameChange.action.declare.form.section.subjects.field.brn.noResults,Error message when no results found,No birth record found with this registration number,Birth registration number
+event.nameChange.action.declare.form.section.subjects.field.brn.placeholder,Placeholder for BRN search field,Enter birth registration number,Nationality
+event.nameChange.action.declare.form.section.subjects.field.brn.search,Button text for search,Search,Birth registration number
+event.nameChange.action.declare.form.section.subjects.field.brn.validation,Validation error message for BRN field,Please enter a birth registration number,"Search for an existing birth record. If a match is found, the details below will auto-fill. If no record is found, continue by entering the details manually."
+event.nameChange.action.declare.form.section.subjects.field.brnHint.label,Hint text for BRN search field,"Search for an existing birth record. If a match is found, the details below will auto-fill. If no record is found, continue by entering the details manually.",Details as recorded in original birth entry
+event.nameChange.action.declare.form.section.subjects.field.brnNumber.label,Label for BRN display field,Birth registration number,No birth record found with this registration number
+event.nameChange.action.declare.form.section.subjects.field.dob.error,Error message for invalid date,Must be a valid date of birth,Given name(s) at birth
+event.nameChange.action.declare.form.section.subjects.field.dob.label,Label for date of birth field,Date of birth,Given name(s) at birth
+event.nameChange.action.declare.form.section.subjects.field.firstname.label,Label for given names field,Given name(s) at birth,Birth registration number
+event.nameChange.action.declare.form.section.subjects.field.name.label,Label for subject name field,Subject name,Birth registration number
+event.nameChange.action.declare.form.section.subjects.field.nameChange1.addAnother.label,Label for add another name change checkbox,Add another name change,New surname
+event.nameChange.action.declare.form.section.subjects.field.nameChange1.deedPollNumber.label,Label for deed poll number field,Deed poll number,Name changed since registration (via deed poll)
+event.nameChange.action.declare.form.section.subjects.field.nameChange1.firstname.label,Label for new given names field,New given name(s),Deed poll number
+event.nameChange.action.declare.form.section.subjects.field.nameChange1.surname.label,Label for new surname field,New surname,New given name(s)
+event.nameChange.action.declare.form.section.subjects.field.nameChange1Helper.label,Heading for name change #1 section,Name change #1,Previous name changes
+event.nameChange.action.declare.form.section.subjects.field.nameChange2.addAnother.label,Label for add another name change checkbox,Add another name change,New surname
+event.nameChange.action.declare.form.section.subjects.field.nameChange2.deedPollNumber.label,Label for deed poll number field,Deed poll Number,Name change #2
+event.nameChange.action.declare.form.section.subjects.field.nameChange2.firstname.label,Label for new given names field,New given name(s),Deed poll Number
+event.nameChange.action.declare.form.section.subjects.field.nameChange2.surname.label,Label for new surname field,New surname,New given name(s)
+event.nameChange.action.declare.form.section.subjects.field.nameChange2Helper.label,Heading for name change #2 section,Name change #2,Add another name change
+event.nameChange.action.declare.form.section.subjects.field.nameChange3.deedPollNumber.label,Label for deed poll number field,Deed poll Number,Name change #3
+event.nameChange.action.declare.form.section.subjects.field.nameChange3.firstname.label,Label for new given names field,New given name(s),Deed poll Number
+event.nameChange.action.declare.form.section.subjects.field.nameChange3.surname.label,Label for new surname field,New surname,New given name(s)
+event.nameChange.action.declare.form.section.subjects.field.nameChange3Helper.label,Heading for name change #3 section,Name change #3,Add another name change
+event.nameChange.action.declare.form.section.subjects.field.nameChangedViaDeadPoll.label,Label for name changed checkbox,Name changed since registration (via deed poll),Previous name changes
+event.nameChange.action.declare.form.section.subjects.field.nationality.label,Label for nationality field,Nationality,Details as recorded in original birth entry
+event.nameChange.action.declare.form.section.subjects.field.previousNamesHelper.label,Heading for previous name changes section,Previous name changes,Residence
+event.nameChange.action.declare.form.section.subjects.field.surname.label,Label for surname field,Surname at birth,Birth registration number
+event.nameChange.action.declare.form.section.witness.field.address.label,Label for address field,Residence,Surname
+event.nameChange.action.declare.form.section.witness.field.addressHelper.label,Heading for usual residence section,Usual residence,Given name(s)
+event.nameChange.action.declare.form.section.witness.field.firstname.label,Label for witness given name(s),Given name(s),Witness details
+event.nameChange.action.declare.form.section.witness.field.name.label,Label for witness name field,Witness name,Witness details
+event.nameChange.action.declare.form.section.witness.field.occupation.label,Label for witness occupation,Occupation,Witness details
+event.nameChange.action.declare.form.section.witness.field.surname.label,Label for witness surname,Surname,Witness details
+event.nameChange.action.declare.form.section.witness.title,Form section title for witness,Witness details,Witness details
+event.nameChange.action.declare.label,This is shown as the action name anywhere the user can trigger the action from,Declare,Name change
+event.nameChange.action.detect-duplicate.label,This is shown as the action name anywhere the user can trigger the action from,Detect duplicate,{subjects.name.firstname} {subjects.name.surname}
+event.nameChange.action.print.collectPayment,This is the body for the verification cancellation modal,"Please be aware that if you proceed, you will be responsible for issuing a certificate without the necessary proof of ID from the collector",Verified
+event.nameChange.action.print.verifyIdentity,This is the title of the section,Certify record,Name Change certificate collector
+event.nameChange.action.read.label,This is shown as the action name anywhere the user can trigger the action from,Read,Name change
+event.nameChange.action.register.label,This is shown as the action name anywhere the user can trigger the action from,Register,Date of birth
+event.nameChange.fallbackTitle,This is the title of the summary,{subjects.name.firstname} {subjects.name.surname},Name change
+event.nameChange.label,This is what this event is referred as in the system,Name change,Name change
+event.nameChange.summary.subjects.dob.empty,This is shown when there is no subject information,Date of birth,Name change
+event.nameChange.title,This is the title of the summary,{subjects.name.firstname} {subjects.name.surname},Name change
 event.not.downloaded,Shown when user tries to perform an action on event that is not available,Please ensure the event is first assigned and downloaded to the browser.,Veuillez vous assurer que l'événement est d'abord attribué et téléchargé dans le navigateur.
 event.stillbirth.action.Read.label,This is shown as the action name anywhere the user can trigger the action from,Read,Lire
 event.stillbirth.action.certificate.form.cancel,This is the label for the verification cancellation button,Identity does not match,L'identité ne correspond pas
@@ -2491,6 +3172,7 @@ integrations.revealKeys,Label for reveal keys option,Reveal Keys,Montrer clés d
 integrations.scopes,Heading for the scopes list in the client details dialog,Scopes,Autorisations
 integrations.shaSecret,Label for SHA secret,SHA secret,SHA Secret
 integrations.type,Labels for integration types,"{type, select, HEALTH {Health integration} NATIONAL_ID {National ID} RECORD_SEARCH {Record search} other {Custom}}","{type, select, HEALTH {Intégration de la santé} NATIONAL_ID {Identité nationale} RECORD_SEARCH {Recherche d'enregistrements} other {Personnalisé}}"
+integrations.type.api,Label for integration clients registered by the country configuration,API integration,Intégration API
 integrations.uniqueKeyDescription,Label for the unique key description,These unique keys will be required by the client integrating...,Ces clés uniques seront requises par l'interface du système
 integrations.updatePermissionsMsg,Label for update permissions message,Permissions update successfully,Mise à jour des permissions avec succès
 integrations.webhook.PII,Label for PII,Include PII data,Inclure les données PII
@@ -2500,6 +3182,8 @@ introduction.guidance.healthNotifier.label,,Guidance: Explaining birth notificat
 loading.records,Loading indicator while fetching records,Loading records...,Chargement des enregistrements...
 marriageNotice.search.criteria.label.prefix.bride,Bride's search criteria prefix,Bride's,Bride's
 marriageNotice.search.criteria.label.prefix.bridegroom,Bridegroom's search criteria prefix,Bridegroom's,Bridegroom's
+marriageRegistration.search.criteria.label.prefix.bride,Bride prefix,Bride's,Bride's
+marriageRegistration.search.criteria.label.prefix.bridegroom,Bride prefix,Bride's,Bride's
 messages.emptyString,Empty string, , 
 misc.confirmPinTitle,The title displayed while creating a PIN,Confirm PIN,Confirmer le  Code PIN
 misc.createDescription,The description displayed while creating a PIN,Choose a PIN that doesn't have 4 repeating digits or sequential numbers,Choisissez un code PIN qui ne comporte pas 4 chiffres répétitifs ou des numéros séquentiels.
@@ -2532,6 +3216,7 @@ misc.session.expired,SessionExpire modal confirmation text,Your session has expi
 misc.title.declarationStatus,Title for review action component,Send for approval,Envoyer pour approbation
 modal.approveCorrection,The title for approve correction modal,Approve correction?,Approuver la correction ?
 modal.rejectCorrection,The title for reject correction modal,Reject correction?,Rejeter la correction ?
+nameChange.search.criteria.label.prefix.person,Person prefix,Person's,Person's
 navigation.CREATED,In progress label in navigation,In progress,En cours
 navigation.DECLARED,Ready for review label in navigation,Ready for review,Prêt pour l'examen
 navigation.REGISTERED,Ready to print label in navigation,Ready to print,Prêt à imprimer
@@ -3282,10 +3967,18 @@ workqueues.pendingUpdates.title,Title of pending updates workqueue,Pending updat
 workqueues.pendingValidation.title,Title of pending validation workqueue,Pending validation,En attente de validation
 workqueues.potentialDuplicate.title,Title of potential duplicate workqueue,Potential duplicate,Duplicata potentiel
 workqueues.recent.title,Title of recent workqueue,Recent,Récent
+workqueues.registeredAdoptionsLast12Months.emptyMessage,Empty message for registered adoptions last 12 months workqueue,No registered adoptions in the last 12 months,Aucune adoption enregistrée au cours des 12 derniers mois
+workqueues.registeredAdoptionsLast12Months.title,Title of registered adoptions last 12 months workqueue,Registered Adoptions (last 12 months),Adoptions enregistrées (12 derniers mois)
 workqueues.registeredBirthsLast12Months.emptyMessage,Empty message for registered births last 12 months workqueue,No registered births in the last 12 months,Aucune naissance enregistrée au cours des 12 derniers mois
 workqueues.registeredBirthsLast12Months.title,Title of registered births last 12 months workqueue,Registered Births (last 12 months),Naissances enregistrées (12 derniers mois)
 workqueues.registeredDeathsLast12Months.emptyMessage,Empty message for registered deaths last 12 months workqueue,No registered deaths in the last 12 months,Aucun décès enregistré au cours des 12 derniers mois
 workqueues.registeredDeathsLast12Months.title,Title of registered deaths last 12 months workqueue,Registered Deaths (last 12 months),Décès enregistrés (12 derniers mois)
+workqueues.registeredDivorcesLast12Months.emptyMessage,Empty message for registered divorces last 12 months workqueue,No registered divorces in the last 12 months,Aucun divorce enregistré au cours des 12 derniers mois
+workqueues.registeredDivorcesLast12Months.title,Title of registered divorces last 12 months workqueue,Registered Divorces (last 12 months),Divorces enregistrés (12 derniers mois)
+workqueues.registeredMarriageRegistrationsLast12Months.emptyMessage,Empty message for registered marriage registrations last 12 months workqueue,No registered marriage registrations in the last 12 months,Aucun enregistrement de mariage enregistré au cours des 12 derniers mois
+workqueues.registeredMarriageRegistrationsLast12Months.title,Title of registered marriage registrations last 12 months workqueue,Registered Marriage Registrations (last 12 months),Enregistrements de mariage enregistrés (12 derniers mois)
+workqueues.registeredNameChangesLast12Months.emptyMessage,Empty message for registered name changes last 12 months workqueue,No registered name changes in the last 12 months,Aucun changement de nom enregistré au cours des 12 derniers mois
+workqueues.registeredNameChangesLast12Months.title,Title of registered name changes last 12 months workqueue,Registered Name Changes (last 12 months),Changements de nom enregistrés (12 derniers mois)
 workqueues.requiresApproval.title,Title of pending approval workqueue,Pending approval,En attente d'approbation
 workqueues.reviewRequested.title,Title of review requested workqueue,Review requested,Révision demandée
 wq.noRecords.CREATED,No records messages for empty draft tab,No records in progress,Aucun enregistrement en cours

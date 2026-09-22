@@ -51,14 +51,22 @@ describe('birth and death workflow configuration', () => {
         'requires-completion',
         'pending-registration',
         'registered-births-last-12-months',
-        'registered-deaths-last-12-months'
+        'registered-deaths-last-12-months',
+        'registered-adoptions-last-12-months',
+        'registered-divorces-last-12-months',
+        'registered-marriage-registrations-last-12-months',
+        'registered-name-changes-last-12-months'
       ])
     )
     expect(getWorkqueueIds('REGISTRATION_OFFICER')).toEqual(
       expect.arrayContaining([
         'pending-registration',
         'registered-births-last-12-months',
-        'registered-deaths-last-12-months'
+        'registered-deaths-last-12-months',
+        'registered-adoptions-last-12-months',
+        'registered-divorces-last-12-months',
+        'registered-marriage-registrations-last-12-months',
+        'registered-name-changes-last-12-months'
       ])
     )
 
@@ -70,14 +78,22 @@ describe('birth and death workflow configuration', () => {
         'requires-completion',
         'pending-registration',
         'registered-births-last-12-months',
-        'registered-deaths-last-12-months'
+        'registered-deaths-last-12-months',
+        'registered-adoptions-last-12-months',
+        'registered-divorces-last-12-months',
+        'registered-marriage-registrations-last-12-months',
+        'registered-name-changes-last-12-months'
       ])
     )
   })
 
   it.each([
     ['registered-births-last-12-months', 'birth'],
-    ['registered-deaths-last-12-months', 'death']
+    ['registered-deaths-last-12-months', 'death'],
+    ['registered-adoptions-last-12-months', 'adoption'],
+    ['registered-divorces-last-12-months', 'divorce'],
+    ['registered-marriage-registrations-last-12-months', 'marriage-registration'],
+    ['registered-name-changes-last-12-months', 'name-change']
   ])('configures %s as an area-scoped registered-record queue', (slug, eventType) => {
     const workqueue = Workqueues.find((queue) => queue.slug === slug)
 

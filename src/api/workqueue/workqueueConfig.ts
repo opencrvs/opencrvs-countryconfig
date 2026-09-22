@@ -331,6 +331,102 @@ export const Workqueues = defineWorkqueues([
     }
   },
   {
+    slug: 'registered-adoptions-last-12-months',
+    icon: 'Certified',
+    name: {
+      id: 'workqueues.registeredAdoptionsLast12Months.title',
+      defaultMessage: 'Registered Adoptions (last 12 months)',
+      description: 'Title of registered adoptions last 12 months workqueue'
+    },
+    query: {
+      ...registeredInMyAdminArea,
+      eventType: 'adoption',
+      status: { type: 'exact', term: EventStatus.enum.REGISTERED },
+      'legalStatuses.REGISTERED.createdAt': {
+        type: 'timePeriod',
+        term: 'last365Days'
+      }
+    },
+    action: { type: ActionType.READ },
+    emptyMessage: {
+      id: 'workqueues.registeredAdoptionsLast12Months.emptyMessage',
+      defaultMessage: 'No registered adoptions in the last 12 months',
+      description: 'Empty message for registered adoptions last 12 months workqueue'
+    }
+  },
+  {
+    slug: 'registered-divorces-last-12-months',
+    icon: 'Certified',
+    name: {
+      id: 'workqueues.registeredDivorcesLast12Months.title',
+      defaultMessage: 'Registered Divorces (last 12 months)',
+      description: 'Title of registered divorces last 12 months workqueue'
+    },
+    query: {
+      ...registeredInMyAdminArea,
+      eventType: 'divorce',
+      status: { type: 'exact', term: EventStatus.enum.REGISTERED },
+      'legalStatuses.REGISTERED.createdAt': {
+        type: 'timePeriod',
+        term: 'last365Days'
+      }
+    },
+    action: { type: ActionType.READ },
+    emptyMessage: {
+      id: 'workqueues.registeredDivorcesLast12Months.emptyMessage',
+      defaultMessage: 'No registered divorces in the last 12 months',
+      description: 'Empty message for registered divorces last 12 months workqueue'
+    }
+  },
+  {
+    slug: 'registered-marriage-registrations-last-12-months',
+    icon: 'Certified',
+    name: {
+      id: 'workqueues.registeredMarriageRegistrationsLast12Months.title',
+      defaultMessage: 'Registered Marriage Registrations (last 12 months)',
+      description: 'Title of registered marriage registrations last 12 months workqueue'
+    },
+    query: {
+      ...registeredInMyAdminArea,
+      eventType: 'marriage-registration',
+      status: { type: 'exact', term: EventStatus.enum.REGISTERED },
+      'legalStatuses.REGISTERED.createdAt': {
+        type: 'timePeriod',
+        term: 'last365Days'
+      }
+    },
+    action: { type: ActionType.READ },
+    emptyMessage: {
+      id: 'workqueues.registeredMarriageRegistrationsLast12Months.emptyMessage',
+      defaultMessage: 'No registered marriage registrations in the last 12 months',
+      description: 'Empty message for registered marriage registrations last 12 months workqueue'
+    }
+  },
+  {
+    slug: 'registered-name-changes-last-12-months',
+    icon: 'Certified',
+    name: {
+      id: 'workqueues.registeredNameChangesLast12Months.title',
+      defaultMessage: 'Registered Name Changes (last 12 months)',
+      description: 'Title of registered name changes last 12 months workqueue'
+    },
+    query: {
+      ...registeredInMyAdminArea,
+      eventType: 'name-change',
+      status: { type: 'exact', term: EventStatus.enum.REGISTERED },
+      'legalStatuses.REGISTERED.createdAt': {
+        type: 'timePeriod',
+        term: 'last365Days'
+      }
+    },
+    action: { type: ActionType.READ },
+    emptyMessage: {
+      id: 'workqueues.registeredNameChangesLast12Months.emptyMessage',
+      defaultMessage: 'No registered name changes in the last 12 months',
+      description: 'Empty message for registered name changes last 12 months workqueue'
+    }
+  },
+  {
     slug: 'my-submissions',
     icon: 'FileText',
     name: {
