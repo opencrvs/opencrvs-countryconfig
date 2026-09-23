@@ -79,7 +79,7 @@ fi
 #-------------------------------------------
 
 # Create a temporary directory to store the backup files before decrypting
-BACKUP_RAW_FILES_DIR=/tmp/backup-$LABEL
+BACKUP_RAW_FILES_DIR=/data/backup-$LABEL
 REMOTE_DIR_WITH_DATE="$REMOTE_DIR/${LABEL:-$BACKUP_DATE}"
 
 mkdir -p $BACKUP_RAW_FILES_DIR
@@ -93,10 +93,12 @@ echo "Copied backup files from server to $BACKUP_RAW_FILES_DIR/${LABEL}.tar.gz.e
 
 # Decrypt
 openssl enc -d -aes-256-cbc -salt -pbkdf2 -in $BACKUP_RAW_FILES_DIR/${LABEL}.tar.gz.enc --out $BACKUP_RAW_FILES_DIR/${LABEL}.tar.gz -pass pass:$PASSPHRASE
+rm $BACKUP_RAW_FILES_DIR/${LABEL}.tar.gz.enc
 
 # Extract
 mkdir -p $BACKUP_RAW_FILES_DIR/extract
 tar -xvf $BACKUP_RAW_FILES_DIR/${LABEL}.tar.gz -C $BACKUP_RAW_FILES_DIR/extract
+rm $BACKUP_RAW_FILES_DIR/${LABEL}.tar.gz
 
 # Delete previous days restore(s) and move the newly downloaded one in place
 for BACKUP_DIR in /data/backups/*; do
@@ -106,16 +108,19 @@ for BACKUP_DIR in /data/backups/*; do
 done
 
 
-mv $BACKUP_RAW_FILES_DIR/extract/elasticsearch/* /data/backups/elasticsearch/
+BACKUP_SERVICES=(
+  elasticsearch
+  influxdb
+  minio
+  vsexport
+  mongo
+  postgres
+)
 
-mv $BACKUP_RAW_FILES_DIR/extract/influxdb /data/backups/influxdb/${LABEL}
-mv $BACKUP_RAW_FILES_DIR/extract/minio/ocrvs-${LABEL}.tar.gz /data/backups/minio/
-mv $BACKUP_RAW_FILES_DIR/extract/vsexport/ocrvs-${LABEL}.tar.gz /data/backups/vsexport/
-mv $BACKUP_RAW_FILES_DIR/extract/mongo/* /data/backups/mongo/
-mv $BACKUP_RAW_FILES_DIR/extract/postgres/* /data/backups/postgres/
+for service in "${BACKUP_SERVICES[@]}"; do
+  mv $BACKUP_RAW_FILES_DIR/extract/$service/* /data/backups/$service/
+done
 
 # Clean up
-rm $BACKUP_RAW_FILES_DIR/${LABEL}.tar.gz.enc
-rm $BACKUP_RAW_FILES_DIR/${LABEL}.tar.gz
 rm -r $BACKUP_RAW_FILES_DIR
 echo "Done"

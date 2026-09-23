@@ -307,39 +307,33 @@ fi
 # Copy the backups to an offsite server in production
 #----------------------------------------------------
 
-# Create a temporary directory to store the backup files before packaging
-BACKUP_RAW_FILES_DIR=/tmp/backup-${LABEL:-$BACKUP_DATE}/
-mkdir -p $BACKUP_RAW_FILES_DIR
+BACKUP_FILES=(
+  elasticsearch
+  "influxdb/${LABEL:-$BACKUP_DATE}"
+  "minio/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz"
+  "vsexport/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz"
+  "mongo/hearth-dev-${LABEL:-$BACKUP_DATE}.gz"
+  "mongo/events-${LABEL:-$BACKUP_DATE}.gz"
+  "mongo/user-mgnt-${LABEL:-$BACKUP_DATE}.gz"
+  "mongo/application-config-${LABEL:-$BACKUP_DATE}.gz"
+  "mongo/metrics-${LABEL:-$BACKUP_DATE}.gz"
+  "mongo/webhooks-${LABEL:-$BACKUP_DATE}.gz"
+  "mongo/performance-${LABEL:-$BACKUP_DATE}.gz"
+  "postgres/events-${LABEL:-$BACKUP_DATE}.dump"
+)
 
-# Copy full directories to the temporary directory
-cp -r $ROOT_PATH/backups/elasticsearch/ $BACKUP_RAW_FILES_DIR/elasticsearch/
-cp -r $ROOT_PATH/backups/influxdb/${LABEL:-$BACKUP_DATE} $BACKUP_RAW_FILES_DIR/influxdb/
+tar -czf /data/${LABEL:-$BACKUP_DATE}.tar.gz -C "$ROOT_PATH/backups" "${BACKUP_FILES[@]}"
 
-
-mkdir -p $BACKUP_RAW_FILES_DIR/minio/ && cp $ROOT_PATH/backups/minio/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz $BACKUP_RAW_FILES_DIR/minio/
-mkdir -p $BACKUP_RAW_FILES_DIR/vsexport/ && cp $ROOT_PATH/backups/vsexport/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz $BACKUP_RAW_FILES_DIR/vsexport/
-mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/hearth-dev-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
-mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/events-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
-mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/user-mgnt-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
-mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/application-config-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
-mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/metrics-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
-mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/webhooks-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
-mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/performance-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
-mkdir -p $BACKUP_RAW_FILES_DIR/postgres/ && cp $ROOT_PATH/backups/postgres/events-${LABEL:-$BACKUP_DATE}.dump $BACKUP_RAW_FILES_DIR/postgres/
-
-tar -czf /tmp/${LABEL:-$BACKUP_DATE}.tar.gz -C "$BACKUP_RAW_FILES_DIR" .
-
-openssl enc -aes-256-cbc -salt -pbkdf2 -in /tmp/${LABEL:-$BACKUP_DATE}.tar.gz -out /tmp/${LABEL:-$BACKUP_DATE}.tar.gz.enc -pass pass:$PASSPHRASE
+openssl enc -aes-256-cbc -salt -pbkdf2 -in /data/${LABEL:-$BACKUP_DATE}.tar.gz -out /data/${LABEL:-$BACKUP_DATE}.tar.gz.enc -pass pass:$PASSPHRASE
+rm /data/${LABEL:-$BACKUP_DATE}.tar.gz
 
 if [ "$IS_LOCAL" = false ]; then
   set +e
-  rsync -a -r --rsync-path="mkdir -p $REMOTE_DIR/ && rsync" --progress --rsh="ssh -o StrictHostKeyChecking=no -p $SSH_PORT" /tmp/${LABEL:-$BACKUP_DATE}.tar.gz.enc $SSH_USER@$SSH_HOST:$REMOTE_DIR/
+  rsync -a -r --rsync-path="mkdir -p $REMOTE_DIR/ && rsync" --progress --rsh="ssh -o StrictHostKeyChecking=no -p $SSH_PORT" /data/${LABEL:-$BACKUP_DATE}.tar.gz.enc $SSH_USER@$SSH_HOST:$REMOTE_DIR/
   if [ $? -eq 0 ]; then
     echo "Copied backup files to remote server."
   fi
   set -e
 fi
 
-rm /tmp/${LABEL:-$BACKUP_DATE}.tar.gz.enc
-rm /tmp/${LABEL:-$BACKUP_DATE}.tar.gz
-rm -r $BACKUP_RAW_FILES_DIR
+rm /data/${LABEL:-$BACKUP_DATE}.tar.gz.enc
