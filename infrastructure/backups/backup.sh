@@ -71,12 +71,27 @@ print_usage_and_exit() {
   echo ""
   echo "If your Elasticsearch is password protected, an admin user's credentials can be given as environment variables:"
   echo "ELASTICSEARCH_ADMIN_USER=your_user ELASTICSEARCH_ADMIN_PASSWORD=your_pass"
+  echo ""
+  echo "MinIO attachments can be backed up in two ways, selected with the MINIO_BACKUP_TYPE environment variable:"
+  echo "MINIO_BACKUP_TYPE=dump (default) - a full tar.gz dump of the MinIO data directory, included in the encrypted backup archive"
+  echo "MINIO_BACKUP_TYPE=differential - an incremental rsync mirror of the MinIO data directory straight to the backup server, skipping the tar/encrypt step. Requires a remote backup server, i.e. cannot be used in a local environment"
   exit 1
 }
 
 # Check if REPLICAS is a number and greater than 0
 if ! [[ "$REPLICAS" =~ ^[0-9]+$ ]]; then
   echo "Script must be passed a positive integer number of replicas"
+  exit 1
+fi
+
+MINIO_BACKUP_TYPE=${MINIO_BACKUP_TYPE:-dump}
+if [ "$MINIO_BACKUP_TYPE" != "dump" ] && [ "$MINIO_BACKUP_TYPE" != "differential" ]; then
+  echo "Error: MINIO_BACKUP_TYPE must be either 'dump' or 'differential'"
+  exit 1
+fi
+
+if [ "$MINIO_BACKUP_TYPE" = "differential" ] && [ "$IS_LOCAL" = true ]; then
+  echo "Error: MINIO_BACKUP_TYPE=differential requires a remote backup server and cannot be used in a local environment"
   exit 1
 fi
 
@@ -186,6 +201,9 @@ get_target_indices() {
 # Today's date is used for filenames if LABEL is not provided
 #-----------------------------------
 BACKUP_DATE=$(date +%Y-%m-%d)
+# Keep the un-suffixed remote dir around for the differential MinIO rsync target, which is a
+# continuously updated mirror rather than a dated snapshot.
+REMOTE_DIR_BASE="$REMOTE_DIR"
 REMOTE_DIR="$REMOTE_DIR/${LABEL:-$BACKUP_DATE}"
 
 # Backup Hearth, User, Application-config and any other service related Mongo databases into a mongo sub folder
@@ -222,7 +240,7 @@ echo "Delete all currently existing snapshots"
 echo ""
 # Get list of snapshots as a simple array
 snapshots=$(docker run --rm --network="$NETWORK" appropriate/curl \
-  -s "http://$(elasticsearch_host)/_snapshot/ocrvs/_all" | jq -r '.snapshots[].snapshot' || true)
+  -s "http://$(elasticsearch_host)/_snapshot/ocrvs/_all" | jq -r '.snapshots[]?.snapshot' || true)
 echo "Found snapshots:"
 echo "$snapshots" | sed 's/^/ - /'
 
@@ -288,10 +306,12 @@ else
   docker run --rm -v $ROOT_PATH/backups/influxdb/${LABEL:-$BACKUP_DATE}:/backup --network=$NETWORK influxdb:1.8.0 influxd backup -portable -host influxdb:8088 /backup
 fi
 
-echo "Creating a backup for Minio"
-
-LOCAL_MINIO_BACKUP=$ROOT_PATH/backups/minio/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz
-cd $ROOT_PATH/minio && tar -zcvf $LOCAL_MINIO_BACKUP . && cd /
+if [ "$MINIO_BACKUP_TYPE" = "dump" ]; then
+  echo "Creating a full dump backup for Minio"
+  cd $ROOT_PATH/minio && tar -zcvf $ROOT_PATH/backups/minio/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz . && cd /
+else
+  echo "Skipping full dump backup for Minio, MINIO_BACKUP_TYPE=differential is used instead"
+fi
 
 echo "Creating a backup for VSExport"
 
@@ -310,7 +330,6 @@ fi
 BACKUP_FILES=(
   elasticsearch
   "influxdb/${LABEL:-$BACKUP_DATE}"
-  "minio/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz"
   "vsexport/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz"
   "mongo/hearth-dev-${LABEL:-$BACKUP_DATE}.gz"
   "mongo/events-${LABEL:-$BACKUP_DATE}.gz"
@@ -321,6 +340,8 @@ BACKUP_FILES=(
   "mongo/performance-${LABEL:-$BACKUP_DATE}.gz"
   "postgres/events-${LABEL:-$BACKUP_DATE}.dump"
 )
+[ "$MINIO_BACKUP_TYPE" = "dump" ] && BACKUP_FILES+=("minio/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz")
+
 
 tar -czf /data/${LABEL:-$BACKUP_DATE}.tar.gz -C "$ROOT_PATH/backups" "${BACKUP_FILES[@]}"
 
@@ -332,6 +353,24 @@ if [ "$IS_LOCAL" = false ]; then
   rsync -a -r --rsync-path="mkdir -p $REMOTE_DIR/ && rsync" --progress --rsh="ssh -o StrictHostKeyChecking=no -p $SSH_PORT" /data/${LABEL:-$BACKUP_DATE}.tar.gz.enc $SSH_USER@$SSH_HOST:$REMOTE_DIR/
   if [ $? -eq 0 ]; then
     echo "Copied backup files to remote server."
+  fi
+  set -e
+fi
+
+# Differential Minio backup
+# -------------------------
+# Unlike the dump backup above, this mirrors the Minio data directory directly to the backup
+# server with rsync so that only the changed attachments are transferred on each run. It is not
+# included in the encrypted archive: it lives in its own, non-dated folder on the backup server
+# (REMOTE_DIR_BASE/minio) that keeps getting incrementally updated over time.
+if [ "$MINIO_BACKUP_TYPE" = "differential" ]; then
+  echo "Running differential (rsync) backup for Minio"
+  set +e
+  rsync -a -r --rsync-path="mkdir -p $REMOTE_DIR_BASE/minio/ && rsync" --progress --exclude=".minio.sys/config/iam/" --rsh="ssh -o StrictHostKeyChecking=no -p $SSH_PORT" $ROOT_PATH/minio/ $SSH_USER@$SSH_HOST:$REMOTE_DIR_BASE/minio/
+  if [ $? -eq 0 ]; then
+    echo "Copied differential Minio backup to remote server."
+  else
+    echo "Failed to copy differential Minio backup to remote server."
   fi
   set -e
 fi

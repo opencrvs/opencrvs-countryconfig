@@ -48,11 +48,21 @@ done
 
 print_usage_and_exit() {
   echo 'Usage: ./download.sh --passphrase=XXX --ssh_user=XXX --ssh_host=XXX --ssh_port=XXX --remote_dir=XXX'
+  echo ""
+  echo "If the backup was taken with MINIO_BACKUP_TYPE=differential (see backup.sh), the encrypted archive"
+  echo "does not contain a Minio dump, so pass the same value here to skip trying to download/restore it:"
+  echo "MINIO_BACKUP_TYPE=differential"
   exit 1
 }
 
 if [ -z "$LABEL" ]; then
   LABEL=$(date +%Y-%m-%d)
+fi
+
+MINIO_BACKUP_TYPE=${MINIO_BACKUP_TYPE:-dump}
+if [ "$MINIO_BACKUP_TYPE" != "dump" ] && [ "$MINIO_BACKUP_TYPE" != "differential" ]; then
+  echo "Error: MINIO_BACKUP_TYPE must be either 'dump' or 'differential'"
+  exit 1
 fi
 
 if [ -z "$SSH_USER" ] ; then
@@ -100,24 +110,17 @@ mkdir -p $BACKUP_RAW_FILES_DIR/extract
 tar -xvf $BACKUP_RAW_FILES_DIR/${LABEL}.tar.gz -C $BACKUP_RAW_FILES_DIR/extract
 rm $BACKUP_RAW_FILES_DIR/${LABEL}.tar.gz
 
-# Delete previous days restore(s) and move the newly downloaded one in place
-for BACKUP_DIR in /data/backups/*; do
-  if [ -d "$BACKUP_DIR" ]; then
-    rm -rf $BACKUP_DIR/*
-  fi
-done
-
-
 BACKUP_SERVICES=(
   elasticsearch
   influxdb
-  minio
   vsexport
   mongo
   postgres
 )
+[ "$MINIO_BACKUP_TYPE" = "dump" ] && BACKUP_SERVICES+=(minio)
 
 for service in "${BACKUP_SERVICES[@]}"; do
+  rm -rf /data/backups/$service/*
   mv $BACKUP_RAW_FILES_DIR/extract/$service/* /data/backups/$service/
 done
 
