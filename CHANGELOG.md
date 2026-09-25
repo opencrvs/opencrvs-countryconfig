@@ -7,6 +7,10 @@
 - Use /data directory for temporary backup files instead of /tmp [#13853](https://github.com/opencrvs/opencrvs-core/issues/13853)
 - Add MinIO rsync backup option [#13851](https://github.com/opencrvs/opencrvs-core/issues/13851)
 
+### Bug fixes
+
+- Replace MinIO server and client images with OpenCRVS-hosted images: `ghcr.io/opencrvs/minio:release.2025-06-13t11-33-47z` and `ghcr.io/opencrvs/minio-mc:release.2025-05-21t01-59-54z`
+
 
 ## 1.9.18
 
