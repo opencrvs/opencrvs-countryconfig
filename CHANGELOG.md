@@ -1,6 +1,10 @@
 # Changelog
 
-## 2.0.4 Release Candidate
+## 2.0.4
+
+### Improvements
+
+- Upgraded `@opencrvs/toolkit` to v2.0.4.
 
 ## 2.0.3
 
