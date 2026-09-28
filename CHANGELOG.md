@@ -1,8 +1,8 @@
 # Changelog
 
-## 1.9.19 Release Candidate
+## 1.9.19
 
-### Imrpovements
+### Improvements
 
 - Use /data directory for temporary backup files instead of /tmp [#13853](https://github.com/opencrvs/opencrvs-core/issues/13853)
 - Add MinIO rsync backup option [#13851](https://github.com/opencrvs/opencrvs-core/issues/13851)
