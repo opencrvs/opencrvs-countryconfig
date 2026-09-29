@@ -114,6 +114,12 @@ jobs:
           git checkout -b "$RELEASE_BRANCH"
 
           yarn version --new-version "$VERSION" --no-git-tag-version
+          # Bump Tiltfile version
+          VERSION=${{ inputs.version }}
+          sed -i -E \
+            -e 's|(core_images_tag = os.getenv\("OPENCRVS_CORE_IMAGE_TAG", )"[^"]+"|\1"v'"$VERSION"'"|' \
+            -e 's|(core_ref = os.getenv\("OPENCRVS_CORE_REF", )"[^"]+"|\1"release/'"$VERSION"'"|' \
+            Tiltfile
           git add .
           git commit -m "chore: update version to $VERSION"
 
