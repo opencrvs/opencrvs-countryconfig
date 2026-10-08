@@ -1,10 +1,6 @@
 # Changelog
 
-## 1.9.20 Release Candidate
-
-### Bug fixes
-
-- The "Identity verified" label in the correction request form showed the placeholder text "@todo" instead of a translation. [#13459](https://github.com/opencrvs/opencrvs-core/issues/13459)
+## 1.9.20
 
 ## 1.9.19
 
