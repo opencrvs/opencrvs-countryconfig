@@ -2,6 +2,10 @@
 
 ## 1.9.21 Release Candidate
 
+### Security
+
+- Traefik now blocks every inbound request whose path contains `internal`, including percent-encoded and double-encoded forms, so the auth service's internal endpoints can't be reached from outside. Internal callers use `http://auth:4040` directly and are unaffected. If you have customised these files, bring over the `deny-internal` labels in `infrastructure/docker-compose.deploy.yml`, and the `--entrypoints.websecure.http.middlewares=deny-internal@docker` argument in `docker-compose.deploy.yml` and in every `docker-compose.<environment>-deploy.yml`. Each environment file replaces Traefik's whole `command` list, so the argument must be in all of them.
+
 ## 1.9.20
 
 ## 1.9.19
