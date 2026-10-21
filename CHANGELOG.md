@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.0.5 Release Candidate
+## 2.0.5
 
 ## 2.0.4
 
