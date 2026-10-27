@@ -2,6 +2,10 @@
 
 ## 2.0.6 Release Candidate
 
+### Improvements
+
+- Upgrade Node.js to 22.23.4, a Node.js security release, in the country config image and for local development.
+
 ## 2.0.5
 
 ## 2.0.4
