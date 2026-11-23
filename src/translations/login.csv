@@ -23,6 +23,7 @@ login.manager.registerAppTitle,,OpenCRVS,Page d'accueil OpenCRVS
 login.mobileLabel,,Mobile number,Numéro de téléphone mobile
 login.mobilePlaceholder,,07123456789,7123456789
 login.optionalLabel,Optional label,Optional,Optionel
+login.passwordChanged,The message that appears on the login page after the user changes their password and the client logs them out,Your password changed. Log in with your new password.,Votre mot de passe a été modifié. Connectez-vous avec votre nouveau mot de passe.
 login.passwordLabel,The label that appears on the password input,Password,Mot de passe
 login.resend,Text for button that resends SMS or email verification code,"Resend {notificationMethod, select, sms {SMS} email {Email} other {}}","Renvoyer le {notificationMethod, select, sms {SMS} email {Email} other {}}"
 login.resentEMAIL,The message that appears when the resend button is clicked and tells user than code is resent to email,Authentication code sent to {email},Nous venons de vous envoyer un autre code à {email}.
